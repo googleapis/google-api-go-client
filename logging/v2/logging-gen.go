@@ -931,9 +931,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -966,9 +966,9 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BigQueryDataset: Describes a BigQuery dataset that was created by a link.
@@ -992,9 +992,9 @@ type BigQueryDataset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BigQueryDataset) MarshalJSON() ([]byte, error) {
+func (s BigQueryDataset) MarshalJSON() ([]byte, error) {
 	type NoMethod BigQueryDataset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BigQueryOptions: Options that change functionality of a sink exporting data
@@ -1028,9 +1028,9 @@ type BigQueryOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BigQueryOptions) MarshalJSON() ([]byte, error) {
+func (s BigQueryOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod BigQueryOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates members, or principals, with a role.
@@ -1124,9 +1124,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BucketMetadata: Metadata for LongRunningUpdateBucket Operations.
@@ -1165,9 +1165,9 @@ type BucketMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BucketMetadata) MarshalJSON() ([]byte, error) {
+func (s BucketMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod BucketMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BucketOptions: BucketOptions describes the bucket boundaries used to create
@@ -1204,9 +1204,9 @@ type BucketOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BucketOptions) MarshalJSON() ([]byte, error) {
+func (s BucketOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod BucketOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -1278,9 +1278,9 @@ type CmekSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CmekSettings) MarshalJSON() ([]byte, error) {
+func (s CmekSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod CmekSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CopyLogEntriesMetadata: Metadata for CopyLogEntries long running operations.
@@ -1335,9 +1335,9 @@ type CopyLogEntriesMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CopyLogEntriesMetadata) MarshalJSON() ([]byte, error) {
+func (s CopyLogEntriesMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CopyLogEntriesMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CopyLogEntriesRequest: The parameters to CopyLogEntries.
@@ -1364,9 +1364,9 @@ type CopyLogEntriesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CopyLogEntriesRequest) MarshalJSON() ([]byte, error) {
+func (s CopyLogEntriesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CopyLogEntriesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CopyLogEntriesResponse: Response type for CopyLogEntries long running
@@ -1387,9 +1387,9 @@ type CopyLogEntriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CopyLogEntriesResponse) MarshalJSON() ([]byte, error) {
+func (s CopyLogEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CopyLogEntriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateBucketRequest: The parameters to CreateBucket.
@@ -1420,9 +1420,9 @@ type CreateBucketRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateBucketRequest) MarshalJSON() ([]byte, error) {
+func (s CreateBucketRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateBucketRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateLinkRequest: The parameters to CreateLink.
@@ -1453,9 +1453,9 @@ type CreateLinkRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateLinkRequest) MarshalJSON() ([]byte, error) {
+func (s CreateLinkRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateLinkRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DefaultSinkConfig: Describes the custom _Default sink configuration that is
@@ -1500,9 +1500,9 @@ type DefaultSinkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DefaultSinkConfig) MarshalJSON() ([]byte, error) {
+func (s DefaultSinkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DefaultSinkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteLinkRequest: The parameters to DeleteLink.
@@ -1530,9 +1530,9 @@ type DeleteLinkRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteLinkRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteLinkRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteLinkRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1566,9 +1566,9 @@ type Explicit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Explicit) MarshalJSON() ([]byte, error) {
+func (s Explicit) MarshalJSON() ([]byte, error) {
 	type NoMethod Explicit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Explicit) UnmarshalJSON(data []byte) error {
@@ -1614,9 +1614,9 @@ type Exponential struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Exponential) MarshalJSON() ([]byte, error) {
+func (s Exponential) MarshalJSON() ([]byte, error) {
 	type NoMethod Exponential
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Exponential) UnmarshalJSON(data []byte) error {
@@ -1678,9 +1678,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetIamPolicyRequest: Request message for GetIamPolicy method.
@@ -1701,9 +1701,9 @@ type GetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
@@ -1733,9 +1733,9 @@ type GetPolicyOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
+func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRequest: A common proto for logging HTTP requests. Only contains
@@ -1755,10 +1755,10 @@ type HttpRequest struct {
 	// meaningful if cache_hit is True.
 	CacheValidatedWithOriginServer bool `json:"cacheValidatedWithOriginServer,omitempty"`
 	// Latency: The request processing latency on the server, from the time the
-	// request was received until the response was sent.
+	// request was received until the response was sent. For WebSocket connections,
+	// this field refers to the entire time duration of the connection.
 	Latency string `json:"latency,omitempty"`
-	// Protocol: Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2",
-	// "websocket"
+	// Protocol: Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2"
 	Protocol string `json:"protocol,omitempty"`
 	// Referer: The referer URL of the request, as defined in HTTP/1.1 Header Field
 	// Definitions (https://datatracker.ietf.org/doc/html/rfc2616#section-14.36).
@@ -1802,9 +1802,9 @@ type HttpRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRequest) MarshalJSON() ([]byte, error) {
+func (s HttpRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IndexConfig: Configuration for an indexed field.
@@ -1816,8 +1816,8 @@ type IndexConfig struct {
 	// FieldPath: Required. The LogEntry field path to index.Note that some paths
 	// are automatically indexed, and other paths are not eligible for indexing.
 	// See indexing documentation(
-	// https://cloud.google.com/logging/docs/view/advanced-queries#indexed-fields)
-	// for details.For example: jsonPayload.request.status
+	// https://cloud.google.com/logging/docs/analyze/custom-index) for details.For
+	// example: jsonPayload.request.status
 	FieldPath string `json:"fieldPath,omitempty"`
 	// Type: Required. The type of data in this index.
 	//
@@ -1839,9 +1839,9 @@ type IndexConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IndexConfig) MarshalJSON() ([]byte, error) {
+func (s IndexConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod IndexConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LabelDescriptor: A description of a label.
@@ -1870,9 +1870,9 @@ type LabelDescriptor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LabelDescriptor) MarshalJSON() ([]byte, error) {
+func (s LabelDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod LabelDescriptor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Linear: Specifies a linear sequence of buckets that all have the same width
@@ -1901,9 +1901,9 @@ type Linear struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Linear) MarshalJSON() ([]byte, error) {
+func (s Linear) MarshalJSON() ([]byte, error) {
 	type NoMethod Linear
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Linear) UnmarshalJSON(data []byte) error {
@@ -1978,9 +1978,9 @@ type Link struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Link) MarshalJSON() ([]byte, error) {
+func (s Link) MarshalJSON() ([]byte, error) {
 	type NoMethod Link
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LinkMetadata: Metadata for long running Link operations.
@@ -2019,9 +2019,9 @@ type LinkMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LinkMetadata) MarshalJSON() ([]byte, error) {
+func (s LinkMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod LinkMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListBucketsResponse: The response from ListBuckets.
@@ -2048,9 +2048,9 @@ type ListBucketsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBucketsResponse) MarshalJSON() ([]byte, error) {
+func (s ListBucketsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBucketsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListExclusionsResponse: Result returned from ListExclusions.
@@ -2077,9 +2077,9 @@ type ListExclusionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListExclusionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListExclusionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListExclusionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLinksResponse: The response from ListLinks.
@@ -2106,9 +2106,9 @@ type ListLinksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLinksResponse) MarshalJSON() ([]byte, error) {
+func (s ListLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLinksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -2134,9 +2134,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLogEntriesRequest: The parameters to ListLogEntries.
@@ -2179,9 +2179,14 @@ type ListLogEntriesRequest struct {
 	// Example: "my-project-1A".
 	ProjectIds []string `json:"projectIds,omitempty"`
 	// ResourceNames: Required. Names of one or more parent resources from which to
-	// retrieve log entries: projects/[PROJECT_ID] organizations/[ORGANIZATION_ID]
-	// billingAccounts/[BILLING_ACCOUNT_ID] folders/[FOLDER_ID]May alternatively be
-	// one or more views:
+	// retrieve log entries. Resources may either be resource containers or
+	// specific LogViews. For the case of resource containers, all logs ingested
+	// into that container will be returned regardless of which LogBuckets they are
+	// actually stored in - i.e. these queries may fan out to multiple regions. In
+	// the event of region unavailability, specify a specific set of LogViews that
+	// do not include the unavailable region. projects/[PROJECT_ID]
+	// organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID]
+	// folders/[FOLDER_ID]
 	// projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW
 	// _ID]
 	// organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -2205,9 +2210,9 @@ type ListLogEntriesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLogEntriesRequest) MarshalJSON() ([]byte, error) {
+func (s ListLogEntriesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLogEntriesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLogEntriesResponse: Result returned from ListLogEntries.
@@ -2242,9 +2247,9 @@ type ListLogEntriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLogEntriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListLogEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLogEntriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLogMetricsResponse: Result returned from ListLogMetrics.
@@ -2271,9 +2276,9 @@ type ListLogMetricsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLogMetricsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLogMetricsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLogMetricsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLogsResponse: Result returned from ListLogs.
@@ -2302,9 +2307,9 @@ type ListLogsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLogsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLogsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLogsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMonitoredResourceDescriptorsResponse: Result returned from
@@ -2332,9 +2337,9 @@ type ListMonitoredResourceDescriptorsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMonitoredResourceDescriptorsResponse) MarshalJSON() ([]byte, error) {
+func (s ListMonitoredResourceDescriptorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMonitoredResourceDescriptorsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -2360,9 +2365,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRecentQueriesResponse: The response from ListRecentQueries.
@@ -2399,9 +2404,9 @@ type ListRecentQueriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRecentQueriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListRecentQueriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRecentQueriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSavedQueriesResponse: The response from ListSavedQueries.
@@ -2438,9 +2443,9 @@ type ListSavedQueriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSavedQueriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListSavedQueriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSavedQueriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSinksResponse: Result returned from ListSinks.
@@ -2467,9 +2472,9 @@ type ListSinksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSinksResponse) MarshalJSON() ([]byte, error) {
+func (s ListSinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSinksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListViewsResponse: The response from ListViews.
@@ -2496,9 +2501,9 @@ type ListViewsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListViewsResponse) MarshalJSON() ([]byte, error) {
+func (s ListViewsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListViewsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -2533,9 +2538,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocationMetadata: Cloud Logging specific location metadata.
@@ -2556,9 +2561,9 @@ type LocationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
+func (s LocationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogBucket: Describes a repository in which log entries are stored.
@@ -2635,9 +2640,9 @@ type LogBucket struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogBucket) MarshalJSON() ([]byte, error) {
+func (s LogBucket) MarshalJSON() ([]byte, error) {
 	type NoMethod LogBucket
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogEntry: An individual entry in a log.
@@ -2796,9 +2801,9 @@ type LogEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogEntry) MarshalJSON() ([]byte, error) {
+func (s LogEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod LogEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogEntryOperation: Additional information about a potentially long-running
@@ -2830,9 +2835,9 @@ type LogEntryOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogEntryOperation) MarshalJSON() ([]byte, error) {
+func (s LogEntryOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod LogEntryOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogEntrySourceLocation: Additional information about the source code
@@ -2864,9 +2869,9 @@ type LogEntrySourceLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogEntrySourceLocation) MarshalJSON() ([]byte, error) {
+func (s LogEntrySourceLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod LogEntrySourceLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogErrorGroup: Contains metadata that associates the LogEntry to Error
@@ -2892,9 +2897,9 @@ type LogErrorGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogErrorGroup) MarshalJSON() ([]byte, error) {
+func (s LogErrorGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod LogErrorGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogExclusion: Specifies a set of log entries that are filtered out by a
@@ -2945,9 +2950,9 @@ type LogExclusion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogExclusion) MarshalJSON() ([]byte, error) {
+func (s LogExclusion) MarshalJSON() ([]byte, error) {
 	type NoMethod LogExclusion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogLine: Application log line emitted while processing a request.
@@ -2985,9 +2990,9 @@ type LogLine struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogLine) MarshalJSON() ([]byte, error) {
+func (s LogLine) MarshalJSON() ([]byte, error) {
 	type NoMethod LogLine
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogMetric: Describes a logs-based metric. The value of the metric is the
@@ -3102,9 +3107,9 @@ type LogMetric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogMetric) MarshalJSON() ([]byte, error) {
+func (s LogMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod LogMetric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogSink: Describes a sink used to export log entries to one of the following
@@ -3222,9 +3227,9 @@ type LogSink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogSink) MarshalJSON() ([]byte, error) {
+func (s LogSink) MarshalJSON() ([]byte, error) {
 	type NoMethod LogSink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogSplit: Additional information used to correlate multiple log entries.
@@ -3255,9 +3260,9 @@ type LogSplit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogSplit) MarshalJSON() ([]byte, error) {
+func (s LogSplit) MarshalJSON() ([]byte, error) {
 	type NoMethod LogSplit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogView: Describes a view over log entries in a bucket.
@@ -3296,9 +3301,9 @@ type LogView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogView) MarshalJSON() ([]byte, error) {
+func (s LogView) MarshalJSON() ([]byte, error) {
 	type NoMethod LogView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LoggingQuery: Describes a Cloud Logging query that can be run in Logs
@@ -3330,9 +3335,9 @@ type LoggingQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoggingQuery) MarshalJSON() ([]byte, error) {
+func (s LoggingQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod LoggingQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricDescriptor: Defines a metric type and its schema. Once a metric
@@ -3491,9 +3496,9 @@ type MetricDescriptor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetricDescriptor) MarshalJSON() ([]byte, error) {
+func (s MetricDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricDescriptor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricDescriptorMetadata: Additional annotations that can be used to guide
@@ -3556,9 +3561,9 @@ type MetricDescriptorMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetricDescriptorMetadata) MarshalJSON() ([]byte, error) {
+func (s MetricDescriptorMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricDescriptorMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MonitoredResource: An object representing a resource that can be used for
@@ -3596,9 +3601,9 @@ type MonitoredResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MonitoredResource) MarshalJSON() ([]byte, error) {
+func (s MonitoredResource) MarshalJSON() ([]byte, error) {
 	type NoMethod MonitoredResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MonitoredResourceDescriptor: An object that describes the schema of a
@@ -3683,9 +3688,9 @@ type MonitoredResourceDescriptor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MonitoredResourceDescriptor) MarshalJSON() ([]byte, error) {
+func (s MonitoredResourceDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod MonitoredResourceDescriptor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MonitoredResourceMetadata: Auxiliary metadata for a MonitoredResource
@@ -3717,9 +3722,9 @@ type MonitoredResourceMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MonitoredResourceMetadata) MarshalJSON() ([]byte, error) {
+func (s MonitoredResourceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod MonitoredResourceMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -3763,9 +3768,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OpsAnalyticsQuery: Describes an analytics query that can be run in the Log
@@ -3789,9 +3794,9 @@ type OpsAnalyticsQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OpsAnalyticsQuery) MarshalJSON() ([]byte, error) {
+func (s OpsAnalyticsQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod OpsAnalyticsQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -3879,9 +3884,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RecentQuery: Describes a recent query executed on the Logs Explorer or Log
@@ -3913,9 +3918,9 @@ type RecentQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RecentQuery) MarshalJSON() ([]byte, error) {
+func (s RecentQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod RecentQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RequestLog: Complete log information about a single HTTP request to an App
@@ -4020,9 +4025,9 @@ type RequestLog struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RequestLog) MarshalJSON() ([]byte, error) {
+func (s RequestLog) MarshalJSON() ([]byte, error) {
 	type NoMethod RequestLog
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *RequestLog) UnmarshalJSON(data []byte) error {
@@ -4087,9 +4092,9 @@ type SavedQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SavedQuery) MarshalJSON() ([]byte, error) {
+func (s SavedQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod SavedQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for SetIamPolicy method.
@@ -4116,9 +4121,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Settings: Describes the settings associated with a project, folder,
@@ -4184,9 +4189,9 @@ type Settings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Settings) MarshalJSON() ([]byte, error) {
+func (s Settings) MarshalJSON() ([]byte, error) {
 	type NoMethod Settings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SourceLocation: Specifies a location in a source code file.
@@ -4215,9 +4220,9 @@ type SourceLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SourceLocation) MarshalJSON() ([]byte, error) {
+func (s SourceLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SourceReference: A reference to a particular snapshot of the source tree
@@ -4242,9 +4247,9 @@ type SourceReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SourceReference) MarshalJSON() ([]byte, error) {
+func (s SourceReference) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The Status type defines a logical error model that is suitable for
@@ -4276,9 +4281,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SummaryField: A field from the LogEntry that is added to the summary line
@@ -4301,9 +4306,9 @@ type SummaryField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SummaryField) MarshalJSON() ([]byte, error) {
+func (s SummaryField) MarshalJSON() ([]byte, error) {
 	type NoMethod SummaryField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SuppressionInfo: Information about entries that were omitted from the
@@ -4335,9 +4340,9 @@ type SuppressionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SuppressionInfo) MarshalJSON() ([]byte, error) {
+func (s SuppressionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SuppressionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TailLogEntriesRequest: The parameters to TailLogEntries.
@@ -4379,9 +4384,9 @@ type TailLogEntriesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TailLogEntriesRequest) MarshalJSON() ([]byte, error) {
+func (s TailLogEntriesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TailLogEntriesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TailLogEntriesResponse: Result returned from TailLogEntries.
@@ -4412,9 +4417,9 @@ type TailLogEntriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TailLogEntriesResponse) MarshalJSON() ([]byte, error) {
+func (s TailLogEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TailLogEntriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for TestIamPermissions method.
@@ -4437,9 +4442,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for TestIamPermissions method.
@@ -4463,9 +4468,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UndeleteBucketRequest: The parameters to UndeleteBucket.
@@ -4504,9 +4509,9 @@ type UpdateBucketRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateBucketRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateBucketRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateBucketRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WriteLogEntriesRequest: The parameters to WriteLogEntries.
@@ -4578,9 +4583,9 @@ type WriteLogEntriesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WriteLogEntriesRequest) MarshalJSON() ([]byte, error) {
+func (s WriteLogEntriesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod WriteLogEntriesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WriteLogEntriesResponse: Result returned from WriteLogEntries.
@@ -8255,6 +8260,15 @@ func (r *BillingAccountsLocationsRecentQueriesService) List(parent string) *Bill
 	return c
 }
 
+// Filter sets the optional parameter "filter": Specifies the type ("Logging"
+// or "OpsAnalytics") of the recent queries to list. The only valid value for
+// this field is one of the two allowable type function calls, which are the
+// following: type("Logging") type("OpsAnalytics")
+func (c *BillingAccountsLocationsRecentQueriesListCall) Filter(filter string) *BillingAccountsLocationsRecentQueriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // results to return from this request. Non-positive values are ignored. The
 // presence of nextPageToken in the response indicates that more results might
@@ -8607,6 +8621,121 @@ func (c *BillingAccountsLocationsSavedQueriesDeleteCall) Do(opts ...googleapi.Ca
 	return ret, nil
 }
 
+type BillingAccountsLocationsSavedQueriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns all data associated with the requested query.
+//
+//   - name: The resource name of the saved query.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQueries/[QUER
+//     Y_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQueries/
+//     [QUERY_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]" For
+//     example:
+//     "projects/my-project/locations/global/savedQueries/my-saved-query".
+func (r *BillingAccountsLocationsSavedQueriesService) Get(name string) *BillingAccountsLocationsSavedQueriesGetCall {
+	c := &BillingAccountsLocationsSavedQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *BillingAccountsLocationsSavedQueriesGetCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsSavedQueriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *BillingAccountsLocationsSavedQueriesGetCall) IfNoneMatch(entityTag string) *BillingAccountsLocationsSavedQueriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *BillingAccountsLocationsSavedQueriesGetCall) Context(ctx context.Context) *BillingAccountsLocationsSavedQueriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *BillingAccountsLocationsSavedQueriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsSavedQueriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.savedQueries.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *BillingAccountsLocationsSavedQueriesGetCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type BillingAccountsLocationsSavedQueriesListCall struct {
 	s            *Service
 	parent       string
@@ -8631,6 +8760,21 @@ type BillingAccountsLocationsSavedQueriesListCall struct {
 func (r *BillingAccountsLocationsSavedQueriesService) List(parent string) *BillingAccountsLocationsSavedQueriesListCall {
 	c := &BillingAccountsLocationsSavedQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Specifies the type ("Logging"
+// or "OpsAnalytics") and the visibility (PRIVATE or SHARED) of the saved
+// queries to list. If provided, the filter must contain either the type
+// function or a visibility token, or both. If both are chosen, they can be
+// placed in any order, but they must be joined by the AND operator or the
+// empty character.The two supported type function calls are: type("Logging")
+// type("OpsAnalytics")The two supported visibility tokens are: visibility =
+// PRIVATE visibility = SHAREDFor example:type("Logging") AND visibility =
+// PRIVATE visibility=SHARED type("OpsAnalytics") type("OpsAnalytics)"
+// visibility = PRIVATE visibility = SHARED
+func (c *BillingAccountsLocationsSavedQueriesListCall) Filter(filter string) *BillingAccountsLocationsSavedQueriesListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -8761,6 +8905,125 @@ func (c *BillingAccountsLocationsSavedQueriesListCall) Pages(ctx context.Context
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type BillingAccountsLocationsSavedQueriesPatchCall struct {
+	s          *Service
+	name       string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates an existing SavedQuery.
+//
+//   - name: Output only. Resource name of the saved query.In the format:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     For a list of supported locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support#bucket-regions)After
+//     the saved query is created, the location cannot be changed.If the user
+//     doesn't provide a QUERY_ID, the system will generate an alphanumeric ID.
+func (r *BillingAccountsLocationsSavedQueriesService) Patch(name string, savedquery *SavedQuery) *BillingAccountsLocationsSavedQueriesPatchCall {
+	c := &BillingAccountsLocationsSavedQueriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.savedquery = savedquery
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. A non-empty
+// list of fields to change in the existing saved query. Fields are relative to
+// the saved_query and new values for the fields are taken from the
+// corresponding fields in the SavedQuery included in this request. Fields not
+// mentioned in update_mask are not changed and are ignored in the request.To
+// update all mutable fields, specify an update_mask of *.For example, to
+// change the description and query filter text of a saved query, specify an
+// update_mask of "description, query.filter".
+func (c *BillingAccountsLocationsSavedQueriesPatchCall) UpdateMask(updateMask string) *BillingAccountsLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *BillingAccountsLocationsSavedQueriesPatchCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *BillingAccountsLocationsSavedQueriesPatchCall) Context(ctx context.Context) *BillingAccountsLocationsSavedQueriesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *BillingAccountsLocationsSavedQueriesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsSavedQueriesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.savedQueries.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *BillingAccountsLocationsSavedQueriesPatchCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type BillingAccountsLogsDeleteCall struct {
@@ -9061,12 +9324,12 @@ func (r *BillingAccountsSinksService) Create(parent string, logsink *LogSink) *B
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *BillingAccountsSinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *BillingAccountsSinksCreateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -9575,12 +9838,12 @@ func (r *BillingAccountsSinksService) Patch(sinkNameid string, logsink *LogSink)
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *BillingAccountsSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *BillingAccountsSinksPatchCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -9726,12 +9989,12 @@ func (r *BillingAccountsSinksService) Update(sinkNameid string, logsink *LogSink
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *BillingAccountsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *BillingAccountsSinksUpdateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -11105,8 +11368,8 @@ type FoldersUpdateSettingsCall struct {
 // information.
 //
 //   - name: The resource name for the settings to update.
-//     "organizations/[ORGANIZATION_ID]/settings" For
-//     example:"organizations/12345/settings".
+//     "organizations/[ORGANIZATION_ID]/settings" "folders/[FOLDER_ID]/settings"
+//     For example:"organizations/12345/settings".
 func (r *FoldersService) UpdateSettings(name string, settings *Settings) *FoldersUpdateSettingsCall {
 	c := &FoldersUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14952,6 +15215,15 @@ func (r *FoldersLocationsRecentQueriesService) List(parent string) *FoldersLocat
 	return c
 }
 
+// Filter sets the optional parameter "filter": Specifies the type ("Logging"
+// or "OpsAnalytics") of the recent queries to list. The only valid value for
+// this field is one of the two allowable type function calls, which are the
+// following: type("Logging") type("OpsAnalytics")
+func (c *FoldersLocationsRecentQueriesListCall) Filter(filter string) *FoldersLocationsRecentQueriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // results to return from this request. Non-positive values are ignored. The
 // presence of nextPageToken in the response indicates that more results might
@@ -15304,6 +15576,121 @@ func (c *FoldersLocationsSavedQueriesDeleteCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 }
 
+type FoldersLocationsSavedQueriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns all data associated with the requested query.
+//
+//   - name: The resource name of the saved query.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQueries/[QUER
+//     Y_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQueries/
+//     [QUERY_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]" For
+//     example:
+//     "projects/my-project/locations/global/savedQueries/my-saved-query".
+func (r *FoldersLocationsSavedQueriesService) Get(name string) *FoldersLocationsSavedQueriesGetCall {
+	c := &FoldersLocationsSavedQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsSavedQueriesGetCall) Fields(s ...googleapi.Field) *FoldersLocationsSavedQueriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersLocationsSavedQueriesGetCall) IfNoneMatch(entityTag string) *FoldersLocationsSavedQueriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsSavedQueriesGetCall) Context(ctx context.Context) *FoldersLocationsSavedQueriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsSavedQueriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsSavedQueriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.savedQueries.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsSavedQueriesGetCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type FoldersLocationsSavedQueriesListCall struct {
 	s            *Service
 	parent       string
@@ -15328,6 +15715,21 @@ type FoldersLocationsSavedQueriesListCall struct {
 func (r *FoldersLocationsSavedQueriesService) List(parent string) *FoldersLocationsSavedQueriesListCall {
 	c := &FoldersLocationsSavedQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Specifies the type ("Logging"
+// or "OpsAnalytics") and the visibility (PRIVATE or SHARED) of the saved
+// queries to list. If provided, the filter must contain either the type
+// function or a visibility token, or both. If both are chosen, they can be
+// placed in any order, but they must be joined by the AND operator or the
+// empty character.The two supported type function calls are: type("Logging")
+// type("OpsAnalytics")The two supported visibility tokens are: visibility =
+// PRIVATE visibility = SHAREDFor example:type("Logging") AND visibility =
+// PRIVATE visibility=SHARED type("OpsAnalytics") type("OpsAnalytics)"
+// visibility = PRIVATE visibility = SHARED
+func (c *FoldersLocationsSavedQueriesListCall) Filter(filter string) *FoldersLocationsSavedQueriesListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -15458,6 +15860,125 @@ func (c *FoldersLocationsSavedQueriesListCall) Pages(ctx context.Context, f func
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type FoldersLocationsSavedQueriesPatchCall struct {
+	s          *Service
+	name       string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates an existing SavedQuery.
+//
+//   - name: Output only. Resource name of the saved query.In the format:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     For a list of supported locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support#bucket-regions)After
+//     the saved query is created, the location cannot be changed.If the user
+//     doesn't provide a QUERY_ID, the system will generate an alphanumeric ID.
+func (r *FoldersLocationsSavedQueriesService) Patch(name string, savedquery *SavedQuery) *FoldersLocationsSavedQueriesPatchCall {
+	c := &FoldersLocationsSavedQueriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.savedquery = savedquery
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. A non-empty
+// list of fields to change in the existing saved query. Fields are relative to
+// the saved_query and new values for the fields are taken from the
+// corresponding fields in the SavedQuery included in this request. Fields not
+// mentioned in update_mask are not changed and are ignored in the request.To
+// update all mutable fields, specify an update_mask of *.For example, to
+// change the description and query filter text of a saved query, specify an
+// update_mask of "description, query.filter".
+func (c *FoldersLocationsSavedQueriesPatchCall) UpdateMask(updateMask string) *FoldersLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsSavedQueriesPatchCall) Fields(s ...googleapi.Field) *FoldersLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsSavedQueriesPatchCall) Context(ctx context.Context) *FoldersLocationsSavedQueriesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsSavedQueriesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsSavedQueriesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.savedQueries.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsSavedQueriesPatchCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type FoldersLogsDeleteCall struct {
@@ -15758,12 +16279,12 @@ func (r *FoldersSinksService) Create(parent string, logsink *LogSink) *FoldersSi
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *FoldersSinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *FoldersSinksCreateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -16272,12 +16793,12 @@ func (r *FoldersSinksService) Patch(sinkNameid string, logsink *LogSink) *Folder
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *FoldersSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *FoldersSinksPatchCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -16423,12 +16944,12 @@ func (r *FoldersSinksService) Update(sinkNameid string, logsink *LogSink) *Folde
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *FoldersSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *FoldersSinksUpdateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -20314,8 +20835,8 @@ type OrganizationsUpdateSettingsCall struct {
 // information.
 //
 //   - name: The resource name for the settings to update.
-//     "organizations/[ORGANIZATION_ID]/settings" For
-//     example:"organizations/12345/settings".
+//     "organizations/[ORGANIZATION_ID]/settings" "folders/[FOLDER_ID]/settings"
+//     For example:"organizations/12345/settings".
 func (r *OrganizationsService) UpdateSettings(name string, settings *Settings) *OrganizationsUpdateSettingsCall {
 	c := &OrganizationsUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24161,6 +24682,15 @@ func (r *OrganizationsLocationsRecentQueriesService) List(parent string) *Organi
 	return c
 }
 
+// Filter sets the optional parameter "filter": Specifies the type ("Logging"
+// or "OpsAnalytics") of the recent queries to list. The only valid value for
+// this field is one of the two allowable type function calls, which are the
+// following: type("Logging") type("OpsAnalytics")
+func (c *OrganizationsLocationsRecentQueriesListCall) Filter(filter string) *OrganizationsLocationsRecentQueriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // results to return from this request. Non-positive values are ignored. The
 // presence of nextPageToken in the response indicates that more results might
@@ -24513,6 +25043,121 @@ func (c *OrganizationsLocationsSavedQueriesDeleteCall) Do(opts ...googleapi.Call
 	return ret, nil
 }
 
+type OrganizationsLocationsSavedQueriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns all data associated with the requested query.
+//
+//   - name: The resource name of the saved query.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQueries/[QUER
+//     Y_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQueries/
+//     [QUERY_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]" For
+//     example:
+//     "projects/my-project/locations/global/savedQueries/my-saved-query".
+func (r *OrganizationsLocationsSavedQueriesService) Get(name string) *OrganizationsLocationsSavedQueriesGetCall {
+	c := &OrganizationsLocationsSavedQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsSavedQueriesGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSavedQueriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsSavedQueriesGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsSavedQueriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsSavedQueriesGetCall) Context(ctx context.Context) *OrganizationsLocationsSavedQueriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsSavedQueriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSavedQueriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.savedQueries.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSavedQueriesGetCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type OrganizationsLocationsSavedQueriesListCall struct {
 	s            *Service
 	parent       string
@@ -24537,6 +25182,21 @@ type OrganizationsLocationsSavedQueriesListCall struct {
 func (r *OrganizationsLocationsSavedQueriesService) List(parent string) *OrganizationsLocationsSavedQueriesListCall {
 	c := &OrganizationsLocationsSavedQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Specifies the type ("Logging"
+// or "OpsAnalytics") and the visibility (PRIVATE or SHARED) of the saved
+// queries to list. If provided, the filter must contain either the type
+// function or a visibility token, or both. If both are chosen, they can be
+// placed in any order, but they must be joined by the AND operator or the
+// empty character.The two supported type function calls are: type("Logging")
+// type("OpsAnalytics")The two supported visibility tokens are: visibility =
+// PRIVATE visibility = SHAREDFor example:type("Logging") AND visibility =
+// PRIVATE visibility=SHARED type("OpsAnalytics") type("OpsAnalytics)"
+// visibility = PRIVATE visibility = SHARED
+func (c *OrganizationsLocationsSavedQueriesListCall) Filter(filter string) *OrganizationsLocationsSavedQueriesListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -24667,6 +25327,125 @@ func (c *OrganizationsLocationsSavedQueriesListCall) Pages(ctx context.Context, 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type OrganizationsLocationsSavedQueriesPatchCall struct {
+	s          *Service
+	name       string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates an existing SavedQuery.
+//
+//   - name: Output only. Resource name of the saved query.In the format:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     For a list of supported locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support#bucket-regions)After
+//     the saved query is created, the location cannot be changed.If the user
+//     doesn't provide a QUERY_ID, the system will generate an alphanumeric ID.
+func (r *OrganizationsLocationsSavedQueriesService) Patch(name string, savedquery *SavedQuery) *OrganizationsLocationsSavedQueriesPatchCall {
+	c := &OrganizationsLocationsSavedQueriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.savedquery = savedquery
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. A non-empty
+// list of fields to change in the existing saved query. Fields are relative to
+// the saved_query and new values for the fields are taken from the
+// corresponding fields in the SavedQuery included in this request. Fields not
+// mentioned in update_mask are not changed and are ignored in the request.To
+// update all mutable fields, specify an update_mask of *.For example, to
+// change the description and query filter text of a saved query, specify an
+// update_mask of "description, query.filter".
+func (c *OrganizationsLocationsSavedQueriesPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsSavedQueriesPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsSavedQueriesPatchCall) Context(ctx context.Context) *OrganizationsLocationsSavedQueriesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsSavedQueriesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSavedQueriesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.savedQueries.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSavedQueriesPatchCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type OrganizationsLogsDeleteCall struct {
@@ -24967,12 +25746,12 @@ func (r *OrganizationsSinksService) Create(parent string, logsink *LogSink) *Org
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *OrganizationsSinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *OrganizationsSinksCreateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -25481,12 +26260,12 @@ func (r *OrganizationsSinksService) Patch(sinkNameid string, logsink *LogSink) *
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *OrganizationsSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *OrganizationsSinksPatchCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -25632,12 +26411,12 @@ func (r *OrganizationsSinksService) Update(sinkNameid string, logsink *LogSink) 
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *OrganizationsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *OrganizationsSinksUpdateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -29739,6 +30518,15 @@ func (r *ProjectsLocationsRecentQueriesService) List(parent string) *ProjectsLoc
 	return c
 }
 
+// Filter sets the optional parameter "filter": Specifies the type ("Logging"
+// or "OpsAnalytics") of the recent queries to list. The only valid value for
+// this field is one of the two allowable type function calls, which are the
+// following: type("Logging") type("OpsAnalytics")
+func (c *ProjectsLocationsRecentQueriesListCall) Filter(filter string) *ProjectsLocationsRecentQueriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // results to return from this request. Non-positive values are ignored. The
 // presence of nextPageToken in the response indicates that more results might
@@ -30091,6 +30879,121 @@ func (c *ProjectsLocationsSavedQueriesDeleteCall) Do(opts ...googleapi.CallOptio
 	return ret, nil
 }
 
+type ProjectsLocationsSavedQueriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns all data associated with the requested query.
+//
+//   - name: The resource name of the saved query.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQueries/[QUER
+//     Y_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQueries/
+//     [QUERY_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]" For
+//     example:
+//     "projects/my-project/locations/global/savedQueries/my-saved-query".
+func (r *ProjectsLocationsSavedQueriesService) Get(name string) *ProjectsLocationsSavedQueriesGetCall {
+	c := &ProjectsLocationsSavedQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSavedQueriesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSavedQueriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSavedQueriesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSavedQueriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSavedQueriesGetCall) Context(ctx context.Context) *ProjectsLocationsSavedQueriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSavedQueriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSavedQueriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.savedQueries.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSavedQueriesGetCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsSavedQueriesListCall struct {
 	s            *Service
 	parent       string
@@ -30115,6 +31018,21 @@ type ProjectsLocationsSavedQueriesListCall struct {
 func (r *ProjectsLocationsSavedQueriesService) List(parent string) *ProjectsLocationsSavedQueriesListCall {
 	c := &ProjectsLocationsSavedQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Specifies the type ("Logging"
+// or "OpsAnalytics") and the visibility (PRIVATE or SHARED) of the saved
+// queries to list. If provided, the filter must contain either the type
+// function or a visibility token, or both. If both are chosen, they can be
+// placed in any order, but they must be joined by the AND operator or the
+// empty character.The two supported type function calls are: type("Logging")
+// type("OpsAnalytics")The two supported visibility tokens are: visibility =
+// PRIVATE visibility = SHAREDFor example:type("Logging") AND visibility =
+// PRIVATE visibility=SHARED type("OpsAnalytics") type("OpsAnalytics)"
+// visibility = PRIVATE visibility = SHARED
+func (c *ProjectsLocationsSavedQueriesListCall) Filter(filter string) *ProjectsLocationsSavedQueriesListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -30245,6 +31163,125 @@ func (c *ProjectsLocationsSavedQueriesListCall) Pages(ctx context.Context, f fun
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsSavedQueriesPatchCall struct {
+	s          *Service
+	name       string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates an existing SavedQuery.
+//
+//   - name: Output only. Resource name of the saved query.In the format:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]"
+//     For a list of supported locations, see Supported Regions
+//     (https://cloud.google.com/logging/docs/region-support#bucket-regions)After
+//     the saved query is created, the location cannot be changed.If the user
+//     doesn't provide a QUERY_ID, the system will generate an alphanumeric ID.
+func (r *ProjectsLocationsSavedQueriesService) Patch(name string, savedquery *SavedQuery) *ProjectsLocationsSavedQueriesPatchCall {
+	c := &ProjectsLocationsSavedQueriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.savedquery = savedquery
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. A non-empty
+// list of fields to change in the existing saved query. Fields are relative to
+// the saved_query and new values for the fields are taken from the
+// corresponding fields in the SavedQuery included in this request. Fields not
+// mentioned in update_mask are not changed and are ignored in the request.To
+// update all mutable fields, specify an update_mask of *.For example, to
+// change the description and query filter text of a saved query, specify an
+// update_mask of "description, query.filter".
+func (c *ProjectsLocationsSavedQueriesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSavedQueriesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsSavedQueriesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSavedQueriesPatchCall) Context(ctx context.Context) *ProjectsLocationsSavedQueriesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSavedQueriesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSavedQueriesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.savedQueries.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSavedQueriesPatchCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLogsDeleteCall struct {
@@ -31104,12 +32141,12 @@ func (r *ProjectsSinksService) Create(parent string, logsink *LogSink) *Projects
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *ProjectsSinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *ProjectsSinksCreateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -31618,12 +32655,12 @@ func (r *ProjectsSinksService) Patch(sinkNameid string, logsink *LogSink) *Proje
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *ProjectsSinksPatchCall) CustomWriterIdentity(customWriterIdentity string) *ProjectsSinksPatchCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -31769,12 +32806,12 @@ func (r *ProjectsSinksService) Update(sinkNameid string, logsink *LogSink) *Proj
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *ProjectsSinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *ProjectsSinksUpdateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -31917,12 +32954,12 @@ func (r *SinksService) Create(parent string, logsink *LogSink) *SinksCreateCall 
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *SinksCreateCall) CustomWriterIdentity(customWriterIdentity string) *SinksCreateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -32431,12 +33468,12 @@ func (r *SinksService) Update(sinkNameid string, logsink *LogSink) *SinksUpdateC
 	return c
 }
 
-// CustomWriterIdentity sets the optional parameter "customWriterIdentity": A
+// CustomWriterIdentity sets the optional parameter "customWriterIdentity": The
 // service account provided by the caller that will be used to write the log
 // entries. The format must be serviceAccount:some@email. This field can only
-// be specified if you are routing logs to a destination outside this sink's
-// project. If not specified, a Logging service account will automatically be
-// generated.
+// be specified when you are routing logs to a log bucket that is in a
+// different project than the sink. When not specified, a Logging service
+// account will automatically be generated.
 func (c *SinksUpdateCall) CustomWriterIdentity(customWriterIdentity string) *SinksUpdateCall {
 	c.urlParams_.Set("customWriterIdentity", customWriterIdentity)
 	return c
@@ -32942,8 +33979,8 @@ type V2UpdateSettingsCall struct {
 // information.
 //
 //   - name: The resource name for the settings to update.
-//     "organizations/[ORGANIZATION_ID]/settings" For
-//     example:"organizations/12345/settings".
+//     "organizations/[ORGANIZATION_ID]/settings" "folders/[FOLDER_ID]/settings"
+//     For example:"organizations/12345/settings".
 func (r *V2Service) UpdateSettings(name string, settings *Settings) *V2UpdateSettingsCall {
 	c := &V2UpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

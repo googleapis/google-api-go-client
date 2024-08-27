@@ -151,7 +151,7 @@ type Analyze struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Analyze) MarshalJSON() ([]byte, error) {
+func (s Analyze) MarshalJSON() ([]byte, error) {
 	type NoMethod Analyze
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }

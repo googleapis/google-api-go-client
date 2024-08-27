@@ -318,9 +318,9 @@ type BiddingFunction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BiddingFunction) MarshalJSON() ([]byte, error) {
+func (s BiddingFunction) MarshalJSON() ([]byte, error) {
 	type NoMethod BiddingFunction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListBiddingFunctionsResponse: A response containing a list of a bidder's
@@ -348,9 +348,9 @@ type ListBiddingFunctionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBiddingFunctionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListBiddingFunctionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBiddingFunctionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BiddersBiddingFunctionsActivateCall struct {

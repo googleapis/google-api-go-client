@@ -244,9 +244,9 @@ type Authentication struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Authentication) MarshalJSON() ([]byte, error) {
+func (s Authentication) MarshalJSON() ([]byte, error) {
 	type NoMethod Authentication
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CrawledUrl: A CrawledUrl resource represents a URL that was crawled during a
@@ -273,9 +273,9 @@ type CrawledUrl struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CrawledUrl) MarshalJSON() ([]byte, error) {
+func (s CrawledUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod CrawledUrl
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomAccount: Describes authentication configuration that uses a custom
@@ -302,9 +302,9 @@ type CustomAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomAccount) MarshalJSON() ([]byte, error) {
+func (s CustomAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -393,9 +393,9 @@ type Finding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Finding) MarshalJSON() ([]byte, error) {
+func (s Finding) MarshalJSON() ([]byte, error) {
 	type NoMethod Finding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FindingTypeStats: A FindingTypeStats resource represents stats regarding a
@@ -418,9 +418,9 @@ type FindingTypeStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FindingTypeStats) MarshalJSON() ([]byte, error) {
+func (s FindingTypeStats) MarshalJSON() ([]byte, error) {
 	type NoMethod FindingTypeStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Form: ! Information about a vulnerability with an HTML.
@@ -442,9 +442,9 @@ type Form struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Form) MarshalJSON() ([]byte, error) {
+func (s Form) MarshalJSON() ([]byte, error) {
 	type NoMethod Form
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAccount: Describes authentication configuration that uses a Google
@@ -469,9 +469,9 @@ type GoogleAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAccount) MarshalJSON() ([]byte, error) {
+func (s GoogleAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Header: Describes a HTTP Header.
@@ -493,9 +493,9 @@ type Header struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Header) MarshalJSON() ([]byte, error) {
+func (s Header) MarshalJSON() ([]byte, error) {
 	type NoMethod Header
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IapCredential: Describes authentication configuration for
@@ -518,9 +518,9 @@ type IapCredential struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IapCredential) MarshalJSON() ([]byte, error) {
+func (s IapCredential) MarshalJSON() ([]byte, error) {
 	type NoMethod IapCredential
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IapTestServiceAccountInfo: Describes authentication configuration when
@@ -543,9 +543,9 @@ type IapTestServiceAccountInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IapTestServiceAccountInfo) MarshalJSON() ([]byte, error) {
+func (s IapTestServiceAccountInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod IapTestServiceAccountInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCrawledUrlsResponse: Response for the `ListCrawledUrls` method.
@@ -571,9 +571,9 @@ type ListCrawledUrlsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCrawledUrlsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCrawledUrlsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCrawledUrlsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListFindingTypeStatsResponse: Response for the `ListFindingTypeStats`
@@ -597,9 +597,9 @@ type ListFindingTypeStatsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListFindingTypeStatsResponse) MarshalJSON() ([]byte, error) {
+func (s ListFindingTypeStatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFindingTypeStatsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListFindingsResponse: Response for the `ListFindings` method.
@@ -625,9 +625,9 @@ type ListFindingsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListFindingsResponse) MarshalJSON() ([]byte, error) {
+func (s ListFindingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFindingsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListScanConfigsResponse: Response for the `ListScanConfigs` method.
@@ -653,9 +653,9 @@ type ListScanConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListScanConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s ListScanConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListScanConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListScanRunsResponse: Response for the `ListScanRuns` method.
@@ -681,9 +681,9 @@ type ListScanRunsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListScanRunsResponse) MarshalJSON() ([]byte, error) {
+func (s ListScanRunsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListScanRunsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OutdatedLibrary: Information reported for an outdated library.
@@ -708,9 +708,9 @@ type OutdatedLibrary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OutdatedLibrary) MarshalJSON() ([]byte, error) {
+func (s OutdatedLibrary) MarshalJSON() ([]byte, error) {
 	type NoMethod OutdatedLibrary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScanConfig: A ScanConfig resource contains the configurations to launch a
@@ -804,9 +804,9 @@ type ScanConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScanConfig) MarshalJSON() ([]byte, error) {
+func (s ScanConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ScanConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScanConfigError: Defines a custom error message used by CreateScanConfig and
@@ -914,9 +914,9 @@ type ScanConfigError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScanConfigError) MarshalJSON() ([]byte, error) {
+func (s ScanConfigError) MarshalJSON() ([]byte, error) {
 	type NoMethod ScanConfigError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScanRun: A ScanRun is a output-only resource representing an actual run of
@@ -987,9 +987,9 @@ type ScanRun struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScanRun) MarshalJSON() ([]byte, error) {
+func (s ScanRun) MarshalJSON() ([]byte, error) {
 	type NoMethod ScanRun
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScanRunErrorTrace: Output only. Defines an error trace message for a
@@ -1039,9 +1039,9 @@ type ScanRunErrorTrace struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScanRunErrorTrace) MarshalJSON() ([]byte, error) {
+func (s ScanRunErrorTrace) MarshalJSON() ([]byte, error) {
 	type NoMethod ScanRunErrorTrace
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScanRunWarningTrace: Output only. Defines a warning trace message for
@@ -1078,9 +1078,9 @@ type ScanRunWarningTrace struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScanRunWarningTrace) MarshalJSON() ([]byte, error) {
+func (s ScanRunWarningTrace) MarshalJSON() ([]byte, error) {
 	type NoMethod ScanRunWarningTrace
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Schedule: Scan schedule configuration.
@@ -1106,9 +1106,9 @@ type Schedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Schedule) MarshalJSON() ([]byte, error) {
+func (s Schedule) MarshalJSON() ([]byte, error) {
 	type NoMethod Schedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartScanRunRequest: Request for the `StartScanRun` method.
@@ -1139,9 +1139,9 @@ type ViolatingResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ViolatingResource) MarshalJSON() ([]byte, error) {
+func (s ViolatingResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ViolatingResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VulnerableHeaders: Information about vulnerable or missing HTTP Headers.
@@ -1163,9 +1163,9 @@ type VulnerableHeaders struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VulnerableHeaders) MarshalJSON() ([]byte, error) {
+func (s VulnerableHeaders) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerableHeaders
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VulnerableParameters: Information about vulnerable request parameters.
@@ -1185,9 +1185,9 @@ type VulnerableParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VulnerableParameters) MarshalJSON() ([]byte, error) {
+func (s VulnerableParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerableParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Xss: Information reported for an XSS.
@@ -1209,9 +1209,9 @@ type Xss struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Xss) MarshalJSON() ([]byte, error) {
+func (s Xss) MarshalJSON() ([]byte, error) {
 	type NoMethod Xss
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Xxe: Information reported for an XXE.
@@ -1239,9 +1239,9 @@ type Xxe struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Xxe) MarshalJSON() ([]byte, error) {
+func (s Xxe) MarshalJSON() ([]byte, error) {
 	type NoMethod Xxe
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsScanConfigsCreateCall struct {

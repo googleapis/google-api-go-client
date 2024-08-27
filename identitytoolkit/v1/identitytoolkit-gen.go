@@ -279,9 +279,9 @@ type GoogleCloudIdentitytoolkitV1Argon2Parameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1Argon2Parameters) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1Argon2Parameters) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1Argon2Parameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1AutoRetrievalInfo: The information required to
@@ -303,9 +303,9 @@ type GoogleCloudIdentitytoolkitV1AutoRetrievalInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1AutoRetrievalInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1AutoRetrievalInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1AutoRetrievalInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1BatchDeleteAccountsRequest: Request message for
@@ -334,9 +334,9 @@ type GoogleCloudIdentitytoolkitV1BatchDeleteAccountsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1BatchDeleteAccountsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1BatchDeleteAccountsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1BatchDeleteAccountsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1BatchDeleteAccountsResponse: Response message to
@@ -360,9 +360,9 @@ type GoogleCloudIdentitytoolkitV1BatchDeleteAccountsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1BatchDeleteAccountsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1BatchDeleteAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1BatchDeleteAccountsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1BatchDeleteErrorInfo: Error info for account
@@ -387,9 +387,9 @@ type GoogleCloudIdentitytoolkitV1BatchDeleteErrorInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1BatchDeleteErrorInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1BatchDeleteErrorInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1BatchDeleteErrorInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1CreateAuthUriRequest: Request message for
@@ -459,9 +459,9 @@ type GoogleCloudIdentitytoolkitV1CreateAuthUriRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1CreateAuthUriRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1CreateAuthUriRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1CreateAuthUriRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1CreateAuthUriResponse: Response message for
@@ -511,9 +511,9 @@ type GoogleCloudIdentitytoolkitV1CreateAuthUriResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1CreateAuthUriResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1CreateAuthUriResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1CreateAuthUriResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1CreateSessionCookieRequest: Request message for
@@ -541,9 +541,9 @@ type GoogleCloudIdentitytoolkitV1CreateSessionCookieRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1CreateSessionCookieRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1CreateSessionCookieRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1CreateSessionCookieRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1CreateSessionCookieResponse: Response message
@@ -569,9 +569,9 @@ type GoogleCloudIdentitytoolkitV1CreateSessionCookieResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1CreateSessionCookieResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1CreateSessionCookieResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1CreateSessionCookieResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1DeleteAccountRequest: Request message for
@@ -611,9 +611,9 @@ type GoogleCloudIdentitytoolkitV1DeleteAccountRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1DeleteAccountRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1DeleteAccountRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1DeleteAccountRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1DeleteAccountResponse: Response message for
@@ -636,9 +636,9 @@ type GoogleCloudIdentitytoolkitV1DeleteAccountResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1DeleteAccountResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1DeleteAccountResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1DeleteAccountResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1DownloadAccountResponse: Response message for
@@ -668,9 +668,9 @@ type GoogleCloudIdentitytoolkitV1DownloadAccountResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1DownloadAccountResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1DownloadAccountResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1DownloadAccountResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1EmailInfo: Information about email MFA.
@@ -690,9 +690,9 @@ type GoogleCloudIdentitytoolkitV1EmailInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1EmailInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1EmailInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1EmailInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1EmailTemplate: Email template
@@ -737,9 +737,9 @@ type GoogleCloudIdentitytoolkitV1EmailTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1EmailTemplate) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1EmailTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1EmailTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1ErrorInfo: Error information explaining why an
@@ -762,9 +762,9 @@ type GoogleCloudIdentitytoolkitV1ErrorInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1ErrorInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1ErrorInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1ErrorInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1FederatedUserIdentifier: Federated user
@@ -793,9 +793,9 @@ type GoogleCloudIdentitytoolkitV1FederatedUserIdentifier struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1FederatedUserIdentifier) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1FederatedUserIdentifier) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1FederatedUserIdentifier
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1GetAccountInfoRequest: Request message for
@@ -853,9 +853,9 @@ type GoogleCloudIdentitytoolkitV1GetAccountInfoRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1GetAccountInfoRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1GetAccountInfoRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1GetAccountInfoRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1GetAccountInfoResponse: Response message for
@@ -881,9 +881,9 @@ type GoogleCloudIdentitytoolkitV1GetAccountInfoResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1GetAccountInfoResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1GetAccountInfoResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1GetAccountInfoResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1GetOobCodeRequest: Request message for
@@ -1011,9 +1011,9 @@ type GoogleCloudIdentitytoolkitV1GetOobCodeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1GetOobCodeRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1GetOobCodeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1GetOobCodeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1GetOobCodeResponse: Response message for
@@ -1045,9 +1045,9 @@ type GoogleCloudIdentitytoolkitV1GetOobCodeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1GetOobCodeResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1GetOobCodeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1GetOobCodeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1GetProjectConfigResponse: Response message for
@@ -1108,9 +1108,9 @@ type GoogleCloudIdentitytoolkitV1GetProjectConfigResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1GetProjectConfigResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1GetProjectConfigResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1GetProjectConfigResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1GetRecaptchaParamResponse: Response message for
@@ -1140,9 +1140,9 @@ type GoogleCloudIdentitytoolkitV1GetRecaptchaParamResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1GetRecaptchaParamResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1GetRecaptchaParamResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1GetRecaptchaParamResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1GetSessionCookiePublicKeysResponse: Response
@@ -1167,9 +1167,9 @@ type GoogleCloudIdentitytoolkitV1GetSessionCookiePublicKeysResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1GetSessionCookiePublicKeysResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1GetSessionCookiePublicKeysResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1GetSessionCookiePublicKeysResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1IdpConfig: Config of an identity provider.
@@ -1214,9 +1214,9 @@ type GoogleCloudIdentitytoolkitV1IdpConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1IdpConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1IdpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1IdpConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1IssueSamlResponseRequest: Request message for
@@ -1247,9 +1247,9 @@ type GoogleCloudIdentitytoolkitV1IssueSamlResponseRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1IssueSamlResponseRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1IssueSamlResponseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1IssueSamlResponseRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1IssueSamlResponseResponse: Response for
@@ -1285,9 +1285,9 @@ type GoogleCloudIdentitytoolkitV1IssueSamlResponseResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1IssueSamlResponseResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1IssueSamlResponseResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1IssueSamlResponseResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1MfaEnrollment: Information on which multi-factor
@@ -1322,9 +1322,9 @@ type GoogleCloudIdentitytoolkitV1MfaEnrollment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1MfaEnrollment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1MfaEnrollment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1MfaEnrollment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudIdentitytoolkitV1MfaFactor struct {
@@ -1345,9 +1345,9 @@ type GoogleCloudIdentitytoolkitV1MfaFactor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1MfaFactor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1MfaFactor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1MfaFactor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1MfaInfo: Multi-factor authentication related
@@ -1368,9 +1368,9 @@ type GoogleCloudIdentitytoolkitV1MfaInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1MfaInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1MfaInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1MfaInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1OpenIdConnectKey: Represents a public key of the
@@ -1404,9 +1404,9 @@ type GoogleCloudIdentitytoolkitV1OpenIdConnectKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1OpenIdConnectKey) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1OpenIdConnectKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1OpenIdConnectKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1ProviderUserInfo: Information about the user as
@@ -1441,9 +1441,9 @@ type GoogleCloudIdentitytoolkitV1ProviderUserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1ProviderUserInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1ProviderUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1ProviderUserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1QueryUserInfoRequest: Request message for
@@ -1498,9 +1498,9 @@ type GoogleCloudIdentitytoolkitV1QueryUserInfoRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1QueryUserInfoRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1QueryUserInfoRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1QueryUserInfoRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1QueryUserInfoResponse: Response message for
@@ -1529,9 +1529,9 @@ type GoogleCloudIdentitytoolkitV1QueryUserInfoResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1QueryUserInfoResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1QueryUserInfoResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1QueryUserInfoResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1ResetPasswordRequest: Request message for
@@ -1571,9 +1571,9 @@ type GoogleCloudIdentitytoolkitV1ResetPasswordRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1ResetPasswordRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1ResetPasswordRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1ResetPasswordRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1ResetPasswordResponse: Response message for
@@ -1614,9 +1614,9 @@ type GoogleCloudIdentitytoolkitV1ResetPasswordResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1ResetPasswordResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1ResetPasswordResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1ResetPasswordResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SendVerificationCodeRequest: Request message for
@@ -1682,9 +1682,9 @@ type GoogleCloudIdentitytoolkitV1SendVerificationCodeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SendVerificationCodeRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SendVerificationCodeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SendVerificationCodeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SendVerificationCodeResponse: Response message
@@ -1709,9 +1709,9 @@ type GoogleCloudIdentitytoolkitV1SendVerificationCodeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SendVerificationCodeResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SendVerificationCodeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SendVerificationCodeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SetAccountInfoRequest: Request message for
@@ -1831,9 +1831,9 @@ type GoogleCloudIdentitytoolkitV1SetAccountInfoRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SetAccountInfoRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SetAccountInfoRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SetAccountInfoRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SetAccountInfoResponse: Response message for
@@ -1881,9 +1881,9 @@ type GoogleCloudIdentitytoolkitV1SetAccountInfoResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SetAccountInfoResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SetAccountInfoResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SetAccountInfoResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SignInWithCustomTokenRequest: Request message
@@ -1915,9 +1915,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithCustomTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SignInWithCustomTokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SignInWithCustomTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SignInWithCustomTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SignInWithCustomTokenResponse: Response message
@@ -1948,9 +1948,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithCustomTokenResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SignInWithCustomTokenResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SignInWithCustomTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SignInWithCustomTokenResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SignInWithEmailLinkRequest: Request message for
@@ -1983,9 +1983,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithEmailLinkRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SignInWithEmailLinkRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SignInWithEmailLinkRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SignInWithEmailLinkRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SignInWithEmailLinkResponse: Response message
@@ -2027,9 +2027,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithEmailLinkResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SignInWithEmailLinkResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SignInWithEmailLinkResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SignInWithEmailLinkResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SignInWithGameCenterRequest: Request message for
@@ -2078,9 +2078,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithGameCenterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SignInWithGameCenterRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SignInWithGameCenterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SignInWithGameCenterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SignInWithGameCenterResponse: Response message
@@ -2126,9 +2126,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithGameCenterResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SignInWithGameCenterResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SignInWithGameCenterResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SignInWithGameCenterResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SignInWithIdpRequest: Request message for
@@ -2207,9 +2207,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithIdpRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SignInWithIdpRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SignInWithIdpRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SignInWithIdpRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SignInWithIdpResponse: Response message for
@@ -2339,9 +2339,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithIdpResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SignInWithIdpResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SignInWithIdpResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SignInWithIdpResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SignInWithPasswordRequest: Request message for
@@ -2399,9 +2399,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithPasswordRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SignInWithPasswordRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SignInWithPasswordRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SignInWithPasswordRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SignInWithPasswordResponse: Response message for
@@ -2456,9 +2456,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithPasswordResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SignInWithPasswordResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SignInWithPasswordResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SignInWithPasswordResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SignInWithPhoneNumberRequest: Request message
@@ -2511,9 +2511,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithPhoneNumberRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SignInWithPhoneNumberRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SignInWithPhoneNumberRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SignInWithPhoneNumberRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SignInWithPhoneNumberResponse: Response message
@@ -2564,9 +2564,9 @@ type GoogleCloudIdentitytoolkitV1SignInWithPhoneNumberResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SignInWithPhoneNumberResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SignInWithPhoneNumberResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SignInWithPhoneNumberResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SignUpRequest: Request message for SignUp.
@@ -2654,9 +2654,9 @@ type GoogleCloudIdentitytoolkitV1SignUpRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SignUpRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SignUpRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SignUpRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SignUpResponse: Response message for SignUp.
@@ -2692,9 +2692,9 @@ type GoogleCloudIdentitytoolkitV1SignUpResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SignUpResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SignUpResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SignUpResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1SqlExpression: Query conditions used to filter
@@ -2728,9 +2728,9 @@ type GoogleCloudIdentitytoolkitV1SqlExpression struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1SqlExpression) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1SqlExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1SqlExpression
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1TotpInfo: Information about TOTP MFA.
@@ -2818,9 +2818,9 @@ type GoogleCloudIdentitytoolkitV1UploadAccountRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1UploadAccountRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1UploadAccountRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1UploadAccountRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1UploadAccountResponse: Response message for
@@ -2845,9 +2845,9 @@ type GoogleCloudIdentitytoolkitV1UploadAccountResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1UploadAccountResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1UploadAccountResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1UploadAccountResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1UserInfo: An Identity Platform account's
@@ -2956,9 +2956,9 @@ type GoogleCloudIdentitytoolkitV1UserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1UserInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1UserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1UserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudIdentitytoolkitV1UserInfo) UnmarshalJSON(data []byte) error {
@@ -3005,9 +3005,9 @@ type GoogleCloudIdentitytoolkitV1UserNotification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1UserNotification) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1UserNotification) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1UserNotification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1VerifyIosClientRequest: Request message for
@@ -3032,9 +3032,9 @@ type GoogleCloudIdentitytoolkitV1VerifyIosClientRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1VerifyIosClientRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1VerifyIosClientRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1VerifyIosClientRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudIdentitytoolkitV1VerifyIosClientResponse: Response message for
@@ -3061,9 +3061,9 @@ type GoogleCloudIdentitytoolkitV1VerifyIosClientResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudIdentitytoolkitV1VerifyIosClientResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudIdentitytoolkitV1VerifyIosClientResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudIdentitytoolkitV1VerifyIosClientResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsCreateAuthUriCall struct {

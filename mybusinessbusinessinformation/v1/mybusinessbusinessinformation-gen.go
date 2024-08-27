@@ -254,9 +254,9 @@ type AdWordsLocationExtensions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdWordsLocationExtensions) MarshalJSON() ([]byte, error) {
+func (s AdWordsLocationExtensions) MarshalJSON() ([]byte, error) {
 	type NoMethod AdWordsLocationExtensions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Attribute: A location attribute. Attributes provide additional information
@@ -303,9 +303,9 @@ type Attribute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Attribute) MarshalJSON() ([]byte, error) {
+func (s Attribute) MarshalJSON() ([]byte, error) {
 	type NoMethod Attribute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AttributeMetadata: Metadata for an attribute. Contains display information
@@ -359,9 +359,9 @@ type AttributeMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttributeMetadata) MarshalJSON() ([]byte, error) {
+func (s AttributeMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod AttributeMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AttributeValueMetadata: Metadata for supported attribute values.
@@ -386,9 +386,9 @@ type AttributeValueMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttributeValueMetadata) MarshalJSON() ([]byte, error) {
+func (s AttributeValueMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod AttributeValueMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Attributes: A container for all the attributes for a given location.
@@ -414,9 +414,9 @@ type Attributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Attributes) MarshalJSON() ([]byte, error) {
+func (s Attributes) MarshalJSON() ([]byte, error) {
 	type NoMethod Attributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchGetCategoriesResponse: Response message for
@@ -441,9 +441,9 @@ type BatchGetCategoriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchGetCategoriesResponse) MarshalJSON() ([]byte, error) {
+func (s BatchGetCategoriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetCategoriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BusinessHours: Represents the time periods that this location is open for
@@ -466,9 +466,9 @@ type BusinessHours struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BusinessHours) MarshalJSON() ([]byte, error) {
+func (s BusinessHours) MarshalJSON() ([]byte, error) {
 	type NoMethod BusinessHours
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Categories: A collection of categories that describes the business. During
@@ -498,9 +498,9 @@ type Categories struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Categories) MarshalJSON() ([]byte, error) {
+func (s Categories) MarshalJSON() ([]byte, error) {
 	type NoMethod Categories
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Category: A category describing what this business is (not what it does).
@@ -534,9 +534,9 @@ type Category struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Category) MarshalJSON() ([]byte, error) {
+func (s Category) MarshalJSON() ([]byte, error) {
 	type NoMethod Category
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Chain: A chain is a brand that your business's locations can be affiliated
@@ -567,9 +567,9 @@ type Chain struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Chain) MarshalJSON() ([]byte, error) {
+func (s Chain) MarshalJSON() ([]byte, error) {
 	type NoMethod Chain
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChainName: Name to be used when displaying the chain.
@@ -591,9 +591,9 @@ type ChainName struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChainName) MarshalJSON() ([]byte, error) {
+func (s ChainName) MarshalJSON() ([]byte, error) {
 	type NoMethod ChainName
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChainUri: Url to be used when displaying the chain.
@@ -613,9 +613,9 @@ type ChainUri struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChainUri) MarshalJSON() ([]byte, error) {
+func (s ChainUri) MarshalJSON() ([]byte, error) {
 	type NoMethod ChainUri
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a birthday. The
@@ -651,9 +651,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -692,9 +692,9 @@ type FreeFormServiceItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FreeFormServiceItem) MarshalJSON() ([]byte, error) {
+func (s FreeFormServiceItem) MarshalJSON() ([]byte, error) {
 	type NoMethod FreeFormServiceItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLocation: Represents a Location that is present on Google. This can be
@@ -724,9 +724,9 @@ type GoogleLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLocation) MarshalJSON() ([]byte, error) {
+func (s GoogleLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleUpdatedLocation: Represents a location that was modified by Google.
@@ -754,9 +754,9 @@ type GoogleUpdatedLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleUpdatedLocation) MarshalJSON() ([]byte, error) {
+func (s GoogleUpdatedLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleUpdatedLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Label: Label to be used when displaying the price list, section, or item.
@@ -781,9 +781,9 @@ type Label struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Label) MarshalJSON() ([]byte, error) {
+func (s Label) MarshalJSON() ([]byte, error) {
 	type NoMethod Label
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LatLng: An object that represents a latitude/longitude pair. This is
@@ -809,9 +809,9 @@ type LatLng struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LatLng) MarshalJSON() ([]byte, error) {
+func (s LatLng) MarshalJSON() ([]byte, error) {
 	type NoMethod LatLng
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LatLng) UnmarshalJSON(data []byte) error {
@@ -857,9 +857,9 @@ type ListAttributeMetadataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAttributeMetadataResponse) MarshalJSON() ([]byte, error) {
+func (s ListAttributeMetadataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAttributeMetadataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCategoriesResponse: Response message for
@@ -887,9 +887,9 @@ type ListCategoriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCategoriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListCategoriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCategoriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: Response message for Locations.ListLocations.
@@ -921,9 +921,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A location. See the [help center article]
@@ -1029,9 +1029,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Metadata: Additional non-user-editable information about the location.
@@ -1095,9 +1095,9 @@ type Metadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Metadata) MarshalJSON() ([]byte, error) {
+func (s Metadata) MarshalJSON() ([]byte, error) {
 	type NoMethod Metadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Money: Represents an amount of money with its currency type.
@@ -1126,9 +1126,9 @@ type Money struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Money) MarshalJSON() ([]byte, error) {
+func (s Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MoreHours: The time periods during which a location is open for certain
@@ -1155,9 +1155,9 @@ type MoreHours struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MoreHours) MarshalJSON() ([]byte, error) {
+func (s MoreHours) MarshalJSON() ([]byte, error) {
 	type NoMethod MoreHours
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MoreHoursType: More hours types that a business can offers, in addition to
@@ -1185,9 +1185,9 @@ type MoreHoursType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MoreHoursType) MarshalJSON() ([]byte, error) {
+func (s MoreHoursType) MarshalJSON() ([]byte, error) {
 	type NoMethod MoreHoursType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OpenInfo: Information related to the opening state of the business.
@@ -1224,9 +1224,9 @@ type OpenInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OpenInfo) MarshalJSON() ([]byte, error) {
+func (s OpenInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod OpenInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PhoneNumbers: A collection of phone numbers for the business. During
@@ -1256,9 +1256,9 @@ type PhoneNumbers struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PhoneNumbers) MarshalJSON() ([]byte, error) {
+func (s PhoneNumbers) MarshalJSON() ([]byte, error) {
 	type NoMethod PhoneNumbers
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlaceInfo: Defines an area that's represented by a place ID.
@@ -1282,9 +1282,9 @@ type PlaceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlaceInfo) MarshalJSON() ([]byte, error) {
+func (s PlaceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PlaceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Places: Defines the union of areas represented by a set of places.
@@ -1305,9 +1305,9 @@ type Places struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Places) MarshalJSON() ([]byte, error) {
+func (s Places) MarshalJSON() ([]byte, error) {
 	type NoMethod Places
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PostalAddress: Represents a postal address, e.g. for postal delivery or
@@ -1404,9 +1404,9 @@ type PostalAddress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostalAddress) MarshalJSON() ([]byte, error) {
+func (s PostalAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod PostalAddress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Profile: All information pertaining to the location's profile.
@@ -1427,9 +1427,9 @@ type Profile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Profile) MarshalJSON() ([]byte, error) {
+func (s Profile) MarshalJSON() ([]byte, error) {
 	type NoMethod Profile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RelationshipData: Information of all parent and children locations related
@@ -1456,9 +1456,9 @@ type RelationshipData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RelationshipData) MarshalJSON() ([]byte, error) {
+func (s RelationshipData) MarshalJSON() ([]byte, error) {
 	type NoMethod RelationshipData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RelevantLocation: Information about another location that is related to
@@ -1494,9 +1494,9 @@ type RelevantLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RelevantLocation) MarshalJSON() ([]byte, error) {
+func (s RelevantLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod RelevantLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RepeatedEnumAttributeValue: Values for an attribute with a `value_type` of
@@ -1521,9 +1521,9 @@ type RepeatedEnumAttributeValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RepeatedEnumAttributeValue) MarshalJSON() ([]byte, error) {
+func (s RepeatedEnumAttributeValue) MarshalJSON() ([]byte, error) {
 	type NoMethod RepeatedEnumAttributeValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchChainsResponse: Response message for Locations.SearchChains.
@@ -1548,9 +1548,9 @@ type SearchChainsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchChainsResponse) MarshalJSON() ([]byte, error) {
+func (s SearchChainsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchChainsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchGoogleLocationsRequest: Request message for
@@ -1580,9 +1580,9 @@ type SearchGoogleLocationsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchGoogleLocationsRequest) MarshalJSON() ([]byte, error) {
+func (s SearchGoogleLocationsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchGoogleLocationsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchGoogleLocationsResponse: Response message for
@@ -1607,9 +1607,9 @@ type SearchGoogleLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchGoogleLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s SearchGoogleLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchGoogleLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceAreaBusiness: Service area businesses provide their service at the
@@ -1655,9 +1655,9 @@ type ServiceAreaBusiness struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceAreaBusiness) MarshalJSON() ([]byte, error) {
+func (s ServiceAreaBusiness) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceAreaBusiness
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceItem: A message that describes a single service item. It is used to
@@ -1687,9 +1687,9 @@ type ServiceItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceItem) MarshalJSON() ([]byte, error) {
+func (s ServiceItem) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceType: A message describing a service type that the business offers.
@@ -1713,9 +1713,9 @@ type ServiceType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceType) MarshalJSON() ([]byte, error) {
+func (s ServiceType) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpecialHourPeriod: Represents a single time period when a location's
@@ -1764,9 +1764,9 @@ type SpecialHourPeriod struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpecialHourPeriod) MarshalJSON() ([]byte, error) {
+func (s SpecialHourPeriod) MarshalJSON() ([]byte, error) {
 	type NoMethod SpecialHourPeriod
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpecialHours: Represents a set of time periods when a location's operational
@@ -1788,9 +1788,9 @@ type SpecialHours struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpecialHours) MarshalJSON() ([]byte, error) {
+func (s SpecialHours) MarshalJSON() ([]byte, error) {
 	type NoMethod SpecialHours
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StructuredServiceItem: Represents a structured service offered by the
@@ -1816,9 +1816,9 @@ type StructuredServiceItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StructuredServiceItem) MarshalJSON() ([]byte, error) {
+func (s StructuredServiceItem) MarshalJSON() ([]byte, error) {
 	type NoMethod StructuredServiceItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeOfDay: Represents a time of day. The date and time zone are either not
@@ -1849,9 +1849,9 @@ type TimeOfDay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeOfDay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimePeriod: Represents a span of time that the business is open, starting on
@@ -1902,9 +1902,9 @@ type TimePeriod struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimePeriod) MarshalJSON() ([]byte, error) {
+func (s TimePeriod) MarshalJSON() ([]byte, error) {
 	type NoMethod TimePeriod
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UriAttributeValue: Values for an attribute with a `value_type` of URL.
@@ -1924,9 +1924,9 @@ type UriAttributeValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UriAttributeValue) MarshalJSON() ([]byte, error) {
+func (s UriAttributeValue) MarshalJSON() ([]byte, error) {
 	type NoMethod UriAttributeValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsLocationsCreateCall struct {

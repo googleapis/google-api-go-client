@@ -585,7 +585,7 @@
         "enrollmentTokens": {
           "methods": {
             "create": {
-              "description": "Creates an enrollment token for a given enterprise. It's up to the caller's responsibility to manage the lifecycle of newly created tokens and deleting them when they're not intended to be used anymore. Once an enrollment token has been created, it's not possible to retrieve the token's content anymore using AM API. It is recommended for EMMs to securely store the token if it's intended to be reused.",
+              "description": "Creates an enrollment token for a given enterprise. It's up to the caller's responsibility to manage the lifecycle of newly created tokens and deleting them when they're not intended to be used anymore.",
               "flatPath": "v1/enterprises/{enterprisesId}/enrollmentTokens",
               "httpMethod": "POST",
               "id": "androidmanagement.enterprises.enrollmentTokens.create",
@@ -638,7 +638,7 @@
               ]
             },
             "get": {
-              "description": "Gets an active, unexpired enrollment token. Only a partial view of EnrollmentToken is returned: all the fields but name and expiration_timestamp are empty. This method is meant to help manage active enrollment tokens lifecycle. For security reasons, it's recommended to delete active enrollment tokens as soon as they're not intended to be used anymore.",
+              "description": "Gets an active, unexpired enrollment token. A partial view of the enrollment token is returned. Only the following fields are populated: name, expirationTimestamp, allowPersonalUsage, value, qrCode. This method is meant to help manage active enrollment tokens lifecycle. For security reasons, it's recommended to delete active enrollment tokens as soon as they're not intended to be used anymore.",
               "flatPath": "v1/enterprises/{enterprisesId}/enrollmentTokens/{enrollmentTokensId}",
               "httpMethod": "GET",
               "id": "androidmanagement.enterprises.enrollmentTokens.get",
@@ -663,7 +663,7 @@
               ]
             },
             "list": {
-              "description": "Lists active, unexpired enrollment tokens for a given enterprise. The list items contain only a partial view of EnrollmentToken: all the fields but name and expiration_timestamp are empty. This method is meant to help manage active enrollment tokens lifecycle. For security reasons, it's recommended to delete active enrollment tokens as soon as they're not intended to be used anymore.",
+              "description": "Lists active, unexpired enrollment tokens for a given enterprise. The list items contain only a partial view of EnrollmentToken object. Only the following fields are populated: name, expirationTimestamp, allowPersonalUsage, value, qrCode. This method is meant to help manage active enrollment tokens lifecycle. For security reasons, it's recommended to delete active enrollment tokens as soon as they're not intended to be used anymore.",
               "flatPath": "v1/enterprises/{enterprisesId}/enrollmentTokens",
               "httpMethod": "GET",
               "id": "androidmanagement.enterprises.enrollmentTokens.list",
@@ -1168,7 +1168,7 @@
       }
     }
   },
-  "revision": "20240516",
+  "revision": "20240821",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdbShellCommandEvent": {
@@ -1193,7 +1193,7 @@
       "id": "AdvancedSecurityOverrides",
       "properties": {
         "commonCriteriaMode": {
-          "description": "Controls Common Criteria Mode—security standards defined in the Common Criteria for Information Technology Security Evaluation (https://www.commoncriteriaportal.org/) (CC). Enabling Common Criteria Mode increases certain security components on a device, including AES-GCM encryption of Bluetooth Long Term Keys, and Wi-Fi configuration stores.Warning: Common Criteria Mode enforces a strict security model typically only required for IT products used in national security systems and other highly sensitive organizations. Standard device use may be affected. Only enabled if required.",
+          "description": "Controls Common Criteria Mode—security standards defined in the Common Criteria for Information Technology Security Evaluation (https://www.commoncriteriaportal.org/) (CC). Enabling Common Criteria Mode increases certain security components on a device, including AES-GCM encryption of Bluetooth Long Term Keys, and Wi-Fi configuration stores.Common Criteria Mode is only supported on company-owned devices running Android 11 or above.Warning: Common Criteria Mode enforces a strict security model typically only required for IT products used in national security systems and other highly sensitive organizations. Standard device use may be affected. Only enabled if required.",
           "enum": [
             "COMMON_CRITERIA_MODE_UNSPECIFIED",
             "COMMON_CRITERIA_MODE_DISABLED",
@@ -1659,7 +1659,7 @@
             "Unspecified. Defaults to AUTO_UPDATE_DEFAULT.",
             "The default update mode.The app is automatically updated with low priority to minimize the impact on the user.The app is updated when all of the following constraints are met: The device is not actively used. The device is connected to an unmetered network. The device is charging. The app to be updated is not running in the foreground.The device is notified about a new update within 24 hours after it is published by the developer, after which the app is updated the next time the constraints above are met.",
             "The app is not automatically updated for a maximum of 90 days after the app becomes out of date.90 days after the app becomes out of date, the latest available version is installed automatically with low priority (see AUTO_UPDATE_DEFAULT). After the app is updated it is not automatically updated again until 90 days after it becomes out of date again.The user can still manually update the app from the Play Store at any time.",
-            "The app is updated as soon as possible. No constraints are applied.The device is notified as soon as possible about a new update after it becomes available."
+            "The app is updated as soon as possible. No constraints are applied.The device is notified as soon as possible about a new update after it becomes available.*NOTE:* Updates to apps with larger deployments across Android's ecosystem can take up to 24h."
           ],
           "type": "string"
         },
@@ -1810,6 +1810,20 @@
             "$ref": "PermissionGrant"
           },
           "type": "array"
+        },
+        "userControlSettings": {
+          "description": "Optional. Specifies whether user control is permitted for the app. User control includes user actions like force-stopping and clearing app data. Supported on Android 11 and above.",
+          "enum": [
+            "USER_CONTROL_SETTINGS_UNSPECIFIED",
+            "USER_CONTROL_ALLOWED",
+            "USER_CONTROL_DISALLOWED"
+          ],
+          "enumDescriptions": [
+            "Uses the default behaviour of the app to determine if user control is allowed or disallowed. For most apps, user control is allowed by default, but for some critical apps such as companion apps (extensionConfig set to true), kiosk apps and other critical system apps, user control is disallowed.",
+            "User control is allowed for the app. Kiosk apps can use this to allow user control.",
+            "User control is disallowed for the app. API_LEVEL is reported if the Android version is less than 11."
+          ],
+          "type": "string"
         },
         "workProfileWidgets": {
           "description": "Specifies whether the app installed in the work profile is allowed to add widgets to the home screen.",
@@ -2492,7 +2506,7 @@
         },
         "commonCriteriaModeInfo": {
           "$ref": "CommonCriteriaModeInfo",
-          "description": "Information about Common Criteria Mode—security standards defined in the Common Criteria for Information Technology Security Evaluation (https://www.commoncriteriaportal.org/) (CC).This information is only available if statusReportingSettings.commonCriteriaModeEnabled is true in the device's policy."
+          "description": "Information about Common Criteria Mode—security standards defined in the Common Criteria for Information Technology Security Evaluation (https://www.commoncriteriaportal.org/) (CC).This information is only available if statusReportingSettings.commonCriteriaModeEnabled is true in the device's policy the device is company-owned."
         },
         "deviceSettings": {
           "$ref": "DeviceSettings",
@@ -2943,6 +2957,21 @@
       },
       "type": "object"
     },
+    "DisplaySettings": {
+      "description": "Controls for the display settings.",
+      "id": "DisplaySettings",
+      "properties": {
+        "screenBrightnessSettings": {
+          "$ref": "ScreenBrightnessSettings",
+          "description": "Optional. Controls the screen brightness settings."
+        },
+        "screenTimeoutSettings": {
+          "$ref": "ScreenTimeoutSettings",
+          "description": "Optional. Controls the screen timeout settings."
+        }
+      },
+      "type": "object"
+    },
     "DnsEvent": {
       "description": "A DNS lookup event was initiated through the standard network stack.",
       "id": "DnsEvent",
@@ -3012,12 +3041,14 @@
           "enum": [
             "ALLOW_PERSONAL_USAGE_UNSPECIFIED",
             "PERSONAL_USAGE_ALLOWED",
-            "PERSONAL_USAGE_DISALLOWED"
+            "PERSONAL_USAGE_DISALLOWED",
+            "PERSONAL_USAGE_DISALLOWED_USERLESS"
           ],
           "enumDescriptions": [
             "Personal usage restriction is not specified",
             "Personal usage is allowed",
-            "Personal usage is disallowed"
+            "Personal usage is disallowed",
+            "Device is not associated with a single user, and thus both personal usage and corporate identity authentication are not expected."
           ],
           "type": "string"
         },
@@ -3106,6 +3137,10 @@
         "enterpriseDisplayName": {
           "description": "The name of the enterprise displayed to users. This field has a maximum length of 100 characters.",
           "type": "string"
+        },
+        "googleAuthenticationSettings": {
+          "$ref": "GoogleAuthenticationSettings",
+          "description": "Settings for Google-provided user authentication."
         },
         "logo": {
           "$ref": "ExternalData",
@@ -3207,6 +3242,28 @@
         "startDate": {
           "$ref": "Date",
           "description": "The start date (inclusive) of the freeze period. Note: year must not be set. For example, {\"month\": 1,\"date\": 30}."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleAuthenticationSettings": {
+      "description": "Contains settings for Google-provided user authentication.",
+      "id": "GoogleAuthenticationSettings",
+      "properties": {
+        "googleAuthenticationRequired": {
+          "description": "Output only. Whether users need to be authenticated by Google during the enrollment process. IT admin can specify if Google authentication is enabled for the enterprise for knowledge worker devices. This value can be set only via the Google Admin Console. Google authentication can be used with signin_url In the case where Google authentication is required and a signin_url is specified, Google authentication will be launched before signin_url.",
+          "enum": [
+            "GOOGLE_AUTHENTICATION_REQUIRED_UNSPECIFIED",
+            "NOT_REQUIRED",
+            "REQUIRED"
+          ],
+          "enumDescriptions": [
+            "This value is not used.",
+            "Google authentication is not required.",
+            "User is required to be successfully authenticated by Google."
+          ],
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -4191,9 +4248,9 @@
             "DEVICE_INCOMPATIBLE"
           ],
           "enumDescriptions": [
-            "This value is disallowed.",
+            "This value is not used.",
             "The setting is not supported in the API level of the Android version running on the device.",
-            "The management mode (profile owner, device owner, etc.) doesn't support the setting.",
+            "The management mode (such as fully managed or work profile) doesn't support the setting.",
             "The user has not taken required action to comply with the setting.",
             "The setting has an invalid value.",
             "The app required to implement the policy is not installed.",
@@ -4269,9 +4326,9 @@
             "DEVICE_INCOMPATIBLE"
           ],
           "enumDescriptions": [
-            "This value is disallowed.",
+            "This value is not used.",
             "The setting is not supported in the API level of the Android version running on the device.",
-            "The management mode (profile owner, device owner, etc.) doesn't support the setting.",
+            "The management mode (such as fully managed or work profile) doesn't support the setting.",
             "The user has not taken required action to comply with the setting.",
             "The setting has an invalid value.",
             "The app required to implement the policy is not installed.",
@@ -4935,6 +4992,10 @@
           "$ref": "DeviceRadioState",
           "description": "Covers controls for radio state such as Wi-Fi, bluetooth, and more."
         },
+        "displaySettings": {
+          "$ref": "DisplaySettings",
+          "description": "Optional. Controls for the display settings."
+        },
         "encryptionPolicy": {
           "description": "Whether encryption is enabled",
           "enum": [
@@ -5456,6 +5517,10 @@
           "format": "int32",
           "type": "integer"
         },
+        "authenticatedUserEmail": {
+          "description": "The email address of the authenticated user (only present for Google Account provisioning method).",
+          "type": "string"
+        },
         "brand": {
           "description": "The brand of the device. For example, Google.",
           "type": "string"
@@ -5563,6 +5628,60 @@
       },
       "type": "object"
     },
+    "ScreenBrightnessSettings": {
+      "description": "Controls for the screen brightness settings.",
+      "id": "ScreenBrightnessSettings",
+      "properties": {
+        "screenBrightness": {
+          "description": "Optional. The screen brightness between 1 and 255 where 1 is the lowest and 255 is the highest brightness. A value of 0 (default) means no screen brightness set. Any other value is rejected. screenBrightnessMode must be either BRIGHTNESS_AUTOMATIC or BRIGHTNESS_FIXED to set this. Supported on Android 9 and above on fully managed devices. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 9.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "screenBrightnessMode": {
+          "description": "Optional. Controls the screen brightness mode.",
+          "enum": [
+            "SCREEN_BRIGHTNESS_MODE_UNSPECIFIED",
+            "BRIGHTNESS_USER_CHOICE",
+            "BRIGHTNESS_AUTOMATIC",
+            "BRIGHTNESS_FIXED"
+          ],
+          "enumDescriptions": [
+            "Unspecified. Defaults to BRIGHTNESS_USER_CHOICE.",
+            "The user is allowed to configure the screen brightness. screenBrightness must not be set.",
+            "The screen brightness mode is automatic in which the brightness is automatically adjusted and the user is not allowed to configure the screen brightness. screenBrightness can still be set and it is taken into account while the brightness is automatically adjusted. Supported on Android 9 and above on fully managed devices. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 9.",
+            "The screen brightness mode is fixed in which the brightness is set to screenBrightness and the user is not allowed to configure the screen brightness. screenBrightness must be set. Supported on Android 9 and above on fully managed devices. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 9."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ScreenTimeoutSettings": {
+      "description": "Controls the screen timeout settings.",
+      "id": "ScreenTimeoutSettings",
+      "properties": {
+        "screenTimeout": {
+          "description": "Optional. Controls the screen timeout duration. The screen timeout duration must be greater than 0, otherwise it is rejected. Additionally, it should not be greater than maximumTimeToLock, otherwise the screen timeout is set to maximumTimeToLock and a NonComplianceDetail with INVALID_VALUE reason and SCREEN_TIMEOUT_GREATER_THAN_MAXIMUM_TIME_TO_LOCK specific reason is reported. If the screen timeout is less than a certain lower bound, it is set to the lower bound. The lower bound may vary across devices. If this is set, screenTimeoutMode must be SCREEN_TIMEOUT_ENFORCED. Supported on Android 9 and above on fully managed devices. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 9.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "screenTimeoutMode": {
+          "description": "Optional. Controls whether the user is allowed to configure the screen timeout.",
+          "enum": [
+            "SCREEN_TIMEOUT_MODE_UNSPECIFIED",
+            "SCREEN_TIMEOUT_USER_CHOICE",
+            "SCREEN_TIMEOUT_ENFORCED"
+          ],
+          "enumDescriptions": [
+            "Unspecified. Defaults to SCREEN_TIMEOUT_USER_CHOICE.",
+            "The user is allowed to configure the screen timeout. screenTimeout must not be set.",
+            "The screen timeout is set to screenTimeout and the user is not allowed to configure the timeout. screenTimeout must be set. Supported on Android 9 and above on fully managed devices. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 9."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "SecurityPosture": {
       "description": "The security posture of the device, as determined by the current device state and the policies applied.",
       "id": "SecurityPosture",
@@ -5621,12 +5740,28 @@
           "enum": [
             "ALLOW_PERSONAL_USAGE_UNSPECIFIED",
             "PERSONAL_USAGE_ALLOWED",
-            "PERSONAL_USAGE_DISALLOWED"
+            "PERSONAL_USAGE_DISALLOWED",
+            "PERSONAL_USAGE_DISALLOWED_USERLESS"
           ],
           "enumDescriptions": [
             "Personal usage restriction is not specified",
             "Personal usage is allowed",
-            "Personal usage is disallowed"
+            "Personal usage is disallowed",
+            "Device is not associated with a single user, and thus both personal usage and corporate identity authentication are not expected."
+          ],
+          "type": "string"
+        },
+        "defaultStatus": {
+          "description": "Optional. Whether the sign-in URL should be used by default for the enterprise. The SigninDetail with defaultStatus set to SIGNIN_DETAIL_IS_DEFAULT is used for Google account enrollment method. Only one of an enterprise's signinDetails can have defaultStatus set to SIGNIN_DETAIL_IS_DEFAULT. If an Enterprise has at least one signinDetails and none of them have defaultStatus set to SIGNIN_DETAIL_IS_DEFAULT then the first one from the list is selected and has set defaultStatus to SIGNIN_DETAIL_IS_DEFAULT. If no signinDetails specified for the Enterprise then the Google Account device enrollment will fail.",
+          "enum": [
+            "SIGNIN_DETAIL_DEFAULT_STATUS_UNSPECIFIED",
+            "SIGNIN_DETAIL_IS_DEFAULT",
+            "SIGNIN_DETAIL_IS_NOT_DEFAULT"
+          ],
+          "enumDescriptions": [
+            "Equivalent to SIGNIN_DETAIL_IS_NOT_DEFAULT.",
+            "The sign-in URL will be used by default for the enterprise.",
+            "The sign-in URL will not be used by default for the enterprise."
           ],
           "type": "string"
         },
@@ -5824,7 +5959,7 @@
           "type": "boolean"
         },
         "commonCriteriaModeEnabled": {
-          "description": "Whether Common Criteria Mode reporting is enabled.",
+          "description": "Whether Common Criteria Mode reporting is enabled. This is supported only on company-owned devices.",
           "type": "boolean"
         },
         "deviceSettingsEnabled": {
@@ -5986,6 +6121,11 @@
       "properties": {
         "carrierName": {
           "description": "The carrier name associated with this SIM card.",
+          "type": "string"
+        },
+        "iccId": {
+          "description": "Output only. The ICCID associated with this SIM card.",
+          "readOnly": true,
           "type": "string"
         },
         "phoneNumber": {

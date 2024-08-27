@@ -149,4 +149,5 @@ import (
 	// module resolution.
 	// See: https://github.com/googleapis/google-api-go-client/issues/2559.
 	_ "cloud.google.com/go/civil"
+	_ "google.golang.org/genproto/googleapis/type/datetime"
 )

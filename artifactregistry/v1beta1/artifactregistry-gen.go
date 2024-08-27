@@ -351,9 +351,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -408,9 +408,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // File: Files store content that is potentially associated with Packages or
@@ -446,9 +446,9 @@ type File struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *File) MarshalJSON() ([]byte, error) {
+func (s File) MarshalJSON() ([]byte, error) {
 	type NoMethod File
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Hash: A hash of file content.
@@ -475,9 +475,9 @@ type Hash struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Hash) MarshalJSON() ([]byte, error) {
+func (s Hash) MarshalJSON() ([]byte, error) {
 	type NoMethod Hash
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListFilesResponse: The response from listing files.
@@ -503,9 +503,9 @@ type ListFilesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListFilesResponse) MarshalJSON() ([]byte, error) {
+func (s ListFilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFilesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -531,9 +531,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPackagesResponse: The response from listing packages.
@@ -559,9 +559,9 @@ type ListPackagesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPackagesResponse) MarshalJSON() ([]byte, error) {
+func (s ListPackagesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPackagesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRepositoriesResponse: The response from listing repositories.
@@ -587,9 +587,9 @@ type ListRepositoriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRepositoriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListRepositoriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRepositoriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTagsResponse: The response from listing tags.
@@ -615,9 +615,9 @@ type ListTagsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTagsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTagsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTagsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVersionsResponse: The response from listing versions.
@@ -643,9 +643,9 @@ type ListVersionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVersionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -681,9 +681,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -728,9 +728,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Package: Packages are named collections of versions.
@@ -762,9 +762,9 @@ type Package struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Package) MarshalJSON() ([]byte, error) {
+func (s Package) MarshalJSON() ([]byte, error) {
 	type NoMethod Package
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -852,9 +852,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Repository: A Repository for storing artifacts with a specific format.
@@ -917,9 +917,9 @@ type Repository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Repository) MarshalJSON() ([]byte, error) {
+func (s Repository) MarshalJSON() ([]byte, error) {
 	type NoMethod Repository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -942,9 +942,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -976,9 +976,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Tag: Tags point to a version and represent an alternative name that can be
@@ -1011,9 +1011,9 @@ type Tag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Tag) MarshalJSON() ([]byte, error) {
+func (s Tag) MarshalJSON() ([]byte, error) {
 	type NoMethod Tag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -1036,9 +1036,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -1063,9 +1063,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Version: The body of a version resource. A version resource represents a
@@ -1103,9 +1103,9 @@ type Version struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Version) MarshalJSON() ([]byte, error) {
+func (s Version) MarshalJSON() ([]byte, error) {
 	type NoMethod Version
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {
@@ -2508,11 +2508,36 @@ func (r *ProjectsLocationsRepositoriesFilesService) List(parent string) *Project
 
 // Filter sets the optional parameter "filter": An expression for filtering the
 // results of the request. Filter rules are case insensitive. The fields
-// eligible for filtering are: * `name` * `owner` An example of using a filter:
-// * `name="projects/p1/locations/us-central1/repositories/repo1/files/a/b/*"
-// --> Files with an ID starting with "a/b/". *
-// `owner="projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/ve
-// rsions/1.0" --> Files owned by the version `1.0` in package `pkg1`.
+// eligible for filtering are: * `name` * `owner` * `annotations` Examples of
+// using a filter: To filter the results of your request to files with the name
+// "my_file.txt" in project my-project in the us-central region, in repository
+// my-repo, append the following filter expression to your request: *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/files/m
+// y-file.txt" You can also use wildcards to match any number of characters
+// before or after the value: *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/files/m
+// y-*" *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/files/*
+// file.txt" *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/files/*
+// file*" To filter the results of your request to files owned by the version
+// `1.0` in package `pkg1`, append the following filter expression to your
+// request: *
+// `owner="projects/my-project/locations/us-central1/repositories/my-repo/packag
+// es/my-package/versions/1.0" To filter the results of your request to files
+// with the annotation key-value pair [`external_link`:`external_link_value`],
+// append the following filter expression to your request: *
+// "annotations.external_link:external_link_value" To filter just for a
+// specific annotation key `external_link`, append the following filter
+// expression to your request: * "annotations.external_link" If the annotation
+// key or value contains special characters, you can escape them by surrounding
+// the value with backticks. For example, to filter the results of your request
+// to files with the annotation key-value pair
+// [`external.link`:`https://example.com/my-file`], append the following filter
+// expression to your request: *
+// "annotations.`external.link`:`https://example.com/my-file" You can also
+// filter with annotations with a wildcard to match any number of characters
+// before or after the value: * "annotations.*_link:`*example.com*"
 func (c *ProjectsLocationsRepositoriesFilesListCall) Filter(filter string) *ProjectsLocationsRepositoriesFilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3321,10 +3346,23 @@ func (r *ProjectsLocationsRepositoriesPackagesTagsService) List(parent string) *
 
 // Filter sets the optional parameter "filter": An expression for filtering the
 // results of the request. Filter rules are case insensitive. The fields
-// eligible for filtering are: * `version` An example of using a filter: *
-// `version="projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/
-// versions/1.0" --> Tags that are applied to the version `1.0` in package
-// `pkg1`.
+// eligible for filtering are: * `name` * `version` Examples of using a filter:
+// To filter the results of your request to tags with the name "my-tag" in
+// package "my-package" in repository "my-repo" in project "my-project" in the
+// us-central region, append the following filter expression to your request: *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/my-package/tags/my-tag" You can also use wildcards to match any number of
+// characters before or after the value: *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/my-package/tags/my*" *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/my-package/tags/*tag" *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/my-package/tags/*tag*" To filter the results of your request to tags
+// applied to the version `1.0` in package `my-package`, append the following
+// filter expression to your request: *
+// `version="projects/my-project/locations/us-central1/repositories/my-repo/pack
+// ages/my-package/versions/1.0"
 func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) Filter(filter string) *ProjectsLocationsRepositoriesPackagesTagsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

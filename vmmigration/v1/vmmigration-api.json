@@ -2220,7 +2220,7 @@
       }
     }
   },
-  "revision": "20240411",
+  "revision": "20240808",
   "rootUrl": "https://vmmigration.googleapis.com/",
   "schemas": {
     "AccessKeyCredentials": {
@@ -2329,17 +2329,20 @@
       "id": "AwsDiskDetails",
       "properties": {
         "diskNumber": {
-          "description": "The ordinal number of the disk.",
+          "description": "Output only. The ordinal number of the disk.",
           "format": "int32",
+          "readOnly": true,
           "type": "integer"
         },
         "sizeGb": {
-          "description": "Size in GB.",
+          "description": "Output only. Size in GB.",
           "format": "int64",
+          "readOnly": true,
           "type": "string"
         },
         "volumeId": {
-          "description": "AWS volume ID.",
+          "description": "Output only. AWS volume ID.",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -2428,19 +2431,21 @@
       "id": "AwsSourceVmDetails",
       "properties": {
         "committedStorageBytes": {
-          "description": "The total size of the disks being migrated in bytes.",
+          "description": "Output only. The total size of the disks being migrated in bytes.",
           "format": "int64",
+          "readOnly": true,
           "type": "string"
         },
         "disks": {
-          "description": "The disks attached to the source VM.",
+          "description": "Output only. The disks attached to the source VM.",
           "items": {
             "$ref": "AwsDiskDetails"
           },
+          "readOnly": true,
           "type": "array"
         },
         "firmware": {
-          "description": "The firmware type of the source VM.",
+          "description": "Output only. The firmware type of the source VM.",
           "enum": [
             "FIRMWARE_UNSPECIFIED",
             "EFI",
@@ -2451,6 +2456,7 @@
             "The firmware is EFI.",
             "The firmware is BIOS."
           ],
+          "readOnly": true,
           "type": "string"
         },
         "vmCapabilitiesInfo": {
@@ -2618,17 +2624,20 @@
       "id": "AzureDiskDetails",
       "properties": {
         "diskId": {
-          "description": "Azure disk ID.",
+          "description": "Output only. Azure disk ID.",
+          "readOnly": true,
           "type": "string"
         },
         "diskNumber": {
-          "description": "The ordinal number of the disk.",
+          "description": "Output only. The ordinal number of the disk.",
           "format": "int32",
+          "readOnly": true,
           "type": "integer"
         },
         "sizeGb": {
-          "description": "Size in GB.",
+          "description": "Output only. Size in GB.",
           "format": "int64",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -2692,19 +2701,21 @@
       "id": "AzureSourceVmDetails",
       "properties": {
         "committedStorageBytes": {
-          "description": "The total size of the disks being migrated in bytes.",
+          "description": "Output only. The total size of the disks being migrated in bytes.",
           "format": "int64",
+          "readOnly": true,
           "type": "string"
         },
         "disks": {
-          "description": "The disks attached to the source VM.",
+          "description": "Output only. The disks attached to the source VM.",
           "items": {
             "$ref": "AzureDiskDetails"
           },
+          "readOnly": true,
           "type": "array"
         },
         "firmware": {
-          "description": "The firmware type of the source VM.",
+          "description": "Output only. The firmware type of the source VM.",
           "enum": [
             "FIRMWARE_UNSPECIFIED",
             "EFI",
@@ -2715,6 +2726,7 @@
             "The firmware is EFI.",
             "The firmware is BIOS."
           ],
+          "readOnly": true,
           "type": "string"
         },
         "vmCapabilitiesInfo": {
@@ -2856,13 +2868,15 @@
             "COMPUTE_ENGINE_DISK_TYPE_UNSPECIFIED",
             "COMPUTE_ENGINE_DISK_TYPE_STANDARD",
             "COMPUTE_ENGINE_DISK_TYPE_SSD",
-            "COMPUTE_ENGINE_DISK_TYPE_BALANCED"
+            "COMPUTE_ENGINE_DISK_TYPE_BALANCED",
+            "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED"
           ],
           "enumDescriptions": [
             "An unspecified disk type. Will be used as STANDARD.",
             "A Standard disk type.",
             "SSD hard disk type.",
-            "An alternative to SSD persistent disks that balance performance and cost."
+            "An alternative to SSD persistent disks that balance performance and cost.",
+            "Hyperdisk balanced disk type."
           ],
           "type": "string"
         },
@@ -3095,6 +3109,20 @@
           "description": "Output only. The OS license returned from the adaptation module report.",
           "readOnly": true
         },
+        "bootConversion": {
+          "description": "Optional. By default the virtual machine will keep its existing boot option. Setting this property will trigger an internal process which will convert the virtual machine from using the existing boot option to another.",
+          "enum": [
+            "BOOT_CONVERSION_UNSPECIFIED",
+            "NONE",
+            "BIOS_TO_EFI"
+          ],
+          "enumDescriptions": [
+            "Unspecified conversion type.",
+            "No conversion.",
+            "Convert from BIOS to EFI."
+          ],
+          "type": "string"
+        },
         "bootOption": {
           "description": "Output only. The VM Boot Option, as set in the source VM.",
           "enum": [
@@ -3120,15 +3148,25 @@
             "COMPUTE_ENGINE_DISK_TYPE_UNSPECIFIED",
             "COMPUTE_ENGINE_DISK_TYPE_STANDARD",
             "COMPUTE_ENGINE_DISK_TYPE_SSD",
-            "COMPUTE_ENGINE_DISK_TYPE_BALANCED"
+            "COMPUTE_ENGINE_DISK_TYPE_BALANCED",
+            "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED"
           ],
           "enumDescriptions": [
             "An unspecified disk type. Will be used as STANDARD.",
             "A Standard disk type.",
             "SSD hard disk type.",
-            "An alternative to SSD persistent disks that balance performance and cost."
+            "An alternative to SSD persistent disks that balance performance and cost.",
+            "Hyperdisk balanced disk type."
           ],
           "type": "string"
+        },
+        "enableIntegrityMonitoring": {
+          "description": "Optional. Defines whether the instance has integrity monitoring enabled. This can be set to true only if the VM boot option is EFI, and vTPM is enabled.",
+          "type": "boolean"
+        },
+        "enableVtpm": {
+          "description": "Optional. Defines whether the instance has vTPM enabled. This can be set to true only if the VM boot option is EFI.",
+          "type": "boolean"
         },
         "encryption": {
           "$ref": "Encryption",
@@ -3226,6 +3264,20 @@
           "$ref": "AppliedLicense",
           "description": "The OS license returned from the adaptation module report."
         },
+        "bootConversion": {
+          "description": "Optional. By default the virtual machine will keep its existing boot option. Setting this property will trigger an internal process which will convert the virtual machine from using the existing boot option to another.",
+          "enum": [
+            "BOOT_CONVERSION_UNSPECIFIED",
+            "NONE",
+            "BIOS_TO_EFI"
+          ],
+          "enumDescriptions": [
+            "Unspecified conversion type.",
+            "No conversion.",
+            "Convert from BIOS to EFI."
+          ],
+          "type": "string"
+        },
         "bootOption": {
           "description": "The VM Boot Option, as set in the source VM.",
           "enum": [
@@ -3250,15 +3302,25 @@
             "COMPUTE_ENGINE_DISK_TYPE_UNSPECIFIED",
             "COMPUTE_ENGINE_DISK_TYPE_STANDARD",
             "COMPUTE_ENGINE_DISK_TYPE_SSD",
-            "COMPUTE_ENGINE_DISK_TYPE_BALANCED"
+            "COMPUTE_ENGINE_DISK_TYPE_BALANCED",
+            "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED"
           ],
           "enumDescriptions": [
             "An unspecified disk type. Will be used as STANDARD.",
             "A Standard disk type.",
             "SSD hard disk type.",
-            "An alternative to SSD persistent disks that balance performance and cost."
+            "An alternative to SSD persistent disks that balance performance and cost.",
+            "Hyperdisk balanced disk type."
           ],
           "type": "string"
+        },
+        "enableIntegrityMonitoring": {
+          "description": "Optional. Defines whether the instance has integrity monitoring enabled.",
+          "type": "boolean"
+        },
+        "enableVtpm": {
+          "description": "Optional. Defines whether the instance has vTPM enabled.",
+          "type": "boolean"
         },
         "encryption": {
           "$ref": "Encryption",
@@ -3696,7 +3758,7 @@
       "id": "DiskImageTargetDetails",
       "properties": {
         "additionalLicenses": {
-          "description": "Optional. Additional licenses to assign to the image.",
+          "description": "Optional. Additional licenses to assign to the image. Format: https://www.googleapis.com/compute/v1/projects/PROJECT_ID/global/licenses/LICENSE_NAME Or https://www.googleapis.com/compute/beta/projects/PROJECT_ID/global/licenses/LICENSE_NAME",
           "items": {
             "type": "string"
           },
@@ -3774,6 +3836,14 @@
         "computeScheduling": {
           "$ref": "ComputeScheduling",
           "description": "Optional. Compute instance scheduling information (if empty default is used)."
+        },
+        "enableIntegrityMonitoring": {
+          "description": "Optional. Defines whether the instance has integrity monitoring enabled.",
+          "type": "boolean"
+        },
+        "enableVtpm": {
+          "description": "Optional. Defines whether the instance has vTPM enabled.",
+          "type": "boolean"
         },
         "encryption": {
           "$ref": "Encryption",
@@ -3967,6 +4037,10 @@
           "$ref": "Encryption",
           "description": "Immutable. The encryption details used by the image import process during the image adaptation for Compute Engine."
         },
+        "machineImageTargetDefaults": {
+          "$ref": "MachineImageTargetDetails",
+          "description": "Immutable. Target details for importing a machine image, will be used by ImageImportJob."
+        },
         "name": {
           "description": "Output only. The resource path of the ImageImport.",
           "readOnly": true,
@@ -4024,6 +4098,11 @@
           },
           "readOnly": true,
           "type": "array"
+        },
+        "machineImageTargetDetails": {
+          "$ref": "MachineImageTargetDetails",
+          "description": "Output only. Target details used to import a machine image.",
+          "readOnly": true
         },
         "name": {
           "description": "Output only. The resource path of the ImageImportJob.",
@@ -4564,6 +4643,92 @@
       },
       "type": "object"
     },
+    "MachineImageParametersOverrides": {
+      "description": "Parameters overriding decisions based on the source machine image configurations.",
+      "id": "MachineImageParametersOverrides",
+      "properties": {
+        "machineType": {
+          "description": "Optional. The machine type to create the MachineImage with. If empty, the service will choose a relevant machine type based on the information from the source image. For more information about machine types, please refer to https://cloud.google.com/compute/docs/machine-resource.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MachineImageTargetDetails": {
+      "description": "The target details of the machine image resource that will be created by the image import job.",
+      "id": "MachineImageTargetDetails",
+      "properties": {
+        "additionalLicenses": {
+          "description": "Optional. Additional licenses to assign to the instance created by the machine image. Format: https://www.googleapis.com/compute/v1/projects/PROJECT_ID/global/licenses/LICENSE_NAME Or https://www.googleapis.com/compute/beta/projects/PROJECT_ID/global/licenses/LICENSE_NAME",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "description": {
+          "description": "Optional. An optional description of the machine image.",
+          "type": "string"
+        },
+        "encryption": {
+          "$ref": "Encryption",
+          "description": "Immutable. The encryption to apply to the machine image."
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. The labels to apply to the instance created by the machine image.",
+          "type": "object"
+        },
+        "machineImageName": {
+          "description": "Required. The name of the machine image to be created.",
+          "type": "string"
+        },
+        "machineImageParametersOverrides": {
+          "$ref": "MachineImageParametersOverrides",
+          "description": "Optional. Parameters overriding decisions based on the source machine image configurations."
+        },
+        "networkInterfaces": {
+          "description": "Optional. The network interfaces to create with the instance created by the machine image. Internal and external IP addresses are ignored for machine image import.",
+          "items": {
+            "$ref": "NetworkInterface"
+          },
+          "type": "array"
+        },
+        "osAdaptationParameters": {
+          "$ref": "ImageImportOsAdaptationParameters",
+          "description": "Optional. Use to set the parameters relevant for the OS adaptation process."
+        },
+        "serviceAccount": {
+          "$ref": "ServiceAccount",
+          "description": "Optional. The service account to assign to the instance created by the machine image."
+        },
+        "shieldedInstanceConfig": {
+          "$ref": "ShieldedInstanceConfig",
+          "description": "Optional. Shielded instance configuration."
+        },
+        "singleRegionStorage": {
+          "description": "Optional. Set to true to set the machine image storageLocations to the single region of the import job. When false, the closest multi-region is selected.",
+          "type": "boolean"
+        },
+        "skipOsAdaptation": {
+          "$ref": "SkipOsAdaptation",
+          "description": "Optional. Use to skip OS adaptation process."
+        },
+        "tags": {
+          "description": "Optional. The tags to apply to the instance created by the machine image.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "targetProject": {
+          "description": "Required. Reference to the TargetProject resource that represents the target project in which the imported machine image will be created.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "MigratingVm": {
       "description": "MigratingVm describes the VM that will be migrated from a Source environment and its replication state.",
       "id": "MigratingVm",
@@ -4787,7 +4952,8 @@
       "properties": {
         "actionItem": {
           "$ref": "LocalizedMessage",
-          "description": "Suggested action for solving the warning."
+          "description": "Output only. Suggested action for solving the warning.",
+          "readOnly": true
         },
         "code": {
           "description": "The warning code.",
@@ -4802,15 +4968,17 @@
           "type": "string"
         },
         "helpLinks": {
-          "description": "URL(s) pointing to additional information on handling the current warning.",
+          "description": "Output only. URL(s) pointing to additional information on handling the current warning.",
           "items": {
             "$ref": "Link"
           },
+          "readOnly": true,
           "type": "array"
         },
         "warningMessage": {
           "$ref": "LocalizedMessage",
-          "description": "The localized warning message."
+          "description": "Output only. The localized warning message.",
+          "readOnly": true
         },
         "warningTime": {
           "description": "The time the warning occurred.",
@@ -4825,19 +4993,33 @@
       "id": "NetworkInterface",
       "properties": {
         "externalIp": {
-          "description": "The external IP to define in the NIC.",
+          "description": "Optional. The external IP to define in the NIC.",
           "type": "string"
         },
         "internalIp": {
-          "description": "The internal IP to define in the NIC. The formats accepted are: `ephemeral` \\ ipv4 address \\ a named address resource full path.",
+          "description": "Optional. The internal IP to define in the NIC. The formats accepted are: `ephemeral` \\ ipv4 address \\ a named address resource full path.",
           "type": "string"
         },
         "network": {
           "description": "The network to connect the NIC to.",
           "type": "string"
         },
+        "networkTier": {
+          "description": "Optional. The networking tier used for optimizing connectivity between instances and systems on the internet. Applies only for external ephemeral IP addresses. If left empty, will default to PREMIUM.",
+          "enum": [
+            "COMPUTE_ENGINE_NETWORK_TIER_UNSPECIFIED",
+            "NETWORK_TIER_STANDARD",
+            "NETWORK_TIER_PREMIUM"
+          ],
+          "enumDescriptions": [
+            "An unspecified network tier. Will be used as PREMIUM.",
+            "A standard network tier.",
+            "A premium network tier."
+          ],
+          "type": "string"
+        },
         "subnetwork": {
-          "description": "The subnetwork to connect the NIC to.",
+          "description": "Optional. The subnetwork to connect the NIC to.",
           "type": "string"
         }
       },
@@ -5008,13 +5190,15 @@
             "COMPUTE_ENGINE_DISK_TYPE_UNSPECIFIED",
             "COMPUTE_ENGINE_DISK_TYPE_STANDARD",
             "COMPUTE_ENGINE_DISK_TYPE_SSD",
-            "COMPUTE_ENGINE_DISK_TYPE_BALANCED"
+            "COMPUTE_ENGINE_DISK_TYPE_BALANCED",
+            "COMPUTE_ENGINE_DISK_TYPE_HYPERDISK_BALANCED"
           ],
           "enumDescriptions": [
             "An unspecified disk type. Will be used as STANDARD.",
             "A Standard disk type.",
             "SSD hard disk type.",
-            "An alternative to SSD persistent disks that balance performance and cost."
+            "An alternative to SSD persistent disks that balance performance and cost.",
+            "Hyperdisk balanced disk type."
           ],
           "type": "string"
         },
@@ -5029,7 +5213,7 @@
         },
         "vmAttachmentDetails": {
           "$ref": "VmAttachmentDetails",
-          "description": "Optional. Details for attachment of the disk to a VM. Used when the disk is set to be attacked to a target VM."
+          "description": "Optional. Details for attachment of the disk to a VM. Used when the disk is set to be attached to a target VM."
         }
       },
       "type": "object"
@@ -5100,7 +5284,8 @@
         },
         "error": {
           "$ref": "Status",
-          "description": "Provides details on the state of the cycle in case of an error."
+          "description": "Output only. Provides details on the state of the cycle in case of an error.",
+          "readOnly": true
         },
         "name": {
           "description": "The identifier of the ReplicationCycle.",
@@ -5224,9 +5409,62 @@
       },
       "type": "object"
     },
+    "ServiceAccount": {
+      "description": "Service account to assign to the instance created by the machine image.",
+      "id": "ServiceAccount",
+      "properties": {
+        "email": {
+          "description": "Required. The email address of the service account.",
+          "type": "string"
+        },
+        "scopes": {
+          "description": "Optional. The list of scopes to be made available for this service account.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ShieldedInstanceConfig": {
+      "description": "Shielded instance configuration.",
+      "id": "ShieldedInstanceConfig",
+      "properties": {
+        "enableIntegrityMonitoring": {
+          "description": "Optional. Defines whether the instance created by the machine image has integrity monitoring enabled. This can be set to true only if the image boot option is EFI, and vTPM is enabled.",
+          "type": "boolean"
+        },
+        "enableVtpm": {
+          "description": "Optional. Defines whether the instance created by the machine image has vTPM enabled. This can be set to true only if the image boot option is EFI.",
+          "type": "boolean"
+        },
+        "secureBoot": {
+          "description": "Optional. Defines whether the instance created by the machine image has Secure Boot enabled. This can be set to true only if the image boot option is EFI.",
+          "enum": [
+            "SECURE_BOOT_UNSPECIFIED",
+            "TRUE",
+            "FALSE"
+          ],
+          "enumDescriptions": [
+            "No explicit value is selected. Will use the configuration of the source (if exists, otherwise the default will be false).",
+            "Use secure boot. This can be set to true only if the image boot option is EFI.",
+            "Do not use secure boot."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ShuttingDownSourceVMStep": {
       "description": "ShuttingDownSourceVMStep contains specific step details.",
       "id": "ShuttingDownSourceVMStep",
+      "properties": {},
+      "type": "object"
+    },
+    "SkipOsAdaptation": {
+      "description": "Mentions that the machine image import is not using OS adaptation process.",
+      "id": "SkipOsAdaptation",
       "properties": {},
       "type": "object"
     },
@@ -5319,11 +5557,11 @@
       "id": "Tag",
       "properties": {
         "key": {
-          "description": "Key of tag.",
+          "description": "Required. Key of tag.",
           "type": "string"
         },
         "value": {
-          "description": "Value of tag.",
+          "description": "Required. Value of tag.",
           "type": "string"
         }
       },
@@ -5378,7 +5616,8 @@
       "properties": {
         "error": {
           "$ref": "Status",
-          "description": "Provides details on the state of the upgrade operation in case of an error."
+          "description": "Output only. Provides details on the state of the upgrade operation in case of an error.",
+          "readOnly": true
         },
         "previousVersion": {
           "description": "The version from which we upgraded.",
@@ -5610,17 +5849,20 @@
       "id": "VmwareDiskDetails",
       "properties": {
         "diskNumber": {
-          "description": "The ordinal number of the disk.",
+          "description": "Output only. The ordinal number of the disk.",
           "format": "int32",
+          "readOnly": true,
           "type": "integer"
         },
         "label": {
-          "description": "The disk label.",
+          "description": "Output only. The disk label.",
+          "readOnly": true,
           "type": "string"
         },
         "sizeGb": {
-          "description": "Size in GB.",
+          "description": "Output only. Size in GB.",
           "format": "int64",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -5658,19 +5900,21 @@
       "id": "VmwareSourceVmDetails",
       "properties": {
         "committedStorageBytes": {
-          "description": "The total size of the disks being migrated in bytes.",
+          "description": "Output only. The total size of the disks being migrated in bytes.",
           "format": "int64",
+          "readOnly": true,
           "type": "string"
         },
         "disks": {
-          "description": "The disks attached to the source VM.",
+          "description": "Output only. The disks attached to the source VM.",
           "items": {
             "$ref": "VmwareDiskDetails"
           },
+          "readOnly": true,
           "type": "array"
         },
         "firmware": {
-          "description": "The firmware type of the source VM.",
+          "description": "Output only. The firmware type of the source VM.",
           "enum": [
             "FIRMWARE_UNSPECIFIED",
             "EFI",
@@ -5681,6 +5925,7 @@
             "The firmware is EFI.",
             "The firmware is BIOS."
           ],
+          "readOnly": true,
           "type": "string"
         },
         "vmCapabilitiesInfo": {

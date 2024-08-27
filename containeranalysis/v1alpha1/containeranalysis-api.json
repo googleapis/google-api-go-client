@@ -15,6 +15,193 @@
   "description": "This API is a prerequisite for leveraging Artifact Analysis scanning capabilities in both Artifact Registry and with Advanced Vulnerability Insights (runtime scanning) in GKE. In addition, the Container Analysis API is an implementation of the Grafeas API, which enables storing, querying, and retrieval of critical metadata about all of your software artifacts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/container-analysis/api/reference/rest/",
+  "endpoints": [
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.asia-east1.rep.googleapis.com/",
+      "location": "asia-east1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.asia-east2.rep.googleapis.com/",
+      "location": "asia-east2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.asia-northeast1.rep.googleapis.com/",
+      "location": "asia-northeast1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.asia-northeast3.rep.googleapis.com/",
+      "location": "asia-northeast3"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.asia-south1.rep.googleapis.com/",
+      "location": "asia-south1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.asia-south2.rep.googleapis.com/",
+      "location": "asia-south2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.asia-southeast1.rep.googleapis.com/",
+      "location": "asia-southeast1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.asia-southeast2.rep.googleapis.com/",
+      "location": "asia-southeast2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.australia-southeast1.rep.googleapis.com/",
+      "location": "australia-southeast1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.europe-central2.rep.googleapis.com/",
+      "location": "europe-central2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.europe-north1.rep.googleapis.com/",
+      "location": "europe-north1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.europe-southwest1.rep.googleapis.com/",
+      "location": "europe-southwest1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.europe-west1.rep.googleapis.com/",
+      "location": "europe-west1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.europe-west2.rep.googleapis.com/",
+      "location": "europe-west2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.europe-west3.rep.googleapis.com/",
+      "location": "europe-west3"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.europe-west4.rep.googleapis.com/",
+      "location": "europe-west4"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.europe-west6.rep.googleapis.com/",
+      "location": "europe-west6"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.europe-west8.rep.googleapis.com/",
+      "location": "europe-west8"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.europe-west9.rep.googleapis.com/",
+      "location": "europe-west9"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.me-central1.rep.googleapis.com/",
+      "location": "me-central1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.me-central2.rep.googleapis.com/",
+      "location": "me-central2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.me-west1.rep.googleapis.com/",
+      "location": "me-west1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.northamerica-northeast1.rep.googleapis.com/",
+      "location": "northamerica-northeast1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.northamerica-northeast2.rep.googleapis.com/",
+      "location": "northamerica-northeast2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.southamerica-east1.rep.googleapis.com/",
+      "location": "southamerica-east1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.southamerica-west1.rep.googleapis.com/",
+      "location": "southamerica-west1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.us-central1.rep.googleapis.com/",
+      "location": "us-central1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.us-central2.rep.googleapis.com/",
+      "location": "us-central2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.us-east1.rep.googleapis.com/",
+      "location": "us-east1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.us-east4.rep.googleapis.com/",
+      "location": "us-east4"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.us-east5.rep.googleapis.com/",
+      "location": "us-east5"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.us-east7.rep.googleapis.com/",
+      "location": "us-east7"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.us-south1.rep.googleapis.com/",
+      "location": "us-south1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.us-west1.rep.googleapis.com/",
+      "location": "us-west1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.us-west2.rep.googleapis.com/",
+      "location": "us-west2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.us-west3.rep.googleapis.com/",
+      "location": "us-west3"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://containeranalysis.us-west4.rep.googleapis.com/",
+      "location": "us-west4"
+    }
+  ],
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -1233,7 +1420,7 @@
       }
     }
   },
-  "revision": "20240516",
+  "revision": "20240816",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "AnalysisCompleted": {
@@ -2543,7 +2730,7 @@
           "type": "string"
         },
         "diskSizeGb": {
-          "description": "Requested disk size for the VM that runs the build. Note that this is *NOT* \"disk free\"; some of the space will be used by the operating system and build utilities. Also note that this is the minimum disk size that will be allocated for the build -- the build may run with a larger disk than requested. At present, the maximum disk size is 2000GB; builds that request more than the maximum are rejected with an error.",
+          "description": "Requested disk size for the VM that runs the build. Note that this is *NOT* \"disk free\"; some of the space will be used by the operating system and build utilities. Also note that this is the minimum disk size that will be allocated for the build -- the build may run with a larger disk than requested. At present, the maximum disk size is 4000GB; builds that request more than the maximum are rejected with an error.",
           "format": "int64",
           "type": "string"
         },
@@ -2935,26 +3122,6 @@
       },
       "type": "object"
     },
-    "ContaineranalysisGoogleDevtoolsCloudbuildV1GCSLocation": {
-      "description": "Represents a storage location in Cloud Storage",
-      "id": "ContaineranalysisGoogleDevtoolsCloudbuildV1GCSLocation",
-      "properties": {
-        "bucket": {
-          "description": "Cloud Storage bucket. See https://cloud.google.com/storage/docs/naming#requirements",
-          "type": "string"
-        },
-        "generation": {
-          "description": "Cloud Storage generation for the object. If the generation is omitted, the latest generation will be used.",
-          "format": "int64",
-          "type": "string"
-        },
-        "object": {
-          "description": "Cloud Storage object. See https://cloud.google.com/storage/docs/naming#objectnames",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig": {
       "description": "GitConfig is a configuration for git operations.",
       "id": "ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfig",
@@ -2971,12 +3138,8 @@
       "id": "ContaineranalysisGoogleDevtoolsCloudbuildV1GitConfigHttpConfig",
       "properties": {
         "proxySecretVersionName": {
-          "description": "SecretVersion resource of the HTTP proxy URL. The proxy URL should be in format protocol://@]proxyhost[:port].",
+          "description": "SecretVersion resource of the HTTP proxy URL. The Service Account used in the build (either the default Service Account or user-specified Service Account) should have `secretmanager.versions.access` permissions on this secret. The proxy URL should be in format `protocol://@]proxyhost[:port]`.",
           "type": "string"
-        },
-        "proxySslCaInfo": {
-          "$ref": "ContaineranalysisGoogleDevtoolsCloudbuildV1GCSLocation",
-          "description": "Optional. Cloud Storage object storing the certificate to use with the HTTP proxy."
         }
       },
       "type": "object"
@@ -3708,6 +3871,11 @@
         "sbomStatus": {
           "$ref": "SBOMStatus",
           "description": "Output only. The status of an SBOM generation.",
+          "readOnly": true
+        },
+        "vulnerabilityAttestation": {
+          "$ref": "VulnerabilityAttestation",
+          "description": "Output only. The status of a vulnerability attestation generation.",
           "readOnly": true
         }
       },
@@ -6716,6 +6884,39 @@
         },
         "title": {
           "description": "The title of the note. E.g. `Vex-Debian-11.4`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VulnerabilityAttestation": {
+      "description": "The status of a vulnerability attestation generation.",
+      "id": "VulnerabilityAttestation",
+      "properties": {
+        "error": {
+          "description": "Output only. If failure, the error reason for why the attestation generation failed.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "lastAttemptTime": {
+          "description": "Output only. The last time we attempted to generate an attestation.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "state": {
+          "description": "Output only. The success/failure state of the latest attestation attempt.",
+          "enum": [
+            "VULNERABILITY_ATTESTATION_STATE_UNSPECIFIED",
+            "SUCCESS",
+            "FAILURE"
+          ],
+          "enumDescriptions": [
+            "Default unknown state.",
+            "Attestation was successfully generated and stored.",
+            "Attestation was unsuccessfully generated and stored."
+          ],
+          "readOnly": true,
           "type": "string"
         }
       },

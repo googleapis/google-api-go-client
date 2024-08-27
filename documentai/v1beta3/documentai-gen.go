@@ -282,9 +282,9 @@ type GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabelSt
@@ -308,9 +308,9 @@ type GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabel
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabelStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabelStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabelStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsResponse: The response proto
@@ -342,9 +342,9 @@ type GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDele
@@ -368,9 +368,9 @@ type GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsResponse: Response of the
@@ -412,9 +412,9 @@ type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveSt
@@ -437,9 +437,9 @@ type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMove
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsResponse: Response of the
@@ -466,9 +466,9 @@ type GoogleCloudDocumentaiUiv1beta3BatchUpdateDocumentsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3BatchUpdateDocumentsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3BatchUpdateDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchUpdateDocumentsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3BatchUpdateDocumentsMetadataIndividualBatchUpda
@@ -492,9 +492,9 @@ type GoogleCloudDocumentaiUiv1beta3BatchUpdateDocumentsMetadataIndividualBatchUp
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3BatchUpdateDocumentsMetadataIndividualBatchUpdateStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3BatchUpdateDocumentsMetadataIndividualBatchUpdateStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchUpdateDocumentsMetadataIndividualBatchUpdateStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3BatchUpdateDocumentsResponse: Response of the
@@ -537,9 +537,9 @@ type GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3CreateLabelerPoolOperationMetadata: The
@@ -560,9 +560,9 @@ type GoogleCloudDocumentaiUiv1beta3CreateLabelerPoolOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3CreateLabelerPoolOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3CreateLabelerPoolOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3CreateLabelerPoolOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3DeleteLabelerPoolOperationMetadata: The
@@ -583,9 +583,9 @@ type GoogleCloudDocumentaiUiv1beta3DeleteLabelerPoolOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3DeleteLabelerPoolOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3DeleteLabelerPoolOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3DeleteLabelerPoolOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3DeleteProcessorMetadata: The long-running
@@ -606,9 +606,9 @@ type GoogleCloudDocumentaiUiv1beta3DeleteProcessorMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3DeleteProcessorMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3DeleteProcessorMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3DeleteProcessorMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3DeleteProcessorVersionMetadata: The
@@ -629,9 +629,9 @@ type GoogleCloudDocumentaiUiv1beta3DeleteProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3DeleteProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3DeleteProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3DeleteProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3DeployProcessorVersionMetadata: The
@@ -652,9 +652,9 @@ type GoogleCloudDocumentaiUiv1beta3DeployProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3DeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3DeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3DeployProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3DeployProcessorVersionResponse: Response
@@ -680,9 +680,9 @@ type GoogleCloudDocumentaiUiv1beta3DisableProcessorMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3DisableProcessorMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3DisableProcessorMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3DisableProcessorMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3DisableProcessorResponse: Response message for
@@ -712,9 +712,9 @@ type GoogleCloudDocumentaiUiv1beta3DocumentId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3DocumentId) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3DocumentId) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3DocumentId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId: Identifies a
@@ -738,9 +738,9 @@ type GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3DocumentIdUnmanagedDocumentId: Identifies a
@@ -761,9 +761,9 @@ type GoogleCloudDocumentaiUiv1beta3DocumentIdUnmanagedDocumentId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3DocumentIdUnmanagedDocumentId) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3DocumentIdUnmanagedDocumentId) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3DocumentIdUnmanagedDocumentId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata: The long-running
@@ -784,9 +784,9 @@ type GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3EnableProcessorResponse: Response message for
@@ -813,9 +813,9 @@ type GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse: Response of
@@ -836,9 +836,9 @@ type GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadata: Metadata of the batch
@@ -863,9 +863,9 @@ type GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadataIndividualExportStatus:
@@ -891,9 +891,9 @@ type GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadataIndividualExportStatus
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadataIndividualExportStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadataIndividualExportStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadataIndividualExportStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadataSplitExportStat: The
@@ -923,9 +923,9 @@ type GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadataSplitExportStat struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadataSplitExportStat) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadataSplitExportStat) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadataSplitExportStat
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3ExportDocumentsResponse: The response proto of
@@ -951,9 +951,9 @@ type GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse: Response
@@ -974,9 +974,9 @@ type GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata: Metadata of the
@@ -1005,9 +1005,9 @@ type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataImportConfigValidationRe
@@ -1032,9 +1032,9 @@ type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataImportConfigValidation
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataImportConfigValidationResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataImportConfigValidationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataImportConfigValidationResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus:
@@ -1063,9 +1063,9 @@ type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3ImportDocumentsResponse: Response of the
@@ -1091,9 +1091,9 @@ type GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionResponse: The response
@@ -1114,9 +1114,9 @@ type GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata: The metadata proto of
@@ -1144,9 +1144,9 @@ type GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataDatasetResyncStatus:
@@ -1175,9 +1175,9 @@ type GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataDatasetResyncStatus stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataDatasetResyncStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataDatasetResyncStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataDatasetResyncStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataIndividualDocumentResyncSt
@@ -1212,9 +1212,9 @@ type GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataIndividualDocumentResync
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataIndividualDocumentResyncStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataIndividualDocumentResyncStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataIndividualDocumentResyncStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3ResyncDatasetResponse: The response proto of
@@ -1254,9 +1254,9 @@ type GoogleCloudDocumentaiUiv1beta3RevisionRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3RevisionRef) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3RevisionRef) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3RevisionRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3SampleDocumentsMetadata: Metadata of the
@@ -1277,9 +1277,9 @@ type GoogleCloudDocumentaiUiv1beta3SampleDocumentsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3SampleDocumentsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3SampleDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3SampleDocumentsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponse: Response of the
@@ -1304,9 +1304,9 @@ type GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponseSelectedDocument struct {
@@ -1325,9 +1325,9 @@ type GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponseSelectedDocument struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponseSelectedDocument) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponseSelectedDocument) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3SampleDocumentsResponseSelectedDocument
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata: The
@@ -1348,9 +1348,9 @@ type GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionResponse: Response
@@ -1380,9 +1380,9 @@ type GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadataDatasetValidation:
@@ -1416,9 +1416,9 @@ type GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadataDatasetValidatio
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadataDatasetValidation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadataDatasetValidation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadataDatasetValidation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionResponse: The response
@@ -1440,9 +1440,9 @@ type GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionMetadata: The
@@ -1463,9 +1463,9 @@ type GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionResponse: Response
@@ -1489,9 +1489,9 @@ type GoogleCloudDocumentaiUiv1beta3UpdateDatasetOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3UpdateDatasetOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3UpdateDatasetOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3UpdateDatasetOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3UpdateHumanReviewConfigMetadata: The
@@ -1512,9 +1512,9 @@ type GoogleCloudDocumentaiUiv1beta3UpdateHumanReviewConfigMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3UpdateHumanReviewConfigMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3UpdateHumanReviewConfigMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3UpdateHumanReviewConfigMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3UpdateLabelerPoolOperationMetadata: The
@@ -1535,9 +1535,9 @@ type GoogleCloudDocumentaiUiv1beta3UpdateLabelerPoolOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3UpdateLabelerPoolOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiUiv1beta3UpdateLabelerPoolOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3UpdateLabelerPoolOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1BatchProcessMetadata: The long-running operation
@@ -1577,9 +1577,9 @@ type GoogleCloudDocumentaiV1BatchProcessMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1BatchProcessMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1BatchProcessMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1BatchProcessMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus: The
@@ -1609,9 +1609,9 @@ type GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1BatchProcessResponse: Response message for
@@ -1654,9 +1654,9 @@ type GoogleCloudDocumentaiV1CommonOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1CommonOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1CommonOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1CommonOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DeleteProcessorMetadata: The long-running operation
@@ -1677,9 +1677,9 @@ type GoogleCloudDocumentaiV1DeleteProcessorMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DeleteProcessorMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DeleteProcessorMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DeleteProcessorMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DeleteProcessorVersionMetadata: The long-running
@@ -1700,9 +1700,9 @@ type GoogleCloudDocumentaiV1DeleteProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DeleteProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DeleteProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DeleteProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DeployProcessorVersionMetadata: The long-running
@@ -1723,9 +1723,9 @@ type GoogleCloudDocumentaiV1DeployProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DeployProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DeployProcessorVersionResponse: Response message for
@@ -1751,9 +1751,9 @@ type GoogleCloudDocumentaiV1DisableProcessorMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1DisableProcessorMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1DisableProcessorMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1DisableProcessorMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1DisableProcessorResponse: Response message for the
@@ -1780,9 +1780,9 @@ type GoogleCloudDocumentaiV1EnableProcessorMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1EnableProcessorMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1EnableProcessorMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1EnableProcessorMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1EnableProcessorResponse: Response message for the
@@ -1809,9 +1809,9 @@ type GoogleCloudDocumentaiV1EvaluateProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1EvaluateProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1EvaluateProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1EvaluateProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1EvaluateProcessorVersionResponse: Response of the
@@ -1832,9 +1832,9 @@ type GoogleCloudDocumentaiV1EvaluateProcessorVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1EvaluateProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1EvaluateProcessorVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1EvaluateProcessorVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1HumanReviewStatus: The status of human review on a
@@ -1875,9 +1875,9 @@ type GoogleCloudDocumentaiV1HumanReviewStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1HumanReviewStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1HumanReviewStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1HumanReviewStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1ReviewDocumentOperationMetadata: The long-running
@@ -1900,9 +1900,9 @@ type GoogleCloudDocumentaiV1ReviewDocumentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1ReviewDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1ReviewDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1ReviewDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1ReviewDocumentResponse: Response message for the
@@ -1934,9 +1934,9 @@ type GoogleCloudDocumentaiV1ReviewDocumentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1ReviewDocumentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1ReviewDocumentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1ReviewDocumentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata: The long-running
@@ -1957,9 +1957,9 @@ type GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1SetDefaultProcessorVersionResponse: Response message
@@ -1989,9 +1989,9 @@ type GoogleCloudDocumentaiV1TrainProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1TrainProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1TrainProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1TrainProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1TrainProcessorVersionMetadataDatasetValidation: The
@@ -2023,9 +2023,9 @@ type GoogleCloudDocumentaiV1TrainProcessorVersionMetadataDatasetValidation struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1TrainProcessorVersionMetadataDatasetValidation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1TrainProcessorVersionMetadataDatasetValidation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1TrainProcessorVersionMetadataDatasetValidation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1TrainProcessorVersionResponse: The response for
@@ -2047,9 +2047,9 @@ type GoogleCloudDocumentaiV1TrainProcessorVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1TrainProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1TrainProcessorVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1TrainProcessorVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1UndeployProcessorVersionMetadata: The long-running
@@ -2070,9 +2070,9 @@ type GoogleCloudDocumentaiV1UndeployProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1UndeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1UndeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1UndeployProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1UndeployProcessorVersionResponse: Response message
@@ -2113,9 +2113,9 @@ type GoogleCloudDocumentaiV1beta1Barcode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1Barcode) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1Barcode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1Barcode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1BatchProcessDocumentsResponse: Response to an
@@ -2137,9 +2137,9 @@ type GoogleCloudDocumentaiV1beta1BatchProcessDocumentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1BatchProcessDocumentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1BatchProcessDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1BatchProcessDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1BoundingPoly: A bounding polygon for the
@@ -2162,9 +2162,9 @@ type GoogleCloudDocumentaiV1beta1BoundingPoly struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1BoundingPoly) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1BoundingPoly) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1BoundingPoly
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1Document: Document represents the canonical
@@ -2172,10 +2172,14 @@ func (s *GoogleCloudDocumentaiV1beta1BoundingPoly) MarshalJSON() ([]byte, error)
 // insights into documents and allows for collaboration between users and
 // Document AI to iterate and optimize for quality.
 type GoogleCloudDocumentaiV1beta1Document struct {
+	// ChunkedDocument: Document chunked based on chunking config.
+	ChunkedDocument *GoogleCloudDocumentaiV1beta1DocumentChunkedDocument `json:"chunkedDocument,omitempty"`
 	// Content: Optional. Inline document content, represented as a stream of
 	// bytes. Note: As with all `bytes` fields, protobuffers use a pure binary
 	// representation, whereas JSON representations use base64.
 	Content string `json:"content,omitempty"`
+	// DocumentLayout: Parsed layout of the document.
+	DocumentLayout *GoogleCloudDocumentaiV1beta1DocumentDocumentLayout `json:"documentLayout,omitempty"`
 	// Entities: A list of entities detected on Document.text. For document shards,
 	// entities in this list may cross shard boundaries.
 	Entities []*GoogleCloudDocumentaiV1beta1DocumentEntity `json:"entities,omitempty"`
@@ -2207,22 +2211,392 @@ type GoogleCloudDocumentaiV1beta1Document struct {
 	// information, refer to Google Cloud Storage Request URIs
 	// (https://cloud.google.com/storage/docs/reference-uris).
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "ChunkedDocument") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChunkedDocument") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta1Document) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1Document
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentChunkedDocument: Represents the chunks
+// that the document is divided into.
+type GoogleCloudDocumentaiV1beta1DocumentChunkedDocument struct {
+	// Chunks: List of chunks.
+	Chunks []*GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunk `json:"chunks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Chunks") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Content") to include in API
+	// NullFields is a list of field names (e.g. "Chunks") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1Document) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta1Document
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+func (s GoogleCloudDocumentaiV1beta1DocumentChunkedDocument) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentChunkedDocument
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunk: Represents a
+// chunk.
+type GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunk struct {
+	// ChunkId: ID of the chunk.
+	ChunkId string `json:"chunkId,omitempty"`
+	// Content: Text content of the chunk.
+	Content string `json:"content,omitempty"`
+	// PageFooters: Page footers associated with the chunk.
+	PageFooters []*GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageFooter `json:"pageFooters,omitempty"`
+	// PageHeaders: Page headers associated with the chunk.
+	PageHeaders []*GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageHeader `json:"pageHeaders,omitempty"`
+	// PageSpan: Page span of the chunk.
+	PageSpan *GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageSpan `json:"pageSpan,omitempty"`
+	// SourceBlockIds: Unused.
+	SourceBlockIds []string `json:"sourceBlockIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChunkId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChunkId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunk) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageFooter:
+// Represents the page footer associated with the chunk.
+type GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageFooter struct {
+	// PageSpan: Page span of the footer.
+	PageSpan *GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageSpan `json:"pageSpan,omitempty"`
+	// Text: Footer in text format.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PageSpan") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PageSpan") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageFooter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageFooter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageHeader:
+// Represents the page header associated with the chunk.
+type GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageHeader struct {
+	// PageSpan: Page span of the header.
+	PageSpan *GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageSpan `json:"pageSpan,omitempty"`
+	// Text: Header in text format.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PageSpan") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PageSpan") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageHeader
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageSpan:
+// Represents where the chunk starts and ends in the document.
+type GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageSpan struct {
+	// PageEnd: Page where chunk ends in the document.
+	PageEnd int64 `json:"pageEnd,omitempty"`
+	// PageStart: Page where chunk starts in the document.
+	PageStart int64 `json:"pageStart,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PageEnd") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PageEnd") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageSpan) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentChunkedDocumentChunkChunkPageSpan
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentDocumentLayout: Represents the parsed
+// layout of a document as a collection of blocks that the document is divided
+// into.
+type GoogleCloudDocumentaiV1beta1DocumentDocumentLayout struct {
+	// Blocks: List of blocks in the document.
+	Blocks []*GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlock `json:"blocks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Blocks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Blocks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta1DocumentDocumentLayout) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentDocumentLayout
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlock:
+// Represents a block. A block could be one of the various types (text, table,
+// list) supported.
+type GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlock struct {
+	// BlockId: ID of the block.
+	BlockId string `json:"blockId,omitempty"`
+	// ListBlock: Block consisting of list content/structure.
+	ListBlock *GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutListBlock `json:"listBlock,omitempty"`
+	// PageSpan: Page span of the block.
+	PageSpan *GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutPageSpan `json:"pageSpan,omitempty"`
+	// TableBlock: Block consisting of table content/structure.
+	TableBlock *GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableBlock `json:"tableBlock,omitempty"`
+	// TextBlock: Block consisting of text content.
+	TextBlock *GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTextBlock `json:"textBlock,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BlockId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BlockId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlock
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutLi
+// stBlock: Represents a list type block.
+type GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutListBlock struct {
+	// ListEntries: List entries that constitute a list block.
+	ListEntries []*GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutListEntry `json:"listEntries,omitempty"`
+	// Type: Type of the list_entries (if exist). Available options are `ordered`
+	// and `unordered`.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ListEntries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ListEntries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutListBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutListBlock
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutLi
+// stEntry: Represents an entry in the list.
+type GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutListEntry struct {
+	// Blocks: A list entry is a list of blocks. Repeated blocks support further
+	// hierarchies and nested blocks.
+	Blocks []*GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlock `json:"blocks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Blocks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Blocks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutListEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutListEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutPa
+// geSpan: Represents where the block starts and ends in the document.
+type GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutPageSpan struct {
+	// PageEnd: Page where block ends in the document.
+	PageEnd int64 `json:"pageEnd,omitempty"`
+	// PageStart: Page where block starts in the document.
+	PageStart int64 `json:"pageStart,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PageEnd") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PageEnd") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutPageSpan) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutPageSpan
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTa
+// bleBlock: Represents a table type block.
+type GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableBlock struct {
+	// BodyRows: Body rows containing main table content.
+	BodyRows []*GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow `json:"bodyRows,omitempty"`
+	// Caption: Table caption/title.
+	Caption string `json:"caption,omitempty"`
+	// HeaderRows: Header rows at the top of the table.
+	HeaderRows []*GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow `json:"headerRows,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BodyRows") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BodyRows") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableBlock
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTa
+// bleCell: Represents a cell in a table row.
+type GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableCell struct {
+	// Blocks: A table cell is a list of blocks. Repeated blocks support further
+	// hierarchies and nested blocks.
+	Blocks []*GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlock `json:"blocks,omitempty"`
+	// ColSpan: How many columns this cell spans.
+	ColSpan int64 `json:"colSpan,omitempty"`
+	// RowSpan: How many rows this cell spans.
+	RowSpan int64 `json:"rowSpan,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Blocks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Blocks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableCell) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableCell
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTa
+// bleRow: Represents a row in a table.
+type GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow struct {
+	// Cells: A table row is a list of table cells.
+	Cells []*GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableCell `json:"cells,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cells") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cells") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTe
+// xtBlock: Represents a text type block.
+type GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTextBlock struct {
+	// Blocks: A text block could further have child blocks. Repeated blocks
+	// support further hierarchies and nested blocks.
+	Blocks []*GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlock `json:"blocks,omitempty"`
+	// Text: Text content stored in the block.
+	Text string `json:"text,omitempty"`
+	// Type: Type of the text in the block. Available options are: `paragraph`,
+	// `subtitle`, `heading-1`, `heading-2`, `heading-3`, `heading-4`, `heading-5`,
+	// `header`, `footer`.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Blocks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Blocks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTextBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentDocumentLayoutDocumentLayoutBlockLayoutTextBlock
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentEntity: An entity that could be a phrase
@@ -2273,9 +2647,9 @@ type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentEntity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentEntity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta1DocumentEntity) UnmarshalJSON(data []byte) error {
@@ -2336,9 +2710,9 @@ type GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue) UnmarshalJSON(data []byte) error {
@@ -2377,9 +2751,9 @@ type GoogleCloudDocumentaiV1beta1DocumentEntityRelation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentEntityRelation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentEntityRelation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentEntityRelation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPage: A page in a Document.
@@ -2440,9 +2814,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageAnchor: Referencing the visual
@@ -2465,9 +2839,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageAnchor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageAnchor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageAnchor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageAnchor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef: Represents a weak
@@ -2513,9 +2887,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef) UnmarshalJSON(data []byte) error {
@@ -2554,9 +2928,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageBlock struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageBlock) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageBlock
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode: A detected barcode.
@@ -2578,9 +2952,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage: Detected language
@@ -2605,9 +2979,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage) UnmarshalJSON(data []byte) error {
@@ -2645,9 +3019,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageDimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageDimension) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageDimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta1DocumentPageDimension) UnmarshalJSON(data []byte) error {
@@ -2707,9 +3081,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageFormField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageFormField) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageFormField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageFormField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageImage: Rendered image contents for
@@ -2738,9 +3112,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageImage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageImage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores: Image quality
@@ -2764,9 +3138,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores) UnmarshalJSON(data []byte) error {
@@ -2808,9 +3182,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect) UnmarshalJSON(data []byte) error {
@@ -2863,9 +3237,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageLayout struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageLayout) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageLayout) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageLayout
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta1DocumentPageLayout) UnmarshalJSON(data []byte) error {
@@ -2905,9 +3279,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageLine struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageLine) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageLine) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageLine
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageMatrix: Representation for
@@ -2938,9 +3312,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageMatrix struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageMatrix) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageMatrix) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageMatrix
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageParagraph: A collection of lines
@@ -2965,9 +3339,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageParagraph struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageParagraph) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageParagraph) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageParagraph
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageSymbol: A detected symbol.
@@ -2989,9 +3363,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageSymbol struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageSymbol) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageSymbol) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageSymbol
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageTable: A table representation
@@ -3020,9 +3394,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageTable) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageTable) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageTableTableCell: A cell
@@ -3049,9 +3423,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageTableTableCell struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageTableTableCell) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageTableTableCell) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageTableTableCell
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageTableTableRow: A row of table cells.
@@ -3071,9 +3445,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageTableTableRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageTableTableRow) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageTableTableRow) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageTableTableRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageToken: A detected token.
@@ -3101,9 +3475,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageToken) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageToken) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageTokenDetectedBreak: Detected break
@@ -3131,9 +3505,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageTokenDetectedBreak struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageTokenDetectedBreak) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageTokenDetectedBreak) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageTokenDetectedBreak
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageTokenStyleInfo: Font and other text
@@ -3189,9 +3563,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageTokenStyleInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageTokenStyleInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageTokenStyleInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageTokenStyleInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta1DocumentPageTokenStyleInfo) UnmarshalJSON(data []byte) error {
@@ -3232,9 +3606,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageVisualElement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentPageVisualElement) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentPageVisualElement) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageVisualElement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentProvenance: Structure to identify
@@ -3278,9 +3652,9 @@ type GoogleCloudDocumentaiV1beta1DocumentProvenance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentProvenance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentProvenance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentProvenance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentProvenanceParent: The parent element the
@@ -3307,9 +3681,9 @@ type GoogleCloudDocumentaiV1beta1DocumentProvenanceParent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentProvenanceParent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentProvenanceParent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentProvenanceParent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentRevision: Contains past or forward
@@ -3350,9 +3724,9 @@ type GoogleCloudDocumentaiV1beta1DocumentRevision struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentRevision) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentRevision) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentRevision
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentRevisionHumanReview: Human Review
@@ -3376,9 +3750,9 @@ type GoogleCloudDocumentaiV1beta1DocumentRevisionHumanReview struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentRevisionHumanReview) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentRevisionHumanReview) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentRevisionHumanReview
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentShardInfo: For a large document,
@@ -3405,9 +3779,9 @@ type GoogleCloudDocumentaiV1beta1DocumentShardInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentShardInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentShardInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentShardInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentStyle: Annotation for common text style
@@ -3449,9 +3823,9 @@ type GoogleCloudDocumentaiV1beta1DocumentStyle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentStyle) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentStyle) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentStyle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentStyleFontSize: Font size with unit.
@@ -3474,9 +3848,9 @@ type GoogleCloudDocumentaiV1beta1DocumentStyleFontSize struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentStyleFontSize) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentStyleFontSize) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentStyleFontSize
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta1DocumentStyleFontSize) UnmarshalJSON(data []byte) error {
@@ -3514,9 +3888,9 @@ type GoogleCloudDocumentaiV1beta1DocumentTextAnchor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentTextAnchor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentTextAnchor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentTextAnchor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentTextAnchorTextSegment: A text segment in
@@ -3541,9 +3915,9 @@ type GoogleCloudDocumentaiV1beta1DocumentTextAnchorTextSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentTextAnchorTextSegment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentTextAnchorTextSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentTextAnchorTextSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentTextChange: This message is used for
@@ -3572,9 +3946,9 @@ type GoogleCloudDocumentaiV1beta1DocumentTextChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1DocumentTextChange) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1DocumentTextChange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentTextChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1GcsDestination: The Google Cloud Storage
@@ -3594,9 +3968,9 @@ type GoogleCloudDocumentaiV1beta1GcsDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1GcsDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1GcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1GcsSource: The Google Cloud Storage location
@@ -3616,9 +3990,9 @@ type GoogleCloudDocumentaiV1beta1GcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1GcsSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1GcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1InputConfig: The desired input location and
@@ -3645,9 +4019,9 @@ type GoogleCloudDocumentaiV1beta1InputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1InputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1InputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1InputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1NormalizedVertex: A vertex represents a 2D point
@@ -3671,9 +4045,9 @@ type GoogleCloudDocumentaiV1beta1NormalizedVertex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1NormalizedVertex) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1NormalizedVertex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1NormalizedVertex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta1NormalizedVertex) UnmarshalJSON(data []byte) error {
@@ -3727,9 +4101,9 @@ type GoogleCloudDocumentaiV1beta1OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1OutputConfig: The desired output location and
@@ -3760,9 +4134,9 @@ type GoogleCloudDocumentaiV1beta1OutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1OutputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1OutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1ProcessDocumentResponse: Response to a single
@@ -3787,9 +4161,9 @@ type GoogleCloudDocumentaiV1beta1ProcessDocumentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1ProcessDocumentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1ProcessDocumentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1ProcessDocumentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta1Vertex: A vertex represents a 2D point in the
@@ -3813,9 +4187,9 @@ type GoogleCloudDocumentaiV1beta1Vertex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta1Vertex) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta1Vertex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta1Vertex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2Barcode: Encodes the detailed information of a
@@ -3851,9 +4225,9 @@ type GoogleCloudDocumentaiV1beta2Barcode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2Barcode) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2Barcode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2Barcode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2BatchProcessDocumentsResponse: Response to an
@@ -3875,9 +4249,9 @@ type GoogleCloudDocumentaiV1beta2BatchProcessDocumentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2BatchProcessDocumentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2BatchProcessDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2BatchProcessDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2BoundingPoly: A bounding polygon for the
@@ -3900,9 +4274,9 @@ type GoogleCloudDocumentaiV1beta2BoundingPoly struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2BoundingPoly) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2BoundingPoly) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2BoundingPoly
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2Document: Document represents the canonical
@@ -3910,10 +4284,14 @@ func (s *GoogleCloudDocumentaiV1beta2BoundingPoly) MarshalJSON() ([]byte, error)
 // insights into documents and allows for collaboration between users and
 // Document AI to iterate and optimize for quality.
 type GoogleCloudDocumentaiV1beta2Document struct {
+	// ChunkedDocument: Document chunked based on chunking config.
+	ChunkedDocument *GoogleCloudDocumentaiV1beta2DocumentChunkedDocument `json:"chunkedDocument,omitempty"`
 	// Content: Optional. Inline document content, represented as a stream of
 	// bytes. Note: As with all `bytes` fields, protobuffers use a pure binary
 	// representation, whereas JSON representations use base64.
 	Content string `json:"content,omitempty"`
+	// DocumentLayout: Parsed layout of the document.
+	DocumentLayout *GoogleCloudDocumentaiV1beta2DocumentDocumentLayout `json:"documentLayout,omitempty"`
 	// Entities: A list of entities detected on Document.text. For document shards,
 	// entities in this list may cross shard boundaries.
 	Entities []*GoogleCloudDocumentaiV1beta2DocumentEntity `json:"entities,omitempty"`
@@ -3947,22 +4325,392 @@ type GoogleCloudDocumentaiV1beta2Document struct {
 	// information, refer to Google Cloud Storage Request URIs
 	// (https://cloud.google.com/storage/docs/reference-uris).
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "ChunkedDocument") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChunkedDocument") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta2Document) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2Document
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentChunkedDocument: Represents the chunks
+// that the document is divided into.
+type GoogleCloudDocumentaiV1beta2DocumentChunkedDocument struct {
+	// Chunks: List of chunks.
+	Chunks []*GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunk `json:"chunks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Chunks") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Content") to include in API
+	// NullFields is a list of field names (e.g. "Chunks") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2Document) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta2Document
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+func (s GoogleCloudDocumentaiV1beta2DocumentChunkedDocument) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentChunkedDocument
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunk: Represents a
+// chunk.
+type GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunk struct {
+	// ChunkId: ID of the chunk.
+	ChunkId string `json:"chunkId,omitempty"`
+	// Content: Text content of the chunk.
+	Content string `json:"content,omitempty"`
+	// PageFooters: Page footers associated with the chunk.
+	PageFooters []*GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageFooter `json:"pageFooters,omitempty"`
+	// PageHeaders: Page headers associated with the chunk.
+	PageHeaders []*GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageHeader `json:"pageHeaders,omitempty"`
+	// PageSpan: Page span of the chunk.
+	PageSpan *GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageSpan `json:"pageSpan,omitempty"`
+	// SourceBlockIds: Unused.
+	SourceBlockIds []string `json:"sourceBlockIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChunkId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChunkId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunk) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageFooter:
+// Represents the page footer associated with the chunk.
+type GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageFooter struct {
+	// PageSpan: Page span of the footer.
+	PageSpan *GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageSpan `json:"pageSpan,omitempty"`
+	// Text: Footer in text format.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PageSpan") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PageSpan") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageFooter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageFooter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageHeader:
+// Represents the page header associated with the chunk.
+type GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageHeader struct {
+	// PageSpan: Page span of the header.
+	PageSpan *GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageSpan `json:"pageSpan,omitempty"`
+	// Text: Header in text format.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PageSpan") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PageSpan") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageHeader
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageSpan:
+// Represents where the chunk starts and ends in the document.
+type GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageSpan struct {
+	// PageEnd: Page where chunk ends in the document.
+	PageEnd int64 `json:"pageEnd,omitempty"`
+	// PageStart: Page where chunk starts in the document.
+	PageStart int64 `json:"pageStart,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PageEnd") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PageEnd") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageSpan) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentChunkedDocumentChunkChunkPageSpan
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentDocumentLayout: Represents the parsed
+// layout of a document as a collection of blocks that the document is divided
+// into.
+type GoogleCloudDocumentaiV1beta2DocumentDocumentLayout struct {
+	// Blocks: List of blocks in the document.
+	Blocks []*GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlock `json:"blocks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Blocks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Blocks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta2DocumentDocumentLayout) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentDocumentLayout
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlock:
+// Represents a block. A block could be one of the various types (text, table,
+// list) supported.
+type GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlock struct {
+	// BlockId: ID of the block.
+	BlockId string `json:"blockId,omitempty"`
+	// ListBlock: Block consisting of list content/structure.
+	ListBlock *GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutListBlock `json:"listBlock,omitempty"`
+	// PageSpan: Page span of the block.
+	PageSpan *GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutPageSpan `json:"pageSpan,omitempty"`
+	// TableBlock: Block consisting of table content/structure.
+	TableBlock *GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTableBlock `json:"tableBlock,omitempty"`
+	// TextBlock: Block consisting of text content.
+	TextBlock *GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTextBlock `json:"textBlock,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BlockId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BlockId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlock
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutLi
+// stBlock: Represents a list type block.
+type GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutListBlock struct {
+	// ListEntries: List entries that constitute a list block.
+	ListEntries []*GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutListEntry `json:"listEntries,omitempty"`
+	// Type: Type of the list_entries (if exist). Available options are `ordered`
+	// and `unordered`.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ListEntries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ListEntries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutListBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutListBlock
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutLi
+// stEntry: Represents an entry in the list.
+type GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutListEntry struct {
+	// Blocks: A list entry is a list of blocks. Repeated blocks support further
+	// hierarchies and nested blocks.
+	Blocks []*GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlock `json:"blocks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Blocks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Blocks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutListEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutListEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutPa
+// geSpan: Represents where the block starts and ends in the document.
+type GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutPageSpan struct {
+	// PageEnd: Page where block ends in the document.
+	PageEnd int64 `json:"pageEnd,omitempty"`
+	// PageStart: Page where block starts in the document.
+	PageStart int64 `json:"pageStart,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PageEnd") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PageEnd") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutPageSpan) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutPageSpan
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTa
+// bleBlock: Represents a table type block.
+type GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTableBlock struct {
+	// BodyRows: Body rows containing main table content.
+	BodyRows []*GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow `json:"bodyRows,omitempty"`
+	// Caption: Table caption/title.
+	Caption string `json:"caption,omitempty"`
+	// HeaderRows: Header rows at the top of the table.
+	HeaderRows []*GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow `json:"headerRows,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BodyRows") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BodyRows") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTableBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTableBlock
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTa
+// bleCell: Represents a cell in a table row.
+type GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTableCell struct {
+	// Blocks: A table cell is a list of blocks. Repeated blocks support further
+	// hierarchies and nested blocks.
+	Blocks []*GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlock `json:"blocks,omitempty"`
+	// ColSpan: How many columns this cell spans.
+	ColSpan int64 `json:"colSpan,omitempty"`
+	// RowSpan: How many rows this cell spans.
+	RowSpan int64 `json:"rowSpan,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Blocks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Blocks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTableCell) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTableCell
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTa
+// bleRow: Represents a row in a table.
+type GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow struct {
+	// Cells: A table row is a list of table cells.
+	Cells []*GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTableCell `json:"cells,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cells") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cells") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTe
+// xtBlock: Represents a text type block.
+type GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTextBlock struct {
+	// Blocks: A text block could further have child blocks. Repeated blocks
+	// support further hierarchies and nested blocks.
+	Blocks []*GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlock `json:"blocks,omitempty"`
+	// Text: Text content stored in the block.
+	Text string `json:"text,omitempty"`
+	// Type: Type of the text in the block. Available options are: `paragraph`,
+	// `subtitle`, `heading-1`, `heading-2`, `heading-3`, `heading-4`, `heading-5`,
+	// `header`, `footer`.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Blocks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Blocks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTextBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentDocumentLayoutDocumentLayoutBlockLayoutTextBlock
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentEntity: An entity that could be a phrase
@@ -4013,9 +4761,9 @@ type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentEntity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentEntity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta2DocumentEntity) UnmarshalJSON(data []byte) error {
@@ -4076,9 +4824,9 @@ type GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue) UnmarshalJSON(data []byte) error {
@@ -4117,9 +4865,9 @@ type GoogleCloudDocumentaiV1beta2DocumentEntityRelation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentEntityRelation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentEntityRelation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentEntityRelation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentLabel: Label attaches schema information
@@ -4149,9 +4897,9 @@ type GoogleCloudDocumentaiV1beta2DocumentLabel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentLabel) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentLabel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentLabel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta2DocumentLabel) UnmarshalJSON(data []byte) error {
@@ -4226,9 +4974,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageAnchor: Referencing the visual
@@ -4251,9 +4999,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageAnchor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageAnchor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageAnchor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageAnchor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef: Represents a weak
@@ -4299,9 +5047,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef) UnmarshalJSON(data []byte) error {
@@ -4340,9 +5088,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageBlock struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageBlock) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageBlock
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode: A detected barcode.
@@ -4364,9 +5112,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage: Detected language
@@ -4391,9 +5139,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage) UnmarshalJSON(data []byte) error {
@@ -4431,9 +5179,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageDimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageDimension) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageDimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta2DocumentPageDimension) UnmarshalJSON(data []byte) error {
@@ -4493,9 +5241,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageFormField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageFormField) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageFormField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageFormField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageImage: Rendered image contents for
@@ -4524,9 +5272,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageImage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageImage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores: Image quality
@@ -4550,9 +5298,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores) UnmarshalJSON(data []byte) error {
@@ -4594,9 +5342,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect) UnmarshalJSON(data []byte) error {
@@ -4649,9 +5397,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageLayout struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageLayout) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageLayout) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageLayout
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta2DocumentPageLayout) UnmarshalJSON(data []byte) error {
@@ -4691,9 +5439,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageLine struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageLine) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageLine) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageLine
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageMatrix: Representation for
@@ -4724,9 +5472,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageMatrix struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageMatrix) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageMatrix) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageMatrix
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageParagraph: A collection of lines
@@ -4751,9 +5499,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageParagraph struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageParagraph) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageParagraph) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageParagraph
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageSymbol: A detected symbol.
@@ -4775,9 +5523,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageSymbol struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageSymbol) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageSymbol) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageSymbol
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageTable: A table representation
@@ -4806,9 +5554,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageTable) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageTable) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageTableTableCell: A cell
@@ -4835,9 +5583,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageTableTableCell struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageTableTableCell) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageTableTableCell) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageTableTableCell
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageTableTableRow: A row of table cells.
@@ -4857,9 +5605,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageTableTableRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageTableTableRow) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageTableTableRow) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageTableTableRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageToken: A detected token.
@@ -4887,9 +5635,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageToken) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageToken) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageTokenDetectedBreak: Detected break
@@ -4917,9 +5665,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageTokenDetectedBreak struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageTokenDetectedBreak) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageTokenDetectedBreak) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageTokenDetectedBreak
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageTokenStyleInfo: Font and other text
@@ -4975,9 +5723,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageTokenStyleInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageTokenStyleInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageTokenStyleInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageTokenStyleInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta2DocumentPageTokenStyleInfo) UnmarshalJSON(data []byte) error {
@@ -5018,9 +5766,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageVisualElement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentPageVisualElement) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentPageVisualElement) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageVisualElement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentProvenance: Structure to identify
@@ -5064,9 +5812,9 @@ type GoogleCloudDocumentaiV1beta2DocumentProvenance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentProvenance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentProvenance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentProvenance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentProvenanceParent: The parent element the
@@ -5093,9 +5841,9 @@ type GoogleCloudDocumentaiV1beta2DocumentProvenanceParent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentProvenanceParent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentProvenanceParent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentProvenanceParent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentRevision: Contains past or forward
@@ -5136,9 +5884,9 @@ type GoogleCloudDocumentaiV1beta2DocumentRevision struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentRevision) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentRevision) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentRevision
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentRevisionHumanReview: Human Review
@@ -5162,9 +5910,9 @@ type GoogleCloudDocumentaiV1beta2DocumentRevisionHumanReview struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentRevisionHumanReview) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentRevisionHumanReview) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentRevisionHumanReview
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentShardInfo: For a large document,
@@ -5191,9 +5939,9 @@ type GoogleCloudDocumentaiV1beta2DocumentShardInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentShardInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentShardInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentShardInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentStyle: Annotation for common text style
@@ -5235,9 +5983,9 @@ type GoogleCloudDocumentaiV1beta2DocumentStyle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentStyle) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentStyle) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentStyle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentStyleFontSize: Font size with unit.
@@ -5260,9 +6008,9 @@ type GoogleCloudDocumentaiV1beta2DocumentStyleFontSize struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentStyleFontSize) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentStyleFontSize) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentStyleFontSize
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta2DocumentStyleFontSize) UnmarshalJSON(data []byte) error {
@@ -5300,9 +6048,9 @@ type GoogleCloudDocumentaiV1beta2DocumentTextAnchor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentTextAnchor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentTextAnchor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentTextAnchor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentTextAnchorTextSegment: A text segment in
@@ -5327,9 +6075,9 @@ type GoogleCloudDocumentaiV1beta2DocumentTextAnchorTextSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentTextAnchorTextSegment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentTextAnchorTextSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentTextAnchorTextSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentTextChange: This message is used for
@@ -5358,9 +6106,9 @@ type GoogleCloudDocumentaiV1beta2DocumentTextChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2DocumentTextChange) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2DocumentTextChange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentTextChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2GcsDestination: The Google Cloud Storage
@@ -5380,9 +6128,9 @@ type GoogleCloudDocumentaiV1beta2GcsDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2GcsDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2GcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2GcsSource: The Google Cloud Storage location
@@ -5402,9 +6150,9 @@ type GoogleCloudDocumentaiV1beta2GcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2GcsSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2GcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2InputConfig: The desired input location and
@@ -5436,9 +6184,9 @@ type GoogleCloudDocumentaiV1beta2InputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2InputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2InputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2InputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2NormalizedVertex: A vertex represents a 2D point
@@ -5462,9 +6210,9 @@ type GoogleCloudDocumentaiV1beta2NormalizedVertex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2NormalizedVertex) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2NormalizedVertex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2NormalizedVertex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta2NormalizedVertex) UnmarshalJSON(data []byte) error {
@@ -5518,9 +6266,9 @@ type GoogleCloudDocumentaiV1beta2OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2OutputConfig: The desired output location and
@@ -5551,9 +6299,9 @@ type GoogleCloudDocumentaiV1beta2OutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2OutputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2OutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2ProcessDocumentResponse: Response to a single
@@ -5578,9 +6326,9 @@ type GoogleCloudDocumentaiV1beta2ProcessDocumentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2ProcessDocumentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2ProcessDocumentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2ProcessDocumentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta2Vertex: A vertex represents a 2D point in the
@@ -5604,9 +6352,9 @@ type GoogleCloudDocumentaiV1beta2Vertex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta2Vertex) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta2Vertex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2Vertex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3Barcode: Encodes the detailed information of a
@@ -5642,9 +6390,9 @@ type GoogleCloudDocumentaiV1beta3Barcode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3Barcode) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3Barcode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3Barcode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3BatchDatasetDocuments: Dataset documents that
@@ -5668,9 +6416,9 @@ type GoogleCloudDocumentaiV1beta3BatchDatasetDocuments struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3BatchDatasetDocuments) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3BatchDatasetDocuments) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3BatchDatasetDocuments
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3BatchDatasetDocumentsIndividualDocumentIds: List
@@ -5692,9 +6440,9 @@ type GoogleCloudDocumentaiV1beta3BatchDatasetDocumentsIndividualDocumentIds stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3BatchDatasetDocumentsIndividualDocumentIds) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3BatchDatasetDocumentsIndividualDocumentIds) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3BatchDatasetDocumentsIndividualDocumentIds
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsMetadata struct {
@@ -5721,9 +6469,9 @@ type GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsMetadataIndividualBatchDelete
@@ -5746,9 +6494,9 @@ type GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsMetadataIndividualBatchDele
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsRequest struct {
@@ -5770,9 +6518,9 @@ type GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3BatchDeleteDocumentsResponse: Response of the
@@ -5801,9 +6549,9 @@ type GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3BatchProcessMetadata: The long-running operation
@@ -5843,9 +6591,9 @@ type GoogleCloudDocumentaiV1beta3BatchProcessMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3BatchProcessMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3BatchProcessMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3BatchProcessMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus: The
@@ -5880,9 +6628,9 @@ type GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3BatchProcessRequest: Request message for
@@ -5922,9 +6670,9 @@ type GoogleCloudDocumentaiV1beta3BatchProcessRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3BatchProcessRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3BatchProcessRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3BatchProcessRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchInputConfig: The message
@@ -5951,9 +6699,9 @@ type GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchInputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchInputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchInputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchOutputConfig: The output
@@ -5975,9 +6723,9 @@ type GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchOutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchOutputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchOutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchOutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3BatchProcessResponse: Response message for
@@ -6005,9 +6753,9 @@ type GoogleCloudDocumentaiV1beta3BoundingPoly struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3BoundingPoly) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3BoundingPoly) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3BoundingPoly
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3CommonOperationMetadata: The common metadata for
@@ -6045,9 +6793,9 @@ type GoogleCloudDocumentaiV1beta3CommonOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3CommonOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3Dataset: A singleton resource under a Processor
@@ -6063,6 +6811,10 @@ type GoogleCloudDocumentaiV1beta3Dataset struct {
 	// Name: Dataset resource name. Format:
 	// `projects/{project}/locations/{location}/processors/{processor}/dataset`
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SpannerIndexingConfig: Optional. A lightweight indexing source with low
 	// latency and high reliability, but lacking advanced features like CMEK and
 	// content-based search.
@@ -6092,9 +6844,9 @@ type GoogleCloudDocumentaiV1beta3Dataset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3Dataset) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3Dataset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3Dataset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig: Configuration
@@ -6119,9 +6871,9 @@ type GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DatasetGCSManagedConfig: Configuration specific
@@ -6143,9 +6895,9 @@ type GoogleCloudDocumentaiV1beta3DatasetGCSManagedConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DatasetGCSManagedConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DatasetGCSManagedConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DatasetGCSManagedConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DatasetSchema: Dataset Schema.
@@ -6172,9 +6924,9 @@ type GoogleCloudDocumentaiV1beta3DatasetSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DatasetSchema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DatasetSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DatasetSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DatasetSpannerIndexingConfig: Configuration
@@ -6205,9 +6957,9 @@ type GoogleCloudDocumentaiV1beta3DeleteProcessorMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DeleteProcessorMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DeleteProcessorMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DeleteProcessorMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DeleteProcessorVersionMetadata: The long-running
@@ -6228,9 +6980,9 @@ type GoogleCloudDocumentaiV1beta3DeleteProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DeleteProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DeleteProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DeleteProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DeployProcessorVersionMetadata: The long-running
@@ -6251,9 +7003,9 @@ type GoogleCloudDocumentaiV1beta3DeployProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DeployProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DeployProcessorVersionRequest: Request message
@@ -6284,9 +7036,9 @@ type GoogleCloudDocumentaiV1beta3DisableProcessorMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DisableProcessorMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DisableProcessorMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DisableProcessorMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DisableProcessorRequest: Request message for the
@@ -6357,9 +7109,9 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3Document) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3Document) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3Document
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentChunkedDocument: Represents the chunks
@@ -6380,9 +7132,9 @@ type GoogleCloudDocumentaiV1beta3DocumentChunkedDocument struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentChunkedDocument) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentChunkedDocument) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentChunkedDocument
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunk: Represents a
@@ -6398,8 +7150,7 @@ type GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunk struct {
 	PageHeaders []*GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageHeader `json:"pageHeaders,omitempty"`
 	// PageSpan: Page span of the chunk.
 	PageSpan *GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageSpan `json:"pageSpan,omitempty"`
-	// SourceBlockIds: DO NOT USE. List of all parsed documents layout source
-	// blocks used to generate the chunk.
+	// SourceBlockIds: Unused.
 	SourceBlockIds []string `json:"sourceBlockIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChunkId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6414,9 +7165,9 @@ type GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunk) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunk) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageFooter:
@@ -6439,9 +7190,9 @@ type GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageFooter str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageFooter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageFooter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageFooter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageHeader:
@@ -6464,9 +7215,9 @@ type GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageHeader str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageHeader) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageSpan:
@@ -6489,9 +7240,9 @@ type GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageSpan struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageSpan) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageSpan) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentChunkedDocumentChunkChunkPageSpan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentDocumentLayout: Represents the parsed
@@ -6513,9 +7264,9 @@ type GoogleCloudDocumentaiV1beta3DocumentDocumentLayout struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentDocumentLayout) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentDocumentLayout) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentDocumentLayout
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlock:
@@ -6545,9 +7296,9 @@ type GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlock struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlock) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlock
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutLi
@@ -6571,9 +7322,9 @@ type GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayout
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutListBlock) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutListBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutListBlock
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutLi
@@ -6595,9 +7346,9 @@ type GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayout
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutListEntry) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutListEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutListEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutPa
@@ -6620,9 +7371,9 @@ type GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayout
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutPageSpan) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutPageSpan) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutPageSpan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTa
@@ -6647,9 +7398,9 @@ type GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayout
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTableBlock) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTableBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTableBlock
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTa
@@ -6675,9 +7426,9 @@ type GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayout
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTableCell) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTableCell) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTableCell
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTa
@@ -6698,9 +7449,9 @@ type GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayout
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTableRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTe
@@ -6728,9 +7479,9 @@ type GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayout
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTextBlock) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTextBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentDocumentLayoutDocumentLayoutBlockLayoutTextBlock
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentEntity: An entity that could be a phrase
@@ -6781,9 +7532,9 @@ type GoogleCloudDocumentaiV1beta3DocumentEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentEntity) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentEntity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3DocumentEntity) UnmarshalJSON(data []byte) error {
@@ -6844,9 +7595,9 @@ type GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue) UnmarshalJSON(data []byte) error {
@@ -6885,9 +7636,9 @@ type GoogleCloudDocumentaiV1beta3DocumentEntityRelation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentEntityRelation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentEntityRelation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentEntityRelation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentId: Document Identifier.
@@ -6911,9 +7662,9 @@ type GoogleCloudDocumentaiV1beta3DocumentId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentId) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentId) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentIdGCSManagedDocumentId: Identifies a
@@ -6937,9 +7688,9 @@ type GoogleCloudDocumentaiV1beta3DocumentIdGCSManagedDocumentId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentIdGCSManagedDocumentId) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentIdGCSManagedDocumentId) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentIdGCSManagedDocumentId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentIdUnmanagedDocumentId: Identifies a
@@ -6960,9 +7711,9 @@ type GoogleCloudDocumentaiV1beta3DocumentIdUnmanagedDocumentId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentIdUnmanagedDocumentId) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentIdUnmanagedDocumentId) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentIdUnmanagedDocumentId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentMetadata: Metadata about a document.
@@ -7003,9 +7754,9 @@ type GoogleCloudDocumentaiV1beta3DocumentMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentOutputConfig: Config that controls the
@@ -7026,9 +7777,9 @@ type GoogleCloudDocumentaiV1beta3DocumentOutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentOutputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentOutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentOutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig: The
@@ -7055,9 +7806,9 @@ type GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfigShardingConfig
@@ -7080,9 +7831,9 @@ type GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfigShardingConf
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfigShardingConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfigShardingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfigShardingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPage: A page in a Document.
@@ -7143,9 +7894,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageAnchor: Referencing the visual
@@ -7168,9 +7919,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageAnchor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageAnchor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageAnchor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageAnchor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageAnchorPageRef: Represents a weak
@@ -7216,9 +7967,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageAnchorPageRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageAnchorPageRef) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageAnchorPageRef) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageAnchorPageRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3DocumentPageAnchorPageRef) UnmarshalJSON(data []byte) error {
@@ -7257,9 +8008,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageBlock struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageBlock) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageBlock
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageDetectedBarcode: A detected barcode.
@@ -7281,9 +8032,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageDetectedBarcode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageDetectedBarcode) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageDetectedBarcode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageDetectedBarcode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageDetectedLanguage: Detected language
@@ -7308,9 +8059,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageDetectedLanguage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageDetectedLanguage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageDetectedLanguage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageDetectedLanguage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3DocumentPageDetectedLanguage) UnmarshalJSON(data []byte) error {
@@ -7348,9 +8099,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageDimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageDimension) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageDimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3DocumentPageDimension) UnmarshalJSON(data []byte) error {
@@ -7410,9 +8161,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageFormField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageFormField) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageFormField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageFormField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageImage: Rendered image contents for
@@ -7441,9 +8192,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageImage) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageImage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores: Image quality
@@ -7467,9 +8218,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScores) UnmarshalJSON(data []byte) error {
@@ -7511,9 +8262,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefect st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefect) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefect) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefect
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3DocumentPageImageQualityScoresDetectedDefect) UnmarshalJSON(data []byte) error {
@@ -7566,9 +8317,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageLayout struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageLayout) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageLayout) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageLayout
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3DocumentPageLayout) UnmarshalJSON(data []byte) error {
@@ -7608,9 +8359,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageLine struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageLine) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageLine) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageLine
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageMatrix: Representation for
@@ -7641,9 +8392,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageMatrix struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageMatrix) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageMatrix) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageMatrix
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageParagraph: A collection of lines
@@ -7668,9 +8419,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageParagraph struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageParagraph) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageParagraph) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageParagraph
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageSymbol: A detected symbol.
@@ -7692,9 +8443,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageSymbol struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageSymbol) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageSymbol) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageSymbol
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageTable: A table representation
@@ -7723,9 +8474,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageTable) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageTable) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageTableTableCell: A cell
@@ -7752,9 +8503,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageTableTableCell struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageTableTableCell) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageTableTableCell) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageTableTableCell
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageTableTableRow: A row of table cells.
@@ -7774,9 +8525,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageTableTableRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageTableTableRow) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageTableTableRow) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageTableTableRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageToken: A detected token.
@@ -7804,9 +8555,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageToken) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageToken) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageTokenDetectedBreak: Detected break
@@ -7834,9 +8585,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageTokenDetectedBreak struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageTokenDetectedBreak) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageTokenDetectedBreak) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageTokenDetectedBreak
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageTokenStyleInfo: Font and other text
@@ -7892,9 +8643,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageTokenStyleInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageTokenStyleInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageTokenStyleInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageTokenStyleInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3DocumentPageTokenStyleInfo) UnmarshalJSON(data []byte) error {
@@ -7935,9 +8686,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageVisualElement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentPageVisualElement) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentPageVisualElement) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageVisualElement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentProvenance: Structure to identify
@@ -7981,9 +8732,9 @@ type GoogleCloudDocumentaiV1beta3DocumentProvenance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentProvenance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentProvenance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentProvenance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentProvenanceParent: The parent element the
@@ -8010,9 +8761,9 @@ type GoogleCloudDocumentaiV1beta3DocumentProvenanceParent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentProvenanceParent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentProvenanceParent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentProvenanceParent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentRevision: Contains past or forward
@@ -8053,9 +8804,9 @@ type GoogleCloudDocumentaiV1beta3DocumentRevision struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentRevision) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentRevision) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentRevision
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentRevisionHumanReview: Human Review
@@ -8079,9 +8830,9 @@ type GoogleCloudDocumentaiV1beta3DocumentRevisionHumanReview struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentRevisionHumanReview) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentRevisionHumanReview) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentRevisionHumanReview
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentSchema: The schema defines the output of
@@ -8108,9 +8859,9 @@ type GoogleCloudDocumentaiV1beta3DocumentSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentSchema) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType: EntityType is the
@@ -8154,9 +8905,9 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues: Defines the
@@ -8177,9 +8928,9 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty: Defines
@@ -8221,9 +8972,9 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata: Metadata for global
@@ -8256,9 +9007,9 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentSchemaMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentShardInfo: For a large document,
@@ -8285,9 +9036,9 @@ type GoogleCloudDocumentaiV1beta3DocumentShardInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentShardInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentShardInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentShardInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentStyle: Annotation for common text style
@@ -8329,9 +9080,9 @@ type GoogleCloudDocumentaiV1beta3DocumentStyle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentStyle) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentStyle) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentStyle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentStyleFontSize: Font size with unit.
@@ -8354,9 +9105,9 @@ type GoogleCloudDocumentaiV1beta3DocumentStyleFontSize struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentStyleFontSize) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentStyleFontSize) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentStyleFontSize
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3DocumentStyleFontSize) UnmarshalJSON(data []byte) error {
@@ -8394,9 +9145,9 @@ type GoogleCloudDocumentaiV1beta3DocumentTextAnchor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentTextAnchor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentTextAnchor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentTextAnchor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentTextAnchorTextSegment: A text segment in
@@ -8421,9 +9172,9 @@ type GoogleCloudDocumentaiV1beta3DocumentTextAnchorTextSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentTextAnchorTextSegment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentTextAnchorTextSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentTextAnchorTextSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentTextChange: This message is used for
@@ -8452,9 +9203,9 @@ type GoogleCloudDocumentaiV1beta3DocumentTextChange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentTextChange) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3DocumentTextChange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentTextChange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3EnableProcessorMetadata: The long-running
@@ -8475,9 +9226,9 @@ type GoogleCloudDocumentaiV1beta3EnableProcessorMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3EnableProcessorMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3EnableProcessorMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3EnableProcessorMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3EnableProcessorRequest: Request message for the
@@ -8509,9 +9260,9 @@ type GoogleCloudDocumentaiV1beta3EntityTypeMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3EntityTypeMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3EntityTypeMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3EntityTypeMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionMetadata: Metadata of
@@ -8532,9 +9283,9 @@ type GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest: Evaluates the
@@ -8556,9 +9307,9 @@ type GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse: Response of
@@ -8579,9 +9330,9 @@ type GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3Evaluation: An evaluation of a
@@ -8619,9 +9370,9 @@ type GoogleCloudDocumentaiV1beta3Evaluation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3Evaluation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3Evaluation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3Evaluation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3EvaluationConfidenceLevelMetrics: Evaluations
@@ -8644,9 +9395,9 @@ type GoogleCloudDocumentaiV1beta3EvaluationConfidenceLevelMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3EvaluationConfidenceLevelMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3EvaluationConfidenceLevelMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationConfidenceLevelMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3EvaluationConfidenceLevelMetrics) UnmarshalJSON(data []byte) error {
@@ -8689,9 +9440,9 @@ type GoogleCloudDocumentaiV1beta3EvaluationCounters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3EvaluationCounters) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3EvaluationCounters) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationCounters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3EvaluationMetrics: Evaluation metrics, either in
@@ -8735,9 +9486,9 @@ type GoogleCloudDocumentaiV1beta3EvaluationMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3EvaluationMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3EvaluationMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3EvaluationMetrics) UnmarshalJSON(data []byte) error {
@@ -8804,9 +9555,9 @@ type GoogleCloudDocumentaiV1beta3EvaluationMultiConfidenceMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3EvaluationMultiConfidenceMetrics) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3EvaluationMultiConfidenceMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationMultiConfidenceMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3EvaluationMultiConfidenceMetrics) UnmarshalJSON(data []byte) error {
@@ -8856,9 +9607,9 @@ type GoogleCloudDocumentaiV1beta3EvaluationReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3EvaluationReference) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3EvaluationReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse: Response message
@@ -8882,9 +9633,9 @@ type GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3FieldExtractionMetadata: Metadata for how this
@@ -8905,9 +9656,9 @@ type GoogleCloudDocumentaiV1beta3FieldExtractionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3FieldExtractionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3FieldExtractionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3FieldExtractionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3GcsDocument: Specifies a document stored on
@@ -8930,9 +9681,9 @@ type GoogleCloudDocumentaiV1beta3GcsDocument struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3GcsDocument) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3GcsDocument) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3GcsDocument
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3GcsDocuments: Specifies a set of documents on
@@ -8953,9 +9704,9 @@ type GoogleCloudDocumentaiV1beta3GcsDocuments struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3GcsDocuments) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3GcsDocuments) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3GcsDocuments
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3GcsPrefix: Specifies all documents on Cloud
@@ -8976,9 +9727,9 @@ type GoogleCloudDocumentaiV1beta3GcsPrefix struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3GcsPrefix) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3GcsPrefix) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3GcsPrefix
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDocumentaiV1beta3GetDocumentResponse struct {
@@ -8999,9 +9750,9 @@ type GoogleCloudDocumentaiV1beta3GetDocumentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3GetDocumentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3GetDocumentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3GetDocumentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3HumanReviewStatus: The status of human review on
@@ -9042,9 +9793,9 @@ type GoogleCloudDocumentaiV1beta3HumanReviewStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3HumanReviewStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3HumanReviewStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3HumanReviewStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ImportDocumentsMetadata: Metadata of the import
@@ -9073,9 +9824,9 @@ type GoogleCloudDocumentaiV1beta3ImportDocumentsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ImportDocumentsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ImportDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ImportDocumentsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ImportDocumentsMetadataImportConfigValidationResu
@@ -9100,9 +9851,9 @@ type GoogleCloudDocumentaiV1beta3ImportDocumentsMetadataImportConfigValidationRe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ImportDocumentsMetadataImportConfigValidationResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ImportDocumentsMetadataImportConfigValidationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ImportDocumentsMetadataImportConfigValidationResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ImportDocumentsMetadataIndividualImportStatus:
@@ -9128,9 +9879,9 @@ type GoogleCloudDocumentaiV1beta3ImportDocumentsMetadataIndividualImportStatus s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ImportDocumentsMetadataIndividualImportStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ImportDocumentsMetadataIndividualImportStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ImportDocumentsMetadataIndividualImportStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDocumentaiV1beta3ImportDocumentsRequest struct {
@@ -9150,9 +9901,9 @@ type GoogleCloudDocumentaiV1beta3ImportDocumentsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ImportDocumentsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ImportDocumentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ImportDocumentsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ImportDocumentsRequestBatchDocumentsImportConfig:
@@ -9188,9 +9939,9 @@ type GoogleCloudDocumentaiV1beta3ImportDocumentsRequestBatchDocumentsImportConfi
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ImportDocumentsRequestBatchDocumentsImportConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ImportDocumentsRequestBatchDocumentsImportConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ImportDocumentsRequestBatchDocumentsImportConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ImportDocumentsRequestBatchDocumentsImportConfigA
@@ -9211,9 +9962,9 @@ type GoogleCloudDocumentaiV1beta3ImportDocumentsRequestBatchDocumentsImportConfi
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ImportDocumentsRequestBatchDocumentsImportConfigAutoSplitConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ImportDocumentsRequestBatchDocumentsImportConfigAutoSplitConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ImportDocumentsRequestBatchDocumentsImportConfigAutoSplitConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3ImportDocumentsRequestBatchDocumentsImportConfigAutoSplitConfig) UnmarshalJSON(data []byte) error {
@@ -9253,9 +10004,9 @@ type GoogleCloudDocumentaiV1beta3ImportProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ImportProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ImportProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ImportProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest: The request
@@ -9290,9 +10041,9 @@ type GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequestExternalProcessorVer
@@ -9318,9 +10069,9 @@ type GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequestExternalProcessorV
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequestExternalProcessorVersionSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequestExternalProcessorVersionSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequestExternalProcessorVersionSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ImportProcessorVersionResponse: The response
@@ -9341,9 +10092,9 @@ type GoogleCloudDocumentaiV1beta3ImportProcessorVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ImportProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ImportProcessorVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ImportProcessorVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDocumentaiV1beta3ListDocumentsRequest struct {
@@ -9392,9 +10143,9 @@ type GoogleCloudDocumentaiV1beta3ListDocumentsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ListDocumentsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ListDocumentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ListDocumentsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudDocumentaiV1beta3ListDocumentsResponse struct {
@@ -9422,9 +10173,9 @@ type GoogleCloudDocumentaiV1beta3ListDocumentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ListDocumentsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ListDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ListDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ListEvaluationsResponse: The response from
@@ -9451,9 +10202,9 @@ type GoogleCloudDocumentaiV1beta3ListEvaluationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ListEvaluationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ListEvaluationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ListEvaluationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ListProcessorTypesResponse: Response message for
@@ -9479,9 +10230,9 @@ type GoogleCloudDocumentaiV1beta3ListProcessorTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ListProcessorTypesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ListProcessorTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ListProcessorTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ListProcessorVersionsResponse: Response message
@@ -9507,9 +10258,9 @@ type GoogleCloudDocumentaiV1beta3ListProcessorVersionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ListProcessorVersionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ListProcessorVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ListProcessorVersionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ListProcessorsResponse: Response message for the
@@ -9535,9 +10286,9 @@ type GoogleCloudDocumentaiV1beta3ListProcessorsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ListProcessorsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ListProcessorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ListProcessorsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3NormalizedVertex: A vertex represents a 2D point
@@ -9561,9 +10312,9 @@ type GoogleCloudDocumentaiV1beta3NormalizedVertex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3NormalizedVertex) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3NormalizedVertex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3NormalizedVertex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3NormalizedVertex) UnmarshalJSON(data []byte) error {
@@ -9624,9 +10375,9 @@ type GoogleCloudDocumentaiV1beta3OcrConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3OcrConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3OcrConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3OcrConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3OcrConfigHints: Hints for OCR Engine
@@ -9651,9 +10402,9 @@ type GoogleCloudDocumentaiV1beta3OcrConfigHints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3OcrConfigHints) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3OcrConfigHints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3OcrConfigHints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3OcrConfigPremiumFeatures: Configurations for
@@ -9680,9 +10431,9 @@ type GoogleCloudDocumentaiV1beta3OcrConfigPremiumFeatures struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3OcrConfigPremiumFeatures) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3OcrConfigPremiumFeatures) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3OcrConfigPremiumFeatures
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ProcessOptions: Options for Process API
@@ -9717,9 +10468,9 @@ type GoogleCloudDocumentaiV1beta3ProcessOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ProcessOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ProcessOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ProcessOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ProcessOptionsIndividualPageSelector: A list of
@@ -9740,9 +10491,9 @@ type GoogleCloudDocumentaiV1beta3ProcessOptionsIndividualPageSelector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ProcessOptionsIndividualPageSelector) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ProcessOptionsIndividualPageSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ProcessOptionsIndividualPageSelector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfig: Serving config for
@@ -9763,9 +10514,9 @@ type GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfigChunkingConfig:
@@ -9797,9 +10548,9 @@ type GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfigChunkingConfig struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfigChunkingConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfigChunkingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ProcessOptionsLayoutConfigChunkingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ProcessRequest: Request message for the
@@ -9814,6 +10565,8 @@ type GoogleCloudDocumentaiV1beta3ProcessRequest struct {
 	FieldMask string `json:"fieldMask,omitempty"`
 	// GcsDocument: A raw document on Google Cloud Storage.
 	GcsDocument *GoogleCloudDocumentaiV1beta3GcsDocument `json:"gcsDocument,omitempty"`
+	// ImagelessMode: Optional. Option to remove images from the document.
+	ImagelessMode bool `json:"imagelessMode,omitempty"`
 	// InlineDocument: An inline document proto.
 	InlineDocument *GoogleCloudDocumentaiV1beta3Document `json:"inlineDocument,omitempty"`
 	// Labels: Optional. The labels with user-defined metadata for the request.
@@ -9842,9 +10595,9 @@ type GoogleCloudDocumentaiV1beta3ProcessRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ProcessRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ProcessRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ProcessRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ProcessResponse: Response message for the
@@ -9876,9 +10629,9 @@ type GoogleCloudDocumentaiV1beta3ProcessResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ProcessResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ProcessResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ProcessResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3Processor: The first-class citizen for Document
@@ -9902,6 +10655,10 @@ type GoogleCloudDocumentaiV1beta3Processor struct {
 	ProcessEndpoint string `json:"processEndpoint,omitempty"`
 	// ProcessorVersionAliases: Output only. The processor version aliases.
 	ProcessorVersionAliases []*GoogleCloudDocumentaiV1beta3ProcessorVersionAlias `json:"processorVersionAliases,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. The state of the processor.
 	//
 	// Possible values:
@@ -9943,9 +10700,9 @@ type GoogleCloudDocumentaiV1beta3Processor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3Processor) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3Processor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3Processor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ProcessorType: A processor type is responsible
@@ -10019,9 +10776,9 @@ type GoogleCloudDocumentaiV1beta3ProcessorType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ProcessorType) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ProcessorType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo: The location
@@ -10043,9 +10800,9 @@ type GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ProcessorVersion: A processor version is an
@@ -10063,6 +10820,9 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// DocumentSchema: The schema of the processor version. Describes the output.
 	DocumentSchema *GoogleCloudDocumentaiV1beta3DocumentSchema `json:"documentSchema,omitempty"`
+	// GenAiModelInfo: Output only. Information about Generative AI model-based
+	// processor versions.
+	GenAiModelInfo *GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfo `json:"genAiModelInfo,omitempty"`
 	// GoogleManaged: Output only. Denotes that this `ProcessorVersion` is managed
 	// by Google.
 	GoogleManaged bool `json:"googleManaged,omitempty"`
@@ -10085,6 +10845,10 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
 	// `projects/{project}/locations/{location}/processors/{processor}/processorVers
 	// ions/{processor_version}`
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. The state of the processor version.
 	//
 	// Possible values:
@@ -10116,9 +10880,9 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ProcessorVersion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ProcessorVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ProcessorVersionAlias: Contains the alias and
@@ -10141,9 +10905,9 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersionAlias struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ProcessorVersionAlias) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ProcessorVersionAlias) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersionAlias
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ProcessorVersionDeprecationInfo: Information
@@ -10168,9 +10932,95 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersionDeprecationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ProcessorVersionDeprecationInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ProcessorVersionDeprecationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersionDeprecationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfo: Information
+// about Generative AI model-based processor versions.
+type GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfo struct {
+	// CustomGenAiModelInfo: Information for a custom Generative AI model created
+	// by the user.
+	CustomGenAiModelInfo *GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoCustomGenAiModelInfo `json:"customGenAiModelInfo,omitempty"`
+	// FoundationGenAiModelInfo: Information for a pretrained Google-managed
+	// foundation model.
+	FoundationGenAiModelInfo *GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo `json:"foundationGenAiModelInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomGenAiModelInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomGenAiModelInfo") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoCustomGenAiModelInf
+// o: Information for a custom Generative AI model created by the user. These
+// are created with `Create New Version` in either the `Call foundation model`
+// or `Fine tuning` tabs.
+type GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoCustomGenAiModelInfo struct {
+	// BaseProcessorVersionId: The base processor version ID for the custom model.
+	BaseProcessorVersionId string `json:"baseProcessorVersionId,omitempty"`
+	// CustomModelType: The type of custom model created by the user.
+	//
+	// Possible values:
+	//   "CUSTOM_MODEL_TYPE_UNSPECIFIED" - The model type is unspecified.
+	//   "VERSIONED_FOUNDATION" - The model is a versioned foundation model.
+	//   "FINE_TUNED" - The model is a finetuned foundation model.
+	CustomModelType string `json:"customModelType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseProcessorVersionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseProcessorVersionId") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoCustomGenAiModelInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoCustomGenAiModelInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoFoundationGenAiMode
+// lInfo: Information for a pretrained Google-managed foundation model.
+type GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo struct {
+	// FinetuningAllowed: Whether finetuning is allowed for this base processor
+	// version.
+	FinetuningAllowed bool `json:"finetuningAllowed,omitempty"`
+	// MinTrainLabeledDocuments: The minimum number of labeled documents in the
+	// training dataset required for finetuning.
+	MinTrainLabeledDocuments int64 `json:"minTrainLabeledDocuments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FinetuningAllowed") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FinetuningAllowed") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3PropertyMetadata: Metadata about a property.
@@ -10192,9 +11042,9 @@ type GoogleCloudDocumentaiV1beta3PropertyMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3PropertyMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3PropertyMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3PropertyMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3RawDocument: Payload message of raw document
@@ -10223,9 +11073,9 @@ type GoogleCloudDocumentaiV1beta3RawDocument struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3RawDocument) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3RawDocument) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3RawDocument
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ReviewDocumentOperationMetadata: The
@@ -10265,9 +11115,9 @@ type GoogleCloudDocumentaiV1beta3ReviewDocumentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ReviewDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ReviewDocumentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ReviewDocumentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ReviewDocumentRequest: Request message for the
@@ -10302,9 +11152,9 @@ type GoogleCloudDocumentaiV1beta3ReviewDocumentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ReviewDocumentRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ReviewDocumentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ReviewDocumentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3ReviewDocumentResponse: Response message for the
@@ -10336,9 +11186,9 @@ type GoogleCloudDocumentaiV1beta3ReviewDocumentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3ReviewDocumentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3ReviewDocumentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ReviewDocumentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3RevisionRef: The revision reference specifies
@@ -10373,9 +11223,9 @@ type GoogleCloudDocumentaiV1beta3RevisionRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3RevisionRef) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3RevisionRef) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3RevisionRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionMetadata: The
@@ -10396,9 +11246,9 @@ type GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest: Request
@@ -10422,9 +11272,9 @@ type GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionResponse: Response
@@ -10463,9 +11313,9 @@ type GoogleCloudDocumentaiV1beta3SummaryOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3SummaryOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3SummaryOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3SummaryOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata: The metadata that
@@ -10490,9 +11340,9 @@ type GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation:
@@ -10524,9 +11374,9 @@ type GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest: Request message
@@ -10563,9 +11413,9 @@ type GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestCustomDocumentExtract
@@ -10592,9 +11442,9 @@ type GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestCustomDocumentExtra
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestCustomDocumentExtractionOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestCustomDocumentExtractionOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestCustomDocumentExtractionOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestFoundationModelTuning
@@ -10621,9 +11471,9 @@ type GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestFoundationModelTuni
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestFoundationModelTuningOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestFoundationModelTuningOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestFoundationModelTuningOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestFoundationModelTuningOptions) UnmarshalJSON(data []byte) error {
@@ -10660,9 +11510,9 @@ type GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestInputData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestInputData) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestInputData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestInputData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3TrainProcessorVersionResponse: The response for
@@ -10684,9 +11534,9 @@ type GoogleCloudDocumentaiV1beta3TrainProcessorVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3TrainProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3TrainProcessorVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3TrainProcessorVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3UndeployProcessorVersionMetadata: The
@@ -10707,9 +11557,9 @@ type GoogleCloudDocumentaiV1beta3UndeployProcessorVersionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3UndeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3UndeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3UndeployProcessorVersionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3UndeployProcessorVersionRequest: Request message
@@ -10738,9 +11588,9 @@ type GoogleCloudDocumentaiV1beta3UpdateDatasetOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3UpdateDatasetOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3UpdateDatasetOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3UpdateDatasetOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1beta3Vertex: A vertex represents a 2D point in the
@@ -10764,9 +11614,9 @@ type GoogleCloudDocumentaiV1beta3Vertex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3Vertex) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDocumentaiV1beta3Vertex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3Vertex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudLocationListLocationsResponse: The response message for
@@ -10793,9 +11643,9 @@ type GoogleCloudLocationListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudLocationListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudLocationLocation: A resource that represents a Google Cloud
@@ -10832,9 +11682,9 @@ type GoogleCloudLocationLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudLocationLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningListOperationsResponse: The response message for
@@ -10861,9 +11711,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -10908,9 +11758,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -10952,9 +11802,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeColor: Represents a color in the RGBA color space. This
@@ -11035,9 +11885,9 @@ type GoogleTypeColor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeColor) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeColor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeColor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleTypeColor) UnmarshalJSON(data []byte) error {
@@ -11093,9 +11943,9 @@ type GoogleTypeDate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeDateTime: Represents civil time (or occasionally physical time).
@@ -11156,9 +12006,9 @@ type GoogleTypeDateTime struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDateTime) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDateTime) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDateTime
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeMoney: Represents an amount of money with its currency type.
@@ -11187,9 +12037,9 @@ type GoogleTypeMoney struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeMoney
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypePostalAddress: Represents a postal address, e.g. for postal
@@ -11286,9 +12136,9 @@ type GoogleTypePostalAddress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypePostalAddress) MarshalJSON() ([]byte, error) {
+func (s GoogleTypePostalAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypePostalAddress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone Database
@@ -11311,9 +12161,9 @@ type GoogleTypeTimeZone struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeTimeZone
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsFetchProcessorTypesCall struct {
@@ -12423,7 +13273,11 @@ type ProjectsLocationsProcessorsCreateCall struct {
 }
 
 // Create: Creates a processor from the ProcessorType provided. The processor
-// will be at `ENABLED` state by default after its creation.
+// will be at `ENABLED` state by default after its creation. Note that this
+// method requires the `documentai.processors.create` permission on the
+// project, which is highly privileged. A user or service account with this
+// permission can create new processors that can interact with any gcs bucket
+// in your project.
 //
 //   - parent: The parent (project and location) under which to create the
 //     processor. Format: `projects/{project}/locations/{location}`.
@@ -13292,7 +14146,11 @@ type ProjectsLocationsProcessorsUpdateDatasetCall struct {
 	header_                             http.Header
 }
 
-// UpdateDataset: Updates metadata associated with a dataset.
+// UpdateDataset: Updates metadata associated with a dataset. Note that this
+// method requires the `documentai.googleapis.com/datasets.update` permission
+// on the project, which is highly privileged. A user or service account with
+// this permission can create new processors that can interact with any gcs
+// bucket in your project.
 //
 //   - name: Dataset resource name. Format:
 //     `projects/{project}/locations/{location}/processors/{processor}/dataset`.

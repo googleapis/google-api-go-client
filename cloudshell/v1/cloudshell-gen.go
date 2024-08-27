@@ -213,9 +213,9 @@ type AddPublicKeyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddPublicKeyRequest) MarshalJSON() ([]byte, error) {
+func (s AddPublicKeyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddPublicKeyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddPublicKeyResponse: Response message for AddPublicKey.
@@ -235,9 +235,9 @@ type AddPublicKeyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddPublicKeyResponse) MarshalJSON() ([]byte, error) {
+func (s AddPublicKeyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AddPublicKeyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuthorizeEnvironmentMetadata: Message included in the metadata field of
@@ -267,9 +267,9 @@ type AuthorizeEnvironmentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuthorizeEnvironmentRequest) MarshalJSON() ([]byte, error) {
+func (s AuthorizeEnvironmentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthorizeEnvironmentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuthorizeEnvironmentResponse: Response message for AuthorizeEnvironment.
@@ -363,9 +363,9 @@ type Environment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Environment) MarshalJSON() ([]byte, error) {
+func (s Environment) MarshalJSON() ([]byte, error) {
 	type NoMethod Environment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -391,9 +391,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -438,9 +438,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemovePublicKeyMetadata: Message included in the metadata field of
@@ -465,9 +465,9 @@ type RemovePublicKeyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemovePublicKeyRequest) MarshalJSON() ([]byte, error) {
+func (s RemovePublicKeyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RemovePublicKeyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemovePublicKeyResponse: Response message for RemovePublicKey.
@@ -508,9 +508,9 @@ type StartEnvironmentMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StartEnvironmentMetadata) MarshalJSON() ([]byte, error) {
+func (s StartEnvironmentMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod StartEnvironmentMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartEnvironmentRequest: Request message for StartEnvironment.
@@ -536,9 +536,9 @@ type StartEnvironmentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StartEnvironmentRequest) MarshalJSON() ([]byte, error) {
+func (s StartEnvironmentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod StartEnvironmentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartEnvironmentResponse: Message included in the response field of
@@ -559,9 +559,9 @@ type StartEnvironmentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StartEnvironmentResponse) MarshalJSON() ([]byte, error) {
+func (s StartEnvironmentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod StartEnvironmentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -593,9 +593,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OperationsCancelCall struct {

@@ -1203,7 +1203,7 @@
       }
     }
   },
-  "revision": "20240226",
+  "revision": "20240806",
   "rootUrl": "https://vault.googleapis.com/",
   "schemas": {
     "AccountCount": {
@@ -1478,6 +1478,10 @@
       "description": "Service-specific options for holds.",
       "id": "CorpusQuery",
       "properties": {
+        "calendarQuery": {
+          "$ref": "HeldCalendarQuery",
+          "description": "Service-specific options for Calendar holds. If set, **CorpusType** must be **CALENDAR**."
+        },
         "driveQuery": {
           "$ref": "HeldDriveQuery",
           "description": "Service-specific options for Drive holds. If set, **CorpusType** must be **DRIVE**."
@@ -1896,6 +1900,12 @@
       },
       "type": "object"
     },
+    "HeldCalendarQuery": {
+      "description": "Options for Calendar holds.",
+      "id": "HeldCalendarQuery",
+      "properties": {},
+      "type": "object"
+    },
     "HeldDriveQuery": {
       "description": "Options for Drive holds.",
       "id": "HeldDriveQuery",
@@ -2286,6 +2296,22 @@
             "$ref": "MatterPermission"
           },
           "type": "array"
+        },
+        "matterRegion": {
+          "description": "Optional. The requested data region for the matter.",
+          "enum": [
+            "MATTER_REGION_UNSPECIFIED",
+            "ANY",
+            "US",
+            "EUROPE"
+          ],
+          "enumDescriptions": [
+            "The region is unspecified. Defaults to ANY.",
+            "Any region.",
+            "United States region.",
+            "Europe region."
+          ],
+          "type": "string"
         },
         "name": {
           "description": "The name of the matter.",

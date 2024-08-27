@@ -203,9 +203,9 @@ type GoogleExampleLibraryagentV1Book struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleExampleLibraryagentV1Book) MarshalJSON() ([]byte, error) {
+func (s GoogleExampleLibraryagentV1Book) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleExampleLibraryagentV1Book
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleExampleLibraryagentV1ListBooksResponse: Response message for
@@ -233,9 +233,9 @@ type GoogleExampleLibraryagentV1ListBooksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleExampleLibraryagentV1ListBooksResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleExampleLibraryagentV1ListBooksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleExampleLibraryagentV1ListBooksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleExampleLibraryagentV1ListShelvesResponse: Response message for
@@ -263,9 +263,9 @@ type GoogleExampleLibraryagentV1ListShelvesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleExampleLibraryagentV1ListShelvesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleExampleLibraryagentV1ListShelvesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleExampleLibraryagentV1ListShelvesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleExampleLibraryagentV1Shelf: A Shelf contains a collection of books
@@ -292,9 +292,9 @@ type GoogleExampleLibraryagentV1Shelf struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleExampleLibraryagentV1Shelf) MarshalJSON() ([]byte, error) {
+func (s GoogleExampleLibraryagentV1Shelf) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleExampleLibraryagentV1Shelf
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ShelvesGetCall struct {

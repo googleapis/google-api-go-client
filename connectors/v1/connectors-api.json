@@ -1320,6 +1320,21 @@
                       "pattern": "^projects/[^/]+/locations/[^/]+/endpointAttachments/[^/]+$",
                       "required": true,
                       "type": "string"
+                    },
+                    "view": {
+                      "description": "Optional. Specifies which fields of the EndpointAttachment are returned in the response. Defaults to `ENDPOINT_ATTACHMENT_VIEW_BASIC` view.",
+                      "enum": [
+                        "ENDPOINT_ATTACHMENT_VIEW_UNSPECIFIED",
+                        "ENDPOINT_ATTACHMENT_VIEW_BASIC",
+                        "ENDPOINT_ATTACHMENT_VIEW_FULL"
+                      ],
+                      "enumDescriptions": [
+                        "ENDPOINT_ATTACHMENT_VIEW_UNSPECIFIED.",
+                        "Do not include status.",
+                        "Includes Status."
+                      ],
+                      "location": "query",
+                      "type": "string"
                     }
                   },
                   "path": "v1/{+name}",
@@ -1365,6 +1380,21 @@
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
+                      "type": "string"
+                    },
+                    "view": {
+                      "description": "Optional. Specifies which fields of the EndpointAttachment are returned in the response. Defaults to `ENDPOINT_ATTACHMENT_VIEW_BASIC` view.",
+                      "enum": [
+                        "ENDPOINT_ATTACHMENT_VIEW_UNSPECIFIED",
+                        "ENDPOINT_ATTACHMENT_VIEW_BASIC",
+                        "ENDPOINT_ATTACHMENT_VIEW_FULL"
+                      ],
+                      "enumDescriptions": [
+                        "ENDPOINT_ATTACHMENT_VIEW_UNSPECIFIED.",
+                        "Do not include status.",
+                        "Includes Status."
+                      ],
+                      "location": "query",
                       "type": "string"
                     }
                   },
@@ -2427,7 +2457,7 @@
       }
     }
   },
-  "revision": "20240504",
+  "revision": "20240822",
   "rootUrl": "https://connectors.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -2582,6 +2612,10 @@
         "displayName": {
           "description": "Display name for authentication template.",
           "type": "string"
+        },
+        "isDefault": {
+          "description": "Whether the auth config is the default one.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -2596,6 +2630,10 @@
         },
         "enablePkce": {
           "description": "Whether to enable PKCE for the auth code flow.",
+          "type": "boolean"
+        },
+        "omitQueryParams": {
+          "description": "Optional. Omit query params from the redirect URI.",
           "type": "boolean"
         },
         "scopes": {
@@ -2755,6 +2793,10 @@
           ],
           "type": "string"
         },
+        "multipleSelectConfig": {
+          "$ref": "MultipleSelectConfig",
+          "description": "Optional. MultipleSelectConfig represents the multiple options for a config variable."
+        },
         "required": {
           "description": "Flag represents that this `ConfigVariable` must be provided for a connection.",
           "type": "boolean"
@@ -2795,7 +2837,8 @@
             "SECRET",
             "ENUM",
             "AUTHORIZATION_CODE",
-            "ENCRYPTION_KEY"
+            "ENCRYPTION_KEY",
+            "MULTIPLE_SELECT"
           ],
           "enumDescriptions": [
             "Value type is not specified.",
@@ -2805,7 +2848,8 @@
             "Value type is secret.",
             "Value type is enum.",
             "Value type is authorization code.",
-            "Encryption Key."
+            "Encryption Key.",
+            "Value type is multiple select."
           ],
           "type": "string"
         }
@@ -2816,6 +2860,10 @@
       "description": "Connection represents an instance of connector.",
       "id": "Connection",
       "properties": {
+        "asyncOperationsEnabled": {
+          "description": "Optional. Async operations enabled for the connection. If Async Operations is enabled, Connection allows the customers to initiate async long running operations using the actions API.",
+          "type": "boolean"
+        },
         "authConfig": {
           "$ref": "AuthConfig",
           "description": "Optional. Configuration for establishing the connection's authentication with an external system."
@@ -2911,6 +2959,11 @@
           "description": "Output only. Eventing Runtime Data.",
           "readOnly": true
         },
+        "host": {
+          "description": "Output only. The name of the Hostname of the Service Directory service with TLS.",
+          "readOnly": true,
+          "type": "string"
+        },
         "imageLocation": {
           "description": "Output only. GCR location where the runtime image is stored. formatted like: gcr.io/{bucketName}/{imageName}",
           "readOnly": true,
@@ -2981,6 +3034,11 @@
         "suspended": {
           "description": "Optional. Suspended indicates if a user has suspended a connection or not.",
           "type": "boolean"
+        },
+        "tlsServiceDirectory": {
+          "description": "Output only. The name of the Service Directory service with TLS.",
+          "readOnly": true,
+          "type": "string"
         },
         "updateTime": {
           "description": "Output only. Updated time.",
@@ -3103,6 +3161,28 @@
       "description": "Connectors indicates a specific connector type, e.x. Salesforce, SAP etc.",
       "id": "Connector",
       "properties": {
+        "category": {
+          "description": "Output only. Category of the connector.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "connectorType": {
+          "description": "Output only. The type of the connector.",
+          "enum": [
+            "CONNECTOR_TYPE_UNSPECIFIED",
+            "CONNECTOR_TYPE_GOOGLE",
+            "CONNECTOR_TYPE_TECHNICAL",
+            "CONNECTOR_TYPE_THIRD_PARTY"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "Google connectors.",
+            "Technical connectors.",
+            "Third Party connectors."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
         "createTime": {
           "description": "Output only. Created time.",
           "format": "google-datetime",
@@ -3166,6 +3246,14 @@
           "readOnly": true,
           "type": "string"
         },
+        "tags": {
+          "description": "Output only. Tags of the connector.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "updateTime": {
           "description": "Output only. Updated time.",
           "format": "google-datetime",
@@ -3211,6 +3299,15 @@
           "description": "Max QPS supported for internal requests originating from Connd.",
           "format": "int64",
           "type": "string"
+        },
+        "maxInstanceRequestConcurrency": {
+          "description": "Max Instance Request Conncurrency for Cloud Run service.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "migrateDeploymentModel": {
+          "description": "Indicate whether connector is being migrated to cloud run deployment model.",
+          "type": "boolean"
         },
         "ratelimitThreshold": {
           "description": "Max QPS supported by the connector version before throttling of requests.",
@@ -3291,6 +3388,21 @@
           "description": "Output only. Eventing configuration supported by the Connector.",
           "readOnly": true
         },
+        "isAsyncOperationsSupported": {
+          "description": "Output only. Is async operations supported.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "isCustomActionsSupported": {
+          "description": "Output only. Is custom actions supported.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "isCustomEntitiesSupported": {
+          "description": "Output only. Is custom entities supported.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "labels": {
           "additionalProperties": {
             "type": "string"
@@ -3355,6 +3467,22 @@
           "description": "Output only. Information about the runtime features supported by the Connector.",
           "readOnly": true
         },
+        "supportedStandardActions": {
+          "description": "Output only. Supported standard actions.",
+          "items": {
+            "$ref": "StandardAction"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "supportedStandardEntities": {
+          "description": "Output only. Supported standard entities.",
+          "items": {
+            "$ref": "StandardEntity"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "unsupportedConnectionTypes": {
           "description": "Output only. Unsupported connection types.",
           "items": {
@@ -3408,6 +3536,25 @@
           ],
           "type": "string"
         },
+        "deploymentModelMigrationState": {
+          "description": "Output only. Status of the deployment model migration.",
+          "enum": [
+            "DEPLOYMENT_MODEL_MIGRATION_STATE_UNSPECIFIED",
+            "IN_PROGRESS",
+            "COMPLETED",
+            "ROLLEDBACK",
+            "ROLLBACK_IN_PROGRESS"
+          ],
+          "enumDescriptions": [
+            "Deployment model migration state is not specified.",
+            "Deployment model migration is in progress.",
+            "Deployment model migration is completed.",
+            "Deployment model migration rolledback.",
+            "Deployment model migration rollback in progress."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
         "hpaConfig": {
           "$ref": "HPAConfig",
           "description": "Output only. HPA autoscaling config.",
@@ -3418,6 +3565,12 @@
           "format": "int64",
           "readOnly": true,
           "type": "string"
+        },
+        "maxInstanceRequestConcurrency": {
+          "description": "Output only. Max instance request concurrency.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
         },
         "ratelimitThreshold": {
           "description": "Output only. Max QPS supported by the connector version before throttling of requests.",
@@ -3933,6 +4086,31 @@
         },
         "serviceAttachment": {
           "description": "Required. The path of the service attachment",
+          "type": "string"
+        },
+        "state": {
+          "description": "Output only. The Private Service Connect Connection Endpoint State. This value is only available in the Full view.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PENDING",
+            "ACCEPTED",
+            "REJECTED",
+            "CLOSED",
+            "FROZEN",
+            "NEEDS_ATTENTION",
+            "ACCEPTED_NOT_PROGRAMMED"
+          ],
+          "enumDescriptions": [
+            "STATE_UNSPECIFIED.",
+            "The endpoint is pending acceptance by the producer.",
+            "The endpoint has been accepted by the producer.",
+            "The endpoint has been rejected by the producer.",
+            "The endpoint has been closed by the producer and will not serve traffic going forward.",
+            "The endpoint has been frozen by the producer and will not serve traffic.",
+            "The endpoint has been accepted by the producer, but it is not ready to serve the traffic due to producer side issues.",
+            "The endpoint has been accepted by the producer, but it cannot be programmed to the data plane due to invariant violation."
+          ],
+          "readOnly": true,
           "type": "string"
         },
         "updateTime": {
@@ -5836,6 +6014,51 @@
       },
       "type": "object"
     },
+    "MultipleSelectConfig": {
+      "description": "MultipleSelectConfig represents the multiple options for a config variable.",
+      "id": "MultipleSelectConfig",
+      "properties": {
+        "allowCustomValues": {
+          "description": "Optional. Allow custom values.",
+          "type": "boolean"
+        },
+        "multipleSelectOptions": {
+          "description": "Required. Multiple select options.",
+          "items": {
+            "$ref": "MultipleSelectOption"
+          },
+          "type": "array"
+        },
+        "valueSeparator": {
+          "description": "Required. Value separator. Only \",\" can be used for OAuth auth code flow scope field.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MultipleSelectOption": {
+      "description": "MultiplSelecteOption represents the single option for a config variable.",
+      "id": "MultipleSelectOption",
+      "properties": {
+        "description": {
+          "description": "Optional. Value of the option.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Required. Display name of the option.",
+          "type": "string"
+        },
+        "key": {
+          "description": "Required. Key of the option.",
+          "type": "string"
+        },
+        "preselected": {
+          "description": "Optional. Indicates if the option is preselected.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "NetworkConfig": {
       "description": "Regional Network Config.",
       "id": "NetworkConfig",
@@ -6451,6 +6674,10 @@
           ],
           "type": "string"
         },
+        "defaultValue": {
+          "description": "The following field specifies the default value of the Parameter provided by the external system if a value is not provided.",
+          "type": "any"
+        },
         "description": {
           "description": "A brief description of the field.",
           "type": "string"
@@ -6462,6 +6689,10 @@
         "jsonSchema": {
           "$ref": "JsonSchema",
           "description": "JsonSchema representation of this action's result"
+        },
+        "nullable": {
+          "description": "Specifies whether a null value is allowed.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -7067,6 +7298,28 @@
             "TLS Handshake",
             "mutual TLS (MTLS) Handshake"
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "StandardAction": {
+      "description": "Standard action",
+      "id": "StandardAction",
+      "properties": {
+        "name": {
+          "description": "Name of the standard action.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "StandardEntity": {
+      "description": "Standard entity",
+      "id": "StandardEntity",
+      "properties": {
+        "name": {
+          "description": "Name of the standard entity.",
           "type": "string"
         }
       },

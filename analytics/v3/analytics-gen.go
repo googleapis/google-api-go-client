@@ -572,9 +572,9 @@ type Account struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Account) MarshalJSON() ([]byte, error) {
+func (s Account) MarshalJSON() ([]byte, error) {
 	type NoMethod Account
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccountChildLink: Child link for an account entry. Points to the list of web
@@ -597,9 +597,9 @@ type AccountChildLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountChildLink) MarshalJSON() ([]byte, error) {
+func (s AccountChildLink) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountChildLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccountPermissions: Permissions the user has for this account.
@@ -620,9 +620,9 @@ type AccountPermissions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountPermissions) MarshalJSON() ([]byte, error) {
+func (s AccountPermissions) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountPermissions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccountRef: JSON template for a linked account.
@@ -648,9 +648,9 @@ type AccountRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountRef) MarshalJSON() ([]byte, error) {
+func (s AccountRef) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccountSummaries: An AccountSummary collection lists a summary of accounts,
@@ -694,9 +694,9 @@ type AccountSummaries struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountSummaries) MarshalJSON() ([]byte, error) {
+func (s AccountSummaries) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountSummaries
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccountSummary: JSON template for an Analytics AccountSummary. An
@@ -725,9 +725,9 @@ type AccountSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountSummary) MarshalJSON() ([]byte, error) {
+func (s AccountSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccountTicket: JSON template for an Analytics account ticket. The account
@@ -763,9 +763,9 @@ type AccountTicket struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountTicket) MarshalJSON() ([]byte, error) {
+func (s AccountTicket) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountTicket
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccountTreeRequest: JSON template for an Analytics account tree requests.
@@ -793,9 +793,9 @@ type AccountTreeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountTreeRequest) MarshalJSON() ([]byte, error) {
+func (s AccountTreeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountTreeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccountTreeResponse: JSON template for an Analytics account tree response.
@@ -826,9 +826,9 @@ type AccountTreeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountTreeResponse) MarshalJSON() ([]byte, error) {
+func (s AccountTreeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountTreeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Accounts: An account collection provides a list of Analytics accounts to
@@ -873,9 +873,9 @@ type Accounts struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Accounts) MarshalJSON() ([]byte, error) {
+func (s Accounts) MarshalJSON() ([]byte, error) {
 	type NoMethod Accounts
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdWordsAccount: JSON template for an Google Ads account.
@@ -901,9 +901,9 @@ type AdWordsAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdWordsAccount) MarshalJSON() ([]byte, error) {
+func (s AdWordsAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod AdWordsAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AnalyticsDataimportDeleteUploadDataRequest: Request template for the delete
@@ -924,9 +924,9 @@ type AnalyticsDataimportDeleteUploadDataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AnalyticsDataimportDeleteUploadDataRequest) MarshalJSON() ([]byte, error) {
+func (s AnalyticsDataimportDeleteUploadDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AnalyticsDataimportDeleteUploadDataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Column: JSON template for a metadata column.
@@ -950,9 +950,9 @@ type Column struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Column) MarshalJSON() ([]byte, error) {
+func (s Column) MarshalJSON() ([]byte, error) {
 	type NoMethod Column
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Columns: Lists columns (dimensions and metrics) for a particular report
@@ -985,9 +985,9 @@ type Columns struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Columns) MarshalJSON() ([]byte, error) {
+func (s Columns) MarshalJSON() ([]byte, error) {
 	type NoMethod Columns
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomDataSource: JSON template for an Analytics custom data source.
@@ -1037,9 +1037,9 @@ type CustomDataSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomDataSource) MarshalJSON() ([]byte, error) {
+func (s CustomDataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomDataSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CustomDataSourceChildLink struct {
@@ -1061,9 +1061,9 @@ type CustomDataSourceChildLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomDataSourceChildLink) MarshalJSON() ([]byte, error) {
+func (s CustomDataSourceChildLink) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomDataSourceChildLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomDataSourceParentLink: Parent link for this custom data source. Points
@@ -1086,9 +1086,9 @@ type CustomDataSourceParentLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomDataSourceParentLink) MarshalJSON() ([]byte, error) {
+func (s CustomDataSourceParentLink) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomDataSourceParentLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomDataSources: Lists Analytics custom data sources to which the user has
@@ -1132,9 +1132,9 @@ type CustomDataSources struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomDataSources) MarshalJSON() ([]byte, error) {
+func (s CustomDataSources) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomDataSources
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomDimension: JSON template for Analytics Custom Dimension.
@@ -1181,9 +1181,9 @@ type CustomDimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomDimension) MarshalJSON() ([]byte, error) {
+func (s CustomDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomDimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomDimensionParentLink: Parent link for the custom dimension. Points to
@@ -1206,9 +1206,9 @@ type CustomDimensionParentLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomDimensionParentLink) MarshalJSON() ([]byte, error) {
+func (s CustomDimensionParentLink) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomDimensionParentLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomDimensions: A custom dimension collection lists Analytics custom
@@ -1252,9 +1252,9 @@ type CustomDimensions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomDimensions) MarshalJSON() ([]byte, error) {
+func (s CustomDimensions) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomDimensions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomMetric: JSON template for Analytics Custom Metric.
@@ -1307,9 +1307,9 @@ type CustomMetric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomMetric) MarshalJSON() ([]byte, error) {
+func (s CustomMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomMetric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomMetricParentLink: Parent link for the custom metric. Points to the
@@ -1332,9 +1332,9 @@ type CustomMetricParentLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomMetricParentLink) MarshalJSON() ([]byte, error) {
+func (s CustomMetricParentLink) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomMetricParentLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomMetrics: A custom metric collection lists Analytics custom metrics to
@@ -1378,9 +1378,9 @@ type CustomMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomMetrics) MarshalJSON() ([]byte, error) {
+func (s CustomMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EntityAdWordsLink: JSON template for Analytics Entity Google Ads Link.
@@ -1418,9 +1418,9 @@ type EntityAdWordsLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EntityAdWordsLink) MarshalJSON() ([]byte, error) {
+func (s EntityAdWordsLink) MarshalJSON() ([]byte, error) {
 	type NoMethod EntityAdWordsLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EntityAdWordsLinkEntity: Web property being linked.
@@ -1439,9 +1439,9 @@ type EntityAdWordsLinkEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EntityAdWordsLinkEntity) MarshalJSON() ([]byte, error) {
+func (s EntityAdWordsLinkEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod EntityAdWordsLinkEntity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EntityAdWordsLinks: An entity Google Ads link collection provides a list of
@@ -1483,9 +1483,9 @@ type EntityAdWordsLinks struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EntityAdWordsLinks) MarshalJSON() ([]byte, error) {
+func (s EntityAdWordsLinks) MarshalJSON() ([]byte, error) {
 	type NoMethod EntityAdWordsLinks
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EntityUserLink: JSON template for an Analytics Entity-User Link. Returns
@@ -1520,9 +1520,9 @@ type EntityUserLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EntityUserLink) MarshalJSON() ([]byte, error) {
+func (s EntityUserLink) MarshalJSON() ([]byte, error) {
 	type NoMethod EntityUserLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EntityUserLinkEntity: Entity for this link. It can be an account, a web
@@ -1547,9 +1547,9 @@ type EntityUserLinkEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EntityUserLinkEntity) MarshalJSON() ([]byte, error) {
+func (s EntityUserLinkEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod EntityUserLinkEntity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EntityUserLinkPermissions: Permissions the user has for this entity.
@@ -1576,9 +1576,9 @@ type EntityUserLinkPermissions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EntityUserLinkPermissions) MarshalJSON() ([]byte, error) {
+func (s EntityUserLinkPermissions) MarshalJSON() ([]byte, error) {
 	type NoMethod EntityUserLinkPermissions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EntityUserLinks: An entity user link collection provides a list of Analytics
@@ -1619,9 +1619,9 @@ type EntityUserLinks struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EntityUserLinks) MarshalJSON() ([]byte, error) {
+func (s EntityUserLinks) MarshalJSON() ([]byte, error) {
 	type NoMethod EntityUserLinks
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Experiment: JSON template for Analytics experiment resource.
@@ -1751,9 +1751,9 @@ type Experiment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Experiment) MarshalJSON() ([]byte, error) {
+func (s Experiment) MarshalJSON() ([]byte, error) {
 	type NoMethod Experiment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Experiment) UnmarshalJSON(data []byte) error {
@@ -1793,9 +1793,9 @@ type ExperimentParentLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExperimentParentLink) MarshalJSON() ([]byte, error) {
+func (s ExperimentParentLink) MarshalJSON() ([]byte, error) {
 	type NoMethod ExperimentParentLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ExperimentVariations struct {
@@ -1830,9 +1830,9 @@ type ExperimentVariations struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExperimentVariations) MarshalJSON() ([]byte, error) {
+func (s ExperimentVariations) MarshalJSON() ([]byte, error) {
 	type NoMethod ExperimentVariations
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ExperimentVariations) UnmarshalJSON(data []byte) error {
@@ -1891,9 +1891,9 @@ type Experiments struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Experiments) MarshalJSON() ([]byte, error) {
+func (s Experiments) MarshalJSON() ([]byte, error) {
 	type NoMethod Experiments
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Filter: JSON template for an Analytics account filter.
@@ -1947,9 +1947,9 @@ type Filter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Filter) MarshalJSON() ([]byte, error) {
+func (s Filter) MarshalJSON() ([]byte, error) {
 	type NoMethod Filter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FilterAdvancedDetails: Details for the filter of the type ADVANCED.
@@ -1997,9 +1997,9 @@ type FilterAdvancedDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FilterAdvancedDetails) MarshalJSON() ([]byte, error) {
+func (s FilterAdvancedDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterAdvancedDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FilterLowercaseDetails: Details for the filter of the type LOWER.
@@ -2022,9 +2022,9 @@ type FilterLowercaseDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FilterLowercaseDetails) MarshalJSON() ([]byte, error) {
+func (s FilterLowercaseDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterLowercaseDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FilterParentLink: Parent link for this filter. Points to the account to
@@ -2047,9 +2047,9 @@ type FilterParentLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FilterParentLink) MarshalJSON() ([]byte, error) {
+func (s FilterParentLink) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterParentLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FilterSearchAndReplaceDetails: Details for the filter of the type
@@ -2079,9 +2079,9 @@ type FilterSearchAndReplaceDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FilterSearchAndReplaceDetails) MarshalJSON() ([]byte, error) {
+func (s FilterSearchAndReplaceDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterSearchAndReplaceDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FilterUppercaseDetails: Details for the filter of the type UPPER.
@@ -2104,9 +2104,9 @@ type FilterUppercaseDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FilterUppercaseDetails) MarshalJSON() ([]byte, error) {
+func (s FilterUppercaseDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterUppercaseDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FilterExpression: JSON template for an Analytics filter expression.
@@ -2226,9 +2226,9 @@ type FilterExpression struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FilterExpression) MarshalJSON() ([]byte, error) {
+func (s FilterExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterExpression
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FilterRef: JSON template for a profile filter link.
@@ -2256,9 +2256,9 @@ type FilterRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FilterRef) MarshalJSON() ([]byte, error) {
+func (s FilterRef) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Filters: A filter collection lists filters created by users in an Analytics
@@ -2301,9 +2301,9 @@ type Filters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Filters) MarshalJSON() ([]byte, error) {
+func (s Filters) MarshalJSON() ([]byte, error) {
 	type NoMethod Filters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GaData: Analytics data for a given view (profile).
@@ -2369,9 +2369,9 @@ type GaData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GaData) MarshalJSON() ([]byte, error) {
+func (s GaData) MarshalJSON() ([]byte, error) {
 	type NoMethod GaData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GaDataColumnHeaders struct {
@@ -2396,9 +2396,9 @@ type GaDataColumnHeaders struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GaDataColumnHeaders) MarshalJSON() ([]byte, error) {
+func (s GaDataColumnHeaders) MarshalJSON() ([]byte, error) {
 	type NoMethod GaDataColumnHeaders
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GaDataDataTable struct {
@@ -2417,9 +2417,9 @@ type GaDataDataTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GaDataDataTable) MarshalJSON() ([]byte, error) {
+func (s GaDataDataTable) MarshalJSON() ([]byte, error) {
 	type NoMethod GaDataDataTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GaDataDataTableCols struct {
@@ -2439,9 +2439,9 @@ type GaDataDataTableCols struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GaDataDataTableCols) MarshalJSON() ([]byte, error) {
+func (s GaDataDataTableCols) MarshalJSON() ([]byte, error) {
 	type NoMethod GaDataDataTableCols
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GaDataDataTableRows struct {
@@ -2459,9 +2459,9 @@ type GaDataDataTableRows struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GaDataDataTableRows) MarshalJSON() ([]byte, error) {
+func (s GaDataDataTableRows) MarshalJSON() ([]byte, error) {
 	type NoMethod GaDataDataTableRows
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GaDataDataTableRowsC struct {
@@ -2479,9 +2479,9 @@ type GaDataDataTableRowsC struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GaDataDataTableRowsC) MarshalJSON() ([]byte, error) {
+func (s GaDataDataTableRowsC) MarshalJSON() ([]byte, error) {
 	type NoMethod GaDataDataTableRowsC
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GaDataProfileInfo: Information for the view (profile), for which the
@@ -2513,9 +2513,9 @@ type GaDataProfileInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GaDataProfileInfo) MarshalJSON() ([]byte, error) {
+func (s GaDataProfileInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GaDataProfileInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GaDataQuery: Analytics data request query parameters.
@@ -2555,9 +2555,9 @@ type GaDataQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GaDataQuery) MarshalJSON() ([]byte, error) {
+func (s GaDataQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod GaDataQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Goal: JSON template for Analytics goal resource.
@@ -2618,9 +2618,9 @@ type Goal struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Goal) MarshalJSON() ([]byte, error) {
+func (s Goal) MarshalJSON() ([]byte, error) {
 	type NoMethod Goal
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Goal) UnmarshalJSON(data []byte) error {
@@ -2657,9 +2657,9 @@ type GoalEventDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoalEventDetails) MarshalJSON() ([]byte, error) {
+func (s GoalEventDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoalEventDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoalEventDetailsEventConditions struct {
@@ -2689,9 +2689,9 @@ type GoalEventDetailsEventConditions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoalEventDetailsEventConditions) MarshalJSON() ([]byte, error) {
+func (s GoalEventDetailsEventConditions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoalEventDetailsEventConditions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoalParentLink: Parent link for a goal. Points to the view (profile) to
@@ -2714,9 +2714,9 @@ type GoalParentLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoalParentLink) MarshalJSON() ([]byte, error) {
+func (s GoalParentLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoalParentLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoalUrlDestinationDetails: Details for the goal of the type URL_DESTINATION.
@@ -2746,9 +2746,9 @@ type GoalUrlDestinationDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoalUrlDestinationDetails) MarshalJSON() ([]byte, error) {
+func (s GoalUrlDestinationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoalUrlDestinationDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoalUrlDestinationDetailsSteps struct {
@@ -2771,9 +2771,9 @@ type GoalUrlDestinationDetailsSteps struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoalUrlDestinationDetailsSteps) MarshalJSON() ([]byte, error) {
+func (s GoalUrlDestinationDetailsSteps) MarshalJSON() ([]byte, error) {
 	type NoMethod GoalUrlDestinationDetailsSteps
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoalVisitNumPagesDetails: Details for the goal of the type VISIT_NUM_PAGES.
@@ -2796,9 +2796,9 @@ type GoalVisitNumPagesDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoalVisitNumPagesDetails) MarshalJSON() ([]byte, error) {
+func (s GoalVisitNumPagesDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoalVisitNumPagesDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoalVisitTimeOnSiteDetails: Details for the goal of the type
@@ -2822,9 +2822,9 @@ type GoalVisitTimeOnSiteDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoalVisitTimeOnSiteDetails) MarshalJSON() ([]byte, error) {
+func (s GoalVisitTimeOnSiteDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoalVisitTimeOnSiteDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Goals: A goal collection lists Analytics goals to which the user has access.
@@ -2868,9 +2868,9 @@ type Goals struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Goals) MarshalJSON() ([]byte, error) {
+func (s Goals) MarshalJSON() ([]byte, error) {
 	type NoMethod Goals
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HashClientIdRequest: JSON template for a hash Client Id request resource.
@@ -2891,9 +2891,9 @@ type HashClientIdRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HashClientIdRequest) MarshalJSON() ([]byte, error) {
+func (s HashClientIdRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod HashClientIdRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HashClientIdResponse: JSON template for a hash Client Id response resource.
@@ -2918,9 +2918,9 @@ type HashClientIdResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HashClientIdResponse) MarshalJSON() ([]byte, error) {
+func (s HashClientIdResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod HashClientIdResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IncludeConditions: JSON template for an Analytics Remarketing Include
@@ -2957,9 +2957,9 @@ type IncludeConditions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IncludeConditions) MarshalJSON() ([]byte, error) {
+func (s IncludeConditions) MarshalJSON() ([]byte, error) {
 	type NoMethod IncludeConditions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LinkedForeignAccount: JSON template for an Analytics Remarketing Audience
@@ -3003,9 +3003,9 @@ type LinkedForeignAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LinkedForeignAccount) MarshalJSON() ([]byte, error) {
+func (s LinkedForeignAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod LinkedForeignAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // McfData: Multi-Channel Funnels data for a given view (profile).
@@ -3068,9 +3068,9 @@ type McfData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *McfData) MarshalJSON() ([]byte, error) {
+func (s McfData) MarshalJSON() ([]byte, error) {
 	type NoMethod McfData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type McfDataColumnHeaders struct {
@@ -3094,9 +3094,9 @@ type McfDataColumnHeaders struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *McfDataColumnHeaders) MarshalJSON() ([]byte, error) {
+func (s McfDataColumnHeaders) MarshalJSON() ([]byte, error) {
 	type NoMethod McfDataColumnHeaders
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // McfDataProfileInfo: Information for the view (profile), for which the
@@ -3128,9 +3128,9 @@ type McfDataProfileInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *McfDataProfileInfo) MarshalJSON() ([]byte, error) {
+func (s McfDataProfileInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod McfDataProfileInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // McfDataQuery: Analytics data request query parameters.
@@ -3170,9 +3170,9 @@ type McfDataQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *McfDataQuery) MarshalJSON() ([]byte, error) {
+func (s McfDataQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod McfDataQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // McfDataRowsItem: A union object representing a dimension or metric value.
@@ -3197,9 +3197,9 @@ type McfDataRowsItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *McfDataRowsItem) MarshalJSON() ([]byte, error) {
+func (s McfDataRowsItem) MarshalJSON() ([]byte, error) {
 	type NoMethod McfDataRowsItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type McfDataRowsItemConversionPathValue struct {
@@ -3222,9 +3222,9 @@ type McfDataRowsItemConversionPathValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *McfDataRowsItemConversionPathValue) MarshalJSON() ([]byte, error) {
+func (s McfDataRowsItemConversionPathValue) MarshalJSON() ([]byte, error) {
 	type NoMethod McfDataRowsItemConversionPathValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Profile: JSON template for an Analytics view (profile).
@@ -3316,9 +3316,9 @@ type Profile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Profile) MarshalJSON() ([]byte, error) {
+func (s Profile) MarshalJSON() ([]byte, error) {
 	type NoMethod Profile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProfileChildLink: Child link for this view (profile). Points to the list of
@@ -3341,9 +3341,9 @@ type ProfileChildLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProfileChildLink) MarshalJSON() ([]byte, error) {
+func (s ProfileChildLink) MarshalJSON() ([]byte, error) {
 	type NoMethod ProfileChildLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProfileParentLink: Parent link for this view (profile). Points to the web
@@ -3366,9 +3366,9 @@ type ProfileParentLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProfileParentLink) MarshalJSON() ([]byte, error) {
+func (s ProfileParentLink) MarshalJSON() ([]byte, error) {
 	type NoMethod ProfileParentLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProfilePermissions: Permissions the user has for this view (profile).
@@ -3390,9 +3390,9 @@ type ProfilePermissions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProfilePermissions) MarshalJSON() ([]byte, error) {
+func (s ProfilePermissions) MarshalJSON() ([]byte, error) {
 	type NoMethod ProfilePermissions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProfileFilterLink: JSON template for an Analytics profile filter link.
@@ -3436,9 +3436,9 @@ type ProfileFilterLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProfileFilterLink) MarshalJSON() ([]byte, error) {
+func (s ProfileFilterLink) MarshalJSON() ([]byte, error) {
 	type NoMethod ProfileFilterLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProfileFilterLinks: A profile filter link collection lists profile filter
@@ -3482,9 +3482,9 @@ type ProfileFilterLinks struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProfileFilterLinks) MarshalJSON() ([]byte, error) {
+func (s ProfileFilterLinks) MarshalJSON() ([]byte, error) {
 	type NoMethod ProfileFilterLinks
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProfileRef: JSON template for a linked view (profile).
@@ -3518,9 +3518,9 @@ type ProfileRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProfileRef) MarshalJSON() ([]byte, error) {
+func (s ProfileRef) MarshalJSON() ([]byte, error) {
 	type NoMethod ProfileRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProfileSummary: JSON template for an Analytics ProfileSummary.
@@ -3549,9 +3549,9 @@ type ProfileSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProfileSummary) MarshalJSON() ([]byte, error) {
+func (s ProfileSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod ProfileSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Profiles: A view (profile) collection lists Analytics views (profiles) to
@@ -3595,9 +3595,9 @@ type Profiles struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Profiles) MarshalJSON() ([]byte, error) {
+func (s Profiles) MarshalJSON() ([]byte, error) {
 	type NoMethod Profiles
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RealtimeData: Real time data for a given view (profile).
@@ -3644,9 +3644,9 @@ type RealtimeData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RealtimeData) MarshalJSON() ([]byte, error) {
+func (s RealtimeData) MarshalJSON() ([]byte, error) {
 	type NoMethod RealtimeData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RealtimeDataColumnHeaders struct {
@@ -3671,9 +3671,9 @@ type RealtimeDataColumnHeaders struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RealtimeDataColumnHeaders) MarshalJSON() ([]byte, error) {
+func (s RealtimeDataColumnHeaders) MarshalJSON() ([]byte, error) {
 	type NoMethod RealtimeDataColumnHeaders
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RealtimeDataProfileInfo: Information for the view (profile), for which the
@@ -3705,9 +3705,9 @@ type RealtimeDataProfileInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RealtimeDataProfileInfo) MarshalJSON() ([]byte, error) {
+func (s RealtimeDataProfileInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod RealtimeDataProfileInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RealtimeDataQuery: Real time data request query parameters.
@@ -3737,9 +3737,9 @@ type RealtimeDataQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RealtimeDataQuery) MarshalJSON() ([]byte, error) {
+func (s RealtimeDataQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod RealtimeDataQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemarketingAudience: JSON template for an Analytics remarketing audience.
@@ -3795,9 +3795,9 @@ type RemarketingAudience struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemarketingAudience) MarshalJSON() ([]byte, error) {
+func (s RemarketingAudience) MarshalJSON() ([]byte, error) {
 	type NoMethod RemarketingAudience
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemarketingAudienceAudienceDefinition: The simple audience definition that
@@ -3818,9 +3818,9 @@ type RemarketingAudienceAudienceDefinition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemarketingAudienceAudienceDefinition) MarshalJSON() ([]byte, error) {
+func (s RemarketingAudienceAudienceDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod RemarketingAudienceAudienceDefinition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemarketingAudienceStateBasedAudienceDefinition: A state based audience
@@ -3844,9 +3844,9 @@ type RemarketingAudienceStateBasedAudienceDefinition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemarketingAudienceStateBasedAudienceDefinition) MarshalJSON() ([]byte, error) {
+func (s RemarketingAudienceStateBasedAudienceDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod RemarketingAudienceStateBasedAudienceDefinition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemarketingAudienceStateBasedAudienceDefinitionExcludeConditions: Defines
@@ -3870,9 +3870,9 @@ type RemarketingAudienceStateBasedAudienceDefinitionExcludeConditions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemarketingAudienceStateBasedAudienceDefinitionExcludeConditions) MarshalJSON() ([]byte, error) {
+func (s RemarketingAudienceStateBasedAudienceDefinitionExcludeConditions) MarshalJSON() ([]byte, error) {
 	type NoMethod RemarketingAudienceStateBasedAudienceDefinitionExcludeConditions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemarketingAudiences: A remarketing audience collection lists Analytics
@@ -3916,9 +3916,9 @@ type RemarketingAudiences struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemarketingAudiences) MarshalJSON() ([]byte, error) {
+func (s RemarketingAudiences) MarshalJSON() ([]byte, error) {
 	type NoMethod RemarketingAudiences
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Segment: JSON template for an Analytics segment.
@@ -3955,9 +3955,9 @@ type Segment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Segment) MarshalJSON() ([]byte, error) {
+func (s Segment) MarshalJSON() ([]byte, error) {
 	type NoMethod Segment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Segments: An segment collection lists Analytics segments that the user has
@@ -4001,9 +4001,9 @@ type Segments struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Segments) MarshalJSON() ([]byte, error) {
+func (s Segments) MarshalJSON() ([]byte, error) {
 	type NoMethod Segments
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UnsampledReport: JSON template for Analytics unsampled report resource.
@@ -4068,9 +4068,9 @@ type UnsampledReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UnsampledReport) MarshalJSON() ([]byte, error) {
+func (s UnsampledReport) MarshalJSON() ([]byte, error) {
 	type NoMethod UnsampledReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UnsampledReportCloudStorageDownloadDetails: Download details for a file
@@ -4093,9 +4093,9 @@ type UnsampledReportCloudStorageDownloadDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UnsampledReportCloudStorageDownloadDetails) MarshalJSON() ([]byte, error) {
+func (s UnsampledReportCloudStorageDownloadDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod UnsampledReportCloudStorageDownloadDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UnsampledReportDriveDownloadDetails: Download details for a file stored in
@@ -4116,9 +4116,9 @@ type UnsampledReportDriveDownloadDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UnsampledReportDriveDownloadDetails) MarshalJSON() ([]byte, error) {
+func (s UnsampledReportDriveDownloadDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod UnsampledReportDriveDownloadDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UnsampledReports: An unsampled report collection lists Analytics unsampled
@@ -4163,9 +4163,9 @@ type UnsampledReports struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UnsampledReports) MarshalJSON() ([]byte, error) {
+func (s UnsampledReports) MarshalJSON() ([]byte, error) {
 	type NoMethod UnsampledReports
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Upload: Metadata returned for an upload operation.
@@ -4201,9 +4201,9 @@ type Upload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Upload) MarshalJSON() ([]byte, error) {
+func (s Upload) MarshalJSON() ([]byte, error) {
 	type NoMethod Upload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Uploads: Upload collection lists Analytics uploads to which the user has
@@ -4245,9 +4245,9 @@ type Uploads struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Uploads) MarshalJSON() ([]byte, error) {
+func (s Uploads) MarshalJSON() ([]byte, error) {
 	type NoMethod Uploads
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserDeletionRequest: JSON template for a user deletion request resource.
@@ -4281,9 +4281,9 @@ type UserDeletionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserDeletionRequest) MarshalJSON() ([]byte, error) {
+func (s UserDeletionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UserDeletionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserDeletionRequestId: User ID.
@@ -4305,9 +4305,9 @@ type UserDeletionRequestId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserDeletionRequestId) MarshalJSON() ([]byte, error) {
+func (s UserDeletionRequestId) MarshalJSON() ([]byte, error) {
 	type NoMethod UserDeletionRequestId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserRef: JSON template for a user reference.
@@ -4330,9 +4330,9 @@ type UserRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserRef) MarshalJSON() ([]byte, error) {
+func (s UserRef) MarshalJSON() ([]byte, error) {
 	type NoMethod UserRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebPropertyRef: JSON template for a web property reference.
@@ -4362,9 +4362,9 @@ type WebPropertyRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebPropertyRef) MarshalJSON() ([]byte, error) {
+func (s WebPropertyRef) MarshalJSON() ([]byte, error) {
 	type NoMethod WebPropertyRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebPropertySummary: JSON template for an Analytics WebPropertySummary.
@@ -4400,9 +4400,9 @@ type WebPropertySummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebPropertySummary) MarshalJSON() ([]byte, error) {
+func (s WebPropertySummary) MarshalJSON() ([]byte, error) {
 	type NoMethod WebPropertySummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Webproperties: A web property collection lists Analytics web properties to
@@ -4446,9 +4446,9 @@ type Webproperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Webproperties) MarshalJSON() ([]byte, error) {
+func (s Webproperties) MarshalJSON() ([]byte, error) {
 	type NoMethod Webproperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Webproperty: JSON template for an Analytics web property.
@@ -4517,9 +4517,9 @@ type Webproperty struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Webproperty) MarshalJSON() ([]byte, error) {
+func (s Webproperty) MarshalJSON() ([]byte, error) {
 	type NoMethod Webproperty
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebpropertyChildLink: Child link for this web property. Points to the list
@@ -4542,9 +4542,9 @@ type WebpropertyChildLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebpropertyChildLink) MarshalJSON() ([]byte, error) {
+func (s WebpropertyChildLink) MarshalJSON() ([]byte, error) {
 	type NoMethod WebpropertyChildLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebpropertyParentLink: Parent link for this web property. Points to the
@@ -4567,9 +4567,9 @@ type WebpropertyParentLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebpropertyParentLink) MarshalJSON() ([]byte, error) {
+func (s WebpropertyParentLink) MarshalJSON() ([]byte, error) {
 	type NoMethod WebpropertyParentLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebpropertyPermissions: Permissions the user has for this web property.
@@ -4591,9 +4591,9 @@ type WebpropertyPermissions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebpropertyPermissions) MarshalJSON() ([]byte, error) {
+func (s WebpropertyPermissions) MarshalJSON() ([]byte, error) {
 	type NoMethod WebpropertyPermissions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DataGaGetCall struct {

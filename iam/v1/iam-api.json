@@ -988,7 +988,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes a custom Role. When you delete a custom role, the following changes occur immediately: * You cannot bind a principal to the custom role in an IAM Policy. * Existing bindings to the custom role are not changed, but they have no effect. * By default, the response from ListRoles does not include the custom role. You have 7 days to undelete the custom role. After 7 days, the following changes occur: * The custom role is permanently deleted and cannot be recovered. * If an IAM policy contains a binding to the custom role, the binding is permanently removed.",
+              "description": "Deletes a custom Role. When you delete a custom role, the following changes occur immediately: * You cannot bind a principal to the custom role in an IAM Policy. * Existing bindings to the custom role are not changed, but they have no effect. * By default, the response from ListRoles does not include the custom role. A deleted custom role still counts toward the [custom role limit](https://cloud.google.com/iam/help/limits) until it is permanently deleted. You have 7 days to undelete the custom role. After 7 days, the following changes occur: * The custom role is permanently deleted and cannot be recovered. * If an IAM policy contains a binding to the custom role, the binding is permanently removed. * The custom role no longer counts toward your custom role limit.",
               "flatPath": "v1/organizations/{organizationsId}/roles/{rolesId}",
               "httpMethod": "DELETE",
               "id": "iam.organizations.roles.delete",
@@ -2288,7 +2288,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes a custom Role. When you delete a custom role, the following changes occur immediately: * You cannot bind a principal to the custom role in an IAM Policy. * Existing bindings to the custom role are not changed, but they have no effect. * By default, the response from ListRoles does not include the custom role. You have 7 days to undelete the custom role. After 7 days, the following changes occur: * The custom role is permanently deleted and cannot be recovered. * If an IAM policy contains a binding to the custom role, the binding is permanently removed.",
+              "description": "Deletes a custom Role. When you delete a custom role, the following changes occur immediately: * You cannot bind a principal to the custom role in an IAM Policy. * Existing bindings to the custom role are not changed, but they have no effect. * By default, the response from ListRoles does not include the custom role. A deleted custom role still counts toward the [custom role limit](https://cloud.google.com/iam/help/limits) until it is permanently deleted. You have 7 days to undelete the custom role. After 7 days, the following changes occur: * The custom role is permanently deleted and cannot be recovered. * If an IAM policy contains a binding to the custom role, the binding is permanently removed. * The custom role no longer counts toward your custom role limit.",
               "flatPath": "v1/projects/{projectsId}/roles/{rolesId}",
               "httpMethod": "DELETE",
               "id": "iam.projects.roles.delete",
@@ -3056,34 +3056,6 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
-                "patch": {
-                  "description": "Patches a ServiceAccountKey.",
-                  "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}/keys/{keysId}:patch",
-                  "httpMethod": "POST",
-                  "id": "iam.projects.serviceAccounts.keys.patch",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "The resource name of the service account key in the following format `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}`.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/serviceAccounts/[^/]+/keys/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1/{+name}:patch",
-                  "request": {
-                    "$ref": "PatchServiceAccountKeyRequest"
-                  },
-                  "response": {
-                    "$ref": "ServiceAccountKey"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
                 "upload": {
                   "description": "Uploads the public key portion of a key pair that you manage, and associates the public key with a ServiceAccount. After you upload the public key, you can use the private key from the key pair as a service account key.",
                   "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}/keys:upload",
@@ -3216,7 +3188,7 @@
       }
     }
   },
-  "revision": "20240521",
+  "revision": "20240725",
   "rootUrl": "https://iam.googleapis.com/",
   "schemas": {
     "AccessRestrictions": {
@@ -3718,7 +3690,7 @@
       "id": "GoogleIamAdminV1WorkforcePoolProviderSaml",
       "properties": {
         "idpMetadataXml": {
-          "description": "Required. SAML Identity provider configuration metadata xml doc. The xml document should comply with [SAML 2.0 specification](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf). The max size of the acceptable xml document will be bounded to 128k characters. The metadata xml document should satisfy the following constraints: 1) Must contain an Identity Provider Entity ID. 2) Must contain at least one non-expired signing key certificate. 3) For each signing key: a) Valid from should be no more than 7 days from now. b) Valid to should be no more than 15 years in the future. 4) Up to 3 IdP signing keys are allowed in the metadata xml. When updating the provider's metadata xml, at least one non-expired signing key must overlap with the existing metadata. This requirement is skipped if there are no non-expired signing keys present in the existing metadata.",
+          "description": "Required. SAML Identity provider configuration metadata xml doc. The xml document should comply with [SAML 2.0 specification](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf). The max size of the acceptable xml document will be bounded to 128k characters. The metadata xml document should satisfy the following constraints: 1) Must contain an Identity Provider Entity ID. 2) Must contain at least one non-expired signing key certificate. 3) For each signing key: a) Valid from should be no more than 7 days from now. b) Valid to should be no more than 20 years in the future. 4) Up to 3 IdP signing keys are allowed in the metadata xml. When updating the provider's metadata xml, at least one non-expired signing key must overlap with the existing metadata. This requirement is skipped if there are no non-expired signing keys present in the existing metadata.",
           "type": "string"
         }
       },
@@ -4053,7 +4025,7 @@
       "type": "object"
     },
     "OauthClient": {
-      "description": "Represents an OauthClient. Used to access Google Cloud resources on behave of a user by using OAuth 2.0 Protocol to obtain an access token from Google Cloud Platform.",
+      "description": "Represents an OauthClient. Used to access Google Cloud resources on behalf of a Workforce Identity Federation user by using OAuth 2.0 Protocol to obtain an access token from Google Cloud.",
       "id": "OauthClient",
       "properties": {
         "allowedGrantTypes": {
@@ -4081,7 +4053,7 @@
           "type": "array"
         },
         "allowedScopes": {
-          "description": "Required. The list of scopes that the OauthClient is allowed to request during OAuth flows. The following scopes are supported: * `https://www.googleapis.com/auth/cloud-platform`: See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account. * `openid`: Associate you with your personal info on Google Cloud. * `email`: See your Google Cloud Account email address.",
+          "description": "Required. The list of scopes that the OauthClient is allowed to request during OAuth flows. The following scopes are supported: * `https://www.googleapis.com/auth/cloud-platform`: See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.",
           "items": {
             "type": "string"
           },
@@ -4271,22 +4243,6 @@
       },
       "type": "object"
     },
-    "PatchServiceAccountKeyRequest": {
-      "description": "The service account key patch request.",
-      "id": "PatchServiceAccountKeyRequest",
-      "properties": {
-        "serviceAccountKey": {
-          "$ref": "ServiceAccountKey",
-          "description": "Required. The service account key to update."
-        },
-        "updateMask": {
-          "description": "Required. The update mask to apply to the service account key. Only the following fields are eligible for patching: - contact - description",
-          "format": "google-fieldmask",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "PatchServiceAccountRequest": {
       "description": "The service account patch request. You can patch only the `display_name` and `description` fields. You must use the `update_mask` field to specify which of these fields you want to patch. Only the fields specified in the request are guaranteed to be returned in the response. Other fields may be empty in the response.",
       "id": "PatchServiceAccountRequest",
@@ -4462,7 +4418,7 @@
           "type": "string"
         },
         "pageSize": {
-          "description": "Optional limit on the number of roles to include in the response. The default is 300, and the maximum is 1,000.",
+          "description": "Optional limit on the number of roles to include in the response. The default is 300, and the maximum is 2,000.",
           "format": "int32",
           "type": "integer"
         },
@@ -4631,7 +4587,7 @@
       "id": "Saml",
       "properties": {
         "idpMetadataXml": {
-          "description": "Required. SAML identity provider (IdP) configuration metadata XML doc. The XML document must comply with the [SAML 2.0 specification](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf). The maximum size of an acceptable XML document is 128K characters. The SAML metadata XML document must satisfy the following constraints: * Must contain an IdP Entity ID. * Must contain at least one non-expired signing certificate. * For each signing certificate, the expiration must be: * From no more than 7 days in the future. * To no more than 15 years in the future. * Up to three IdP signing keys are allowed. When updating the provider's metadata XML, at least one non-expired signing key must overlap with the existing metadata. This requirement is skipped if there are no non-expired signing keys present in the existing metadata.",
+          "description": "Required. SAML identity provider (IdP) configuration metadata XML doc. The XML document must comply with the [SAML 2.0 specification](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf). The maximum size of an acceptable XML document is 128K characters. The SAML metadata XML document must satisfy the following constraints: * Must contain an IdP Entity ID. * Must contain at least one non-expired signing certificate. * For each signing certificate, the expiration must be: * From no more than 7 days in the future. * To no more than 20 years in the future. * Up to three IdP signing keys are allowed. When updating the provider's metadata XML, at least one non-expired signing key must overlap with the existing metadata. This requirement is skipped if there are no non-expired signing keys present in the existing metadata.",
           "type": "string"
         }
       },
@@ -4691,19 +4647,6 @@
       "description": "Represents a service account key. A service account has two sets of key-pairs: user-managed, and system-managed. User-managed key-pairs can be created and deleted by users. Users are responsible for rotating these keys periodically to ensure security of their service accounts. Users retain the private key of these key-pairs, and Google retains ONLY the public key. System-managed keys are automatically rotated by Google, and are used for signing for a maximum of two weeks. The rotation process is probabilistic, and usage of the new key will gradually ramp up and down over the key's lifetime. If you cache the public key set for a service account, we recommend that you update the cache every 15 minutes. User-managed keys can be added and removed at any time, so it is important to update the cache frequently. For Google-managed keys, Google will publish a key at least 6 hours before it is first used for signing and will keep publishing it for at least 6 hours after it was last used for signing. Public keys for all service accounts are also published at the OAuth2 Service Account API.",
       "id": "ServiceAccountKey",
       "properties": {
-        "contact": {
-          "description": "Optional. A user provided email address as the point of contact for this service account key. Must be an email address. Limit 64 characters.",
-          "type": "string"
-        },
-        "creator": {
-          "description": "Output only. The cloud identity that created this service account key. Populated automatically when the key is created and not editable by the user.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "description": {
-          "description": "Optional. A user provided description of this service account key.",
-          "type": "string"
-        },
         "disableReason": {
           "description": "Output only. optional. If the key is disabled, it may have a DisableReason describing why it was disabled.",
           "enum": [

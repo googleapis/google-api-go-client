@@ -18068,25 +18068,26 @@ func (c *RegionNotificationEndpointsTestIamPermissionsCall) Do(opts ...googleapi
 }
 
 type RegionOperationsDeleteCall struct {
-	s          *Service
-	project    string
-	region     string
-	operation  string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s           *Service
+	project     string
+	region      string
+	operationid string
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
 }
 
 // Delete: Deletes the specified region-specific Operations resource.
 //
-// - operation: Name of the Operations resource to delete.
-// - project: Project ID for this request.
-// - region: Name of the region for this request.
-func (r *RegionOperationsService) Delete(project string, region string, operation string) *RegionOperationsDeleteCall {
+//   - operation: Name of the Operations resource to delete, or its unique
+//     numeric identifier.
+//   - project: Project ID for this request.
+//   - region: Name of the region for this request.
+func (r *RegionOperationsService) Delete(project string, region string, operationid string) *RegionOperationsDeleteCall {
 	c := &RegionOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.region = region
-	c.operation = operation
+	c.operationid = operationid
 	return c
 }
 
@@ -18128,7 +18129,7 @@ func (c *RegionOperationsDeleteCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
 		"region":    c.region,
-		"operation": c.operation,
+		"operation": c.operationid,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -18151,7 +18152,7 @@ type RegionOperationsGetCall struct {
 	s            *Service
 	project      string
 	region       string
-	operation    string
+	operationid  string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -18160,14 +18161,15 @@ type RegionOperationsGetCall struct {
 
 // Get: Retrieves the specified region-specific Operations resource.
 //
-// - operation: Name of the Operations resource to return.
-// - project: Project ID for this request.
-// - region: Name of the region for this request.
-func (r *RegionOperationsService) Get(project string, region string, operation string) *RegionOperationsGetCall {
+//   - operation: Name of the Operations resource to return, or its unique
+//     numeric identifier.
+//   - project: Project ID for this request.
+//   - region: Name of the region for this request.
+func (r *RegionOperationsService) Get(project string, region string, operationid string) *RegionOperationsGetCall {
 	c := &RegionOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.region = region
-	c.operation = operation
+	c.operationid = operationid
 	return c
 }
 
@@ -18220,7 +18222,7 @@ func (c *RegionOperationsGetCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
 		"region":    c.region,
-		"operation": c.operation,
+		"operation": c.operationid,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -18474,13 +18476,13 @@ func (c *RegionOperationsListCall) Pages(ctx context.Context, f func(*OperationL
 }
 
 type RegionOperationsWaitCall struct {
-	s          *Service
-	project    string
-	region     string
-	operation  string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s           *Service
+	project     string
+	region      string
+	operationid string
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
 }
 
 // Wait: Waits for the specified Operation resource to return as `DONE` or for
@@ -18495,14 +18497,15 @@ type RegionOperationsWaitCall struct {
 // actually done when the method returns. Be prepared to retry if the operation
 // is not `DONE`.
 //
-// - operation: Name of the Operations resource to return.
-// - project: Project ID for this request.
-// - region: Name of the region for this request.
-func (r *RegionOperationsService) Wait(project string, region string, operation string) *RegionOperationsWaitCall {
+//   - operation: Name of the Operations resource to return, or its unique
+//     numeric identifier.
+//   - project: Project ID for this request.
+//   - region: Name of the region for this request.
+func (r *RegionOperationsService) Wait(project string, region string, operationid string) *RegionOperationsWaitCall {
 	c := &RegionOperationsWaitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.region = region
-	c.operation = operation
+	c.operationid = operationid
 	return c
 }
 
@@ -18544,7 +18547,7 @@ func (c *RegionOperationsWaitCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
 		"region":    c.region,
-		"operation": c.operation,
+		"operation": c.operationid,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -25336,7 +25339,13 @@ type RegionsGetCall struct {
 // quota information (the `quotas` field). To exclude one or more fields, set
 // your request's `fields` query parameter to only include the fields you need.
 // For example, to only include the `id` and `selfLink` fields, add the query
-// parameter `?fields=id,selfLink` to your request.
+// parameter `?fields=id,selfLink` to your request. This method fails if the
+// quota information is unavailable for the region and if the organization
+// policy constraint compute.requireBasicQuotaInResponse is enforced. This
+// constraint, when enforced, disables the fail-open behaviour when quota
+// information (the `items.quotas` field) is unavailable for the region. It is
+// recommended to use the default setting for the constraint unless your
+// application requires the fail-closed behaviour for this method.
 //
 // - project: Project ID for this request.
 // - region: Name of the region resource to return.
@@ -39865,8 +39874,9 @@ type StoragePoolsUpdateCall struct {
 
 // Update: Updates the specified storagePool with the data included in the
 // request. The update is performed only on selected fields included as part of
-// update-mask. Only the following fields can be modified: size_tb and
-// provisioned_iops.
+// update-mask. Only the following fields can be modified:
+// pool_provisioned_capacity_gb, pool_provisioned_iops and
+// pool_provisioned_throughput.
 //
 // - project: Project ID for this request.
 // - storagePool: The storagePool name for this request.
@@ -55035,25 +55045,26 @@ func (c *VpnTunnelsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Te
 }
 
 type ZoneOperationsDeleteCall struct {
-	s          *Service
-	project    string
-	zone       string
-	operation  string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s           *Service
+	project     string
+	zone        string
+	operationid string
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
 }
 
 // Delete: Deletes the specified zone-specific Operations resource.
 //
-// - operation: Name of the Operations resource to delete.
-// - project: Project ID for this request.
-// - zone: Name of the zone for this request.
-func (r *ZoneOperationsService) Delete(project string, zone string, operation string) *ZoneOperationsDeleteCall {
+//   - operation: Name of the Operations resource to delete, or its unique
+//     numeric identifier.
+//   - project: Project ID for this request.
+//   - zone: Name of the zone for this request.
+func (r *ZoneOperationsService) Delete(project string, zone string, operationid string) *ZoneOperationsDeleteCall {
 	c := &ZoneOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.zone = zone
-	c.operation = operation
+	c.operationid = operationid
 	return c
 }
 
@@ -55095,7 +55106,7 @@ func (c *ZoneOperationsDeleteCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
 		"zone":      c.zone,
-		"operation": c.operation,
+		"operation": c.operationid,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -55118,7 +55129,7 @@ type ZoneOperationsGetCall struct {
 	s            *Service
 	project      string
 	zone         string
-	operation    string
+	operationid  string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -55127,14 +55138,15 @@ type ZoneOperationsGetCall struct {
 
 // Get: Retrieves the specified zone-specific Operations resource.
 //
-// - operation: Name of the Operations resource to return.
-// - project: Project ID for this request.
-// - zone: Name of the zone for this request.
-func (r *ZoneOperationsService) Get(project string, zone string, operation string) *ZoneOperationsGetCall {
+//   - operation: Name of the Operations resource to return, or its unique
+//     numeric identifier.
+//   - project: Project ID for this request.
+//   - zone: Name of the zone for this request.
+func (r *ZoneOperationsService) Get(project string, zone string, operationid string) *ZoneOperationsGetCall {
 	c := &ZoneOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.zone = zone
-	c.operation = operation
+	c.operationid = operationid
 	return c
 }
 
@@ -55187,7 +55199,7 @@ func (c *ZoneOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
 		"zone":      c.zone,
-		"operation": c.operation,
+		"operation": c.operationid,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -55441,13 +55453,13 @@ func (c *ZoneOperationsListCall) Pages(ctx context.Context, f func(*OperationLis
 }
 
 type ZoneOperationsWaitCall struct {
-	s          *Service
-	project    string
-	zone       string
-	operation  string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s           *Service
+	project     string
+	zone        string
+	operationid string
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
 }
 
 // Wait: Waits for the specified Operation resource to return as `DONE` or for
@@ -55461,14 +55473,15 @@ type ZoneOperationsWaitCall struct {
 // guarantee that the operation is actually done when the method returns. Be
 // prepared to retry if the operation is not `DONE`.
 //
-// - operation: Name of the Operations resource to return.
-// - project: Project ID for this request.
-// - zone: Name of the zone for this request.
-func (r *ZoneOperationsService) Wait(project string, zone string, operation string) *ZoneOperationsWaitCall {
+//   - operation: Name of the Operations resource to return, or its unique
+//     numeric identifier.
+//   - project: Project ID for this request.
+//   - zone: Name of the zone for this request.
+func (r *ZoneOperationsService) Wait(project string, zone string, operationid string) *ZoneOperationsWaitCall {
 	c := &ZoneOperationsWaitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.zone = zone
-	c.operation = operation
+	c.operationid = operationid
 	return c
 }
 
@@ -55510,7 +55523,7 @@ func (c *ZoneOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"project":   c.project,
 		"zone":      c.zone,
-		"operation": c.operation,
+		"operation": c.operationid,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }

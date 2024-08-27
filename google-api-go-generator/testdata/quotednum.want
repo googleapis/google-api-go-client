@@ -168,7 +168,7 @@ type Creative struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Creative) MarshalJSON() ([]byte, error) {
+func (s Creative) MarshalJSON() ([]byte, error) {
 	type NoMethod Creative
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }

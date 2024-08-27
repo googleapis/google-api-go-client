@@ -148,11 +148,6 @@
                   "location": "query",
                   "type": "string"
                 },
-                "includeUnrevealedLocations": {
-                  "description": "If true, the returned list will include locations which are not yet revealed.",
-                  "location": "query",
-                  "type": "boolean"
-                },
                 "name": {
                   "description": "The resource that owns the locations collection, if applicable.",
                   "location": "path",
@@ -737,7 +732,7 @@
       }
     }
   },
-  "revision": "20240111",
+  "revision": "20240703",
   "rootUrl": "https://datafusion.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -745,7 +740,7 @@
       "id": "Accelerator",
       "properties": {
         "acceleratorType": {
-          "description": "The type of an accelator for a CDF instance.",
+          "description": "Optional. The type of an accelator for a Cloud Data Fusion instance.",
           "enum": [
             "ACCELERATOR_TYPE_UNSPECIFIED",
             "CDC",
@@ -755,15 +750,15 @@
           ],
           "enumDescriptions": [
             "Default value, if unspecified.",
-            "Change Data Capture accelerator for CDF.",
-            "Cloud Healthcare accelerator for CDF. This accelerator is to enable Cloud Healthcare specific CDF plugins developed by Healthcare team.",
+            "Change Data Capture accelerator for Cloud Data Fusion.",
+            "Reserved for internal use.",
             "Contact Center AI Insights This accelerator is used to enable import and export pipelines custom built to streamline CCAI Insights processing.",
-            "Cloud search accelerator for CDF. This accelerator is to enable Cloud search specific CDF plugins developed by Cloudsearch team."
+            "Reserved for internal use."
           ],
           "type": "string"
         },
         "state": {
-          "description": "The state of the accelerator.",
+          "description": "Output only. The state of the accelerator.",
           "enum": [
             "STATE_UNSPECIFIED",
             "ENABLED",
@@ -776,7 +771,40 @@
             "Indicates that the accelerator is disabled and not available to use.",
             "Indicates that accelerator state is currently unknown. Requests for enable, disable could be retried while in this state."
           ],
+          "readOnly": true,
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AssetLocation": {
+      "description": "Provides the mapping of a cloud asset to a direct physical location or to a proxy that defines the location on its behalf.",
+      "id": "AssetLocation",
+      "properties": {
+        "expected": {
+          "$ref": "IsolationExpectations",
+          "description": "Defines the customer expectation around ZI/ZS for this asset and ZI/ZS state of the region at the time of asset creation."
+        },
+        "extraParameters": {
+          "description": "Defines extra parameters required for specific asset types.",
+          "items": {
+            "$ref": "ExtraParameter"
+          },
+          "type": "array"
+        },
+        "locationData": {
+          "description": "Contains all kinds of physical location definitions for this asset.",
+          "items": {
+            "$ref": "LocationData"
+          },
+          "type": "array"
+        },
+        "parentAsset": {
+          "description": "Defines parents assets if any in order to allow later generation of child_asset_location data via child assets.",
+          "items": {
+            "$ref": "CloudAsset"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -845,8 +873,21 @@
           "type": "array"
         },
         "role": {
-          "description": "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
+          "description": "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview of the IAM roles and permissions, see the [IAM documentation](https://cloud.google.com/iam/docs/roles-overview). For a list of the available pre-defined roles, see [here](https://cloud.google.com/iam/docs/understanding-roles).",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BlobstoreLocation": {
+      "description": "Policy ID that identified data placement in Blobstore as per go/blobstore-user-guide#data-metadata-placement-and-failure-domains",
+      "id": "BlobstoreLocation",
+      "properties": {
+        "policyId": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -855,6 +896,30 @@
       "description": "The request message for Operations.CancelOperation.",
       "id": "CancelOperationRequest",
       "properties": {},
+      "type": "object"
+    },
+    "CloudAsset": {
+      "id": "CloudAsset",
+      "properties": {
+        "assetName": {
+          "type": "string"
+        },
+        "assetType": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CloudAssetComposition": {
+      "id": "CloudAssetComposition",
+      "properties": {
+        "childAsset": {
+          "items": {
+            "$ref": "CloudAsset"
+          },
+          "type": "array"
+        }
+      },
       "type": "object"
     },
     "CryptoKeyConfig": {
@@ -868,32 +933,12 @@
       },
       "type": "object"
     },
-    "DataResidencyAugmentedView": {
-      "description": "Next tag: 7",
-      "id": "DataResidencyAugmentedView",
+    "DirectLocationAssignment": {
+      "id": "DirectLocationAssignment",
       "properties": {
-        "crGopoGuris": {
-          "description": "Cloud resource to Google owned production object mapping in the form of GURIs. The GURIs should be available in DG KB storage/cns tables. This is the preferred way of providing cloud resource mappings. For further details please read go/cloud-resource-monitoring_sig",
+        "location": {
           "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "crGopoPrefixes": {
-          "description": "Cloud resource to Google owned production object mapping in the form of prefixes. These should be available in DG KB storage/cns tables. The entity type, which is the part of the string before the first colon in the GURI, must be completely specified in prefix. For details about GURI please read go/guri. For further details about the field please read go/cloud-resource-monitoring_sig.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "serviceData": {
-          "$ref": "ServiceData",
-          "description": "Service-specific data. Only required for pre-determined services. Generally used to bind a Cloud Resource to some a TI container that uniquely specifies a customer. See milestone 2 of DRZ KR8 SIG for more information."
-        },
-        "tpIds": {
-          "description": "The list of project_id's of the tenant projects in the 'google.com' org which serve the Cloud Resource. See go/drz-mst-sig for more details.",
-          "items": {
-            "type": "string"
+            "$ref": "LocationAssignment"
           },
           "type": "array"
         }
@@ -967,6 +1012,17 @@
         "title": {
           "description": "Optional. Title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ExtraParameter": {
+      "description": "Defines parameters that should only be used for specific asset types.",
+      "id": "ExtraParameter",
+      "properties": {
+        "regionalMigDistributionPolicy": {
+          "$ref": "RegionalMigDistributionPolicy",
+          "description": "Details about zones used by regional compute.googleapis.com/InstanceGroupManager to create instances."
         }
       },
       "type": "object"
@@ -1070,6 +1126,10 @@
           "description": "The resource labels for instance to use to annotate any related underlying resources such as Compute Engine VMs. The character '=' is not allowed to be used within the labels.",
           "type": "object"
         },
+        "maintenancePolicy": {
+          "$ref": "MaintenancePolicy",
+          "description": "Optional. Configure the maintenance policy for this instance."
+        },
         "name": {
           "description": "Output only. The name of this instance is in the form of projects/{project}/locations/{location}/instances/{instance}.",
           "readOnly": true,
@@ -1087,7 +1147,7 @@
           "type": "object"
         },
         "p4ServiceAccount": {
-          "description": "Output only. P4 service account for the customer project.",
+          "description": "Output only. Service agent for the customer project.",
           "readOnly": true,
           "type": "string"
         },
@@ -1189,6 +1249,127 @@
         },
         "zone": {
           "description": "Name of the zone in which the Data Fusion instance will be created. Only DEVELOPER instances use this field.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "IsolationExpectations": {
+      "id": "IsolationExpectations",
+      "properties": {
+        "ziOrgPolicy": {
+          "enum": [
+            "ZI_UNSPECIFIED",
+            "ZI_UNKNOWN",
+            "ZI_NOT_REQUIRED",
+            "ZI_PREFERRED",
+            "ZI_REQUIRED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking is not available",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "ziRegionPolicy": {
+          "enum": [
+            "ZI_REGION_POLICY_UNSPECIFIED",
+            "ZI_REGION_POLICY_UNKNOWN",
+            "ZI_REGION_POLICY_NOT_SET",
+            "ZI_REGION_POLICY_FAIL_OPEN",
+            "ZI_REGION_POLICY_FAIL_CLOSED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking is not available",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "ziRegionState": {
+          "enum": [
+            "ZI_REGION_UNSPECIFIED",
+            "ZI_REGION_UNKNOWN",
+            "ZI_REGION_NOT_ENABLED",
+            "ZI_REGION_ENABLED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking is not available",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "zoneIsolation": {
+          "deprecated": true,
+          "description": "Deprecated: use zi_org_policy, zi_region_policy and zi_region_state instead for setting ZI expectations as per go/zicy-publish-physical-location.",
+          "enum": [
+            "ZI_UNSPECIFIED",
+            "ZI_UNKNOWN",
+            "ZI_NOT_REQUIRED",
+            "ZI_PREFERRED",
+            "ZI_REQUIRED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking is not available",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "zoneSeparation": {
+          "deprecated": true,
+          "description": "Deprecated: use zs_org_policy, and zs_region_stateinstead for setting Zs expectations as per go/zicy-publish-physical-location.",
+          "enum": [
+            "ZS_UNSPECIFIED",
+            "ZS_UNKNOWN",
+            "ZS_NOT_REQUIRED",
+            "ZS_REQUIRED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking is not available",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "zsOrgPolicy": {
+          "enum": [
+            "ZS_UNSPECIFIED",
+            "ZS_UNKNOWN",
+            "ZS_NOT_REQUIRED",
+            "ZS_REQUIRED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking is not available",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "zsRegionState": {
+          "enum": [
+            "ZS_REGION_UNSPECIFIED",
+            "ZS_REGION_UNKNOWN",
+            "ZS_REGION_NOT_ENABLED",
+            "ZS_REGION_ENABLED"
+          ],
+          "enumDescriptions": [
+            "",
+            "To be used if tracking of the asset ZS-bit is not available",
+            "",
+            ""
+          ],
           "type": "string"
         }
       },
@@ -1325,6 +1506,90 @@
       },
       "type": "object"
     },
+    "LocationAssignment": {
+      "id": "LocationAssignment",
+      "properties": {
+        "location": {
+          "type": "string"
+        },
+        "locationType": {
+          "enum": [
+            "UNSPECIFIED",
+            "CLUSTER",
+            "POP",
+            "CLOUD_ZONE",
+            "CLOUD_REGION",
+            "MULTI_REGION_GEO",
+            "MULTI_REGION_JURISDICTION",
+            "GLOBAL",
+            "OTHER"
+          ],
+          "enumDescriptions": [
+            "",
+            "1-10: Physical failure domains.",
+            "",
+            "11-20: Logical failure domains.",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LocationData": {
+      "id": "LocationData",
+      "properties": {
+        "blobstoreLocation": {
+          "$ref": "BlobstoreLocation"
+        },
+        "childAssetLocation": {
+          "$ref": "CloudAssetComposition"
+        },
+        "directLocation": {
+          "$ref": "DirectLocationAssignment"
+        },
+        "gcpProjectProxy": {
+          "$ref": "TenantProjectProxy"
+        },
+        "placerLocation": {
+          "$ref": "PlacerLocation"
+        },
+        "spannerLocation": {
+          "$ref": "SpannerLocation"
+        }
+      },
+      "type": "object"
+    },
+    "MaintenancePolicy": {
+      "description": "Maintenance policy of the instance.",
+      "id": "MaintenancePolicy",
+      "properties": {
+        "maintenanceExclusionWindow": {
+          "$ref": "TimeWindow",
+          "description": "Optional. The maintenance exclusion window of the instance."
+        },
+        "maintenanceWindow": {
+          "$ref": "MaintenanceWindow",
+          "description": "Optional. The maintenance window of the instance."
+        }
+      },
+      "type": "object"
+    },
+    "MaintenanceWindow": {
+      "description": "Maintenance window of the instance.",
+      "id": "MaintenanceWindow",
+      "properties": {
+        "recurringTimeWindow": {
+          "$ref": "RecurringTimeWindow",
+          "description": "Required. The recurring time window of the maintenance window."
+        }
+      },
+      "type": "object"
+    },
     "NetworkConfig": {
       "description": "Network configuration for a Data Fusion instance. These configurations are used for peering with the customer network. Configurations are optional when a public Data Fusion instance is to be created. However, providing these configurations allows several benefits, such as reduced network latency while accessing the customer resources from managed Data Fusion instance nodes, as well as access to the customer on-prem resources.",
       "id": "NetworkConfig",
@@ -1348,7 +1613,7 @@
           "type": "string"
         },
         "network": {
-          "description": "Optional. Name of the network in the customer project with which the Tenant Project will be peered for executing pipelines. This is required only when using connection type VPC peering. In case of shared VPC where the network resides in another host project the network should specified in the form of projects/{host-project-id}/global/networks/{network}. This is only required for connectivity type VPC_PEERING.",
+          "description": "Optional. Name of the network in the customer project with which the Tenant Project will be peered for executing pipelines. In case of shared VPC where the network resides in another host project the network should specified in the form of projects/{host-project-id}/global/networks/{network}. This is only required for connectivity type VPC_PEERING.",
           "type": "string"
         },
         "privateServiceConnectConfig": {
@@ -1437,23 +1702,13 @@
       },
       "type": "object"
     },
-    "PersistentDiskData": {
-      "description": "Persistent Disk service-specific Data. Contains information that may not be appropriate for the generic DRZ Augmented View. This currently includes LSV Colossus Roots and GCS Buckets.",
-      "id": "PersistentDiskData",
+    "PlacerLocation": {
+      "description": "Message describing that the location of the customer resource is tied to placer allocations",
+      "id": "PlacerLocation",
       "properties": {
-        "cfsRoots": {
-          "description": "Path to Colossus root for an LSV. NOTE: Unlike `cr_ti_guris` and `cr_ti_prefixes`, the field `cfs_roots` below does not need to be a GUri or GUri prefix. It can simply be any valid CFS or CFS2 Path. The DRZ KR8 SIG has more details overall, but generally the `cfs_roots` provided here should be scoped to an individual Persistent Disk. An example for a PD Disk with a disk ID 3277719120423414466, follows: * `cr_ti_guris` could be ‘/cfs2/pj/pd-cloud-prod’ as this is a valid GUri present in the DG KB and contains enough information to perform location monitoring and scope ownership of the Production Object. * `cfs_roots` would be: ‘/cfs2/pj/pd-cloud-staging/lsv000001234@/ lsv/projects~773365403387~zones~2700~disks~3277719120423414466 ~bank-blue-careful-3526-lsv00054DB1B7254BA3/’ as this allows us to enumerate the files on CFS2 that belong to an individual Disk.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "gcsBucketNames": {
-          "description": "The GCS Buckets that back this snapshot or image. This is required as `cr_ti_prefixes` and `cr_ti_guris` only accept TI resources. This should be the globally unique bucket name.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
+        "placerConfig": {
+          "description": "Directory with a config related to it in placer (e.g. \"/placer/prod/home/my-root/my-dir\")",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1509,21 +1764,44 @@
       },
       "type": "object"
     },
+    "RecurringTimeWindow": {
+      "description": "Represents an arbitrary window of time that recurs.",
+      "id": "RecurringTimeWindow",
+      "properties": {
+        "recurrence": {
+          "description": "Required. An RRULE with format [RFC-5545](https://tools.ietf.org/html/rfc5545#section-3.8.5.3) for how this window reccurs. They go on for the span of time between the start and end time. The only supported FREQ value is \"WEEKLY\". To have something repeat every weekday, use: \"FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR\". This specifies how frequently the window starts. To have a 9 am - 5 pm UTC-4 window every weekday, use something like: ``` start time = 2019-01-01T09:00:00-0400 end time = 2019-01-01T17:00:00-0400 recurrence = FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR ```",
+          "type": "string"
+        },
+        "window": {
+          "$ref": "TimeWindow",
+          "description": "Required. The window representing the start and end time of recurrences. This field ignores the date components of the provided timestamps. Only the time of day and duration between start and end time are relevant."
+        }
+      },
+      "type": "object"
+    },
+    "RegionalMigDistributionPolicy": {
+      "description": "To be used for specifying the intended distribution of regional compute.googleapis.com/InstanceGroupManager instances",
+      "id": "RegionalMigDistributionPolicy",
+      "properties": {
+        "targetShape": {
+          "description": "The shape in which the group converges around distribution of resources. Instance of proto2 enum",
+          "format": "int32",
+          "type": "integer"
+        },
+        "zones": {
+          "description": "Cloud zones used by regional MIG to create instances.",
+          "items": {
+            "$ref": "ZoneConfiguration"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "RestartInstanceRequest": {
       "description": "Request message for restarting a Data Fusion instance.",
       "id": "RestartInstanceRequest",
       "properties": {},
-      "type": "object"
-    },
-    "ServiceData": {
-      "description": "This message defines service-specific data that certain service teams must provide as part of the Data Residency Augmented View for a resource. Next ID: 2",
-      "id": "ServiceData",
-      "properties": {
-        "pd": {
-          "$ref": "PersistentDiskData",
-          "description": "Auxiliary data for the persistent disk pipeline provided to provide the LSV Colossus Roots and GCS Buckets."
-        }
-      },
       "type": "object"
     },
     "SetIamPolicyRequest": {
@@ -1538,6 +1816,26 @@
           "description": "OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only the fields in the mask will be modified. If no mask is provided, the following default mask is used: `paths: \"bindings, etag\"`",
           "format": "google-fieldmask",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SpannerLocation": {
+      "id": "SpannerLocation",
+      "properties": {
+        "backupName": {
+          "description": "Set of backups used by the resource with name in the same format as what is available at http://table/spanner_automon.backup_metadata",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "dbName": {
+          "description": "Set of databases used by the resource in format /span//",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1569,6 +1867,18 @@
       },
       "type": "object"
     },
+    "TenantProjectProxy": {
+      "id": "TenantProjectProxy",
+      "properties": {
+        "projectNumbers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "TestIamPermissionsRequest": {
       "description": "Request message for `TestIamPermissions` method.",
       "id": "TestIamPermissionsRequest",
@@ -1593,6 +1903,23 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TimeWindow": {
+      "description": "Represents an arbitrary window of time.",
+      "id": "TimeWindow",
+      "properties": {
+        "endTime": {
+          "description": "Required. The end time of the time window provided in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. The end time should take place after the start time. Example: \"2024-01-02T12:04:06-06:00\"",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "startTime": {
+          "description": "Required. The start time of the time window provided in [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. Example: \"2024-01-01T12:04:06-04:00\"",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1628,6 +1955,15 @@
         },
         "versionNumber": {
           "description": "The version number of the Data Fusion instance, such as '6.0.1.0'.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ZoneConfiguration": {
+      "id": "ZoneConfiguration",
+      "properties": {
+        "zone": {
           "type": "string"
         }
       },

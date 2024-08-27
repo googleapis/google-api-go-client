@@ -315,6 +315,7 @@ type ProjectsInstancesDatabaseOperationsService struct {
 
 func NewProjectsInstancesDatabasesService(s *Service) *ProjectsInstancesDatabasesService {
 	rs := &ProjectsInstancesDatabasesService{s: s}
+	rs.BackupSchedules = NewProjectsInstancesDatabasesBackupSchedulesService(s)
 	rs.DatabaseRoles = NewProjectsInstancesDatabasesDatabaseRolesService(s)
 	rs.Operations = NewProjectsInstancesDatabasesOperationsService(s)
 	rs.Sessions = NewProjectsInstancesDatabasesSessionsService(s)
@@ -324,11 +325,22 @@ func NewProjectsInstancesDatabasesService(s *Service) *ProjectsInstancesDatabase
 type ProjectsInstancesDatabasesService struct {
 	s *Service
 
+	BackupSchedules *ProjectsInstancesDatabasesBackupSchedulesService
+
 	DatabaseRoles *ProjectsInstancesDatabasesDatabaseRolesService
 
 	Operations *ProjectsInstancesDatabasesOperationsService
 
 	Sessions *ProjectsInstancesDatabasesSessionsService
+}
+
+func NewProjectsInstancesDatabasesBackupSchedulesService(s *Service) *ProjectsInstancesDatabasesBackupSchedulesService {
+	rs := &ProjectsInstancesDatabasesBackupSchedulesService{s: s}
+	return rs
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesService struct {
+	s *Service
 }
 
 func NewProjectsInstancesDatabasesDatabaseRolesService(s *Service) *ProjectsInstancesDatabasesDatabaseRolesService {
@@ -406,7 +418,7 @@ type ScansService struct {
 	s *Service
 }
 
-// AutoscalingConfig: Autoscaling config for an instance.
+// AutoscalingConfig: Autoscaling configuration for an instance.
 type AutoscalingConfig struct {
 	// AutoscalingLimits: Required. Autoscaling limits for an instance.
 	AutoscalingLimits *AutoscalingLimits `json:"autoscalingLimits,omitempty"`
@@ -425,9 +437,9 @@ type AutoscalingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoscalingConfig) MarshalJSON() ([]byte, error) {
+func (s AutoscalingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoscalingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutoscalingLimits: The autoscaling limits for the instance. Users can define
@@ -462,9 +474,9 @@ type AutoscalingLimits struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoscalingLimits) MarshalJSON() ([]byte, error) {
+func (s AutoscalingLimits) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoscalingLimits
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutoscalingTargets: The autoscaling targets for an instance.
@@ -494,13 +506,22 @@ type AutoscalingTargets struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoscalingTargets) MarshalJSON() ([]byte, error) {
+func (s AutoscalingTargets) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoscalingTargets
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Backup: A backup of a Cloud Spanner database.
 type Backup struct {
+	// BackupSchedules: Output only. List of backup schedule URIs that are
+	// associated with creating this backup. This is only applicable for scheduled
+	// backups, and is empty for on-demand backups. To optimize for storage,
+	// whenever possible, multiple schedules are collapsed together to create one
+	// backup. In such cases, this field captures the list of all backup schedule
+	// URIs that are associated with creating this backup. If collapsing is not
+	// done, then this field captures the single backup schedule URI associated
+	// with creating this backup.
+	BackupSchedules []string `json:"backupSchedules,omitempty"`
 	// CreateTime: Output only. The time the CreateBackup request is received. If
 	// the request does not specify `version_time`, the `version_time` of the
 	// backup will be equivalent to the `create_time`.
@@ -528,12 +549,34 @@ type Backup struct {
 	// restored. If a key version is revoked in the middle of a restore, the
 	// restore behavior is undefined.
 	EncryptionInformation []*EncryptionInfo `json:"encryptionInformation,omitempty"`
+	// ExclusiveSizeBytes: Output only. For a backup in an incremental backup
+	// chain, this is the storage space needed to keep the data that has changed
+	// since the previous backup. For all other backups, this is always the size of
+	// the backup. This value may change if backups on the same chain get deleted
+	// or expired. This field can be used to calculate the total storage space used
+	// by a set of backups. For example, the total space used by all backups of a
+	// database can be computed by summing up this field.
+	ExclusiveSizeBytes int64 `json:"exclusiveSizeBytes,omitempty,string"`
 	// ExpireTime: Required for the CreateBackup operation. The expiration time of
 	// the backup, with microseconds granularity that must be at least 6 hours and
 	// at most 366 days from the time the CreateBackup request is processed. Once
 	// the `expire_time` has passed, the backup is eligible to be automatically
 	// deleted by Cloud Spanner to free the resources used by the backup.
 	ExpireTime string `json:"expireTime,omitempty"`
+	// FreeableSizeBytes: Output only. The number of bytes that will be freed by
+	// deleting this backup. This value will be zero if, for example, this backup
+	// is part of an incremental backup chain and younger backups in the chain
+	// require that we keep its data. For backups not in an incremental backup
+	// chain, this is always the size of the backup. This value may change if
+	// backups on the same chain get created, deleted or expired.
+	FreeableSizeBytes int64 `json:"freeableSizeBytes,omitempty,string"`
+	// IncrementalBackupChainId: Output only. Populated only for backups in an
+	// incremental backup chain. Backups share the same chain id if and only if
+	// they belong to the same incremental backup chain. Use this field to
+	// determine which backups are part of the same incremental backup chain. The
+	// ordering of backups in the chain can be determined by ordering the backup
+	// `version_time`.
+	IncrementalBackupChainId string `json:"incrementalBackupChainId,omitempty"`
 	// MaxExpireTime: Output only. The max allowed expiration time of the backup,
 	// with microseconds granularity. A backup's expiration time can be configured
 	// in multiple APIs: CreateBackup, UpdateBackup, CopyBackup. When updating or
@@ -549,6 +592,13 @@ type Backup struct {
 	// containing the backup, identified by the prefix of the backup name of the
 	// form `projects//instances/`.
 	Name string `json:"name,omitempty"`
+	// OldestVersionTime: Output only. Data deleted at a time older than this is
+	// guaranteed not to be retained in order to support this backup. For a backup
+	// in an incremental backup chain, this is the version time of the oldest
+	// backup that exists or ever existed in the chain. For all other backups, this
+	// is the version time of the backup. This field can be used to understand what
+	// data is being retained by the backup system.
+	OldestVersionTime string `json:"oldestVersionTime,omitempty"`
 	// ReferencingBackups: Output only. The names of the destination backups being
 	// created by copying this source backup. The backup names are of the form
 	// `projects//instances//backups/`. Referencing backups may exist in different
@@ -564,7 +614,9 @@ type Backup struct {
 	// backup from being deleted. When a restored database from the backup enters
 	// the `READY` state, the reference to the backup is removed.
 	ReferencingDatabases []string `json:"referencingDatabases,omitempty"`
-	// SizeBytes: Output only. Size of the backup in bytes.
+	// SizeBytes: Output only. Size of the backup in bytes. For a backup in an
+	// incremental backup chain, this is the sum of the `exclusive_size_bytes` of
+	// itself and all older backups in the chain.
 	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
 	// State: Output only. The current state of the backup.
 	//
@@ -582,22 +634,22 @@ type Backup struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "BackupSchedules") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BackupSchedules") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Backup) MarshalJSON() ([]byte, error) {
+func (s Backup) MarshalJSON() ([]byte, error) {
 	type NoMethod Backup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BackupInfo: Information about a backup.
@@ -626,9 +678,80 @@ type BackupInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BackupInfo) MarshalJSON() ([]byte, error) {
+func (s BackupInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackupSchedule: BackupSchedule expresses the automated backup creation
+// specification for a Spanner database. Next ID: 10
+type BackupSchedule struct {
+	// EncryptionConfig: Optional. The encryption configuration that will be used
+	// to encrypt the backup. If this field is not specified, the backup will use
+	// the same encryption configuration as the database.
+	EncryptionConfig *CreateBackupEncryptionConfig `json:"encryptionConfig,omitempty"`
+	// FullBackupSpec: The schedule creates only full backups.
+	FullBackupSpec *FullBackupSpec `json:"fullBackupSpec,omitempty"`
+	// IncrementalBackupSpec: The schedule creates incremental backup chains.
+	IncrementalBackupSpec *IncrementalBackupSpec `json:"incrementalBackupSpec,omitempty"`
+	// Name: Identifier. Output only for the CreateBackupSchedule operation.
+	// Required for the UpdateBackupSchedule operation. A globally unique
+	// identifier for the backup schedule which cannot be changed. Values are of
+	// the form `projects//instances//databases//backupSchedules/a-z*[a-z0-9]` The
+	// final segment of the name must be between 2 and 60 characters in length.
+	Name string `json:"name,omitempty"`
+	// RetentionDuration: Optional. The retention duration of a backup that must be
+	// at least 6 hours and at most 366 days. The backup is eligible to be
+	// automatically deleted once the retention period has elapsed.
+	RetentionDuration string `json:"retentionDuration,omitempty"`
+	// Spec: Optional. The schedule specification based on which the backup
+	// creations are triggered.
+	Spec *BackupScheduleSpec `json:"spec,omitempty"`
+	// UpdateTime: Output only. The timestamp at which the schedule was last
+	// updated. If the schedule has never been updated, this field contains the
+	// timestamp when the schedule was first created.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EncryptionConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptionConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupSchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackupScheduleSpec: Defines specifications of the backup schedule.
+type BackupScheduleSpec struct {
+	// CronSpec: Cron style schedule specification.
+	CronSpec *CrontabSpec `json:"cronSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CronSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CronSpec") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupScheduleSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupScheduleSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchCreateSessionsRequest: The request for BatchCreateSessions.
@@ -653,9 +776,9 @@ type BatchCreateSessionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchCreateSessionsRequest) MarshalJSON() ([]byte, error) {
+func (s BatchCreateSessionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateSessionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchCreateSessionsResponse: The response for BatchCreateSessions.
@@ -678,9 +801,9 @@ type BatchCreateSessionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchCreateSessionsResponse) MarshalJSON() ([]byte, error) {
+func (s BatchCreateSessionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateSessionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchWriteRequest: The request for BatchWrite.
@@ -714,9 +837,9 @@ type BatchWriteRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchWriteRequest) MarshalJSON() ([]byte, error) {
+func (s BatchWriteRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchWriteRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchWriteResponse: The result of applying a batch of mutations.
@@ -746,9 +869,9 @@ type BatchWriteResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchWriteResponse) MarshalJSON() ([]byte, error) {
+func (s BatchWriteResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchWriteResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BeginTransactionRequest: The request for BeginTransaction.
@@ -773,9 +896,9 @@ type BeginTransactionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BeginTransactionRequest) MarshalJSON() ([]byte, error) {
+func (s BeginTransactionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BeginTransactionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -872,9 +995,68 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ChangeQuorumMetadata: Metadata type for the long-running operation returned
+// by ChangeQuorum.
+type ChangeQuorumMetadata struct {
+	// EndTime: If set, the time at which this operation failed or was completed
+	// successfully.
+	EndTime string `json:"endTime,omitempty"`
+	// Request: The request for ChangeQuorum.
+	Request *ChangeQuorumRequest `json:"request,omitempty"`
+	// StartTime: Time the request was received.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ChangeQuorumMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod ChangeQuorumMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ChangeQuorumRequest: The request for ChangeQuorum.
+type ChangeQuorumRequest struct {
+	// Etag: Optional. The etag is the hash of the `QuorumInfo`. The `ChangeQuorum`
+	// operation is only performed if the etag matches that of the `QuorumInfo` in
+	// the current database resource. Otherwise the API returns an `ABORTED` error.
+	// The etag is used for optimistic concurrency control as a way to help prevent
+	// simultaneous change quorum requests that could create a race condition.
+	Etag string `json:"etag,omitempty"`
+	// Name: Required. Name of the database in which to apply `ChangeQuorum`.
+	// Values are of the form `projects//instances//databases/`.
+	Name string `json:"name,omitempty"`
+	// QuorumType: Required. The type of this quorum.
+	QuorumType *QuorumType `json:"quorumType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ChangeQuorumRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ChangeQuorumRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChildLink: Metadata associated with a parent-child relationship appearing in
@@ -908,9 +1090,9 @@ type ChildLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChildLink) MarshalJSON() ([]byte, error) {
+func (s ChildLink) MarshalJSON() ([]byte, error) {
 	type NoMethod ChildLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommitRequest: The request for Commit.
@@ -952,9 +1134,9 @@ type CommitRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommitRequest) MarshalJSON() ([]byte, error) {
+func (s CommitRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CommitRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommitResponse: The response for Commit.
@@ -981,9 +1163,9 @@ type CommitResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommitResponse) MarshalJSON() ([]byte, error) {
+func (s CommitResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CommitResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommitStats: Additional statistics about a commit.
@@ -1010,9 +1192,9 @@ type CommitStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommitStats) MarshalJSON() ([]byte, error) {
+func (s CommitStats) MarshalJSON() ([]byte, error) {
 	type NoMethod CommitStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContextValue: A message representing context for a KeyRangeInfo, including a
@@ -1046,9 +1228,9 @@ type ContextValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContextValue) MarshalJSON() ([]byte, error) {
+func (s ContextValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ContextValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ContextValue) UnmarshalJSON(data []byte) error {
@@ -1111,9 +1293,9 @@ type CopyBackupEncryptionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CopyBackupEncryptionConfig) MarshalJSON() ([]byte, error) {
+func (s CopyBackupEncryptionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CopyBackupEncryptionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CopyBackupMetadata: Metadata type for the operation returned by CopyBackup.
@@ -1149,9 +1331,9 @@ type CopyBackupMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CopyBackupMetadata) MarshalJSON() ([]byte, error) {
+func (s CopyBackupMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CopyBackupMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CopyBackupRequest: The request for CopyBackup.
@@ -1190,9 +1372,60 @@ type CopyBackupRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CopyBackupRequest) MarshalJSON() ([]byte, error) {
+func (s CopyBackupRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CopyBackupRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateBackupEncryptionConfig: Encryption configuration for the backup to
+// create.
+type CreateBackupEncryptionConfig struct {
+	// EncryptionType: Required. The encryption type of the backup.
+	//
+	// Possible values:
+	//   "ENCRYPTION_TYPE_UNSPECIFIED" - Unspecified. Do not use.
+	//   "USE_DATABASE_ENCRYPTION" - Use the same encryption configuration as the
+	// database. This is the default option when encryption_config is empty. For
+	// example, if the database is using `Customer_Managed_Encryption`, the backup
+	// will be using the same Cloud KMS key as the database.
+	//   "GOOGLE_DEFAULT_ENCRYPTION" - Use Google default encryption.
+	//   "CUSTOMER_MANAGED_ENCRYPTION" - Use customer managed encryption. If
+	// specified, `kms_key_name` must contain a valid Cloud KMS key.
+	EncryptionType string `json:"encryptionType,omitempty"`
+	// KmsKeyName: Optional. The Cloud KMS key that will be used to protect the
+	// backup. This field should be set only when encryption_type is
+	// `CUSTOMER_MANAGED_ENCRYPTION`. Values are of the form
+	// `projects//locations//keyRings//cryptoKeys/`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// KmsKeyNames: Optional. Specifies the KMS configuration for the one or more
+	// keys used to protect the backup. Values are of the form
+	// `projects//locations//keyRings//cryptoKeys/`. The keys referenced by
+	// kms_key_names must fully cover all regions of the backup's instance
+	// configuration. Some examples: * For single region instance configs, specify
+	// a single regional location KMS key. * For multi-regional instance configs of
+	// type GOOGLE_MANAGED, either specify a multi-regional location KMS key or
+	// multiple regional location KMS keys that cover all regions in the instance
+	// config. * For an instance config of type USER_MANAGED, please specify only
+	// regional location KMS keys to cover each region in the instance config.
+	// Multi-regional location KMS keys are not supported for USER_MANAGED instance
+	// configs.
+	KmsKeyNames []string `json:"kmsKeyNames,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncryptionType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptionType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateBackupEncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateBackupEncryptionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateBackupMetadata: Metadata type for the operation returned by
@@ -1227,9 +1460,9 @@ type CreateBackupMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateBackupMetadata) MarshalJSON() ([]byte, error) {
+func (s CreateBackupMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateBackupMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateDatabaseMetadata: Metadata type for the operation returned by
@@ -1250,9 +1483,9 @@ type CreateDatabaseMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateDatabaseMetadata) MarshalJSON() ([]byte, error) {
+func (s CreateDatabaseMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateDatabaseMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateDatabaseRequest: The request for CreateDatabase.
@@ -1280,13 +1513,14 @@ type CreateDatabaseRequest struct {
 	// statements execute atomically with the creation of the database: if there is
 	// an error in any statement, the database is not created.
 	ExtraStatements []string `json:"extraStatements,omitempty"`
-	// ProtoDescriptors: Optional. Proto descriptors used by CREATE/ALTER PROTO
-	// BUNDLE statements in 'extra_statements' above. Contains a
-	// protobuf-serialized google.protobuf.FileDescriptorSet
-	// (https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto).
-	// To generate it, install (https://grpc.io/docs/protoc-installation/) and run
-	// `protoc` with --include_imports and --descriptor_set_out. For example, to
-	// generate for moon/shot/app.proto, run ``` $protoc --proto_path=/app_path
+	// ProtoDescriptors: Optional. Proto descriptors used by `CREATE/ALTER PROTO
+	// BUNDLE` statements in 'extra_statements'. Contains a protobuf-serialized
+	// `google.protobuf.FileDescriptorSet`
+	// (https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto)
+	// descriptor set. To generate it, install
+	// (https://grpc.io/docs/protoc-installation/) and run `protoc` with
+	// --include_imports and --descriptor_set_out. For example, to generate for
+	// moon/shot/app.proto, run ``` $protoc --proto_path=/app_path
 	// --proto_path=/lib_path \ --include_imports \
 	// --descriptor_set_out=descriptors.data \ moon/shot/app.proto ``` For more
 	// details, see protobuffer self description
@@ -1305,9 +1539,9 @@ type CreateDatabaseRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateDatabaseRequest) MarshalJSON() ([]byte, error) {
+func (s CreateDatabaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateDatabaseRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateInstanceConfigMetadata: Metadata type for the operation returned by
@@ -1315,7 +1549,7 @@ func (s *CreateDatabaseRequest) MarshalJSON() ([]byte, error) {
 type CreateInstanceConfigMetadata struct {
 	// CancelTime: The time at which this operation was cancelled.
 	CancelTime string `json:"cancelTime,omitempty"`
-	// InstanceConfig: The target instance config end state.
+	// InstanceConfig: The target instance configuration end state.
 	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
 	// Progress: The progress of the CreateInstanceConfig operation.
 	Progress *InstanceOperationProgress `json:"progress,omitempty"`
@@ -1332,22 +1566,22 @@ type CreateInstanceConfigMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateInstanceConfigMetadata) MarshalJSON() ([]byte, error) {
+func (s CreateInstanceConfigMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateInstanceConfigMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateInstanceConfigRequest: The request for CreateInstanceConfigRequest.
 type CreateInstanceConfigRequest struct {
-	// InstanceConfig: Required. The InstanceConfig proto of the configuration to
-	// create. instance_config.name must be `/instanceConfigs/`.
-	// instance_config.base_config must be a Google managed configuration name,
+	// InstanceConfig: Required. The `InstanceConfig` proto of the configuration to
+	// create. `instance_config.name` must be `/instanceConfigs/`.
+	// `instance_config.base_config` must be a Google-managed configuration name,
 	// e.g. /instanceConfigs/us-east1, /instanceConfigs/nam3.
 	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
-	// InstanceConfigId: Required. The ID of the instance config to create. Valid
-	// identifiers are of the form `custom-[-a-z0-9]*[a-z0-9]` and must be between
-	// 2 and 64 characters in length. The `custom-` prefix is required to avoid
-	// name conflicts with Google managed configurations.
+	// InstanceConfigId: Required. The ID of the instance configuration to create.
+	// Valid identifiers are of the form `custom-[-a-z0-9]*[a-z0-9]` and must be
+	// between 2 and 64 characters in length. The `custom-` prefix is required to
+	// avoid name conflicts with Google-managed configurations.
 	InstanceConfigId string `json:"instanceConfigId,omitempty"`
 	// ValidateOnly: An option to validate, but not actually execute, a request,
 	// and provide the same response.
@@ -1365,9 +1599,9 @@ type CreateInstanceConfigRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateInstanceConfigRequest) MarshalJSON() ([]byte, error) {
+func (s CreateInstanceConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateInstanceConfigRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateInstanceMetadata: Metadata type for the operation returned by
@@ -1407,9 +1641,9 @@ type CreateInstanceMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateInstanceMetadata) MarshalJSON() ([]byte, error) {
+func (s CreateInstanceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateInstanceMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateInstancePartitionMetadata: Metadata type for the operation returned by
@@ -1440,9 +1674,9 @@ type CreateInstancePartitionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateInstancePartitionMetadata) MarshalJSON() ([]byte, error) {
+func (s CreateInstancePartitionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateInstancePartitionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateInstancePartitionRequest: The request for CreateInstancePartition.
@@ -1468,9 +1702,9 @@ type CreateInstancePartitionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateInstancePartitionRequest) MarshalJSON() ([]byte, error) {
+func (s CreateInstancePartitionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateInstancePartitionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateInstanceRequest: The request for CreateInstance.
@@ -1495,9 +1729,9 @@ type CreateInstanceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateInstanceRequest) MarshalJSON() ([]byte, error) {
+func (s CreateInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateInstanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateSessionRequest: The request for CreateSession.
@@ -1517,9 +1751,52 @@ type CreateSessionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateSessionRequest) MarshalJSON() ([]byte, error) {
+func (s CreateSessionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateSessionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CrontabSpec: CrontabSpec can be used to specify the version time and
+// frequency at which the backup should be created.
+type CrontabSpec struct {
+	// CreationWindow: Output only. Schedule backups will contain an externally
+	// consistent copy of the database at the version time specified in
+	// `schedule_spec.cron_spec`. However, Spanner may not initiate the creation of
+	// the scheduled backups at that version time. Spanner will initiate the
+	// creation of scheduled backups within the time window bounded by the
+	// version_time specified in `schedule_spec.cron_spec` and version_time +
+	// `creation_window`.
+	CreationWindow string `json:"creationWindow,omitempty"`
+	// Text: Required. Textual representation of the crontab. User can customize
+	// the backup frequency and the backup version time using the cron expression.
+	// The version time must be in UTC timzeone. The backup will contain an
+	// externally consistent copy of the database at the version time. Allowed
+	// frequencies are 12 hour, 1 day, 1 week and 1 month. Examples of valid cron
+	// specifications: * `0 2/12 * * * ` : every 12 hours at (2, 14) hours past
+	// midnight in UTC. * `0 2,14 * * * ` : every 12 hours at (2,14) hours past
+	// midnight in UTC. * `0 2 * * * ` : once a day at 2 past midnight in UTC. * `0
+	// 2 * * 0 ` : once a week every Sunday at 2 past midnight in UTC. * `0 2 8 * *
+	// ` : once a month on 8th day at 2 past midnight in UTC.
+	Text string `json:"text,omitempty"`
+	// TimeZone: Output only. The time zone of the times in `CrontabSpec.text`.
+	// Currently only UTC is supported.
+	TimeZone string `json:"timeZone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreationWindow") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreationWindow") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CrontabSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod CrontabSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Database: A Cloud Spanner database.
@@ -1546,9 +1823,9 @@ type Database struct {
 	// recover data, make sure to account for the time from the moment when the
 	// value is queried to the moment when you initiate the recovery.
 	EarliestVersionTime string `json:"earliestVersionTime,omitempty"`
-	// EnableDropProtection: Whether drop protection is enabled for this database.
-	// Defaults to false, if not set. For more details, please see how to prevent
-	// accidental database deletion
+	// EnableDropProtection: Optional. Whether drop protection is enabled for this
+	// database. Defaults to false, if not set. For more details, please see how to
+	// prevent accidental database deletion
 	// (https://cloud.google.com/spanner/docs/prevent-database-deletion).
 	EnableDropProtection bool `json:"enableDropProtection,omitempty"`
 	// EncryptionConfig: Output only. For databases that are using customer managed
@@ -1569,6 +1846,9 @@ type Database struct {
 	// DATABASE` statement. This name can be passed to other API methods to
 	// identify the database.
 	Name string `json:"name,omitempty"`
+	// QuorumInfo: Output only. Applicable only for databases that use dual-region
+	// instance configurations. Contains information about the quorum.
+	QuorumInfo *QuorumInfo `json:"quorumInfo,omitempty"`
 	// Reconciling: Output only. If true, the database is being updated. If false,
 	// there are no ongoing update operations for the database.
 	Reconciling bool `json:"reconciling,omitempty"`
@@ -1610,9 +1890,9 @@ type Database struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Database) MarshalJSON() ([]byte, error) {
+func (s Database) MarshalJSON() ([]byte, error) {
 	type NoMethod Database
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatabaseRole: A Cloud Spanner database role.
@@ -1634,9 +1914,9 @@ type DatabaseRole struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatabaseRole) MarshalJSON() ([]byte, error) {
+func (s DatabaseRole) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseRole
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DdlStatementActionInfo: Action information extracted from a DDL statement.
@@ -1668,9 +1948,9 @@ type DdlStatementActionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DdlStatementActionInfo) MarshalJSON() ([]byte, error) {
+func (s DdlStatementActionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DdlStatementActionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Delete: Arguments to delete operations.
@@ -1696,9 +1976,9 @@ type Delete struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Delete) MarshalJSON() ([]byte, error) {
+func (s Delete) MarshalJSON() ([]byte, error) {
 	type NoMethod Delete
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DerivedMetric: A message representing a derived metric.
@@ -1720,9 +2000,9 @@ type DerivedMetric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DerivedMetric) MarshalJSON() ([]byte, error) {
+func (s DerivedMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod DerivedMetric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiagnosticMessage: A message representing the key visualizer diagnostic
@@ -1764,9 +2044,9 @@ type DiagnosticMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiagnosticMessage) MarshalJSON() ([]byte, error) {
+func (s DiagnosticMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod DiagnosticMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DirectedReadOptions: The DirectedReadOptions can be used to indicate which
@@ -1797,9 +2077,14 @@ type DirectedReadOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DirectedReadOptions) MarshalJSON() ([]byte, error) {
+func (s DirectedReadOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod DirectedReadOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DualRegionQuorum: Message type for a dual-region quorum. Currently this type
+// has no options.
+type DualRegionQuorum struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1843,9 +2128,9 @@ type EncryptionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EncryptionConfig) MarshalJSON() ([]byte, error) {
+func (s EncryptionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EncryptionInfo: Encryption information for a Cloud Spanner database or
@@ -1884,9 +2169,9 @@ type EncryptionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EncryptionInfo) MarshalJSON() ([]byte, error) {
+func (s EncryptionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExcludeReplicas: An ExcludeReplicas contains a repeated set of
@@ -1907,9 +2192,9 @@ type ExcludeReplicas struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExcludeReplicas) MarshalJSON() ([]byte, error) {
+func (s ExcludeReplicas) MarshalJSON() ([]byte, error) {
 	type NoMethod ExcludeReplicas
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecuteBatchDmlRequest: The request for ExecuteBatchDml.
@@ -1948,9 +2233,9 @@ type ExecuteBatchDmlRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecuteBatchDmlRequest) MarshalJSON() ([]byte, error) {
+func (s ExecuteBatchDmlRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecuteBatchDmlRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecuteBatchDmlResponse: The response for ExecuteBatchDml. Contains a list
@@ -1995,9 +2280,9 @@ type ExecuteBatchDmlResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecuteBatchDmlResponse) MarshalJSON() ([]byte, error) {
+func (s ExecuteBatchDmlResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecuteBatchDmlResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecuteSqlRequest: The request for ExecuteSql and ExecuteStreamingSql.
@@ -2040,7 +2325,9 @@ type ExecuteSqlRequest struct {
 	//   "PLAN" - This mode returns only the query plan, without any results or
 	// execution statistics information.
 	//   "PROFILE" - This mode returns both the query plan and the execution
-	// statistics along with the results.
+	// statistics along with the results. This has a performance overhead compared
+	// to the NORMAL mode. It is not recommended to use this mode for production
+	// traffic.
 	QueryMode string `json:"queryMode,omitempty"`
 	// QueryOptions: Query optimizer configuration to use for the given query.
 	QueryOptions *QueryOptions `json:"queryOptions,omitempty"`
@@ -2083,9 +2370,9 @@ type ExecuteSqlRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecuteSqlRequest) MarshalJSON() ([]byte, error) {
+func (s ExecuteSqlRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecuteSqlRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -2131,9 +2418,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Field: Message representing a single field of a struct.
@@ -2160,9 +2447,9 @@ type Field struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Field) MarshalJSON() ([]byte, error) {
+func (s Field) MarshalJSON() ([]byte, error) {
 	type NoMethod Field
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FreeInstanceMetadata: Free instance specific metadata that is kept even
@@ -2201,9 +2488,14 @@ type FreeInstanceMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FreeInstanceMetadata) MarshalJSON() ([]byte, error) {
+func (s FreeInstanceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod FreeInstanceMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FullBackupSpec: The specification for full backups. A full backup stores the
+// entire contents of the database at a given version time.
+type FullBackupSpec struct {
 }
 
 // GetDatabaseDdlResponse: The response for GetDatabaseDdl.
@@ -2233,9 +2525,9 @@ type GetDatabaseDdlResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetDatabaseDdlResponse) MarshalJSON() ([]byte, error) {
+func (s GetDatabaseDdlResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetDatabaseDdlResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
@@ -2256,9 +2548,9 @@ type GetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
@@ -2288,9 +2580,9 @@ type GetPolicyOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
+func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IncludeReplicas: An IncludeReplicas contains a repeated set of
@@ -2316,9 +2608,18 @@ type IncludeReplicas struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IncludeReplicas) MarshalJSON() ([]byte, error) {
+func (s IncludeReplicas) MarshalJSON() ([]byte, error) {
 	type NoMethod IncludeReplicas
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IncrementalBackupSpec: The specification for incremental backup chains. An
+// incremental backup stores the delta of changes between a previous backup and
+// the database contents at a given version time. An incremental backup chain
+// consists of a full backup and zero or more successive incremental backups.
+// The first backup created for an incremental backup chain is always a full
+// backup.
+type IncrementalBackupSpec struct {
 }
 
 // IndexAdvice: Recommendation to add new indexes to run queries more
@@ -2344,9 +2645,9 @@ type IndexAdvice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IndexAdvice) MarshalJSON() ([]byte, error) {
+func (s IndexAdvice) MarshalJSON() ([]byte, error) {
 	type NoMethod IndexAdvice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *IndexAdvice) UnmarshalJSON(data []byte) error {
@@ -2384,9 +2685,9 @@ type IndexedHotKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IndexedHotKey) MarshalJSON() ([]byte, error) {
+func (s IndexedHotKey) MarshalJSON() ([]byte, error) {
 	type NoMethod IndexedHotKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IndexedKeyRangeInfos: A message representing a (sparse) collection of
@@ -2408,9 +2709,9 @@ type IndexedKeyRangeInfos struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IndexedKeyRangeInfos) MarshalJSON() ([]byte, error) {
+func (s IndexedKeyRangeInfos) MarshalJSON() ([]byte, error) {
 	type NoMethod IndexedKeyRangeInfos
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Instance: An isolated set of Cloud Spanner resources on which databases can
@@ -2431,6 +2732,14 @@ type Instance struct {
 	// in UIs. Must be unique per project and between 4 and 30 characters in
 	// length.
 	DisplayName string `json:"displayName,omitempty"`
+	// Edition: Optional. The `Edition` of the current instance.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - Edition not specified.
+	//   "STANDARD" - Standard edition.
+	//   "ENTERPRISE" - Enterprise edition.
+	//   "ENTERPRISE_PLUS" - Enterprise Plus edition.
+	Edition string `json:"edition,omitempty"`
 	// EndpointUris: Deprecated. This field is not populated.
 	EndpointUris []string `json:"endpointUris,omitempty"`
 	// FreeInstanceMetadata: Free instance metadata. Only populated for free
@@ -2468,21 +2777,25 @@ type Instance struct {
 	// `projects//instances/a-z*[a-z0-9]`. The final segment of the name must be
 	// between 2 and 64 characters in length.
 	Name string `json:"name,omitempty"`
-	// NodeCount: The number of nodes allocated to this instance. At most one of
-	// either node_count or processing_units should be present in the message.
-	// Users can set the node_count field to specify the target number of nodes
-	// allocated to the instance. This may be zero in API responses for instances
-	// that are not yet in state `READY`. See the documentation
-	// (https://cloud.google.com/spanner/docs/compute-capacity) for more
-	// information about nodes and processing units.
+	// NodeCount: The number of nodes allocated to this instance. At most, one of
+	// either `node_count` or `processing_units` should be present in the message.
+	// Users can set the `node_count` field to specify the target number of nodes
+	// allocated to the instance. If autoscaling is enabled, `node_count` is
+	// treated as an `OUTPUT_ONLY` field and reflects the current number of nodes
+	// allocated to the instance. This might be zero in API responses for instances
+	// that are not yet in the `READY` state. For more information, see Compute
+	// capacity, nodes, and processing units
+	// (https://cloud.google.com/spanner/docs/compute-capacity).
 	NodeCount int64 `json:"nodeCount,omitempty"`
 	// ProcessingUnits: The number of processing units allocated to this instance.
-	// At most one of processing_units or node_count should be present in the
-	// message. Users can set the processing_units field to specify the target
-	// number of processing units allocated to the instance. This may be zero in
-	// API responses for instances that are not yet in state `READY`. See the
-	// documentation (https://cloud.google.com/spanner/docs/compute-capacity) for
-	// more information about nodes and processing units.
+	// At most, one of either `processing_units` or `node_count` should be present
+	// in the message. Users can set the `processing_units` field to specify the
+	// target number of processing units allocated to the instance. If autoscaling
+	// is enabled, `processing_units` is treated as an `OUTPUT_ONLY` field and
+	// reflects the current number of processing units allocated to the instance.
+	// This might be zero in API responses for instances that are not yet in the
+	// `READY` state. For more information, see Compute capacity, nodes and
+	// processing units (https://cloud.google.com/spanner/docs/compute-capacity).
 	ProcessingUnits int64 `json:"processingUnits,omitempty"`
 	// State: Output only. The current instance state. For CreateInstance, the
 	// state must be either omitted or set to `CREATING`. For UpdateInstance, the
@@ -2514,9 +2827,9 @@ type Instance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Instance) MarshalJSON() ([]byte, error) {
+func (s Instance) MarshalJSON() ([]byte, error) {
 	type NoMethod Instance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstanceConfig: A possible configuration for a Cloud Spanner instance.
@@ -2524,44 +2837,45 @@ func (s *Instance) MarshalJSON() ([]byte, error) {
 // replication.
 type InstanceConfig struct {
 	// BaseConfig: Base configuration name, e.g. projects//instanceConfigs/nam3,
-	// based on which this configuration is created. Only set for user managed
+	// based on which this configuration is created. Only set for user-managed
 	// configurations. `base_config` must refer to a configuration of type
-	// GOOGLE_MANAGED in the same project as this configuration.
+	// `GOOGLE_MANAGED` in the same project as this configuration.
 	BaseConfig string `json:"baseConfig,omitempty"`
-	// ConfigType: Output only. Whether this instance config is a Google or User
-	// Managed Configuration.
+	// ConfigType: Output only. Whether this instance configuration is a
+	// Google-managed or user-managed configuration.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified.
-	//   "GOOGLE_MANAGED" - Google managed configuration.
-	//   "USER_MANAGED" - User managed configuration.
+	//   "GOOGLE_MANAGED" - Google-managed configuration.
+	//   "USER_MANAGED" - User-managed configuration.
 	ConfigType string `json:"configType,omitempty"`
 	// DisplayName: The name of this instance configuration as it appears in UIs.
 	DisplayName string `json:"displayName,omitempty"`
 	// Etag: etag is used for optimistic concurrency control as a way to help
-	// prevent simultaneous updates of a instance config from overwriting each
-	// other. It is strongly suggested that systems make use of the etag in the
-	// read-modify-write cycle to perform instance config updates in order to avoid
-	// race conditions: An etag is returned in the response which contains instance
-	// configs, and systems are expected to put that etag in the request to update
-	// instance config to ensure that their change will be applied to the same
-	// version of the instance config. If no etag is provided in the call to update
-	// instance config, then the existing instance config is overwritten blindly.
+	// prevent simultaneous updates of a instance configuration from overwriting
+	// each other. It is strongly suggested that systems make use of the etag in
+	// the read-modify-write cycle to perform instance configuration updates in
+	// order to avoid race conditions: An etag is returned in the response which
+	// contains instance configurations, and systems are expected to put that etag
+	// in the request to update instance configuration to ensure that their change
+	// is applied to the same version of the instance configuration. If no etag is
+	// provided in the call to update the instance configuration, then the existing
+	// instance configuration is overwritten blindly.
 	Etag string `json:"etag,omitempty"`
 	// FreeInstanceAvailability: Output only. Describes whether free instances are
-	// available to be created in this instance config.
+	// available to be created in this instance configuration.
 	//
 	// Possible values:
 	//   "FREE_INSTANCE_AVAILABILITY_UNSPECIFIED" - Not specified.
 	//   "AVAILABLE" - Indicates that free instances are available to be created in
-	// this instance config.
+	// this instance configuration.
 	//   "UNSUPPORTED" - Indicates that free instances are not supported in this
-	// instance config.
+	// instance configuration.
 	//   "DISABLED" - Indicates that free instances are currently not available to
-	// be created in this instance config.
+	// be created in this instance configuration.
 	//   "QUOTA_EXCEEDED" - Indicates that additional free instances cannot be
-	// created in this instance config because the project has reached its limit of
-	// free instances.
+	// created in this instance configuration because the project has reached its
+	// limit of free instances.
 	FreeInstanceAvailability string `json:"freeInstanceAvailability,omitempty"`
 	// Labels: Cloud Labels are a flexible and lightweight mechanism for organizing
 	// cloud resources into groups that reflect a customer's organizational needs
@@ -2584,26 +2898,45 @@ type InstanceConfig struct {
 	// databases in instances that use this instance configuration.
 	LeaderOptions []string `json:"leaderOptions,omitempty"`
 	// Name: A unique identifier for the instance configuration. Values are of the
-	// form `projects//instanceConfigs/a-z*`.
+	// form `projects//instanceConfigs/a-z*`. User instance configuration must
+	// start with `custom-`.
 	Name string `json:"name,omitempty"`
 	// OptionalReplicas: Output only. The available optional replicas to choose
-	// from for user managed configurations. Populated for Google managed
+	// from for user-managed configurations. Populated for Google-managed
 	// configurations.
 	OptionalReplicas []*ReplicaInfo `json:"optionalReplicas,omitempty"`
-	// Reconciling: Output only. If true, the instance config is being created or
-	// updated. If false, there are no ongoing operations for the instance config.
+	// QuorumType: Output only. The `QuorumType` of the instance configuration.
+	//
+	// Possible values:
+	//   "QUORUM_TYPE_UNSPECIFIED" - Quorum type not specified.
+	//   "REGION" - An instance configuration tagged with `REGION` quorum type
+	// forms a write quorum in a single region.
+	//   "DUAL_REGION" - An instance configuration tagged with the `DUAL_REGION`
+	// quorum type forms a write quorum with exactly two read-write regions in a
+	// multi-region configuration. This instance configuration requires failover in
+	// the event of regional failures.
+	//   "MULTI_REGION" - An instance configuration tagged with the `MULTI_REGION`
+	// quorum type forms a write quorum from replicas that are spread across more
+	// than one region in a multi-region configuration.
+	QuorumType string `json:"quorumType,omitempty"`
+	// Reconciling: Output only. If true, the instance configuration is being
+	// created or updated. If false, there are no ongoing operations for the
+	// instance configuration.
 	Reconciling bool `json:"reconciling,omitempty"`
 	// Replicas: The geographic placement of nodes in this instance configuration
-	// and their replication properties.
+	// and their replication properties. To create user-managed configurations,
+	// input `replicas` must include all replicas in `replicas` of the
+	// `base_config` and include one or more replicas in the `optional_replicas` of
+	// the `base_config`.
 	Replicas []*ReplicaInfo `json:"replicas,omitempty"`
-	// State: Output only. The current instance config state. Applicable only for
-	// USER_MANAGED configs.
+	// State: Output only. The current instance configuration state. Applicable
+	// only for `USER_MANAGED` configurations.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Not specified.
-	//   "CREATING" - The instance config is still being created.
-	//   "READY" - The instance config is fully created and ready to be used to
-	// create instances.
+	//   "CREATING" - The instance configuration is still being created.
+	//   "READY" - The instance configuration is fully created and ready to be used
+	// to create instances.
 	State string `json:"state,omitempty"`
 	// StorageLimitPerProcessingUnit: Output only. The storage limit in bytes per
 	// processing unit.
@@ -2624,9 +2957,9 @@ type InstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstanceConfig) MarshalJSON() ([]byte, error) {
+func (s InstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstanceOperationProgress: Encapsulates progress related information for a
@@ -2653,9 +2986,9 @@ type InstanceOperationProgress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstanceOperationProgress) MarshalJSON() ([]byte, error) {
+func (s InstanceOperationProgress) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceOperationProgress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancePartition: An isolated set of Cloud Spanner resources that databases
@@ -2690,20 +3023,21 @@ type InstancePartition struct {
 	// created.
 	Name string `json:"name,omitempty"`
 	// NodeCount: The number of nodes allocated to this instance partition. Users
-	// can set the node_count field to specify the target number of nodes allocated
-	// to the instance partition. This may be zero in API responses for instance
-	// partitions that are not yet in state `READY`.
+	// can set the `node_count` field to specify the target number of nodes
+	// allocated to the instance partition. This may be zero in API responses for
+	// instance partitions that are not yet in state `READY`.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 	// ProcessingUnits: The number of processing units allocated to this instance
-	// partition. Users can set the processing_units field to specify the target
-	// number of processing units allocated to the instance partition. This may be
-	// zero in API responses for instance partitions that are not yet in state
-	// `READY`.
+	// partition. Users can set the `processing_units` field to specify the target
+	// number of processing units allocated to the instance partition. This might
+	// be zero in API responses for instance partitions that are not yet in the
+	// `READY` state.
 	ProcessingUnits int64 `json:"processingUnits,omitempty"`
-	// ReferencingBackups: Output only. The names of the backups that reference
-	// this instance partition. Referencing backups should share the parent
-	// instance. The existence of any referencing backup prevents the instance
-	// partition from being deleted.
+	// ReferencingBackups: Output only. Deprecated: This field is not populated.
+	// Output only. The names of the backups that reference this instance
+	// partition. Referencing backups should share the parent instance. The
+	// existence of any referencing backup prevents the instance partition from
+	// being deleted.
 	ReferencingBackups []string `json:"referencingBackups,omitempty"`
 	// ReferencingDatabases: Output only. The names of the databases that reference
 	// this instance partition. Referencing databases should share the parent
@@ -2739,9 +3073,9 @@ type InstancePartition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancePartition) MarshalJSON() ([]byte, error) {
+func (s InstancePartition) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancePartition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KeyRange: KeyRange represents a range of rows in a table or index. A range
@@ -2804,9 +3138,9 @@ type KeyRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeyRange) MarshalJSON() ([]byte, error) {
+func (s KeyRange) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KeyRangeInfo: A message representing information for a key range (possibly
@@ -2845,9 +3179,9 @@ type KeyRangeInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeyRangeInfo) MarshalJSON() ([]byte, error) {
+func (s KeyRangeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyRangeInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *KeyRangeInfo) UnmarshalJSON(data []byte) error {
@@ -2886,9 +3220,9 @@ type KeyRangeInfos struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeyRangeInfos) MarshalJSON() ([]byte, error) {
+func (s KeyRangeInfos) MarshalJSON() ([]byte, error) {
 	type NoMethod KeyRangeInfos
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KeySet: `KeySet` defines a collection of Cloud Spanner keys and/or key
@@ -2922,9 +3256,9 @@ type KeySet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeySet) MarshalJSON() ([]byte, error) {
+func (s KeySet) MarshalJSON() ([]byte, error) {
 	type NoMethod KeySet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListBackupOperationsResponse: The response for ListBackupOperations.
@@ -2956,9 +3290,37 @@ type ListBackupOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBackupOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListBackupOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBackupOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListBackupSchedulesResponse: The response for ListBackupSchedules.
+type ListBackupSchedulesResponse struct {
+	// BackupSchedules: The list of backup schedules for a database.
+	BackupSchedules []*BackupSchedule `json:"backupSchedules,omitempty"`
+	// NextPageToken: `next_page_token` can be sent in a subsequent
+	// ListBackupSchedules call to fetch more of the schedules.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BackupSchedules") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupSchedules") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListBackupSchedulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBackupSchedulesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListBackupsResponse: The response for ListBackups.
@@ -2986,9 +3348,9 @@ type ListBackupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBackupsResponse) MarshalJSON() ([]byte, error) {
+func (s ListBackupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBackupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDatabaseOperationsResponse: The response for ListDatabaseOperations.
@@ -3016,9 +3378,9 @@ type ListDatabaseOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDatabaseOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListDatabaseOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDatabaseOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDatabaseRolesResponse: The response for ListDatabaseRoles.
@@ -3044,9 +3406,9 @@ type ListDatabaseRolesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDatabaseRolesResponse) MarshalJSON() ([]byte, error) {
+func (s ListDatabaseRolesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDatabaseRolesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDatabasesResponse: The response for ListDatabases.
@@ -3072,9 +3434,9 @@ type ListDatabasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDatabasesResponse) MarshalJSON() ([]byte, error) {
+func (s ListDatabasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDatabasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInstanceConfigOperationsResponse: The response for
@@ -3083,10 +3445,10 @@ type ListInstanceConfigOperationsResponse struct {
 	// NextPageToken: `next_page_token` can be sent in a subsequent
 	// ListInstanceConfigOperations call to fetch more of the matching metadata.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Operations: The list of matching instance config long-running operations.
-	// Each operation's name will be prefixed by the instance config's name. The
-	// operation's metadata field type `metadata.type_url` describes the type of
-	// the metadata.
+	// Operations: The list of matching instance configuration long-running
+	// operations. Each operation's name will be prefixed by the name of the
+	// instance configuration. The operation's metadata field type
+	// `metadata.type_url` describes the type of the metadata.
 	Operations []*Operation `json:"operations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3104,9 +3466,9 @@ type ListInstanceConfigOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInstanceConfigOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListInstanceConfigOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInstanceConfigOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInstanceConfigsResponse: The response for ListInstanceConfigs.
@@ -3133,9 +3495,9 @@ type ListInstanceConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInstanceConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s ListInstanceConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInstanceConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInstancePartitionOperationsResponse: The response for
@@ -3169,9 +3531,9 @@ type ListInstancePartitionOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInstancePartitionOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListInstancePartitionOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInstancePartitionOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInstancePartitionsResponse: The response for ListInstancePartitions.
@@ -3182,9 +3544,9 @@ type ListInstancePartitionsResponse struct {
 	// ListInstancePartitions call to fetch more of the matching instance
 	// partitions.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Unreachable: The list of unreachable instance partitions. It includes the
-	// names of instance partitions whose metadata could not be retrieved within
-	// instance_partition_deadline.
+	// Unreachable: The list of unreachable instances or instance partitions. It
+	// includes the names of instances or instance partitions whose metadata could
+	// not be retrieved within instance_partition_deadline.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3202,9 +3564,9 @@ type ListInstancePartitionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInstancePartitionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListInstancePartitionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInstancePartitionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInstancesResponse: The response for ListInstances.
@@ -3233,9 +3595,9 @@ type ListInstancesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInstancesResponse) MarshalJSON() ([]byte, error) {
+func (s ListInstancesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInstancesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -3261,9 +3623,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListScansResponse: Response method from the ListScans method.
@@ -3289,9 +3651,9 @@ type ListScansResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListScansResponse) MarshalJSON() ([]byte, error) {
+func (s ListScansResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListScansResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSessionsResponse: The response for ListSessions.
@@ -3317,9 +3679,9 @@ type ListSessionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSessionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSessionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSessionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocalizedString: A message representing a user-facing string whose value may
@@ -3349,9 +3711,9 @@ type LocalizedString struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocalizedString) MarshalJSON() ([]byte, error) {
+func (s LocalizedString) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalizedString
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Metric: A message representing the actual monitoring data, values for each
@@ -3407,9 +3769,9 @@ type Metric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Metric) MarshalJSON() ([]byte, error) {
+func (s Metric) MarshalJSON() ([]byte, error) {
 	type NoMethod Metric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Metric) UnmarshalJSON(data []byte) error {
@@ -3443,9 +3805,9 @@ type MetricMatrix struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetricMatrix) MarshalJSON() ([]byte, error) {
+func (s MetricMatrix) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricMatrix
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricMatrixRow: A message representing a row of a matrix of floats.
@@ -3465,9 +3827,9 @@ type MetricMatrixRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetricMatrixRow) MarshalJSON() ([]byte, error) {
+func (s MetricMatrixRow) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricMatrixRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *MetricMatrixRow) UnmarshalJSON(data []byte) error {
@@ -3489,8 +3851,8 @@ func (s *MetricMatrixRow) UnmarshalJSON(data []byte) error {
 
 // MoveInstanceRequest: The request for MoveInstance.
 type MoveInstanceRequest struct {
-	// TargetConfig: Required. The target instance config for the instance to move.
-	// Values are of the form `projects//instanceConfigs/`.
+	// TargetConfig: Required. The target instance configuration where to move the
+	// instance. Values are of the form `projects//instanceConfigs/`.
 	TargetConfig string `json:"targetConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TargetConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3505,9 +3867,9 @@ type MoveInstanceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MoveInstanceRequest) MarshalJSON() ([]byte, error) {
+func (s MoveInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MoveInstanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Mutation: A modification to one or more Cloud Spanner rows. Mutations can be
@@ -3550,9 +3912,9 @@ type Mutation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Mutation) MarshalJSON() ([]byte, error) {
+func (s Mutation) MarshalJSON() ([]byte, error) {
 	type NoMethod Mutation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MutationGroup: A group of mutations to be committed together. Related
@@ -3575,9 +3937,9 @@ type MutationGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MutationGroup) MarshalJSON() ([]byte, error) {
+func (s MutationGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod MutationGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -3622,9 +3984,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationProgress: Encapsulates progress related information for a Cloud
@@ -3651,9 +4013,9 @@ type OperationProgress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationProgress) MarshalJSON() ([]byte, error) {
+func (s OperationProgress) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationProgress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OptimizeRestoredDatabaseMetadata: Metadata type for the long-running
@@ -3679,9 +4041,9 @@ type OptimizeRestoredDatabaseMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OptimizeRestoredDatabaseMetadata) MarshalJSON() ([]byte, error) {
+func (s OptimizeRestoredDatabaseMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OptimizeRestoredDatabaseMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartialResultSet: Partial results from a streaming read or SQL query.
@@ -3761,9 +4123,9 @@ type PartialResultSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartialResultSet) MarshalJSON() ([]byte, error) {
+func (s PartialResultSet) MarshalJSON() ([]byte, error) {
 	type NoMethod PartialResultSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Partition: Information returned for each partition returned in a
@@ -3786,9 +4148,9 @@ type Partition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Partition) MarshalJSON() ([]byte, error) {
+func (s Partition) MarshalJSON() ([]byte, error) {
 	type NoMethod Partition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartitionOptions: Options for a PartitionQueryRequest and
@@ -3820,9 +4182,9 @@ type PartitionOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartitionOptions) MarshalJSON() ([]byte, error) {
+func (s PartitionOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod PartitionOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartitionQueryRequest: The request for PartitionQuery
@@ -3846,15 +4208,15 @@ type PartitionQueryRequest struct {
 	// created.
 	PartitionOptions *PartitionOptions `json:"partitionOptions,omitempty"`
 	// Sql: Required. The query request to generate partitions for. The request
-	// will fail if the query is not root partitionable. For a query to be root
+	// fails if the query is not root partitionable. For a query to be root
 	// partitionable, it needs to satisfy a few conditions. For example, if the
 	// query execution plan contains a distributed union operator, then it must be
 	// the first operator in the plan. For more information about other conditions,
 	// see Read data in parallel
 	// (https://cloud.google.com/spanner/docs/reads#read_data_in_parallel). The
-	// query request must not contain DML commands, such as INSERT, UPDATE, or
-	// DELETE. Use ExecuteStreamingSql with a PartitionedDml transaction for large,
-	// partition-friendly DML operations.
+	// query request must not contain DML commands, such as `INSERT`, `UPDATE`, or
+	// `DELETE`. Use `ExecuteStreamingSql` with a PartitionedDml transaction for
+	// large, partition-friendly DML operations.
 	Sql string `json:"sql,omitempty"`
 	// Transaction: Read only snapshot transactions are supported, read/write and
 	// single use transactions are not.
@@ -3872,9 +4234,9 @@ type PartitionQueryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartitionQueryRequest) MarshalJSON() ([]byte, error) {
+func (s PartitionQueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PartitionQueryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartitionReadRequest: The request for PartitionRead
@@ -3913,9 +4275,9 @@ type PartitionReadRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartitionReadRequest) MarshalJSON() ([]byte, error) {
+func (s PartitionReadRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PartitionReadRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartitionResponse: The response for PartitionQuery or PartitionRead
@@ -3940,9 +4302,9 @@ type PartitionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartitionResponse) MarshalJSON() ([]byte, error) {
+func (s PartitionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PartitionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartitionedDml: Message type to initiate a Partitioned DML transaction.
@@ -3999,9 +4361,9 @@ type PlanNode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlanNode) MarshalJSON() ([]byte, error) {
+func (s PlanNode) MarshalJSON() ([]byte, error) {
 	type NoMethod PlanNode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -4089,9 +4451,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PrefixNode: A message representing a key prefix node in the key prefix
@@ -4125,9 +4487,9 @@ type PrefixNode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrefixNode) MarshalJSON() ([]byte, error) {
+func (s PrefixNode) MarshalJSON() ([]byte, error) {
 	type NoMethod PrefixNode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryAdvisorResult: Output of query advisor analysis.
@@ -4149,9 +4511,9 @@ type QueryAdvisorResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryAdvisorResult) MarshalJSON() ([]byte, error) {
+func (s QueryAdvisorResult) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryAdvisorResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryOptions: Query optimizer configuration.
@@ -4197,9 +4559,9 @@ type QueryOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryOptions) MarshalJSON() ([]byte, error) {
+func (s QueryOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryPlan: Contains an ordered list of nodes appearing in the query plan.
@@ -4224,9 +4586,71 @@ type QueryPlan struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryPlan) MarshalJSON() ([]byte, error) {
+func (s QueryPlan) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryPlan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// QuorumInfo: Information about the dual-region quorum.
+type QuorumInfo struct {
+	// Etag: Output only. The etag is used for optimistic concurrency control as a
+	// way to help prevent simultaneous `ChangeQuorum` requests that might create a
+	// race condition.
+	Etag string `json:"etag,omitempty"`
+	// Initiator: Output only. Whether this `ChangeQuorum` is Google or User
+	// initiated.
+	//
+	// Possible values:
+	//   "INITIATOR_UNSPECIFIED" - Unspecified.
+	//   "GOOGLE" - `ChangeQuorum` initiated by Google.
+	//   "USER" - `ChangeQuorum` initiated by User.
+	Initiator string `json:"initiator,omitempty"`
+	// QuorumType: Output only. The type of this quorum. See QuorumType for more
+	// information about quorum type specifications.
+	QuorumType *QuorumType `json:"quorumType,omitempty"`
+	// StartTime: Output only. The timestamp when the request was triggered.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QuorumInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod QuorumInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// QuorumType: Information about the database quorum type. This only applies to
+// dual-region instance configs.
+type QuorumType struct {
+	// DualRegion: Dual-region quorum type.
+	DualRegion *DualRegionQuorum `json:"dualRegion,omitempty"`
+	// SingleRegion: Single-region quorum type.
+	SingleRegion *SingleRegionQuorum `json:"singleRegion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DualRegion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DualRegion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QuorumType) MarshalJSON() ([]byte, error) {
+	type NoMethod QuorumType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReadOnly: Message type to initiate a read-only transaction.
@@ -4283,9 +4707,9 @@ type ReadOnly struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReadOnly) MarshalJSON() ([]byte, error) {
+func (s ReadOnly) MarshalJSON() ([]byte, error) {
 	type NoMethod ReadOnly
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReadRequest: The request for Read and StreamingRead.
@@ -4317,6 +4741,59 @@ type ReadRequest struct {
 	// `limit` is zero, the default is no limit. A limit cannot be specified if
 	// `partition_token` is set.
 	Limit int64 `json:"limit,omitempty,string"`
+	// LockHint: Optional. Lock Hint for the request, it can only be used with
+	// read-write transactions.
+	//
+	// Possible values:
+	//   "LOCK_HINT_UNSPECIFIED" - Default value. LOCK_HINT_UNSPECIFIED is
+	// equivalent to LOCK_HINT_SHARED.
+	//   "LOCK_HINT_SHARED" - Acquire shared locks. By default when you perform a
+	// read as part of a read-write transaction, Spanner acquires shared read
+	// locks, which allows other reads to still access the data until your
+	// transaction is ready to commit. When your transaction is committing and
+	// writes are being applied, the transaction attempts to upgrade to an
+	// exclusive lock for any data you are writing. For more information about
+	// locks, see [Lock
+	// modes](https://cloud.google.com/spanner/docs/introspection/lock-statistics#ex
+	// plain-lock-modes).
+	//   "LOCK_HINT_EXCLUSIVE" - Acquire exclusive locks. Requesting exclusive
+	// locks is beneficial if you observe high write contention, which means you
+	// notice that multiple transactions are concurrently trying to read and write
+	// to the same data, resulting in a large number of aborts. This problem occurs
+	// when two transactions initially acquire shared locks and then both try to
+	// upgrade to exclusive locks at the same time. In this situation both
+	// transactions are waiting for the other to give up their lock, resulting in a
+	// deadlocked situation. Spanner is able to detect this occurring and force one
+	// of the transactions to abort. However, this is a slow and expensive
+	// operation and results in lower performance. In this case it makes sense to
+	// acquire exclusive locks at the start of the transaction because then when
+	// multiple transactions try to act on the same data, they automatically get
+	// serialized. Each transaction waits its turn to acquire the lock and avoids
+	// getting into deadlock situations. Because the exclusive lock hint is just a
+	// hint, it should not be considered equivalent to a mutex. In other words, you
+	// should not use Spanner exclusive locks as a mutual exclusion mechanism for
+	// the execution of code outside of Spanner. **Note:** Request exclusive locks
+	// judiciously because they block others from reading that data for the entire
+	// transaction, rather than just when the writes are being performed. Unless
+	// you observe high write contention, you should use the default of shared read
+	// locks so you don't prematurely block other clients from reading the data
+	// that you're writing to.
+	LockHint string `json:"lockHint,omitempty"`
+	// OrderBy: Optional. Order for the returned rows. By default, Spanner will
+	// return result rows in primary key order except for PartitionRead requests.
+	// For applications that do not require rows to be returned in primary key
+	// (`ORDER_BY_PRIMARY_KEY`) order, setting `ORDER_BY_NO_ORDER` option allows
+	// Spanner to optimize row retrieval, resulting in lower latencies in certain
+	// cases (e.g. bulk point lookups).
+	//
+	// Possible values:
+	//   "ORDER_BY_UNSPECIFIED" - Default value. ORDER_BY_UNSPECIFIED is equivalent
+	// to ORDER_BY_PRIMARY_KEY.
+	//   "ORDER_BY_PRIMARY_KEY" - Read rows are returned in primary key order. In
+	// the event that this option is used in conjunction with the `partition_token`
+	// field, the API will return an `INVALID_ARGUMENT` error.
+	//   "ORDER_BY_NO_ORDER" - Read rows are returned in any order.
+	OrderBy string `json:"orderBy,omitempty"`
 	// PartitionToken: If present, results will be restricted to the specified
 	// partition previously created using PartitionRead(). There must be an exact
 	// match for the values of fields common to this message and the
@@ -4348,9 +4825,9 @@ type ReadRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReadRequest) MarshalJSON() ([]byte, error) {
+func (s ReadRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReadRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReadWrite: Message type to initiate a read-write transaction. Currently this
@@ -4381,9 +4858,9 @@ type ReadWrite struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReadWrite) MarshalJSON() ([]byte, error) {
+func (s ReadWrite) MarshalJSON() ([]byte, error) {
 	type NoMethod ReadWrite
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ReplicaInfo struct {
@@ -4424,9 +4901,9 @@ type ReplicaInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplicaInfo) MarshalJSON() ([]byte, error) {
+func (s ReplicaInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplicaInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplicaSelection: The directed read replica selector. Callers must provide
@@ -4462,9 +4939,9 @@ type ReplicaSelection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplicaSelection) MarshalJSON() ([]byte, error) {
+func (s ReplicaSelection) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplicaSelection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RequestOptions: Common request options for various APIs.
@@ -4510,9 +4987,9 @@ type RequestOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RequestOptions) MarshalJSON() ([]byte, error) {
+func (s RequestOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod RequestOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestoreDatabaseEncryptionConfig: Encryption configuration for the restored
@@ -4534,17 +5011,18 @@ type RestoreDatabaseEncryptionConfig struct {
 	// `projects//locations//keyRings//cryptoKeys/`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// KmsKeyNames: Optional. Specifies the KMS configuration for the one or more
-	// keys used to encrypt the database. Values are of the form
+	// keys used to encrypt the database. Values have the form
 	// `projects//locations//keyRings//cryptoKeys/`. The keys referenced by
 	// kms_key_names must fully cover all regions of the database instance
-	// configuration. Some examples: * For single region database instance configs,
-	// specify a single regional location KMS key. * For multi-regional database
-	// instance configs of type GOOGLE_MANAGED, either specify a multi-regional
-	// location KMS key or multiple regional location KMS keys that cover all
-	// regions in the instance config. * For a database instance config of type
-	// USER_MANAGED, please specify only regional location KMS keys to cover each
-	// region in the instance config. Multi-regional location KMS keys are not
-	// supported for USER_MANAGED instance configs.
+	// configuration. Some examples: * For single region database instance
+	// configurations, specify a single regional location KMS key. * For
+	// multi-regional database instance configurations of type `GOOGLE_MANAGED`,
+	// either specify a multi-regional location KMS key or multiple regional
+	// location KMS keys that cover all regions in the instance configuration. *
+	// For a database instance configuration of type `USER_MANAGED`, please specify
+	// only regional location KMS keys to cover each region in the instance
+	// configuration. Multi-regional location KMS keys are not supported for
+	// USER_MANAGED instance configurations.
 	KmsKeyNames []string `json:"kmsKeyNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EncryptionType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4559,9 +5037,9 @@ type RestoreDatabaseEncryptionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestoreDatabaseEncryptionConfig) MarshalJSON() ([]byte, error) {
+func (s RestoreDatabaseEncryptionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RestoreDatabaseEncryptionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestoreDatabaseMetadata: Metadata type for the long-running operation
@@ -4613,9 +5091,9 @@ type RestoreDatabaseMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestoreDatabaseMetadata) MarshalJSON() ([]byte, error) {
+func (s RestoreDatabaseMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod RestoreDatabaseMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestoreDatabaseRequest: The request for RestoreDatabase.
@@ -4646,9 +5124,9 @@ type RestoreDatabaseRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestoreDatabaseRequest) MarshalJSON() ([]byte, error) {
+func (s RestoreDatabaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RestoreDatabaseRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestoreInfo: Information about the database restore.
@@ -4675,9 +5153,9 @@ type RestoreInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestoreInfo) MarshalJSON() ([]byte, error) {
+func (s RestoreInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod RestoreInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResultSet: Results from Read or ExecuteSql.
@@ -4711,9 +5189,9 @@ type ResultSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResultSet) MarshalJSON() ([]byte, error) {
+func (s ResultSet) MarshalJSON() ([]byte, error) {
 	type NoMethod ResultSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResultSetMetadata: Metadata about a ResultSet or PartialResultSet.
@@ -4747,9 +5225,9 @@ type ResultSetMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResultSetMetadata) MarshalJSON() ([]byte, error) {
+func (s ResultSetMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ResultSetMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResultSetStats: Additional statistics about a ResultSet or PartialResultSet.
@@ -4780,9 +5258,9 @@ type ResultSetStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResultSetStats) MarshalJSON() ([]byte, error) {
+func (s ResultSetStats) MarshalJSON() ([]byte, error) {
 	type NoMethod ResultSetStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RollbackRequest: The request for Rollback.
@@ -4802,9 +5280,9 @@ type RollbackRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RollbackRequest) MarshalJSON() ([]byte, error) {
+func (s RollbackRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RollbackRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Scan: Scan is a structure which describes Cloud Key Visualizer scan
@@ -4839,9 +5317,9 @@ type Scan struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Scan) MarshalJSON() ([]byte, error) {
+func (s Scan) MarshalJSON() ([]byte, error) {
 	type NoMethod Scan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScanData: ScanData contains Cloud Key Visualizer scan data used by the
@@ -4869,9 +5347,9 @@ type ScanData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScanData) MarshalJSON() ([]byte, error) {
+func (s ScanData) MarshalJSON() ([]byte, error) {
 	type NoMethod ScanData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Session: A session in the Cloud Spanner API.
@@ -4891,12 +5369,12 @@ type Session struct {
 	// with a given session. See https://goo.gl/xmQnxf for more information on and
 	// examples of labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Multiplexed: Optional. If true, specifies a multiplexed session. A
-	// multiplexed session may be used for multiple, concurrent read-only
-	// operations but can not be used for read-write transactions, partitioned
-	// reads, or partitioned queries. Multiplexed sessions can be created via
-	// CreateSession but not via BatchCreateSessions. Multiplexed sessions may not
-	// be deleted nor listed.
+	// Multiplexed: Optional. If true, specifies a multiplexed session. Use a
+	// multiplexed session for multiple, concurrent read-only operations. Don't use
+	// them for read-write transactions, partitioned reads, or partitioned queries.
+	// Use CreateSession to create multiplexed sessions. Don't use
+	// BatchCreateSessions to create a multiplexed session. You can't delete or
+	// list multiplexed sessions.
 	Multiplexed bool `json:"multiplexed,omitempty"`
 	// Name: Output only. The name of the session. This is always system-assigned.
 	Name string `json:"name,omitempty"`
@@ -4916,9 +5394,9 @@ type Session struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Session) MarshalJSON() ([]byte, error) {
+func (s Session) MarshalJSON() ([]byte, error) {
 	type NoMethod Session
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -4941,9 +5419,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ShortRepresentation: Condensed representation of a node and its subtree.
@@ -4971,9 +5449,35 @@ type ShortRepresentation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ShortRepresentation) MarshalJSON() ([]byte, error) {
+func (s ShortRepresentation) MarshalJSON() ([]byte, error) {
 	type NoMethod ShortRepresentation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SingleRegionQuorum: Message type for a single-region quorum.
+type SingleRegionQuorum struct {
+	// ServingLocation: Required. The location of the serving region, e.g.
+	// "us-central1". The location must be one of the regions within the
+	// dual-region instance configuration of your database. The list of valid
+	// locations is available using the GetInstanceConfig API. This should only be
+	// used if you plan to change quorum to the single-region quorum type.
+	ServingLocation string `json:"servingLocation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ServingLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ServingLocation") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SingleRegionQuorum) MarshalJSON() ([]byte, error) {
+	type NoMethod SingleRegionQuorum
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Statement: A single DML statement.
@@ -5008,9 +5512,9 @@ type Statement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Statement) MarshalJSON() ([]byte, error) {
+func (s Statement) MarshalJSON() ([]byte, error) {
 	type NoMethod Statement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -5042,9 +5546,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StructType: `StructType` defines the fields of a STRUCT type.
@@ -5068,9 +5572,9 @@ type StructType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StructType) MarshalJSON() ([]byte, error) {
+func (s StructType) MarshalJSON() ([]byte, error) {
 	type NoMethod StructType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -5092,9 +5596,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -5119,9 +5623,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Transaction: A transaction.
@@ -5153,9 +5657,9 @@ type Transaction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Transaction) MarshalJSON() ([]byte, error) {
+func (s Transaction) MarshalJSON() ([]byte, error) {
 	type NoMethod Transaction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransactionOptions: Transactions: Each session can have at most one active
@@ -5176,7 +5680,7 @@ func (s *Transaction) MarshalJSON() ([]byte, error) {
 // have committed before the start of the read). Snapshot read-only
 // transactions do not need to be committed. Queries on change streams must be
 // performed with the snapshot read-only transaction mode, specifying a strong
-// read. Please see TransactionOptions.ReadOnly.strong for more details. 3.
+// read. See TransactionOptions.ReadOnly.strong for more details. 3.
 // Partitioned DML. This type of transaction is used to execute a single
 // Partitioned DML statement. Partitioned DML partitions the key space and runs
 // the DML statement over each partition in parallel using separate, internal
@@ -5397,9 +5901,9 @@ type TransactionOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransactionOptions) MarshalJSON() ([]byte, error) {
+func (s TransactionOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod TransactionOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransactionSelector: This message is used to select the transaction in which
@@ -5429,9 +5933,9 @@ type TransactionSelector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransactionSelector) MarshalJSON() ([]byte, error) {
+func (s TransactionSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod TransactionSelector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Type: `Type` indicates the type of a Cloud Spanner value, as might be stored
@@ -5518,9 +6022,9 @@ type Type struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Type) MarshalJSON() ([]byte, error) {
+func (s Type) MarshalJSON() ([]byte, error) {
 	type NoMethod Type
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateDatabaseDdlMetadata: Metadata type for the operation returned by
@@ -5561,9 +6065,9 @@ type UpdateDatabaseDdlMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateDatabaseDdlMetadata) MarshalJSON() ([]byte, error) {
+func (s UpdateDatabaseDdlMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDatabaseDdlMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateDatabaseDdlRequest: Enqueues the given DDL statements to be applied,
@@ -5617,9 +6121,9 @@ type UpdateDatabaseDdlRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateDatabaseDdlRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateDatabaseDdlRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDatabaseDdlRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateDatabaseMetadata: Metadata type for the operation returned by
@@ -5645,9 +6149,9 @@ type UpdateDatabaseMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateDatabaseMetadata) MarshalJSON() ([]byte, error) {
+func (s UpdateDatabaseMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDatabaseMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateDatabaseRequest: The request for UpdateDatabase.
@@ -5671,9 +6175,9 @@ type UpdateDatabaseRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateDatabaseRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateDatabaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDatabaseRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateInstanceConfigMetadata: Metadata type for the operation returned by
@@ -5681,7 +6185,7 @@ func (s *UpdateDatabaseRequest) MarshalJSON() ([]byte, error) {
 type UpdateInstanceConfigMetadata struct {
 	// CancelTime: The time at which this operation was cancelled.
 	CancelTime string `json:"cancelTime,omitempty"`
-	// InstanceConfig: The desired instance config after updating.
+	// InstanceConfig: The desired instance configuration after updating.
 	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
 	// Progress: The progress of the UpdateInstanceConfig operation.
 	Progress *InstanceOperationProgress `json:"progress,omitempty"`
@@ -5698,17 +6202,17 @@ type UpdateInstanceConfigMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateInstanceConfigMetadata) MarshalJSON() ([]byte, error) {
+func (s UpdateInstanceConfigMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateInstanceConfigMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateInstanceConfigRequest: The request for UpdateInstanceConfigRequest.
 type UpdateInstanceConfigRequest struct {
-	// InstanceConfig: Required. The user instance config to update, which must
-	// always include the instance config name. Otherwise, only fields mentioned in
-	// update_mask need be included. To prevent conflicts of concurrent updates,
-	// etag can be used.
+	// InstanceConfig: Required. The user instance configuration to update, which
+	// must always include the instance configuration name. Otherwise, only fields
+	// mentioned in update_mask need be included. To prevent conflicts of
+	// concurrent updates, etag can be used.
 	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
 	// UpdateMask: Required. A mask specifying which fields in InstanceConfig
 	// should be updated. The field mask must always be specified; this prevents
@@ -5732,9 +6236,9 @@ type UpdateInstanceConfigRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateInstanceConfigRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateInstanceConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateInstanceConfigRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateInstanceMetadata: Metadata type for the operation returned by
@@ -5774,9 +6278,9 @@ type UpdateInstanceMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateInstanceMetadata) MarshalJSON() ([]byte, error) {
+func (s UpdateInstanceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateInstanceMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateInstancePartitionMetadata: Metadata type for the operation returned by
@@ -5806,9 +6310,9 @@ type UpdateInstancePartitionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateInstancePartitionMetadata) MarshalJSON() ([]byte, error) {
+func (s UpdateInstancePartitionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateInstancePartitionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateInstancePartitionRequest: The request for UpdateInstancePartition.
@@ -5835,9 +6339,9 @@ type UpdateInstancePartitionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateInstancePartitionRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateInstancePartitionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateInstancePartitionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateInstanceRequest: The request for UpdateInstance.
@@ -5864,9 +6368,9 @@ type UpdateInstanceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateInstanceRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateInstanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type VisualizationData struct {
@@ -5914,9 +6418,9 @@ type VisualizationData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VisualizationData) MarshalJSON() ([]byte, error) {
+func (s VisualizationData) MarshalJSON() ([]byte, error) {
 	type NoMethod VisualizationData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Write: Arguments to insert, update, insert_or_update, and replace
@@ -5949,9 +6453,9 @@ type Write struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Write) MarshalJSON() ([]byte, error) {
+func (s Write) MarshalJSON() ([]byte, error) {
 	type NoMethod Write
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsInstanceConfigOperationsListCall struct {
@@ -5963,17 +6467,17 @@ type ProjectsInstanceConfigOperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the user-managed instance config long-running operations in the
-// given project. An instance config operation has a name of the form
-// `projects//instanceConfigs//operations/`. The long-running operation
+// List: Lists the user-managed instance configuration long-running operations
+// in the given project. An instance configuration operation has a name of the
+// form `projects//instanceConfigs//operations/`. The long-running operation
 // metadata field type `metadata.type_url` describes the type of the metadata.
 // Operations returned include those that have completed/failed/canceled within
 // the last 7 days, and pending operations. Operations returned are ordered by
 // `operation.metadata.value.start_time` in descending order starting from the
 // most recently started operation.
 //
-//   - parent: The project of the instance config operations. Values are of the
-//     form `projects/`.
+//   - parent: The project of the instance configuration operations. Values are
+//     of the form `projects/`.
 func (r *ProjectsInstanceConfigOperationsService) List(parent string) *ProjectsInstanceConfigOperationsListCall {
 	c := &ProjectsInstanceConfigOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6003,7 +6507,7 @@ func (r *ProjectsInstanceConfigOperationsService) List(parent string) *ProjectsI
 // adata) AND` \ `(metadata.instance_config.name:custom-config) AND` \
 // `(metadata.progress.start_time < \"2021-03-28T14:50:00Z\") AND` \
 // `(error:*)` - Return operations where: * The operation's metadata type is
-// CreateInstanceConfigMetadata. * The instance config name contains
+// CreateInstanceConfigMetadata. * The instance configuration name contains
 // "custom-config". * The operation started before 2021-03-28T14:50:00Z. * The
 // operation resulted in an error.
 func (c *ProjectsInstanceConfigOperationsListCall) Filter(filter string) *ProjectsInstanceConfigOperationsListCall {
@@ -6148,27 +6652,28 @@ type ProjectsInstanceConfigsCreateCall struct {
 	header_                     http.Header
 }
 
-// Create: Creates an instance config and begins preparing it to be used. The
-// returned long-running operation can be used to track the progress of
-// preparing the new instance config. The instance config name is assigned by
-// the caller. If the named instance config already exists,
-// `CreateInstanceConfig` returns `ALREADY_EXISTS`. Immediately after the
-// request returns: * The instance config is readable via the API, with all
-// requested attributes. The instance config's reconciling field is set to
-// true. Its state is `CREATING`. While the operation is pending: * Cancelling
-// the operation renders the instance config immediately unreadable via the
-// API. * Except for deleting the creating resource, all other attempts to
-// modify the instance config are rejected. Upon completion of the returned
-// operation: * Instances can be created using the instance configuration. *
-// The instance config's reconciling field becomes false. Its state becomes
-// `READY`. The returned long-running operation will have a name of the format
-// `/operations/` and can be used to track creation of the instance config. The
-// metadata field type is CreateInstanceConfigMetadata. The response field type
-// is InstanceConfig, if successful. Authorization requires
+// Create: Creates an instance configuration and begins preparing it to be
+// used. The returned long-running operation can be used to track the progress
+// of preparing the new instance configuration. The instance configuration name
+// is assigned by the caller. If the named instance configuration already
+// exists, `CreateInstanceConfig` returns `ALREADY_EXISTS`. Immediately after
+// the request returns: * The instance configuration is readable via the API,
+// with all requested attributes. The instance configuration's reconciling
+// field is set to true. Its state is `CREATING`. While the operation is
+// pending: * Cancelling the operation renders the instance configuration
+// immediately unreadable via the API. * Except for deleting the creating
+// resource, all other attempts to modify the instance configuration are
+// rejected. Upon completion of the returned operation: * Instances can be
+// created using the instance configuration. * The instance configuration's
+// reconciling field becomes false. Its state becomes `READY`. The returned
+// long-running operation will have a name of the format `/operations/` and can
+// be used to track creation of the instance configuration. The metadata field
+// type is CreateInstanceConfigMetadata. The response field type is
+// InstanceConfig, if successful. Authorization requires
 // `spanner.instanceConfigs.create` permission on the resource parent.
 //
-//   - parent: The name of the project in which to create the instance config.
-//     Values are of the form `projects/`.
+//   - parent: The name of the project in which to create the instance
+//     configuration. Values are of the form `projects/`.
 func (r *ProjectsInstanceConfigsService) Create(parent string, createinstanceconfigrequest *CreateInstanceConfigRequest) *ProjectsInstanceConfigsCreateCall {
 	c := &ProjectsInstanceConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6266,11 +6771,11 @@ type ProjectsInstanceConfigsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the instance config. Deletion is only allowed when no
+// Delete: Deletes the instance configuration. Deletion is only allowed when no
 // instances are using the configuration. If any instances are using the
-// config, returns `FAILED_PRECONDITION`. Only user managed configurations can
-// be deleted. Authorization requires `spanner.instanceConfigs.delete`
-// permission on the resource name.
+// configuration, returns `FAILED_PRECONDITION`. Only user-managed
+// configurations can be deleted. Authorization requires
+// `spanner.instanceConfigs.delete` permission on the resource name.
 //
 //   - name: The name of the instance configuration to be deleted. Values are of
 //     the form `projects//instanceConfigs/`.
@@ -6281,11 +6786,12 @@ func (r *ProjectsInstanceConfigsService) Delete(name string) *ProjectsInstanceCo
 }
 
 // Etag sets the optional parameter "etag": Used for optimistic concurrency
-// control as a way to help prevent simultaneous deletes of an instance config
-// from overwriting each other. If not empty, the API only deletes the instance
-// config when the etag provided matches the current status of the requested
-// instance config. Otherwise, deletes the instance config without checking the
-// current status of the requested instance config.
+// control as a way to help prevent simultaneous deletes of an instance
+// configuration from overwriting each other. If not empty, the API only
+// deletes the instance configuration when the etag provided matches the
+// current status of the requested instance configuration. Otherwise, deletes
+// the instance configuration without checking the current status of the
+// requested instance configuration.
 func (c *ProjectsInstanceConfigsDeleteCall) Etag(etag string) *ProjectsInstanceConfigsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -6495,6 +7001,7 @@ type ProjectsInstanceConfigsListCall struct {
 }
 
 // List: Lists the supported instance configurations for a given project.
+// Returns both Google-managed configurations and user-managed configurations.
 //
 //   - parent: The name of the project for which a list of supported instance
 //     configurations is requested. Values are of the form `projects/`.
@@ -6640,27 +7147,29 @@ type ProjectsInstanceConfigsPatchCall struct {
 	header_                     http.Header
 }
 
-// Patch: Updates an instance config. The returned long-running operation can
-// be used to track the progress of updating the instance. If the named
-// instance config does not exist, returns `NOT_FOUND`. Only user managed
-// configurations can be updated. Immediately after the request returns: * The
-// instance config's reconciling field is set to true. While the operation is
-// pending: * Cancelling the operation sets its metadata's cancel_time. The
-// operation is guaranteed to succeed at undoing all changes, after which point
-// it terminates with a `CANCELLED` status. * All other attempts to modify the
-// instance config are rejected. * Reading the instance config via the API
-// continues to give the pre-request values. Upon completion of the returned
-// operation: * Creating instances using the instance configuration uses the
-// new values. * The instance config's new values are readable via the API. *
-// The instance config's reconciling field becomes false. The returned
+// Patch: Updates an instance configuration. The returned long-running
+// operation can be used to track the progress of updating the instance. If the
+// named instance configuration does not exist, returns `NOT_FOUND`. Only
+// user-managed configurations can be updated. Immediately after the request
+// returns: * The instance configuration's reconciling field is set to true.
+// While the operation is pending: * Cancelling the operation sets its
+// metadata's cancel_time. The operation is guaranteed to succeed at undoing
+// all changes, after which point it terminates with a `CANCELLED` status. *
+// All other attempts to modify the instance configuration are rejected. *
+// Reading the instance configuration via the API continues to give the
+// pre-request values. Upon completion of the returned operation: * Creating
+// instances using the instance configuration uses the new values. * The new
+// values of the instance configuration are readable via the API. * The
+// instance configuration's reconciling field becomes false. The returned
 // long-running operation will have a name of the format `/operations/` and can
-// be used to track the instance config modification. The metadata field type
-// is UpdateInstanceConfigMetadata. The response field type is InstanceConfig,
-// if successful. Authorization requires `spanner.instanceConfigs.update`
-// permission on the resource name.
+// be used to track the instance configuration modification. The metadata field
+// type is UpdateInstanceConfigMetadata. The response field type is
+// InstanceConfig, if successful. Authorization requires
+// `spanner.instanceConfigs.update` permission on the resource name.
 //
 //   - name: A unique identifier for the instance configuration. Values are of
-//     the form `projects//instanceConfigs/a-z*`.
+//     the form `projects//instanceConfigs/a-z*`. User instance configuration
+//     must start with `custom-`.
 func (r *ProjectsInstanceConfigsService) Patch(nameid string, updateinstanceconfigrequest *UpdateInstanceConfigRequest) *ProjectsInstanceConfigsPatchCall {
 	c := &ProjectsInstanceConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -8289,34 +8798,35 @@ type ProjectsInstancesMoveCall struct {
 	header_             http.Header
 }
 
-// Move: Moves the instance to the target instance config. The returned
-// long-running operation can be used to track the progress of moving the
+// Move: Moves an instance to the target instance configuration. You can use
+// the returned long-running operation to track the progress of moving the
 // instance. `MoveInstance` returns `FAILED_PRECONDITION` if the instance meets
-// any of the following criteria: * Has an ongoing move to a different instance
-// config * Has backups * Has an ongoing update * Is under free trial *
-// Contains any CMEK-enabled databases While the operation is pending: * All
-// other attempts to modify the instance, including changes to its compute
-// capacity, are rejected. * The following database and backup admin operations
-// are rejected: * DatabaseAdmin.CreateDatabase, *
-// DatabaseAdmin.UpdateDatabaseDdl (Disabled if default_leader is specified in
-// the request.) * DatabaseAdmin.RestoreDatabase * DatabaseAdmin.CreateBackup *
-// DatabaseAdmin.CopyBackup * Both the source and target instance configs are
-// subject to hourly compute and storage charges. * The instance may experience
-// higher read-write latencies and a higher transaction abort rate. However,
-// moving an instance does not cause any downtime. The returned long-running
-// operation will have a name of the format `/operations/` and can be used to
-// track the move instance operation. The metadata field type is
-// MoveInstanceMetadata. The response field type is Instance, if successful.
-// Cancelling the operation sets its metadata's cancel_time. Cancellation is
-// not immediate since it involves moving any data previously moved to target
-// instance config back to the original instance config. The same operation can
-// be used to track the progress of the cancellation. Upon successful
-// completion of the cancellation, the operation terminates with CANCELLED
-// status. Upon completion(if not cancelled) of the returned operation: *
-// Instance would be successfully moved to the target instance config. * You
-// are billed for compute and storage in target instance config. Authorization
-// requires `spanner.instances.update` permission on the resource instance. For
-// more details, please see documentation
+// any of the following criteria: * Is undergoing a move to a different
+// instance configuration * Has backups * Has an ongoing update * Contains any
+// CMEK-enabled databases * Is a free trial instance While the operation is
+// pending: * All other attempts to modify the instance, including changes to
+// its compute capacity, are rejected. * The following database and backup
+// admin operations are rejected: * `DatabaseAdmin.CreateDatabase` *
+// `DatabaseAdmin.UpdateDatabaseDdl` (disabled if default_leader is specified
+// in the request.) * `DatabaseAdmin.RestoreDatabase` *
+// `DatabaseAdmin.CreateBackup` * `DatabaseAdmin.CopyBackup` * Both the source
+// and target instance configurations are subject to hourly compute and storage
+// charges. * The instance might experience higher read-write latencies and a
+// higher transaction abort rate. However, moving an instance doesn't cause any
+// downtime. The returned long-running operation has a name of the format
+// `/operations/` and can be used to track the move instance operation. The
+// metadata field type is MoveInstanceMetadata. The response field type is
+// Instance, if successful. Cancelling the operation sets its metadata's
+// cancel_time. Cancellation is not immediate because it involves moving any
+// data previously moved to the target instance configuration back to the
+// original instance configuration. You can use this operation to track the
+// progress of the cancellation. Upon successful completion of the
+// cancellation, the operation terminates with `CANCELLED` status. If not
+// cancelled, upon completion of the returned operation: * The instance
+// successfully moves to the target instance configuration. * You are billed
+// for compute and storage in target instance configuration. Authorization
+// requires the `spanner.instances.update` permission on the resource instance.
+// For more details, see Move an instance
 // (https://cloud.google.com/spanner/docs/move-instance).
 //
 // - name: The instance to move. Values are of the form `projects//instances/`.
@@ -9572,18 +10082,20 @@ func (r *ProjectsInstancesBackupsService) List(parent string) *ProjectsInstances
 // eligible for filtering: * `name` * `database` * `state` * `create_time` (and
 // values are of the format YYYY-MM-DDTHH:MM:SSZ) * `expire_time` (and values
 // are of the format YYYY-MM-DDTHH:MM:SSZ) * `version_time` (and values are of
-// the format YYYY-MM-DDTHH:MM:SSZ) * `size_bytes` You can combine multiple
-// expressions by enclosing each expression in parentheses. By default,
-// expressions are combined with AND logic, but you can specify AND, OR, and
-// NOT logic explicitly. Here are a few examples: * `name:Howl` - The backup's
-// name contains the string "howl". * `database:prod` - The database's name
-// contains the string "prod". * `state:CREATING` - The backup is pending
+// the format YYYY-MM-DDTHH:MM:SSZ) * `size_bytes` * `backup_schedules` You can
+// combine multiple expressions by enclosing each expression in parentheses. By
+// default, expressions are combined with AND logic, but you can specify AND,
+// OR, and NOT logic explicitly. Here are a few examples: * `name:Howl` - The
+// backup's name contains the string "howl". * `database:prod` - The database's
+// name contains the string "prod". * `state:CREATING` - The backup is pending
 // creation. * `state:READY` - The backup is fully created and ready for use. *
 // `(name:howl) AND (create_time < \"2018-03-28T14:50:00Z\")` - The backup name
 // contains the string "howl" and `create_time` of the backup is before
 // 2018-03-28T14:50:00Z. * `expire_time < \"2018-03-28T14:50:00Z\" - The
 // backup `expire_time` is before 2018-03-28T14:50:00Z. * `size_bytes >
-// 10000000000` - The backup's size is greater than 10GB
+// 10000000000` - The backup's size is greater than 10GB *
+// `backup_schedules:daily` - The backup is created from a schedule with
+// "daily" in its name.
 func (c *ProjectsInstancesBackupsListCall) Filter(filter string) *ProjectsInstancesBackupsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -10696,6 +11208,115 @@ func (c *ProjectsInstancesDatabaseOperationsListCall) Pages(ctx context.Context,
 	}
 }
 
+type ProjectsInstancesDatabasesChangequorumCall struct {
+	s                   *Service
+	name                string
+	changequorumrequest *ChangeQuorumRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Changequorum: `ChangeQuorum` is strictly restricted to databases that use
+// dual-region instance configurations. Initiates a background operation to
+// change the quorum of a database from dual-region mode to single-region mode
+// or vice versa. The returned long-running operation has a name of the format
+// `projects//instances//databases//operations/` and can be used to track
+// execution of the `ChangeQuorum`. The metadata field type is
+// ChangeQuorumMetadata. Authorization requires
+// `spanner.databases.changequorum` permission on the resource database.
+//
+//   - name: Name of the database in which to apply `ChangeQuorum`. Values are of
+//     the form `projects//instances//databases/`.
+func (r *ProjectsInstancesDatabasesService) Changequorum(name string, changequorumrequest *ChangeQuorumRequest) *ProjectsInstancesDatabasesChangequorumCall {
+	c := &ProjectsInstancesDatabasesChangequorumCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.changequorumrequest = changequorumrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesChangequorumCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesChangequorumCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesChangequorumCall) Context(ctx context.Context) *ProjectsInstancesDatabasesChangequorumCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesChangequorumCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesChangequorumCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.changequorumrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:changequorum")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.changequorum" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesChangequorumCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsInstancesDatabasesCreateCall struct {
 	s                     *Service
 	parent                string
@@ -10705,8 +11326,8 @@ type ProjectsInstancesDatabasesCreateCall struct {
 	header_               http.Header
 }
 
-// Create: Creates a new Cloud Spanner database and starts to prepare it for
-// serving. The returned long-running operation will have a name of the format
+// Create: Creates a new Spanner database and starts to prepare it for serving.
+// The returned long-running operation will have a name of the format
 // `/operations/` and can be used to track preparation of the database. The
 // metadata field type is CreateDatabaseMetadata. The response field type is
 // Database, if successful.
@@ -12072,6 +12693,907 @@ func (c *ProjectsInstancesDatabasesUpdateDdlCall) Do(opts ...googleapi.CallOptio
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesCreateCall struct {
+	s              *Service
+	parent         string
+	backupschedule *BackupSchedule
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Creates a new backup schedule.
+//
+// - parent: The name of the database that this backup schedule applies to.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) Create(parent string, backupschedule *BackupSchedule) *ProjectsInstancesDatabasesBackupSchedulesCreateCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.backupschedule = backupschedule
+	return c
+}
+
+// BackupScheduleId sets the optional parameter "backupScheduleId": Required.
+// The Id to use for the backup schedule. The `backup_schedule_id` appended to
+// `parent` forms the full backup schedule name of the form
+// `projects//instances//databases//backupSchedules/`.
+func (c *ProjectsInstancesDatabasesBackupSchedulesCreateCall) BackupScheduleId(backupScheduleId string) *ProjectsInstancesDatabasesBackupSchedulesCreateCall {
+	c.urlParams_.Set("backupScheduleId", backupScheduleId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesCreateCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesCreateCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backupschedule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backupSchedules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BackupSchedule.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesCreateCall) Do(opts ...googleapi.CallOption) (*BackupSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BackupSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a backup schedule.
+//
+//   - name: The name of the schedule to delete. Values are of the form
+//     `projects//instances//databases//backupSchedules/`.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) Delete(name string) *ProjectsInstancesDatabasesBackupSchedulesDeleteCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesDeleteCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesDeleteCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets backup schedule for the input schedule name.
+//
+//   - name: The name of the schedule to retrieve. Values are of the form
+//     `projects//instances//databases//backupSchedules/`.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) Get(name string) *ProjectsInstancesDatabasesBackupSchedulesGetCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetCall) IfNoneMatch(entityTag string) *ProjectsInstancesDatabasesBackupSchedulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BackupSchedule.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetCall) Do(opts ...googleapi.CallOption) (*BackupSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BackupSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	getiampolicyrequest *GetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a database or backup
+// resource. Returns an empty policy if a database or backup exists but does
+// not have a policy set. Authorization requires
+// `spanner.databases.getIamPolicy` permission on resource. For backups,
+// authorization requires `spanner.backups.getIamPolicy` permission on
+// resource.
+//
+//   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
+//     being retrieved. The format is `projects//instances/` for instance
+//     resources and `projects//instances//databases/` for database resources.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.getiampolicyrequest = getiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the backup schedules for the database.
+//
+//   - parent: Database is the parent resource whose backup schedules should be
+//     listed. Values are of the form projects//instances//databases/.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) List(parent string) *ProjectsInstancesDatabasesBackupSchedulesListCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of backup schedules
+// to be returned in the response. If 0 or less, defaults to the server's
+// maximum allowed page size.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) PageSize(pageSize int64) *ProjectsInstancesDatabasesBackupSchedulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If non-empty,
+// `page_token` should contain a next_page_token from a previous
+// ListBackupSchedulesResponse to the same `parent`.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) PageToken(pageToken string) *ProjectsInstancesDatabasesBackupSchedulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) IfNoneMatch(entityTag string) *ProjectsInstancesDatabasesBackupSchedulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/backupSchedules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBackupSchedulesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) Do(opts ...googleapi.CallOption) (*ListBackupSchedulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBackupSchedulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesListCall) Pages(ctx context.Context, f func(*ListBackupSchedulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesPatchCall struct {
+	s              *Service
+	nameid         string
+	backupschedule *BackupSchedule
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Patch: Updates a backup schedule.
+//
+//   - name: Identifier. Output only for the CreateBackupSchedule operation.
+//     Required for the UpdateBackupSchedule operation. A globally unique
+//     identifier for the backup schedule which cannot be changed. Values are of
+//     the form `projects//instances//databases//backupSchedules/a-z*[a-z0-9]`
+//     The final segment of the name must be between 2 and 60 characters in
+//     length.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) Patch(nameid string, backupschedule *BackupSchedule) *ProjectsInstancesDatabasesBackupSchedulesPatchCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.backupschedule = backupschedule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. A mask
+// specifying which fields in the BackupSchedule resource should be updated.
+// This mask is relative to the BackupSchedule resource, not to the request
+// message. The field mask must always be specified; this prevents any future
+// fields from being erased accidentally.
+func (c *ProjectsInstancesDatabasesBackupSchedulesPatchCall) UpdateMask(updateMask string) *ProjectsInstancesDatabasesBackupSchedulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesPatchCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesPatchCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backupschedule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BackupSchedule.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesPatchCall) Do(opts ...googleapi.CallOption) (*BackupSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BackupSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on a database or backup
+// resource. Replaces any existing policy. Authorization requires
+// `spanner.databases.setIamPolicy` permission on resource. For backups,
+// authorization requires `spanner.backups.setIamPolicy` permission on
+// resource.
+//
+//   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
+//     being set. The format is `projects//instances/` for instance resources and
+//     `projects//instances//databases/` for databases resources.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that the caller has on the specified
+// database or backup resource. Attempting this RPC on a non-existent Cloud
+// Spanner database will result in a NOT_FOUND error if the user has
+// `spanner.databases.list` permission on the containing Cloud Spanner
+// instance. Otherwise returns an empty set of permissions. Calling this method
+// on a backup that does not exist will result in a NOT_FOUND error if the user
+// has `spanner.backups.list` permission on the containing instance.
+//
+//   - resource: REQUIRED: The Cloud Spanner resource for which permissions are
+//     being tested. The format is `projects//instances/` for instance resources
+//     and `projects//instances//databases/` for database resources.
+func (r *ProjectsInstancesDatabasesBackupSchedulesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall {
+	c := &ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.backupSchedules.testIamPermissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -15118,7 +16640,9 @@ type ProjectsInstancesInstancePartitionsListCall struct {
 // List: Lists all instance partitions for the given instance.
 //
 //   - parent: The instance whose instance partitions should be listed. Values
-//     are of the form `projects//instances/`.
+//     are of the form `projects//instances/`. Use `{instance} = '-'` to list
+//     instance partitions for all Instances in a project, e.g.,
+//     `projects/myproject/instances/-`.
 func (r *ProjectsInstancesInstancePartitionsService) List(parent string) *ProjectsInstancesInstancePartitionsListCall {
 	c := &ProjectsInstancesInstancePartitionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

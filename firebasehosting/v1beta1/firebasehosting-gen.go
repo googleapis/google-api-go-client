@@ -406,9 +406,9 @@ type ActingUser struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActingUser) MarshalJSON() ([]byte, error) {
+func (s ActingUser) MarshalJSON() ([]byte, error) {
 	type NoMethod ActingUser
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertDnsChallenge: Represents a DNS certificate challenge.
@@ -431,9 +431,9 @@ type CertDnsChallenge struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertDnsChallenge) MarshalJSON() ([]byte, error) {
+func (s CertDnsChallenge) MarshalJSON() ([]byte, error) {
 	type NoMethod CertDnsChallenge
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertHttpChallenge: Represents an HTTP certificate challenge.
@@ -457,9 +457,9 @@ type CertHttpChallenge struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertHttpChallenge) MarshalJSON() ([]byte, error) {
+func (s CertHttpChallenge) MarshalJSON() ([]byte, error) {
 	type NoMethod CertHttpChallenge
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertVerification: A set of ACME challenges you can use to allow Hosting to
@@ -487,9 +487,9 @@ type CertVerification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertVerification) MarshalJSON() ([]byte, error) {
+func (s CertVerification) MarshalJSON() ([]byte, error) {
 	type NoMethod CertVerification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Certificate: An SSL certificate used to provide end-to-end encryption for
@@ -564,9 +564,9 @@ type Certificate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Certificate) MarshalJSON() ([]byte, error) {
+func (s Certificate) MarshalJSON() ([]byte, error) {
 	type NoMethod Certificate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Channel: A `Channel` represents a stream of releases for a site. All sites
@@ -618,9 +618,9 @@ type Channel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Channel) MarshalJSON() ([]byte, error) {
+func (s Channel) MarshalJSON() ([]byte, error) {
 	type NoMethod Channel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CloneVersionRequest struct {
@@ -651,9 +651,9 @@ type CloneVersionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloneVersionRequest) MarshalJSON() ([]byte, error) {
+func (s CloneVersionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CloneVersionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudRunRewrite: A configured rewrite that directs requests to a Cloud Run
@@ -683,9 +683,9 @@ type CloudRunRewrite struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudRunRewrite) MarshalJSON() ([]byte, error) {
+func (s CloudRunRewrite) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudRunRewrite
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomDomain: A `CustomDomain` is an entity that links a domain name to a
@@ -821,9 +821,9 @@ type CustomDomain struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomDomain) MarshalJSON() ([]byte, error) {
+func (s CustomDomain) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomDomain
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomDomainMetadata: Metadata associated with a`CustomDomain` operation.
@@ -937,9 +937,9 @@ type CustomDomainMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomDomainMetadata) MarshalJSON() ([]byte, error) {
+func (s CustomDomainMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomDomainMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DnsRecord: DNS records are resource records that define how systems and
@@ -1012,9 +1012,9 @@ type DnsRecord struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DnsRecord) MarshalJSON() ([]byte, error) {
+func (s DnsRecord) MarshalJSON() ([]byte, error) {
 	type NoMethod DnsRecord
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DnsRecordSet: A set of DNS records relevant to the setup and maintenance of
@@ -1041,9 +1041,9 @@ type DnsRecordSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DnsRecordSet) MarshalJSON() ([]byte, error) {
+func (s DnsRecordSet) MarshalJSON() ([]byte, error) {
 	type NoMethod DnsRecordSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DnsUpdates: A set of DNS record updates that you should make to allow
@@ -1073,9 +1073,9 @@ type DnsUpdates struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DnsUpdates) MarshalJSON() ([]byte, error) {
+func (s DnsUpdates) MarshalJSON() ([]byte, error) {
 	type NoMethod DnsUpdates
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Domain: The intended behavior and status information of a domain.
@@ -1123,9 +1123,9 @@ type Domain struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Domain) MarshalJSON() ([]byte, error) {
+func (s Domain) MarshalJSON() ([]byte, error) {
 	type NoMethod Domain
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DomainProvisioning: The current certificate provisioning status information
@@ -1185,9 +1185,9 @@ type DomainProvisioning struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DomainProvisioning) MarshalJSON() ([]byte, error) {
+func (s DomainProvisioning) MarshalJSON() ([]byte, error) {
 	type NoMethod DomainProvisioning
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DomainRedirect: Defines the behavior of a domain-level redirect. Domain
@@ -1217,9 +1217,9 @@ type DomainRedirect struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DomainRedirect) MarshalJSON() ([]byte, error) {
+func (s DomainRedirect) MarshalJSON() ([]byte, error) {
 	type NoMethod DomainRedirect
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1258,9 +1258,9 @@ type Header struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Header) MarshalJSON() ([]byte, error) {
+func (s Header) MarshalJSON() ([]byte, error) {
 	type NoMethod Header
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpUpdate: A file you can add to your existing, non-Hosting hosting service
@@ -1293,9 +1293,9 @@ type HttpUpdate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpUpdate) MarshalJSON() ([]byte, error) {
+func (s HttpUpdate) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpUpdate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // I18nConfig: If provided, i18n rewrites are enabled.
@@ -1316,9 +1316,9 @@ type I18nConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *I18nConfig) MarshalJSON() ([]byte, error) {
+func (s I18nConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod I18nConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListChannelsResponse struct {
@@ -1344,9 +1344,9 @@ type ListChannelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListChannelsResponse) MarshalJSON() ([]byte, error) {
+func (s ListChannelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListChannelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCustomDomainsResponse: The response from `ListCustomDomains`.
@@ -1374,9 +1374,9 @@ type ListCustomDomainsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCustomDomainsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCustomDomainsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCustomDomainsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDomainsResponse: The response to listing Domains.
@@ -1401,9 +1401,9 @@ type ListDomainsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDomainsResponse) MarshalJSON() ([]byte, error) {
+func (s ListDomainsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDomainsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -1429,9 +1429,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListReleasesResponse struct {
@@ -1458,9 +1458,9 @@ type ListReleasesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListReleasesResponse) MarshalJSON() ([]byte, error) {
+func (s ListReleasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReleasesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListSitesResponse struct {
@@ -1487,9 +1487,9 @@ type ListSitesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSitesResponse) MarshalJSON() ([]byte, error) {
+func (s ListSitesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSitesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListVersionFilesResponse struct {
@@ -1516,9 +1516,9 @@ type ListVersionFilesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListVersionFilesResponse) MarshalJSON() ([]byte, error) {
+func (s ListVersionFilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVersionFilesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListVersionsResponse struct {
@@ -1544,9 +1544,9 @@ type ListVersionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVersionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LiveMigrationStep: A set of updates including ACME challenges and DNS
@@ -1603,9 +1603,9 @@ type LiveMigrationStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveMigrationStep) MarshalJSON() ([]byte, error) {
+func (s LiveMigrationStep) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveMigrationStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1650,9 +1650,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PathFilter: A representation of filter path.
@@ -1672,9 +1672,9 @@ type PathFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PathFilter) MarshalJSON() ([]byte, error) {
+func (s PathFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod PathFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PopulateVersionFilesRequest struct {
@@ -1696,9 +1696,9 @@ type PopulateVersionFilesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PopulateVersionFilesRequest) MarshalJSON() ([]byte, error) {
+func (s PopulateVersionFilesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PopulateVersionFilesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PopulateVersionFilesResponse struct {
@@ -1727,9 +1727,9 @@ type PopulateVersionFilesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PopulateVersionFilesResponse) MarshalJSON() ([]byte, error) {
+func (s PopulateVersionFilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PopulateVersionFilesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Redirect: A `Redirect`
@@ -1766,9 +1766,9 @@ type Redirect struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Redirect) MarshalJSON() ([]byte, error) {
+func (s Redirect) MarshalJSON() ([]byte, error) {
 	type NoMethod Redirect
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Release:  A `Release` is a particular collection of configurations and files
@@ -1817,9 +1817,9 @@ type Release struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Release) MarshalJSON() ([]byte, error) {
+func (s Release) MarshalJSON() ([]byte, error) {
 	type NoMethod Release
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Rewrite: A `Rewrite`
@@ -1859,9 +1859,9 @@ type Rewrite struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Rewrite) MarshalJSON() ([]byte, error) {
+func (s Rewrite) MarshalJSON() ([]byte, error) {
 	type NoMethod Rewrite
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServingConfig: The configuration for how incoming requests to a site should
@@ -1921,9 +1921,9 @@ type ServingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServingConfig) MarshalJSON() ([]byte, error) {
+func (s ServingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ServingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Site: A `Site` represents a Firebase Hosting site.
@@ -1972,9 +1972,9 @@ type Site struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Site) MarshalJSON() ([]byte, error) {
+func (s Site) MarshalJSON() ([]byte, error) {
 	type NoMethod Site
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SiteConfig: A `SiteConfig` contains metadata associated with a specific site
@@ -2005,9 +2005,9 @@ type SiteConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SiteConfig) MarshalJSON() ([]byte, error) {
+func (s SiteConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SiteConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -2039,9 +2039,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UndeleteCustomDomainRequest: The request sent to `UndeleteCustomDomain`.
@@ -2066,9 +2066,9 @@ type UndeleteCustomDomainRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UndeleteCustomDomainRequest) MarshalJSON() ([]byte, error) {
+func (s UndeleteCustomDomainRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UndeleteCustomDomainRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Version: A `Version` is a configuration and a collection of static files
@@ -2143,9 +2143,9 @@ type Version struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Version) MarshalJSON() ([]byte, error) {
+func (s Version) MarshalJSON() ([]byte, error) {
 	type NoMethod Version
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VersionFile: A static content file that is part of a version.
@@ -2177,9 +2177,9 @@ type VersionFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VersionFile) MarshalJSON() ([]byte, error) {
+func (s VersionFile) MarshalJSON() ([]byte, error) {
 	type NoMethod VersionFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsOperationsGetCall struct {

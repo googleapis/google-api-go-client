@@ -242,9 +242,9 @@ type ABNFGrammar struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ABNFGrammar) MarshalJSON() ([]byte, error) {
+func (s ABNFGrammar) MarshalJSON() ([]byte, error) {
 	type NoMethod ABNFGrammar
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClassItem: An item of the class.
@@ -264,9 +264,9 @@ type ClassItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClassItem) MarshalJSON() ([]byte, error) {
+func (s ClassItem) MarshalJSON() ([]byte, error) {
 	type NoMethod ClassItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateCustomClassRequest: Message sent by the client for the
@@ -292,9 +292,9 @@ type CreateCustomClassRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateCustomClassRequest) MarshalJSON() ([]byte, error) {
+func (s CreateCustomClassRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateCustomClassRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreatePhraseSetRequest: Message sent by the client for the `CreatePhraseSet`
@@ -320,9 +320,9 @@ type CreatePhraseSetRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreatePhraseSetRequest) MarshalJSON() ([]byte, error) {
+func (s CreatePhraseSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreatePhraseSetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomClass: A set of words or phrases that represents a common concept
@@ -397,9 +397,9 @@ type CustomClass struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomClass) MarshalJSON() ([]byte, error) {
+func (s CustomClass) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomClass
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -432,9 +432,9 @@ type Entry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Entry) MarshalJSON() ([]byte, error) {
+func (s Entry) MarshalJSON() ([]byte, error) {
 	type NoMethod Entry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCustomClassesResponse: Message returned to the client by the
@@ -461,9 +461,9 @@ type ListCustomClassesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCustomClassesResponse) MarshalJSON() ([]byte, error) {
+func (s ListCustomClassesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCustomClassesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -489,9 +489,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPhraseSetResponse: Message returned to the client by the `ListPhraseSet`
@@ -518,9 +518,9 @@ type ListPhraseSetResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPhraseSetResponse) MarshalJSON() ([]byte, error) {
+func (s ListPhraseSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPhraseSetResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LongRunningRecognizeMetadata: Describes the progress of a long-running
@@ -555,9 +555,9 @@ type LongRunningRecognizeMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LongRunningRecognizeMetadata) MarshalJSON() ([]byte, error) {
+func (s LongRunningRecognizeMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod LongRunningRecognizeMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LongRunningRecognizeRequest: The top-level message sent by the client for
@@ -584,9 +584,9 @@ type LongRunningRecognizeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LongRunningRecognizeRequest) MarshalJSON() ([]byte, error) {
+func (s LongRunningRecognizeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod LongRunningRecognizeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LongRunningRecognizeResponse: The only message returned to the client by the
@@ -625,9 +625,9 @@ type LongRunningRecognizeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LongRunningRecognizeResponse) MarshalJSON() ([]byte, error) {
+func (s LongRunningRecognizeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LongRunningRecognizeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -672,9 +672,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Phrase: A phrases containing words and phrase "hints" so that the speech
@@ -725,9 +725,9 @@ type Phrase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Phrase) MarshalJSON() ([]byte, error) {
+func (s Phrase) MarshalJSON() ([]byte, error) {
 	type NoMethod Phrase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Phrase) UnmarshalJSON(data []byte) error {
@@ -821,9 +821,9 @@ type PhraseSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PhraseSet) MarshalJSON() ([]byte, error) {
+func (s PhraseSet) MarshalJSON() ([]byte, error) {
 	type NoMethod PhraseSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PhraseSet) UnmarshalJSON(data []byte) error {
@@ -869,9 +869,9 @@ type RecognitionAudio struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RecognitionAudio) MarshalJSON() ([]byte, error) {
+func (s RecognitionAudio) MarshalJSON() ([]byte, error) {
 	type NoMethod RecognitionAudio
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RecognitionConfig: Provides information to the recognizer that specifies how
@@ -1070,9 +1070,9 @@ type RecognitionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RecognitionConfig) MarshalJSON() ([]byte, error) {
+func (s RecognitionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RecognitionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RecognitionMetadata: Description of audio data to be recognized.
@@ -1162,9 +1162,9 @@ type RecognitionMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RecognitionMetadata) MarshalJSON() ([]byte, error) {
+func (s RecognitionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod RecognitionMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RecognizeRequest: The top-level message sent by the client for the
@@ -1188,9 +1188,9 @@ type RecognizeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RecognizeRequest) MarshalJSON() ([]byte, error) {
+func (s RecognizeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RecognizeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RecognizeResponse: The only message returned to the client by the
@@ -1228,9 +1228,9 @@ type RecognizeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RecognizeResponse) MarshalJSON() ([]byte, error) {
+func (s RecognizeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RecognizeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpeakerDiarizationConfig: Config to enable speaker diarization.
@@ -1262,9 +1262,9 @@ type SpeakerDiarizationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpeakerDiarizationConfig) MarshalJSON() ([]byte, error) {
+func (s SpeakerDiarizationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SpeakerDiarizationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpeechAdaptation: Speech adaptation configuration.
@@ -1297,9 +1297,9 @@ type SpeechAdaptation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpeechAdaptation) MarshalJSON() ([]byte, error) {
+func (s SpeechAdaptation) MarshalJSON() ([]byte, error) {
 	type NoMethod SpeechAdaptation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpeechAdaptationInfo: Information on speech adaptation use in results
@@ -1323,9 +1323,9 @@ type SpeechAdaptationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpeechAdaptationInfo) MarshalJSON() ([]byte, error) {
+func (s SpeechAdaptationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SpeechAdaptationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpeechContext: Provides "hints" to the speech recognizer to favor specific
@@ -1364,9 +1364,9 @@ type SpeechContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpeechContext) MarshalJSON() ([]byte, error) {
+func (s SpeechContext) MarshalJSON() ([]byte, error) {
 	type NoMethod SpeechContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *SpeechContext) UnmarshalJSON(data []byte) error {
@@ -1415,9 +1415,9 @@ type SpeechRecognitionAlternative struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpeechRecognitionAlternative) MarshalJSON() ([]byte, error) {
+func (s SpeechRecognitionAlternative) MarshalJSON() ([]byte, error) {
 	type NoMethod SpeechRecognitionAlternative
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *SpeechRecognitionAlternative) UnmarshalJSON(data []byte) error {
@@ -1467,9 +1467,9 @@ type SpeechRecognitionResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpeechRecognitionResult) MarshalJSON() ([]byte, error) {
+func (s SpeechRecognitionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod SpeechRecognitionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -1501,9 +1501,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TranscriptNormalization: Transcription normalization configuration. Use
@@ -1530,9 +1530,9 @@ type TranscriptNormalization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TranscriptNormalization) MarshalJSON() ([]byte, error) {
+func (s TranscriptNormalization) MarshalJSON() ([]byte, error) {
 	type NoMethod TranscriptNormalization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TranscriptOutputConfig: Specifies an optional destination for the
@@ -1555,9 +1555,9 @@ type TranscriptOutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TranscriptOutputConfig) MarshalJSON() ([]byte, error) {
+func (s TranscriptOutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TranscriptOutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WordInfo: Word-specific information for recognized words.
@@ -1608,9 +1608,9 @@ type WordInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WordInfo) MarshalJSON() ([]byte, error) {
+func (s WordInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod WordInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *WordInfo) UnmarshalJSON(data []byte) error {

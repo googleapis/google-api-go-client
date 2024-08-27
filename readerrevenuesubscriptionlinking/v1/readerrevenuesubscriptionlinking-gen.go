@@ -204,9 +204,9 @@ type Entitlement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Entitlement) MarshalJSON() ([]byte, error) {
+func (s Entitlement) MarshalJSON() ([]byte, error) {
 	type NoMethod Entitlement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Reader: A reader of a publication.
@@ -233,9 +233,9 @@ type Reader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Reader) MarshalJSON() ([]byte, error) {
+func (s Reader) MarshalJSON() ([]byte, error) {
 	type NoMethod Reader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReaderEntitlements: A singleton containing all of a reader's entitlements
@@ -261,9 +261,9 @@ type ReaderEntitlements struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReaderEntitlements) MarshalJSON() ([]byte, error) {
+func (s ReaderEntitlements) MarshalJSON() ([]byte, error) {
 	type NoMethod ReaderEntitlements
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type PublicationsReadersDeleteCall struct {

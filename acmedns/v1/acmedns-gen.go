@@ -173,9 +173,9 @@ type AcmeChallengeSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AcmeChallengeSet) MarshalJSON() ([]byte, error) {
+func (s AcmeChallengeSet) MarshalJSON() ([]byte, error) {
 	type NoMethod AcmeChallengeSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AcmeTxtRecord: The TXT record message that represents an ACME DNS-01
@@ -204,9 +204,9 @@ type AcmeTxtRecord struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AcmeTxtRecord) MarshalJSON() ([]byte, error) {
+func (s AcmeTxtRecord) MarshalJSON() ([]byte, error) {
 	type NoMethod AcmeTxtRecord
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RotateChallengesRequest: The request message for the RotateChallenges RPC.
@@ -244,9 +244,9 @@ type RotateChallengesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RotateChallengesRequest) MarshalJSON() ([]byte, error) {
+func (s RotateChallengesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RotateChallengesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AcmeChallengeSetsGetCall struct {

@@ -228,9 +228,9 @@ type EmptyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EmptyResponse) MarshalJSON() ([]byte, error) {
+func (s EmptyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EmptyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ErrorProto: Describes one specific error.
@@ -282,9 +282,9 @@ type ErrorProto struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ErrorProto) MarshalJSON() ([]byte, error) {
+func (s ErrorProto) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorProto
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Errors: Request Error information. The presence of an error field signals
@@ -321,9 +321,9 @@ type Errors struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Errors) MarshalJSON() ([]byte, error) {
+func (s Errors) MarshalJSON() ([]byte, error) {
 	type NoMethod Errors
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Group: A group.
@@ -358,9 +358,9 @@ type Group struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Group) MarshalJSON() ([]byte, error) {
+func (s Group) MarshalJSON() ([]byte, error) {
 	type NoMethod Group
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GroupContentDetails: A group's content details.
@@ -384,9 +384,9 @@ type GroupContentDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupContentDetails) MarshalJSON() ([]byte, error) {
+func (s GroupContentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupContentDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GroupItem: A group item.
@@ -428,9 +428,9 @@ type GroupItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupItem) MarshalJSON() ([]byte, error) {
+func (s GroupItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GroupItemResource struct {
@@ -454,9 +454,9 @@ type GroupItemResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupItemResource) MarshalJSON() ([]byte, error) {
+func (s GroupItemResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupItemResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GroupSnippet: A group snippet.
@@ -479,9 +479,9 @@ type GroupSnippet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupSnippet) MarshalJSON() ([]byte, error) {
+func (s GroupSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupSnippet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGroupItemsResponse: Response message for GroupsService.ListGroupItems.
@@ -512,9 +512,9 @@ type ListGroupItemsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGroupItemsResponse) MarshalJSON() ([]byte, error) {
+func (s ListGroupItemsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGroupItemsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGroupsResponse: Response message for GroupsService.ListGroups.
@@ -548,9 +548,9 @@ type ListGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s ListGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryResponse: Response message for TargetedQueriesService.Query.
@@ -595,9 +595,9 @@ type QueryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryResponse) MarshalJSON() ([]byte, error) {
+func (s QueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResultTableColumnHeader: The description of a column of the result table.
@@ -622,9 +622,9 @@ type ResultTableColumnHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResultTableColumnHeader) MarshalJSON() ([]byte, error) {
+func (s ResultTableColumnHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod ResultTableColumnHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GroupItemsDeleteCall struct {

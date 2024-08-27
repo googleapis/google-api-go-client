@@ -230,9 +230,9 @@ type DeliveryError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeliveryError) MarshalJSON() ([]byte, error) {
+func (s DeliveryError) MarshalJSON() ([]byte, error) {
 	type NoMethod DeliveryError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DeliveryError) UnmarshalJSON(data []byte) error {
@@ -286,9 +286,9 @@ type Domain struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Domain) MarshalJSON() ([]byte, error) {
+func (s Domain) MarshalJSON() ([]byte, error) {
 	type NoMethod Domain
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FeedbackLoop: Feedback loop (https://support.google.com/mail/answer/6254652)
@@ -312,9 +312,9 @@ type FeedbackLoop struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FeedbackLoop) MarshalJSON() ([]byte, error) {
+func (s FeedbackLoop) MarshalJSON() ([]byte, error) {
 	type NoMethod FeedbackLoop
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *FeedbackLoop) UnmarshalJSON(data []byte) error {
@@ -371,9 +371,9 @@ type IpReputation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IpReputation) MarshalJSON() ([]byte, error) {
+func (s IpReputation) MarshalJSON() ([]byte, error) {
 	type NoMethod IpReputation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDomainsResponse: Response message for ListDomains.
@@ -399,9 +399,9 @@ type ListDomainsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDomainsResponse) MarshalJSON() ([]byte, error) {
+func (s ListDomainsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDomainsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTrafficStatsResponse: Response message for ListTrafficStats.
@@ -427,9 +427,9 @@ type ListTrafficStatsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTrafficStatsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTrafficStatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTrafficStatsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TrafficStats: Email traffic statistics pertaining to a specific date.
@@ -529,9 +529,9 @@ type TrafficStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TrafficStats) MarshalJSON() ([]byte, error) {
+func (s TrafficStats) MarshalJSON() ([]byte, error) {
 	type NoMethod TrafficStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *TrafficStats) UnmarshalJSON(data []byte) error {

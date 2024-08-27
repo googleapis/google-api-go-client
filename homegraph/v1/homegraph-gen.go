@@ -191,9 +191,9 @@ type AgentDeviceId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgentDeviceId) MarshalJSON() ([]byte, error) {
+func (s AgentDeviceId) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentDeviceId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentOtherDeviceId: Alternate third-party device ID.
@@ -215,9 +215,9 @@ type AgentOtherDeviceId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgentOtherDeviceId) MarshalJSON() ([]byte, error) {
+func (s AgentOtherDeviceId) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentOtherDeviceId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Device: Third-party device definition.
@@ -276,9 +276,9 @@ type Device struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Device) MarshalJSON() ([]byte, error) {
+func (s Device) MarshalJSON() ([]byte, error) {
 	type NoMethod Device
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceInfo: Device information.
@@ -304,9 +304,9 @@ type DeviceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceInfo) MarshalJSON() ([]byte, error) {
+func (s DeviceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceNames: Identifiers used to describe the device.
@@ -331,9 +331,9 @@ type DeviceNames struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceNames) MarshalJSON() ([]byte, error) {
+func (s DeviceNames) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceNames
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -368,9 +368,9 @@ type QueryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryRequest) MarshalJSON() ([]byte, error) {
+func (s QueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryRequestInput: Device ID inputs to QueryRequest.
@@ -390,9 +390,9 @@ type QueryRequestInput struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryRequestInput) MarshalJSON() ([]byte, error) {
+func (s QueryRequestInput) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryRequestInput
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryRequestPayload: Payload containing device IDs.
@@ -412,9 +412,9 @@ type QueryRequestPayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryRequestPayload) MarshalJSON() ([]byte, error) {
+func (s QueryRequestPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryRequestPayload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryResponse: Response type for the `Query`
@@ -446,9 +446,9 @@ type QueryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryResponse) MarshalJSON() ([]byte, error) {
+func (s QueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryResponsePayload: Payload containing device states information.
@@ -469,9 +469,9 @@ type QueryResponsePayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryResponsePayload) MarshalJSON() ([]byte, error) {
+func (s QueryResponsePayload) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryResponsePayload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportStateAndNotificationDevice: The states and notifications specific to a
@@ -498,9 +498,9 @@ type ReportStateAndNotificationDevice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportStateAndNotificationDevice) MarshalJSON() ([]byte, error) {
+func (s ReportStateAndNotificationDevice) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportStateAndNotificationDevice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportStateAndNotificationRequest: Request type for the
@@ -537,9 +537,9 @@ type ReportStateAndNotificationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportStateAndNotificationRequest) MarshalJSON() ([]byte, error) {
+func (s ReportStateAndNotificationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportStateAndNotificationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportStateAndNotificationResponse: Response type for the
@@ -564,9 +564,9 @@ type ReportStateAndNotificationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportStateAndNotificationResponse) MarshalJSON() ([]byte, error) {
+func (s ReportStateAndNotificationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportStateAndNotificationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RequestSyncDevicesRequest: Request type for the `RequestSyncDevices`
@@ -591,9 +591,9 @@ type RequestSyncDevicesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RequestSyncDevicesRequest) MarshalJSON() ([]byte, error) {
+func (s RequestSyncDevicesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RequestSyncDevicesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RequestSyncDevicesResponse: Response type for the `RequestSyncDevices`
@@ -623,9 +623,9 @@ type StateAndNotificationPayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StateAndNotificationPayload) MarshalJSON() ([]byte, error) {
+func (s StateAndNotificationPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod StateAndNotificationPayload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SyncRequest: Request type for the `Sync`
@@ -648,9 +648,9 @@ type SyncRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SyncRequest) MarshalJSON() ([]byte, error) {
+func (s SyncRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SyncRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SyncResponse: Response type for the `Sync`
@@ -686,9 +686,9 @@ type SyncResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SyncResponse) MarshalJSON() ([]byte, error) {
+func (s SyncResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SyncResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SyncResponsePayload: Payload containing device information.
@@ -710,9 +710,9 @@ type SyncResponsePayload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SyncResponsePayload) MarshalJSON() ([]byte, error) {
+func (s SyncResponsePayload) MarshalJSON() ([]byte, error) {
 	type NoMethod SyncResponsePayload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AgentUsersDeleteCall struct {

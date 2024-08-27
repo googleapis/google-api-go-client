@@ -169,9 +169,9 @@ type ComputeFlightEmissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComputeFlightEmissionsRequest) MarshalJSON() ([]byte, error) {
+func (s ComputeFlightEmissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeFlightEmissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComputeFlightEmissionsResponse: Output definition for the
@@ -198,9 +198,9 @@ type ComputeFlightEmissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComputeFlightEmissionsResponse) MarshalJSON() ([]byte, error) {
+func (s ComputeFlightEmissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeFlightEmissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a birthday. The
@@ -236,9 +236,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EmissionsGramsPerPax: Grouped emissions per seating class results.
@@ -272,9 +272,9 @@ type EmissionsGramsPerPax struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EmissionsGramsPerPax) MarshalJSON() ([]byte, error) {
+func (s EmissionsGramsPerPax) MarshalJSON() ([]byte, error) {
 	type NoMethod EmissionsGramsPerPax
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Flight: All details related to a single request item for a direct flight
@@ -304,9 +304,9 @@ type Flight struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Flight) MarshalJSON() ([]byte, error) {
+func (s Flight) MarshalJSON() ([]byte, error) {
 	type NoMethod Flight
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FlightWithEmissions: Direct flight with emission estimates.
@@ -334,9 +334,9 @@ type FlightWithEmissions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FlightWithEmissions) MarshalJSON() ([]byte, error) {
+func (s FlightWithEmissions) MarshalJSON() ([]byte, error) {
 	type NoMethod FlightWithEmissions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModelVersion: Travel Impact Model version. For more information about the
@@ -371,9 +371,9 @@ type ModelVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModelVersion) MarshalJSON() ([]byte, error) {
+func (s ModelVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod ModelVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FlightsComputeFlightEmissionsCall struct {

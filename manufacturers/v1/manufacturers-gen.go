@@ -259,6 +259,12 @@ type Attributes struct {
 	// "ClientShoppingCatalog" or "PartnerShoppingCatalog". For more information,
 	// see https://support.google.com/manufacturers/answer/7443550
 	IncludedDestination []string `json:"includedDestination,omitempty"`
+	// IntendedCountry: Optional. List of countries to show this product in.
+	// Countries provided in this attribute will override any of the countries
+	// configured at feed level. The values should be: the CLDR territory code
+	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) of the
+	// countries in which this item will be shown.
+	IntendedCountry []string `json:"intendedCountry,omitempty"`
 	// ItemGroupId: The item group id of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#itemgroupid.
 	ItemGroupId string `json:"itemGroupId,omitempty"`
@@ -345,9 +351,9 @@ type Attributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Attributes) MarshalJSON() ([]byte, error) {
+func (s Attributes) MarshalJSON() ([]byte, error) {
 	type NoMethod Attributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Capacity: The capacity of a product. For more information, see
@@ -370,9 +376,9 @@ type Capacity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Capacity) MarshalJSON() ([]byte, error) {
+func (s Capacity) MarshalJSON() ([]byte, error) {
 	type NoMethod Capacity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Certification: Description of a certification.
@@ -404,9 +410,9 @@ type Certification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Certification) MarshalJSON() ([]byte, error) {
+func (s Certification) MarshalJSON() ([]byte, error) {
 	type NoMethod Certification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Count: The number of products in a single package. For more information, see
@@ -429,15 +435,24 @@ type Count struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Count) MarshalJSON() ([]byte, error) {
+func (s Count) MarshalJSON() ([]byte, error) {
 	type NoMethod Count
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DestinationStatus: The destination status.
 type DestinationStatus struct {
+	// ApprovedCountries: Output only. List of country codes (ISO 3166-1 alpha-2)
+	// where the offer is approved.
+	ApprovedCountries []string `json:"approvedCountries,omitempty"`
 	// Destination: The name of the destination.
 	Destination string `json:"destination,omitempty"`
+	// DisapprovedCountries: Output only. List of country codes (ISO 3166-1
+	// alpha-2) where the offer is disapproved.
+	DisapprovedCountries []string `json:"disapprovedCountries,omitempty"`
+	// PendingCountries: Output only. List of country codes (ISO 3166-1 alpha-2)
+	// where the offer is pending approval.
+	PendingCountries []string `json:"pendingCountries,omitempty"`
 	// Status: The status of the destination.
 	//
 	// Possible values:
@@ -446,22 +461,22 @@ type DestinationStatus struct {
 	//   "PENDING" - The decision is still pending.
 	//   "DISAPPROVED" - The product is disapproved. Please look at the issues.
 	Status string `json:"status,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Destination") to
+	// ForceSendFields is a list of field names (e.g. "ApprovedCountries") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Destination") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ApprovedCountries") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *DestinationStatus) MarshalJSON() ([]byte, error) {
+func (s DestinationStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod DestinationStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -496,9 +511,9 @@ type FeatureDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FeatureDescription) MarshalJSON() ([]byte, error) {
+func (s FeatureDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod FeatureDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FloatUnit: Combination of float amount and unit.
@@ -520,9 +535,9 @@ type FloatUnit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FloatUnit) MarshalJSON() ([]byte, error) {
+func (s FloatUnit) MarshalJSON() ([]byte, error) {
 	type NoMethod FloatUnit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *FloatUnit) UnmarshalJSON(data []byte) error {
@@ -561,9 +576,9 @@ type GoogleShoppingManufacturersV1ProductCertification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleShoppingManufacturersV1ProductCertification) MarshalJSON() ([]byte, error) {
+func (s GoogleShoppingManufacturersV1ProductCertification) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleShoppingManufacturersV1ProductCertification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Grocery struct {
@@ -598,9 +613,9 @@ type Grocery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Grocery) MarshalJSON() ([]byte, error) {
+func (s Grocery) MarshalJSON() ([]byte, error) {
 	type NoMethod Grocery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Grocery) UnmarshalJSON(data []byte) error {
@@ -665,13 +680,16 @@ type Image struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Image) MarshalJSON() ([]byte, error) {
+func (s Image) MarshalJSON() ([]byte, error) {
 	type NoMethod Image
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Issue: Product issue.
 type Issue struct {
+	// ApplicableCountries: Output only. List of country codes (ISO 3166-1 alpha-2)
+	// where issue applies to the manufacturer product.
+	ApplicableCountries []string `json:"applicableCountries,omitempty"`
 	// Attribute: If present, the attribute that triggered the issue. For more
 	// information about attributes, see
 	// https://support.google.com/manufacturers/answer/6124116.
@@ -709,22 +727,22 @@ type Issue struct {
 	// Type: The server-generated type of the issue, for example,
 	// “INCORRECT_TEXT_FORMATTING”, “IMAGE_NOT_SERVEABLE”, etc.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Attribute") to
+	// ForceSendFields is a list of field names (e.g. "ApplicableCountries") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Attribute") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ApplicableCountries") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Issue) MarshalJSON() ([]byte, error) {
+func (s Issue) MarshalJSON() ([]byte, error) {
 	type NoMethod Issue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListProductCertificationsResponse: Response for ListProductCertifications
@@ -752,9 +770,9 @@ type ListProductCertificationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListProductCertificationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListProductCertificationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListProductCertificationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListProductsResponse struct {
@@ -779,9 +797,9 @@ type ListProductsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListProductsResponse) MarshalJSON() ([]byte, error) {
+func (s ListProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListProductsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Nutrition struct {
@@ -884,9 +902,9 @@ type Nutrition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Nutrition) MarshalJSON() ([]byte, error) {
+func (s Nutrition) MarshalJSON() ([]byte, error) {
 	type NoMethod Nutrition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Nutrition) UnmarshalJSON(data []byte) error {
@@ -952,9 +970,9 @@ type Price struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Price) MarshalJSON() ([]byte, error) {
+func (s Price) MarshalJSON() ([]byte, error) {
 	type NoMethod Price
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Product: Product data.
@@ -967,6 +985,8 @@ type Product struct {
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 	// DestinationStatuses: The status of the destinations.
 	DestinationStatuses []*DestinationStatus `json:"destinationStatuses,omitempty"`
+	// FeedLabel: Optional. The feed label for the product.
+	FeedLabel string `json:"feedLabel,omitempty"`
 	// Issues: A server-generated list of issues associated with the product.
 	Issues []*Issue `json:"issues,omitempty"`
 	// Name: Name in the format `{target_country}:{content_language}:{product_id}`.
@@ -1001,9 +1021,9 @@ type Product struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Product) MarshalJSON() ([]byte, error) {
+func (s Product) MarshalJSON() ([]byte, error) {
 	type NoMethod Product
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductCertification: Product certification data.
@@ -1055,9 +1075,9 @@ type ProductCertification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductCertification) MarshalJSON() ([]byte, error) {
+func (s ProductCertification) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductCertification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductDetail: A product detail of the product. For more information, see
@@ -1083,9 +1103,9 @@ type ProductDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductDetail) MarshalJSON() ([]byte, error) {
+func (s ProductDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VoluntaryNutritionFact: Voluntary Nutrition Facts.
@@ -1109,9 +1129,9 @@ type VoluntaryNutritionFact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VoluntaryNutritionFact) MarshalJSON() ([]byte, error) {
+func (s VoluntaryNutritionFact) MarshalJSON() ([]byte, error) {
 	type NoMethod VoluntaryNutritionFact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *VoluntaryNutritionFact) UnmarshalJSON(data []byte) error {

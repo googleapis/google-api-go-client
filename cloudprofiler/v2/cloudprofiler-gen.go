@@ -229,9 +229,9 @@ type CreateProfileRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateProfileRequest) MarshalJSON() ([]byte, error) {
+func (s CreateProfileRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateProfileRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Deployment: Deployment contains the deployment identification information.
@@ -269,9 +269,9 @@ type Deployment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Deployment) MarshalJSON() ([]byte, error) {
+func (s Deployment) MarshalJSON() ([]byte, error) {
 	type NoMethod Deployment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListProfilesResponse: ListProfileResponse contains the list of collected
@@ -303,9 +303,9 @@ type ListProfilesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListProfilesResponse) MarshalJSON() ([]byte, error) {
+func (s ListProfilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListProfilesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Profile: Profile resource.
@@ -368,9 +368,9 @@ type Profile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Profile) MarshalJSON() ([]byte, error) {
+func (s Profile) MarshalJSON() ([]byte, error) {
 	type NoMethod Profile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsProfilesCreateCall struct {

@@ -174,9 +174,9 @@ type TimeseriesDescriptor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeseriesDescriptor) MarshalJSON() ([]byte, error) {
+func (s TimeseriesDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeseriesDescriptor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AtlasGetMapCall struct {

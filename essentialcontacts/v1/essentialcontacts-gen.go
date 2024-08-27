@@ -252,9 +252,9 @@ type GoogleCloudEssentialcontactsV1ComputeContactsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudEssentialcontactsV1ComputeContactsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudEssentialcontactsV1ComputeContactsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudEssentialcontactsV1ComputeContactsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudEssentialcontactsV1Contact: A contact that will receive
@@ -298,8 +298,9 @@ type GoogleCloudEssentialcontactsV1Contact struct {
 	// manually or automatically. A contact is considered stale if its validation
 	// state was updated more than 1 year ago.
 	ValidateTime string `json:"validateTime,omitempty"`
-	// ValidationState: The validity of the contact. A contact is considered valid
-	// if it is the correct recipient for notifications for a particular resource.
+	// ValidationState: Output only. The validity of the contact. A contact is
+	// considered valid if it is the correct recipient for notifications for a
+	// particular resource.
 	//
 	// Possible values:
 	//   "VALIDATION_STATE_UNSPECIFIED" - The validation state is unknown or
@@ -325,9 +326,9 @@ type GoogleCloudEssentialcontactsV1Contact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudEssentialcontactsV1Contact) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudEssentialcontactsV1Contact) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudEssentialcontactsV1Contact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudEssentialcontactsV1ListContactsResponse: Response message for the
@@ -357,9 +358,9 @@ type GoogleCloudEssentialcontactsV1ListContactsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudEssentialcontactsV1ListContactsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudEssentialcontactsV1ListContactsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudEssentialcontactsV1ListContactsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudEssentialcontactsV1SendTestMessageRequest: Request message for
@@ -406,9 +407,9 @@ type GoogleCloudEssentialcontactsV1SendTestMessageRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudEssentialcontactsV1SendTestMessageRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudEssentialcontactsV1SendTestMessageRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudEssentialcontactsV1SendTestMessageRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid

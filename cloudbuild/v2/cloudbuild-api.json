@@ -844,7 +844,7 @@
       }
     }
   },
-  "revision": "20240519",
+  "revision": "20240731",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -977,7 +977,7 @@
           "description": "Required. A http access token with the `REPO_ADMIN` scope access."
         },
         "hostUri": {
-          "description": "Optional. The URI of the Bitbucket Data Center instance or cluster this connection is for.",
+          "description": "Required. The URI of the Bitbucket Data Center instance or cluster this connection is for.",
           "type": "string"
         },
         "readAuthorizerCredential": {
@@ -1806,12 +1806,14 @@
           "enum": [
             "TYPE_UNSPECIFIED",
             "STRING",
-            "ARRAY"
+            "ARRAY",
+            "OBJECT"
           ],
           "enumDescriptions": [
             "Default enum type; should not be used.",
             "Default",
-            "Arrary type."
+            "Array type.",
+            "Object type."
           ],
           "type": "string"
         }
@@ -1829,6 +1831,13 @@
           },
           "type": "array"
         },
+        "objectVal": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. Value of the parameter if type is object.",
+          "type": "object"
+        },
         "stringVal": {
           "description": "Value of the parameter if type is string.",
           "type": "string"
@@ -1838,12 +1847,14 @@
           "enum": [
             "TYPE_UNSPECIFIED",
             "STRING",
-            "ARRAY"
+            "ARRAY",
+            "OBJECT"
           ],
           "enumDescriptions": [
             "Default enum type; should not be used.",
             "Default",
-            "Array type"
+            "Array type",
+            "Object type"
           ],
           "type": "string"
         }
@@ -1855,8 +1866,7 @@
       "id": "PipelineRef",
       "properties": {
         "name": {
-          "deprecated": true,
-          "description": "Name of the Pipeline.",
+          "description": "Optional. Name of the Pipeline.",
           "type": "string"
         },
         "params": {
@@ -1873,14 +1883,16 @@
             "BUNDLES",
             "GCB_REPO",
             "GIT",
-            "DEVELOPER_CONNECT"
+            "DEVELOPER_CONNECT",
+            "DEFAULT"
           ],
           "enumDescriptions": [
             "Default enum type; should not be used.",
             "Bundles resolver. https://tekton.dev/docs/pipelines/bundle-resolver/",
             "GCB repo resolver.",
             "Simple Git resolver. https://tekton.dev/docs/pipelines/git-resolver/",
-            "Developer Connect resolver."
+            "Developer Connect resolver.",
+            "Default resolver."
           ],
           "type": "string"
         }
@@ -2500,8 +2512,7 @@
           "type": "string"
         },
         "secretVersion": {
-          "description": "Output only. Resource name of the SecretVersion. In format: projects/*/secrets/*/versions/*",
-          "readOnly": true,
+          "description": "Optional. Resource name of the SecretVersion. In format: projects/*/secrets/*/versions/*",
           "type": "string"
         }
       },
@@ -2512,6 +2523,7 @@
       "id": "Security",
       "properties": {
         "privilegeMode": {
+          "deprecated": true,
           "description": "Optional. Privilege mode.",
           "enum": [
             "PRIVILEGE_MODE_UNSPECIFIED",
@@ -2723,6 +2735,20 @@
           "description": "Name of the container specified as a DNS_LABEL.",
           "type": "string"
         },
+        "onError": {
+          "description": "Optional. OnError defines the exiting behavior on error can be set to [ continue | stopAndFail ]",
+          "enum": [
+            "ON_ERROR_TYPE_UNSPECIFIED",
+            "STOP_AND_FAIL",
+            "CONTINUE"
+          ],
+          "enumDescriptions": [
+            "Default enum type; should not be used.",
+            "StopAndFail indicates exit if the step/task exits with non-zero exit code",
+            "Continue indicates continue executing the rest of the steps/tasks irrespective of the exit code"
+          ],
+          "type": "string"
+        },
         "params": {
           "description": "Optional. Optional parameters passed to the StepAction.",
           "items": {
@@ -2783,14 +2809,16 @@
             "BUNDLES",
             "GCB_REPO",
             "GIT",
-            "DEVELOPER_CONNECT"
+            "DEVELOPER_CONNECT",
+            "DEFAULT"
           ],
           "enumDescriptions": [
             "Default enum type; should not be used.",
             "Bundles resolver. https://tekton.dev/docs/pipelines/bundle-resolver/",
             "GCB repo resolver.",
             "Simple Git resolver. https://tekton.dev/docs/pipelines/git-resolver/",
-            "Developer Connect resolver."
+            "Developer Connect resolver.",
+            "Default resolver."
           ],
           "type": "string"
         }
@@ -2823,8 +2851,7 @@
       "id": "TaskRef",
       "properties": {
         "name": {
-          "deprecated": true,
-          "description": "Name of the task.",
+          "description": "Optional. Name of the task.",
           "type": "string"
         },
         "params": {
@@ -2841,14 +2868,16 @@
             "BUNDLES",
             "GCB_REPO",
             "GIT",
-            "DEVELOPER_CONNECT"
+            "DEVELOPER_CONNECT",
+            "DEFAULT"
           ],
           "enumDescriptions": [
             "Default enum type; should not be used.",
             "Bundles resolver. https://tekton.dev/docs/pipelines/bundle-resolver/",
             "GCB repo resolver.",
             "Simple Git resolver. https://tekton.dev/docs/pipelines/git-resolver/",
-            "Developer Connect resolver."
+            "Developer Connect resolver.",
+            "Default resolver."
           ],
           "type": "string"
         }

@@ -263,9 +263,9 @@ type ImportSshPublicKeyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportSshPublicKeyResponse) MarshalJSON() ([]byte, error) {
+func (s ImportSshPublicKeyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportSshPublicKeyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LoginProfile: The user profile information used for logging in to a virtual
@@ -296,9 +296,9 @@ type LoginProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoginProfile) MarshalJSON() ([]byte, error) {
+func (s LoginProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod LoginProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PosixAccount: The POSIX account information associated with a Google
@@ -346,9 +346,9 @@ type PosixAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PosixAccount) MarshalJSON() ([]byte, error) {
+func (s PosixAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod PosixAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SecurityKey: The credential information for a Google registered security
@@ -378,9 +378,9 @@ type SecurityKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecurityKey) MarshalJSON() ([]byte, error) {
+func (s SecurityKey) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SignSshPublicKeyRequest struct {
@@ -399,9 +399,9 @@ type SignSshPublicKeyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SignSshPublicKeyRequest) MarshalJSON() ([]byte, error) {
+func (s SignSshPublicKeyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SignSshPublicKeyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SignSshPublicKeyResponse struct {
@@ -423,9 +423,9 @@ type SignSshPublicKeyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SignSshPublicKeyResponse) MarshalJSON() ([]byte, error) {
+func (s SignSshPublicKeyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SignSshPublicKeyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SshPublicKey: The SSH public key information associated with a Google
@@ -455,9 +455,9 @@ type SshPublicKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SshPublicKey) MarshalJSON() ([]byte, error) {
+func (s SshPublicKey) MarshalJSON() ([]byte, error) {
 	type NoMethod SshPublicKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UniversalTwoFactor: Security key information specific to the U2F protocol.
@@ -477,9 +477,9 @@ type UniversalTwoFactor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UniversalTwoFactor) MarshalJSON() ([]byte, error) {
+func (s UniversalTwoFactor) MarshalJSON() ([]byte, error) {
 	type NoMethod UniversalTwoFactor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebAuthn: Security key information specific to the Web Authentication
@@ -500,9 +500,9 @@ type WebAuthn struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebAuthn) MarshalJSON() ([]byte, error) {
+func (s WebAuthn) MarshalJSON() ([]byte, error) {
 	type NoMethod WebAuthn
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UsersGetLoginProfileCall struct {
@@ -887,10 +887,7 @@ type UsersProjectsLocationsSignSshPublicKeyCall struct {
 // SignSshPublicKey: Signs an SSH public key for a user to authenticate to an
 // instance.
 //
-//   - parent: The parent project and zone for the signing request. This is
-//     needed to properly ensure per-organization ISS processing and potentially
-//     to provide for the possibility of zone-specific certificates used in the
-//     signing process.
+// - parent: The parent project and region for the signing request.
 func (r *UsersProjectsLocationsService) SignSshPublicKey(parent string, signsshpublickeyrequest *SignSshPublicKeyRequest) *UsersProjectsLocationsSignSshPublicKeyCall {
 	c := &UsersProjectsLocationsSignSshPublicKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -993,10 +990,7 @@ type UsersProjectsZonesSignSshPublicKeyCall struct {
 // SignSshPublicKey: Signs an SSH public key for a user to authenticate to an
 // instance.
 //
-//   - parent: The parent project and zone for the signing request. This is
-//     needed to properly ensure per-organization ISS processing and potentially
-//     to provide for the possibility of zone-specific certificates used in the
-//     signing process.
+// - parent: The parent project and region for the signing request.
 func (r *UsersProjectsZonesService) SignSshPublicKey(parent string, signsshpublickeyrequest *SignSshPublicKeyRequest) *UsersProjectsZonesSignSshPublicKeyCall {
 	c := &UsersProjectsZonesSignSshPublicKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

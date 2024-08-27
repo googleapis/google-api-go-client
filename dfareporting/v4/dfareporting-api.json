@@ -441,7 +441,7 @@
           ]
         },
         "patch": {
-          "description": "Updates an existing user role. This method supports patch semantics.",
+          "description": "Updates an existing account user profile. This method supports patch semantics.",
           "flatPath": "userprofiles/{userprofilesId}/accountUserProfiles",
           "httpMethod": "PATCH",
           "id": "dfareporting.accountUserProfiles.patch",
@@ -975,7 +975,7 @@
           ]
         },
         "patch": {
-          "description": "Updates an existing event tag. This method supports patch semantics.",
+          "description": "Updates an existing ad. This method supports patch semantics.",
           "flatPath": "userprofiles/{userprofilesId}/ads",
           "httpMethod": "PATCH",
           "id": "dfareporting.ads.patch",
@@ -1512,7 +1512,7 @@
           ]
         },
         "patch": {
-          "description": "Updates an existing advertiser. This method supports patch semantics.",
+          "description": "Updates an existing landing page. This method supports patch semantics.",
           "flatPath": "userprofiles/{userprofilesId}/advertiserLandingPages",
           "httpMethod": "PATCH",
           "id": "dfareporting.advertiserLandingPages.patch",
@@ -2450,7 +2450,7 @@
           ]
         },
         "patch": {
-          "description": "Updates an existing creative. This method supports patch semantics.",
+          "description": "Updates an existing campaign. This method supports patch semantics.",
           "flatPath": "userprofiles/{userprofilesId}/campaigns",
           "httpMethod": "PATCH",
           "id": "dfareporting.campaigns.patch",
@@ -5433,7 +5433,7 @@
           ]
         },
         "patch": {
-          "description": "Updates an existing event tag. This method supports patch semantics.",
+          "description": "Updates an existing floodlight activity. This method supports patch semantics.",
           "flatPath": "userprofiles/{userprofilesId}/floodlightActivities",
           "httpMethod": "PATCH",
           "id": "dfareporting.floodlightActivities.patch",
@@ -5670,7 +5670,7 @@
           ]
         },
         "patch": {
-          "description": "Updates an existing event tag. This method supports patch semantics.",
+          "description": "Updates an existing floodlight activity group. This method supports patch semantics.",
           "flatPath": "userprofiles/{userprofilesId}/floodlightActivityGroups",
           "httpMethod": "PATCH",
           "id": "dfareporting.floodlightActivityGroups.patch",
@@ -5808,7 +5808,7 @@
           ]
         },
         "patch": {
-          "description": "Updates an existing event tag. This method supports patch semantics.",
+          "description": "Updates an existing floodlight configuration. This method supports patch semantics.",
           "flatPath": "userprofiles/{userprofilesId}/floodlightConfigurations",
           "httpMethod": "PATCH",
           "id": "dfareporting.floodlightConfigurations.patch",
@@ -7897,7 +7897,7 @@
           ]
         },
         "patch": {
-          "description": "Updates an existing RemarketingListShare. This method supports patch semantics.",
+          "description": "Updates an existing remarketing list share. This method supports patch semantics.",
           "flatPath": "userprofiles/{userprofilesId}/remarketingListShares",
           "httpMethod": "PATCH",
           "id": "dfareporting.remarketingListShares.patch",
@@ -8121,7 +8121,7 @@
           ]
         },
         "patch": {
-          "description": "Updates an existing RemarketingList. This method supports patch semantics.",
+          "description": "Updates an existing remarketing list. This method supports patch semantics.",
           "flatPath": "userprofiles/{userprofilesId}/remarketingLists",
           "httpMethod": "PATCH",
           "id": "dfareporting.remarketingLists.patch",
@@ -10067,7 +10067,7 @@
       }
     }
   },
-  "revision": "20240201",
+  "revision": "20240821",
   "rootUrl": "https://dfareporting.googleapis.com/",
   "schemas": {
     "Account": {
@@ -10379,7 +10379,7 @@
           "type": "string"
         },
         "email": {
-          "description": "Email of the user profile. The email addresss must be linked to a Google Account. This field is required on insertion and is read-only after insertion.",
+          "description": "Email of the user profile. The email address must be linked to a Google Account. This field is required on insertion and is read-only after insertion.",
           "type": "string"
         },
         "id": {
@@ -11663,6 +11663,54 @@
       },
       "type": "object"
     },
+    "CartData": {
+      "description": "Contains additional information about cart data.",
+      "id": "CartData",
+      "properties": {
+        "items": {
+          "description": "Data of the items purchased.",
+          "items": {
+            "$ref": "CartDataItem"
+          },
+          "type": "array"
+        },
+        "merchantFeedLabel": {
+          "description": "The feed labels associated with the feed where your items are uploaded. For more information, please refer to ​​ https://support.google.com/merchants/answer/12453549. This is a required field.",
+          "type": "string"
+        },
+        "merchantFeedLanguage": {
+          "description": "The language associated with the feed where your items are uploaded. Use ISO 639-1 language codes. This field is needed only when item IDs are not unique across multiple Merchant Center feeds.",
+          "type": "string"
+        },
+        "merchantId": {
+          "description": "The Merchant Center ID where the items are uploaded.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CartDataItem": {
+      "description": "Contains data of the items purchased.",
+      "id": "CartDataItem",
+      "properties": {
+        "itemId": {
+          "description": "The shopping id of the item. Must be equal to the Merchant Center product identifier. This is a required field.",
+          "type": "string"
+        },
+        "quantity": {
+          "description": "Number of items sold. This is a required field.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "unitPrice": {
+          "description": "Unit price excluding tax, shipping, and any transaction level discounts. Interpreted in CM360 Floodlight config parent advertiser's currency code. This is a required field.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "ChangeLog": {
       "description": "Describes a change that a user has made to a resource.",
       "id": "ChangeLog",
@@ -11749,54 +11797,6 @@
         },
         "nextPageToken": {
           "description": "Pagination token to be used for the next list operation.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "ChannelGrouping": {
-      "description": "Represents a DfaReporting channel grouping.",
-      "id": "ChannelGrouping",
-      "properties": {
-        "fallbackName": {
-          "description": "ChannelGrouping fallback name.",
-          "type": "string"
-        },
-        "kind": {
-          "description": "The kind of resource this is, in this case dfareporting#channelGrouping.",
-          "type": "string"
-        },
-        "name": {
-          "description": "ChannelGrouping name.",
-          "type": "string"
-        },
-        "rules": {
-          "description": "The rules contained within this channel grouping.",
-          "items": {
-            "$ref": "ChannelGroupingRule"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "ChannelGroupingRule": {
-      "description": "Represents a DfaReporting channel grouping rule.",
-      "id": "ChannelGroupingRule",
-      "properties": {
-        "disjunctiveMatchStatements": {
-          "description": "The disjunctive match statements contained within this rule.",
-          "items": {
-            "$ref": "DisjunctiveMatchStatement"
-          },
-          "type": "array"
-        },
-        "kind": {
-          "description": "The kind of resource this is, in this case dfareporting#channelGroupingRule.",
-          "type": "string"
-        },
-        "name": {
-          "description": "Rule name.",
           "type": "string"
         }
       },
@@ -11983,14 +11983,6 @@
           "description": "The kind of resource this is, in this case dfareporting#compatibleFields.",
           "type": "string"
         },
-        "pathAttributionReportCompatibleFields": {
-          "$ref": "PathReportCompatibleFields",
-          "description": "Contains items that are compatible to be selected for a report of type \"PATH_ATTRIBUTION\"."
-        },
-        "pathReportCompatibleFields": {
-          "$ref": "PathReportCompatibleFields",
-          "description": "Contains items that are compatible to be selected for a report of type \"PATH\"."
-        },
         "pathToConversionReportCompatibleFields": {
           "$ref": "PathToConversionReportCompatibleFields",
           "description": "Contains items that are compatible to be selected for a report of type \"PATH_TO_CONVERSION\"."
@@ -12105,6 +12097,10 @@
             "Denied."
           ],
           "type": "string"
+        },
+        "cartData": {
+          "$ref": "CartData",
+          "description": "The cart data associated with this conversion."
         },
         "childDirectedTreatment": {
           "description": "Whether this particular request may come from a user under the age of 13, under COPPA compliance.",
@@ -13722,12 +13718,12 @@
               "Click tag invalid (failed url validation).",
               "Orphaned asset not referenced.",
               "Primary html file missing.",
-              "Reference to a third-party resource. Problematic because the volume of ad serving could bring down unprepared web servers due to high load. e.g. http://www.zibble.net/smiles.gif",
+              "Reference to a third-party resource.",
               "Reference to INAPP MRAID feature.",
               "Reference to INAPP ADMOB feature.",
               "Invalid file type referenced.",
-              "Invalid zip passed in (could not extract from zip",
-              "A relative file was linked to that wasn't included in zip. e.g. images/missing_file.gif",
+              "Invalid zip passed in",
+              "A relative file was linked to that wasn't included in zip.",
               "Max flash version at 11.",
               "Whether the asset uses secure urls or not.",
               "File detail empty.",
@@ -15020,6 +15016,12 @@
           "description": "Name of this directory site.",
           "type": "string"
         },
+        "publisherSpecificationId": {
+          "description": "Output only. Default publisher specification ID of video placements under this directory site. Possible values are: * `1`, Hulu * `2`, NBC * `3`, CBS * `4`, CBS Desktop * `5`, Discovery * `6`, VEVO HD * `7`, VEVO Vertical * `8`, Fox * `9`, CW Network * `10`, Disney * `11`, IGN * `12`, NFL.com * `13`, Turner Broadcasting * `14`, Tubi on Fox * `15`, Hearst Corporation * `16`, Twitch Desktop * `17`, ABC * `18`, Univision * `19`, MLB.com * `20`, MLB.com Mobile * `21`, MLB.com OTT * `22`, Polsat * `23`, TVN * `24`, Mediaset * `25`, Antena 3 * `26`, Mediamond * `27`, Sky Italia * `28`, Tubi on CBS * `29`, Spotify * `30`, Paramount * `31`, Max",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
         "settings": {
           "$ref": "DirectorySiteSettings",
           "description": "Directory site settings."
@@ -15071,24 +15073,6 @@
         },
         "nextPageToken": {
           "description": "Pagination token to be used for the next list operation.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "DisjunctiveMatchStatement": {
-      "description": "Represents a Disjunctive Match Statement resource, which is a conjunction (and) of disjunctive (or) boolean statements.",
-      "id": "DisjunctiveMatchStatement",
-      "properties": {
-        "eventFilters": {
-          "description": "The event filters contained within this disjunctive match statement.",
-          "items": {
-            "$ref": "EventFilter"
-          },
-          "type": "array"
-        },
-        "kind": {
-          "description": "The kind of resource this is, in this case dfareporting#disjunctiveMatchStatement.",
           "type": "string"
         }
       },
@@ -15196,25 +15180,6 @@
         "kind": {
           "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#encryptionInfo\".",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "EventFilter": {
-      "description": "Represents a DfaReporting event filter.",
-      "id": "EventFilter",
-      "properties": {
-        "dimensionFilter": {
-          "$ref": "PathReportDimensionValue",
-          "description": "The dimension filter contained within this EventFilter."
-        },
-        "kind": {
-          "description": "The kind of resource this is, in this case dfareporting#eventFilter.",
-          "type": "string"
-        },
-        "uvarFilter": {
-          "$ref": "UvarFilter",
-          "description": "Filter on a custom variable."
         }
       },
       "type": "object"
@@ -15506,11 +15471,11 @@
       "id": "FloodlightActivitiesGenerateTagResponse",
       "properties": {
         "floodlightActivityTag": {
-          "description": "Generated tag for this Floodlight activity. For global site tags, this is the event snippet.",
+          "description": "Generated tag for this Floodlight activity. For Google tags, this is the event snippet.",
           "type": "string"
         },
         "globalSiteTagGlobalSnippet": {
-          "description": "The global snippet section of a global site tag. The global site tag sets new cookies on your domain, which will store a unique identifier for a user or the ad click that brought the user to your site. Learn more.",
+          "description": "The global snippet section of a Google tag. The Google tag sets new cookies on your domain, which will store a unique identifier for a user or the ad click that brought the user to your site. Learn more.",
           "type": "string"
         },
         "kind": {
@@ -16847,7 +16812,8 @@
             "MEASUREMENT_PARTNER_LINK_OPT_OUT",
             "MEASUREMENT_PARTNER_LINK_OPT_OUT_PENDING",
             "MEASUREMENT_PARTNER_LINK_WRAPPING_PENDING",
-            "MEASUREMENT_PARTNER_MODE_CHANGE_PENDING"
+            "MEASUREMENT_PARTNER_MODE_CHANGE_PENDING",
+            "MEASUREMENT_PARTNER_UNLINK_PENDING"
           ],
           "enumDescriptions": [
             "Unlinked.",
@@ -16857,7 +16823,8 @@
             "Link opt-out by user.",
             "Link opt-out pending sync.",
             "Link wrap answer pending.",
-            "Mode change pending."
+            "Mode change pending.",
+            "Partner unlink pending."
           ],
           "type": "string"
         },
@@ -16895,7 +16862,8 @@
             "MEASUREMENT_PARTNER_LINK_OPT_OUT",
             "MEASUREMENT_PARTNER_LINK_OPT_OUT_PENDING",
             "MEASUREMENT_PARTNER_LINK_WRAPPING_PENDING",
-            "MEASUREMENT_PARTNER_MODE_CHANGE_PENDING"
+            "MEASUREMENT_PARTNER_MODE_CHANGE_PENDING",
+            "MEASUREMENT_PARTNER_UNLINK_PENDING"
           ],
           "enumDescriptions": [
             "Unlinked.",
@@ -16905,7 +16873,8 @@
             "Link opt-out by user.",
             "Link opt-out pending sync.",
             "Link wrap answer pending.",
-            "Mode change pending."
+            "Mode change pending.",
+            "Partner unlink pending."
           ],
           "type": "string"
         },
@@ -16944,7 +16913,8 @@
             "MEASUREMENT_PARTNER_LINK_OPT_OUT",
             "MEASUREMENT_PARTNER_LINK_OPT_OUT_PENDING",
             "MEASUREMENT_PARTNER_LINK_WRAPPING_PENDING",
-            "MEASUREMENT_PARTNER_MODE_CHANGE_PENDING"
+            "MEASUREMENT_PARTNER_MODE_CHANGE_PENDING",
+            "MEASUREMENT_PARTNER_UNLINK_PENDING"
           ],
           "enumDescriptions": [
             "Unlinked.",
@@ -16954,7 +16924,8 @@
             "Link opt-out by user.",
             "Link opt-out pending sync.",
             "Link wrap answer pending.",
-            "Mode change pending."
+            "Mode change pending.",
+            "Partner unlink pending."
           ],
           "type": "string"
         },
@@ -17631,124 +17602,6 @@
       },
       "type": "object"
     },
-    "PathFilter": {
-      "description": "Represents a DfaReporting path filter.",
-      "id": "PathFilter",
-      "properties": {
-        "eventFilters": {
-          "description": "Event filters in path report.",
-          "items": {
-            "$ref": "EventFilter"
-          },
-          "type": "array"
-        },
-        "kind": {
-          "description": "The kind of resource this is, in this case dfareporting#pathFilter.",
-          "type": "string"
-        },
-        "pathMatchPosition": {
-          "description": "Determines how the 'value' field is matched when filtering. If not specified, defaults to EXACT. If set to WILDCARD_EXPRESSION, '*' is allowed as a placeholder for variable length character sequences, and it can be escaped with a backslash. Note, only paid search dimensions ('dfa:paidSearch*') allow a matchType other than EXACT.",
-          "enum": [
-            "PATH_MATCH_POSITION_UNSPECIFIED",
-            "ANY",
-            "FIRST",
-            "LAST"
-          ],
-          "enumDescriptions": [
-            "",
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "PathReportCompatibleFields": {
-      "description": "Represents fields that are compatible to be selected for a report of type \"PATH\".",
-      "id": "PathReportCompatibleFields",
-      "properties": {
-        "channelGroupings": {
-          "description": "Dimensions which are compatible to be selected in the \"channelGroupings\" section of the report.",
-          "items": {
-            "$ref": "Dimension"
-          },
-          "type": "array"
-        },
-        "dimensions": {
-          "description": "Dimensions which are compatible to be selected in the \"dimensions\" section of the report.",
-          "items": {
-            "$ref": "Dimension"
-          },
-          "type": "array"
-        },
-        "kind": {
-          "description": "The kind of resource this is, in this case dfareporting#pathReportCompatibleFields.",
-          "type": "string"
-        },
-        "metrics": {
-          "description": "Metrics which are compatible to be selected in the \"metricNames\" section of the report.",
-          "items": {
-            "$ref": "Metric"
-          },
-          "type": "array"
-        },
-        "pathFilters": {
-          "description": "Dimensions which are compatible to be selected in the \"pathFilters\" section of the report.",
-          "items": {
-            "$ref": "Dimension"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "PathReportDimensionValue": {
-      "description": "Represents a PathReportDimensionValue resource.",
-      "id": "PathReportDimensionValue",
-      "properties": {
-        "dimensionName": {
-          "description": "The name of the dimension.",
-          "type": "string"
-        },
-        "ids": {
-          "description": "The possible ID's associated with the value if available.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "kind": {
-          "description": "The kind of resource this is, in this case dfareporting#pathReportDimensionValue.",
-          "type": "string"
-        },
-        "matchType": {
-          "description": "Determines how the 'value' field is matched when filtering. If not specified, defaults to EXACT. If set to WILDCARD_EXPRESSION, '*' is allowed as a placeholder for variable length character sequences, and it can be escaped with a backslash. Note, only paid search dimensions ('dfa:paidSearch*') allow a matchType other than EXACT.",
-          "enum": [
-            "EXACT",
-            "BEGINS_WITH",
-            "CONTAINS",
-            "WILDCARD_EXPRESSION"
-          ],
-          "enumDescriptions": [
-            "",
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
-        },
-        "values": {
-          "description": "The possible values of the dimension.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "PathToConversionReportCompatibleFields": {
       "description": "Represents fields that are compatible to be selected for a report of type \"PATH_TO_CONVERSION\".",
       "id": "PathToConversionReportCompatibleFields",
@@ -17818,6 +17671,11 @@
         "adBlockingOptOut": {
           "description": "Whether this placement opts out of ad blocking. When true, ad blocking is disabled for this placement. When false, the campaign and site settings take effect.",
           "type": "boolean"
+        },
+        "adServingPlatformId": {
+          "description": "Optional. Ad serving platform ID to identify the ad serving platform used by the placement. Measurement partners can use this field to add ad-server specific macros. Possible values are: * `1`, Adelphic * `2`, Adform * `3`, Adobe * `4`, Amobee * `5`, Basis (Centro) * `6`, Beeswax * `7`, Amazon * `8`, DV360 (DBM) * `9`, Innovid * `10`, MediaMath * `11`, Roku OneView DSP * `12`, TabMo Hawk * `13`, The Trade Desk * `14`, Xandr Invest DSP * `15`, Yahoo DSP * `16`, Zeta Global * `17`, Scaleout * `18`, Bidtellect * `19`, Unicorn * `20`, Teads * `21`, Quantcast * `22`, Cognitiv",
+          "format": "int64",
+          "type": "string"
         },
         "additionalSizes": {
           "description": "Additional sizes associated with this placement. When inserting or updating a placement, only the size ID field is used.",
@@ -17977,6 +17835,10 @@
         "siteIdDimensionValue": {
           "$ref": "DimensionValue",
           "description": "Dimension value for the ID of the site. This is a read-only, auto-generated field."
+        },
+        "siteServed": {
+          "description": "Optional. Whether the ads in the placement are served by another platform and CM is only used for tracking or they are served by CM. A false value indicates the ad is served by CM.",
+          "type": "boolean"
         },
         "size": {
           "$ref": "Size",
@@ -19391,98 +19253,6 @@
           "format": "int64",
           "type": "string"
         },
-        "pathAttributionCriteria": {
-          "description": "The report criteria for a report of type \"PATH_ATTRIBUTION\".",
-          "properties": {
-            "activityFilters": {
-              "description": "The list of 'dfa:activity' values to filter on.",
-              "items": {
-                "$ref": "DimensionValue"
-              },
-              "type": "array"
-            },
-            "customChannelGrouping": {
-              "$ref": "ChannelGrouping",
-              "description": "Channel Grouping."
-            },
-            "dateRange": {
-              "$ref": "DateRange",
-              "description": "The date range this report should be run for."
-            },
-            "dimensions": {
-              "description": "The list of dimensions the report should include.",
-              "items": {
-                "$ref": "SortedDimension"
-              },
-              "type": "array"
-            },
-            "floodlightConfigId": {
-              "$ref": "DimensionValue",
-              "description": "The floodlight ID for which to show data in this report. All advertisers associated with that ID will automatically be added. The dimension of the value needs to be 'dfa:floodlightConfigId'."
-            },
-            "metricNames": {
-              "description": "The list of names of metrics the report should include.",
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            "pathFilters": {
-              "description": "Path Filters.",
-              "items": {
-                "$ref": "PathFilter"
-              },
-              "type": "array"
-            }
-          },
-          "type": "object"
-        },
-        "pathCriteria": {
-          "description": "The report criteria for a report of type \"PATH\".",
-          "properties": {
-            "activityFilters": {
-              "description": "The list of 'dfa:activity' values to filter on.",
-              "items": {
-                "$ref": "DimensionValue"
-              },
-              "type": "array"
-            },
-            "customChannelGrouping": {
-              "$ref": "ChannelGrouping",
-              "description": "Channel Grouping."
-            },
-            "dateRange": {
-              "$ref": "DateRange",
-              "description": "The date range this report should be run for."
-            },
-            "dimensions": {
-              "description": "The list of dimensions the report should include.",
-              "items": {
-                "$ref": "SortedDimension"
-              },
-              "type": "array"
-            },
-            "floodlightConfigId": {
-              "$ref": "DimensionValue",
-              "description": "The floodlight ID for which to show data in this report. All advertisers associated with that ID will automatically be added. The dimension of the value needs to be 'dfa:floodlightConfigId'."
-            },
-            "metricNames": {
-              "description": "The list of names of metrics the report should include.",
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            "pathFilters": {
-              "description": "Path Filters.",
-              "items": {
-                "$ref": "PathFilter"
-              },
-              "type": "array"
-            }
-          },
-          "type": "object"
-        },
         "pathToConversionCriteria": {
           "description": "The report criteria for a report of type \"PATH_TO_CONVERSION\".",
           "properties": {
@@ -19716,13 +19486,9 @@
             "REACH",
             "PATH_TO_CONVERSION",
             "CROSS_DIMENSION_REACH",
-            "FLOODLIGHT",
-            "PATH",
-            "PATH_ATTRIBUTION"
+            "FLOODLIGHT"
           ],
           "enumDescriptions": [
-            "",
-            "",
             "",
             "",
             "",
@@ -19866,6 +19632,11 @@
       "properties": {
         "accountId": {
           "description": "Account ID of this site. This is a read-only field that can be left blank.",
+          "format": "int64",
+          "type": "string"
+        },
+        "adServingPlatformId": {
+          "description": "Optional. Ad serving platform ID to identify the ad serving platform used by the site. Measurement partners can use this field to add ad-server specific macros. If set, this value acts as the default during placement creation. Possible values are: * `1`, Adelphic * `2`, Adform * `3`, Adobe * `4`, Amobee * `5`, Basis (Centro) * `6`, Beeswax * `7`, Amazon * `8`, DV360 (DBM) * `9`, Innovid * `10`, MediaMath * `11`, Roku OneView DSP * `12`, TabMo Hawk * `13`, The Trade Desk * `14`, Xandr Invest DSP * `15`, Yahoo DSP * `16`, Zeta Global * `17`, Scaleout * `18`, Bidtellect * `19`, Unicorn * `20`, Teads * `21`, Quantcast * `22`, Cognitiv",
           "format": "int64",
           "type": "string"
         },
@@ -20120,7 +19891,7 @@
           "type": "string"
         },
         "publisherSpecificationId": {
-          "description": "Publisher specification ID used to identify site-associated publisher requirements and automatically populate transcode settings. If publisher specification ID is specified, it will take precedence over transcode settings.",
+          "description": "Publisher specification ID used to identify site-associated publisher requirements and automatically populate transcode settings. If publisher specification ID is specified, it will take precedence over transcode settings. Possible values are: * `1`, Hulu * `2`, NBC * `3`, CBS * `4`, CBS Desktop * `5`, Discovery * `6`, VEVO HD * `7`, VEVO Vertical * `8`, Fox * `9`, CW Network * `10`, Disney * `11`, IGN * `12`, NFL.com * `13`, Turner Broadcasting * `14`, Tubi on Fox * `15`, Hearst Corporation * `16`, Twitch Desktop * `17`, ABC * `18`, Univision * `19`, MLB.com * `20`, MLB.com Mobile * `21`, MLB.com OTT * `22`, Polsat * `23`, TVN * `24`, Mediaset * `25`, Antena 3 * `26`, Mediamond * `27`, Sky Italia * `28`, Tubi on CBS * `29`, Spotify * `30`, Paramount * `31`, Max",
           "format": "int64",
           "type": "string"
         },
@@ -21302,47 +21073,6 @@
       },
       "type": "object"
     },
-    "UvarFilter": {
-      "description": "Defines the filtering on a single uvar.",
-      "id": "UvarFilter",
-      "properties": {
-        "complement": {
-          "description": "Return rows which don't match this filter.",
-          "type": "boolean"
-        },
-        "index": {
-          "description": "Custom variable index the filter is applied to.",
-          "format": "int64",
-          "type": "string"
-        },
-        "kind": {
-          "description": "The kind of resource this is, in this case dfareporting#uvarFilter.",
-          "type": "string"
-        },
-        "match": {
-          "description": "Indicates how the filter should be matched to the values.",
-          "enum": [
-            "UNSPECIFIED",
-            "EXACT",
-            "CONTAINS"
-          ],
-          "enumDescriptions": [
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
-        },
-        "values": {
-          "description": "Values to filter on.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "VideoFormat": {
       "description": "Contains information about supported video formats.",
       "id": "VideoFormat",
@@ -21461,7 +21191,7 @@
           "type": "string"
         },
         "publisherSpecificationId": {
-          "description": "Publisher specification ID of a video placement.",
+          "description": "Publisher specification ID of a video placement. Possible values are: * `1`, Hulu * `2`, NBC * `3`, CBS * `4`, CBS Desktop * `5`, Discovery * `6`, VEVO HD * `7`, VEVO Vertical * `8`, Fox * `9`, CW Network * `10`, Disney * `11`, IGN * `12`, NFL.com * `13`, Turner Broadcasting * `14`, Tubi on Fox * `15`, Hearst Corporation * `16`, Twitch Desktop * `17`, ABC * `18`, Univision * `19`, MLB.com * `20`, MLB.com Mobile * `21`, MLB.com OTT * `22`, Polsat * `23`, TVN * `24`, Mediaset * `25`, Antena 3 * `26`, Mediamond * `27`, Sky Italia * `28`, Tubi on CBS * `29`, Spotify * `30`, Paramount * `31`, Max",
           "format": "int64",
           "type": "string"
         },

@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -48,13 +49,24 @@ func TestSendRequestWithRetry(t *testing.T) {
 }
 
 type headerRoundTripper struct {
-	wantHeader http.Header
+	wantHeader        http.Header
+	wantXgoogAPIRegex string // test x-goog-api-client separately
 }
 
 func (rt *headerRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
+	// Test x-goog-api-client with a regex, since invocation ids are randomly generated
+	match, err := regexp.MatchString(rt.wantXgoogAPIRegex, r.Header.Get("X-Goog-Api-Client"))
+	if err != nil {
+		return nil, fmt.Errorf("compiling regexp: %v", err)
+	}
+	if !match {
+		return nil, fmt.Errorf("X-Goog-Api-Client header has wrong format\ngot %v\nwant regex matching %v", r.Header.Get("X-Goog-Api-Client"), rt.wantXgoogAPIRegex)
+	}
+
 	// Ignore x-goog headers sent by SendRequestWithRetry
-	r.Header.Del("X-Goog-Api-Client")
 	r.Header.Del("X-Goog-Gcs-Idempotency-Token")
+	r.Header.Del("X-Goog-Api-Client") // this was tested above already
+
 	if diff := cmp.Diff(r.Header, rt.wantHeader); diff != "" {
 		return nil, fmt.Errorf("headers don't match: %v", diff)
 	}
@@ -65,18 +77,47 @@ func (rt *headerRoundTripper) RoundTrip(r *http.Request) (*http.Response, error)
 func TestSendRequestHeader(t *testing.T) {
 	ctx := context.Background()
 	ctx = callctx.SetHeaders(ctx, "foo", "100", "bar", "200")
-	client := http.Client{
-		Transport: &headerRoundTripper{
-			wantHeader: map[string][]string{"Foo": {"100"}, "Bar": {"200"}},
-		},
+	transport := &headerRoundTripper{
+		wantHeader: map[string][]string{"Foo": {"100"}, "Bar": {"200"}},
 	}
+	client := http.Client{Transport: transport}
+
 	req, _ := http.NewRequest("GET", "url", nil)
 	if _, err := SendRequest(ctx, &client, req, false); err != nil {
 		t.Errorf("SendRequest: %v", err)
 	}
+
+	// SendRequestWithRetry adds retry and idempotency headers
+	transport.wantXgoogAPIRegex = "^gccl-invocation-id/.{36} gccl-attempt-count/[0-9]+ $"
 	req2, _ := http.NewRequest("GET", "url", nil)
 	if _, err := SendRequestWithRetry(ctx, &client, req2, nil, false); err != nil {
+		t.Errorf("SendRequestWithRetry: %v", err)
+	}
+}
+
+// Ensure that x-goog-api-client headers set via the context are merged properly
+// and passed through to the request as expected.
+func TestSendRequestXgoogHeaderxxx(t *testing.T) {
+	ctx := context.Background()
+	ctx = callctx.SetHeaders(ctx, "x-goog-api-client", "val/1", "bar", "200", "x-goog-api-client", "val/2")
+	ctx = callctx.SetHeaders(ctx, "x-goog-api-client", "val/11 val/22")
+
+	transport := &headerRoundTripper{
+		wantHeader:        map[string][]string{"Bar": {"200"}},
+		wantXgoogAPIRegex: "^val/1 val/2 val/11 val/22$",
+	}
+	client := http.Client{Transport: transport}
+
+	req, _ := http.NewRequest("GET", "url", nil)
+	if _, err := SendRequest(ctx, &client, req, false); err != nil {
 		t.Errorf("SendRequest: %v", err)
+	}
+
+	// SendRequestWithRetry adds retry and idempotency headers
+	transport.wantXgoogAPIRegex = fmt.Sprintf("^gccl-invocation-id/.{36} gccl-attempt-count/[0-9]+ %s$", transport.wantXgoogAPIRegex[1:len(transport.wantXgoogAPIRegex)-1])
+	req2, _ := http.NewRequest("GET", "url", nil)
+	if _, err := SendRequestWithRetry(ctx, &client, req2, nil, false); err != nil {
+		t.Errorf("SendRequestWithRetry: %v", err)
 	}
 }
 

@@ -18,14 +18,14 @@
     {
       "matchPackagePatterns": [
         "^github.com/google/go-github/v",
-        "^go.opentelemetry.io/contrib/instrumentation/",
+        "^go.opentelemetry.io/contrib/instrumentation/"
       ],
       "enabled": false
     }
   ],
   "force": {
     "constraints": {
-      "go": "1.20"
+      "go": "1.21"
     }
   }
 }

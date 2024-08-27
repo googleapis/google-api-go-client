@@ -193,9 +193,9 @@ type AnalyzeIamPolicyLongrunningMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AnalyzeIamPolicyLongrunningMetadata) MarshalJSON() ([]byte, error) {
+func (s AnalyzeIamPolicyLongrunningMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod AnalyzeIamPolicyLongrunningMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AnalyzeIamPolicyLongrunningResponse: A response message for
@@ -239,9 +239,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -274,9 +274,9 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -373,9 +373,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -421,9 +421,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssetV1p7beta1Asset: An asset in Google Cloud. An asset can be
@@ -499,9 +499,9 @@ type GoogleCloudAssetV1p7beta1Asset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssetV1p7beta1Asset) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssetV1p7beta1Asset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssetV1p7beta1Asset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssetV1p7beta1BigQueryDestination: A BigQuery destination for
@@ -574,9 +574,9 @@ type GoogleCloudAssetV1p7beta1BigQueryDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssetV1p7beta1BigQueryDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssetV1p7beta1BigQueryDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssetV1p7beta1BigQueryDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssetV1p7beta1ExportAssetsRequest: Export asset request.
@@ -638,9 +638,9 @@ type GoogleCloudAssetV1p7beta1ExportAssetsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssetV1p7beta1ExportAssetsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssetV1p7beta1ExportAssetsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssetV1p7beta1ExportAssetsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssetV1p7beta1GcsDestination: A Cloud Storage location.
@@ -673,9 +673,9 @@ type GoogleCloudAssetV1p7beta1GcsDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssetV1p7beta1GcsDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssetV1p7beta1GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssetV1p7beta1GcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssetV1p7beta1OutputConfig: Output configuration for export
@@ -699,9 +699,9 @@ type GoogleCloudAssetV1p7beta1OutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssetV1p7beta1OutputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssetV1p7beta1OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssetV1p7beta1OutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssetV1p7beta1PartitionSpec: Specifications of BigQuery
@@ -735,9 +735,9 @@ type GoogleCloudAssetV1p7beta1PartitionSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssetV1p7beta1PartitionSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssetV1p7beta1PartitionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssetV1p7beta1PartitionSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssetV1p7beta1RelatedAsset: An asset identify in Google Cloud
@@ -780,9 +780,9 @@ type GoogleCloudAssetV1p7beta1RelatedAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssetV1p7beta1RelatedAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssetV1p7beta1RelatedAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssetV1p7beta1RelatedAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssetV1p7beta1RelatedAssets: The detailed related assets with the
@@ -805,9 +805,9 @@ type GoogleCloudAssetV1p7beta1RelatedAssets struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssetV1p7beta1RelatedAssets) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssetV1p7beta1RelatedAssets) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssetV1p7beta1RelatedAssets
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssetV1p7beta1RelationshipAttributes: The relationship attributes
@@ -838,9 +838,9 @@ type GoogleCloudAssetV1p7beta1RelationshipAttributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssetV1p7beta1RelationshipAttributes) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssetV1p7beta1RelationshipAttributes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssetV1p7beta1RelationshipAttributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssetV1p7beta1Resource: A representation of a Google Cloud
@@ -891,9 +891,9 @@ type GoogleCloudAssetV1p7beta1Resource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssetV1p7beta1Resource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssetV1p7beta1Resource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssetV1p7beta1Resource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV1BooleanPolicy: Used in `policy_type` to specify how
@@ -938,9 +938,9 @@ type GoogleCloudOrgpolicyV1BooleanPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV1BooleanPolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV1BooleanPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV1BooleanPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV1ListPolicy: Used in `policy_type` to specify how
@@ -1053,9 +1053,9 @@ type GoogleCloudOrgpolicyV1ListPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV1ListPolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV1ListPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV1ListPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV1Policy: Defines a Cloud Organization `Policy` which is
@@ -1106,9 +1106,9 @@ type GoogleCloudOrgpolicyV1Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV1Policy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV1Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV1Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV1RestoreDefault: Ignores policies set above this
@@ -1135,7 +1135,7 @@ type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
 	// Description: Description of the `AccessLevel` and its use. Does not affect
 	// behavior.
 	Description string `json:"description,omitempty"`
-	// Name: Resource name for the `AccessLevel`. Format:
+	// Name: Identifier. Resource name for the `AccessLevel`. Format:
 	// `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
 	// `access_level` component must begin with a letter, followed by alphanumeric
 	// characters or `_`. Its maximum length is 50 characters. After you create an
@@ -1156,9 +1156,9 @@ type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1AccessLevel) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1AccessLevel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1AccessLevel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1AccessPolicy: `AccessPolicy` is a
@@ -1170,10 +1170,10 @@ func (s *GoogleIdentityAccesscontextmanagerV1AccessLevel) MarshalJSON() ([]byte,
 type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 	// Etag: Output only. An opaque identifier for the current version of the
 	// `AccessPolicy`. This will always be a strongly validated etag, meaning that
-	// two Access Polices will be identical if and only if their etags are
+	// two Access Policies will be identical if and only if their etags are
 	// identical. Clients should not expect this to be in any specific format.
 	Etag string `json:"etag,omitempty"`
-	// Name: Output only. Resource name of the `AccessPolicy`. Format:
+	// Name: Output only. Identifier. Resource name of the `AccessPolicy`. Format:
 	// `accessPolicies/{access_policy}`
 	Name string `json:"name,omitempty"`
 	// Parent: Required. The parent of this `AccessPolicy` in the Cloud Resource
@@ -1207,9 +1207,9 @@ type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1AccessPolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1AccessPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1AccessPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1ApiOperation: Identification for an API
@@ -1238,9 +1238,9 @@ type GoogleIdentityAccesscontextmanagerV1ApiOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1ApiOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1ApiOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1ApiOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1BasicLevel: `BasicLevel` is an
@@ -1272,9 +1272,9 @@ type GoogleIdentityAccesscontextmanagerV1BasicLevel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1BasicLevel) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1BasicLevel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1BasicLevel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1Condition: A condition necessary for an
@@ -1331,9 +1331,9 @@ type GoogleIdentityAccesscontextmanagerV1Condition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1Condition) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1Condition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1Condition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1CustomLevel: `CustomLevel` is an
@@ -1356,9 +1356,9 @@ type GoogleIdentityAccesscontextmanagerV1CustomLevel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1CustomLevel) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1CustomLevel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1CustomLevel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1DevicePolicy: `DevicePolicy` specifies
@@ -1420,9 +1420,9 @@ type GoogleIdentityAccesscontextmanagerV1DevicePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1DevicePolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1DevicePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1DevicePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1EgressFrom: Defines the conditions under
@@ -1434,9 +1434,11 @@ func (s *GoogleIdentityAccesscontextmanagerV1DevicePolicy) MarshalJSON() ([]byte
 type GoogleIdentityAccesscontextmanagerV1EgressFrom struct {
 	// Identities: A list of identities that are allowed access through
 	// [EgressPolicy]. Identities can be an individual user, service account,
-	// Google group, or third-party identity. The `v1` identities that have the
-	// prefix `user`, `group`, `serviceAccount`, `principal`, and `principalSet` in
-	// https://cloud.google.com/iam/docs/principal-identifiers#v1 are supported.
+	// Google group, or third-party identity. For third-party identity, only single
+	// identities are supported and other identity types are not supported. The
+	// `v1` identities that have the prefix `user`, `group`, `serviceAccount`, and
+	// `principal` in https://cloud.google.com/iam/docs/principal-identifiers#v1
+	// are supported.
 	Identities []string `json:"identities,omitempty"`
 	// IdentityType: Specifies the type of identities that are allowed access to
 	// outside the perimeter. If left unspecified, then members of `identities`
@@ -1480,9 +1482,9 @@ type GoogleIdentityAccesscontextmanagerV1EgressFrom struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1EgressFrom) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1EgressFrom) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1EgressFrom
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1EgressPolicy: Policy for egress from
@@ -1518,9 +1520,9 @@ type GoogleIdentityAccesscontextmanagerV1EgressPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1EgressPolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1EgressPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1EgressPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1EgressSource: The source that
@@ -1550,9 +1552,9 @@ type GoogleIdentityAccesscontextmanagerV1EgressSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1EgressSource) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1EgressSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1EgressSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1EgressTo: Defines the conditions under
@@ -1595,9 +1597,9 @@ type GoogleIdentityAccesscontextmanagerV1EgressTo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1EgressTo) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1EgressTo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1EgressTo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1IngressFrom: Defines the conditions
@@ -1607,9 +1609,11 @@ func (s *GoogleIdentityAccesscontextmanagerV1EgressTo) MarshalJSON() ([]byte, er
 type GoogleIdentityAccesscontextmanagerV1IngressFrom struct {
 	// Identities: A list of identities that are allowed access through
 	// [IngressPolicy]. Identities can be an individual user, service account,
-	// Google group, or third-party identity. The `v1` identities that have the
-	// prefix `user`, `group`, `serviceAccount`, `principal`, and `principalSet` in
-	// https://cloud.google.com/iam/docs/principal-identifiers#v1 are supported.
+	// Google group, or third-party identity. For third-party identity, only single
+	// identities are supported and other identity types are not supported. The
+	// `v1` identities that have the prefix `user`, `group`, `serviceAccount`, and
+	// `principal` in https://cloud.google.com/iam/docs/principal-identifiers#v1
+	// are supported.
 	Identities []string `json:"identities,omitempty"`
 	// IdentityType: Specifies the type of identities that are allowed access from
 	// outside the perimeter. If left unspecified, then members of `identities`
@@ -1639,9 +1643,9 @@ type GoogleIdentityAccesscontextmanagerV1IngressFrom struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1IngressFrom) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1IngressFrom) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressFrom
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1IngressPolicy: Policy for ingress into
@@ -1675,9 +1679,9 @@ type GoogleIdentityAccesscontextmanagerV1IngressPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1IngressPolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1IngressPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1IngressSource: The source that
@@ -1714,9 +1718,9 @@ type GoogleIdentityAccesscontextmanagerV1IngressSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1IngressSource) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1IngressSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1IngressTo: Defines the conditions under
@@ -1747,9 +1751,9 @@ type GoogleIdentityAccesscontextmanagerV1IngressTo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1IngressTo) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1IngressTo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1IngressTo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1MethodSelector: An allowed method or
@@ -1775,9 +1779,9 @@ type GoogleIdentityAccesscontextmanagerV1MethodSelector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1MethodSelector) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1MethodSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1MethodSelector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1OsConstraint: A restriction on the OS
@@ -1817,9 +1821,9 @@ type GoogleIdentityAccesscontextmanagerV1OsConstraint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1OsConstraint) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1OsConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1OsConstraint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1ServicePerimeter: `ServicePerimeter`
@@ -1837,7 +1841,7 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// Description: Description of the `ServicePerimeter` and its use. Does not
 	// affect behavior.
 	Description string `json:"description,omitempty"`
-	// Name: Resource name for the `ServicePerimeter`. Format:
+	// Name: Identifier. Resource name for the `ServicePerimeter`. Format:
 	// `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`. The
 	// `service_perimeter` component must begin with a letter, followed by
 	// alphanumeric characters or `_`. After you create a `ServicePerimeter`, you
@@ -1889,9 +1893,9 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1ServicePerimeter) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1ServicePerimeter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1ServicePerimeter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig:
@@ -1942,9 +1946,9 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices: Specifies how
@@ -1971,9 +1975,9 @@ type GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1VpcNetworkSource: The originating
@@ -1994,9 +1998,9 @@ type GoogleIdentityAccesscontextmanagerV1VpcNetworkSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1VpcNetworkSource) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1VpcNetworkSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1VpcNetworkSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityAccesscontextmanagerV1VpcSubNetwork: Sub-segment ranges inside
@@ -2029,9 +2033,9 @@ type GoogleIdentityAccesscontextmanagerV1VpcSubNetwork struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityAccesscontextmanagerV1VpcSubNetwork) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityAccesscontextmanagerV1VpcSubNetwork) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityAccesscontextmanagerV1VpcSubNetwork
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -2076,9 +2080,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -2165,9 +2169,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -2199,9 +2203,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OperationsGetCall struct {

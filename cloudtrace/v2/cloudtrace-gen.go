@@ -217,9 +217,9 @@ type Annotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Annotation) MarshalJSON() ([]byte, error) {
+func (s Annotation) MarshalJSON() ([]byte, error) {
 	type NoMethod Annotation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AttributeValue: The allowed types for `[VALUE]` in a `[KEY]:[VALUE]`
@@ -244,9 +244,9 @@ type AttributeValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttributeValue) MarshalJSON() ([]byte, error) {
+func (s AttributeValue) MarshalJSON() ([]byte, error) {
 	type NoMethod AttributeValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Attributes: A set of attributes as key-value pairs.
@@ -275,9 +275,9 @@ type Attributes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Attributes) MarshalJSON() ([]byte, error) {
+func (s Attributes) MarshalJSON() ([]byte, error) {
 	type NoMethod Attributes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchWriteSpansRequest: The request message for the `BatchWriteSpans`
@@ -299,9 +299,9 @@ type BatchWriteSpansRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchWriteSpansRequest) MarshalJSON() ([]byte, error) {
+func (s BatchWriteSpansRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchWriteSpansRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -345,9 +345,9 @@ type Link struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Link) MarshalJSON() ([]byte, error) {
+func (s Link) MarshalJSON() ([]byte, error) {
 	type NoMethod Link
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Links: A collection of links, which are references from this span to a span
@@ -371,9 +371,9 @@ type Links struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Links) MarshalJSON() ([]byte, error) {
+func (s Links) MarshalJSON() ([]byte, error) {
 	type NoMethod Links
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MessageEvent: An event describing a message sent/received between Spans.
@@ -408,9 +408,9 @@ type MessageEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MessageEvent) MarshalJSON() ([]byte, error) {
+func (s MessageEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod MessageEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Module: Binary module.
@@ -434,9 +434,9 @@ type Module struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Module) MarshalJSON() ([]byte, error) {
+func (s Module) MarshalJSON() ([]byte, error) {
 	type NoMethod Module
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Span: A span represents a single operation within a trace. Spans can be
@@ -532,9 +532,9 @@ type Span struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Span) MarshalJSON() ([]byte, error) {
+func (s Span) MarshalJSON() ([]byte, error) {
 	type NoMethod Span
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StackFrame: Represents a single stack frame in a stack trace.
@@ -573,9 +573,9 @@ type StackFrame struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StackFrame) MarshalJSON() ([]byte, error) {
+func (s StackFrame) MarshalJSON() ([]byte, error) {
 	type NoMethod StackFrame
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StackFrames: A collection of stack frames, which can be truncated.
@@ -599,9 +599,9 @@ type StackFrames struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StackFrames) MarshalJSON() ([]byte, error) {
+func (s StackFrames) MarshalJSON() ([]byte, error) {
 	type NoMethod StackFrames
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StackTrace: A call stack appearing in a trace.
@@ -629,9 +629,9 @@ type StackTrace struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StackTrace) MarshalJSON() ([]byte, error) {
+func (s StackTrace) MarshalJSON() ([]byte, error) {
 	type NoMethod StackTrace
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -663,9 +663,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeEvent: A time-stamped annotation or message event in the Span.
@@ -689,9 +689,9 @@ type TimeEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeEvent) MarshalJSON() ([]byte, error) {
+func (s TimeEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeEvents: A collection of `TimeEvent`s. A `TimeEvent` is a time-stamped
@@ -720,9 +720,9 @@ type TimeEvents struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeEvents) MarshalJSON() ([]byte, error) {
+func (s TimeEvents) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeEvents
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TruncatableString: Represents a string that might be shortened to a
@@ -750,9 +750,9 @@ type TruncatableString struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TruncatableString) MarshalJSON() ([]byte, error) {
+func (s TruncatableString) MarshalJSON() ([]byte, error) {
 	type NoMethod TruncatableString
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsTracesBatchWriteCall struct {

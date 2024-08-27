@@ -5189,7 +5189,7 @@
                       "type": "string"
                     },
                     "targetingType": {
-                      "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`",
+                      "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_KEYWORD`",
                       "enum": [
                         "TARGETING_TYPE_UNSPECIFIED",
                         "TARGETING_TYPE_CHANNEL",
@@ -5346,7 +5346,7 @@
                       "type": "string"
                     },
                     "targetingType": {
-                      "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`",
+                      "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_KEYWORD`",
                       "enum": [
                         "TARGETING_TYPE_UNSPECIFIED",
                         "TARGETING_TYPE_CHANNEL",
@@ -9222,7 +9222,7 @@
       }
     }
   },
-  "revision": "20240418",
+  "revision": "20240808",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActiveViewVideoViewabilityMetricConfig": {
@@ -10048,7 +10048,8 @@
             "EXCHANGE_UNITY_GBID",
             "EXCHANGE_CHARTBOOST_GBID",
             "EXCHANGE_ADMOST_GBID",
-            "EXCHANGE_TOPON_GBID"
+            "EXCHANGE_TOPON_GBID",
+            "EXCHANGE_NETFLIX"
           ],
           "enumDescriptions": [
             "Exchange is not specified or is unknown in this version.",
@@ -10132,7 +10133,8 @@
             "Unity LevelPlay.",
             "Chartboost Mediation.",
             "AdMost.",
-            "TopOn."
+            "TopOn.",
+            "Netflix."
           ],
           "type": "string"
         },
@@ -12904,7 +12906,8 @@
             "SDF_VERSION_5_4",
             "SDF_VERSION_5_5",
             "SDF_VERSION_6",
-            "SDF_VERSION_7"
+            "SDF_VERSION_7",
+            "SDF_VERSION_7_1"
           ],
           "enumDeprecated": [
             false,
@@ -12917,6 +12920,7 @@
             true,
             true,
             true,
+            false,
             false,
             false,
             false
@@ -12934,7 +12938,8 @@
             "SDF version 5.4",
             "SDF version 5.5",
             "SDF version 6",
-            "SDF version 7. Read the [v7 migration guide](/display-video/api/structured-data-file/v7-migration-guide) before migrating to this version."
+            "SDF version 7. Read the [v7 migration guide](/display-video/api/structured-data-file/v7-migration-guide) before migrating to this version.",
+            "SDF version 7.1. Read the [v7 migration guide](/display-video/api/structured-data-file/v7-migration-guide) before migrating to this version."
           ],
           "type": "string"
         }
@@ -14816,7 +14821,8 @@
             "EXCHANGE_UNITY_GBID",
             "EXCHANGE_CHARTBOOST_GBID",
             "EXCHANGE_ADMOST_GBID",
-            "EXCHANGE_TOPON_GBID"
+            "EXCHANGE_TOPON_GBID",
+            "EXCHANGE_NETFLIX"
           ],
           "enumDescriptions": [
             "Exchange is not specified or is unknown in this version.",
@@ -14900,7 +14906,8 @@
             "Unity LevelPlay.",
             "Chartboost Mediation.",
             "AdMost.",
-            "TopOn."
+            "TopOn.",
+            "Netflix."
           ],
           "type": "string"
         }
@@ -15009,7 +15016,8 @@
             "EXCHANGE_UNITY_GBID",
             "EXCHANGE_CHARTBOOST_GBID",
             "EXCHANGE_ADMOST_GBID",
-            "EXCHANGE_TOPON_GBID"
+            "EXCHANGE_TOPON_GBID",
+            "EXCHANGE_NETFLIX"
           ],
           "enumDescriptions": [
             "Exchange is not specified or is unknown in this version.",
@@ -15093,7 +15101,8 @@
             "Unity LevelPlay.",
             "Chartboost Mediation.",
             "AdMost.",
-            "TopOn."
+            "TopOn.",
+            "Netflix."
           ],
           "type": "string"
         },
@@ -15203,7 +15212,8 @@
             "EXCHANGE_UNITY_GBID",
             "EXCHANGE_CHARTBOOST_GBID",
             "EXCHANGE_ADMOST_GBID",
-            "EXCHANGE_TOPON_GBID"
+            "EXCHANGE_TOPON_GBID",
+            "EXCHANGE_NETFLIX"
           ],
           "enumDescriptions": [
             "Exchange is not specified or is unknown in this version.",
@@ -15287,7 +15297,8 @@
             "Unity LevelPlay.",
             "Chartboost Mediation.",
             "AdMost.",
-            "TopOn."
+            "TopOn.",
+            "Netflix."
           ],
           "type": "string"
         },
@@ -15398,7 +15409,8 @@
             "EXCHANGE_UNITY_GBID",
             "EXCHANGE_CHARTBOOST_GBID",
             "EXCHANGE_ADMOST_GBID",
-            "EXCHANGE_TOPON_GBID"
+            "EXCHANGE_TOPON_GBID",
+            "EXCHANGE_NETFLIX"
           ],
           "enumDescriptions": [
             "Exchange is not specified or is unknown in this version.",
@@ -15482,7 +15494,8 @@
             "Unity LevelPlay.",
             "Chartboost Mediation.",
             "AdMost.",
-            "TopOn."
+            "TopOn.",
+            "Netflix."
           ],
           "readOnly": true,
           "type": "string"
@@ -16444,7 +16457,8 @@
             "EXCHANGE_UNITY_GBID",
             "EXCHANGE_CHARTBOOST_GBID",
             "EXCHANGE_ADMOST_GBID",
-            "EXCHANGE_TOPON_GBID"
+            "EXCHANGE_TOPON_GBID",
+            "EXCHANGE_NETFLIX"
           ],
           "enumDescriptions": [
             "Exchange is not specified or is unknown in this version.",
@@ -16528,7 +16542,8 @@
             "Unity LevelPlay.",
             "Chartboost Mediation.",
             "AdMost.",
-            "TopOn."
+            "TopOn.",
+            "Netflix."
           ],
           "type": "string"
         },
@@ -16715,6 +16730,14 @@
           },
           "type": "array"
         },
+        "adGroupQaIds": {
+          "description": "Optional. YouTube Ad Groups, by ID, to download in QA format. All IDs must belong to the same Advertiser or Partner specified in CreateSdfDownloadTaskRequest.",
+          "items": {
+            "format": "int64",
+            "type": "string"
+          },
+          "type": "array"
+        },
         "campaignIds": {
           "description": "Campaigns to download by ID. All IDs must belong to the same Advertiser or Partner specified in CreateSdfDownloadTaskRequest.",
           "items": {
@@ -16733,6 +16756,14 @@
         },
         "lineItemIds": {
           "description": "Line Items to download by ID. All IDs must belong to the same Advertiser or Partner specified in CreateSdfDownloadTaskRequest.",
+          "items": {
+            "format": "int64",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "lineItemQaIds": {
+          "description": "Optional. Line Items, by ID, to download in QA format. All IDs must belong to the same Advertiser or Partner specified in CreateSdfDownloadTaskRequest.",
           "items": {
             "format": "int64",
             "type": "string"
@@ -16870,6 +16901,26 @@
         "name": {
           "description": "Output only. The resource name of the insertion order.",
           "readOnly": true,
+          "type": "string"
+        },
+        "optimizationObjective": {
+          "description": "Optional. The optimization objective of the insertion order. **This field is only available to allowlisted customers.** If a customer is not allowlisted, this field will be null and attempts to set it will return an error.",
+          "enum": [
+            "OPTIMIZATION_OBJECTIVE_UNSPECIFIED",
+            "CONVERSION",
+            "CLICK",
+            "BRAND_AWARENESS",
+            "CUSTOM",
+            "NO_OBJECTIVE"
+          ],
+          "enumDescriptions": [
+            "Type value is not specified or is unknown in this version.",
+            "Prioritize impressions that increase sales and conversions.",
+            "Prioritize impressions that increase website traffic, apps, app stores.",
+            "Prioritize impressions of specific quality.",
+            "Objective is defined by the assigned custom bidding algorithm.",
+            "Objective is not defined. Any KPI or bidding strategy can be used."
+          ],
           "type": "string"
         },
         "pacing": {
@@ -17333,7 +17384,8 @@
             "EXCHANGE_UNITY_GBID",
             "EXCHANGE_CHARTBOOST_GBID",
             "EXCHANGE_ADMOST_GBID",
-            "EXCHANGE_TOPON_GBID"
+            "EXCHANGE_TOPON_GBID",
+            "EXCHANGE_NETFLIX"
           ],
           "enumDescriptions": [
             "Exchange is not specified or is unknown in this version.",
@@ -17417,7 +17469,8 @@
             "Unity LevelPlay.",
             "Chartboost Mediation.",
             "AdMost.",
-            "TopOn."
+            "TopOn.",
+            "Netflix."
           ],
           "type": "string"
         },
@@ -19573,7 +19626,9 @@
               "FILE_TYPE_INSERTION_ORDER",
               "FILE_TYPE_LINE_ITEM",
               "FILE_TYPE_AD_GROUP",
-              "FILE_TYPE_AD"
+              "FILE_TYPE_AD",
+              "FILE_TYPE_LINE_ITEM_QA",
+              "FILE_TYPE_AD_GROUP_QA"
             ],
             "enumDescriptions": [
               "Default value when type is unspecified or is unknown in this version.",
@@ -19582,7 +19637,9 @@
               "Insertion Order.",
               "Line Item.",
               "YouTube Ad Group.",
-              "YouTube Ad."
+              "YouTube Ad.",
+              "Line Item - QA format.",
+              "YouTube Ad Group - QA format."
             ],
             "type": "string"
           },
@@ -19613,8 +19670,8 @@
             "Advertiser ID. If selected, all filter IDs must be Advertiser IDs that belong to the Partner specified in CreateSdfDownloadTaskRequest.",
             "Campaign ID. If selected, all filter IDs must be Campaign IDs that belong to the Advertiser or Partner specified in CreateSdfDownloadTaskRequest.",
             "Media Product ID. If selected, all filter IDs must be Media Product IDs that belong to the Advertiser or Partner specified in CreateSdfDownloadTaskRequest. Can only be used for downloading `FILE_TYPE_MEDIA_PRODUCT`.",
-            "Insertion Order ID. If selected, all filter IDs must be Insertion Order IDs that belong to the Advertiser or Partner specified in CreateSdfDownloadTaskRequest. Can only be used for downloading `FILE_TYPE_INSERTION_ORDER`, `FILE_TYPE_LINE_ITEM`, `FILE_TYPE_AD_GROUP`, and `FILE_TYPE_AD`.",
-            "Line Item ID. If selected, all filter IDs must be Line Item IDs that belong to the Advertiser or Partner specified in CreateSdfDownloadTaskRequest. Can only be used for downloading `FILE_TYPE_LINE_ITEM`, `FILE_TYPE_AD_GROUP`, and `FILE_TYPE_AD`."
+            "Insertion Order ID. If selected, all filter IDs must be Insertion Order IDs that belong to the Advertiser or Partner specified in CreateSdfDownloadTaskRequest. Can only be used for downloading `FILE_TYPE_INSERTION_ORDER`, `FILE_TYPE_LINE_ITEM`, `FILE_TYPE_LINE_ITEM_QA`, `FILE_TYPE_AD_GROUP`, `FILE_TYPE_AD_GROUP_QA`, and `FILE_TYPE_AD`.",
+            "Line Item ID. If selected, all filter IDs must be Line Item IDs that belong to the Advertiser or Partner specified in CreateSdfDownloadTaskRequest. Can only be used for downloading `FILE_TYPE_LINE_ITEM`, `FILE_TYPE_LINE_ITEM_QA`,`FILE_TYPE_AD_GROUP`, `FILE_TYPE_AD_GROUP_QA`, and `FILE_TYPE_AD`."
           ],
           "type": "string"
         }
@@ -20486,6 +20543,7 @@
           "type": "array"
         },
         "publisherReviewStatuses": {
+          "deprecated": true,
           "description": "Publisher review statuses for the creative.",
           "items": {
             "$ref": "PublisherReviewStatus"
@@ -20555,7 +20613,8 @@
             "SDF_VERSION_5_4",
             "SDF_VERSION_5_5",
             "SDF_VERSION_6",
-            "SDF_VERSION_7"
+            "SDF_VERSION_7",
+            "SDF_VERSION_7_1"
           ],
           "enumDeprecated": [
             false,
@@ -20568,6 +20627,7 @@
             true,
             true,
             true,
+            false,
             false,
             false,
             false
@@ -20585,7 +20645,8 @@
             "SDF version 5.4",
             "SDF version 5.5",
             "SDF version 6",
-            "SDF version 7. Read the [v7 migration guide](/display-video/api/structured-data-file/v7-migration-guide) before migrating to this version."
+            "SDF version 7. Read the [v7 migration guide](/display-video/api/structured-data-file/v7-migration-guide) before migrating to this version.",
+            "SDF version 7.1. Read the [v7 migration guide](/display-video/api/structured-data-file/v7-migration-guide) before migrating to this version."
           ],
           "type": "string"
         }
@@ -20632,7 +20693,8 @@
             "SDF_VERSION_5_4",
             "SDF_VERSION_5_5",
             "SDF_VERSION_6",
-            "SDF_VERSION_7"
+            "SDF_VERSION_7",
+            "SDF_VERSION_7_1"
           ],
           "enumDeprecated": [
             false,
@@ -20645,6 +20707,7 @@
             true,
             true,
             true,
+            false,
             false,
             false,
             false
@@ -20662,7 +20725,8 @@
             "SDF version 5.4",
             "SDF version 5.5",
             "SDF version 6",
-            "SDF version 7. Read the [v7 migration guide](/display-video/api/structured-data-file/v7-migration-guide) before migrating to this version."
+            "SDF version 7. Read the [v7 migration guide](/display-video/api/structured-data-file/v7-migration-guide) before migrating to this version.",
+            "SDF version 7.1. Read the [v7 migration guide](/display-video/api/structured-data-file/v7-migration-guide) before migrating to this version."
           ],
           "type": "string"
         }

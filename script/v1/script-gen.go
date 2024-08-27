@@ -308,9 +308,9 @@ type Content struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Content) MarshalJSON() ([]byte, error) {
+func (s Content) MarshalJSON() ([]byte, error) {
 	type NoMethod Content
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateProjectRequest: Request to create a script project. Request to create
@@ -335,9 +335,9 @@ type CreateProjectRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateProjectRequest) MarshalJSON() ([]byte, error) {
+func (s CreateProjectRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateProjectRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Deployment: Representation of a single script deployment.
@@ -366,9 +366,9 @@ type Deployment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Deployment) MarshalJSON() ([]byte, error) {
+func (s Deployment) MarshalJSON() ([]byte, error) {
 	type NoMethod Deployment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeploymentConfig: Metadata the defines how a deployment is configured.
@@ -394,9 +394,9 @@ type DeploymentConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeploymentConfig) MarshalJSON() ([]byte, error) {
+func (s DeploymentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DeploymentConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -439,9 +439,9 @@ type EntryPoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EntryPoint) MarshalJSON() ([]byte, error) {
+func (s EntryPoint) MarshalJSON() ([]byte, error) {
 	type NoMethod EntryPoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecuteStreamResponse: The response for executing or debugging a function in
@@ -462,9 +462,9 @@ type ExecuteStreamResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecuteStreamResponse) MarshalJSON() ([]byte, error) {
+func (s ExecuteStreamResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecuteStreamResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecutionError: An object that provides information about the nature of an
@@ -497,9 +497,9 @@ type ExecutionError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecutionError) MarshalJSON() ([]byte, error) {
+func (s ExecutionError) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecutionError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecutionRequest: A request to run the function in a script. The script is
@@ -545,9 +545,9 @@ type ExecutionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecutionRequest) MarshalJSON() ([]byte, error) {
+func (s ExecutionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecutionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecutionResponse: An object that provides the return value of a function
@@ -574,9 +574,9 @@ type ExecutionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecutionResponse) MarshalJSON() ([]byte, error) {
+func (s ExecutionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecutionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // File: An individual file within a script project. A file is a third-party
@@ -624,9 +624,9 @@ type File struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *File) MarshalJSON() ([]byte, error) {
+func (s File) MarshalJSON() ([]byte, error) {
 	type NoMethod File
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsScriptTypeAddOnEntryPoint: An add-on entry point.
@@ -661,9 +661,9 @@ type GoogleAppsScriptTypeAddOnEntryPoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsScriptTypeAddOnEntryPoint) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsScriptTypeAddOnEntryPoint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsScriptTypeAddOnEntryPoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsScriptTypeExecutionApiConfig: API executable entry point
@@ -694,9 +694,9 @@ type GoogleAppsScriptTypeExecutionApiConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsScriptTypeExecutionApiConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsScriptTypeExecutionApiConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsScriptTypeExecutionApiConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsScriptTypeExecutionApiEntryPoint: An API executable entry point.
@@ -716,9 +716,9 @@ type GoogleAppsScriptTypeExecutionApiEntryPoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsScriptTypeExecutionApiEntryPoint) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsScriptTypeExecutionApiEntryPoint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsScriptTypeExecutionApiEntryPoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsScriptTypeFunction: Represents a function in a script project.
@@ -741,9 +741,9 @@ type GoogleAppsScriptTypeFunction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsScriptTypeFunction) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsScriptTypeFunction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsScriptTypeFunction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsScriptTypeFunctionSet: A set of functions. No duplicates are
@@ -764,9 +764,9 @@ type GoogleAppsScriptTypeFunctionSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsScriptTypeFunctionSet) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsScriptTypeFunctionSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsScriptTypeFunctionSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsScriptTypeProcess: Representation of a single script process
@@ -840,9 +840,9 @@ type GoogleAppsScriptTypeProcess struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsScriptTypeProcess) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsScriptTypeProcess) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsScriptTypeProcess
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsScriptTypeUser: A simple user profile resource.
@@ -868,9 +868,9 @@ type GoogleAppsScriptTypeUser struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsScriptTypeUser) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsScriptTypeUser) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsScriptTypeUser
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsScriptTypeWebAppConfig: Web app entry point configuration.
@@ -908,9 +908,9 @@ type GoogleAppsScriptTypeWebAppConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsScriptTypeWebAppConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsScriptTypeWebAppConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsScriptTypeWebAppConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsScriptTypeWebAppEntryPoint: A web application entry point.
@@ -932,9 +932,9 @@ type GoogleAppsScriptTypeWebAppEntryPoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsScriptTypeWebAppEntryPoint) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsScriptTypeWebAppEntryPoint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsScriptTypeWebAppEntryPoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDeploymentsResponse: Response with the list of deployments for the
@@ -961,9 +961,9 @@ type ListDeploymentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDeploymentsResponse) MarshalJSON() ([]byte, error) {
+func (s ListDeploymentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDeploymentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListScriptProcessesResponse: Response with the list of Process resources.
@@ -989,9 +989,9 @@ type ListScriptProcessesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListScriptProcessesResponse) MarshalJSON() ([]byte, error) {
+func (s ListScriptProcessesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListScriptProcessesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListUserProcessesResponse: Response with the list of Process resources.
@@ -1017,9 +1017,9 @@ type ListUserProcessesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListUserProcessesResponse) MarshalJSON() ([]byte, error) {
+func (s ListUserProcessesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListUserProcessesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListValue: `ListValue` is a wrapper around a repeated field of values.
@@ -1039,9 +1039,9 @@ type ListValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListValue) MarshalJSON() ([]byte, error) {
+func (s ListValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ListValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVersionsResponse: Response with the list of the versions for the
@@ -1068,9 +1068,9 @@ type ListVersionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVersionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Metrics: Resource containing usage stats for a given script, based on the
@@ -1098,9 +1098,9 @@ type Metrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Metrics) MarshalJSON() ([]byte, error) {
+func (s Metrics) MarshalJSON() ([]byte, error) {
 	type NoMethod Metrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricsValue: Metrics value that holds number of executions counted.
@@ -1124,9 +1124,9 @@ type MetricsValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetricsValue) MarshalJSON() ([]byte, error) {
+func (s MetricsValue) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricsValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: A representation of an execution of an Apps Script function
@@ -1177,9 +1177,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Project: The script project resource.
@@ -1216,9 +1216,9 @@ type Project struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Project) MarshalJSON() ([]byte, error) {
+func (s Project) MarshalJSON() ([]byte, error) {
 	type NoMethod Project
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScriptExecutionResult: The result of an execution.
@@ -1238,9 +1238,9 @@ type ScriptExecutionResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScriptExecutionResult) MarshalJSON() ([]byte, error) {
+func (s ScriptExecutionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod ScriptExecutionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScriptStackTraceElement: A stack trace through the script that shows where
@@ -1263,9 +1263,9 @@ type ScriptStackTraceElement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScriptStackTraceElement) MarshalJSON() ([]byte, error) {
+func (s ScriptStackTraceElement) MarshalJSON() ([]byte, error) {
 	type NoMethod ScriptStackTraceElement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: If a `run` call succeeds but the script function (or Apps Script
@@ -1296,9 +1296,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Struct: `Struct` represents a structured data value, consisting of fields
@@ -1319,9 +1319,9 @@ type Struct struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Struct) MarshalJSON() ([]byte, error) {
+func (s Struct) MarshalJSON() ([]byte, error) {
 	type NoMethod Struct
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateDeploymentRequest: Request with deployment information to update an
@@ -1342,9 +1342,9 @@ type UpdateDeploymentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateDeploymentRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateDeploymentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDeploymentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Value: `Value` represents a dynamically typed value which is the outcome of
@@ -1384,9 +1384,9 @@ type Value struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Value) MarshalJSON() ([]byte, error) {
+func (s Value) MarshalJSON() ([]byte, error) {
 	type NoMethod Value
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Value) UnmarshalJSON(data []byte) error {
@@ -1433,9 +1433,9 @@ type Version struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Version) MarshalJSON() ([]byte, error) {
+func (s Version) MarshalJSON() ([]byte, error) {
 	type NoMethod Version
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProcessesListCall struct {

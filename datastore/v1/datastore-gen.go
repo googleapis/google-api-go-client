@@ -228,9 +228,9 @@ type Aggregation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Aggregation) MarshalJSON() ([]byte, error) {
+func (s Aggregation) MarshalJSON() ([]byte, error) {
 	type NoMethod Aggregation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AggregationQuery: Datastore query for running an aggregation over a Query.
@@ -254,9 +254,9 @@ type AggregationQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AggregationQuery) MarshalJSON() ([]byte, error) {
+func (s AggregationQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod AggregationQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AggregationResult: The result of a single bucket from a Datastore
@@ -282,9 +282,9 @@ type AggregationResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AggregationResult) MarshalJSON() ([]byte, error) {
+func (s AggregationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod AggregationResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AggregationResultBatch: A batch of aggregation results produced by an
@@ -323,9 +323,9 @@ type AggregationResultBatch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AggregationResultBatch) MarshalJSON() ([]byte, error) {
+func (s AggregationResultBatch) MarshalJSON() ([]byte, error) {
 	type NoMethod AggregationResultBatch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AllocateIdsRequest: The request for Datastore.AllocateIds.
@@ -350,9 +350,9 @@ type AllocateIdsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AllocateIdsRequest) MarshalJSON() ([]byte, error) {
+func (s AllocateIdsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AllocateIdsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AllocateIdsResponse: The response for Datastore.AllocateIds.
@@ -376,9 +376,9 @@ type AllocateIdsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AllocateIdsResponse) MarshalJSON() ([]byte, error) {
+func (s AllocateIdsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AllocateIdsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ArrayValue: An array value.
@@ -399,9 +399,9 @@ type ArrayValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ArrayValue) MarshalJSON() ([]byte, error) {
+func (s ArrayValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ArrayValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Avg: Average of the values of the requested property. * Only numeric values
@@ -425,9 +425,9 @@ type Avg struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Avg) MarshalJSON() ([]byte, error) {
+func (s Avg) MarshalJSON() ([]byte, error) {
 	type NoMethod Avg
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BeginTransactionRequest: The request for Datastore.BeginTransaction.
@@ -451,9 +451,9 @@ type BeginTransactionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BeginTransactionRequest) MarshalJSON() ([]byte, error) {
+func (s BeginTransactionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BeginTransactionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BeginTransactionResponse: The response for Datastore.BeginTransaction.
@@ -476,9 +476,9 @@ type BeginTransactionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BeginTransactionResponse) MarshalJSON() ([]byte, error) {
+func (s BeginTransactionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BeginTransactionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommitRequest: The request for Datastore.Commit.
@@ -524,9 +524,9 @@ type CommitRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommitRequest) MarshalJSON() ([]byte, error) {
+func (s CommitRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CommitRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommitResponse: The response for Datastore.Commit.
@@ -556,9 +556,9 @@ type CommitResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommitResponse) MarshalJSON() ([]byte, error) {
+func (s CommitResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CommitResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompositeFilter: A filter that merges multiple other filters using the given
@@ -588,9 +588,9 @@ type CompositeFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompositeFilter) MarshalJSON() ([]byte, error) {
+func (s CompositeFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod CompositeFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Count: Count of entities that match the query. The `COUNT(*)` aggregation
@@ -617,9 +617,9 @@ type Count struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Count) MarshalJSON() ([]byte, error) {
+func (s Count) MarshalJSON() ([]byte, error) {
 	type NoMethod Count
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -656,9 +656,9 @@ type Entity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Entity) MarshalJSON() ([]byte, error) {
+func (s Entity) MarshalJSON() ([]byte, error) {
 	type NoMethod Entity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EntityResult: The result of fetching an entity from Datastore.
@@ -695,9 +695,9 @@ type EntityResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EntityResult) MarshalJSON() ([]byte, error) {
+func (s EntityResult) MarshalJSON() ([]byte, error) {
 	type NoMethod EntityResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecutionStats: Execution statistics for the query.
@@ -728,9 +728,9 @@ type ExecutionStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecutionStats) MarshalJSON() ([]byte, error) {
+func (s ExecutionStats) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecutionStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExplainMetrics: Explain metrics for the query.
@@ -753,9 +753,9 @@ type ExplainMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExplainMetrics) MarshalJSON() ([]byte, error) {
+func (s ExplainMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod ExplainMetrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExplainOptions: Explain options for the query.
@@ -778,9 +778,9 @@ type ExplainOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExplainOptions) MarshalJSON() ([]byte, error) {
+func (s ExplainOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ExplainOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Filter: A holder for any type of filter.
@@ -802,9 +802,9 @@ type Filter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Filter) MarshalJSON() ([]byte, error) {
+func (s Filter) MarshalJSON() ([]byte, error) {
 	type NoMethod Filter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1CommonMetadata: Metadata common to all Datastore Admin
@@ -855,9 +855,9 @@ type GoogleDatastoreAdminV1CommonMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1CommonMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1CommonMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1CommonMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata: Metadata for
@@ -906,9 +906,9 @@ type GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1EntityFilter: Identifies a subset of entities in a
@@ -942,9 +942,9 @@ type GoogleDatastoreAdminV1EntityFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1EntityFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1EntityFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1EntityFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1ExportEntitiesMetadata: Metadata for ExportEntities
@@ -977,9 +977,9 @@ type GoogleDatastoreAdminV1ExportEntitiesMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1ExportEntitiesMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1ExportEntitiesMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1ExportEntitiesMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1ExportEntitiesRequest: The request for
@@ -1019,9 +1019,9 @@ type GoogleDatastoreAdminV1ExportEntitiesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1ExportEntitiesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1ExportEntitiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1ExportEntitiesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1ExportEntitiesResponse: The response for
@@ -1045,9 +1045,9 @@ type GoogleDatastoreAdminV1ExportEntitiesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1ExportEntitiesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1ExportEntitiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1ExportEntitiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1ImportEntitiesMetadata: Metadata for ImportEntities
@@ -1078,9 +1078,9 @@ type GoogleDatastoreAdminV1ImportEntitiesMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1ImportEntitiesMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1ImportEntitiesMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1ImportEntitiesMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1ImportEntitiesRequest: The request for
@@ -1118,9 +1118,9 @@ type GoogleDatastoreAdminV1ImportEntitiesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1ImportEntitiesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1ImportEntitiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1ImportEntitiesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1Index: Datastore composite index definition.
@@ -1177,9 +1177,9 @@ type GoogleDatastoreAdminV1Index struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1Index) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1Index) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1Index
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1IndexOperationMetadata: Metadata for Index operations.
@@ -1203,9 +1203,9 @@ type GoogleDatastoreAdminV1IndexOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1IndexOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1IndexOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1IndexOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1IndexedProperty: A property of an index.
@@ -1235,9 +1235,9 @@ type GoogleDatastoreAdminV1IndexedProperty struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1IndexedProperty) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1IndexedProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1IndexedProperty
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1ListIndexesResponse: The response for
@@ -1263,9 +1263,9 @@ type GoogleDatastoreAdminV1ListIndexesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1ListIndexesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1ListIndexesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1ListIndexesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1MigrationProgressEvent: An event signifying the start
@@ -1308,9 +1308,9 @@ type GoogleDatastoreAdminV1MigrationProgressEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1MigrationProgressEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1MigrationProgressEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1MigrationProgressEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1MigrationStateEvent: An event signifying a change in
@@ -1338,9 +1338,9 @@ type GoogleDatastoreAdminV1MigrationStateEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1MigrationStateEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1MigrationStateEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1MigrationStateEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1PrepareStepDetails: Details for the `PREPARE` step.
@@ -1368,9 +1368,9 @@ type GoogleDatastoreAdminV1PrepareStepDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1PrepareStepDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1PrepareStepDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1PrepareStepDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1Progress: Measures the progress of a particular
@@ -1395,9 +1395,9 @@ type GoogleDatastoreAdminV1Progress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1Progress) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1Progress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1Progress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1RedirectWritesStepDetails: Details for the
@@ -1425,9 +1425,9 @@ type GoogleDatastoreAdminV1RedirectWritesStepDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1RedirectWritesStepDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1RedirectWritesStepDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1RedirectWritesStepDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1beta1CommonMetadata: Metadata common to all Datastore
@@ -1476,9 +1476,9 @@ type GoogleDatastoreAdminV1beta1CommonMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1beta1CommonMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1beta1CommonMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1beta1CommonMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1beta1EntityFilter: Identifies a subset of entities in
@@ -1512,9 +1512,9 @@ type GoogleDatastoreAdminV1beta1EntityFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1beta1EntityFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1beta1EntityFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1beta1EntityFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1beta1ExportEntitiesMetadata: Metadata for
@@ -1547,9 +1547,9 @@ type GoogleDatastoreAdminV1beta1ExportEntitiesMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1beta1ExportEntitiesMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1beta1ExportEntitiesMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1beta1ExportEntitiesMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1beta1ExportEntitiesResponse: The response for
@@ -1573,9 +1573,9 @@ type GoogleDatastoreAdminV1beta1ExportEntitiesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1beta1ExportEntitiesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1beta1ExportEntitiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1beta1ExportEntitiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1beta1ImportEntitiesMetadata: Metadata for
@@ -1606,9 +1606,9 @@ type GoogleDatastoreAdminV1beta1ImportEntitiesMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1beta1ImportEntitiesMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1beta1ImportEntitiesMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1beta1ImportEntitiesMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDatastoreAdminV1beta1Progress: Measures the progress of a particular
@@ -1633,9 +1633,9 @@ type GoogleDatastoreAdminV1beta1Progress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDatastoreAdminV1beta1Progress) MarshalJSON() ([]byte, error) {
+func (s GoogleDatastoreAdminV1beta1Progress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDatastoreAdminV1beta1Progress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningListOperationsResponse: The response message for
@@ -1662,9 +1662,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -1709,9 +1709,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GqlQuery: A GQL query
@@ -1748,9 +1748,9 @@ type GqlQuery struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GqlQuery) MarshalJSON() ([]byte, error) {
+func (s GqlQuery) MarshalJSON() ([]byte, error) {
 	type NoMethod GqlQuery
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GqlQueryParameter: A binding parameter for a GQL query.
@@ -1772,9 +1772,9 @@ type GqlQueryParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GqlQueryParameter) MarshalJSON() ([]byte, error) {
+func (s GqlQueryParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GqlQueryParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Key: A unique identifier for an entity. If a key's partition ID or any of
@@ -1811,9 +1811,9 @@ type Key struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Key) MarshalJSON() ([]byte, error) {
+func (s Key) MarshalJSON() ([]byte, error) {
 	type NoMethod Key
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KindExpression: A representation of a kind.
@@ -1833,9 +1833,9 @@ type KindExpression struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KindExpression) MarshalJSON() ([]byte, error) {
+func (s KindExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod KindExpression
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LatLng: An object that represents a latitude/longitude pair. This is
@@ -1861,9 +1861,9 @@ type LatLng struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LatLng) MarshalJSON() ([]byte, error) {
+func (s LatLng) MarshalJSON() ([]byte, error) {
 	type NoMethod LatLng
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LatLng) UnmarshalJSON(data []byte) error {
@@ -1910,9 +1910,9 @@ type LookupRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupRequest) MarshalJSON() ([]byte, error) {
+func (s LookupRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LookupResponse: The response for Datastore.Lookup.
@@ -1951,9 +1951,9 @@ type LookupResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupResponse) MarshalJSON() ([]byte, error) {
+func (s LookupResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Mutation: A mutation to apply to an entity.
@@ -1997,9 +1997,9 @@ type Mutation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Mutation) MarshalJSON() ([]byte, error) {
+func (s Mutation) MarshalJSON() ([]byte, error) {
 	type NoMethod Mutation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MutationResult: The result of applying a mutation.
@@ -2037,9 +2037,9 @@ type MutationResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MutationResult) MarshalJSON() ([]byte, error) {
+func (s MutationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod MutationResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartitionId: A partition ID identifies a grouping of entities. The grouping
@@ -2074,9 +2074,9 @@ type PartitionId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartitionId) MarshalJSON() ([]byte, error) {
+func (s PartitionId) MarshalJSON() ([]byte, error) {
 	type NoMethod PartitionId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PathElement: A (kind, ID/name) pair used to construct a key path. If either
@@ -2111,9 +2111,9 @@ type PathElement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PathElement) MarshalJSON() ([]byte, error) {
+func (s PathElement) MarshalJSON() ([]byte, error) {
 	type NoMethod PathElement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlanSummary: Planning phase information for the query.
@@ -2135,9 +2135,9 @@ type PlanSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlanSummary) MarshalJSON() ([]byte, error) {
+func (s PlanSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod PlanSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Projection: A representation of a property in a projection.
@@ -2157,9 +2157,9 @@ type Projection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Projection) MarshalJSON() ([]byte, error) {
+func (s Projection) MarshalJSON() ([]byte, error) {
 	type NoMethod Projection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PropertyFilter: A filter on a specific property.
@@ -2208,9 +2208,9 @@ type PropertyFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PropertyFilter) MarshalJSON() ([]byte, error) {
+func (s PropertyFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod PropertyFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PropertyMask: The set of arbitrarily nested property paths used to restrict
@@ -2236,9 +2236,9 @@ type PropertyMask struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PropertyMask) MarshalJSON() ([]byte, error) {
+func (s PropertyMask) MarshalJSON() ([]byte, error) {
 	type NoMethod PropertyMask
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PropertyOrder: The desired order for a specific property.
@@ -2265,9 +2265,9 @@ type PropertyOrder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PropertyOrder) MarshalJSON() ([]byte, error) {
+func (s PropertyOrder) MarshalJSON() ([]byte, error) {
 	type NoMethod PropertyOrder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PropertyReference: A reference to a property relative to the kind
@@ -2290,9 +2290,9 @@ type PropertyReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PropertyReference) MarshalJSON() ([]byte, error) {
+func (s PropertyReference) MarshalJSON() ([]byte, error) {
 	type NoMethod PropertyReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Query: A query for entities.
@@ -2342,9 +2342,9 @@ type Query struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Query) MarshalJSON() ([]byte, error) {
+func (s Query) MarshalJSON() ([]byte, error) {
 	type NoMethod Query
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryResultBatch: A batch of results produced by a query.
@@ -2409,9 +2409,9 @@ type QueryResultBatch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryResultBatch) MarshalJSON() ([]byte, error) {
+func (s QueryResultBatch) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryResultBatch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReadOnly: Options specific to read-only transactions.
@@ -2434,9 +2434,9 @@ type ReadOnly struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReadOnly) MarshalJSON() ([]byte, error) {
+func (s ReadOnly) MarshalJSON() ([]byte, error) {
 	type NoMethod ReadOnly
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReadOptions: The options shared by read requests.
@@ -2475,9 +2475,9 @@ type ReadOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReadOptions) MarshalJSON() ([]byte, error) {
+func (s ReadOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ReadOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReadWrite: Options specific to read / write transactions.
@@ -2498,9 +2498,9 @@ type ReadWrite struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReadWrite) MarshalJSON() ([]byte, error) {
+func (s ReadWrite) MarshalJSON() ([]byte, error) {
 	type NoMethod ReadWrite
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReserveIdsRequest: The request for Datastore.ReserveIds.
@@ -2525,9 +2525,9 @@ type ReserveIdsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReserveIdsRequest) MarshalJSON() ([]byte, error) {
+func (s ReserveIdsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReserveIdsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReserveIdsResponse: The response for Datastore.ReserveIds.
@@ -2558,9 +2558,9 @@ type RollbackRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RollbackRequest) MarshalJSON() ([]byte, error) {
+func (s RollbackRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RollbackRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RollbackResponse: The response for Datastore.Rollback. (an empty message).
@@ -2602,9 +2602,9 @@ type RunAggregationQueryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RunAggregationQueryRequest) MarshalJSON() ([]byte, error) {
+func (s RunAggregationQueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunAggregationQueryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunAggregationQueryResponse: The response for Datastore.RunAggregationQuery.
@@ -2637,9 +2637,9 @@ type RunAggregationQueryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RunAggregationQueryResponse) MarshalJSON() ([]byte, error) {
+func (s RunAggregationQueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RunAggregationQueryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunQueryRequest: The request for Datastore.RunQuery.
@@ -2678,9 +2678,9 @@ type RunQueryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
+func (s RunQueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunQueryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunQueryResponse: The response for Datastore.RunQuery.
@@ -2713,9 +2713,9 @@ type RunQueryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RunQueryResponse) MarshalJSON() ([]byte, error) {
+func (s RunQueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RunQueryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -2747,9 +2747,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Sum: Sum of the values of the requested property. * Only numeric values will
@@ -2781,9 +2781,9 @@ type Sum struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Sum) MarshalJSON() ([]byte, error) {
+func (s Sum) MarshalJSON() ([]byte, error) {
 	type NoMethod Sum
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransactionOptions: Options for beginning a new transaction. Transactions
@@ -2807,9 +2807,9 @@ type TransactionOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransactionOptions) MarshalJSON() ([]byte, error) {
+func (s TransactionOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod TransactionOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Value: A message that can hold any of the supported value types and
@@ -2868,9 +2868,9 @@ type Value struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Value) MarshalJSON() ([]byte, error) {
+func (s Value) MarshalJSON() ([]byte, error) {
 	type NoMethod Value
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Value) UnmarshalJSON(data []byte) error {

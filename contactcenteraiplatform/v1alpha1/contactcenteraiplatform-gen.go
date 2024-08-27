@@ -218,9 +218,9 @@ type AdminUser struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdminUser) MarshalJSON() ([]byte, error) {
+func (s AdminUser) MarshalJSON() ([]byte, error) {
 	type NoMethod AdminUser
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -233,8 +233,12 @@ type CancelOperationRequest struct {
 type Component struct {
 	// Name: Name of the component.
 	Name string `json:"name,omitempty"`
-	// ServiceAttachments: Associated service attachments.
-	ServiceAttachments []*ServiceAttachment `json:"serviceAttachments,omitempty"`
+	// ServiceAttachmentNames: Associated service attachments. The service
+	// attachment names that will be used for sending private traffic to the CCAIP
+	// tenant project. Example service attachment name:
+	// "projects/${TENANT_PROJECT_ID}/regions/${REGION}/serviceAttachments/ingress-d
+	// efault".
+	ServiceAttachmentNames []string `json:"serviceAttachmentNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -248,9 +252,9 @@ type Component struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Component) MarshalJSON() ([]byte, error) {
+func (s Component) MarshalJSON() ([]byte, error) {
 	type NoMethod Component
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContactCenter: Message describing ContactCenter object Next ID: 23
@@ -286,12 +290,7 @@ type ContactCenter struct {
 	Normal *Normal `json:"normal,omitempty"`
 	// PrivateAccess: Optional. VPC-SC related networking configuration.
 	PrivateAccess *PrivateAccess `json:"privateAccess,omitempty"`
-	// PrivateComponents: Output only. A list of UJET components that should be
-	// privately accessed. This field is set by reading settings from the data
-	// plane. For more information about the format of the component please refer
-	// to go/ccaip-vpc-sc-org-policy. This field is must be fully populated only
-	// for Create/Update resource operations. The main use case for this field is
-	// OrgPolicy checks via CPE.
+	// PrivateComponents: Output only. TODO(b/283407860) Deprecate this field.
 	PrivateComponents []string `json:"privateComponents,omitempty"`
 	// SamlParams: Optional. Params that sets up Google as IdP.
 	SamlParams *SAMLParams `json:"samlParams,omitempty"`
@@ -339,9 +338,9 @@ type ContactCenter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContactCenter) MarshalJSON() ([]byte, error) {
+func (s ContactCenter) MarshalJSON() ([]byte, error) {
 	type NoMethod ContactCenter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContactCenterQuota: Represents a quota for contact centers.
@@ -370,9 +369,9 @@ type ContactCenterQuota struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContactCenterQuota) MarshalJSON() ([]byte, error) {
+func (s ContactCenterQuota) MarshalJSON() ([]byte, error) {
 	type NoMethod ContactCenterQuota
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Critical: Instances in this Channel will receive updates after all instances
@@ -394,9 +393,9 @@ type Critical struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Critical) MarshalJSON() ([]byte, error) {
+func (s Critical) MarshalJSON() ([]byte, error) {
 	type NoMethod Critical
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Early: LINT.IfChange First Channel to receive the updates. Meant to dev/test
@@ -447,9 +446,9 @@ type GoogleCloudCommonOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudCommonOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudCommonOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudCommonOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstanceConfig: Message storing the instance configuration.
@@ -486,9 +485,9 @@ type InstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstanceConfig) MarshalJSON() ([]byte, error) {
+func (s InstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListContactCentersResponse: Message for response to listing ContactCenters
@@ -516,9 +515,9 @@ type ListContactCentersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListContactCentersResponse) MarshalJSON() ([]byte, error) {
+func (s ListContactCentersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListContactCentersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -544,9 +543,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -572,9 +571,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -610,9 +609,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Normal: Instances in this Channel will receive updates after all instances
@@ -662,9 +661,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -702,9 +701,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PrivateAccess: Defines ingress and egress private traffic settings for CCAIP
@@ -716,6 +715,8 @@ type PrivateAccess struct {
 	// IngressSettings: List of ingress components that should not be accessed via
 	// the Internet. For more information see go/ccaip-private-path-v2.
 	IngressSettings []*Component `json:"ingressSettings,omitempty"`
+	// PscSetting: Private service connect settings.
+	PscSetting *PscSetting `json:"pscSetting,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EgressSettings") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -729,9 +730,33 @@ type PrivateAccess struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrivateAccess) MarshalJSON() ([]byte, error) {
+func (s PrivateAccess) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivateAccess
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PscSetting: Private service connect settings.
+type PscSetting struct {
+	// AllowedConsumerProjectIds: The list of project ids that are allowed to send
+	// traffic to the service attachment. This field should be filled only for the
+	// ingress components.
+	AllowedConsumerProjectIds []string `json:"allowedConsumerProjectIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedConsumerProjectIds")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedConsumerProjectIds") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod PscSetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Quota: Quota details.
@@ -774,9 +799,9 @@ type Quota struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Quota) MarshalJSON() ([]byte, error) {
+func (s Quota) MarshalJSON() ([]byte, error) {
 	type NoMethod Quota
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SAMLParams: Message storing SAML params to enable Google as IDP.
@@ -892,34 +917,9 @@ type SAMLParams struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SAMLParams) MarshalJSON() ([]byte, error) {
+func (s SAMLParams) MarshalJSON() ([]byte, error) {
 	type NoMethod SAMLParams
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// ServiceAttachment: Container for the VPC-SC networking configurations.
-type ServiceAttachment struct {
-	// Name: The service attachment name that will be used for sending private
-	// traffic to the CCAIP tenant project. Example:
-	// "projects/${TENANT_PROJECT_ID}/regions/${REGION}/serviceAttachments/ingress-d
-	// efault".
-	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *ServiceAttachment) MarshalJSON() ([]byte, error) {
-	type NoMethod ServiceAttachment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -951,9 +951,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeOfDay: Represents a time of day. The date and time zone are either not
@@ -984,9 +984,9 @@ type TimeOfDay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeOfDay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // URIs: Message storing the URIs of the ContactCenter.
@@ -1013,9 +1013,9 @@ type URIs struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *URIs) MarshalJSON() ([]byte, error) {
+func (s URIs) MarshalJSON() ([]byte, error) {
 	type NoMethod URIs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WeeklySchedule: Message representing a weekly schedule.
@@ -1052,9 +1052,9 @@ type WeeklySchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WeeklySchedule) MarshalJSON() ([]byte, error) {
+func (s WeeklySchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod WeeklySchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {

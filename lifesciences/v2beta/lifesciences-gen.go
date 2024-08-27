@@ -225,9 +225,9 @@ type Accelerator struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Accelerator) MarshalJSON() ([]byte, error) {
+func (s Accelerator) MarshalJSON() ([]byte, error) {
 	type NoMethod Accelerator
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Action: Specifies a single action that runs a Docker container.
@@ -367,9 +367,9 @@ type Action struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Action) MarshalJSON() ([]byte, error) {
+func (s Action) MarshalJSON() ([]byte, error) {
 	type NoMethod Action
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -395,9 +395,9 @@ type ContainerKilledEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContainerKilledEvent) MarshalJSON() ([]byte, error) {
+func (s ContainerKilledEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerKilledEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContainerStartedEvent: An event generated when a container starts.
@@ -427,9 +427,9 @@ type ContainerStartedEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContainerStartedEvent) MarshalJSON() ([]byte, error) {
+func (s ContainerStartedEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerStartedEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContainerStoppedEvent: An event generated when a container exits.
@@ -459,9 +459,9 @@ type ContainerStoppedEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContainerStoppedEvent) MarshalJSON() ([]byte, error) {
+func (s ContainerStoppedEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerStoppedEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DelayedEvent: An event generated whenever a resource limitation or transient
@@ -489,9 +489,9 @@ type DelayedEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DelayedEvent) MarshalJSON() ([]byte, error) {
+func (s DelayedEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod DelayedEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Disk: Carries information about a disk that can be attached to a VM. See
@@ -528,9 +528,9 @@ type Disk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Disk) MarshalJSON() ([]byte, error) {
+func (s Disk) MarshalJSON() ([]byte, error) {
 	type NoMethod Disk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -587,9 +587,9 @@ type Event struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Event) MarshalJSON() ([]byte, error) {
+func (s Event) MarshalJSON() ([]byte, error) {
 	type NoMethod Event
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExistingDisk: Configuration for an existing disk to be attached to the VM.
@@ -616,9 +616,9 @@ type ExistingDisk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExistingDisk) MarshalJSON() ([]byte, error) {
+func (s ExistingDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod ExistingDisk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FailedEvent: An event generated when the execution of a pipeline has failed.
@@ -721,9 +721,9 @@ type FailedEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FailedEvent) MarshalJSON() ([]byte, error) {
+func (s FailedEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod FailedEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -749,9 +749,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -777,9 +777,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -815,9 +815,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Metadata: Carries information about the pipeline execution that is returned
@@ -854,9 +854,9 @@ type Metadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Metadata) MarshalJSON() ([]byte, error) {
+func (s Metadata) MarshalJSON() ([]byte, error) {
 	type NoMethod Metadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Mount: Carries information about a particular disk mount inside a container.
@@ -880,9 +880,9 @@ type Mount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Mount) MarshalJSON() ([]byte, error) {
+func (s Mount) MarshalJSON() ([]byte, error) {
 	type NoMethod Mount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NFSMount: Configuration for an `NFSMount` to be attached to the VM.
@@ -903,9 +903,9 @@ type NFSMount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NFSMount) MarshalJSON() ([]byte, error) {
+func (s NFSMount) MarshalJSON() ([]byte, error) {
 	type NoMethod NFSMount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Network: VM networking options.
@@ -941,9 +941,9 @@ type Network struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Network) MarshalJSON() ([]byte, error) {
+func (s Network) MarshalJSON() ([]byte, error) {
 	type NoMethod Network
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -980,9 +980,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PersistentDisk: Configuration for a persistent disk to be attached to the
@@ -1013,9 +1013,9 @@ type PersistentDisk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PersistentDisk) MarshalJSON() ([]byte, error) {
+func (s PersistentDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod PersistentDisk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Pipeline: Specifies a series of actions to execute, expressed as Docker
@@ -1054,9 +1054,9 @@ type Pipeline struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Pipeline) MarshalJSON() ([]byte, error) {
+func (s Pipeline) MarshalJSON() ([]byte, error) {
 	type NoMethod Pipeline
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PullStartedEvent: An event generated when the worker starts pulling an
@@ -1077,9 +1077,9 @@ type PullStartedEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PullStartedEvent) MarshalJSON() ([]byte, error) {
+func (s PullStartedEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod PullStartedEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PullStoppedEvent: An event generated when the worker stops pulling an image.
@@ -1099,9 +1099,9 @@ type PullStoppedEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PullStoppedEvent) MarshalJSON() ([]byte, error) {
+func (s PullStoppedEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod PullStoppedEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Resources: The system resources for the pipeline run. At least one zone or
@@ -1128,9 +1128,9 @@ type Resources struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Resources) MarshalJSON() ([]byte, error) {
+func (s Resources) MarshalJSON() ([]byte, error) {
 	type NoMethod Resources
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunPipelineRequest: The arguments to the `RunPipeline` method. The
@@ -1163,9 +1163,9 @@ type RunPipelineRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RunPipelineRequest) MarshalJSON() ([]byte, error) {
+func (s RunPipelineRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunPipelineRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunPipelineResponse: The response to the RunPipeline method, returned in the
@@ -1196,9 +1196,9 @@ type Secret struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Secret) MarshalJSON() ([]byte, error) {
+func (s Secret) MarshalJSON() ([]byte, error) {
 	type NoMethod Secret
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceAccount: Carries information about a Google Cloud service account.
@@ -1222,9 +1222,9 @@ type ServiceAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
+func (s ServiceAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -1256,9 +1256,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UnexpectedExitStatusEvent: An event generated when the execution of a
@@ -1283,9 +1283,9 @@ type UnexpectedExitStatusEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UnexpectedExitStatusEvent) MarshalJSON() ([]byte, error) {
+func (s UnexpectedExitStatusEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod UnexpectedExitStatusEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VirtualMachine: Carries information about a Compute Engine VM resource.
@@ -1378,9 +1378,9 @@ type VirtualMachine struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VirtualMachine) MarshalJSON() ([]byte, error) {
+func (s VirtualMachine) MarshalJSON() ([]byte, error) {
 	type NoMethod VirtualMachine
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Volume: Carries information about storage that can be attached to a VM.
@@ -1409,9 +1409,9 @@ type Volume struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Volume) MarshalJSON() ([]byte, error) {
+func (s Volume) MarshalJSON() ([]byte, error) {
 	type NoMethod Volume
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WorkerAssignedEvent: An event generated after a worker VM has been assigned
@@ -1436,9 +1436,9 @@ type WorkerAssignedEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WorkerAssignedEvent) MarshalJSON() ([]byte, error) {
+func (s WorkerAssignedEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkerAssignedEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WorkerReleasedEvent: An event generated when the worker VM that was assigned
@@ -1461,9 +1461,9 @@ type WorkerReleasedEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WorkerReleasedEvent) MarshalJSON() ([]byte, error) {
+func (s WorkerReleasedEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkerReleasedEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {

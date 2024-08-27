@@ -218,9 +218,9 @@ type Attachment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Attachment) MarshalJSON() ([]byte, error) {
+func (s Attachment) MarshalJSON() ([]byte, error) {
 	type NoMethod Attachment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchCreatePermissionsRequest: The request to add one or more permissions on
@@ -242,9 +242,9 @@ type BatchCreatePermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchCreatePermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s BatchCreatePermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreatePermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchCreatePermissionsResponse: The response for creating permissions on a
@@ -268,9 +268,9 @@ type BatchCreatePermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchCreatePermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s BatchCreatePermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreatePermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchDeletePermissionsRequest: The request to remove one or more permissions
@@ -295,9 +295,9 @@ type BatchDeletePermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchDeletePermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s BatchDeletePermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchDeletePermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreatePermissionRequest: The request to add a single permission on the note.
@@ -321,9 +321,9 @@ type CreatePermissionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreatePermissionRequest) MarshalJSON() ([]byte, error) {
+func (s CreatePermissionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreatePermissionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -356,9 +356,9 @@ type Group struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Group) MarshalJSON() ([]byte, error) {
+func (s Group) MarshalJSON() ([]byte, error) {
 	type NoMethod Group
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListContent: The list of items for a single list note.
@@ -379,9 +379,9 @@ type ListContent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListContent) MarshalJSON() ([]byte, error) {
+func (s ListContent) MarshalJSON() ([]byte, error) {
 	type NoMethod ListContent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListItem: A single list item in a note's list.
@@ -406,9 +406,9 @@ type ListItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListItem) MarshalJSON() ([]byte, error) {
+func (s ListItem) MarshalJSON() ([]byte, error) {
 	type NoMethod ListItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListNotesResponse: The response when listing a page of notes.
@@ -433,9 +433,9 @@ type ListNotesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListNotesResponse) MarshalJSON() ([]byte, error) {
+func (s ListNotesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListNotesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Note: A single note.
@@ -479,9 +479,9 @@ type Note struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Note) MarshalJSON() ([]byte, error) {
+func (s Note) MarshalJSON() ([]byte, error) {
 	type NoMethod Note
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Permission: A single permission on the note. Associates a `member` with a
@@ -527,9 +527,9 @@ type Permission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Permission) MarshalJSON() ([]byte, error) {
+func (s Permission) MarshalJSON() ([]byte, error) {
 	type NoMethod Permission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Section: The content of the note.
@@ -552,9 +552,9 @@ type Section struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Section) MarshalJSON() ([]byte, error) {
+func (s Section) MarshalJSON() ([]byte, error) {
 	type NoMethod Section
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextContent: The block of text for a single text section or list item.
@@ -575,9 +575,9 @@ type TextContent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextContent) MarshalJSON() ([]byte, error) {
+func (s TextContent) MarshalJSON() ([]byte, error) {
 	type NoMethod TextContent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // User: Describes a single user.
@@ -597,9 +597,9 @@ type User struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *User) MarshalJSON() ([]byte, error) {
+func (s User) MarshalJSON() ([]byte, error) {
 	type NoMethod User
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type MediaDownloadCall struct {

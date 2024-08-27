@@ -241,6 +241,7 @@ func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService
 	rs.DeidentifyTemplates = NewOrganizationsLocationsDeidentifyTemplatesService(s)
 	rs.DiscoveryConfigs = NewOrganizationsLocationsDiscoveryConfigsService(s)
 	rs.DlpJobs = NewOrganizationsLocationsDlpJobsService(s)
+	rs.FileStoreDataProfiles = NewOrganizationsLocationsFileStoreDataProfilesService(s)
 	rs.InspectTemplates = NewOrganizationsLocationsInspectTemplatesService(s)
 	rs.JobTriggers = NewOrganizationsLocationsJobTriggersService(s)
 	rs.ProjectDataProfiles = NewOrganizationsLocationsProjectDataProfilesService(s)
@@ -261,6 +262,8 @@ type OrganizationsLocationsService struct {
 	DiscoveryConfigs *OrganizationsLocationsDiscoveryConfigsService
 
 	DlpJobs *OrganizationsLocationsDlpJobsService
+
+	FileStoreDataProfiles *OrganizationsLocationsFileStoreDataProfilesService
 
 	InspectTemplates *OrganizationsLocationsInspectTemplatesService
 
@@ -315,6 +318,15 @@ func NewOrganizationsLocationsDlpJobsService(s *Service) *OrganizationsLocations
 }
 
 type OrganizationsLocationsDlpJobsService struct {
+	s *Service
+}
+
+func NewOrganizationsLocationsFileStoreDataProfilesService(s *Service) *OrganizationsLocationsFileStoreDataProfilesService {
+	rs := &OrganizationsLocationsFileStoreDataProfilesService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsFileStoreDataProfilesService struct {
 	s *Service
 }
 
@@ -467,6 +479,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.DeidentifyTemplates = NewProjectsLocationsDeidentifyTemplatesService(s)
 	rs.DiscoveryConfigs = NewProjectsLocationsDiscoveryConfigsService(s)
 	rs.DlpJobs = NewProjectsLocationsDlpJobsService(s)
+	rs.FileStoreDataProfiles = NewProjectsLocationsFileStoreDataProfilesService(s)
 	rs.Image = NewProjectsLocationsImageService(s)
 	rs.InspectTemplates = NewProjectsLocationsInspectTemplatesService(s)
 	rs.JobTriggers = NewProjectsLocationsJobTriggersService(s)
@@ -490,6 +503,8 @@ type ProjectsLocationsService struct {
 	DiscoveryConfigs *ProjectsLocationsDiscoveryConfigsService
 
 	DlpJobs *ProjectsLocationsDlpJobsService
+
+	FileStoreDataProfiles *ProjectsLocationsFileStoreDataProfilesService
 
 	Image *ProjectsLocationsImageService
 
@@ -555,6 +570,15 @@ func NewProjectsLocationsDlpJobsService(s *Service) *ProjectsLocationsDlpJobsSer
 }
 
 type ProjectsLocationsDlpJobsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsFileStoreDataProfilesService(s *Service) *ProjectsLocationsFileStoreDataProfilesService {
+	rs := &ProjectsLocationsFileStoreDataProfilesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsFileStoreDataProfilesService struct {
 	s *Service
 }
 
@@ -656,9 +680,9 @@ type GooglePrivacyDlpV2Action struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Action) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Action) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Action
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ActionDetails: The results of an Action.
@@ -678,9 +702,9 @@ type GooglePrivacyDlpV2ActionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ActionDetails) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ActionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ActionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ActivateJobTriggerRequest: Request message for
@@ -701,6 +725,11 @@ type GooglePrivacyDlpV2AllOtherBigQueryTables struct {
 // GooglePrivacyDlpV2AllOtherDatabaseResources: Match database resources not
 // covered by any other filter.
 type GooglePrivacyDlpV2AllOtherDatabaseResources struct {
+}
+
+// GooglePrivacyDlpV2AllOtherResources: Match discovery resources not covered
+// by any other filter.
+type GooglePrivacyDlpV2AllOtherResources struct {
 }
 
 // GooglePrivacyDlpV2AllText: Apply to all text.
@@ -741,9 +770,9 @@ type GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2AuxiliaryTable: An auxiliary table contains statistical
@@ -775,9 +804,9 @@ type GooglePrivacyDlpV2AuxiliaryTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2AuxiliaryTable) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2AuxiliaryTable) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2AuxiliaryTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2BigQueryDiscoveryTarget: Target used to match against for
@@ -808,9 +837,9 @@ type GooglePrivacyDlpV2BigQueryDiscoveryTarget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2BigQueryDiscoveryTarget) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2BigQueryDiscoveryTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2BigQueryDiscoveryTarget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2BigQueryField: Message defining a field of a BigQuery
@@ -833,9 +862,9 @@ type GooglePrivacyDlpV2BigQueryField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2BigQueryField) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2BigQueryField) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2BigQueryField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2BigQueryKey: Row key for identifying a record in BigQuery
@@ -862,9 +891,9 @@ type GooglePrivacyDlpV2BigQueryKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2BigQueryKey) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2BigQueryKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2BigQueryKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2BigQueryOptions: Options defining BigQuery table and row
@@ -924,9 +953,9 @@ type GooglePrivacyDlpV2BigQueryOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2BigQueryOptions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2BigQueryOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2BigQueryOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2BigQueryRegex: A pattern to match against one or more
@@ -955,9 +984,9 @@ type GooglePrivacyDlpV2BigQueryRegex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2BigQueryRegex) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2BigQueryRegex) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2BigQueryRegex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2BigQueryRegexes: A collection of regular expressions to
@@ -979,9 +1008,9 @@ type GooglePrivacyDlpV2BigQueryRegexes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2BigQueryRegexes) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2BigQueryRegexes) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2BigQueryRegexes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2BigQueryTable: Message defining the location of a BigQuery
@@ -1009,9 +1038,9 @@ type GooglePrivacyDlpV2BigQueryTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2BigQueryTable) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2BigQueryTable) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2BigQueryTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2BigQueryTableCollection: Specifies a collection of
@@ -1033,9 +1062,9 @@ type GooglePrivacyDlpV2BigQueryTableCollection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2BigQueryTableCollection) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2BigQueryTableCollection) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2BigQueryTableCollection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2BigQueryTableTypes: The types of BigQuery tables supported
@@ -1062,9 +1091,9 @@ type GooglePrivacyDlpV2BigQueryTableTypes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2BigQueryTableTypes) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2BigQueryTableTypes) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2BigQueryTableTypes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2BoundingBox: Bounding box encompassing detected text
@@ -1091,9 +1120,9 @@ type GooglePrivacyDlpV2BoundingBox struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2BoundingBox) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2BoundingBox) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2BoundingBox
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Bucket: Bucket is represented as a range, along with
@@ -1119,15 +1148,15 @@ type GooglePrivacyDlpV2Bucket struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Bucket) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Bucket) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Bucket
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2BucketingConfig: Generalization function that buckets
 // values based on ranges. The ranges and replacement values are dynamically
-// provided by the user for custom behavior, such as 1-30 -> LOW 31-65 ->
-// MEDIUM 66-100 -> HIGH This can be used on data of type: number, long,
+// provided by the user for custom behavior, such as 1-30 -> LOW, 31-65 ->
+// MEDIUM, 66-100 -> HIGH. This can be used on data of type: number, long,
 // string, timestamp. If the bound `Value` type differs from the type of data
 // being transformed, we will first attempt converting the type of the data to
 // be transformed to match the type of the bound before comparing. See
@@ -1149,9 +1178,9 @@ type GooglePrivacyDlpV2BucketingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2BucketingConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2BucketingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2BucketingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ByteContentItem: Container for bytes to inspect or redact.
@@ -1176,6 +1205,9 @@ type GooglePrivacyDlpV2ByteContentItem struct {
 	//   "AVRO" - avro
 	//   "CSV" - csv
 	//   "TSV" - tsv
+	//   "AUDIO" - Audio file types. Only used for profiling.
+	//   "VIDEO" - Video file types. Only used for profiling.
+	//   "EXECUTABLE" - Executable file types. Only used for profiling.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1190,9 +1222,9 @@ type GooglePrivacyDlpV2ByteContentItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ByteContentItem) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ByteContentItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ByteContentItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CancelDlpJobRequest: The request message for canceling a
@@ -1221,9 +1253,9 @@ type GooglePrivacyDlpV2CategoricalStatsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CategoricalStatsConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CategoricalStatsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CategoricalStatsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CategoricalStatsHistogramBucket: Histogram of value
@@ -1255,9 +1287,9 @@ type GooglePrivacyDlpV2CategoricalStatsHistogramBucket struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CategoricalStatsHistogramBucket) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CategoricalStatsHistogramBucket) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CategoricalStatsHistogramBucket
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CategoricalStatsResult: Result of the categorical stats
@@ -1280,9 +1312,9 @@ type GooglePrivacyDlpV2CategoricalStatsResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CategoricalStatsResult) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CategoricalStatsResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CategoricalStatsResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CharacterMaskConfig: Partially mask a string by replacing
@@ -1334,9 +1366,9 @@ type GooglePrivacyDlpV2CharacterMaskConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CharacterMaskConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CharacterMaskConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CharacterMaskConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CharsToIgnore: Characters to skip when doing
@@ -1368,9 +1400,9 @@ type GooglePrivacyDlpV2CharsToIgnore struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CharsToIgnore) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CharsToIgnore) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CharsToIgnore
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CloudSqlDiscoveryTarget: Target used to match against for
@@ -1401,9 +1433,9 @@ type GooglePrivacyDlpV2CloudSqlDiscoveryTarget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CloudSqlDiscoveryTarget) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CloudSqlDiscoveryTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CloudSqlDiscoveryTarget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CloudSqlIamCredential: Use IAM authentication to connect.
@@ -1453,9 +1485,42 @@ type GooglePrivacyDlpV2CloudSqlProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CloudSqlProperties) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CloudSqlProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CloudSqlProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2CloudStorageDiscoveryTarget: Target used to match against
+// for discovery with Cloud Storage buckets.
+type GooglePrivacyDlpV2CloudStorageDiscoveryTarget struct {
+	// Conditions: Optional. In addition to matching the filter, these conditions
+	// must be true before a profile is generated.
+	Conditions *GooglePrivacyDlpV2DiscoveryFileStoreConditions `json:"conditions,omitempty"`
+	// Disabled: Optional. Disable profiling for buckets that match this filter.
+	Disabled *GooglePrivacyDlpV2Disabled `json:"disabled,omitempty"`
+	// Filter: Required. The buckets the generation_cadence applies to. The first
+	// target with a matching filter will be the one to apply to a bucket.
+	Filter *GooglePrivacyDlpV2DiscoveryCloudStorageFilter `json:"filter,omitempty"`
+	// GenerationCadence: Optional. How often and when to update profiles. New
+	// buckets that match both the filter and conditions are scanned as quickly as
+	// possible depending on system capacity.
+	GenerationCadence *GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence `json:"generationCadence,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conditions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conditions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2CloudStorageDiscoveryTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2CloudStorageDiscoveryTarget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CloudStorageFileSet: Message representing a set of files
@@ -1477,9 +1542,9 @@ type GooglePrivacyDlpV2CloudStorageFileSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CloudStorageFileSet) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CloudStorageFileSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CloudStorageFileSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CloudStorageOptions: Options defining a file or a set of
@@ -1572,9 +1637,9 @@ type GooglePrivacyDlpV2CloudStorageOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CloudStorageOptions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CloudStorageOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CloudStorageOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CloudStoragePath: Message representing a single file or
@@ -1596,9 +1661,39 @@ type GooglePrivacyDlpV2CloudStoragePath struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CloudStoragePath) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CloudStoragePath) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CloudStoragePath
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2CloudStorageRegex: A pattern to match against one or more
+// file stores. At least one pattern must be specified. Regular expressions use
+// RE2 syntax (https://github.com/google/re2/wiki/Syntax); a guide can be found
+// under the google/re2 repository on GitHub.
+type GooglePrivacyDlpV2CloudStorageRegex struct {
+	// BucketNameRegex: Optional. Regex to test the bucket name against. If empty,
+	// all buckets match. Example: "marketing2021" or "(marketing)\d{4}" will both
+	// match the bucket gs://marketing2021
+	BucketNameRegex string `json:"bucketNameRegex,omitempty"`
+	// ProjectIdRegex: Optional. For organizations, if unset, will match all
+	// projects.
+	ProjectIdRegex string `json:"projectIdRegex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BucketNameRegex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BucketNameRegex") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2CloudStorageRegex) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2CloudStorageRegex
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CloudStorageRegexFileSet: Message representing a set of
@@ -1652,9 +1747,35 @@ type GooglePrivacyDlpV2CloudStorageRegexFileSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CloudStorageRegexFileSet) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CloudStorageRegexFileSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CloudStorageRegexFileSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2CloudStorageResourceReference: Identifies a single Cloud
+// Storage bucket.
+type GooglePrivacyDlpV2CloudStorageResourceReference struct {
+	// BucketName: Required. The bucket to scan.
+	BucketName string `json:"bucketName,omitempty"`
+	// ProjectId: Required. If within a project-level config, then this must match
+	// the config's project id.
+	ProjectId string `json:"projectId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BucketName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BucketName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2CloudStorageResourceReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2CloudStorageResourceReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Color: Represents a color in the RGB color space.
@@ -1678,9 +1799,9 @@ type GooglePrivacyDlpV2Color struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Color) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Color) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Color
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GooglePrivacyDlpV2Color) UnmarshalJSON(data []byte) error {
@@ -1822,9 +1943,9 @@ type GooglePrivacyDlpV2ColumnDataProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ColumnDataProfile) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ColumnDataProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ColumnDataProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GooglePrivacyDlpV2ColumnDataProfile) UnmarshalJSON(data []byte) error {
@@ -1886,9 +2007,9 @@ type GooglePrivacyDlpV2Condition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Condition) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Condition) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Condition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Conditions: A collection of conditions.
@@ -1908,9 +2029,9 @@ type GooglePrivacyDlpV2Conditions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Conditions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Conditions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Conditions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Connection: A data connection to allow DLP to profile data
@@ -1954,9 +2075,9 @@ type GooglePrivacyDlpV2Connection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Connection) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Connection) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Connection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Container: Represents a container that may contain DLP
@@ -2001,9 +2122,9 @@ type GooglePrivacyDlpV2Container struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Container) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Container) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Container
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ContentItem: Type of content to inspect.
@@ -2029,9 +2150,9 @@ type GooglePrivacyDlpV2ContentItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ContentItem) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ContentItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ContentItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ContentLocation: Precise location of the finding within a
@@ -2074,9 +2195,9 @@ type GooglePrivacyDlpV2ContentLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ContentLocation) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ContentLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ContentLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CreateConnectionRequest: Request message for
@@ -2097,9 +2218,9 @@ type GooglePrivacyDlpV2CreateConnectionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CreateConnectionRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CreateConnectionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CreateConnectionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CreateDeidentifyTemplateRequest: Request message for
@@ -2127,9 +2248,9 @@ type GooglePrivacyDlpV2CreateDeidentifyTemplateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CreateDeidentifyTemplateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CreateDiscoveryConfigRequest: Request message for
@@ -2155,9 +2276,9 @@ type GooglePrivacyDlpV2CreateDiscoveryConfigRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CreateDiscoveryConfigRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CreateDiscoveryConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CreateDiscoveryConfigRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CreateDlpJobRequest: Request message for
@@ -2189,9 +2310,9 @@ type GooglePrivacyDlpV2CreateDlpJobRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CreateDlpJobRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CreateDlpJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CreateDlpJobRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CreateInspectTemplateRequest: Request message for
@@ -2219,9 +2340,9 @@ type GooglePrivacyDlpV2CreateInspectTemplateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CreateInspectTemplateRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CreateInspectTemplateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CreateInspectTemplateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CreateJobTriggerRequest: Request message for
@@ -2249,9 +2370,9 @@ type GooglePrivacyDlpV2CreateJobTriggerRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CreateJobTriggerRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CreateJobTriggerRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CreateJobTriggerRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CreateStoredInfoTypeRequest: Request message for
@@ -2279,9 +2400,9 @@ type GooglePrivacyDlpV2CreateStoredInfoTypeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CreateStoredInfoTypeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CreateStoredInfoTypeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CryptoDeterministicConfig: Pseudonymization method that
@@ -2342,9 +2463,9 @@ type GooglePrivacyDlpV2CryptoDeterministicConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CryptoDeterministicConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CryptoDeterministicConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CryptoDeterministicConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CryptoHashConfig: Pseudonymization method that generates
@@ -2370,9 +2491,9 @@ type GooglePrivacyDlpV2CryptoHashConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CryptoHashConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CryptoHashConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CryptoHashConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CryptoKey: This is a data encryption key (DEK) (as opposed
@@ -2400,9 +2521,9 @@ type GooglePrivacyDlpV2CryptoKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CryptoKey) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CryptoKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CryptoKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig: Replaces an identifier with a
@@ -2447,8 +2568,9 @@ type GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig struct {
 	// encryption/decryption. Each character listed must appear only once. Number
 	// of characters must be in the range [2, 95]. This must be encoded as ASCII.
 	// The order of characters does not matter. The full list of allowed characters
-	// is: 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
-	// ~`!@#$%^&*()_-+={[}]|\:;"'<,>.?/
+	// is:
+	// ``0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~`!@#$%^&*()_
+	// -+={[}]|\:;"'<,>.?/``
 	CustomAlphabet string `json:"customAlphabet,omitempty"`
 	// Radix: The native way to select the alphabet. Must be in the range [2, 95].
 	Radix int64 `json:"radix,omitempty"`
@@ -2486,9 +2608,9 @@ type GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2CustomInfoType: Custom information type provided by the
@@ -2557,9 +2679,9 @@ type GooglePrivacyDlpV2CustomInfoType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2CustomInfoType) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2CustomInfoType) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CustomInfoType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DataProfileAction: A task to execute when a data profile
@@ -2569,6 +2691,8 @@ type GooglePrivacyDlpV2DataProfileAction struct {
 	ExportData *GooglePrivacyDlpV2Export `json:"exportData,omitempty"`
 	// PubSubNotification: Publish a message into the Pub/Sub topic.
 	PubSubNotification *GooglePrivacyDlpV2PubSubNotification `json:"pubSubNotification,omitempty"`
+	// TagResources: Tags the profiled resources with the specified tag values.
+	TagResources *GooglePrivacyDlpV2TagResources `json:"tagResources,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportData") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2582,9 +2706,9 @@ type GooglePrivacyDlpV2DataProfileAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DataProfileAction) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DataProfileAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DataProfileAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DataProfileBigQueryRowSchema: The schema of data to be
@@ -2592,6 +2716,8 @@ func (s *GooglePrivacyDlpV2DataProfileAction) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2DataProfileBigQueryRowSchema struct {
 	// ColumnProfile: Column data profile column
 	ColumnProfile *GooglePrivacyDlpV2ColumnDataProfile `json:"columnProfile,omitempty"`
+	// FileStoreProfile: File store data profile column.
+	FileStoreProfile *GooglePrivacyDlpV2FileStoreDataProfile `json:"fileStoreProfile,omitempty"`
 	// TableProfile: Table data profile column
 	TableProfile *GooglePrivacyDlpV2TableDataProfile `json:"tableProfile,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ColumnProfile") to
@@ -2607,9 +2733,9 @@ type GooglePrivacyDlpV2DataProfileBigQueryRowSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DataProfileBigQueryRowSchema) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DataProfileBigQueryRowSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DataProfileBigQueryRowSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DataProfileConfigSnapshot: Snapshot of the configurations
@@ -2645,9 +2771,9 @@ type GooglePrivacyDlpV2DataProfileConfigSnapshot struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DataProfileConfigSnapshot) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DataProfileConfigSnapshot) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DataProfileConfigSnapshot
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DataProfileJobConfig: Configuration for setting up a job
@@ -2688,14 +2814,14 @@ type GooglePrivacyDlpV2DataProfileJobConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DataProfileJobConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DataProfileJobConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DataProfileJobConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DataProfileLocation: The data that will be profiled.
 type GooglePrivacyDlpV2DataProfileLocation struct {
-	// FolderId: The ID of the Folder within an organization to scan.
+	// FolderId: The ID of the folder within an organization to scan.
 	FolderId int64 `json:"folderId,omitempty,string"`
 	// OrganizationId: The ID of an organization to scan.
 	OrganizationId int64 `json:"organizationId,omitempty,string"`
@@ -2712,9 +2838,9 @@ type GooglePrivacyDlpV2DataProfileLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DataProfileLocation) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DataProfileLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DataProfileLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DataProfilePubSubCondition: A condition for determining
@@ -2735,9 +2861,9 @@ type GooglePrivacyDlpV2DataProfilePubSubCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DataProfilePubSubCondition) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DataProfilePubSubCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DataProfilePubSubCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DataProfilePubSubMessage: Pub/Sub topic message for a
@@ -2756,6 +2882,10 @@ type GooglePrivacyDlpV2DataProfilePubSubMessage struct {
 	//   "SCORE_INCREASED" - Table data risk score or sensitivity score increased.
 	//   "ERROR_CHANGED" - A user (non-internal) error occurred.
 	Event string `json:"event,omitempty"`
+	// FileStoreProfile: If `DetailLevel` is `FILE_STORE_PROFILE` this will be
+	// fully populated. Otherwise, if `DetailLevel` is `RESOURCE_NAME`, then only
+	// `name` and `file_store_path` will be populated.
+	FileStoreProfile *GooglePrivacyDlpV2FileStoreDataProfile `json:"fileStoreProfile,omitempty"`
 	// Profile: If `DetailLevel` is `TABLE_PROFILE` this will be fully populated.
 	// Otherwise, if `DetailLevel` is `RESOURCE_NAME`, then only `name` and
 	// `full_resource` will be populated.
@@ -2773,9 +2903,9 @@ type GooglePrivacyDlpV2DataProfilePubSubMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DataProfilePubSubMessage) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DataProfilePubSubMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DataProfilePubSubMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DataRiskLevel: Score is a summary of all elements in the
@@ -2788,6 +2918,7 @@ type GooglePrivacyDlpV2DataRiskLevel struct {
 	//   "RISK_LOW" - Low risk - Lower indication of sensitive data that appears to
 	// have additional access restrictions in place or no indication of sensitive
 	// data found.
+	//   "RISK_UNKNOWN" - Unable to determine risk.
 	//   "RISK_MODERATE" - Medium risk - Sensitive data may be present but
 	// additional access or fine grain access restrictions appear to be present.
 	// Consider limiting access even further or transform data to mask.
@@ -2809,9 +2940,9 @@ type GooglePrivacyDlpV2DataRiskLevel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DataRiskLevel) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DataRiskLevel) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DataRiskLevel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DataSourceType: Message used to identify the type of
@@ -2833,9 +2964,9 @@ type GooglePrivacyDlpV2DataSourceType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DataSourceType) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DataSourceType) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DataSourceType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DatabaseResourceCollection: Match database resources using
@@ -2858,9 +2989,9 @@ type GooglePrivacyDlpV2DatabaseResourceCollection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DatabaseResourceCollection) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DatabaseResourceCollection) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DatabaseResourceCollection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DatabaseResourceReference: Identifies a single database
@@ -2890,9 +3021,9 @@ type GooglePrivacyDlpV2DatabaseResourceReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DatabaseResourceReference) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DatabaseResourceReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DatabaseResourceReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DatabaseResourceRegex: A pattern to match against one or
@@ -2927,9 +3058,9 @@ type GooglePrivacyDlpV2DatabaseResourceRegex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DatabaseResourceRegex) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DatabaseResourceRegex) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DatabaseResourceRegex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DatabaseResourceRegexes: A collection of regular
@@ -2952,9 +3083,9 @@ type GooglePrivacyDlpV2DatabaseResourceRegexes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DatabaseResourceRegexes) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DatabaseResourceRegexes) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DatabaseResourceRegexes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DatastoreKey: Record key for a finding in Cloud Datastore.
@@ -2974,9 +3105,9 @@ type GooglePrivacyDlpV2DatastoreKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DatastoreKey) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DatastoreKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DatastoreKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DatastoreOptions: Options defining a data set within
@@ -3000,9 +3131,9 @@ type GooglePrivacyDlpV2DatastoreOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DatastoreOptions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DatastoreOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DatastoreOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DateShiftConfig: Shifts dates by random number of days,
@@ -3040,9 +3171,9 @@ type GooglePrivacyDlpV2DateShiftConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DateShiftConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DateShiftConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DateShiftConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DateTime: Message for a date time object. e.g. 2018-01-01,
@@ -3080,9 +3211,9 @@ type GooglePrivacyDlpV2DateTime struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DateTime) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DateTime) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DateTime
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Deidentify: Create a de-identified copy of the requested
@@ -3097,18 +3228,18 @@ func (s *GooglePrivacyDlpV2DateTime) MarshalJSON() ([]byte, error) {
 // project and dataset as the original table. Compatible with: Inspect
 type GooglePrivacyDlpV2Deidentify struct {
 	// CloudStorageOutput: Required. User settable Cloud Storage bucket and folders
-	// to store de-identified files. This field must be set for cloud storage
+	// to store de-identified files. This field must be set for Cloud Storage
 	// deidentification. The output Cloud Storage bucket must be different from the
 	// input bucket. De-identified files will overwrite files in the output path.
 	// Form of: gs://bucket/folder/ or gs://bucket
 	CloudStorageOutput string `json:"cloudStorageOutput,omitempty"`
 	// FileTypesToTransform: List of user-specified file type groups to transform.
-	// If specified, only the files with these filetypes will be transformed. If
+	// If specified, only the files with these file types will be transformed. If
 	// empty, all supported files will be transformed. Supported types may be
 	// automatically added over time. If a file type is set in this field that
 	// isn't supported by the Deidentify action then the job will fail and will not
-	// be successfully created/started. Currently the only filetypes supported are:
-	// IMAGES, TEXT_FILES, CSV, TSV.
+	// be successfully created/started. Currently the only file types supported
+	// are: IMAGES, TEXT_FILES, CSV, TSV.
 	//
 	// Possible values:
 	//   "FILE_TYPE_UNSPECIFIED" - Includes all files.
@@ -3169,9 +3300,9 @@ type GooglePrivacyDlpV2Deidentify struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Deidentify) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Deidentify) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Deidentify
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DeidentifyConfig: The configuration that controls how the
@@ -3203,9 +3334,9 @@ type GooglePrivacyDlpV2DeidentifyConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DeidentifyConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DeidentifyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DeidentifyConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DeidentifyContentRequest: Request to de-identify a
@@ -3248,9 +3379,9 @@ type GooglePrivacyDlpV2DeidentifyContentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DeidentifyContentRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DeidentifyContentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DeidentifyContentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DeidentifyContentResponse: Results of de-identifying a
@@ -3276,9 +3407,9 @@ type GooglePrivacyDlpV2DeidentifyContentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DeidentifyContentResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DeidentifyContentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DeidentifyContentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DeidentifyDataSourceDetails: The results of a Deidentify
@@ -3301,9 +3432,9 @@ type GooglePrivacyDlpV2DeidentifyDataSourceDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DeidentifyDataSourceDetails) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DeidentifyDataSourceDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DeidentifyDataSourceDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DeidentifyDataSourceStats: Summary of what was modified
@@ -3329,9 +3460,9 @@ type GooglePrivacyDlpV2DeidentifyDataSourceStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DeidentifyDataSourceStats) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DeidentifyDataSourceStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DeidentifyDataSourceStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DeidentifyTemplate: DeidentifyTemplates contains
@@ -3369,9 +3500,9 @@ type GooglePrivacyDlpV2DeidentifyTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DeidentifyTemplate) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DeidentifyTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DeidentifyTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DeltaPresenceEstimationConfig: δ-presence metric, used to
@@ -3404,9 +3535,9 @@ type GooglePrivacyDlpV2DeltaPresenceEstimationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DeltaPresenceEstimationConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DeltaPresenceEstimationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DeltaPresenceEstimationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DeltaPresenceEstimationHistogramBucket: A
@@ -3441,9 +3572,9 @@ type GooglePrivacyDlpV2DeltaPresenceEstimationHistogramBucket struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DeltaPresenceEstimationHistogramBucket) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DeltaPresenceEstimationHistogramBucket) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DeltaPresenceEstimationHistogramBucket
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GooglePrivacyDlpV2DeltaPresenceEstimationHistogramBucket) UnmarshalJSON(data []byte) error {
@@ -3489,9 +3620,9 @@ type GooglePrivacyDlpV2DeltaPresenceEstimationQuasiIdValues struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DeltaPresenceEstimationQuasiIdValues) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DeltaPresenceEstimationQuasiIdValues) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DeltaPresenceEstimationQuasiIdValues
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GooglePrivacyDlpV2DeltaPresenceEstimationQuasiIdValues) UnmarshalJSON(data []byte) error {
@@ -3535,9 +3666,9 @@ type GooglePrivacyDlpV2DeltaPresenceEstimationResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DeltaPresenceEstimationResult) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DeltaPresenceEstimationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DeltaPresenceEstimationResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DetectionRule: Deprecated; use `InspectionRuleSet`
@@ -3560,9 +3691,9 @@ type GooglePrivacyDlpV2DetectionRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DetectionRule) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DetectionRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DetectionRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Dictionary: Custom information type based on a dictionary
@@ -3604,9 +3735,9 @@ type GooglePrivacyDlpV2Dictionary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Dictionary) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Dictionary) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Dictionary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Disabled: Do not profile the tables.
@@ -3654,9 +3785,9 @@ type GooglePrivacyDlpV2DiscoveryBigQueryConditions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoveryBigQueryConditions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoveryBigQueryConditions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryBigQueryConditions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DiscoveryBigQueryFilter: Determines what tables will have
@@ -3691,9 +3822,9 @@ type GooglePrivacyDlpV2DiscoveryBigQueryFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoveryBigQueryFilter) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoveryBigQueryFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryBigQueryFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DiscoveryCloudSqlConditions: Requirements that must be
@@ -3731,9 +3862,9 @@ type GooglePrivacyDlpV2DiscoveryCloudSqlConditions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoveryCloudSqlConditions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoveryCloudSqlConditions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryCloudSqlConditions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DiscoveryCloudSqlFilter: Determines what tables will have
@@ -3766,15 +3897,19 @@ type GooglePrivacyDlpV2DiscoveryCloudSqlFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoveryCloudSqlFilter) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoveryCloudSqlFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryCloudSqlFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DiscoveryCloudSqlGenerationCadence: How often existing
 // tables should have their profiles refreshed. New tables are scanned as
 // quickly as possible depending on system capacity.
 type GooglePrivacyDlpV2DiscoveryCloudSqlGenerationCadence struct {
+	// InspectTemplateModifiedCadence: Governs when to update data profiles when
+	// the inspection rules defined by the `InspectTemplate` change. If not set,
+	// changing the template will not cause a data profile to update.
+	InspectTemplateModifiedCadence *GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence `json:"inspectTemplateModifiedCadence,omitempty"`
 	// RefreshFrequency: Data changes (non-schema changes) in Cloud SQL tables
 	// can't trigger reprofiling. If you set this field, profiles are refreshed at
 	// this frequency regardless of whether the underlying tables have changed.
@@ -3791,22 +3926,157 @@ type GooglePrivacyDlpV2DiscoveryCloudSqlGenerationCadence struct {
 	RefreshFrequency string `json:"refreshFrequency,omitempty"`
 	// SchemaModifiedCadence: When to reprofile if the schema has changed.
 	SchemaModifiedCadence *GooglePrivacyDlpV2SchemaModifiedCadence `json:"schemaModifiedCadence,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RefreshFrequency") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "InspectTemplateModifiedCadence") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RefreshFrequency") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "InspectTemplateModifiedCadence")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoveryCloudSqlGenerationCadence) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoveryCloudSqlGenerationCadence) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryCloudSqlGenerationCadence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DiscoveryCloudStorageConditions: Requirements that must be
+// true before a Cloud Storage bucket or object is scanned in discovery for the
+// first time. There is an AND relationship between the top-level attributes.
+type GooglePrivacyDlpV2DiscoveryCloudStorageConditions struct {
+	// IncludedBucketAttributes: Required. Only objects with the specified
+	// attributes will be scanned. Defaults to [ALL_SUPPORTED_BUCKETS] if unset.
+	//
+	// Possible values:
+	//   "CLOUD_STORAGE_BUCKET_ATTRIBUTE_UNSPECIFIED" - Unused.
+	//   "ALL_SUPPORTED_BUCKETS" - Scan buckets regardless of the attribute.
+	//   "AUTOCLASS_DISABLED" - Buckets with autoclass disabled
+	// (https://cloud.google.com/storage/docs/autoclass). Only one of
+	// AUTOCLASS_DISABLED or AUTOCLASS_ENABLED should be set.
+	//   "AUTOCLASS_ENABLED" - Buckets with autoclass enabled
+	// (https://cloud.google.com/storage/docs/autoclass). Only one of
+	// AUTOCLASS_DISABLED or AUTOCLASS_ENABLED should be set. Scanning
+	// Autoclass-enabled buckets can affect object storage classes.
+	IncludedBucketAttributes []string `json:"includedBucketAttributes,omitempty"`
+	// IncludedObjectAttributes: Required. Only objects with the specified
+	// attributes will be scanned. If an object has one of the specified attributes
+	// but is inside an excluded bucket, it will not be scanned. Defaults to
+	// [ALL_SUPPORTED_OBJECTS]. A profile will be created even if no objects match
+	// the included_object_attributes.
+	//
+	// Possible values:
+	//   "CLOUD_STORAGE_OBJECT_ATTRIBUTE_UNSPECIFIED" - Unused.
+	//   "ALL_SUPPORTED_OBJECTS" - Scan objects regardless of the attribute.
+	//   "STANDARD" - Scan objects with the standard storage class.
+	//   "NEARLINE" - Scan objects with the nearline storage class. This will incur
+	// retrieval fees.
+	//   "COLDLINE" - Scan objects with the coldline storage class. This will incur
+	// retrieval fees.
+	//   "ARCHIVE" - Scan objects with the archive storage class. This will incur
+	// retrieval fees.
+	//   "REGIONAL" - Scan objects with the regional storage class.
+	//   "MULTI_REGIONAL" - Scan objects with the multi-regional storage class.
+	//   "DURABLE_REDUCED_AVAILABILITY" - Scan objects with the dual-regional
+	// storage class. This will incur retrieval fees.
+	IncludedObjectAttributes []string `json:"includedObjectAttributes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IncludedBucketAttributes")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IncludedBucketAttributes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2DiscoveryCloudStorageConditions) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryCloudStorageConditions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DiscoveryCloudStorageFilter: Determines which buckets will
+// have profiles generated within an organization or project. Includes the
+// ability to filter by regular expression patterns on project ID and bucket
+// name.
+type GooglePrivacyDlpV2DiscoveryCloudStorageFilter struct {
+	// CloudStorageResourceReference: Optional. The bucket to scan. Targets
+	// including this can only include one target (the target with this bucket).
+	// This enables profiling the contents of a single bucket, while the other
+	// options allow for easy profiling of many bucets within a project or an
+	// organization.
+	CloudStorageResourceReference *GooglePrivacyDlpV2CloudStorageResourceReference `json:"cloudStorageResourceReference,omitempty"`
+	// Collection: Optional. A specific set of buckets for this filter to apply to.
+	Collection *GooglePrivacyDlpV2FileStoreCollection `json:"collection,omitempty"`
+	// Others: Optional. Catch-all. This should always be the last target in the
+	// list because anything above it will apply first. Should only appear once in
+	// a configuration. If none is specified, a default one will be added
+	// automatically.
+	Others *GooglePrivacyDlpV2AllOtherResources `json:"others,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CloudStorageResourceReference") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudStorageResourceReference")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2DiscoveryCloudStorageFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryCloudStorageFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence: How often existing
+// buckets should have their profiles refreshed. New buckets are scanned as
+// quickly as possible depending on system capacity.
+type GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence struct {
+	// InspectTemplateModifiedCadence: Optional. Governs when to update data
+	// profiles when the inspection rules defined by the `InspectTemplate` change.
+	// If not set, changing the template will not cause a data profile to update.
+	InspectTemplateModifiedCadence *GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence `json:"inspectTemplateModifiedCadence,omitempty"`
+	// RefreshFrequency: Optional. Data changes in Cloud Storage can't trigger
+	// reprofiling. If you set this field, profiles are refreshed at this frequency
+	// regardless of whether the underlying buckets have changed. Defaults to
+	// never.
+	//
+	// Possible values:
+	//   "UPDATE_FREQUENCY_UNSPECIFIED" - Unspecified.
+	//   "UPDATE_FREQUENCY_NEVER" - After the data profile is created, it will
+	// never be updated.
+	//   "UPDATE_FREQUENCY_DAILY" - The data profile can be updated up to once
+	// every 24 hours.
+	//   "UPDATE_FREQUENCY_MONTHLY" - The data profile can be updated up to once
+	// every 30 days. Default.
+	RefreshFrequency string `json:"refreshFrequency,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "InspectTemplateModifiedCadence") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InspectTemplateModifiedCadence")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DiscoveryConfig: Configuration for discovery to scan
@@ -3874,37 +4144,118 @@ type GooglePrivacyDlpV2DiscoveryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoveryConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoveryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2DiscoveryGenerationCadence: What must take place for a
-// profile to be updated and how frequently it should occur. New tables are
-// scanned as quickly as possible depending on system capacity.
-type GooglePrivacyDlpV2DiscoveryGenerationCadence struct {
-	// SchemaModifiedCadence: Governs when to update data profiles when a schema is
-	// modified.
-	SchemaModifiedCadence *GooglePrivacyDlpV2DiscoverySchemaModifiedCadence `json:"schemaModifiedCadence,omitempty"`
-	// TableModifiedCadence: Governs when to update data profiles when a table is
-	// modified.
-	TableModifiedCadence *GooglePrivacyDlpV2DiscoveryTableModifiedCadence `json:"tableModifiedCadence,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SchemaModifiedCadence") to
+// GooglePrivacyDlpV2DiscoveryFileStoreConditions: Requirements that must be
+// true before a file store is scanned in discovery for the first time. There
+// is an AND relationship between the top-level attributes.
+type GooglePrivacyDlpV2DiscoveryFileStoreConditions struct {
+	// CloudStorageConditions: Optional. Cloud Storage conditions.
+	CloudStorageConditions *GooglePrivacyDlpV2DiscoveryCloudStorageConditions `json:"cloudStorageConditions,omitempty"`
+	// CreatedAfter: Optional. File store must have been created after this date.
+	// Used to avoid backfilling.
+	CreatedAfter string `json:"createdAfter,omitempty"`
+	// MinAge: Optional. Minimum age a file store must have. If set, the value must
+	// be 1 hour or greater.
+	MinAge string `json:"minAge,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudStorageConditions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SchemaModifiedCadence") to
+	// NullFields is a list of field names (e.g. "CloudStorageConditions") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoveryGenerationCadence) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoveryFileStoreConditions) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryFileStoreConditions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DiscoveryGenerationCadence: What must take place for a
+// profile to be updated and how frequently it should occur. New tables are
+// scanned as quickly as possible depending on system capacity.
+type GooglePrivacyDlpV2DiscoveryGenerationCadence struct {
+	// InspectTemplateModifiedCadence: Governs when to update data profiles when
+	// the inspection rules defined by the `InspectTemplate` change. If not set,
+	// changing the template will not cause a data profile to update.
+	InspectTemplateModifiedCadence *GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence `json:"inspectTemplateModifiedCadence,omitempty"`
+	// RefreshFrequency: Frequency at which profiles should be updated, regardless
+	// of whether the underlying resource has changed. Defaults to never.
+	//
+	// Possible values:
+	//   "UPDATE_FREQUENCY_UNSPECIFIED" - Unspecified.
+	//   "UPDATE_FREQUENCY_NEVER" - After the data profile is created, it will
+	// never be updated.
+	//   "UPDATE_FREQUENCY_DAILY" - The data profile can be updated up to once
+	// every 24 hours.
+	//   "UPDATE_FREQUENCY_MONTHLY" - The data profile can be updated up to once
+	// every 30 days. Default.
+	RefreshFrequency string `json:"refreshFrequency,omitempty"`
+	// SchemaModifiedCadence: Governs when to update data profiles when a schema is
+	// modified.
+	SchemaModifiedCadence *GooglePrivacyDlpV2DiscoverySchemaModifiedCadence `json:"schemaModifiedCadence,omitempty"`
+	// TableModifiedCadence: Governs when to update data profiles when a table is
+	// modified.
+	TableModifiedCadence *GooglePrivacyDlpV2DiscoveryTableModifiedCadence `json:"tableModifiedCadence,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "InspectTemplateModifiedCadence") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InspectTemplateModifiedCadence")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2DiscoveryGenerationCadence) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryGenerationCadence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence: The cadence at
+// which to update data profiles when the inspection rules defined by the
+// `InspectTemplate` change.
+type GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence struct {
+	// Frequency: How frequently data profiles can be updated when the template is
+	// modified. Defaults to never.
+	//
+	// Possible values:
+	//   "UPDATE_FREQUENCY_UNSPECIFIED" - Unspecified.
+	//   "UPDATE_FREQUENCY_NEVER" - After the data profile is created, it will
+	// never be updated.
+	//   "UPDATE_FREQUENCY_DAILY" - The data profile can be updated up to once
+	// every 24 hours.
+	//   "UPDATE_FREQUENCY_MONTHLY" - The data profile can be updated up to once
+	// every 30 days. Default.
+	Frequency string `json:"frequency,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Frequency") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Frequency") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DiscoverySchemaModifiedCadence: The cadence at which to
@@ -3946,16 +4297,16 @@ type GooglePrivacyDlpV2DiscoverySchemaModifiedCadence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoverySchemaModifiedCadence) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoverySchemaModifiedCadence) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoverySchemaModifiedCadence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DiscoveryStartingLocation: The location to begin a
 // discovery scan. Denotes an organization ID or folder ID within an
 // organization.
 type GooglePrivacyDlpV2DiscoveryStartingLocation struct {
-	// FolderId: The ID of the Folder within an organization to scan.
+	// FolderId: The ID of the folder within an organization to be scanned.
 	FolderId int64 `json:"folderId,omitempty,string"`
 	// OrganizationId: The ID of an organization to scan.
 	OrganizationId int64 `json:"organizationId,omitempty,string"`
@@ -3972,9 +4323,9 @@ type GooglePrivacyDlpV2DiscoveryStartingLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoveryStartingLocation) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoveryStartingLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryStartingLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DiscoveryTableModifiedCadence: The cadence at which to
@@ -4014,9 +4365,9 @@ type GooglePrivacyDlpV2DiscoveryTableModifiedCadence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoveryTableModifiedCadence) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoveryTableModifiedCadence) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryTableModifiedCadence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DiscoveryTarget: Target used to match against for
@@ -4028,6 +4379,9 @@ type GooglePrivacyDlpV2DiscoveryTarget struct {
 	// CloudSqlTarget: Cloud SQL target for Discovery. The first target to match a
 	// table will be the one applied.
 	CloudSqlTarget *GooglePrivacyDlpV2CloudSqlDiscoveryTarget `json:"cloudSqlTarget,omitempty"`
+	// CloudStorageTarget: Cloud Storage target for Discovery. The first target to
+	// match a table will be the one applied.
+	CloudStorageTarget *GooglePrivacyDlpV2CloudStorageDiscoveryTarget `json:"cloudStorageTarget,omitempty"`
 	// SecretsTarget: Discovery target that looks for credentials and secrets
 	// stored in cloud resource metadata and reports them as vulnerabilities to
 	// Security Command Center. Only one target of this type is allowed.
@@ -4045,9 +4399,9 @@ type GooglePrivacyDlpV2DiscoveryTarget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DiscoveryTarget) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DiscoveryTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DiscoveryTarget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DlpJob: Combines all of the information about a DLP job.
@@ -4111,9 +4465,9 @@ type GooglePrivacyDlpV2DlpJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DlpJob) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DlpJob) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DlpJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2DocumentLocation: Location of a finding within a document.
@@ -4134,9 +4488,9 @@ type GooglePrivacyDlpV2DocumentLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2DocumentLocation) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2DocumentLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2DocumentLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2EntityId: An entity in a dataset is a field or set of
@@ -4161,9 +4515,9 @@ type GooglePrivacyDlpV2EntityId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2EntityId) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2EntityId) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2EntityId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Error: Details information about an error encountered
@@ -4172,6 +4526,15 @@ func (s *GooglePrivacyDlpV2EntityId) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2Error struct {
 	// Details: Detailed error codes and messages.
 	Details *GoogleRpcStatus `json:"details,omitempty"`
+	// ExtraInfo: Additional information about the error.
+	//
+	// Possible values:
+	//   "ERROR_INFO_UNSPECIFIED" - Unused.
+	//   "IMAGE_SCAN_UNAVAILABLE_IN_REGION" - Image scan is not available in the
+	// region.
+	//   "FILE_STORE_CLUSTER_UNSUPPORTED" - File store cluster is not supported for
+	// profile generation.
+	ExtraInfo string `json:"extraInfo,omitempty"`
 	// Timestamps: The times the error occurred. List includes the oldest timestamp
 	// and the last 9 timestamps.
 	Timestamps []string `json:"timestamps,omitempty"`
@@ -4188,9 +4551,9 @@ type GooglePrivacyDlpV2Error struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Error) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Error) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Error
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ExcludeByHotword: The rule to exclude findings based on a
@@ -4219,9 +4582,9 @@ type GooglePrivacyDlpV2ExcludeByHotword struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ExcludeByHotword) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ExcludeByHotword) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ExcludeByHotword
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ExcludeInfoTypes: List of excluded infoTypes.
@@ -4247,9 +4610,9 @@ type GooglePrivacyDlpV2ExcludeInfoTypes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ExcludeInfoTypes) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ExcludeInfoTypes) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ExcludeInfoTypes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ExclusionRule: The rule that specifies conditions when
@@ -4295,9 +4658,9 @@ type GooglePrivacyDlpV2ExclusionRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ExclusionRule) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ExclusionRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ExclusionRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Export: If set, the detailed data profiles will be
@@ -4325,9 +4688,9 @@ type GooglePrivacyDlpV2Export struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Export) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Export) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Export
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Expressions: An expression, consisting of an operator and
@@ -4355,9 +4718,9 @@ type GooglePrivacyDlpV2Expressions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Expressions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Expressions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Expressions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2FieldId: General identifier of a data field in a storage
@@ -4378,9 +4741,9 @@ type GooglePrivacyDlpV2FieldId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2FieldId) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2FieldId) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2FieldId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2FieldTransformation: The transformation to apply to the
@@ -4416,9 +4779,112 @@ type GooglePrivacyDlpV2FieldTransformation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2FieldTransformation) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2FieldTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2FieldTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FileClusterSummary: The file cluster summary.
+type GooglePrivacyDlpV2FileClusterSummary struct {
+	// DataRiskLevel: The data risk level of this cluster. RISK_LOW if nothing has
+	// been scanned.
+	DataRiskLevel *GooglePrivacyDlpV2DataRiskLevel `json:"dataRiskLevel,omitempty"`
+	// Errors: A list of errors detected while scanning this cluster. The list is
+	// truncated to 10 per cluster.
+	Errors []*GooglePrivacyDlpV2Error `json:"errors,omitempty"`
+	// FileClusterType: The file cluster type.
+	FileClusterType *GooglePrivacyDlpV2FileClusterType `json:"fileClusterType,omitempty"`
+	// FileExtensionsScanned: A sample of file types scanned in this cluster. Empty
+	// if no files were scanned. File extensions can be derived from the file name
+	// or the file content.
+	FileExtensionsScanned []*GooglePrivacyDlpV2FileExtensionInfo `json:"fileExtensionsScanned,omitempty"`
+	// FileExtensionsSeen: A sample of file types seen in this cluster. Empty if no
+	// files were seen. File extensions can be derived from the file name or the
+	// file content.
+	FileExtensionsSeen []*GooglePrivacyDlpV2FileExtensionInfo `json:"fileExtensionsSeen,omitempty"`
+	// FileStoreInfoTypeSummaries: InfoTypes detected in this cluster.
+	FileStoreInfoTypeSummaries []*GooglePrivacyDlpV2FileStoreInfoTypeSummary `json:"fileStoreInfoTypeSummaries,omitempty"`
+	// NoFilesExist: True if no files exist in this cluster. If the bucket had more
+	// files than could be listed, this will be false even if no files for this
+	// cluster were seen and file_extensions_seen is empty.
+	NoFilesExist bool `json:"noFilesExist,omitempty"`
+	// SensitivityScore: The sensitivity score of this cluster. The score will be
+	// SENSITIVITY_LOW if nothing has been scanned.
+	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataRiskLevel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataRiskLevel") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2FileClusterSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileClusterSummary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FileClusterType: Message used to identify file cluster
+// type being profiled.
+type GooglePrivacyDlpV2FileClusterType struct {
+	// Cluster: Cluster type.
+	//
+	// Possible values:
+	//   "CLUSTER_UNSPECIFIED" - Unused.
+	//   "CLUSTER_UNKNOWN" - Unsupported files.
+	//   "CLUSTER_TEXT" - Plain text.
+	//   "CLUSTER_STRUCTURED_DATA" - Structured data like CSV, TSV etc.
+	//   "CLUSTER_SOURCE_CODE" - Source code.
+	//   "CLUSTER_RICH_DOCUMENT" - Rich document like docx, xlsx etc.
+	//   "CLUSTER_IMAGE" - Images like jpeg, bmp.
+	//   "CLUSTER_ARCHIVE" - Archives and containers like .zip, .tar etc.
+	//   "CLUSTER_MULTIMEDIA" - Multimedia like .mp4, .avi etc.
+	//   "CLUSTER_EXECUTABLE" - Executable files like .exe, .class, .apk etc.
+	Cluster string `json:"cluster,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cluster") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cluster") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2FileClusterType) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileClusterType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FileExtensionInfo: Information regarding the discovered
+// file extension.
+type GooglePrivacyDlpV2FileExtensionInfo struct {
+	// FileExtension: The file extension if set. (aka .pdf, .jpg, .txt)
+	FileExtension string `json:"fileExtension,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileExtension") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileExtension") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2FileExtensionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileExtensionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2FileSet: Set of files to scan.
@@ -4447,9 +4913,206 @@ type GooglePrivacyDlpV2FileSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2FileSet) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2FileSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2FileSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FileStoreCollection: Match file stores (e.g. buckets)
+// using regex filters.
+type GooglePrivacyDlpV2FileStoreCollection struct {
+	// IncludeRegexes: Optional. A collection of regular expressions to match a
+	// file store against.
+	IncludeRegexes *GooglePrivacyDlpV2FileStoreRegexes `json:"includeRegexes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IncludeRegexes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IncludeRegexes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2FileStoreCollection) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileStoreCollection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FileStoreDataProfile: The profile for a file store. *
+// Cloud Storage: maps 1:1 with a bucket.
+type GooglePrivacyDlpV2FileStoreDataProfile struct {
+	// ConfigSnapshot: The snapshot of the configurations used to generate the
+	// profile.
+	ConfigSnapshot *GooglePrivacyDlpV2DataProfileConfigSnapshot `json:"configSnapshot,omitempty"`
+	// CreateTime: The time the file store was first created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DataRiskLevel: The data risk level of this resource.
+	DataRiskLevel *GooglePrivacyDlpV2DataRiskLevel `json:"dataRiskLevel,omitempty"`
+	// DataSourceType: The resource type that was profiled.
+	DataSourceType *GooglePrivacyDlpV2DataSourceType `json:"dataSourceType,omitempty"`
+	// DataStorageLocations: For resources that have multiple storage locations,
+	// these are those regions. For Cloud Storage this is the list of regions
+	// chosen for dual-region storage. `file_store_location` will normally be the
+	// corresponding multi-region for the list of individual locations. The first
+	// region is always picked as the processing and storage location for the data
+	// profile.
+	DataStorageLocations []string `json:"dataStorageLocations,omitempty"`
+	// FileClusterSummaries: FileClusterSummary per each cluster.
+	FileClusterSummaries []*GooglePrivacyDlpV2FileClusterSummary `json:"fileClusterSummaries,omitempty"`
+	// FileStoreInfoTypeSummaries: InfoTypes detected in this file store.
+	FileStoreInfoTypeSummaries []*GooglePrivacyDlpV2FileStoreInfoTypeSummary `json:"fileStoreInfoTypeSummaries,omitempty"`
+	// FileStoreIsEmpty: The file store does not have any files.
+	FileStoreIsEmpty bool `json:"fileStoreIsEmpty,omitempty"`
+	// FileStoreLocation: The location of the file store. * Cloud Storage:
+	// https://cloud.google.com/storage/docs/locations#available-locations
+	FileStoreLocation string `json:"fileStoreLocation,omitempty"`
+	// FileStorePath: The file store path. * Cloud Storage: `gs://{bucket}`
+	FileStorePath string `json:"fileStorePath,omitempty"`
+	// FullResource: The resource name of the resource profiled.
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name
+	FullResource string `json:"fullResource,omitempty"`
+	// LastModifiedTime: The time the file store was last modified.
+	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
+	// LocationType: The location type of the bucket (region, dual-region,
+	// multi-region, etc). If dual-region, expect data_storage_locations to be
+	// populated.
+	LocationType string `json:"locationType,omitempty"`
+	// Name: The name of the profile.
+	Name string `json:"name,omitempty"`
+	// ProfileLastGenerated: The last time the profile was generated.
+	ProfileLastGenerated string `json:"profileLastGenerated,omitempty"`
+	// ProfileStatus: Success or error status from the most recent profile
+	// generation attempt. May be empty if the profile is still being generated.
+	ProfileStatus *GooglePrivacyDlpV2ProfileStatus `json:"profileStatus,omitempty"`
+	// ProjectDataProfile: The resource name of the project data profile for this
+	// file store.
+	ProjectDataProfile string `json:"projectDataProfile,omitempty"`
+	// ProjectId: The Google Cloud project ID that owns the resource.
+	ProjectId string `json:"projectId,omitempty"`
+	// ResourceAttributes: Attributes of the resource being profiled. Currently
+	// used attributes: * customer_managed_encryption: boolean - true: the resource
+	// is encrypted with a customer-managed key. - false: the resource is encrypted
+	// with a provider-managed key.
+	ResourceAttributes map[string]GooglePrivacyDlpV2Value `json:"resourceAttributes,omitempty"`
+	// ResourceLabels: The labels applied to the resource at the time the profile
+	// was generated.
+	ResourceLabels map[string]string `json:"resourceLabels,omitempty"`
+	// ResourceVisibility: How broadly a resource has been shared.
+	//
+	// Possible values:
+	//   "RESOURCE_VISIBILITY_UNSPECIFIED" - Unused.
+	//   "RESOURCE_VISIBILITY_PUBLIC" - Visible to any user.
+	//   "RESOURCE_VISIBILITY_INCONCLUSIVE" - May contain public items. For
+	// example, if a Cloud Storage bucket has uniform bucket level access disabled,
+	// some objects inside it may be public, but none are known yet.
+	//   "RESOURCE_VISIBILITY_RESTRICTED" - Visible only to specific users.
+	ResourceVisibility string `json:"resourceVisibility,omitempty"`
+	// SensitivityScore: The sensitivity score of this resource.
+	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
+	// State: State of a profile.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unused.
+	//   "RUNNING" - The profile is currently running. Once a profile has finished
+	// it will transition to DONE.
+	//   "DONE" - The profile is no longer generating. If
+	// profile_status.status.code is 0, the profile succeeded, otherwise, it
+	// failed.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ConfigSnapshot") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConfigSnapshot") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2FileStoreDataProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileStoreDataProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FileStoreInfoTypeSummary: Information regarding the
+// discovered InfoType.
+type GooglePrivacyDlpV2FileStoreInfoTypeSummary struct {
+	// InfoType: The InfoType seen.
+	InfoType *GooglePrivacyDlpV2InfoType `json:"infoType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InfoType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InfoType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2FileStoreInfoTypeSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileStoreInfoTypeSummary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FileStoreRegex: A pattern to match against one or more
+// file stores.
+type GooglePrivacyDlpV2FileStoreRegex struct {
+	// CloudStorageRegex: Optional. Regex for Cloud Storage.
+	CloudStorageRegex *GooglePrivacyDlpV2CloudStorageRegex `json:"cloudStorageRegex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudStorageRegex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudStorageRegex") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2FileStoreRegex) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileStoreRegex
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2FileStoreRegexes: A collection of regular expressions to
+// determine what file store to match against.
+type GooglePrivacyDlpV2FileStoreRegexes struct {
+	// Patterns: Required. The group of regular expression patterns to match
+	// against one or more file stores. Maximum of 100 entries. The sum of all
+	// regular expression's length can't exceed 10 KiB.
+	Patterns []*GooglePrivacyDlpV2FileStoreRegex `json:"patterns,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Patterns") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Patterns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2FileStoreRegexes) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2FileStoreRegexes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Finding: Represents a piece of potentially sensitive
@@ -4517,9 +5180,9 @@ type GooglePrivacyDlpV2Finding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Finding) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Finding) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Finding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2FindingLimits: Configuration to control the number of
@@ -4560,9 +5223,9 @@ type GooglePrivacyDlpV2FindingLimits struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2FindingLimits) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2FindingLimits) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2FindingLimits
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2FinishDlpJobRequest: The request message for finishing a
@@ -4611,9 +5274,9 @@ type GooglePrivacyDlpV2FixedSizeBucketingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2FixedSizeBucketingConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2FixedSizeBucketingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2FixedSizeBucketingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GooglePrivacyDlpV2FixedSizeBucketingConfig) UnmarshalJSON(data []byte) error {
@@ -4663,9 +5326,9 @@ type GooglePrivacyDlpV2HotwordRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2HotwordRule) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2HotwordRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2HotwordRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2HybridContentItem: An individual hybrid item to inspect.
@@ -4689,9 +5352,9 @@ type GooglePrivacyDlpV2HybridContentItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2HybridContentItem) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2HybridContentItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2HybridContentItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2HybridFindingDetails: Populate to associate additional
@@ -4738,9 +5401,9 @@ type GooglePrivacyDlpV2HybridFindingDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2HybridFindingDetails) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2HybridFindingDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2HybridFindingDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2HybridInspectDlpJobRequest: Request to search for
@@ -4761,9 +5424,9 @@ type GooglePrivacyDlpV2HybridInspectDlpJobRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2HybridInspectDlpJobRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2HybridInspectDlpJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2HybridInspectDlpJobRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2HybridInspectJobTriggerRequest: Request to search for
@@ -4784,9 +5447,9 @@ type GooglePrivacyDlpV2HybridInspectJobTriggerRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2HybridInspectJobTriggerRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2HybridInspectJobTriggerRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2HybridInspectJobTriggerRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2HybridInspectResponse: Quota exceeded errors will be
@@ -4824,9 +5487,9 @@ type GooglePrivacyDlpV2HybridInspectStatistics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2HybridInspectStatistics) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2HybridInspectStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2HybridInspectStatistics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2HybridOptions: Configuration to control jobs where the
@@ -4865,9 +5528,9 @@ type GooglePrivacyDlpV2HybridOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2HybridOptions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2HybridOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2HybridOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ImageLocation: Location of the finding within an image.
@@ -4888,9 +5551,9 @@ type GooglePrivacyDlpV2ImageLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ImageLocation) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ImageLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ImageLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ImageRedactionConfig: Configuration for determining how
@@ -4920,9 +5583,9 @@ type GooglePrivacyDlpV2ImageRedactionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ImageRedactionConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ImageRedactionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ImageRedactionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ImageTransformation: Configuration for determining how
@@ -4953,9 +5616,9 @@ type GooglePrivacyDlpV2ImageTransformation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ImageTransformation) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ImageTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ImageTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ImageTransformations: A type of transformation that is
@@ -4976,9 +5639,9 @@ type GooglePrivacyDlpV2ImageTransformations struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ImageTransformations) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ImageTransformations) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ImageTransformations
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InfoType: Type of information detected by the API.
@@ -5008,9 +5671,9 @@ type GooglePrivacyDlpV2InfoType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InfoType) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InfoType) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InfoType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InfoTypeCategory: Classification of infoTypes to organize
@@ -5034,7 +5697,10 @@ type GooglePrivacyDlpV2InfoTypeCategory struct {
 	//   "GLOBAL" - The infoType is not issued by or tied to a specific region, but
 	// is used almost everywhere.
 	//   "ARGENTINA" - The infoType is typically used in Argentina.
+	//   "ARMENIA" - The infoType is typically used in Armenia.
 	//   "AUSTRALIA" - The infoType is typically used in Australia.
+	//   "AZERBAIJAN" - The infoType is typically used in Azerbaijan.
+	//   "BELARUS" - The infoType is typically used in Belarus.
 	//   "BELGIUM" - The infoType is typically used in Belgium.
 	//   "BRAZIL" - The infoType is typically used in Brazil.
 	//   "CANADA" - The infoType is typically used in Canada.
@@ -5111,9 +5777,9 @@ type GooglePrivacyDlpV2InfoTypeCategory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InfoTypeCategory) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InfoTypeCategory) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InfoTypeCategory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InfoTypeDescription: InfoType description.
@@ -5151,9 +5817,9 @@ type GooglePrivacyDlpV2InfoTypeDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InfoTypeDescription) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InfoTypeDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InfoTypeDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InfoTypeLikelihood: Configuration for setting a minimum
@@ -5191,9 +5857,9 @@ type GooglePrivacyDlpV2InfoTypeLikelihood struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InfoTypeLikelihood) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InfoTypeLikelihood) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InfoTypeLikelihood
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InfoTypeLimit: Max findings configuration per infoType,
@@ -5219,9 +5885,9 @@ type GooglePrivacyDlpV2InfoTypeLimit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InfoTypeLimit) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InfoTypeLimit) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InfoTypeLimit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InfoTypeStats: Statistics regarding a specific InfoType.
@@ -5243,9 +5909,9 @@ type GooglePrivacyDlpV2InfoTypeStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InfoTypeStats) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InfoTypeStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InfoTypeStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InfoTypeSummary: The infoType details for this column.
@@ -5267,9 +5933,9 @@ type GooglePrivacyDlpV2InfoTypeSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InfoTypeSummary) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InfoTypeSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InfoTypeSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InfoTypeTransformation: A transformation to apply to text
@@ -5295,9 +5961,9 @@ type GooglePrivacyDlpV2InfoTypeTransformation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InfoTypeTransformation) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InfoTypeTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InfoTypeTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InfoTypeTransformations: A type of transformation that
@@ -5321,9 +5987,9 @@ type GooglePrivacyDlpV2InfoTypeTransformations struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InfoTypeTransformations) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InfoTypeTransformations) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InfoTypeTransformations
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InspectConfig: Configuration description of the scanning
@@ -5406,9 +6072,9 @@ type GooglePrivacyDlpV2InspectConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InspectConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InspectConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InspectConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InspectContentRequest: Request to search for potentially
@@ -5440,9 +6106,9 @@ type GooglePrivacyDlpV2InspectContentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InspectContentRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InspectContentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InspectContentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InspectContentResponse: Results of inspecting an item.
@@ -5465,9 +6131,9 @@ type GooglePrivacyDlpV2InspectContentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InspectContentResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InspectContentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InspectContentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InspectDataSourceDetails: The results of an inspect
@@ -5490,9 +6156,9 @@ type GooglePrivacyDlpV2InspectDataSourceDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InspectDataSourceDetails) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InspectDataSourceDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InspectDataSourceDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InspectJobConfig: Controls what and how to inspect for
@@ -5521,9 +6187,9 @@ type GooglePrivacyDlpV2InspectJobConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InspectJobConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InspectJobConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InspectJobConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InspectResult: All the findings for a single scanned item.
@@ -5550,9 +6216,9 @@ type GooglePrivacyDlpV2InspectResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InspectResult) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InspectResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InspectResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InspectTemplate: The inspectTemplate contains a
@@ -5592,9 +6258,9 @@ type GooglePrivacyDlpV2InspectTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InspectTemplate) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InspectTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InspectTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InspectionRule: A single inspection rule to be applied to
@@ -5617,9 +6283,9 @@ type GooglePrivacyDlpV2InspectionRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InspectionRule) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InspectionRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InspectionRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2InspectionRuleSet: Rule set for modifying a set of
@@ -5644,9 +6310,9 @@ type GooglePrivacyDlpV2InspectionRuleSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2InspectionRuleSet) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2InspectionRuleSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InspectionRuleSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2JobNotificationEmails: Sends an email when the job
@@ -5711,9 +6377,9 @@ type GooglePrivacyDlpV2JobTrigger struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2JobTrigger) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2JobTrigger) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2JobTrigger
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2KAnonymityConfig: k-anonymity metric, used for analysis of
@@ -5747,9 +6413,9 @@ type GooglePrivacyDlpV2KAnonymityConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2KAnonymityConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2KAnonymityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2KAnonymityConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2KAnonymityEquivalenceClass: The set of columns' values
@@ -5775,9 +6441,9 @@ type GooglePrivacyDlpV2KAnonymityEquivalenceClass struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2KAnonymityEquivalenceClass) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2KAnonymityEquivalenceClass) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2KAnonymityEquivalenceClass
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2KAnonymityHistogramBucket: Histogram of k-anonymity
@@ -5810,9 +6476,9 @@ type GooglePrivacyDlpV2KAnonymityHistogramBucket struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2KAnonymityHistogramBucket) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2KAnonymityHistogramBucket) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2KAnonymityHistogramBucket
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2KAnonymityResult: Result of the k-anonymity computation.
@@ -5835,9 +6501,9 @@ type GooglePrivacyDlpV2KAnonymityResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2KAnonymityResult) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2KAnonymityResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2KAnonymityResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2KMapEstimationConfig: Reidentifiability metric. This
@@ -5872,9 +6538,9 @@ type GooglePrivacyDlpV2KMapEstimationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2KMapEstimationConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2KMapEstimationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2KMapEstimationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2KMapEstimationHistogramBucket: A
@@ -5910,9 +6576,9 @@ type GooglePrivacyDlpV2KMapEstimationHistogramBucket struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2KMapEstimationHistogramBucket) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2KMapEstimationHistogramBucket) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2KMapEstimationHistogramBucket
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2KMapEstimationQuasiIdValues: A tuple of values for the
@@ -5936,9 +6602,9 @@ type GooglePrivacyDlpV2KMapEstimationQuasiIdValues struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2KMapEstimationQuasiIdValues) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2KMapEstimationQuasiIdValues) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2KMapEstimationQuasiIdValues
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2KMapEstimationResult: Result of the reidentifiability
@@ -5965,9 +6631,9 @@ type GooglePrivacyDlpV2KMapEstimationResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2KMapEstimationResult) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2KMapEstimationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2KMapEstimationResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Key: A unique identifier for a Datastore entity. If a
@@ -5999,9 +6665,9 @@ type GooglePrivacyDlpV2Key struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Key) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Key) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Key
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2KindExpression: A representation of a Datastore kind.
@@ -6021,9 +6687,9 @@ type GooglePrivacyDlpV2KindExpression struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2KindExpression) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2KindExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2KindExpression
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2KmsWrappedCryptoKey: Include to use an existing data
@@ -6053,9 +6719,9 @@ type GooglePrivacyDlpV2KmsWrappedCryptoKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2KmsWrappedCryptoKey) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2KmsWrappedCryptoKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2KmsWrappedCryptoKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2LDiversityConfig: l-diversity metric, used for analysis of
@@ -6080,9 +6746,9 @@ type GooglePrivacyDlpV2LDiversityConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2LDiversityConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2LDiversityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2LDiversityConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2LDiversityEquivalenceClass: The set of columns' values
@@ -6111,9 +6777,9 @@ type GooglePrivacyDlpV2LDiversityEquivalenceClass struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2LDiversityEquivalenceClass) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2LDiversityEquivalenceClass) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2LDiversityEquivalenceClass
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2LDiversityHistogramBucket: Histogram of l-diversity
@@ -6146,9 +6812,9 @@ type GooglePrivacyDlpV2LDiversityHistogramBucket struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2LDiversityHistogramBucket) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2LDiversityHistogramBucket) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2LDiversityHistogramBucket
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2LDiversityResult: Result of the l-diversity computation.
@@ -6171,9 +6837,9 @@ type GooglePrivacyDlpV2LDiversityResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2LDiversityResult) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2LDiversityResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2LDiversityResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2LargeCustomDictionaryConfig: Configuration for a custom
@@ -6208,9 +6874,9 @@ type GooglePrivacyDlpV2LargeCustomDictionaryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2LargeCustomDictionaryConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2LargeCustomDictionaryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2LargeCustomDictionaryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2LargeCustomDictionaryStats: Summary statistics of a custom
@@ -6231,9 +6897,9 @@ type GooglePrivacyDlpV2LargeCustomDictionaryStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2LargeCustomDictionaryStats) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2LargeCustomDictionaryStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2LargeCustomDictionaryStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2LeaveUntransformed: Skips the data without modifying it if
@@ -6278,9 +6944,9 @@ type GooglePrivacyDlpV2LikelihoodAdjustment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2LikelihoodAdjustment) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2LikelihoodAdjustment) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2LikelihoodAdjustment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ListColumnDataProfilesResponse: List of profiles generated
@@ -6306,9 +6972,9 @@ type GooglePrivacyDlpV2ListColumnDataProfilesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ListColumnDataProfilesResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ListColumnDataProfilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ListColumnDataProfilesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ListConnectionsResponse: Response message for
@@ -6335,9 +7001,9 @@ type GooglePrivacyDlpV2ListConnectionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ListConnectionsResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ListConnectionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ListConnectionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ListDeidentifyTemplatesResponse: Response message for
@@ -6365,9 +7031,9 @@ type GooglePrivacyDlpV2ListDeidentifyTemplatesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ListDeidentifyTemplatesResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ListDeidentifyTemplatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ListDeidentifyTemplatesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ListDiscoveryConfigsResponse: Response message for
@@ -6395,9 +7061,9 @@ type GooglePrivacyDlpV2ListDiscoveryConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ListDiscoveryConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ListDiscoveryConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ListDiscoveryConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ListDlpJobsResponse: The response message for listing DLP
@@ -6423,9 +7089,37 @@ type GooglePrivacyDlpV2ListDlpJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ListDlpJobsResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ListDlpJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ListDlpJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2ListFileStoreDataProfilesResponse: List of file store data
+// profiles generated for a given organization or project.
+type GooglePrivacyDlpV2ListFileStoreDataProfilesResponse struct {
+	// FileStoreDataProfiles: List of data profiles.
+	FileStoreDataProfiles []*GooglePrivacyDlpV2FileStoreDataProfile `json:"fileStoreDataProfiles,omitempty"`
+	// NextPageToken: The next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "FileStoreDataProfiles") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileStoreDataProfiles") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2ListFileStoreDataProfilesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ListFileStoreDataProfilesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ListInfoTypesResponse: Response to the ListInfoTypes
@@ -6449,9 +7143,9 @@ type GooglePrivacyDlpV2ListInfoTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ListInfoTypesResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ListInfoTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ListInfoTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ListInspectTemplatesResponse: Response message for
@@ -6479,9 +7173,9 @@ type GooglePrivacyDlpV2ListInspectTemplatesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ListInspectTemplatesResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ListInspectTemplatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ListInspectTemplatesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ListJobTriggersResponse: Response message for
@@ -6509,9 +7203,9 @@ type GooglePrivacyDlpV2ListJobTriggersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ListJobTriggersResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ListJobTriggersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ListJobTriggersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ListProjectDataProfilesResponse: List of profiles
@@ -6537,9 +7231,9 @@ type GooglePrivacyDlpV2ListProjectDataProfilesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ListProjectDataProfilesResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ListProjectDataProfilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ListProjectDataProfilesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ListStoredInfoTypesResponse: Response message for
@@ -6567,9 +7261,9 @@ type GooglePrivacyDlpV2ListStoredInfoTypesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ListStoredInfoTypesResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ListStoredInfoTypesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ListStoredInfoTypesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ListTableDataProfilesResponse: List of profiles generated
@@ -6595,9 +7289,9 @@ type GooglePrivacyDlpV2ListTableDataProfilesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ListTableDataProfilesResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ListTableDataProfilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ListTableDataProfilesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Location: Specifies the location of the finding.
@@ -6630,9 +7324,9 @@ type GooglePrivacyDlpV2Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Location) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Location) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Manual: Job trigger option for hybrid jobs. Jobs must be
@@ -6663,9 +7357,9 @@ type GooglePrivacyDlpV2MetadataLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2MetadataLocation) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2MetadataLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2MetadataLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2NumericalStatsConfig: Compute numerical stats over an
@@ -6687,9 +7381,9 @@ type GooglePrivacyDlpV2NumericalStatsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2NumericalStatsConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2NumericalStatsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2NumericalStatsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2NumericalStatsResult: Result of the numerical stats
@@ -6715,9 +7409,9 @@ type GooglePrivacyDlpV2NumericalStatsResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2NumericalStatsResult) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2NumericalStatsResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2NumericalStatsResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2OrConditions: There is an OR relationship between these
@@ -6743,9 +7437,9 @@ type GooglePrivacyDlpV2OrConditions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2OrConditions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2OrConditions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2OrConditions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2OrgConfig: Project and scan location information. Only set
@@ -6770,9 +7464,9 @@ type GooglePrivacyDlpV2OrgConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2OrgConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2OrgConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2OrgConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2OtherInfoTypeSummary: Infotype details for other infoTypes
@@ -6799,9 +7493,9 @@ type GooglePrivacyDlpV2OtherInfoTypeSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2OtherInfoTypeSummary) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2OtherInfoTypeSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2OtherInfoTypeSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2OutputStorageConfig: Cloud repository for storing output.
@@ -6850,9 +7544,9 @@ type GooglePrivacyDlpV2OutputStorageConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2OutputStorageConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2OutputStorageConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2OutputStorageConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2PartitionId: Datastore partition ID. A partition ID
@@ -6878,9 +7572,9 @@ type GooglePrivacyDlpV2PartitionId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2PartitionId) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2PartitionId) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2PartitionId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2PathElement: A (kind, ID/name) pair used to construct a
@@ -6911,9 +7605,9 @@ type GooglePrivacyDlpV2PathElement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2PathElement) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2PathElement) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2PathElement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2PrimitiveTransformation: A rule for transforming a value.
@@ -6956,9 +7650,9 @@ type GooglePrivacyDlpV2PrimitiveTransformation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2PrimitiveTransformation) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2PrimitiveTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2PrimitiveTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2PrivacyMetric: Privacy metric to compute for
@@ -6989,9 +7683,9 @@ type GooglePrivacyDlpV2PrivacyMetric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2PrivacyMetric) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2PrivacyMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2PrivacyMetric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ProfileStatus: Success or errors for the profile
@@ -7015,9 +7709,9 @@ type GooglePrivacyDlpV2ProfileStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ProfileStatus) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ProfileStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ProfileStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ProjectDataProfile: An aggregated profile for this
@@ -7025,6 +7719,9 @@ func (s *GooglePrivacyDlpV2ProfileStatus) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2ProjectDataProfile struct {
 	// DataRiskLevel: The data risk level of this project.
 	DataRiskLevel *GooglePrivacyDlpV2DataRiskLevel `json:"dataRiskLevel,omitempty"`
+	// FileStoreDataProfileCount: The number of file store data profiles generated
+	// for this project.
+	FileStoreDataProfileCount int64 `json:"fileStoreDataProfileCount,omitempty,string"`
 	// Name: The resource name of the profile.
 	Name string `json:"name,omitempty"`
 	// ProfileLastGenerated: The last time the profile was generated.
@@ -7036,6 +7733,9 @@ type GooglePrivacyDlpV2ProjectDataProfile struct {
 	ProjectId string `json:"projectId,omitempty"`
 	// SensitivityScore: The sensitivity score of this project.
 	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
+	// TableDataProfileCount: The number of table data profiles generated for this
+	// project.
+	TableDataProfileCount int64 `json:"tableDataProfileCount,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -7052,9 +7752,9 @@ type GooglePrivacyDlpV2ProjectDataProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ProjectDataProfile) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ProjectDataProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ProjectDataProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Proximity: Message for specifying a window around a
@@ -7081,9 +7781,9 @@ type GooglePrivacyDlpV2Proximity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Proximity) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Proximity) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Proximity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2PubSubCondition: A condition consisting of a value.
@@ -7116,9 +7816,9 @@ type GooglePrivacyDlpV2PubSubCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2PubSubCondition) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2PubSubCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2PubSubCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2PubSubExpressions: An expression, consisting of an
@@ -7146,9 +7846,9 @@ type GooglePrivacyDlpV2PubSubExpressions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2PubSubExpressions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2PubSubExpressions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2PubSubExpressions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2PubSubNotification: Send a Pub/Sub message into the given
@@ -7164,6 +7864,7 @@ type GooglePrivacyDlpV2PubSubNotification struct {
 	//   "DETAIL_LEVEL_UNSPECIFIED" - Unused.
 	//   "TABLE_PROFILE" - The full table data profile.
 	//   "RESOURCE_NAME" - The name of the profiled resource.
+	//   "FILE_STORE_PROFILE" - The full file store data profile.
 	DetailOfMessage string `json:"detailOfMessage,omitempty"`
 	// Event: The type of event that triggers a Pub/Sub. At most one
 	// `PubSubNotification` per EventType is permitted.
@@ -7196,9 +7897,9 @@ type GooglePrivacyDlpV2PubSubNotification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2PubSubNotification) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2PubSubNotification) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2PubSubNotification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog: Publish findings of a
@@ -7254,9 +7955,9 @@ type GooglePrivacyDlpV2PublishToPubSub struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2PublishToPubSub) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2PublishToPubSub) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2PublishToPubSub
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2PublishToStackdriver: Enable Stackdriver metric
@@ -7297,9 +7998,9 @@ type GooglePrivacyDlpV2QuasiId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2QuasiId) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2QuasiId) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2QuasiId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2QuasiIdField: A quasi-identifier column has a custom_tag,
@@ -7323,9 +8024,9 @@ type GooglePrivacyDlpV2QuasiIdField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2QuasiIdField) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2QuasiIdField) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2QuasiIdField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2QuasiIdentifierField: A quasi-identifier column has a
@@ -7351,9 +8052,9 @@ type GooglePrivacyDlpV2QuasiIdentifierField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2QuasiIdentifierField) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2QuasiIdentifierField) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2QuasiIdentifierField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2QuoteInfo: Message for infoType-dependent details parsed
@@ -7374,9 +8075,9 @@ type GooglePrivacyDlpV2QuoteInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2QuoteInfo) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2QuoteInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2QuoteInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Range: Generic half-open interval [start, end)
@@ -7398,9 +8099,9 @@ type GooglePrivacyDlpV2Range struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Range) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Range) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Range
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2RecordCondition: A condition for determining whether a
@@ -7421,9 +8122,9 @@ type GooglePrivacyDlpV2RecordCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2RecordCondition) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2RecordCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2RecordCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2RecordKey: Message for a unique key indicating a record
@@ -7449,9 +8150,9 @@ type GooglePrivacyDlpV2RecordKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2RecordKey) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2RecordKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2RecordKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2RecordLocation: Location of a finding within a row or
@@ -7476,9 +8177,9 @@ type GooglePrivacyDlpV2RecordLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2RecordLocation) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2RecordLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2RecordLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2RecordSuppression: Configuration to suppress records whose
@@ -7500,9 +8201,9 @@ type GooglePrivacyDlpV2RecordSuppression struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2RecordSuppression) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2RecordSuppression) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2RecordSuppression
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2RecordTransformation: The field in a record to transform.
@@ -7528,9 +8229,9 @@ type GooglePrivacyDlpV2RecordTransformation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2RecordTransformation) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2RecordTransformation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2RecordTransformation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2RecordTransformations: A type of transformation that is
@@ -7556,9 +8257,9 @@ type GooglePrivacyDlpV2RecordTransformations struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2RecordTransformations) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2RecordTransformations) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2RecordTransformations
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2RedactConfig: Redact a given value. For example, if used
@@ -7596,9 +8297,9 @@ type GooglePrivacyDlpV2RedactImageRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2RedactImageRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2RedactImageRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2RedactImageRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2RedactImageResponse: Results of redacting an image.
@@ -7629,9 +8330,9 @@ type GooglePrivacyDlpV2RedactImageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2RedactImageResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2RedactImageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2RedactImageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Regex: Message defining a custom regular expression.
@@ -7656,9 +8357,9 @@ type GooglePrivacyDlpV2Regex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Regex) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Regex) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Regex
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ReidentifyContentRequest: Request to re-identify an item.
@@ -7705,9 +8406,9 @@ type GooglePrivacyDlpV2ReidentifyContentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ReidentifyContentRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ReidentifyContentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ReidentifyContentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ReidentifyContentResponse: Results of re-identifying an
@@ -7733,9 +8434,9 @@ type GooglePrivacyDlpV2ReidentifyContentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ReidentifyContentResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ReidentifyContentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ReidentifyContentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ReplaceDictionaryConfig: Replace each input value with a
@@ -7758,9 +8459,9 @@ type GooglePrivacyDlpV2ReplaceDictionaryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ReplaceDictionaryConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ReplaceDictionaryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ReplaceDictionaryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ReplaceValueConfig: Replace each input value with a given
@@ -7781,9 +8482,9 @@ type GooglePrivacyDlpV2ReplaceValueConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ReplaceValueConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ReplaceValueConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ReplaceValueConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ReplaceWithInfoTypeConfig: Replace each matching finding
@@ -7818,9 +8519,9 @@ type GooglePrivacyDlpV2RequestedDeidentifyOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2RequestedDeidentifyOptions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2RequestedDeidentifyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2RequestedDeidentifyOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2RequestedOptions: Snapshot of the inspection
@@ -7844,9 +8545,9 @@ type GooglePrivacyDlpV2RequestedOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2RequestedOptions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2RequestedOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2RequestedOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2RequestedRiskAnalysisOptions: Risk analysis options.
@@ -7866,9 +8567,9 @@ type GooglePrivacyDlpV2RequestedRiskAnalysisOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2RequestedRiskAnalysisOptions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2RequestedRiskAnalysisOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2RequestedRiskAnalysisOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Result: All result fields mentioned below are updated
@@ -7899,9 +8600,9 @@ type GooglePrivacyDlpV2Result struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Result) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Result) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Result
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2RiskAnalysisJobConfig: Configuration for a risk analysis
@@ -7929,9 +8630,9 @@ type GooglePrivacyDlpV2RiskAnalysisJobConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2RiskAnalysisJobConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2RiskAnalysisJobConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2RiskAnalysisJobConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Row: Values of the row.
@@ -7951,9 +8652,9 @@ type GooglePrivacyDlpV2Row struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Row) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Row) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Row
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2SaveFindings: If set, the detailed findings will be
@@ -7975,9 +8676,9 @@ type GooglePrivacyDlpV2SaveFindings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2SaveFindings) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2SaveFindings) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2SaveFindings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Schedule: Schedule for inspect job triggers.
@@ -8001,9 +8702,9 @@ type GooglePrivacyDlpV2Schedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Schedule) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Schedule) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Schedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2SchemaModifiedCadence: How frequently to modify the
@@ -8042,9 +8743,9 @@ type GooglePrivacyDlpV2SchemaModifiedCadence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2SchemaModifiedCadence) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2SchemaModifiedCadence) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2SchemaModifiedCadence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2SearchConnectionsResponse: Response message for
@@ -8073,9 +8774,9 @@ type GooglePrivacyDlpV2SearchConnectionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2SearchConnectionsResponse) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2SearchConnectionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2SearchConnectionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2SecretManagerCredential: A credential consisting of a
@@ -8102,9 +8803,9 @@ type GooglePrivacyDlpV2SecretManagerCredential struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2SecretManagerCredential) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2SecretManagerCredential) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2SecretManagerCredential
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2SecretsDiscoveryTarget: Discovery target for credentials
@@ -8138,9 +8839,9 @@ type GooglePrivacyDlpV2SelectedInfoTypes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2SelectedInfoTypes) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2SelectedInfoTypes) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2SelectedInfoTypes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2SensitivityScore: Score is calculated from of all elements
@@ -8152,6 +8853,7 @@ type GooglePrivacyDlpV2SensitivityScore struct {
 	//   "SENSITIVITY_SCORE_UNSPECIFIED" - Unused.
 	//   "SENSITIVITY_LOW" - No sensitive information detected. The resource isn't
 	// publicly accessible.
+	//   "SENSITIVITY_UNKNOWN" - Unable to determine sensitivity.
 	//   "SENSITIVITY_MODERATE" - Medium risk. Contains personally identifiable
 	// information (PII), potentially sensitive data, or fields with free-text data
 	// that are at a higher risk of having intermittent sensitive data. Consider
@@ -8174,9 +8876,9 @@ type GooglePrivacyDlpV2SensitivityScore struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2SensitivityScore) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2SensitivityScore) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2SensitivityScore
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2StatisticalTable: An auxiliary table containing
@@ -8208,9 +8910,9 @@ type GooglePrivacyDlpV2StatisticalTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2StatisticalTable) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2StatisticalTable) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2StatisticalTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2StorageConfig: Shared message indicating Cloud storage
@@ -8240,9 +8942,9 @@ type GooglePrivacyDlpV2StorageConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2StorageConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2StorageConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2StorageConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2StorageMetadataLabel: Storage metadata label to indicate
@@ -8263,9 +8965,9 @@ type GooglePrivacyDlpV2StorageMetadataLabel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2StorageMetadataLabel) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2StorageMetadataLabel) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2StorageMetadataLabel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2StoredInfoType: StoredInfoType resource message that
@@ -8294,9 +8996,9 @@ type GooglePrivacyDlpV2StoredInfoType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2StoredInfoType) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2StoredInfoType) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2StoredInfoType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2StoredInfoTypeConfig: Configuration for stored infoTypes.
@@ -8327,9 +9029,9 @@ type GooglePrivacyDlpV2StoredInfoTypeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2StoredInfoTypeConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2StoredInfoTypeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2StoredInfoTypeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2StoredInfoTypeStats: Statistics for a StoredInfoType.
@@ -8350,9 +9052,9 @@ type GooglePrivacyDlpV2StoredInfoTypeStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2StoredInfoTypeStats) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2StoredInfoTypeStats) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2StoredInfoTypeStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2StoredInfoTypeVersion: Version of a StoredInfoType,
@@ -8403,9 +9105,9 @@ type GooglePrivacyDlpV2StoredInfoTypeVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2StoredInfoTypeVersion) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2StoredInfoTypeVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2StoredInfoTypeVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2StoredType: A reference to a StoredInfoType to use with
@@ -8431,9 +9133,9 @@ type GooglePrivacyDlpV2StoredType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2StoredType) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2StoredType) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2StoredType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2SummaryResult: A collection that informs the user the
@@ -8465,9 +9167,9 @@ type GooglePrivacyDlpV2SummaryResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2SummaryResult) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2SummaryResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2SummaryResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2SurrogateType: Message for detecting output from
@@ -8503,9 +9205,9 @@ type GooglePrivacyDlpV2Table struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Table) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Table) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Table
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TableDataProfile: The profile for a scanned table.
@@ -8556,7 +9258,7 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	// ProfileStatus: Success or error status from the most recent profile
 	// generation attempt. May be empty if the profile is still being generated.
 	ProfileStatus *GooglePrivacyDlpV2ProfileStatus `json:"profileStatus,omitempty"`
-	// ProjectDataProfile: The resource name to the project data profile for this
+	// ProjectDataProfile: The resource name of the project data profile for this
 	// table.
 	ProjectDataProfile string `json:"projectDataProfile,omitempty"`
 	// ResourceLabels: The labels applied to the resource at the time the profile
@@ -8569,7 +9271,7 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	//   "RESOURCE_VISIBILITY_PUBLIC" - Visible to any user.
 	//   "RESOURCE_VISIBILITY_INCONCLUSIVE" - May contain public items. For
 	// example, if a Cloud Storage bucket has uniform bucket level access disabled,
-	// some objects inside it may be public.
+	// some objects inside it may be public, but none are known yet.
 	//   "RESOURCE_VISIBILITY_RESTRICTED" - Visible only to specific users.
 	ResourceVisibility string `json:"resourceVisibility,omitempty"`
 	// RowCount: Number of rows in the table when the profile was generated. This
@@ -8609,9 +9311,9 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TableDataProfile) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TableDataProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TableDataProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TableLocation: Location of a finding within a table.
@@ -8636,9 +9338,9 @@ type GooglePrivacyDlpV2TableLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TableLocation) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TableLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TableLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TableOptions: Instructions regarding the table content
@@ -8662,9 +9364,9 @@ type GooglePrivacyDlpV2TableOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TableOptions) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TableOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TableOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TableReference: Message defining the location of a
@@ -8687,9 +9389,111 @@ type GooglePrivacyDlpV2TableReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TableReference) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TableReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TableReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2TagCondition: The tag to attach to profiles matching the
+// condition. At most one `TagCondition` can be specified per sensitivity
+// level.
+type GooglePrivacyDlpV2TagCondition struct {
+	// SensitivityScore: Conditions attaching the tag to a resource on its profile
+	// having this sensitivity score.
+	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`
+	// Tag: The tag value to attach to resources.
+	Tag *GooglePrivacyDlpV2TagValue `json:"tag,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SensitivityScore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SensitivityScore") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2TagCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2TagCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2TagResources: If set, attaches the [tags]
+// (https://cloud.google.com/resource-manager/docs/tags/tags-overview) provided
+// to profiled resources. Tags support access control
+// (https://cloud.google.com/iam/docs/tags-access-control). You can
+// conditionally grant or deny access to a resource based on whether the
+// resource has a specific tag.
+type GooglePrivacyDlpV2TagResources struct {
+	// LowerDataRiskToLow: Whether applying a tag to a resource should lower the
+	// risk of the profile for that resource. For example, in conjunction with an
+	// IAM deny policy (https://cloud.google.com/iam/docs/deny-overview), you can
+	// deny all principals a permission if a tag value is present, mitigating the
+	// risk of the resource. This also lowers the data risk of resources at the
+	// lower levels of the resource hierarchy. For example, reducing the data risk
+	// of a table data profile also reduces the data risk of the constituent column
+	// data profiles.
+	LowerDataRiskToLow bool `json:"lowerDataRiskToLow,omitempty"`
+	// ProfileGenerationsToTag: The profile generations for which the tag should be
+	// attached to resources. If you attach a tag to only new profiles, then if the
+	// sensitivity score of a profile subsequently changes, its tag doesn't change.
+	// By default, this field includes only new profiles. To include both new and
+	// updated profiles for tagging, this field should explicitly include both
+	// `PROFILE_GENERATION_NEW` and `PROFILE_GENERATION_UPDATE`.
+	//
+	// Possible values:
+	//   "PROFILE_GENERATION_UNSPECIFIED" - Unused.
+	//   "PROFILE_GENERATION_NEW" - The profile is the first profile for the
+	// resource.
+	//   "PROFILE_GENERATION_UPDATE" - The profile is an update to a previous
+	// profile.
+	ProfileGenerationsToTag []string `json:"profileGenerationsToTag,omitempty"`
+	// TagConditions: The tags to associate with different conditions.
+	TagConditions []*GooglePrivacyDlpV2TagCondition `json:"tagConditions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LowerDataRiskToLow") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LowerDataRiskToLow") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2TagResources) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2TagResources
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2TagValue: A value of a tag.
+type GooglePrivacyDlpV2TagValue struct {
+	// NamespacedValue: The namespaced name for the tag value to attach to
+	// resources. Must be in the format
+	// `{parent_id}/{tag_key_short_name}/{short_name}`, for example,
+	// "123456/environment/prod".
+	NamespacedValue string `json:"namespacedValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NamespacedValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NamespacedValue") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2TagValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2TagValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TaggedField: A column with a semantic tag attached.
@@ -8722,9 +9526,9 @@ type GooglePrivacyDlpV2TaggedField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TaggedField) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TaggedField) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TaggedField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2ThrowError: Throw an error and fail the request when a
@@ -8759,9 +9563,9 @@ type GooglePrivacyDlpV2TimePartConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TimePartConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TimePartConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TimePartConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TimeZone: Time zone of the date time object.
@@ -8782,9 +9586,9 @@ type GooglePrivacyDlpV2TimeZone struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TimeZone) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TimeZone
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TimespanConfig: Configuration of the timespan of the items
@@ -8811,8 +9615,8 @@ type GooglePrivacyDlpV2TimespanConfig struct {
 	// no lower time limit is applied.
 	StartTime string `json:"startTime,omitempty"`
 	// TimestampField: Specification of the field containing the timestamp of
-	// scanned items. Used for data sources like Datastore and BigQuery. *For
-	// BigQuery* If this value is not specified and the table was modified between
+	// scanned items. Used for data sources like Datastore and BigQuery. **For
+	// BigQuery** If this value is not specified and the table was modified between
 	// the given start and end times, the entire table will be scanned. If this
 	// value is specified, then rows are filtered based on the given start and end
 	// times. Rows with a `NULL` value in the provided BigQuery column are skipped.
@@ -8822,11 +9626,12 @@ type GooglePrivacyDlpV2TimespanConfig struct {
 	// (https://cloud.google.com/bigquery/docs/partitioned-tables#ingestion_time),
 	// you can use any of the following pseudo-columns as your timestamp field.
 	// When used with Cloud DLP, these pseudo-column names are case sensitive. -
-	// _PARTITIONTIME - _PARTITIONDATE - _PARTITION_LOAD_TIME *For Datastore* If
-	// this value is specified, then entities are filtered based on the given start
-	// and end times. If an entity does not contain the provided timestamp property
-	// or contains empty or invalid values, then it is included. Valid data types
-	// of the provided timestamp property are: `TIMESTAMP`. See the known issue
+	// `_PARTITIONTIME` - `_PARTITIONDATE` - `_PARTITION_LOAD_TIME` **For
+	// Datastore** If this value is specified, then entities are filtered based on
+	// the given start and end times. If an entity does not contain the provided
+	// timestamp property or contains empty or invalid values, then it is included.
+	// Valid data types of the provided timestamp property are: `TIMESTAMP`. See
+	// the known issue
 	// (https://cloud.google.com/sensitive-data-protection/docs/known-issues#bq-timespan)
 	// related to this operation.
 	TimestampField *GooglePrivacyDlpV2FieldId `json:"timestampField,omitempty"`
@@ -8845,9 +9650,9 @@ type GooglePrivacyDlpV2TimespanConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TimespanConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TimespanConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TimespanConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TransformationConfig: User specified templates and configs
@@ -8887,9 +9692,9 @@ type GooglePrivacyDlpV2TransformationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TransformationConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TransformationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TransformationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TransformationDescription: A flattened description of a
@@ -8941,9 +9746,9 @@ type GooglePrivacyDlpV2TransformationDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TransformationDescription) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TransformationDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TransformationDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TransformationDetails: Details about a single
@@ -8987,9 +9792,9 @@ type GooglePrivacyDlpV2TransformationDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TransformationDetails) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TransformationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TransformationDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TransformationDetailsStorageConfig: Config for storing
@@ -9014,9 +9819,9 @@ type GooglePrivacyDlpV2TransformationDetailsStorageConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TransformationDetailsStorageConfig) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TransformationDetailsStorageConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TransformationDetailsStorageConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TransformationErrorHandling: How to handle transformation
@@ -9045,9 +9850,9 @@ type GooglePrivacyDlpV2TransformationErrorHandling struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TransformationErrorHandling) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TransformationErrorHandling) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TransformationErrorHandling
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TransformationLocation: Specifies the location of a
@@ -9084,9 +9889,9 @@ type GooglePrivacyDlpV2TransformationLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TransformationLocation) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TransformationLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TransformationLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TransformationOverview: Overview of the modifications that
@@ -9109,9 +9914,9 @@ type GooglePrivacyDlpV2TransformationOverview struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TransformationOverview) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TransformationOverview) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TransformationOverview
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TransformationResultStatus: The outcome of a
@@ -9149,9 +9954,9 @@ type GooglePrivacyDlpV2TransformationResultStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TransformationResultStatus) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TransformationResultStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TransformationResultStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TransformationSummary: Summary of a single transformation.
@@ -9187,9 +9992,9 @@ type GooglePrivacyDlpV2TransformationSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TransformationSummary) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TransformationSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TransformationSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2TransientCryptoKey: Use this to have a random data crypto
@@ -9215,9 +10020,9 @@ type GooglePrivacyDlpV2TransientCryptoKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2TransientCryptoKey) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2TransientCryptoKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2TransientCryptoKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Trigger: What event needs to occur for a new job to be
@@ -9241,9 +10046,9 @@ type GooglePrivacyDlpV2Trigger struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Trigger) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Trigger) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Trigger
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2UnwrappedCryptoKey: Using raw keys is prone to security
@@ -9265,9 +10070,9 @@ type GooglePrivacyDlpV2UnwrappedCryptoKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2UnwrappedCryptoKey) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2UnwrappedCryptoKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2UnwrappedCryptoKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2UpdateConnectionRequest: Request message for
@@ -9291,9 +10096,9 @@ type GooglePrivacyDlpV2UpdateConnectionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2UpdateConnectionRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2UpdateConnectionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2UpdateConnectionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest: Request message for
@@ -9316,9 +10121,9 @@ type GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2UpdateDiscoveryConfigRequest: Request message for
@@ -9341,9 +10146,9 @@ type GooglePrivacyDlpV2UpdateDiscoveryConfigRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2UpdateDiscoveryConfigRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2UpdateDiscoveryConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2UpdateDiscoveryConfigRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2UpdateInspectTemplateRequest: Request message for
@@ -9366,9 +10171,9 @@ type GooglePrivacyDlpV2UpdateInspectTemplateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2UpdateInspectTemplateRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2UpdateInspectTemplateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2UpdateInspectTemplateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2UpdateJobTriggerRequest: Request message for
@@ -9391,9 +10196,9 @@ type GooglePrivacyDlpV2UpdateJobTriggerRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2UpdateJobTriggerRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2UpdateJobTriggerRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2UpdateJobTriggerRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2UpdateStoredInfoTypeRequest: Request message for
@@ -9418,9 +10223,9 @@ type GooglePrivacyDlpV2UpdateStoredInfoTypeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2UpdateStoredInfoTypeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2UpdateStoredInfoTypeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2Value: Set of primitive values supported by the system.
@@ -9469,9 +10274,9 @@ type GooglePrivacyDlpV2Value struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2Value) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2Value) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Value
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GooglePrivacyDlpV2Value) UnmarshalJSON(data []byte) error {
@@ -9508,9 +10313,9 @@ type GooglePrivacyDlpV2ValueFrequency struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2ValueFrequency) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2ValueFrequency) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ValueFrequency
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2VersionDescription: Details about each available version
@@ -9533,9 +10338,9 @@ type GooglePrivacyDlpV2VersionDescription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2VersionDescription) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2VersionDescription) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2VersionDescription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePrivacyDlpV2WordList: Message defining a list of words or phrases to
@@ -9558,9 +10363,9 @@ type GooglePrivacyDlpV2WordList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooglePrivacyDlpV2WordList) MarshalJSON() ([]byte, error) {
+func (s GooglePrivacyDlpV2WordList) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2WordList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -9602,9 +10407,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeDate: Represents a whole or partial calendar date, such as a
@@ -9640,9 +10445,9 @@ type GoogleTypeDate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeTimeOfDay: Represents a time of day. The date and time zone are
@@ -9674,9 +10479,9 @@ type GoogleTypeTimeOfDay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeTimeOfDay) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeTimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeTimeOfDay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type InfoTypesListCall struct {
@@ -9719,7 +10524,7 @@ func (c *InfoTypesListCall) LocationId(locationId string) *InfoTypesListCall {
 }
 
 // Parent sets the optional parameter "parent": The parent resource name. The
-// format of this value is as follows: locations/ LOCATION_ID
+// format of this value is as follows: `locations/{location_id}`
 func (c *InfoTypesListCall) Parent(parent string) *InfoTypesListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -9827,7 +10632,7 @@ type LocationsInfoTypesListCall struct {
 // to learn more.
 //
 //   - parent: The parent resource name. The format of this value is as follows:
-//     locations/ LOCATION_ID.
+//     `locations/{location_id}`.
 func (r *LocationsInfoTypesService) List(parent string) *LocationsInfoTypesListCall {
 	c := &LocationsInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9965,11 +10770,11 @@ type OrganizationsDeidentifyTemplatesCreateCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -10295,11 +11100,11 @@ type OrganizationsDeidentifyTemplatesListCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -10317,7 +11122,7 @@ func (c *OrganizationsDeidentifyTemplatesListCall) LocationId(locationId string)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -10581,11 +11386,11 @@ type OrganizationsInspectTemplatesCreateCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -10910,11 +11715,11 @@ type OrganizationsInspectTemplatesListCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -10932,7 +11737,7 @@ func (c *OrganizationsInspectTemplatesListCall) LocationId(locationId string) *O
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -11329,7 +12134,7 @@ func (c *OrganizationsLocationsColumnDataProfilesListCall) Filter(filter string)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
@@ -11471,6 +12276,574 @@ func (c *OrganizationsLocationsColumnDataProfilesListCall) Pages(ctx context.Con
 	}
 }
 
+type OrganizationsLocationsConnectionsCreateCall struct {
+	s                                         *Service
+	parent                                    string
+	googleprivacydlpv2createconnectionrequest *GooglePrivacyDlpV2CreateConnectionRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Create: Create a Connection to an external data source.
+//
+//   - parent: Parent resource name. The format of this value varies depending on
+//     the scope of the request (project or organization): + Projects scope:
+//     `projects/{project_id}/locations/{location_id}` + Organizations scope:
+//     `organizations/{org_id}/locations/{location_id}`.
+func (r *OrganizationsLocationsConnectionsService) Create(parent string, googleprivacydlpv2createconnectionrequest *GooglePrivacyDlpV2CreateConnectionRequest) *OrganizationsLocationsConnectionsCreateCall {
+	c := &OrganizationsLocationsConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleprivacydlpv2createconnectionrequest = googleprivacydlpv2createconnectionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsConnectionsCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConnectionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsConnectionsCreateCall) Context(ctx context.Context) *OrganizationsLocationsConnectionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsConnectionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2createconnectionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/connections")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.connections.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2Connection.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsConnectionsCreateCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2Connection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2Connection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsLocationsConnectionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a Connection.
+//
+//   - name: Resource name of the Connection to be deleted, in the format:
+//     `projects/{project}/locations/{location}/connections/{connection}`.
+func (r *OrganizationsLocationsConnectionsService) Delete(name string) *OrganizationsLocationsConnectionsDeleteCall {
+	c := &OrganizationsLocationsConnectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsConnectionsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConnectionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsConnectionsDeleteCall) Context(ctx context.Context) *OrganizationsLocationsConnectionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsConnectionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConnectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.connections.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsConnectionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsLocationsConnectionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a Connection by name.
+//
+//   - name: Resource name in the format:
+//     `projects/{project}/locations/{location}/connections/{connection}`.
+func (r *OrganizationsLocationsConnectionsService) Get(name string) *OrganizationsLocationsConnectionsGetCall {
+	c := &OrganizationsLocationsConnectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsConnectionsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConnectionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsConnectionsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsConnectionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsConnectionsGetCall) Context(ctx context.Context) *OrganizationsLocationsConnectionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsConnectionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConnectionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.connections.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2Connection.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsConnectionsGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2Connection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2Connection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsLocationsConnectionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Connections in a parent. Use SearchConnections to see all
+// connections within an organization.
+//
+//   - parent: Resource name of the organization or project, for example,
+//     `organizations/433245324/locations/europe` or
+//     `projects/project-id/locations/asia`.
+func (r *OrganizationsLocationsConnectionsService) List(parent string) *OrganizationsLocationsConnectionsListCall {
+	c := &OrganizationsLocationsConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Supported field/value: `state`
+// - MISSING|AVAILABLE|ERROR
+func (c *OrganizationsLocationsConnectionsListCall) Filter(filter string) *OrganizationsLocationsConnectionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of results per page,
+// max 1000.
+func (c *OrganizationsLocationsConnectionsListCall) PageSize(pageSize int64) *OrganizationsLocationsConnectionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token from a
+// previous page to return the next set of results. If set, all other request
+// fields must match the original request.
+func (c *OrganizationsLocationsConnectionsListCall) PageToken(pageToken string) *OrganizationsLocationsConnectionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsConnectionsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConnectionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsConnectionsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsConnectionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsConnectionsListCall) Context(ctx context.Context) *OrganizationsLocationsConnectionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsConnectionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConnectionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/connections")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.connections.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2ListConnectionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsConnectionsListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListConnectionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2ListConnectionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsConnectionsListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListConnectionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsLocationsConnectionsPatchCall struct {
+	s                                         *Service
+	name                                      string
+	googleprivacydlpv2updateconnectionrequest *GooglePrivacyDlpV2UpdateConnectionRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Patch: Update a Connection.
+//
+//   - name: Resource name in the format:
+//     `projects/{project}/locations/{location}/connections/{connection}`.
+func (r *OrganizationsLocationsConnectionsService) Patch(name string, googleprivacydlpv2updateconnectionrequest *GooglePrivacyDlpV2UpdateConnectionRequest) *OrganizationsLocationsConnectionsPatchCall {
+	c := &OrganizationsLocationsConnectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleprivacydlpv2updateconnectionrequest = googleprivacydlpv2updateconnectionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsConnectionsPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConnectionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsConnectionsPatchCall) Context(ctx context.Context) *OrganizationsLocationsConnectionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsConnectionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConnectionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2updateconnectionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.connections.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2Connection.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsConnectionsPatchCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2Connection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2Connection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type OrganizationsLocationsConnectionsSearchCall struct {
 	s            *Service
 	parent       string
@@ -11482,8 +12855,9 @@ type OrganizationsLocationsConnectionsSearchCall struct {
 
 // Search: Searches for Connections in a parent.
 //
-//   - parent: Parent name, typically an organization, without location. For
-//     example: `organizations/12345678`.
+//   - parent: Resource name of the organization or project with a wildcard
+//     location, for example, `organizations/433245324/locations/-` or
+//     `projects/project-id/locations/-`.
 func (r *OrganizationsLocationsConnectionsService) Search(parent string) *OrganizationsLocationsConnectionsSearchCall {
 	c := &OrganizationsLocationsConnectionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11642,11 +13016,11 @@ type OrganizationsLocationsDeidentifyTemplatesCreateCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -11972,11 +13346,11 @@ type OrganizationsLocationsDeidentifyTemplatesListCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -11994,7 +13368,7 @@ func (c *OrganizationsLocationsDeidentifyTemplatesListCall) LocationId(locationI
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -12250,8 +13624,10 @@ type OrganizationsLocationsDiscoveryConfigsCreateCall struct {
 
 // Create: Creates a config for discovery to scan and profile storage.
 //
-//   - parent: Parent resource name. The format of this value is as follows:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID The following example
+//   - parent: Parent resource name. The format of this value varies depending on
+//     the scope of the request (project or organization): + Projects scope:
+//     `projects/{project_id}/locations/{location_id}` + Organizations scope:
+//     `organizations/{org_id}/locations/{location_id}` The following example
 //     `parent` string specifies a parent project with the identifier
 //     `example-project`, and specifies the `europe-west3` location for
 //     processing data: parent=projects/example-project/locations/europe-west3.
@@ -12563,7 +13939,7 @@ type OrganizationsLocationsDiscoveryConfigsListCall struct {
 // List: Lists discovery configurations.
 //
 //   - parent: Parent resource name. The format of this value is as follows:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID The following example
+//     `projects/{project_id}/locations/{location_id}` The following example
 //     `parent` string specifies a parent project with the identifier
 //     `example-project`, and specifies the `europe-west3` location for
 //     processing data: parent=projects/example-project/locations/europe-west3.
@@ -12573,7 +13949,7 @@ func (r *OrganizationsLocationsDiscoveryConfigsService) List(parentid string) *O
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // config fields to order by, followed by `asc` or `desc` postfix. This list is
 // case insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -12833,8 +14209,8 @@ type OrganizationsLocationsDlpJobsListCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -12874,7 +14250,7 @@ func (c *OrganizationsLocationsDlpJobsListCall) LocationId(locationId string) *O
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc, end_time asc, create_time
@@ -13024,6 +14400,400 @@ func (c *OrganizationsLocationsDlpJobsListCall) Pages(ctx context.Context, f fun
 	}
 }
 
+type OrganizationsLocationsFileStoreDataProfilesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a FileStoreDataProfile. Will not prevent the profile from
+// being regenerated if the resource is still included in a discovery
+// configuration.
+//
+// - name: Resource name of the file store data profile.
+func (r *OrganizationsLocationsFileStoreDataProfilesService) Delete(name string) *OrganizationsLocationsFileStoreDataProfilesDeleteCall {
+	c := &OrganizationsLocationsFileStoreDataProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsFileStoreDataProfilesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsFileStoreDataProfilesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsFileStoreDataProfilesDeleteCall) Context(ctx context.Context) *OrganizationsLocationsFileStoreDataProfilesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsFileStoreDataProfilesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsFileStoreDataProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.fileStoreDataProfiles.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsFileStoreDataProfilesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsLocationsFileStoreDataProfilesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a file store data profile.
+//
+//   - name: Resource name, for example
+//     `organizations/12345/locations/us/fileStoreDataProfiles/53234423`.
+func (r *OrganizationsLocationsFileStoreDataProfilesService) Get(name string) *OrganizationsLocationsFileStoreDataProfilesGetCall {
+	c := &OrganizationsLocationsFileStoreDataProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsFileStoreDataProfilesGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsFileStoreDataProfilesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsFileStoreDataProfilesGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsFileStoreDataProfilesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsFileStoreDataProfilesGetCall) Context(ctx context.Context) *OrganizationsLocationsFileStoreDataProfilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsFileStoreDataProfilesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsFileStoreDataProfilesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.fileStoreDataProfiles.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2FileStoreDataProfile.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsFileStoreDataProfilesGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2FileStoreDataProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2FileStoreDataProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsLocationsFileStoreDataProfilesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists file store data profiles for an organization.
+//
+//   - parent: Resource name of the organization or project, for example
+//     `organizations/433245324/locations/europe` or
+//     `projects/project-id/locations/asia`.
+func (r *OrganizationsLocationsFileStoreDataProfilesService) List(parent string) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c := &OrganizationsLocationsFileStoreDataProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering. Supported
+// syntax: * Filter expressions are made up of one or more restrictions. *
+// Restrictions can be combined by `AND` or `OR` logical operators. A sequence
+// of restrictions implicitly uses `AND`. * A restriction has the form of
+// `{field} {operator} {value}`. * Supported fields/values: - `project_id` -
+// The Google Cloud project ID. - `file_store_path` - The path like
+// "gs://bucket". - `data_source_type` - The profile's data source type, like
+// "google/storage/bucket". - `data_storage_location` - The location where the
+// file store's data is stored, like "us-central1". - `sensitivity_level` -
+// HIGH|MODERATE|LOW - `data_risk_level` - HIGH|MODERATE|LOW -
+// `resource_visibility`: PUBLIC|RESTRICTED - `status_code` - an RPC status
+// code as defined in
+// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
+// The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
+// status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` *
+// `project_id = 12345 AND resource_visibility = PUBLIC` * `file_store_path =
+// "gs://mybucket" The length of this field should be no more than 500
+// characters.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Filter(filter string) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
+// fields to order by, followed by `asc` or `desc` postfix. This list is case
+// insensitive. The default sorting order is ascending. Redundant space
+// characters are insignificant. Only one order field at a time is allowed.
+// Examples: * `project_id asc` * `name` * `sensitivity_level desc` Supported
+// fields are: - `project_id`: The Google Cloud project ID. -
+// `sensitivity_level`: How sensitive the data in a table is, at most. -
+// `data_risk_level`: How much risk is associated with this data. -
+// `profile_last_generated`: When the profile was last updated in epoch
+// seconds. - `last_modified`: The last time the resource was modified. -
+// `resource_visibility`: Visibility restriction for this resource. - `name`:
+// The name of the profile. - `create_time`: The time the file store was first
+// created.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) OrderBy(orderBy string) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Size of the page. This
+// value can be limited by the server. If zero, server returns a page of max
+// size 100.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) PageSize(pageSize int64) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token to continue
+// retrieval.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) PageToken(pageToken string) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Context(ctx context.Context) *OrganizationsLocationsFileStoreDataProfilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/fileStoreDataProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.fileStoreDataProfiles.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2ListFileStoreDataProfilesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListFileStoreDataProfilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2ListFileStoreDataProfilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsFileStoreDataProfilesListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListFileStoreDataProfilesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type OrganizationsLocationsInspectTemplatesCreateCall struct {
 	s                                              *Service
 	parentid                                       string
@@ -13043,11 +14813,11 @@ type OrganizationsLocationsInspectTemplatesCreateCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -13372,11 +15142,11 @@ type OrganizationsLocationsInspectTemplatesListCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -13394,7 +15164,7 @@ func (c *OrganizationsLocationsInspectTemplatesListCall) LocationId(locationId s
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -13657,8 +15427,8 @@ type OrganizationsLocationsJobTriggersCreateCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -13980,8 +15750,8 @@ type OrganizationsLocationsJobTriggersListCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -14019,7 +15789,7 @@ func (c *OrganizationsLocationsJobTriggersListCall) LocationId(locationId string
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // triggeredJob fields to order by, followed by `asc` or `desc` postfix. This
 // list is case insensitive. The default sorting order is ascending. Redundant
 // space characters are insignificant. Example: `name asc,update_time,
@@ -14421,7 +16191,7 @@ func (c *OrganizationsLocationsProjectDataProfilesListCall) Filter(filter string
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
@@ -14579,11 +16349,11 @@ type OrganizationsLocationsStoredInfoTypesCreateCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -14908,8 +16678,8 @@ type OrganizationsLocationsStoredInfoTypesListCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -14927,7 +16697,7 @@ func (c *OrganizationsLocationsStoredInfoTypesListCall) LocationId(locationId st
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc, display_name, create_time
@@ -15419,7 +17189,7 @@ func (c *OrganizationsLocationsTableDataProfilesListCall) Filter(filter string) 
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
@@ -15581,11 +17351,11 @@ type OrganizationsStoredInfoTypesCreateCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -15910,8 +17680,8 @@ type OrganizationsStoredInfoTypesListCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -15929,7 +17699,7 @@ func (c *OrganizationsStoredInfoTypesListCall) LocationId(locationId string) *Or
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc, display_name, create_time
@@ -16196,8 +17966,8 @@ type ProjectsContentDeidentifyCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -16313,8 +18083,8 @@ type ProjectsContentInspectCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -16426,8 +18196,8 @@ type ProjectsContentReidentifyCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -16541,11 +18311,11 @@ type ProjectsDeidentifyTemplatesCreateCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -16871,11 +18641,11 @@ type ProjectsDeidentifyTemplatesListCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -16893,7 +18663,7 @@ func (c *ProjectsDeidentifyTemplatesListCall) LocationId(locationId string) *Pro
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -17267,8 +19037,8 @@ type ProjectsDlpJobsCreateCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -17596,8 +19366,8 @@ type ProjectsDlpJobsListCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -17637,7 +19407,7 @@ func (c *ProjectsDlpJobsListCall) LocationId(locationId string) *ProjectsDlpJobs
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc, end_time asc, create_time
@@ -17808,8 +19578,8 @@ type ProjectsImageRedactCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -17923,11 +19693,11 @@ type ProjectsInspectTemplatesCreateCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -18252,11 +20022,11 @@ type ProjectsInspectTemplatesListCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -18274,7 +20044,7 @@ func (c *ProjectsInspectTemplatesListCall) LocationId(locationId string) *Projec
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -18641,8 +20411,8 @@ type ProjectsJobTriggersCreateCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -18964,8 +20734,8 @@ type ProjectsJobTriggersListCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -19003,7 +20773,7 @@ func (c *ProjectsJobTriggersListCall) LocationId(locationId string) *ProjectsJob
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // triggeredJob fields to order by, followed by `asc` or `desc` postfix. This
 // list is case insensitive. The default sorting order is ascending. Redundant
 // space characters are insignificant. Example: `name asc,update_time,
@@ -19414,7 +21184,7 @@ func (c *ProjectsLocationsColumnDataProfilesListCall) Filter(filter string) *Pro
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
@@ -19567,8 +21337,10 @@ type ProjectsLocationsConnectionsCreateCall struct {
 
 // Create: Create a Connection to an external data source.
 //
-//   - parent: Parent resource name in the format:
-//     `projects/{project}/locations/{location}`.
+//   - parent: Parent resource name. The format of this value varies depending on
+//     the scope of the request (project or organization): + Projects scope:
+//     `projects/{project_id}/locations/{location_id}` + Organizations scope:
+//     `organizations/{org_id}/locations/{location_id}`.
 func (r *ProjectsLocationsConnectionsService) Create(parent string, googleprivacydlpv2createconnectionrequest *GooglePrivacyDlpV2CreateConnectionRequest) *ProjectsLocationsConnectionsCreateCall {
 	c := &ProjectsLocationsConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -19874,9 +21646,12 @@ type ProjectsLocationsConnectionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Connections in a parent.
+// List: Lists Connections in a parent. Use SearchConnections to see all
+// connections within an organization.
 //
-// - parent: Parent name, for example: `projects/project-id/locations/global`.
+//   - parent: Resource name of the organization or project, for example,
+//     `organizations/433245324/locations/europe` or
+//     `projects/project-id/locations/asia`.
 func (r *ProjectsLocationsConnectionsService) List(parent string) *ProjectsLocationsConnectionsListCall {
 	c := &ProjectsLocationsConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20130,8 +21905,9 @@ type ProjectsLocationsConnectionsSearchCall struct {
 
 // Search: Searches for Connections in a parent.
 //
-//   - parent: Parent name, typically an organization, without location. For
-//     example: `organizations/12345678`.
+//   - parent: Resource name of the organization or project with a wildcard
+//     location, for example, `organizations/433245324/locations/-` or
+//     `projects/project-id/locations/-`.
 func (r *ProjectsLocationsConnectionsService) Search(parent string) *ProjectsLocationsConnectionsSearchCall {
 	c := &ProjectsLocationsConnectionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20292,8 +22068,8 @@ type ProjectsLocationsContentDeidentifyCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -20409,8 +22185,8 @@ type ProjectsLocationsContentInspectCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -20522,8 +22298,8 @@ type ProjectsLocationsContentReidentifyCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -20637,11 +22413,11 @@ type ProjectsLocationsDeidentifyTemplatesCreateCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -20967,11 +22743,11 @@ type ProjectsLocationsDeidentifyTemplatesListCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -20989,7 +22765,7 @@ func (c *ProjectsLocationsDeidentifyTemplatesListCall) LocationId(locationId str
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -21245,8 +23021,10 @@ type ProjectsLocationsDiscoveryConfigsCreateCall struct {
 
 // Create: Creates a config for discovery to scan and profile storage.
 //
-//   - parent: Parent resource name. The format of this value is as follows:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID The following example
+//   - parent: Parent resource name. The format of this value varies depending on
+//     the scope of the request (project or organization): + Projects scope:
+//     `projects/{project_id}/locations/{location_id}` + Organizations scope:
+//     `organizations/{org_id}/locations/{location_id}` The following example
 //     `parent` string specifies a parent project with the identifier
 //     `example-project`, and specifies the `europe-west3` location for
 //     processing data: parent=projects/example-project/locations/europe-west3.
@@ -21558,7 +23336,7 @@ type ProjectsLocationsDiscoveryConfigsListCall struct {
 // List: Lists discovery configurations.
 //
 //   - parent: Parent resource name. The format of this value is as follows:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID The following example
+//     `projects/{project_id}/locations/{location_id}` The following example
 //     `parent` string specifies a parent project with the identifier
 //     `example-project`, and specifies the `europe-west3` location for
 //     processing data: parent=projects/example-project/locations/europe-west3.
@@ -21568,7 +23346,7 @@ func (r *ProjectsLocationsDiscoveryConfigsService) List(parentid string) *Projec
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // config fields to order by, followed by `asc` or `desc` postfix. This list is
 // case insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -21938,8 +23716,8 @@ type ProjectsLocationsDlpJobsCreateCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -22474,8 +24252,8 @@ type ProjectsLocationsDlpJobsListCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -22515,7 +24293,7 @@ func (c *ProjectsLocationsDlpJobsListCall) LocationId(locationId string) *Projec
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc, end_time asc, create_time
@@ -22665,6 +24443,400 @@ func (c *ProjectsLocationsDlpJobsListCall) Pages(ctx context.Context, f func(*Go
 	}
 }
 
+type ProjectsLocationsFileStoreDataProfilesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a FileStoreDataProfile. Will not prevent the profile from
+// being regenerated if the resource is still included in a discovery
+// configuration.
+//
+// - name: Resource name of the file store data profile.
+func (r *ProjectsLocationsFileStoreDataProfilesService) Delete(name string) *ProjectsLocationsFileStoreDataProfilesDeleteCall {
+	c := &ProjectsLocationsFileStoreDataProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFileStoreDataProfilesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsFileStoreDataProfilesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFileStoreDataProfilesDeleteCall) Context(ctx context.Context) *ProjectsLocationsFileStoreDataProfilesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFileStoreDataProfilesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFileStoreDataProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.fileStoreDataProfiles.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsFileStoreDataProfilesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsFileStoreDataProfilesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a file store data profile.
+//
+//   - name: Resource name, for example
+//     `organizations/12345/locations/us/fileStoreDataProfiles/53234423`.
+func (r *ProjectsLocationsFileStoreDataProfilesService) Get(name string) *ProjectsLocationsFileStoreDataProfilesGetCall {
+	c := &ProjectsLocationsFileStoreDataProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFileStoreDataProfilesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsFileStoreDataProfilesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsFileStoreDataProfilesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsFileStoreDataProfilesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFileStoreDataProfilesGetCall) Context(ctx context.Context) *ProjectsLocationsFileStoreDataProfilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFileStoreDataProfilesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFileStoreDataProfilesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.fileStoreDataProfiles.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2FileStoreDataProfile.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFileStoreDataProfilesGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2FileStoreDataProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2FileStoreDataProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsFileStoreDataProfilesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists file store data profiles for an organization.
+//
+//   - parent: Resource name of the organization or project, for example
+//     `organizations/433245324/locations/europe` or
+//     `projects/project-id/locations/asia`.
+func (r *ProjectsLocationsFileStoreDataProfilesService) List(parent string) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c := &ProjectsLocationsFileStoreDataProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering. Supported
+// syntax: * Filter expressions are made up of one or more restrictions. *
+// Restrictions can be combined by `AND` or `OR` logical operators. A sequence
+// of restrictions implicitly uses `AND`. * A restriction has the form of
+// `{field} {operator} {value}`. * Supported fields/values: - `project_id` -
+// The Google Cloud project ID. - `file_store_path` - The path like
+// "gs://bucket". - `data_source_type` - The profile's data source type, like
+// "google/storage/bucket". - `data_storage_location` - The location where the
+// file store's data is stored, like "us-central1". - `sensitivity_level` -
+// HIGH|MODERATE|LOW - `data_risk_level` - HIGH|MODERATE|LOW -
+// `resource_visibility`: PUBLIC|RESTRICTED - `status_code` - an RPC status
+// code as defined in
+// https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
+// The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
+// status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` *
+// `project_id = 12345 AND resource_visibility = PUBLIC` * `file_store_path =
+// "gs://mybucket" The length of this field should be no more than 500
+// characters.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) Filter(filter string) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
+// fields to order by, followed by `asc` or `desc` postfix. This list is case
+// insensitive. The default sorting order is ascending. Redundant space
+// characters are insignificant. Only one order field at a time is allowed.
+// Examples: * `project_id asc` * `name` * `sensitivity_level desc` Supported
+// fields are: - `project_id`: The Google Cloud project ID. -
+// `sensitivity_level`: How sensitive the data in a table is, at most. -
+// `data_risk_level`: How much risk is associated with this data. -
+// `profile_last_generated`: When the profile was last updated in epoch
+// seconds. - `last_modified`: The last time the resource was modified. -
+// `resource_visibility`: Visibility restriction for this resource. - `name`:
+// The name of the profile. - `create_time`: The time the file store was first
+// created.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) OrderBy(orderBy string) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Size of the page. This
+// value can be limited by the server. If zero, server returns a page of max
+// size 100.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) PageSize(pageSize int64) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token to continue
+// retrieval.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) PageToken(pageToken string) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) Context(ctx context.Context) *ProjectsLocationsFileStoreDataProfilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/fileStoreDataProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.fileStoreDataProfiles.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2ListFileStoreDataProfilesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListFileStoreDataProfilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2ListFileStoreDataProfilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsFileStoreDataProfilesListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListFileStoreDataProfilesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type ProjectsLocationsImageRedactCall struct {
 	s                                    *Service
 	parentid                             string
@@ -22686,8 +24858,8 @@ type ProjectsLocationsImageRedactCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -22801,11 +24973,11 @@ type ProjectsLocationsInspectTemplatesCreateCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -23130,11 +25302,11 @@ type ProjectsLocationsInspectTemplatesListCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -23152,7 +25324,7 @@ func (c *ProjectsLocationsInspectTemplatesListCall) LocationId(locationId string
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc,update_time, create_time
@@ -23519,8 +25691,8 @@ type ProjectsLocationsJobTriggersCreateCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -23947,8 +26119,8 @@ type ProjectsLocationsJobTriggersListCall struct {
 //     whether you have specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -23986,7 +26158,7 @@ func (c *ProjectsLocationsJobTriggersListCall) LocationId(locationId string) *Pr
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // triggeredJob fields to order by, followed by `asc` or `desc` postfix. This
 // list is case insensitive. The default sorting order is ascending. Redundant
 // space characters are insignificant. Example: `name asc,update_time,
@@ -24388,7 +26560,7 @@ func (c *ProjectsLocationsProjectDataProfilesListCall) Filter(filter string) *Pr
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
@@ -24546,11 +26718,11 @@ type ProjectsLocationsStoredInfoTypesCreateCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -24875,8 +27047,8 @@ type ProjectsLocationsStoredInfoTypesListCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -24894,7 +27066,7 @@ func (c *ProjectsLocationsStoredInfoTypesListCall) LocationId(locationId string)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc, display_name, create_time
@@ -25386,7 +27558,7 @@ func (c *ProjectsLocationsTableDataProfilesListCall) Filter(filter string) *Proj
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Only one order field at a time is allowed.
@@ -25548,11 +27720,11 @@ type ProjectsStoredInfoTypesCreateCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID +
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` +
 //     Organizations scope, location specified:
-//     `organizations/`ORG_ID`/locations/`LOCATION_ID + Organizations scope, no
-//     location specified (defaults to global): `organizations/`ORG_ID The
+//     `organizations/{org_id}/locations/{location_id}` + Organizations scope, no
+//     location specified (defaults to global): `organizations/{org_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -25877,8 +28049,8 @@ type ProjectsStoredInfoTypesListCall struct {
 //     specified a processing location
 //     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
-//     `projects/`PROJECT_ID`/locations/`LOCATION_ID + Projects scope, no
-//     location specified (defaults to global): `projects/`PROJECT_ID The
+//     `projects/{project_id}/locations/{location_id}` + Projects scope, no
+//     location specified (defaults to global): `projects/{project_id}` The
 //     following example `parent` string specifies a parent project with the
 //     identifier `example-project`, and specifies the `europe-west3` location
 //     for processing data:
@@ -25896,7 +28068,7 @@ func (c *ProjectsStoredInfoTypesListCall) LocationId(locationId string) *Project
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Comma separated list of
+// OrderBy sets the optional parameter "orderBy": Comma-separated list of
 // fields to order by, followed by `asc` or `desc` postfix. This list is case
 // insensitive. The default sorting order is ascending. Redundant space
 // characters are insignificant. Example: `name asc, display_name, create_time

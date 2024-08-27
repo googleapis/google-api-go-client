@@ -219,9 +219,9 @@ type AchievementConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AchievementConfiguration) MarshalJSON() ([]byte, error) {
+func (s AchievementConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod AchievementConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AchievementConfigurationDetail: An achievement configuration detail.
@@ -253,9 +253,9 @@ type AchievementConfigurationDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AchievementConfigurationDetail) MarshalJSON() ([]byte, error) {
+func (s AchievementConfigurationDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod AchievementConfigurationDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AchievementConfigurationListResponse: A ListConfigurations response.
@@ -283,9 +283,9 @@ type AchievementConfigurationListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AchievementConfigurationListResponse) MarshalJSON() ([]byte, error) {
+func (s AchievementConfigurationListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AchievementConfigurationListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GamesNumberAffixConfiguration: A number affix resource.
@@ -323,9 +323,9 @@ type GamesNumberAffixConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GamesNumberAffixConfiguration) MarshalJSON() ([]byte, error) {
+func (s GamesNumberAffixConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod GamesNumberAffixConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GamesNumberFormatConfiguration: A number format resource.
@@ -361,9 +361,9 @@ type GamesNumberFormatConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GamesNumberFormatConfiguration) MarshalJSON() ([]byte, error) {
+func (s GamesNumberFormatConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod GamesNumberFormatConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LeaderboardConfiguration: An leaderboard configuration resource.
@@ -404,9 +404,9 @@ type LeaderboardConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LeaderboardConfiguration) MarshalJSON() ([]byte, error) {
+func (s LeaderboardConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod LeaderboardConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LeaderboardConfigurationDetail: A leaderboard configuration detail.
@@ -436,9 +436,9 @@ type LeaderboardConfigurationDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LeaderboardConfigurationDetail) MarshalJSON() ([]byte, error) {
+func (s LeaderboardConfigurationDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod LeaderboardConfigurationDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LeaderboardConfigurationListResponse: A ListConfigurations response.
@@ -466,9 +466,9 @@ type LeaderboardConfigurationListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LeaderboardConfigurationListResponse) MarshalJSON() ([]byte, error) {
+func (s LeaderboardConfigurationListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LeaderboardConfigurationListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocalizedString: A localized string resource.
@@ -493,9 +493,9 @@ type LocalizedString struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocalizedString) MarshalJSON() ([]byte, error) {
+func (s LocalizedString) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalizedString
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocalizedStringBundle: A localized string bundle resource.
@@ -518,9 +518,9 @@ type LocalizedStringBundle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocalizedStringBundle) MarshalJSON() ([]byte, error) {
+func (s LocalizedStringBundle) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalizedStringBundle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AchievementConfigurationsDeleteCall struct {

@@ -271,9 +271,9 @@ type AptRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AptRepository) MarshalJSON() ([]byte, error) {
+func (s AptRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod AptRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AptSettings: Apt patching is completed by executing `apt-get update &&
@@ -309,9 +309,9 @@ type AptSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AptSettings) MarshalJSON() ([]byte, error) {
+func (s AptSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod AptSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Assignment: An assignment represents the group or groups of VM instances
@@ -357,9 +357,9 @@ type Assignment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Assignment) MarshalJSON() ([]byte, error) {
+func (s Assignment) MarshalJSON() ([]byte, error) {
 	type NoMethod Assignment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AssignmentGroupLabel: Represents a group of VM intances that can be
@@ -381,9 +381,9 @@ type AssignmentGroupLabel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AssignmentGroupLabel) MarshalJSON() ([]byte, error) {
+func (s AssignmentGroupLabel) MarshalJSON() ([]byte, error) {
 	type NoMethod AssignmentGroupLabel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AssignmentOsType: Defines the criteria for selecting VM Instances by OS
@@ -411,9 +411,9 @@ type AssignmentOsType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AssignmentOsType) MarshalJSON() ([]byte, error) {
+func (s AssignmentOsType) MarshalJSON() ([]byte, error) {
 	type NoMethod AssignmentOsType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelPatchJobRequest: Message for canceling a patch job.
@@ -446,9 +446,9 @@ type EffectiveGuestPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EffectiveGuestPolicy) MarshalJSON() ([]byte, error) {
+func (s EffectiveGuestPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod EffectiveGuestPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EffectiveGuestPolicySourcedPackage: A guest policy package including its
@@ -471,9 +471,9 @@ type EffectiveGuestPolicySourcedPackage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EffectiveGuestPolicySourcedPackage) MarshalJSON() ([]byte, error) {
+func (s EffectiveGuestPolicySourcedPackage) MarshalJSON() ([]byte, error) {
 	type NoMethod EffectiveGuestPolicySourcedPackage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EffectiveGuestPolicySourcedPackageRepository: A guest policy package
@@ -497,9 +497,9 @@ type EffectiveGuestPolicySourcedPackageRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EffectiveGuestPolicySourcedPackageRepository) MarshalJSON() ([]byte, error) {
+func (s EffectiveGuestPolicySourcedPackageRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod EffectiveGuestPolicySourcedPackageRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EffectiveGuestPolicySourcedSoftwareRecipe: A guest policy recipe including
@@ -522,9 +522,9 @@ type EffectiveGuestPolicySourcedSoftwareRecipe struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EffectiveGuestPolicySourcedSoftwareRecipe) MarshalJSON() ([]byte, error) {
+func (s EffectiveGuestPolicySourcedSoftwareRecipe) MarshalJSON() ([]byte, error) {
 	type NoMethod EffectiveGuestPolicySourcedSoftwareRecipe
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -557,9 +557,9 @@ type ExecStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecStep) MarshalJSON() ([]byte, error) {
+func (s ExecStep) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecStepConfig: Common configurations for an ExecStep.
@@ -601,9 +601,9 @@ type ExecStepConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecStepConfig) MarshalJSON() ([]byte, error) {
+func (s ExecStepConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecStepConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExecutePatchJobRequest: A request message to initiate patching across
@@ -642,9 +642,9 @@ type ExecutePatchJobRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExecutePatchJobRequest) MarshalJSON() ([]byte, error) {
+func (s ExecutePatchJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ExecutePatchJobRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FixedOrPercent: Message encapsulating a value that can be either absolute
@@ -668,9 +668,9 @@ type FixedOrPercent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FixedOrPercent) MarshalJSON() ([]byte, error) {
+func (s FixedOrPercent) MarshalJSON() ([]byte, error) {
 	type NoMethod FixedOrPercent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcsObject: Google Cloud Storage object representation.
@@ -696,9 +696,9 @@ type GcsObject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GcsObject) MarshalJSON() ([]byte, error) {
+func (s GcsObject) MarshalJSON() ([]byte, error) {
 	type NoMethod GcsObject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooRepository: Represents a Goo package repository. These is added to a repo
@@ -721,9 +721,9 @@ type GooRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GooRepository) MarshalJSON() ([]byte, error) {
+func (s GooRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod GooRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GooSettings: Googet patching is performed by running `googet update`.
@@ -773,9 +773,9 @@ type GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOsconfigV1__OSPolicyAssignmentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GuestPolicy: An OS Config resource representing a guest configuration
@@ -831,9 +831,9 @@ type GuestPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GuestPolicy) MarshalJSON() ([]byte, error) {
+func (s GuestPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GuestPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGuestPoliciesResponse: A response message for listing guest policies.
@@ -859,9 +859,9 @@ type ListGuestPoliciesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGuestPoliciesResponse) MarshalJSON() ([]byte, error) {
+func (s ListGuestPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGuestPoliciesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPatchDeploymentsResponse: A response message for listing patch
@@ -888,9 +888,9 @@ type ListPatchDeploymentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPatchDeploymentsResponse) MarshalJSON() ([]byte, error) {
+func (s ListPatchDeploymentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPatchDeploymentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPatchJobInstanceDetailsResponse: A response message for listing the
@@ -917,9 +917,9 @@ type ListPatchJobInstanceDetailsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPatchJobInstanceDetailsResponse) MarshalJSON() ([]byte, error) {
+func (s ListPatchJobInstanceDetailsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPatchJobInstanceDetailsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPatchJobsResponse: A response message for listing patch jobs.
@@ -945,9 +945,9 @@ type ListPatchJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPatchJobsResponse) MarshalJSON() ([]byte, error) {
+func (s ListPatchJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPatchJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LookupEffectiveGuestPolicyRequest: A request message for getting the
@@ -978,9 +978,9 @@ type LookupEffectiveGuestPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupEffectiveGuestPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s LookupEffectiveGuestPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupEffectiveGuestPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MonthlySchedule: Represents a monthly schedule. An example of a valid
@@ -1007,9 +1007,9 @@ type MonthlySchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MonthlySchedule) MarshalJSON() ([]byte, error) {
+func (s MonthlySchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod MonthlySchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OSPolicyAssignmentOperationMetadata: OS policy assignment operation metadata
@@ -1055,9 +1055,9 @@ type OSPolicyAssignmentOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OSPolicyAssignmentOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OSPolicyAssignmentOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyAssignmentOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OneTimeSchedule: Sets the time for a one time patch deployment. Timestamp is
@@ -1078,9 +1078,9 @@ type OneTimeSchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OneTimeSchedule) MarshalJSON() ([]byte, error) {
+func (s OneTimeSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod OneTimeSchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Package: Package is a reference to the software package to be installed or
@@ -1141,9 +1141,9 @@ type Package struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Package) MarshalJSON() ([]byte, error) {
+func (s Package) MarshalJSON() ([]byte, error) {
 	type NoMethod Package
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PackageRepository: A package repository.
@@ -1169,9 +1169,9 @@ type PackageRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PackageRepository) MarshalJSON() ([]byte, error) {
+func (s PackageRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod PackageRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PatchConfig: Patch configuration specifications. Contains details on how to
@@ -1223,9 +1223,9 @@ type PatchConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PatchConfig) MarshalJSON() ([]byte, error) {
+func (s PatchConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PatchConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PatchDeployment: Patch deployments are configurations that individual patch
@@ -1290,9 +1290,9 @@ type PatchDeployment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PatchDeployment) MarshalJSON() ([]byte, error) {
+func (s PatchDeployment) MarshalJSON() ([]byte, error) {
 	type NoMethod PatchDeployment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PatchInstanceFilter: A filter to target VM instances for patching. The
@@ -1333,9 +1333,9 @@ type PatchInstanceFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PatchInstanceFilter) MarshalJSON() ([]byte, error) {
+func (s PatchInstanceFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod PatchInstanceFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PatchInstanceFilterGroupLabel: Represents a group of VMs that can be
@@ -1357,9 +1357,9 @@ type PatchInstanceFilterGroupLabel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PatchInstanceFilterGroupLabel) MarshalJSON() ([]byte, error) {
+func (s PatchInstanceFilterGroupLabel) MarshalJSON() ([]byte, error) {
 	type NoMethod PatchInstanceFilterGroupLabel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PatchJob: A high level representation of a patch job that is either in
@@ -1433,9 +1433,9 @@ type PatchJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PatchJob) MarshalJSON() ([]byte, error) {
+func (s PatchJob) MarshalJSON() ([]byte, error) {
 	type NoMethod PatchJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PatchJob) UnmarshalJSON(data []byte) error {
@@ -1503,9 +1503,9 @@ type PatchJobInstanceDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PatchJobInstanceDetails) MarshalJSON() ([]byte, error) {
+func (s PatchJobInstanceDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod PatchJobInstanceDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PatchJobInstanceDetailsSummary: A summary of the current patch state across
@@ -1565,9 +1565,9 @@ type PatchJobInstanceDetailsSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PatchJobInstanceDetailsSummary) MarshalJSON() ([]byte, error) {
+func (s PatchJobInstanceDetailsSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod PatchJobInstanceDetailsSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PatchRollout: Patch rollout configuration specifications. Contains details
@@ -1618,9 +1618,9 @@ type PatchRollout struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PatchRollout) MarshalJSON() ([]byte, error) {
+func (s PatchRollout) MarshalJSON() ([]byte, error) {
 	type NoMethod PatchRollout
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PausePatchDeploymentRequest: A request message for pausing a patch
@@ -1674,9 +1674,9 @@ type RecurringSchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RecurringSchedule) MarshalJSON() ([]byte, error) {
+func (s RecurringSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod RecurringSchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResumePatchDeploymentRequest: A request message for resuming a patch
@@ -1748,9 +1748,9 @@ type SoftwareRecipe struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SoftwareRecipe) MarshalJSON() ([]byte, error) {
+func (s SoftwareRecipe) MarshalJSON() ([]byte, error) {
 	type NoMethod SoftwareRecipe
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SoftwareRecipeArtifact: Specifies a resource to be used in the recipe.
@@ -1780,9 +1780,9 @@ type SoftwareRecipeArtifact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SoftwareRecipeArtifact) MarshalJSON() ([]byte, error) {
+func (s SoftwareRecipeArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod SoftwareRecipeArtifact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SoftwareRecipeArtifactGcs: Specifies an artifact available as a Google Cloud
@@ -1815,9 +1815,9 @@ type SoftwareRecipeArtifactGcs struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SoftwareRecipeArtifactGcs) MarshalJSON() ([]byte, error) {
+func (s SoftwareRecipeArtifactGcs) MarshalJSON() ([]byte, error) {
 	type NoMethod SoftwareRecipeArtifactGcs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SoftwareRecipeArtifactRemote: Specifies an artifact available via some URI.
@@ -1843,9 +1843,9 @@ type SoftwareRecipeArtifactRemote struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SoftwareRecipeArtifactRemote) MarshalJSON() ([]byte, error) {
+func (s SoftwareRecipeArtifactRemote) MarshalJSON() ([]byte, error) {
 	type NoMethod SoftwareRecipeArtifactRemote
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SoftwareRecipeStep: An action that can be taken as part of installing or
@@ -1878,9 +1878,9 @@ type SoftwareRecipeStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SoftwareRecipeStep) MarshalJSON() ([]byte, error) {
+func (s SoftwareRecipeStep) MarshalJSON() ([]byte, error) {
 	type NoMethod SoftwareRecipeStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SoftwareRecipeStepCopyFile: Copies the artifact to the specified path on the
@@ -1916,9 +1916,9 @@ type SoftwareRecipeStepCopyFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SoftwareRecipeStepCopyFile) MarshalJSON() ([]byte, error) {
+func (s SoftwareRecipeStepCopyFile) MarshalJSON() ([]byte, error) {
 	type NoMethod SoftwareRecipeStepCopyFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SoftwareRecipeStepExecFile: Executes an artifact or local file.
@@ -1945,9 +1945,9 @@ type SoftwareRecipeStepExecFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SoftwareRecipeStepExecFile) MarshalJSON() ([]byte, error) {
+func (s SoftwareRecipeStepExecFile) MarshalJSON() ([]byte, error) {
 	type NoMethod SoftwareRecipeStepExecFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SoftwareRecipeStepExtractArchive: Extracts an archive of the type specified
@@ -1986,9 +1986,9 @@ type SoftwareRecipeStepExtractArchive struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SoftwareRecipeStepExtractArchive) MarshalJSON() ([]byte, error) {
+func (s SoftwareRecipeStepExtractArchive) MarshalJSON() ([]byte, error) {
 	type NoMethod SoftwareRecipeStepExtractArchive
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SoftwareRecipeStepInstallDpkg: Installs a deb via dpkg.
@@ -2008,9 +2008,9 @@ type SoftwareRecipeStepInstallDpkg struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SoftwareRecipeStepInstallDpkg) MarshalJSON() ([]byte, error) {
+func (s SoftwareRecipeStepInstallDpkg) MarshalJSON() ([]byte, error) {
 	type NoMethod SoftwareRecipeStepInstallDpkg
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SoftwareRecipeStepInstallMsi: Installs an MSI file.
@@ -2036,9 +2036,9 @@ type SoftwareRecipeStepInstallMsi struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SoftwareRecipeStepInstallMsi) MarshalJSON() ([]byte, error) {
+func (s SoftwareRecipeStepInstallMsi) MarshalJSON() ([]byte, error) {
 	type NoMethod SoftwareRecipeStepInstallMsi
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SoftwareRecipeStepInstallRpm: Installs an rpm file via the rpm utility.
@@ -2058,9 +2058,9 @@ type SoftwareRecipeStepInstallRpm struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SoftwareRecipeStepInstallRpm) MarshalJSON() ([]byte, error) {
+func (s SoftwareRecipeStepInstallRpm) MarshalJSON() ([]byte, error) {
 	type NoMethod SoftwareRecipeStepInstallRpm
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SoftwareRecipeStepRunScript: Runs a script through an interpreter.
@@ -2094,9 +2094,9 @@ type SoftwareRecipeStepRunScript struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SoftwareRecipeStepRunScript) MarshalJSON() ([]byte, error) {
+func (s SoftwareRecipeStepRunScript) MarshalJSON() ([]byte, error) {
 	type NoMethod SoftwareRecipeStepRunScript
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeOfDay: Represents a time of day. The date and time zone are either not
@@ -2127,9 +2127,9 @@ type TimeOfDay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeOfDay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeZone: Represents a time zone from the IANA Time Zone Database
@@ -2152,9 +2152,9 @@ type TimeZone struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeZone) MarshalJSON() ([]byte, error) {
+func (s TimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeZone
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WeekDayOfMonth: Represents one week day in a month. An example is "the 4th
@@ -2196,9 +2196,9 @@ type WeekDayOfMonth struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WeekDayOfMonth) MarshalJSON() ([]byte, error) {
+func (s WeekDayOfMonth) MarshalJSON() ([]byte, error) {
 	type NoMethod WeekDayOfMonth
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WeeklySchedule: Represents a weekly schedule.
@@ -2228,9 +2228,9 @@ type WeeklySchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WeeklySchedule) MarshalJSON() ([]byte, error) {
+func (s WeeklySchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod WeeklySchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WindowsUpdateSettings: Windows patching is performed using the Windows
@@ -2289,9 +2289,9 @@ type WindowsUpdateSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WindowsUpdateSettings) MarshalJSON() ([]byte, error) {
+func (s WindowsUpdateSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod WindowsUpdateSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // YumRepository: Represents a single Yum package repository. This repository
@@ -2322,9 +2322,9 @@ type YumRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *YumRepository) MarshalJSON() ([]byte, error) {
+func (s YumRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod YumRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // YumSettings: Yum patching is performed by executing `yum update`. Additional
@@ -2357,9 +2357,9 @@ type YumSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *YumSettings) MarshalJSON() ([]byte, error) {
+func (s YumSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod YumSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ZypperRepository: Represents a single Zypper package repository. This
@@ -2390,9 +2390,9 @@ type ZypperRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ZypperRepository) MarshalJSON() ([]byte, error) {
+func (s ZypperRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod ZypperRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ZypperSettings: Zypper patching is performed by running `zypper patch`. See
@@ -2427,9 +2427,9 @@ type ZypperSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ZypperSettings) MarshalJSON() ([]byte, error) {
+func (s ZypperSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ZypperSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsGuestPoliciesCreateCall struct {

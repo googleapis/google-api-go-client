@@ -265,9 +265,9 @@ type Connection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Connection) MarshalJSON() ([]byte, error) {
+func (s Connection) MarshalJSON() ([]byte, error) {
 	type NoMethod Connection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -300,9 +300,9 @@ type FetchGitHubInstallationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FetchGitHubInstallationsResponse) MarshalJSON() ([]byte, error) {
+func (s FetchGitHubInstallationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchGitHubInstallationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FetchGitRefsResponse: Response for fetching git refs.
@@ -328,9 +328,9 @@ type FetchGitRefsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FetchGitRefsResponse) MarshalJSON() ([]byte, error) {
+func (s FetchGitRefsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchGitRefsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FetchLinkableGitRepositoriesResponse: Response message for
@@ -358,9 +358,9 @@ type FetchLinkableGitRepositoriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FetchLinkableGitRepositoriesResponse) MarshalJSON() ([]byte, error) {
+func (s FetchLinkableGitRepositoriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchLinkableGitRepositoriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FetchReadTokenRequest: Message for fetching SCM read token.
@@ -394,9 +394,9 @@ type FetchReadTokenResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FetchReadTokenResponse) MarshalJSON() ([]byte, error) {
+func (s FetchReadTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchReadTokenResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FetchReadWriteTokenRequest: Message for fetching SCM read/write token.
@@ -430,9 +430,9 @@ type FetchReadWriteTokenResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FetchReadWriteTokenResponse) MarshalJSON() ([]byte, error) {
+func (s FetchReadWriteTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchReadWriteTokenResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GitHubConfig: Configuration for connections to github.com.
@@ -468,9 +468,9 @@ type GitHubConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GitHubConfig) MarshalJSON() ([]byte, error) {
+func (s GitHubConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GitHubConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GitRepositoryLink: Message describing the GitRepositoryLink object
@@ -517,9 +517,9 @@ type GitRepositoryLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GitRepositoryLink) MarshalJSON() ([]byte, error) {
+func (s GitRepositoryLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GitRepositoryLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Installation: Represents an installation of the GitHub App.
@@ -543,9 +543,9 @@ type Installation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Installation) MarshalJSON() ([]byte, error) {
+func (s Installation) MarshalJSON() ([]byte, error) {
 	type NoMethod Installation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstallationState: Describes stage and necessary actions to be taken by the
@@ -584,9 +584,9 @@ type InstallationState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstallationState) MarshalJSON() ([]byte, error) {
+func (s InstallationState) MarshalJSON() ([]byte, error) {
 	type NoMethod InstallationState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LinkableGitRepository: LinkableGitRepository represents a git repository
@@ -607,9 +607,9 @@ type LinkableGitRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LinkableGitRepository) MarshalJSON() ([]byte, error) {
+func (s LinkableGitRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod LinkableGitRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListConnectionsResponse: Message for response to listing Connections
@@ -637,9 +637,9 @@ type ListConnectionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListConnectionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListConnectionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListConnectionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGitRepositoryLinksResponse: Message for response to listing
@@ -668,9 +668,9 @@ type ListGitRepositoryLinksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGitRepositoryLinksResponse) MarshalJSON() ([]byte, error) {
+func (s ListGitRepositoryLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGitRepositoryLinksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -696,9 +696,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -724,9 +724,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -762,9 +762,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OAuthCredential: Represents an OAuth token of the account that authorized
@@ -789,9 +789,9 @@ type OAuthCredential struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OAuthCredential) MarshalJSON() ([]byte, error) {
+func (s OAuthCredential) MarshalJSON() ([]byte, error) {
 	type NoMethod OAuthCredential
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -836,9 +836,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -874,9 +874,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -908,9 +908,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {

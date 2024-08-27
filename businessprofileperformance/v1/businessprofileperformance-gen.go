@@ -240,9 +240,9 @@ type DailyMetricTimeSeries struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DailyMetricTimeSeries) MarshalJSON() ([]byte, error) {
+func (s DailyMetricTimeSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod DailyMetricTimeSeries
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DailySubEntityType: Represents all possible subentity types that are
@@ -277,9 +277,9 @@ type DailySubEntityType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DailySubEntityType) MarshalJSON() ([]byte, error) {
+func (s DailySubEntityType) MarshalJSON() ([]byte, error) {
 	type NoMethod DailySubEntityType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a birthday. The
@@ -315,9 +315,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatedValue: Represents a single datapoint in the timeseries, where each
@@ -342,9 +342,9 @@ type DatedValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatedValue) MarshalJSON() ([]byte, error) {
+func (s DatedValue) MarshalJSON() ([]byte, error) {
 	type NoMethod DatedValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FetchMultiDailyMetricsTimeSeriesResponse: Represents the response for
@@ -369,9 +369,9 @@ type FetchMultiDailyMetricsTimeSeriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FetchMultiDailyMetricsTimeSeriesResponse) MarshalJSON() ([]byte, error) {
+func (s FetchMultiDailyMetricsTimeSeriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchMultiDailyMetricsTimeSeriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetDailyMetricsTimeSeriesResponse: Represents the response for
@@ -395,9 +395,9 @@ type GetDailyMetricsTimeSeriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetDailyMetricsTimeSeriesResponse) MarshalJSON() ([]byte, error) {
+func (s GetDailyMetricsTimeSeriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetDailyMetricsTimeSeriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InsightsValue: Represents an insights value.
@@ -419,9 +419,9 @@ type InsightsValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InsightsValue) MarshalJSON() ([]byte, error) {
+func (s InsightsValue) MarshalJSON() ([]byte, error) {
 	type NoMethod InsightsValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSearchKeywordImpressionsMonthlyResponse: Represents the response for
@@ -449,9 +449,9 @@ type ListSearchKeywordImpressionsMonthlyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSearchKeywordImpressionsMonthlyResponse) MarshalJSON() ([]byte, error) {
+func (s ListSearchKeywordImpressionsMonthlyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSearchKeywordImpressionsMonthlyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MultiDailyMetricTimeSeries: Represents a list of tuples of
@@ -472,9 +472,9 @@ type MultiDailyMetricTimeSeries struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MultiDailyMetricTimeSeries) MarshalJSON() ([]byte, error) {
+func (s MultiDailyMetricTimeSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod MultiDailyMetricTimeSeries
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchKeywordCount: Represents a single search keyword and its value.
@@ -498,9 +498,9 @@ type SearchKeywordCount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchKeywordCount) MarshalJSON() ([]byte, error) {
+func (s SearchKeywordCount) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchKeywordCount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeOfDay: Represents a time of day. The date and time zone are either not
@@ -531,9 +531,9 @@ type TimeOfDay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeOfDay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeSeries: Represents a timeseries.
@@ -554,9 +554,9 @@ type TimeSeries struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeSeries) MarshalJSON() ([]byte, error) {
+func (s TimeSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeSeries
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LocationsFetchMultiDailyMetricsTimeSeriesCall struct {

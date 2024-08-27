@@ -193,9 +193,9 @@ type CreateOrUpdateTagsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateOrUpdateTagsRequest) MarshalJSON() ([]byte, error) {
+func (s CreateOrUpdateTagsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateOrUpdateTagsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateOrUpdateTagsResponse: Response message for CreateOrUpdateTags.
@@ -218,9 +218,9 @@ type CreateOrUpdateTagsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateOrUpdateTagsResponse) MarshalJSON() ([]byte, error) {
+func (s CreateOrUpdateTagsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateOrUpdateTagsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Tag: A tag is associated with exactly one package name and user.
@@ -248,9 +248,9 @@ type Tag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Tag) MarshalJSON() ([]byte, error) {
+func (s Tag) MarshalJSON() ([]byte, error) {
 	type NoMethod Tag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VerifyTokenRequest: Request message for VerifyToken.
@@ -271,9 +271,9 @@ type VerifyTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VerifyTokenRequest) MarshalJSON() ([]byte, error) {
+func (s VerifyTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VerifyTokenResponse: Response message for VerifyToken.

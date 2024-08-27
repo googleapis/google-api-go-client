@@ -39,6 +39,7 @@ func TestAPIs(t *testing.T) {
 		"json-body",
 		"mapofany",
 		"mapofarrayofobjects",
+		"mapprotostruct",
 		"mapofint64strings",
 		"mapofobjects",
 		"mapofstrings-1",

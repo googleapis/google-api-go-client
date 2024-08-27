@@ -229,9 +229,9 @@ type GoogleHomeEnterpriseSdmV1Device struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleHomeEnterpriseSdmV1Device) MarshalJSON() ([]byte, error) {
+func (s GoogleHomeEnterpriseSdmV1Device) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleHomeEnterpriseSdmV1Device
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest: Request message for
@@ -255,9 +255,9 @@ type GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse: Response message for
@@ -281,9 +281,9 @@ type GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleHomeEnterpriseSdmV1ListDevicesResponse: Response message for
@@ -307,9 +307,9 @@ type GoogleHomeEnterpriseSdmV1ListDevicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleHomeEnterpriseSdmV1ListDevicesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleHomeEnterpriseSdmV1ListDevicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleHomeEnterpriseSdmV1ListDevicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleHomeEnterpriseSdmV1ListRoomsResponse: Response message for
@@ -333,9 +333,9 @@ type GoogleHomeEnterpriseSdmV1ListRoomsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleHomeEnterpriseSdmV1ListRoomsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleHomeEnterpriseSdmV1ListRoomsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleHomeEnterpriseSdmV1ListRoomsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleHomeEnterpriseSdmV1ListStructuresResponse: Response message for
@@ -359,9 +359,9 @@ type GoogleHomeEnterpriseSdmV1ListStructuresResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleHomeEnterpriseSdmV1ListStructuresResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleHomeEnterpriseSdmV1ListStructuresResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleHomeEnterpriseSdmV1ListStructuresResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleHomeEnterpriseSdmV1ParentRelation: Represents device relationships,
@@ -387,9 +387,9 @@ type GoogleHomeEnterpriseSdmV1ParentRelation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleHomeEnterpriseSdmV1ParentRelation) MarshalJSON() ([]byte, error) {
+func (s GoogleHomeEnterpriseSdmV1ParentRelation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleHomeEnterpriseSdmV1ParentRelation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleHomeEnterpriseSdmV1Room: Room resource represents an instance of
@@ -417,9 +417,9 @@ type GoogleHomeEnterpriseSdmV1Room struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleHomeEnterpriseSdmV1Room) MarshalJSON() ([]byte, error) {
+func (s GoogleHomeEnterpriseSdmV1Room) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleHomeEnterpriseSdmV1Room
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleHomeEnterpriseSdmV1Structure: Structure resource represents an
@@ -446,9 +446,9 @@ type GoogleHomeEnterpriseSdmV1Structure struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleHomeEnterpriseSdmV1Structure) MarshalJSON() ([]byte, error) {
+func (s GoogleHomeEnterpriseSdmV1Structure) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleHomeEnterpriseSdmV1Structure
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EnterprisesDevicesExecuteCommandCall struct {

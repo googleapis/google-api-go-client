@@ -255,9 +255,9 @@ type DatabaseInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatabaseInstance) MarshalJSON() ([]byte, error) {
+func (s DatabaseInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DisableDatabaseInstanceRequest: The request sent to the
@@ -293,9 +293,9 @@ type ListDatabaseInstancesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDatabaseInstancesResponse) MarshalJSON() ([]byte, error) {
+func (s ListDatabaseInstancesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDatabaseInstancesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReenableDatabaseInstanceRequest: The request sent to the

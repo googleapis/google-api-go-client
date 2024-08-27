@@ -206,9 +206,9 @@ type AcknowledgeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AcknowledgeRequest) MarshalJSON() ([]byte, error) {
+func (s AcknowledgeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AcknowledgeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: An empty message that you can re-use to avoid defining duplicated
@@ -254,9 +254,9 @@ type Label struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Label) MarshalJSON() ([]byte, error) {
+func (s Label) MarshalJSON() ([]byte, error) {
 	type NoMethod Label
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSubscriptionsResponse: Response for the ListSubscriptions method.
@@ -283,9 +283,9 @@ type ListSubscriptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSubscriptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTopicsResponse: Response for the ListTopics method.
@@ -312,9 +312,9 @@ type ListTopicsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTopicsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTopicsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTopicsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyAckDeadlineRequest: Request for the ModifyAckDeadline method.
@@ -347,9 +347,9 @@ type ModifyAckDeadlineRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyAckDeadlineRequest) MarshalJSON() ([]byte, error) {
+func (s ModifyAckDeadlineRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyAckDeadlineRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ModifyPushConfigRequest: Request for the ModifyPushConfig method.
@@ -372,9 +372,9 @@ type ModifyPushConfigRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
+func (s ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyPushConfigRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PublishBatchRequest: Request for the PublishBatch method.
@@ -396,9 +396,9 @@ type PublishBatchRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PublishBatchRequest) MarshalJSON() ([]byte, error) {
+func (s PublishBatchRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishBatchRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PublishBatchResponse: Response for the PublishBatch method.
@@ -423,9 +423,9 @@ type PublishBatchResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PublishBatchResponse) MarshalJSON() ([]byte, error) {
+func (s PublishBatchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishBatchResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PublishRequest: Request for the Publish method.
@@ -447,9 +447,9 @@ type PublishRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PublishRequest) MarshalJSON() ([]byte, error) {
+func (s PublishRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PubsubEvent: An event indicating a received message or truncation event.
@@ -477,9 +477,9 @@ type PubsubEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PubsubEvent) MarshalJSON() ([]byte, error) {
+func (s PubsubEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PubsubMessage: A message data and its labels.
@@ -510,9 +510,9 @@ type PubsubMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
+func (s PubsubMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PullBatchRequest: Request for the PullBatch method.
@@ -541,9 +541,9 @@ type PullBatchRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PullBatchRequest) MarshalJSON() ([]byte, error) {
+func (s PullBatchRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PullBatchRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PullBatchResponse: Response for the PullBatch method.
@@ -569,9 +569,9 @@ type PullBatchResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PullBatchResponse) MarshalJSON() ([]byte, error) {
+func (s PullBatchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PullBatchResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PullRequest: Request for the Pull method.
@@ -597,9 +597,9 @@ type PullRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PullRequest) MarshalJSON() ([]byte, error) {
+func (s PullRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PullRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PullResponse: Either a PubsubMessage or a truncation event. One of these two
@@ -625,9 +625,9 @@ type PullResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PullResponse) MarshalJSON() ([]byte, error) {
+func (s PullResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PullResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PushConfig: Configuration for a push delivery endpoint.
@@ -649,9 +649,9 @@ type PushConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PushConfig) MarshalJSON() ([]byte, error) {
+func (s PushConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PushConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Subscription: A subscription resource.
@@ -695,9 +695,9 @@ type Subscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Subscription) MarshalJSON() ([]byte, error) {
+func (s Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod Subscription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Topic: A topic resource.
@@ -720,9 +720,9 @@ type Topic struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Topic) MarshalJSON() ([]byte, error) {
+func (s Topic) MarshalJSON() ([]byte, error) {
 	type NoMethod Topic
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SubscriptionsAcknowledgeCall struct {

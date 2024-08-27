@@ -411,9 +411,9 @@ type AptArtifact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AptArtifact) MarshalJSON() ([]byte, error) {
+func (s AptArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod AptArtifact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AptRepository: Configuration for an Apt remote repository.
@@ -436,9 +436,9 @@ type AptRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AptRepository) MarshalJSON() ([]byte, error) {
+func (s AptRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod AptRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchDeleteVersionsMetadata: The metadata of an LRO from deleting multiple
@@ -459,9 +459,9 @@ type BatchDeleteVersionsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchDeleteVersionsMetadata) MarshalJSON() ([]byte, error) {
+func (s BatchDeleteVersionsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchDeleteVersionsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchDeleteVersionsRequest: The request to delete multiple versions across a
@@ -486,9 +486,9 @@ type BatchDeleteVersionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchDeleteVersionsRequest) MarshalJSON() ([]byte, error) {
+func (s BatchDeleteVersionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchDeleteVersionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -585,9 +585,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CleanupPolicy: Artifact policy configuration for repository cleanup
@@ -620,9 +620,9 @@ type CleanupPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CleanupPolicy) MarshalJSON() ([]byte, error) {
+func (s CleanupPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod CleanupPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CleanupPolicyCondition: CleanupPolicyCondition is a set of conditions
@@ -662,9 +662,9 @@ type CleanupPolicyCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CleanupPolicyCondition) MarshalJSON() ([]byte, error) {
+func (s CleanupPolicyCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod CleanupPolicyCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CleanupPolicyMostRecentVersions: CleanupPolicyMostRecentVersions is an
@@ -689,9 +689,9 @@ type CleanupPolicyMostRecentVersions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CleanupPolicyMostRecentVersions) MarshalJSON() ([]byte, error) {
+func (s CleanupPolicyMostRecentVersions) MarshalJSON() ([]byte, error) {
 	type NoMethod CleanupPolicyMostRecentVersions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DockerImage: DockerImage represents a docker artifact. The following fields
@@ -748,9 +748,9 @@ type DockerImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DockerImage) MarshalJSON() ([]byte, error) {
+func (s DockerImage) MarshalJSON() ([]byte, error) {
 	type NoMethod DockerImage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DockerRepository: Configuration for a Docker remote repository.
@@ -777,9 +777,9 @@ type DockerRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DockerRepository) MarshalJSON() ([]byte, error) {
+func (s DockerRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod DockerRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DockerRepositoryConfig: DockerRepositoryConfig is docker related repository
@@ -803,9 +803,9 @@ type DockerRepositoryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DockerRepositoryConfig) MarshalJSON() ([]byte, error) {
+func (s DockerRepositoryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DockerRepositoryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DownloadFileResponse: The response to download a file.
@@ -866,9 +866,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenericArtifact: GenericArtifact represents a generic artifact
@@ -897,9 +897,9 @@ type GenericArtifact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenericArtifact) MarshalJSON() ([]byte, error) {
+func (s GenericArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod GenericArtifact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoModule: GoModule represents a Go module.
@@ -926,9 +926,9 @@ type GoModule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoModule) MarshalJSON() ([]byte, error) {
+func (s GoModule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoModule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogetArtifact: A detailed representation of a GooGet artifact.
@@ -952,9 +952,9 @@ type GoogetArtifact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogetArtifact) MarshalJSON() ([]byte, error) {
+func (s GoogetArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogetArtifact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDevtoolsArtifactregistryV1File: Files store content that is
@@ -993,9 +993,9 @@ type GoogleDevtoolsArtifactregistryV1File struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDevtoolsArtifactregistryV1File) MarshalJSON() ([]byte, error) {
+func (s GoogleDevtoolsArtifactregistryV1File) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsArtifactregistryV1File
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryCustomRepo
@@ -1017,9 +1017,9 @@ type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryCustomRe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
+func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryCustomRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPublicRepo
@@ -1050,9 +1050,9 @@ type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPublicRe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPublicRepository) MarshalJSON() ([]byte, error) {
+func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPublicRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPublicRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepositoryCustomR
@@ -1074,9 +1074,9 @@ type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepositoryCusto
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
+func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepositoryCustomRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryCustomRe
@@ -1098,9 +1098,9 @@ type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryCustom
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
+func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryCustomRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCustomRepo
@@ -1122,9 +1122,9 @@ type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCustomRe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
+func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCustomRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepositoryCustomR
@@ -1146,9 +1146,9 @@ type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepositoryCusto
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
+func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepositoryCustomRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryCustomRepo
@@ -1170,9 +1170,9 @@ type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryCustomRe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
+func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryCustomRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryPublicRepo
@@ -1206,9 +1206,9 @@ type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryPublicRe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryPublicRepository) MarshalJSON() ([]byte, error) {
+func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryPublicRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryPublicRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Hash: A hash of file content.
@@ -1235,9 +1235,9 @@ type Hash struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Hash) MarshalJSON() ([]byte, error) {
+func (s Hash) MarshalJSON() ([]byte, error) {
 	type NoMethod Hash
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportAptArtifactsErrorInfo: Error information explaining why a package was
@@ -1260,9 +1260,9 @@ type ImportAptArtifactsErrorInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportAptArtifactsErrorInfo) MarshalJSON() ([]byte, error) {
+func (s ImportAptArtifactsErrorInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportAptArtifactsErrorInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportAptArtifactsGcsSource: Google Cloud Storage location where the
@@ -1286,9 +1286,9 @@ type ImportAptArtifactsGcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportAptArtifactsGcsSource) MarshalJSON() ([]byte, error) {
+func (s ImportAptArtifactsGcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportAptArtifactsGcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportAptArtifactsMetadata: The operation metadata for importing artifacts.
@@ -1312,9 +1312,9 @@ type ImportAptArtifactsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportAptArtifactsRequest) MarshalJSON() ([]byte, error) {
+func (s ImportAptArtifactsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportAptArtifactsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportAptArtifactsResponse: The response message from importing APT
@@ -1337,9 +1337,9 @@ type ImportAptArtifactsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportAptArtifactsResponse) MarshalJSON() ([]byte, error) {
+func (s ImportAptArtifactsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportAptArtifactsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportGoogetArtifactsErrorInfo: Error information explaining why a package
@@ -1362,9 +1362,9 @@ type ImportGoogetArtifactsErrorInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportGoogetArtifactsErrorInfo) MarshalJSON() ([]byte, error) {
+func (s ImportGoogetArtifactsErrorInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportGoogetArtifactsErrorInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportGoogetArtifactsGcsSource: Google Cloud Storage location where the
@@ -1388,9 +1388,9 @@ type ImportGoogetArtifactsGcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportGoogetArtifactsGcsSource) MarshalJSON() ([]byte, error) {
+func (s ImportGoogetArtifactsGcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportGoogetArtifactsGcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportGoogetArtifactsMetadata: The operation metadata for importing
@@ -1415,9 +1415,9 @@ type ImportGoogetArtifactsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportGoogetArtifactsRequest) MarshalJSON() ([]byte, error) {
+func (s ImportGoogetArtifactsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportGoogetArtifactsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportGoogetArtifactsResponse: The response message from importing
@@ -1440,9 +1440,9 @@ type ImportGoogetArtifactsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportGoogetArtifactsResponse) MarshalJSON() ([]byte, error) {
+func (s ImportGoogetArtifactsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportGoogetArtifactsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportYumArtifactsErrorInfo: Error information explaining why a package was
@@ -1465,9 +1465,9 @@ type ImportYumArtifactsErrorInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportYumArtifactsErrorInfo) MarshalJSON() ([]byte, error) {
+func (s ImportYumArtifactsErrorInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportYumArtifactsErrorInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportYumArtifactsGcsSource: Google Cloud Storage location where the
@@ -1491,9 +1491,9 @@ type ImportYumArtifactsGcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportYumArtifactsGcsSource) MarshalJSON() ([]byte, error) {
+func (s ImportYumArtifactsGcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportYumArtifactsGcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportYumArtifactsMetadata: The operation metadata for importing artifacts.
@@ -1517,9 +1517,9 @@ type ImportYumArtifactsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportYumArtifactsRequest) MarshalJSON() ([]byte, error) {
+func (s ImportYumArtifactsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportYumArtifactsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportYumArtifactsResponse: The response message from importing YUM
@@ -1542,9 +1542,9 @@ type ImportYumArtifactsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportYumArtifactsResponse) MarshalJSON() ([]byte, error) {
+func (s ImportYumArtifactsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportYumArtifactsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KfpArtifact: A detailed representation of a KFP artifact.
@@ -1571,9 +1571,9 @@ type KfpArtifact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KfpArtifact) MarshalJSON() ([]byte, error) {
+func (s KfpArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod KfpArtifact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDockerImagesResponse: The response from listing docker images.
@@ -1599,9 +1599,9 @@ type ListDockerImagesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDockerImagesResponse) MarshalJSON() ([]byte, error) {
+func (s ListDockerImagesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDockerImagesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListFilesResponse: The response from listing files.
@@ -1627,9 +1627,9 @@ type ListFilesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListFilesResponse) MarshalJSON() ([]byte, error) {
+func (s ListFilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFilesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -1655,9 +1655,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMavenArtifactsResponse: The response from listing maven artifacts.
@@ -1683,9 +1683,9 @@ type ListMavenArtifactsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMavenArtifactsResponse) MarshalJSON() ([]byte, error) {
+func (s ListMavenArtifactsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMavenArtifactsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListNpmPackagesResponse: The response from listing npm packages.
@@ -1711,9 +1711,9 @@ type ListNpmPackagesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListNpmPackagesResponse) MarshalJSON() ([]byte, error) {
+func (s ListNpmPackagesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListNpmPackagesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPackagesResponse: The response from listing packages.
@@ -1739,9 +1739,9 @@ type ListPackagesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPackagesResponse) MarshalJSON() ([]byte, error) {
+func (s ListPackagesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPackagesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPythonPackagesResponse: The response from listing python packages.
@@ -1767,9 +1767,9 @@ type ListPythonPackagesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPythonPackagesResponse) MarshalJSON() ([]byte, error) {
+func (s ListPythonPackagesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPythonPackagesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRepositoriesResponse: The response from listing repositories.
@@ -1795,9 +1795,9 @@ type ListRepositoriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRepositoriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListRepositoriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRepositoriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTagsResponse: The response from listing tags.
@@ -1823,9 +1823,9 @@ type ListTagsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTagsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTagsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTagsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVersionsResponse: The response from listing versions.
@@ -1851,9 +1851,9 @@ type ListVersionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVersionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -1889,9 +1889,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MavenArtifact: MavenArtifact represents a maven artifact.
@@ -1933,9 +1933,9 @@ type MavenArtifact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MavenArtifact) MarshalJSON() ([]byte, error) {
+func (s MavenArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod MavenArtifact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MavenRepository: Configuration for a Maven remote repository.
@@ -1962,9 +1962,9 @@ type MavenRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MavenRepository) MarshalJSON() ([]byte, error) {
+func (s MavenRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod MavenRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MavenRepositoryConfig: MavenRepositoryConfig is maven related repository
@@ -1997,9 +1997,9 @@ type MavenRepositoryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MavenRepositoryConfig) MarshalJSON() ([]byte, error) {
+func (s MavenRepositoryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MavenRepositoryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NpmPackage: NpmPackage represents an npm artifact.
@@ -2037,9 +2037,9 @@ type NpmPackage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NpmPackage) MarshalJSON() ([]byte, error) {
+func (s NpmPackage) MarshalJSON() ([]byte, error) {
 	type NoMethod NpmPackage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NpmRepository: Configuration for a Npm remote repository.
@@ -2066,9 +2066,9 @@ type NpmRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NpmRepository) MarshalJSON() ([]byte, error) {
+func (s NpmRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod NpmRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -2113,9 +2113,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Metadata type for longrunning-operations, currently
@@ -2154,9 +2154,9 @@ type Package struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Package) MarshalJSON() ([]byte, error) {
+func (s Package) MarshalJSON() ([]byte, error) {
 	type NoMethod Package
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -2244,9 +2244,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProjectSettings: The Artifact Registry settings that apply to a Project.
@@ -2262,11 +2262,16 @@ type ProjectSettings struct {
 	// finalized so cannot be reverted.
 	//   "REDIRECTION_FROM_GCR_IO_ENABLED_AND_COPYING" - Redirection is enabled and
 	// missing images are copied from GCR
+	//   "REDIRECTION_FROM_GCR_IO_PARTIAL_AND_COPYING" - Redirection is partially
+	// enabled and missing images are copied from GCR
 	LegacyRedirectionState string `json:"legacyRedirectionState,omitempty"`
 	// Name: The name of the project's settings. Always of the form:
 	// projects/{project-id}/projectSettings In update request: never set In
 	// response: always set
 	Name string `json:"name,omitempty"`
+	// PullPercent: The percentage of pull traffic to redirect from GCR to AR when
+	// using partial redirection.
+	PullPercent int64 `json:"pullPercent,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2283,9 +2288,14 @@ type ProjectSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProjectSettings) MarshalJSON() ([]byte, error) {
+func (s ProjectSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ProjectSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PromoteArtifactMetadata: The metadata for promote artifact long running
+// operation.
+type PromoteArtifactMetadata struct {
 }
 
 // PythonPackage: PythonPackage represents a python artifact.
@@ -2326,9 +2336,9 @@ type PythonPackage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PythonPackage) MarshalJSON() ([]byte, error) {
+func (s PythonPackage) MarshalJSON() ([]byte, error) {
 	type NoMethod PythonPackage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PythonRepository: Configuration for a Python remote repository.
@@ -2355,9 +2365,9 @@ type PythonRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PythonRepository) MarshalJSON() ([]byte, error) {
+func (s PythonRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod PythonRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemoteRepositoryConfig: Remote repository configuration.
@@ -2396,9 +2406,9 @@ type RemoteRepositoryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoteRepositoryConfig) MarshalJSON() ([]byte, error) {
+func (s RemoteRepositoryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteRepositoryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Repository: A Repository for storing artifacts with a specific format.
@@ -2498,9 +2508,9 @@ type Repository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Repository) MarshalJSON() ([]byte, error) {
+func (s Repository) MarshalJSON() ([]byte, error) {
 	type NoMethod Repository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -2523,9 +2533,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -2557,9 +2567,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Tag: Tags point to a version and represent an alternative name that can be
@@ -2592,9 +2602,9 @@ type Tag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Tag) MarshalJSON() ([]byte, error) {
+func (s Tag) MarshalJSON() ([]byte, error) {
 	type NoMethod Tag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -2617,9 +2627,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -2644,9 +2654,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UploadAptArtifactMediaResponse: The response to upload an artifact.
@@ -2669,9 +2679,9 @@ type UploadAptArtifactMediaResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UploadAptArtifactMediaResponse) MarshalJSON() ([]byte, error) {
+func (s UploadAptArtifactMediaResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadAptArtifactMediaResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UploadAptArtifactMetadata: The operation metadata for uploading artifacts.
@@ -2701,9 +2711,9 @@ type UploadAptArtifactResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UploadAptArtifactResponse) MarshalJSON() ([]byte, error) {
+func (s UploadAptArtifactResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadAptArtifactResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UploadGenericArtifactMediaResponse: The response to upload a generic
@@ -2727,9 +2737,9 @@ type UploadGenericArtifactMediaResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UploadGenericArtifactMediaResponse) MarshalJSON() ([]byte, error) {
+func (s UploadGenericArtifactMediaResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadGenericArtifactMediaResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UploadGenericArtifactMetadata: The operation metadata for uploading generic
@@ -2747,9 +2757,9 @@ type UploadGenericArtifactRequest struct {
 	// characters, i.e. [a-zA-Z0-9-_.~@].
 	Filename string `json:"filename,omitempty"`
 	// PackageId: The ID of the package of the generic artifact. If the package
-	// does not exist, a new package will be created. The `package_id` must start
-	// with a letter, end with a letter or number, only contain letters, numbers,
-	// hyphens and periods i.e. [a-z0-9-.], and cannot exceed 256 characters.
+	// does not exist, a new package will be created. The `package_id` should start
+	// and end with a letter or number, only contain letters, numbers, hyphens,
+	// underscores, and periods, and not exceed 256 characters.
 	PackageId string `json:"packageId,omitempty"`
 	// VersionId: The ID of the version of the generic artifact. If the version
 	// does not exist, a new version will be created. The version_id must start and
@@ -2770,9 +2780,9 @@ type UploadGenericArtifactRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UploadGenericArtifactRequest) MarshalJSON() ([]byte, error) {
+func (s UploadGenericArtifactRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadGenericArtifactRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UploadGoModuleMediaResponse: The response to upload a Go module.
@@ -2795,9 +2805,9 @@ type UploadGoModuleMediaResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UploadGoModuleMediaResponse) MarshalJSON() ([]byte, error) {
+func (s UploadGoModuleMediaResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadGoModuleMediaResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UploadGoModuleMetadata: The operation metadata for uploading go modules.
@@ -2828,9 +2838,9 @@ type UploadGoogetArtifactMediaResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UploadGoogetArtifactMediaResponse) MarshalJSON() ([]byte, error) {
+func (s UploadGoogetArtifactMediaResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadGoogetArtifactMediaResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UploadGoogetArtifactMetadata: The operation metadata for uploading
@@ -2861,9 +2871,9 @@ type UploadGoogetArtifactResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UploadGoogetArtifactResponse) MarshalJSON() ([]byte, error) {
+func (s UploadGoogetArtifactResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadGoogetArtifactResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UploadKfpArtifactMediaResponse: The response to upload an artifact.
@@ -2886,9 +2896,9 @@ type UploadKfpArtifactMediaResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UploadKfpArtifactMediaResponse) MarshalJSON() ([]byte, error) {
+func (s UploadKfpArtifactMediaResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadKfpArtifactMediaResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UploadKfpArtifactMetadata: The operation metadata for uploading KFP
@@ -2915,9 +2925,9 @@ type UploadKfpArtifactRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UploadKfpArtifactRequest) MarshalJSON() ([]byte, error) {
+func (s UploadKfpArtifactRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadKfpArtifactRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UploadYumArtifactMediaResponse: The response to upload an artifact.
@@ -2940,9 +2950,9 @@ type UploadYumArtifactMediaResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UploadYumArtifactMediaResponse) MarshalJSON() ([]byte, error) {
+func (s UploadYumArtifactMediaResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadYumArtifactMediaResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UploadYumArtifactMetadata: The operation metadata for uploading artifacts.
@@ -2972,9 +2982,9 @@ type UploadYumArtifactResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UploadYumArtifactResponse) MarshalJSON() ([]byte, error) {
+func (s UploadYumArtifactResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadYumArtifactResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpstreamCredentials: The credentials to access the remote repository.
@@ -2995,9 +3005,9 @@ type UpstreamCredentials struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpstreamCredentials) MarshalJSON() ([]byte, error) {
+func (s UpstreamCredentials) MarshalJSON() ([]byte, error) {
 	type NoMethod UpstreamCredentials
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpstreamPolicy: Artifact policy configuration for the repository contents.
@@ -3023,9 +3033,9 @@ type UpstreamPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpstreamPolicy) MarshalJSON() ([]byte, error) {
+func (s UpstreamPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod UpstreamPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UsernamePasswordCredentials: Username and password credentials.
@@ -3049,9 +3059,9 @@ type UsernamePasswordCredentials struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UsernamePasswordCredentials) MarshalJSON() ([]byte, error) {
+func (s UsernamePasswordCredentials) MarshalJSON() ([]byte, error) {
 	type NoMethod UsernamePasswordCredentials
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VPCSCConfig: The Artifact Registry VPC SC config that apply to a Project.
@@ -3088,9 +3098,9 @@ type VPCSCConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VPCSCConfig) MarshalJSON() ([]byte, error) {
+func (s VPCSCConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VPCSCConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Version: The body of a version resource. A version resource represents a
@@ -3133,9 +3143,9 @@ type Version struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Version) MarshalJSON() ([]byte, error) {
+func (s Version) MarshalJSON() ([]byte, error) {
 	type NoMethod Version
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VirtualRepositoryConfig: Virtual repository configuration.
@@ -3157,9 +3167,9 @@ type VirtualRepositoryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VirtualRepositoryConfig) MarshalJSON() ([]byte, error) {
+func (s VirtualRepositoryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VirtualRepositoryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // YumArtifact: A detailed representation of a Yum artifact.
@@ -3190,9 +3200,9 @@ type YumArtifact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *YumArtifact) MarshalJSON() ([]byte, error) {
+func (s YumArtifact) MarshalJSON() ([]byte, error) {
 	type NoMethod YumArtifact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // YumRepository: Configuration for a Yum remote repository.
@@ -3215,9 +3225,9 @@ type YumRepository struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *YumRepository) MarshalJSON() ([]byte, error) {
+func (s YumRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod YumRepository
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsGetProjectSettingsCall struct {
@@ -5814,11 +5824,36 @@ func (r *ProjectsLocationsRepositoriesFilesService) List(parent string) *Project
 
 // Filter sets the optional parameter "filter": An expression for filtering the
 // results of the request. Filter rules are case insensitive. The fields
-// eligible for filtering are: * `name` * `owner` An example of using a filter:
-// * `name="projects/p1/locations/us-central1/repositories/repo1/files/a/b/*"
-// --> Files with an ID starting with "a/b/". *
-// `owner="projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/ve
-// rsions/1.0" --> Files owned by the version `1.0` in package `pkg1`.
+// eligible for filtering are: * `name` * `owner` * `annotations` Examples of
+// using a filter: To filter the results of your request to files with the name
+// "my_file.txt" in project my-project in the us-central region, in repository
+// my-repo, append the following filter expression to your request: *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/files/m
+// y-file.txt" You can also use wildcards to match any number of characters
+// before or after the value: *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/files/m
+// y-*" *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/files/*
+// file.txt" *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/files/*
+// file*" To filter the results of your request to files owned by the version
+// `1.0` in package `pkg1`, append the following filter expression to your
+// request: *
+// `owner="projects/my-project/locations/us-central1/repositories/my-repo/packag
+// es/my-package/versions/1.0" To filter the results of your request to files
+// with the annotation key-value pair [`external_link`:`external_link_value`],
+// append the following filter expression to your request: *
+// "annotations.external_link:external_link_value" To filter just for a
+// specific annotation key `external_link`, append the following filter
+// expression to your request: * "annotations.external_link" If the annotation
+// key or value contains special characters, you can escape them by surrounding
+// the value with backticks. For example, to filter the results of your request
+// to files with the annotation key-value pair
+// [`external.link`:`https://example.com/my-file`], append the following filter
+// expression to your request: *
+// "annotations.`external.link`:`https://example.com/my-file" You can also
+// filter with annotations with a wildcard to match any number of characters
+// before or after the value: * "annotations.*_link:`*example.com*"
 func (c *ProjectsLocationsRepositoriesFilesListCall) Filter(filter string) *ProjectsLocationsRepositoriesFilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -8042,10 +8077,23 @@ func (r *ProjectsLocationsRepositoriesPackagesTagsService) List(parent string) *
 
 // Filter sets the optional parameter "filter": An expression for filtering the
 // results of the request. Filter rules are case insensitive. The fields
-// eligible for filtering are: * `version` An example of using a filter: *
-// `version="projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/
-// versions/1.0" --> Tags that are applied to the version `1.0` in package
-// `pkg1`.
+// eligible for filtering are: * `name` * `version` Examples of using a filter:
+// To filter the results of your request to tags with the name "my-tag" in
+// package "my-package" in repository "my-repo" in project "my-project" in the
+// us-central region, append the following filter expression to your request: *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/my-package/tags/my-tag" You can also use wildcards to match any number of
+// characters before or after the value: *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/my-package/tags/my*" *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/my-package/tags/*tag" *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/my-package/tags/*tag*" To filter the results of your request to tags
+// applied to the version `1.0` in package `my-package`, append the following
+// filter expression to your request: *
+// `version="projects/my-project/locations/us-central1/repositories/my-repo/pack
+// ages/my-package/versions/1.0"
 func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) Filter(filter string) *ProjectsLocationsRepositoriesPackagesTagsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

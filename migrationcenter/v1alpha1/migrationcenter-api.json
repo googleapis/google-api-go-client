@@ -541,6 +541,162 @@
                 }
               }
             },
+            "assetsExportJobs": {
+              "methods": {
+                "create": {
+                  "description": "Creates a new assets export job.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/assetsExportJobs",
+                  "httpMethod": "POST",
+                  "id": "migrationcenter.projects.locations.assetsExportJobs.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "assetsExportJobId": {
+                      "description": "Required. The ID to use for the asset export job.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent resource where the assts export job will be created.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "requestId": {
+                      "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+parent}/assetsExportJobs",
+                  "request": {
+                    "$ref": "AssetsExportJob"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Deletes an assets export job.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/assetsExportJobs/{assetsExportJobsId}",
+                  "httpMethod": "DELETE",
+                  "id": "migrationcenter.projects.locations.assetsExportJobs.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the assets export job to delete.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/assetsExportJobs/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+name}",
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Gets the details of an assets export job.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/assetsExportJobs/{assetsExportJobsId}",
+                  "httpMethod": "GET",
+                  "id": "migrationcenter.projects.locations.assetsExportJobs.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the resource.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/assetsExportJobs/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+name}",
+                  "response": {
+                    "$ref": "AssetsExportJob"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists all the assets export jobs in a given project and location.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/assetsExportJobs",
+                  "httpMethod": "GET",
+                  "id": "migrationcenter.projects.locations.assetsExportJobs.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "Optional. Requested page size. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default value.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "Optional. A token identifying a page of results that the server should return.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. Parent resource.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+parent}/assetsExportJobs",
+                  "response": {
+                    "$ref": "ListAssetsExportJobsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "run": {
+                  "description": "Runs an assets export job, returning an AssetsExportJobExecution.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/assetsExportJobs/{assetsExportJobsId}:run",
+                  "httpMethod": "POST",
+                  "id": "migrationcenter.projects.locations.assetsExportJobs.run",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the resource.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/assetsExportJobs/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+name}:run",
+                  "request": {
+                    "$ref": "RunAssetsExportJobRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
             "discoveryClients": {
               "methods": {
                 "create": {
@@ -1706,6 +1862,81 @@
                 }
               }
             },
+            "relations": {
+              "methods": {
+                "get": {
+                  "description": "Gets the details of an relation.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/relations/{relationsId}",
+                  "httpMethod": "GET",
+                  "id": "migrationcenter.projects.locations.relations.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the resource.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/relations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+name}",
+                  "response": {
+                    "$ref": "Relation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists all the relations in a given project and location.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/relations",
+                  "httpMethod": "GET",
+                  "id": "migrationcenter.projects.locations.relations.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "Filtering results.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "orderBy": {
+                      "description": "Field to sort by. See https://google.aip.dev/132#ordering for more details.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "A token identifying a page of results the server should return.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. Parent value for `ListRelationsRequest`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+parent}/relations",
+                  "response": {
+                    "$ref": "ListRelationsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
             "reportConfigs": {
               "methods": {
                 "create": {
@@ -2317,7 +2548,7 @@
       }
     }
   },
-  "revision": "20240516",
+  "revision": "20240815",
   "rootUrl": "https://migrationcenter.googleapis.com/",
   "schemas": {
     "AddAssetsToGroupRequest": {
@@ -2724,6 +2955,132 @@
       },
       "type": "object"
     },
+    "AssetsExportJob": {
+      "description": "Assets export job message.",
+      "id": "AssetsExportJob",
+      "properties": {
+        "condition": {
+          "$ref": "AssetsExportJobExportCondition",
+          "description": "Optional. Conditions for selecting assets to export."
+        },
+        "createTime": {
+          "description": "Output only. Resource creation time.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. Labels as key value pairs. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be \u003c= 128 bytes.",
+          "type": "object"
+        },
+        "name": {
+          "description": "Output only. Identifier. Resource name.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "networkDependencies": {
+          "$ref": "AssetsExportJobNetworkDependencies",
+          "description": "Export data regarding asset network dependencies."
+        },
+        "recentExecutions": {
+          "description": "Output only. Recent non expired executions of the job.",
+          "items": {
+            "$ref": "AssetsExportJobExecution"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "signedUriDestination": {
+          "$ref": "SignedUriDestination",
+          "description": "Export to Cloud Storage files downloadable using signed URIs."
+        },
+        "updateTime": {
+          "description": "Output only. Resource update time.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AssetsExportJobExecution": {
+      "description": "Execution status of assets export job.",
+      "id": "AssetsExportJobExecution",
+      "properties": {
+        "endTime": {
+          "description": "Output only. Completion time of the export.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "executionId": {
+          "description": "Output only. Globally unique identifier of the execution.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "expireTime": {
+          "description": "Output only. Expiration time for the export and artifacts.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "result": {
+          "$ref": "AssetsExportJobExecutionResult",
+          "description": "Output only. Result of the export execution.",
+          "readOnly": true
+        },
+        "startTime": {
+          "description": "Output only. Execution timestamp.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AssetsExportJobExecutionResult": {
+      "description": "Contains the result of the assets export.",
+      "id": "AssetsExportJobExecutionResult",
+      "properties": {
+        "error": {
+          "$ref": "Status",
+          "description": "Output only. Error encountered during export.",
+          "readOnly": true
+        },
+        "signedUris": {
+          "$ref": "SignedUris",
+          "description": "Output only. Signed URLs for downloading export artifacts.",
+          "readOnly": true
+        }
+      },
+      "type": "object"
+    },
+    "AssetsExportJobExportCondition": {
+      "description": "Conditions for selecting assets to export.",
+      "id": "AssetsExportJobExportCondition",
+      "properties": {
+        "filter": {
+          "description": "Optional. Assets filter, supports the same syntax as asset listing.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AssetsExportJobNetworkDependencies": {
+      "description": "Configuration for network dependencies exports.",
+      "id": "AssetsExportJobNetworkDependencies",
+      "properties": {
+        "maxDays": {
+          "description": "Optional. When this value is set to a positive integer, network connections data will be returned for the most recent days for which data is available. When this value is unset (or set to zero), all available data is returned.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "AwsEc2PlatformDetails": {
       "description": "AWS EC2 specific details.",
       "id": "AwsEc2PlatformDetails",
@@ -2765,6 +3122,13 @@
         "allowMissing": {
           "description": "Optional. When this value is set to `true` the request is a no-op for non-existing assets. See https://google.aip.dev/135#delete-if-existing for additional details. Default value is `false`.",
           "type": "boolean"
+        },
+        "cascadingRules": {
+          "description": "Optional. Optional cascading rules for deleting related assets.",
+          "items": {
+            "$ref": "CascadingRule"
+          },
+          "type": "array"
         },
         "names": {
           "description": "Required. The IDs of the assets to delete. A maximum of 1000 assets can be deleted in a batch. Format: projects/{project}/locations/{location}/assets/{name}.",
@@ -2835,6 +3199,23 @@
       "description": "The request message for Operations.CancelOperation.",
       "id": "CancelOperationRequest",
       "properties": {},
+      "type": "object"
+    },
+    "CascadeLogicalDBsRule": {
+      "description": "Cascading rule for related logical DBs.",
+      "id": "CascadeLogicalDBsRule",
+      "properties": {},
+      "type": "object"
+    },
+    "CascadingRule": {
+      "description": "Specifies cascading rules for traversing relations.",
+      "id": "CascadingRule",
+      "properties": {
+        "cascadeLogicalDbs": {
+          "$ref": "CascadeLogicalDBsRule",
+          "description": "Cascading rule for related logical DBs."
+        }
+      },
       "type": "object"
     },
     "CloudDatabaseMigrationTarget": {
@@ -3073,6 +3454,11 @@
           "readOnly": true,
           "type": "integer"
         },
+        "smtEnabled": {
+          "description": "Output only. Whether simultaneous multithreading is enabled (see https://cloud.google.com/sql/docs/sqlserver/create-instance#smt-create-instance).",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "storage": {
           "$ref": "ComputeStorageDescriptor",
           "description": "Output only. Predicted storage shape.",
@@ -3147,7 +3533,7 @@
       "id": "ComputeEnginePreferences",
       "properties": {
         "licenseType": {
-          "description": "Overridden by os_pricing_preferences if specified. License type to consider when calculating costs for virtual machine insights and recommendations. If unspecified, costs are calculated based on the default licensing plan.",
+          "description": "License type to consider when calculating costs for operating systems. If unspecified, costs are calculated based on the default licensing plan. If os_pricing_preferences is specified, it overrides this field.",
           "enum": [
             "LICENSE_TYPE_UNSPECIFIED",
             "LICENSE_TYPE_DEFAULT",
@@ -3156,13 +3542,33 @@
           "enumDescriptions": [
             "Unspecified (default value).",
             "Default Google Cloud licensing plan. Licensing is charged per usage. This a good value to start with.",
-            "Bring-your-own-license (BYOL) plan. User provides the OS license."
+            "Bring-your-own-license (BYOL) plan. User provides the license."
           ],
           "type": "string"
         },
         "machinePreferences": {
           "$ref": "MachinePreferences",
           "description": "Preferences concerning the machine types to consider on Compute Engine."
+        },
+        "multithreading": {
+          "description": "Optional. Preferences for multithreading support on Windows Server.",
+          "enum": [
+            "MULTITHREADING_UNSPECIFIED",
+            "MULTITHREADING_DISABLED",
+            "MULTITHREADING_ENABLED",
+            "MULTITHREADING_DISABLED_WITH_COMPENSATION"
+          ],
+          "enumDescriptions": [
+            "Same as MULTITHREADING_AUTO.",
+            "Disable simultaneous multithreading.",
+            "Enable simultaneous multithreading.",
+            "Disable simultaneous multithreading and increase number of VCPUs to compensate."
+          ],
+          "type": "string"
+        },
+        "osPricingPreferences": {
+          "$ref": "OperatingSystemPricingPreferences",
+          "description": "Optional. Pricing options for OS images."
         },
         "persistentDiskType": {
           "description": "Persistent disk type to use. If unspecified (default), all types are considered, based on available usage data.",
@@ -3214,6 +3620,11 @@
           "description": "Output only. Compute Engine machine series.",
           "readOnly": true,
           "type": "string"
+        },
+        "smtEnabled": {
+          "description": "Output only. Whether simultaneous multithreading is enabled (see https://cloud.google.com/compute/docs/instances/set-threads-per-core).",
+          "readOnly": true,
+          "type": "boolean"
         },
         "storage": {
           "description": "Output only. Compute Engine storage. Never empty.",
@@ -3479,6 +3890,16 @@
           "description": "Optional. Total memory in bytes limited by db deployment.",
           "format": "int64",
           "type": "string"
+        },
+        "physicalCoreCount": {
+          "description": "Optional. Number of total physical cores.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "physicalCoreLimit": {
+          "description": "Optional. Number of total physical cores limited by db deployment.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -3533,6 +3954,10 @@
           "description": "The instance's name.",
           "type": "string"
         },
+        "network": {
+          "$ref": "DatabaseInstanceNetwork",
+          "description": "Optional. Networking details."
+        },
         "role": {
           "description": "The instance role in the database engine.",
           "enum": [
@@ -3547,6 +3972,31 @@
             "Secondary.",
             "Arbiter."
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DatabaseInstanceNetwork": {
+      "description": "Network details of a database instance.",
+      "id": "DatabaseInstanceNetwork",
+      "properties": {
+        "hostNames": {
+          "description": "Optional. The instance's host names.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "ipAddresses": {
+          "description": "Optional. The instance's IP addresses.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "primaryMacAddress": {
+          "description": "Optional. The instance's primary MAC address.",
           "type": "string"
         }
       },
@@ -3619,13 +4069,17 @@
             "COMMITMENT_PLAN_UNSPECIFIED",
             "COMMITMENT_PLAN_NONE",
             "COMMITMENT_PLAN_ONE_YEAR",
-            "COMMITMENT_PLAN_THREE_YEARS"
+            "COMMITMENT_PLAN_THREE_YEARS",
+            "COMMITMENT_PLAN_FLEXIBLE_ONE_YEAR",
+            "COMMITMENT_PLAN_FLEXIBLE_THREE_YEARS"
           ],
           "enumDescriptions": [
             "Unspecified commitment plan.",
             "No commitment plan.",
             "1-year regular committed use discount.",
-            "3-year regular committed use discount."
+            "3-year regular committed use discount.",
+            "1-year flexible committed use discount. While not supported in the v1 API, this value is converted to UNSPECIFIED in conversions to the v1 API.",
+            "3-year flexible committed use discount. While not supported in the v1 API, this value is converted to UNSPECIFIED in conversions to the v1 API."
           ],
           "type": "string"
         },
@@ -3751,13 +4205,13 @@
             "MULTITHREADING_UNSPECIFIED",
             "MULTITHREADING_DISABLED",
             "MULTITHREADING_ENABLED",
-            "MULTITHREADING_AUTO_SELECT"
+            "MULTITHREADING_DISABLED_WITH_COMPENSATION"
           ],
           "enumDescriptions": [
-            "Same as MULTITHREADING_AUTO_SELECT.",
-            "No multithreading support.",
-            "Allow multithreading support.",
-            "Choose to enable/disable multithreading according to which is lowest cost for your workload."
+            "Same as MULTITHREADING_AUTO.",
+            "Disable simultaneous multithreading.",
+            "Enable simultaneous multithreading.",
+            "Disable simultaneous multithreading and increase number of VCPUs to compensate."
           ],
           "type": "string"
         },
@@ -5073,6 +5527,26 @@
       },
       "type": "object"
     },
+    "ListAssetsExportJobsResponse": {
+      "description": "Response message for listing assets export jobs.",
+      "id": "ListAssetsExportJobsResponse",
+      "properties": {
+        "assetsExportJobs": {
+          "description": "Output only. The list of assets export jobs.",
+          "items": {
+            "$ref": "AssetsExportJob"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Output only. A token identifying a page of results the server should return.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ListAssetsResponse": {
       "description": "Response message for listing assets.",
       "id": "ListAssetsResponse",
@@ -5284,6 +5758,24 @@
       },
       "type": "object"
     },
+    "ListRelationsResponse": {
+      "description": "Response message for listing relations.",
+      "id": "ListRelationsResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "A token identifying a page of results the server should return.",
+          "type": "string"
+        },
+        "relations": {
+          "description": "A list of relations.",
+          "items": {
+            "$ref": "Relation"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "ListReportConfigsResponse": {
       "description": "Response message for listing report configs.",
       "id": "ListReportConfigsResponse",
@@ -5394,7 +5886,7 @@
       "type": "object"
     },
     "MachinePreferences": {
-      "description": "The type of machines to consider when calculating virtual machine migration insights and recommendations. Not all machine types are available in all zones and regions.",
+      "description": "The type of machines to consider when calculating virtual machine migration insights and recommendations for GCE. Not all machine types are available in all zones and regions.",
       "id": "MachinePreferences",
       "properties": {
         "allowedMachineSeries": {
@@ -5875,6 +6367,66 @@
       },
       "type": "object"
     },
+    "OperatingSystemPricingPreferences": {
+      "description": "Pricing options for OS images.",
+      "id": "OperatingSystemPricingPreferences",
+      "properties": {
+        "rhel": {
+          "$ref": "OperatingSystemPricingPreferencesOperatingSystemPricing",
+          "description": "Optional. Pricing options for RHEL images."
+        },
+        "sles": {
+          "$ref": "OperatingSystemPricingPreferencesOperatingSystemPricing",
+          "description": "Optional. Pricing options for SLES images."
+        },
+        "slesForSap": {
+          "$ref": "OperatingSystemPricingPreferencesOperatingSystemPricing",
+          "description": "Optional. Pricing options for SLES for SAP images."
+        },
+        "windows": {
+          "$ref": "OperatingSystemPricingPreferencesOperatingSystemPricing",
+          "description": "Optional. Pricing options for Windows images. No commitment plans are available, set it to unspecified."
+        }
+      },
+      "type": "object"
+    },
+    "OperatingSystemPricingPreferencesOperatingSystemPricing": {
+      "description": "Pricing options of an OS image.",
+      "id": "OperatingSystemPricingPreferencesOperatingSystemPricing",
+      "properties": {
+        "commitmentPlan": {
+          "description": "Optional. The plan of commitments for committed use discounts (CUD).",
+          "enum": [
+            "COMMITMENT_PLAN_UNSPECIFIED",
+            "COMMITMENT_PLAN_ON_DEMAND",
+            "COMMITMENT_PLAN_1_YEAR",
+            "COMMITMENT_PLAN_3_YEAR"
+          ],
+          "enumDescriptions": [
+            "Unspecified commitment plan.",
+            "No commitment plan (on-demand usage).",
+            "1-year committed use discount.",
+            "3-year committed use discount."
+          ],
+          "type": "string"
+        },
+        "licenseType": {
+          "description": "Optional. License type for premium images (RHEL, RHEL for SAP, SLES, SLES for SAP, Windows Server).",
+          "enum": [
+            "LICENSE_TYPE_UNSPECIFIED",
+            "LICENSE_TYPE_DEFAULT",
+            "LICENSE_TYPE_BRING_YOUR_OWN_LICENSE"
+          ],
+          "enumDescriptions": [
+            "Unspecified (default value).",
+            "Default Google Cloud licensing plan. Licensing is charged per usage. This a good value to start with.",
+            "Bring-your-own-license (BYOL) plan. User provides the license."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Operation": {
       "description": "This resource represents a long-running operation that is the result of a network API call.",
       "id": "Operation",
@@ -6202,6 +6754,48 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Relation": {
+      "description": "Message representing a relation between 2 resource.",
+      "id": "Relation",
+      "properties": {
+        "createTime": {
+          "description": "Output only. The timestamp when the relation was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "dstAsset": {
+          "description": "Output only. The destination asset name in the relation.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. Identifier. The identifier of the relation.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "srcAsset": {
+          "description": "Output only. The source asset name in the relation.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "type": {
+          "description": "Optional. The type of the relation.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "LOGICAL_DATABASE",
+            "DATABASE_DEPLOYMENT_HOSTING_SERVER"
+          ],
+          "enumDescriptions": [
+            "Default value.",
+            "DBDeployment -\u003e Database",
+            "A relation between a machine/VM and the database deployment it hosts."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -6595,7 +7189,8 @@
         },
         "monthlyCostCompute": {
           "$ref": "Money",
-          "description": "Compute monthly cost for this preference set."
+          "description": "Output only. Compute monthly cost for this preference set.",
+          "readOnly": true
         },
         "monthlyCostDatabaseBackup": {
           "$ref": "Money",
@@ -6604,28 +7199,43 @@
         },
         "monthlyCostDatabaseLicensing": {
           "$ref": "Money",
-          "description": "Output only. Database licensing monthly cost for this preference set. For virtual machines denotes the cost of licenses for hosted databases.",
+          "description": "Output only. Database licensing monthly cost for this preference set. Only present for databases.",
+          "readOnly": true
+        },
+        "monthlyCostGcveProtected": {
+          "$ref": "Money",
+          "description": "Output only. GCVE Protected nodes cost for this preference set.",
           "readOnly": true
         },
         "monthlyCostNetworkEgress": {
           "$ref": "Money",
-          "description": "Network Egress monthly cost for this preference set. Only present for virtual machines."
+          "description": "Output only. Network Egress monthly cost for this preference set. Only present for virtual machines.",
+          "readOnly": true
         },
         "monthlyCostOsLicense": {
           "$ref": "Money",
-          "description": "Operating system licensing monthly cost for this preference set. Only present for virtual machines."
+          "description": "Output only. Operating system licensing monthly cost for this preference set. Only present for virtual machines.",
+          "readOnly": true
         },
         "monthlyCostOther": {
           "$ref": "Money",
-          "description": "Miscellaneous monthly cost for this preference set."
+          "description": "Output only. Miscellaneous monthly cost for this preference set.",
+          "readOnly": true
+        },
+        "monthlyCostPortableVmwareLicense": {
+          "$ref": "Money",
+          "description": "Output only. VMware portable license monthly cost for this preference set. Only present for VMware target with portable license service type. This cost is not paid to google, but is an estimate of license costs paid to VMware.",
+          "readOnly": true
         },
         "monthlyCostStorage": {
           "$ref": "Money",
-          "description": "Storage monthly cost for this preference set."
+          "description": "Output only. Storage monthly cost for this preference set.",
+          "readOnly": true
         },
         "monthlyCostTotal": {
           "$ref": "Money",
-          "description": "Total monthly cost for this preference set."
+          "description": "Output only. Total monthly cost for this preference set.",
+          "readOnly": true
         },
         "preferenceSet": {
           "$ref": "PreferenceSet",
@@ -6877,6 +7487,29 @@
       },
       "type": "object"
     },
+    "RunAssetsExportJobRequest": {
+      "description": "A request to run an assets export job.",
+      "id": "RunAssetsExportJobRequest",
+      "properties": {
+        "requestId": {
+          "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RunAssetsExportJobResponse": {
+      "description": "Response message for running an assets export job.",
+      "id": "RunAssetsExportJobResponse",
+      "properties": {
+        "assetsExportJobExecution": {
+          "$ref": "AssetsExportJobExecution",
+          "description": "Output only. Execution status of the assets export operation.",
+          "readOnly": true
+        }
+      },
+      "type": "object"
+    },
     "RunImportJobRequest": {
       "description": "A request to run an import job.",
       "id": "RunImportJobRequest",
@@ -7055,6 +7688,44 @@
       },
       "type": "object"
     },
+    "SignedUri": {
+      "description": "Contains a signed URI.",
+      "id": "SignedUri",
+      "properties": {
+        "file": {
+          "description": "Output only. Name of the file the Signed URI references.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "uri": {
+          "description": "Output only. Download URI for the file.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SignedUriDestination": {
+      "description": "Signed URI destination configuration.",
+      "id": "SignedUriDestination",
+      "properties": {},
+      "type": "object"
+    },
+    "SignedUris": {
+      "description": "Contains a list of Signed URIs.",
+      "id": "SignedUris",
+      "properties": {
+        "signedUris": {
+          "description": "Output only. List of signed URIs.",
+          "items": {
+            "$ref": "SignedUri"
+          },
+          "readOnly": true,
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "SoftwareInsight": {
       "description": "An insight regarding software detected on an asset.",
       "id": "SoftwareInsight",
@@ -7077,13 +7748,17 @@
             "COMMITMENT_PLAN_UNSPECIFIED",
             "ON_DEMAND",
             "COMMITMENT_1_YEAR",
-            "COMMITMENT_3_YEAR"
+            "COMMITMENT_3_YEAR",
+            "COMMITMENT_FLEXIBLE_1_YEAR",
+            "COMMITMENT_FLEXIBLE_3_YEAR"
           ],
           "enumDescriptions": [
             "Unspecified commitment plan.",
             "No commitment plan (on-demand usage).",
             "1-year regular committed use discount.",
-            "3-year regular committed use discount."
+            "3-year regular committed use discount.",
+            "1-year flexible committed use discount. While not supported in the v1 API, this value is converted to UNSPECIFIED in conversions to the v1 API.",
+            "3-year flexible committed use discount. While not supported in the v1 API, this value is converted to UNSPECIFIED in conversions to the v1 API."
           ],
           "type": "string"
         },
@@ -7114,6 +7789,10 @@
             "$ref": "SoleTenantNodeType"
           },
           "type": "array"
+        },
+        "osPricingPreferences": {
+          "$ref": "OperatingSystemPricingPreferences",
+          "description": "Optional. Pricing options for OS images."
         }
       },
       "type": "object"
@@ -7265,7 +7944,13 @@
     "SqlServerSchemaDetails": {
       "description": "Specific details for a SqlServer database.",
       "id": "SqlServerSchemaDetails",
-      "properties": {},
+      "properties": {
+        "clrObjectCount": {
+          "description": "Optional. SqlServer number of CLR objects.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
       "type": "object"
     },
     "SqlServerServerFlag": {
@@ -7402,6 +8087,48 @@
       },
       "type": "object"
     },
+    "VMwareEngineMachinePreferences": {
+      "description": "The type of machines to consider when calculating virtual machine migration insights and recommendations for VMware Engine. Not all machine types are available in all zones and regions.",
+      "id": "VMwareEngineMachinePreferences",
+      "properties": {
+        "allowedMachineSeries": {
+          "description": "Optional. VMware Engine on Google Cloud machine series to consider for insights and recommendations. If empty, no restriction is applied on the machine series.",
+          "items": {
+            "$ref": "MachineSeries"
+          },
+          "type": "array"
+        },
+        "protectedNodes": {
+          "description": "Optional. Whether to use VMware Engine Protected offering.",
+          "enum": [
+            "PROTECTED_NODES_UNSPECIFIED",
+            "PROTECTED_NODES_ENABLED",
+            "PROTECTED_NODES_DISABLED"
+          ],
+          "enumDescriptions": [
+            "Unspecified protected nodes preference.",
+            "Use only protected nodes for the selected allowed_machine_series.",
+            "Do not use protected nodes."
+          ],
+          "type": "string"
+        },
+        "storageOnlyNodes": {
+          "description": "Optional. Whether to use storage-only nodes, if those are available.",
+          "enum": [
+            "STORAGE_ONLY_NODES_UNSPECIFIED",
+            "STORAGE_ONLY_NODES_ENABLED",
+            "STORAGE_ONLY_NODES_DISABLED"
+          ],
+          "enumDescriptions": [
+            "Unspecified storage-only nodes preference.",
+            "Use storage-only nodes for selected allowed_machine_series, if available.",
+            "Do not use storage-only nodes."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ValidateImportJobRequest": {
       "description": "A request to validate an import job.",
       "id": "ValidateImportJobRequest",
@@ -7494,7 +8221,7 @@
       "id": "VirtualMachineDetails",
       "properties": {
         "coreCount": {
-          "description": "Number of CPU cores in the VirtualMachine. Must be non-negative.",
+          "description": "Number of logical CPU cores in the VirtualMachine. Must be non-negative.",
           "format": "int32",
           "type": "integer"
         },
@@ -7641,13 +8368,17 @@
             "COMMITMENT_PLAN_UNSPECIFIED",
             "COMMITMENT_PLAN_NONE",
             "COMMITMENT_PLAN_ONE_YEAR",
-            "COMMITMENT_PLAN_THREE_YEARS"
+            "COMMITMENT_PLAN_THREE_YEARS",
+            "COMMITMENT_PLAN_FLEXIBLE_ONE_YEAR",
+            "COMMITMENT_PLAN_FLEXIBLE_THREE_YEARS"
           ],
           "enumDescriptions": [
             "Unspecified commitment plan.",
             "No commitment plan.",
             "1-year regular committed use discount.",
-            "3-year regular committed use discount."
+            "3-year regular committed use discount.",
+            "1-year flexible committed use discount. While not supported in the v1 API, this value is converted to UNSPECIFIED in conversions to the v1 API.",
+            "3-year flexible committed use discount. While not supported in the v1 API, this value is converted to UNSPECIFIED in conversions to the v1 API."
           ],
           "type": "string"
         },
@@ -7827,7 +8558,9 @@
             "COMMITMENT_1_YEAR_MONTHLY_PAYMENTS",
             "COMMITMENT_3_YEAR_MONTHLY_PAYMENTS",
             "COMMITMENT_1_YEAR_UPFRONT_PAYMENT",
-            "COMMITMENT_3_YEAR_UPFRONT_PAYMENT"
+            "COMMITMENT_3_YEAR_UPFRONT_PAYMENT",
+            "COMMITMENT_FLEXIBLE_3_YEAR_MONTHLY_PAYMENTS",
+            "COMMITMENT_FLEXIBLE_3_YEAR_UPFRONT_PAYMENT"
           ],
           "enumDescriptions": [
             "Unspecified commitment plan.",
@@ -7835,7 +8568,9 @@
             "1 year commitment (monthly payments).",
             "3 year commitment (monthly payments).",
             "1 year commitment (upfront payment).",
-            "3 years commitment (upfront payment)."
+            "3 years commitment (upfront payment).",
+            "3-year flexible commitment (monthly payments). While not supported in the v1 API, this value is converted to UNSPECIFIED in conversions to the v1 API.",
+            "3-year flexible commitment (upfront payment). While not supported in the v1 API, this value is converted to UNSPECIFIED in conversions to the v1 API."
           ],
           "type": "string"
         },
@@ -7844,10 +8579,33 @@
           "format": "double",
           "type": "number"
         },
+        "licenseDiscountPercentage": {
+          "description": "Optional. Discount percentage for the license type offered to you by Broadcom. Must be between 0 and 100. Only valid when service_type is set to SERVICE_TYPE_PORTABLE_LICENSE.",
+          "format": "float",
+          "type": "number"
+        },
+        "machinePreferences": {
+          "$ref": "VMwareEngineMachinePreferences",
+          "description": "Optional. Preferences concerning the machine types to consider on Google Cloud VMware Engine."
+        },
         "memoryOvercommitRatio": {
           "description": "Memory overcommit ratio. Acceptable values are 1.0, 1.25, 1.5, 1.75 and 2.0.",
           "format": "double",
           "type": "number"
+        },
+        "serviceType": {
+          "description": "Optional. VMWare Service Type (Fully Licensed or Portable License).",
+          "enum": [
+            "SERVICE_TYPE_UNSPECIFIED",
+            "SERVICE_TYPE_FULLY_LICENSED",
+            "SERVICE_TYPE_PORTABLE_LICENSE"
+          ],
+          "enumDescriptions": [
+            "Same as SERVICE_TYPE_FULLY_LICENSED.",
+            "Google provided VCF license.",
+            "Bring Your Own License."
+          ],
+          "type": "string"
         },
         "storageDeduplicationCompressionRatio": {
           "description": "The Deduplication and Compression ratio is based on the logical (Used Before) space required to store data before applying deduplication and compression, in relation to the physical (Used After) space required after applying deduplication and compression. Specifically, the ratio is the Used Before space divided by the Used After space. For example, if the Used Before space is 3 GB, but the physical Used After space is 1 GB, the deduplication and compression ratio is 3x. Acceptable values are between 1.0 and 4.0.",

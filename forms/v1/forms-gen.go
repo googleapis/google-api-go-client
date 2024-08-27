@@ -235,9 +235,9 @@ type Answer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Answer) MarshalJSON() ([]byte, error) {
+func (s Answer) MarshalJSON() ([]byte, error) {
 	type NoMethod Answer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateFormRequest: A batch of updates to perform on a form. All the
@@ -263,9 +263,9 @@ type BatchUpdateFormRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateFormRequest) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateFormRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateFormRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateFormResponse: Response to a BatchUpdateFormRequest.
@@ -295,9 +295,9 @@ type BatchUpdateFormResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchUpdateFormResponse) MarshalJSON() ([]byte, error) {
+func (s BatchUpdateFormResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateFormResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChoiceQuestion: A radio/checkbox/dropdown question.
@@ -335,9 +335,9 @@ type ChoiceQuestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChoiceQuestion) MarshalJSON() ([]byte, error) {
+func (s ChoiceQuestion) MarshalJSON() ([]byte, error) {
 	type NoMethod ChoiceQuestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudPubsubTopic: A Pub/Sub topic.
@@ -359,9 +359,9 @@ type CloudPubsubTopic struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudPubsubTopic) MarshalJSON() ([]byte, error) {
+func (s CloudPubsubTopic) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudPubsubTopic
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CorrectAnswer: A single correct answer for a question. For multiple-valued
@@ -384,9 +384,9 @@ type CorrectAnswer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CorrectAnswer) MarshalJSON() ([]byte, error) {
+func (s CorrectAnswer) MarshalJSON() ([]byte, error) {
 	type NoMethod CorrectAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CorrectAnswers: The answer key for a question.
@@ -411,9 +411,9 @@ type CorrectAnswers struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CorrectAnswers) MarshalJSON() ([]byte, error) {
+func (s CorrectAnswers) MarshalJSON() ([]byte, error) {
 	type NoMethod CorrectAnswers
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateItemRequest: Create an item in a form.
@@ -435,9 +435,9 @@ type CreateItemRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateItemRequest) MarshalJSON() ([]byte, error) {
+func (s CreateItemRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateItemRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateItemResponse: The result of creating an item.
@@ -460,9 +460,9 @@ type CreateItemResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateItemResponse) MarshalJSON() ([]byte, error) {
+func (s CreateItemResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateItemResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateWatchRequest: Create a new watch.
@@ -487,9 +487,9 @@ type CreateWatchRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateWatchRequest) MarshalJSON() ([]byte, error) {
+func (s CreateWatchRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateWatchRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DateQuestion: A date question. Date questions default to just month + day.
@@ -511,9 +511,9 @@ type DateQuestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DateQuestion) MarshalJSON() ([]byte, error) {
+func (s DateQuestion) MarshalJSON() ([]byte, error) {
 	type NoMethod DateQuestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteItemRequest: Delete an item in a form.
@@ -533,9 +533,9 @@ type DeleteItemRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteItemRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteItemRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteItemRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -566,9 +566,9 @@ type ExtraMaterial struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExtraMaterial) MarshalJSON() ([]byte, error) {
+func (s ExtraMaterial) MarshalJSON() ([]byte, error) {
 	type NoMethod ExtraMaterial
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Feedback: Feedback for a respondent about their response to a question.
@@ -591,9 +591,9 @@ type Feedback struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Feedback) MarshalJSON() ([]byte, error) {
+func (s Feedback) MarshalJSON() ([]byte, error) {
 	type NoMethod Feedback
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FileUploadAnswer: Info for a single file submitted to a file upload
@@ -619,9 +619,9 @@ type FileUploadAnswer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileUploadAnswer) MarshalJSON() ([]byte, error) {
+func (s FileUploadAnswer) MarshalJSON() ([]byte, error) {
 	type NoMethod FileUploadAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FileUploadAnswers: All submitted files for a FileUpload question.
@@ -641,9 +641,9 @@ type FileUploadAnswers struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileUploadAnswers) MarshalJSON() ([]byte, error) {
+func (s FileUploadAnswers) MarshalJSON() ([]byte, error) {
 	type NoMethod FileUploadAnswers
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FileUploadQuestion: A file upload question. The API currently does not
@@ -685,9 +685,9 @@ type FileUploadQuestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileUploadQuestion) MarshalJSON() ([]byte, error) {
+func (s FileUploadQuestion) MarshalJSON() ([]byte, error) {
 	type NoMethod FileUploadQuestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Form: A Google Forms document. A form is created in Drive, and deleting a
@@ -737,9 +737,9 @@ type Form struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Form) MarshalJSON() ([]byte, error) {
+func (s Form) MarshalJSON() ([]byte, error) {
 	type NoMethod Form
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FormResponse: A form response.
@@ -781,9 +781,9 @@ type FormResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FormResponse) MarshalJSON() ([]byte, error) {
+func (s FormResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FormResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *FormResponse) UnmarshalJSON(data []byte) error {
@@ -817,9 +817,9 @@ type FormSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FormSettings) MarshalJSON() ([]byte, error) {
+func (s FormSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod FormSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Grade: Grade information associated with a respondent's answer to a
@@ -846,9 +846,9 @@ type Grade struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Grade) MarshalJSON() ([]byte, error) {
+func (s Grade) MarshalJSON() ([]byte, error) {
 	type NoMethod Grade
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Grade) UnmarshalJSON(data []byte) error {
@@ -900,9 +900,9 @@ type Grading struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Grading) MarshalJSON() ([]byte, error) {
+func (s Grading) MarshalJSON() ([]byte, error) {
 	type NoMethod Grading
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Grid: A grid of choices (radio or check boxes) with each row constituting a
@@ -929,9 +929,9 @@ type Grid struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Grid) MarshalJSON() ([]byte, error) {
+func (s Grid) MarshalJSON() ([]byte, error) {
 	type NoMethod Grid
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Image: Data representing an image.
@@ -960,9 +960,9 @@ type Image struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Image) MarshalJSON() ([]byte, error) {
+func (s Image) MarshalJSON() ([]byte, error) {
 	type NoMethod Image
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImageItem: An item containing an image.
@@ -982,9 +982,9 @@ type ImageItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImageItem) MarshalJSON() ([]byte, error) {
+func (s ImageItem) MarshalJSON() ([]byte, error) {
 	type NoMethod ImageItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Info: The general information for a form.
@@ -1014,9 +1014,9 @@ type Info struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Info) MarshalJSON() ([]byte, error) {
+func (s Info) MarshalJSON() ([]byte, error) {
 	type NoMethod Info
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Item: A single item of the form. `kind` defines which kind of item it is.
@@ -1054,9 +1054,9 @@ type Item struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Item) MarshalJSON() ([]byte, error) {
+func (s Item) MarshalJSON() ([]byte, error) {
 	type NoMethod Item
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListFormResponsesResponse: Response to a ListFormResponsesRequest.
@@ -1083,9 +1083,9 @@ type ListFormResponsesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListFormResponsesResponse) MarshalJSON() ([]byte, error) {
+func (s ListFormResponsesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFormResponsesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListWatchesResponse: The response of a ListWatchesRequest.
@@ -1108,9 +1108,9 @@ type ListWatchesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListWatchesResponse) MarshalJSON() ([]byte, error) {
+func (s ListWatchesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListWatchesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A specific location in a form.
@@ -1131,9 +1131,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MediaProperties: Properties of the media.
@@ -1166,9 +1166,9 @@ type MediaProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MediaProperties) MarshalJSON() ([]byte, error) {
+func (s MediaProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod MediaProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MoveItemRequest: Move an item in a form.
@@ -1190,9 +1190,9 @@ type MoveItemRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MoveItemRequest) MarshalJSON() ([]byte, error) {
+func (s MoveItemRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MoveItemRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Option: An option for a Choice question.
@@ -1227,9 +1227,9 @@ type Option struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Option) MarshalJSON() ([]byte, error) {
+func (s Option) MarshalJSON() ([]byte, error) {
 	type NoMethod Option
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PageBreakItem: A page break. The title and description of this item are
@@ -1276,9 +1276,9 @@ type Question struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Question) MarshalJSON() ([]byte, error) {
+func (s Question) MarshalJSON() ([]byte, error) {
 	type NoMethod Question
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QuestionGroupItem: Defines a question that comprises multiple questions
@@ -1308,9 +1308,9 @@ type QuestionGroupItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QuestionGroupItem) MarshalJSON() ([]byte, error) {
+func (s QuestionGroupItem) MarshalJSON() ([]byte, error) {
 	type NoMethod QuestionGroupItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QuestionItem: A form item containing a single question.
@@ -1332,9 +1332,9 @@ type QuestionItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QuestionItem) MarshalJSON() ([]byte, error) {
+func (s QuestionItem) MarshalJSON() ([]byte, error) {
 	type NoMethod QuestionItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QuizSettings: Settings related to quiz forms and grading. These must be
@@ -1357,9 +1357,9 @@ type QuizSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QuizSettings) MarshalJSON() ([]byte, error) {
+func (s QuizSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod QuizSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RenewWatchRequest: Renew an existing Watch for seven days.
@@ -1393,9 +1393,9 @@ type Request struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Request) MarshalJSON() ([]byte, error) {
+func (s Request) MarshalJSON() ([]byte, error) {
 	type NoMethod Request
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Response: A single response from an update.
@@ -1415,9 +1415,9 @@ type Response struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Response) MarshalJSON() ([]byte, error) {
+func (s Response) MarshalJSON() ([]byte, error) {
 	type NoMethod Response
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RowQuestion: Configuration for a question that is part of a question group.
@@ -1437,9 +1437,9 @@ type RowQuestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RowQuestion) MarshalJSON() ([]byte, error) {
+func (s RowQuestion) MarshalJSON() ([]byte, error) {
 	type NoMethod RowQuestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScaleQuestion: A scale question. The user has a range of numeric values to
@@ -1466,9 +1466,9 @@ type ScaleQuestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScaleQuestion) MarshalJSON() ([]byte, error) {
+func (s ScaleQuestion) MarshalJSON() ([]byte, error) {
 	type NoMethod ScaleQuestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextAnswer: An answer to a question represented as text.
@@ -1499,9 +1499,9 @@ type TextAnswer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextAnswer) MarshalJSON() ([]byte, error) {
+func (s TextAnswer) MarshalJSON() ([]byte, error) {
 	type NoMethod TextAnswer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextAnswers: A question's answers as text.
@@ -1522,9 +1522,9 @@ type TextAnswers struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextAnswers) MarshalJSON() ([]byte, error) {
+func (s TextAnswers) MarshalJSON() ([]byte, error) {
 	type NoMethod TextAnswers
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextItem: A text item.
@@ -1550,9 +1550,9 @@ type TextLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextLink) MarshalJSON() ([]byte, error) {
+func (s TextLink) MarshalJSON() ([]byte, error) {
 	type NoMethod TextLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextQuestion: A text-based question.
@@ -1573,9 +1573,9 @@ type TextQuestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TextQuestion) MarshalJSON() ([]byte, error) {
+func (s TextQuestion) MarshalJSON() ([]byte, error) {
 	type NoMethod TextQuestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeQuestion: A time question.
@@ -1596,9 +1596,9 @@ type TimeQuestion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeQuestion) MarshalJSON() ([]byte, error) {
+func (s TimeQuestion) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeQuestion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateFormInfoRequest: Update Form's Info.
@@ -1623,9 +1623,9 @@ type UpdateFormInfoRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateFormInfoRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateFormInfoRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateFormInfoRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateItemRequest: Update an item in a form.
@@ -1654,9 +1654,9 @@ type UpdateItemRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateItemRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateItemRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateItemRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateSettingsRequest: Update Form's FormSettings.
@@ -1681,9 +1681,9 @@ type UpdateSettingsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateSettingsRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateSettingsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateSettingsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Video: Data representing a video.
@@ -1705,9 +1705,9 @@ type Video struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Video) MarshalJSON() ([]byte, error) {
+func (s Video) MarshalJSON() ([]byte, error) {
 	type NoMethod Video
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoItem: An item containing a video.
@@ -1729,9 +1729,9 @@ type VideoItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoItem) MarshalJSON() ([]byte, error) {
+func (s VideoItem) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoLink: Link to a video.
@@ -1753,9 +1753,9 @@ type VideoLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoLink) MarshalJSON() ([]byte, error) {
+func (s VideoLink) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Watch: A watch for events for a form. When the designated event happens, a
@@ -1831,9 +1831,9 @@ type Watch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Watch) MarshalJSON() ([]byte, error) {
+func (s Watch) MarshalJSON() ([]byte, error) {
 	type NoMethod Watch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WatchTarget: The target for notification delivery.
@@ -1857,9 +1857,9 @@ type WatchTarget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WatchTarget) MarshalJSON() ([]byte, error) {
+func (s WatchTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod WatchTarget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WriteControl: Provides control over how write requests are executed.
@@ -1893,9 +1893,9 @@ type WriteControl struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WriteControl) MarshalJSON() ([]byte, error) {
+func (s WriteControl) MarshalJSON() ([]byte, error) {
 	type NoMethod WriteControl
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FormsBatchUpdateCall struct {

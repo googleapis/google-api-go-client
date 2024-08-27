@@ -265,9 +265,9 @@ type AuthorizedNetwork struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuthorizedNetwork) MarshalJSON() ([]byte, error) {
+func (s AuthorizedNetwork) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthorizedNetwork
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutomatedBackupPolicy: Message describing the user-specified automated
@@ -314,9 +314,9 @@ type AutomatedBackupPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutomatedBackupPolicy) MarshalJSON() ([]byte, error) {
+func (s AutomatedBackupPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod AutomatedBackupPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Backup: Message describing Backup object
@@ -341,6 +341,7 @@ type Backup struct {
 	//   "POSTGRES_13" - DEPRECATED - The database version is Postgres 13.
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
+	//   "POSTGRES_16" - The database version is Postgres 16.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// DeleteTime: Output only. Delete time stamp
 	DeleteTime string `json:"deleteTime,omitempty"`
@@ -429,9 +430,9 @@ type Backup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Backup) MarshalJSON() ([]byte, error) {
+func (s Backup) MarshalJSON() ([]byte, error) {
 	type NoMethod Backup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BackupSource: Message describing a BackupSource.
@@ -456,9 +457,9 @@ type BackupSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BackupSource) MarshalJSON() ([]byte, error) {
+func (s BackupSource) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -485,9 +486,9 @@ type ClientConnectionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClientConnectionConfig) MarshalJSON() ([]byte, error) {
+func (s ClientConnectionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ClientConnectionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudControl2SharedOperationsReconciliationOperationMetadata: Operation
@@ -520,9 +521,36 @@ type CloudControl2SharedOperationsReconciliationOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudControl2SharedOperationsReconciliationOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s CloudControl2SharedOperationsReconciliationOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudControl2SharedOperationsReconciliationOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudSQLBackupRunSource: The source CloudSQL backup resource.
+type CloudSQLBackupRunSource struct {
+	// BackupRunId: Required. The CloudSQL backup run ID.
+	BackupRunId int64 `json:"backupRunId,omitempty,string"`
+	// InstanceId: Required. The CloudSQL instance ID.
+	InstanceId string `json:"instanceId,omitempty"`
+	// Project: The project ID of the source CloudSQL instance. This should be the
+	// same as the AlloyDB cluster's project.
+	Project string `json:"project,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupRunId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupRunId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudSQLBackupRunSource) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSQLBackupRunSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Cluster: A cluster is a collection of regional AlloyDB resources. It can
@@ -540,6 +568,9 @@ type Cluster struct {
 	AutomatedBackupPolicy *AutomatedBackupPolicy `json:"automatedBackupPolicy,omitempty"`
 	// BackupSource: Output only. Cluster created from backup.
 	BackupSource *BackupSource `json:"backupSource,omitempty"`
+	// CloudsqlBackupRunSource: Output only. Cluster created from CloudSQL
+	// snapshot.
+	CloudsqlBackupRunSource *CloudSQLBackupRunSource `json:"cloudsqlBackupRunSource,omitempty"`
 	// ClusterType: Output only. The type of the cluster. This is an output-only
 	// field and it's populated at the Cluster creation time or the Cluster
 	// promotion time. The cluster type is determined by which RPC was used to
@@ -569,6 +600,7 @@ type Cluster struct {
 	//   "POSTGRES_13" - DEPRECATED - The database version is Postgres 13.
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
+	//   "POSTGRES_16" - The database version is Postgres 16.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// DeleteTime: Output only. Delete time stamp
 	DeleteTime string `json:"deleteTime,omitempty"`
@@ -659,6 +691,16 @@ type Cluster struct {
 	// cluster are not allowed while the cluster is in this state.
 	//   "PROMOTING" - The cluster is being promoted.
 	State string `json:"state,omitempty"`
+	// SubscriptionType: Optional. Subscription type of the cluster.
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_TYPE_UNSPECIFIED" - This is an unknown Subscription type (By
+	// default, Subscription Type is STANDARD)
+	//   "STANDARD" - Standard subscription.
+	//   "TRIAL" - Trial subscription.
+	SubscriptionType string `json:"subscriptionType,omitempty"`
+	// TrialMetadata: Output only. Metadata for free trial clusters
+	TrialMetadata *TrialMetadata `json:"trialMetadata,omitempty"`
 	// Uid: Output only. The system-generated UID of the resource. The UID is
 	// assigned when the resource is created, and it is retained until it is
 	// deleted.
@@ -681,9 +723,64 @@ type Cluster struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Cluster) MarshalJSON() ([]byte, error) {
+func (s Cluster) MarshalJSON() ([]byte, error) {
 	type NoMethod Cluster
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeDetails: Upgrade details of a cluster. This cluster can be
+// primary or secondary.
+type ClusterUpgradeDetails struct {
+	// ClusterType: Cluster type which can either be primary or secondary.
+	//
+	// Possible values:
+	//   "CLUSTER_TYPE_UNSPECIFIED" - The type of the cluster is unknown.
+	//   "PRIMARY" - Primary cluster that support read and write operations.
+	//   "SECONDARY" - Secondary cluster that is replicating from another region.
+	// This only supports read.
+	ClusterType string `json:"clusterType,omitempty"`
+	// DatabaseVersion: Database version of the cluster after the upgrade
+	// operation. This will be the target version if the upgrade was successful
+	// otherwise it remains the same as that before the upgrade operation.
+	//
+	// Possible values:
+	//   "DATABASE_VERSION_UNSPECIFIED" - This is an unknown database version.
+	//   "POSTGRES_13" - DEPRECATED - The database version is Postgres 13.
+	//   "POSTGRES_14" - The database version is Postgres 14.
+	//   "POSTGRES_15" - The database version is Postgres 15.
+	//   "POSTGRES_16" - The database version is Postgres 16.
+	DatabaseVersion string `json:"databaseVersion,omitempty"`
+	// InstanceUpgradeDetails: Upgrade details of the instances directly associated
+	// with this cluster.
+	InstanceUpgradeDetails []*InstanceUpgradeDetails `json:"instanceUpgradeDetails,omitempty"`
+	// Name: Normalized name of the cluster
+	Name string `json:"name,omitempty"`
+	// StageInfo: Array containing stage info associated with this cluster.
+	StageInfo []*StageInfo `json:"stageInfo,omitempty"`
+	// UpgradeStatus: Upgrade status of the cluster.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "SUCCESS" - Operation succeeded.
+	//   "FAILED" - Operation failed.
+	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
+	UpgradeStatus string `json:"upgradeStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClusterType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClusterType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClusterUpgradeDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConnectionInfo: ConnectionInfo singleton resource.
@@ -726,9 +823,9 @@ type ConnectionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConnectionInfo) MarshalJSON() ([]byte, error) {
+func (s ConnectionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContinuousBackupConfig: ContinuousBackupConfig describes the continuous
@@ -759,9 +856,9 @@ type ContinuousBackupConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContinuousBackupConfig) MarshalJSON() ([]byte, error) {
+func (s ContinuousBackupConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ContinuousBackupConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContinuousBackupInfo: ContinuousBackupInfo describes the continuous backup
@@ -802,9 +899,9 @@ type ContinuousBackupInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContinuousBackupInfo) MarshalJSON() ([]byte, error) {
+func (s ContinuousBackupInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ContinuousBackupInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContinuousBackupSource: Message describing a ContinuousBackupSource.
@@ -828,9 +925,9 @@ type ContinuousBackupSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContinuousBackupSource) MarshalJSON() ([]byte, error) {
+func (s ContinuousBackupSource) MarshalJSON() ([]byte, error) {
 	type NoMethod ContinuousBackupSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -863,9 +960,9 @@ type EncryptionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EncryptionConfig) MarshalJSON() ([]byte, error) {
+func (s EncryptionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EncryptionInfo: EncryptionInfo describes the encryption information of a
@@ -898,9 +995,9 @@ type EncryptionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EncryptionInfo) MarshalJSON() ([]byte, error) {
+func (s EncryptionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FailoverInstanceRequest: Message for triggering failover on an Instance
@@ -934,9 +1031,9 @@ type FailoverInstanceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FailoverInstanceRequest) MarshalJSON() ([]byte, error) {
+func (s FailoverInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod FailoverInstanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeminiClusterConfig: Cluster level configuration parameters related to the
@@ -960,9 +1057,9 @@ type GeminiClusterConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeminiClusterConfig) MarshalJSON() ([]byte, error) {
+func (s GeminiClusterConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GeminiClusterConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeminiInstanceConfig: Instance level configuration parameters related to the
@@ -986,9 +1083,9 @@ type GeminiInstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeminiInstanceConfig) MarshalJSON() ([]byte, error) {
+func (s GeminiInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GeminiInstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudLocationListLocationsResponse: The response message for
@@ -1015,9 +1112,9 @@ type GoogleCloudLocationListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudLocationListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudLocationListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudLocationLocation: A resource that represents a Google Cloud
@@ -1054,9 +1151,9 @@ type GoogleCloudLocationLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudLocationLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeTimeOfDay: Represents a time of day. The date and time zone are
@@ -1088,9 +1185,9 @@ type GoogleTypeTimeOfDay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeTimeOfDay) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeTimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeTimeOfDay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InjectFaultRequest: Message for triggering fault injection on an instance
@@ -1130,9 +1227,9 @@ type InjectFaultRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InjectFaultRequest) MarshalJSON() ([]byte, error) {
+func (s InjectFaultRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InjectFaultRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Instance: An Instance is a computing unit that an end customer can connect
@@ -1295,9 +1392,9 @@ type Instance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Instance) MarshalJSON() ([]byte, error) {
+func (s Instance) MarshalJSON() ([]byte, error) {
 	type NoMethod Instance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstanceNetworkConfig: Metadata related to instance level network
@@ -1324,9 +1421,53 @@ type InstanceNetworkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstanceNetworkConfig) MarshalJSON() ([]byte, error) {
+func (s InstanceNetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceNetworkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InstanceUpgradeDetails: Details regarding the upgrade of instaces associated
+// with a cluster.
+type InstanceUpgradeDetails struct {
+	// InstanceType: Instance type.
+	//
+	// Possible values:
+	//   "INSTANCE_TYPE_UNSPECIFIED" - The type of the instance is unknown.
+	//   "PRIMARY" - PRIMARY instances support read and write operations.
+	//   "READ_POOL" - READ POOL instances support read operations only. Each read
+	// pool instance consists of one or more homogeneous nodes. * Read pool of size
+	// 1 can only have zonal availability. * Read pools with node count of 2 or
+	// more can have regional availability (nodes are present in 2 or more zones in
+	// a region).
+	//   "SECONDARY" - SECONDARY instances support read operations only. SECONDARY
+	// instance is a cross-region read replica
+	InstanceType string `json:"instanceType,omitempty"`
+	// Name: Normalized name of the instance.
+	Name string `json:"name,omitempty"`
+	// UpgradeStatus: Upgrade status of the instance.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "SUCCESS" - Operation succeeded.
+	//   "FAILED" - Operation failed.
+	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
+	UpgradeStatus string `json:"upgradeStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstanceType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstanceType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceUpgradeDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceUpgradeDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IntegerRestrictions: Restrictions on INTEGER type values.
@@ -1348,9 +1489,9 @@ type IntegerRestrictions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IntegerRestrictions) MarshalJSON() ([]byte, error) {
+func (s IntegerRestrictions) MarshalJSON() ([]byte, error) {
 	type NoMethod IntegerRestrictions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListBackupsResponse: Message for response to listing Backups
@@ -1378,9 +1519,9 @@ type ListBackupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBackupsResponse) MarshalJSON() ([]byte, error) {
+func (s ListBackupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBackupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListClustersResponse: Message for response to listing Clusters
@@ -1408,9 +1549,9 @@ type ListClustersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListClustersResponse) MarshalJSON() ([]byte, error) {
+func (s ListClustersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListClustersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInstancesResponse: Message for response to listing Instances
@@ -1438,9 +1579,9 @@ type ListInstancesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInstancesResponse) MarshalJSON() ([]byte, error) {
+func (s ListInstancesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInstancesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -1466,9 +1607,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSupportedDatabaseFlagsResponse: Message for response to listing
@@ -1495,9 +1636,9 @@ type ListSupportedDatabaseFlagsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSupportedDatabaseFlagsResponse) MarshalJSON() ([]byte, error) {
+func (s ListSupportedDatabaseFlagsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSupportedDatabaseFlagsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListUsersResponse: Message for response to listing Users
@@ -1525,9 +1666,9 @@ type ListUsersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListUsersResponse) MarshalJSON() ([]byte, error) {
+func (s ListUsersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListUsersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MachineConfig: MachineConfig describes the configuration of a machine.
@@ -1547,9 +1688,9 @@ type MachineConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MachineConfig) MarshalJSON() ([]byte, error) {
+func (s MachineConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MachineConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenanceSchedule: MaintenanceSchedule stores the maintenance schedule
@@ -1573,9 +1714,9 @@ type MaintenanceSchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenanceSchedule) MarshalJSON() ([]byte, error) {
+func (s MaintenanceSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceSchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenanceUpdatePolicy: MaintenanceUpdatePolicy defines the policy for
@@ -1597,9 +1738,9 @@ type MaintenanceUpdatePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenanceUpdatePolicy) MarshalJSON() ([]byte, error) {
+func (s MaintenanceUpdatePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceUpdatePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenanceWindow: MaintenanceWindow specifies a preferred day and time for
@@ -1633,9 +1774,9 @@ type MaintenanceWindow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
+func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MigrationSource: Subset of the source instance configuration that is
@@ -1666,9 +1807,9 @@ type MigrationSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MigrationSource) MarshalJSON() ([]byte, error) {
+func (s MigrationSource) MarshalJSON() ([]byte, error) {
 	type NoMethod MigrationSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkConfig: Metadata related to network configuration.
@@ -1700,9 +1841,9 @@ type NetworkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkConfig) MarshalJSON() ([]byte, error) {
+func (s NetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Node: Details of a single node in the instance. Nodes in an AlloyDB instance
@@ -1733,16 +1874,15 @@ type Node struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Node) MarshalJSON() ([]byte, error) {
+func (s Node) MarshalJSON() ([]byte, error) {
 	type NoMethod Node
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ObservabilityInstanceConfig: Observability Instance specific configuration.
 type ObservabilityInstanceConfig struct {
-	// Enabled: Observability feature status for an instance. This is a read-only
-	// flag and modifiable only by producer API. This flag is turned "off" by
-	// default.
+	// Enabled: Observability feature status for an instance. This flag is turned
+	// "off" by default.
 	Enabled bool `json:"enabled,omitempty"`
 	// MaxQueryStringLength: Query string length. The default value is 10k.
 	MaxQueryStringLength int64 `json:"maxQueryStringLength,omitempty"`
@@ -1750,8 +1890,8 @@ type ObservabilityInstanceConfig struct {
 	// flag is turned "off" by default.
 	PreserveComments bool `json:"preserveComments,omitempty"`
 	// QueryPlansPerMinute: Number of query execution plans captured by Insights
-	// per minute for all queries combined. The default value is 5. Any integer
-	// between 0 to 20 is considered valid.
+	// per minute for all queries combined. The default value is 200. Any integer
+	// between 0 to 200 is considered valid.
 	QueryPlansPerMinute int64 `json:"queryPlansPerMinute,omitempty"`
 	// RecordApplicationTags: Record application tags for an instance. This flag is
 	// turned "off" by default.
@@ -1759,6 +1899,9 @@ type ObservabilityInstanceConfig struct {
 	// TrackActiveQueries: Track actively running queries on the instance. If not
 	// set, this flag is "off" by default.
 	TrackActiveQueries bool `json:"trackActiveQueries,omitempty"`
+	// TrackClientAddress: Track client address for an instance. If not set,
+	// default value is "off".
+	TrackClientAddress bool `json:"trackClientAddress,omitempty"`
 	// TrackWaitEventTypes: Output only. Track wait event types during query
 	// execution for an instance. This flag is turned "on" by default but tracking
 	// is enabled only after observability enabled flag is also turned on. This is
@@ -1781,9 +1924,9 @@ type ObservabilityInstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ObservabilityInstanceConfig) MarshalJSON() ([]byte, error) {
+func (s ObservabilityInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ObservabilityInstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1828,9 +1971,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -1866,9 +2009,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PrimaryConfig: Configuration for the primary cluster. It has the list of
@@ -1891,9 +2034,9 @@ type PrimaryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrimaryConfig) MarshalJSON() ([]byte, error) {
+func (s PrimaryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PrimaryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PromoteClusterRequest: Message for promoting a Cluster
@@ -1931,9 +2074,9 @@ type PromoteClusterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PromoteClusterRequest) MarshalJSON() ([]byte, error) {
+func (s PromoteClusterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PromoteClusterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PscConfig: PscConfig contains PSC related configuration at a cluster level.
@@ -1954,9 +2097,9 @@ type PscConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PscConfig) MarshalJSON() ([]byte, error) {
+func (s PscConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PscConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PscInstanceConfig: PscInstanceConfig contains PSC related configuration at
@@ -1985,9 +2128,9 @@ type PscInstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PscInstanceConfig) MarshalJSON() ([]byte, error) {
+func (s PscInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PscInstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QuantityBasedExpiry: A backup's position in a quantity-based retention
@@ -2019,9 +2162,9 @@ type QuantityBasedExpiry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QuantityBasedExpiry) MarshalJSON() ([]byte, error) {
+func (s QuantityBasedExpiry) MarshalJSON() ([]byte, error) {
 	type NoMethod QuantityBasedExpiry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QuantityBasedRetention: A quantity based policy specifies that a certain
@@ -2042,9 +2185,9 @@ type QuantityBasedRetention struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QuantityBasedRetention) MarshalJSON() ([]byte, error) {
+func (s QuantityBasedRetention) MarshalJSON() ([]byte, error) {
 	type NoMethod QuantityBasedRetention
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryInsightsInstanceConfig: QueryInsights Instance specific configuration.
@@ -2075,9 +2218,9 @@ type QueryInsightsInstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryInsightsInstanceConfig) MarshalJSON() ([]byte, error) {
+func (s QueryInsightsInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryInsightsInstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReadPoolConfig: Configuration for a read pool instance.
@@ -2097,12 +2240,15 @@ type ReadPoolConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReadPoolConfig) MarshalJSON() ([]byte, error) {
+func (s ReadPoolConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ReadPoolConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RestartInstanceRequest struct {
+	// NodeIds: Optional. Full name of the nodes as obtained from
+	// INSTANCE_VIEW_FULL to restart upon. Only applicable for read instances.
+	NodeIds []string `json:"nodeIds,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
 	// know to ignore the request if it has already been completed. The server will
@@ -2119,22 +2265,22 @@ type RestartInstanceRequest struct {
 	// checks and any other type of validation), but do not actually execute the
 	// restart.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RequestId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "NodeIds") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// NullFields is a list of field names (e.g. "NodeIds") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *RestartInstanceRequest) MarshalJSON() ([]byte, error) {
+func (s RestartInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RestartInstanceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RestoreClusterRequest: Message for restoring a Cluster from a backup or
@@ -2178,9 +2324,9 @@ type RestoreClusterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RestoreClusterRequest) MarshalJSON() ([]byte, error) {
+func (s RestoreClusterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RestoreClusterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SecondaryConfig: Configuration information for the secondary cluster. This
@@ -2202,9 +2348,9 @@ type SecondaryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecondaryConfig) MarshalJSON() ([]byte, error) {
+func (s SecondaryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SecondaryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SslConfig: SSL configuration.
@@ -2250,9 +2396,52 @@ type SslConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SslConfig) MarshalJSON() ([]byte, error) {
+func (s SslConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SslConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StageInfo: Stage information for different stages in the upgrade process.
+type StageInfo struct {
+	// LogsUrl: logs_url is the URL for the logs associated with a stage if that
+	// stage has logs. Right now, only three stages have logs: ALLOYDB_PRECHECK,
+	// PG_UPGRADE_CHECK, PRIMARY_INSTANCE_UPGRADE.
+	LogsUrl string `json:"logsUrl,omitempty"`
+	// Stage: The stage.
+	//
+	// Possible values:
+	//   "STAGE_UNSPECIFIED" - Unspecified stage.
+	//   "ALLOYDB_PRECHECK" - This stage is for the custom checks done before
+	// upgrade.
+	//   "PG_UPGRADE_CHECK" - This stage is for `pg_upgrade --check` run before
+	// upgrade.
+	//   "PRIMARY_INSTANCE_UPGRADE" - This stage is primary upgrade.
+	//   "READ_POOL_UPGRADE" - This stage is read pool upgrade.
+	Stage string `json:"stage,omitempty"`
+	// Status: Status of the stage.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "SUCCESS" - Operation succeeded.
+	//   "FAILED" - Operation failed.
+	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LogsUrl") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LogsUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod StageInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -2284,9 +2473,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration:
@@ -2322,9 +2511,9 @@ type StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDatabasecenterPartnerapiV1mainBackupConfiguration: Configuration for
@@ -2352,9 +2541,9 @@ type StorageDatabasecenterPartnerapiV1mainBackupConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainBackupConfiguration) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainBackupConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainBackupConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDatabasecenterPartnerapiV1mainBackupRun: A backup run.
@@ -2386,9 +2575,9 @@ type StorageDatabasecenterPartnerapiV1mainBackupRun struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainBackupRun) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainBackupRun) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainBackupRun
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDatabasecenterPartnerapiV1mainCompliance: Contains compliance
@@ -2412,64 +2601,36 @@ type StorageDatabasecenterPartnerapiV1mainCompliance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainCompliance) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainCompliance) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainCompliance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDatabasecenterPartnerapiV1mainCustomMetadataData: Any custom metadata
-// associated with the resource. i.e. A spanner instance can have multiple
+// associated with the resource. e.g. A spanner instance can have multiple
 // databases with its own unique metadata. Information for these individual
 // databases can be captured in custom metadata data
 type StorageDatabasecenterPartnerapiV1mainCustomMetadataData struct {
-	DatabaseMetadata []*StorageDatabasecenterPartnerapiV1mainDatabaseMetadata `json:"databaseMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DatabaseMetadata") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// InternalResourceMetadata: Metadata for individual internal resources in an
+	// instance. e.g. spanner instance can have multiple databases with unique
+	// configuration.
+	InternalResourceMetadata []*StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata `json:"internalResourceMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InternalResourceMetadata")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DatabaseMetadata") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "InternalResourceMetadata") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainCustomMetadataData) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainCustomMetadataData) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainCustomMetadataData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// StorageDatabasecenterPartnerapiV1mainDatabaseMetadata: Metadata for
-// individual databases created in an instance. i.e. spanner instance can have
-// multiple databases with unique configuration settings.
-type StorageDatabasecenterPartnerapiV1mainDatabaseMetadata struct {
-	// BackupConfiguration: Backup configuration for this database
-	BackupConfiguration *StorageDatabasecenterPartnerapiV1mainBackupConfiguration `json:"backupConfiguration,omitempty"`
-	// BackupRun: Information about the last backup attempt for this database
-	BackupRun  *StorageDatabasecenterPartnerapiV1mainBackupRun          `json:"backupRun,omitempty"`
-	Product    *StorageDatabasecenterProtoCommonProduct                 `json:"product,omitempty"`
-	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
-	// ResourceName: Required. Database name. Resource name to follow CAIS
-	// resource_name format as noted here go/condor-common-datamodel
-	ResourceName string `json:"resourceName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BackupConfiguration") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackupConfiguration") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *StorageDatabasecenterPartnerapiV1mainDatabaseMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod StorageDatabasecenterPartnerapiV1mainDatabaseMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed:
@@ -2487,8 +2648,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	//   "SECURITY_FINDING_DATA" - Database resource security health signal data
 	//   "RECOMMENDATION_SIGNAL_DATA" - Database resource recommendation signal
 	// data
-	FeedType string `json:"feedType,omitempty"`
-	// ObservabilityMetricData: More feed data would be added in subsequent CLs
+	FeedType                 string                                                                         `json:"feedType,omitempty"`
 	ObservabilityMetricData  *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData                  `json:"observabilityMetricData,omitempty"`
 	RecommendationSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData `json:"recommendationSignalData,omitempty"`
 	ResourceHealthSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData         `json:"resourceHealthSignalData,omitempty"`
@@ -2509,9 +2669,9 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData:
@@ -2581,6 +2741,22 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// SignalId: Required. Unique identifier for the signal. This is an unique id
 	// which would be mainatined by partner to identify a signal.
 	SignalId string `json:"signalId,omitempty"`
+	// SignalSeverity: The severity of the signal, such as if it's a HIGH or LOW
+	// severity.
+	//
+	// Possible values:
+	//   "SIGNAL_SEVERITY_UNSPECIFIED" - This value is used for findings when a
+	// source doesn't write a severity value.
+	//   "CRITICAL" - A critical vulnerability is easily discoverable by an
+	// external actor, exploitable.
+	//   "HIGH" - A high risk vulnerability can be easily discovered and exploited
+	// in combination with other vulnerabilities.
+	//   "MEDIUM" - A medium risk vulnerability could be used by an actor to gain
+	// access to resources or privileges that enable them to eventually gain access
+	// and the ability to execute arbitrary code or exfiltrate data.
+	//   "LOW" - A low risk vulnerability hampers a security organization's ability
+	// to detect vulnerabilities or active threats in their deployment.
+	SignalSeverity string `json:"signalSeverity,omitempty"`
 	// SignalType: Required. Type of signal, for example,
 	// `AVAILABLE_IN_MULTIPLE_ZONES`, `LOGGING_MOST_ERRORS`, etc.
 	//
@@ -2617,12 +2793,27 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// violates CIS GCP Foundation 1.1.
 	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_0" - Represents if a resource
 	// violates CIS GCP Foundation 1.0.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_CONTROLS_V8_0" - Represents if a resource
+	// violates CIS Controls 8.0.
 	//   "SIGNAL_TYPE_VIOLATES_NIST_800_53" - Represents if a resource violates
 	// NIST 800-53.
+	//   "SIGNAL_TYPE_VIOLATES_NIST_800_53_R5" - Represents if a resource violates
+	// NIST 800-53 R5.
+	//   "SIGNAL_TYPE_VIOLATES_NIST_CYBERSECURITY_FRAMEWORK_V1_0" - Represents if a
+	// resource violates NIST Cybersecurity Framework 1.0.
 	//   "SIGNAL_TYPE_VIOLATES_ISO_27001" - Represents if a resource violates
 	// ISO-27001.
+	//   "SIGNAL_TYPE_VIOLATES_ISO_27001_V2022" - Represents if a resource violates
+	// ISO 27001 2022.
 	//   "SIGNAL_TYPE_VIOLATES_PCI_DSS_V3_2_1" - Represents if a resource violates
 	// PCI-DSS v3.2.1.
+	//   "SIGNAL_TYPE_VIOLATES_PCI_DSS_V4_0" - Represents if a resource violates
+	// PCI-DSS v4.0.
+	//   "SIGNAL_TYPE_VIOLATES_CLOUD_CONTROLS_MATRIX_V4" - Represents if a resource
+	// violates Cloud Controls Matrix v4.0.
+	//   "SIGNAL_TYPE_VIOLATES_HIPAA" - Represents if a resource violates HIPAA.
+	//   "SIGNAL_TYPE_VIOLATES_SOC2_V2017" - Represents if a resource violates SOC2
+	// v2017.
 	//   "SIGNAL_TYPE_LOGS_NOT_OPTIMIZED_FOR_TROUBLESHOOTING" - Represents if
 	// log_checkpoints database flag for a Cloud SQL for PostgreSQL instance is not
 	// set to on.
@@ -2772,9 +2963,9 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceId: DatabaseResourceId
@@ -2803,8 +2994,10 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceId struct {
 	// ResourceType: Required. The type of resource this ID is identifying. Ex
 	// redis.googleapis.com/Instance, redis.googleapis.com/Cluster,
 	// alloydb.googleapis.com/Cluster, alloydb.googleapis.com/Instance,
-	// spanner.googleapis.com/Instance REQUIRED Please refer
-	// go/condor-common-datamodel
+	// spanner.googleapis.com/Instance, spanner.googleapis.com/Database,
+	// firestore.googleapis.com/Database, sqladmin.googleapis.com/Instance,
+	// bigtableadmin.googleapis.com/Cluster, bigtableadmin.googleapis.com/Instance
+	// REQUIRED Please refer go/condor-common-datamodel
 	ResourceType string `json:"resourceType,omitempty"`
 	// UniqueId: Required. A service-local token that distinguishes this resource
 	// from other resources within the same service.
@@ -2822,9 +3015,9 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceId) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainDatabaseResourceId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata: Common model
@@ -2911,9 +3104,6 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	UpdationTime string `json:"updationTime,omitempty"`
 	// UserLabelSet: User-provided labels associated with the resource
 	UserLabelSet *StorageDatabasecenterPartnerapiV1mainUserLabels `json:"userLabelSet,omitempty"`
-	// UserLabels: User-provided labels, represented as a dictionary where each
-	// label is a single key value pair.
-	UserLabels map[string]string `json:"userLabels,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AvailabilityConfiguration")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2927,9 +3117,9 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData
@@ -3016,12 +3206,27 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	// violates CIS GCP Foundation 1.1.
 	//   "SIGNAL_TYPE_VIOLATES_CIS_GCP_FOUNDATION_1_0" - Represents if a resource
 	// violates CIS GCP Foundation 1.0.
+	//   "SIGNAL_TYPE_VIOLATES_CIS_CONTROLS_V8_0" - Represents if a resource
+	// violates CIS Controls 8.0.
 	//   "SIGNAL_TYPE_VIOLATES_NIST_800_53" - Represents if a resource violates
 	// NIST 800-53.
+	//   "SIGNAL_TYPE_VIOLATES_NIST_800_53_R5" - Represents if a resource violates
+	// NIST 800-53 R5.
+	//   "SIGNAL_TYPE_VIOLATES_NIST_CYBERSECURITY_FRAMEWORK_V1_0" - Represents if a
+	// resource violates NIST Cybersecurity Framework 1.0.
 	//   "SIGNAL_TYPE_VIOLATES_ISO_27001" - Represents if a resource violates
 	// ISO-27001.
+	//   "SIGNAL_TYPE_VIOLATES_ISO_27001_V2022" - Represents if a resource violates
+	// ISO 27001 2022.
 	//   "SIGNAL_TYPE_VIOLATES_PCI_DSS_V3_2_1" - Represents if a resource violates
 	// PCI-DSS v3.2.1.
+	//   "SIGNAL_TYPE_VIOLATES_PCI_DSS_V4_0" - Represents if a resource violates
+	// PCI-DSS v4.0.
+	//   "SIGNAL_TYPE_VIOLATES_CLOUD_CONTROLS_MATRIX_V4" - Represents if a resource
+	// violates Cloud Controls Matrix v4.0.
+	//   "SIGNAL_TYPE_VIOLATES_HIPAA" - Represents if a resource violates HIPAA.
+	//   "SIGNAL_TYPE_VIOLATES_SOC2_V2017" - Represents if a resource violates SOC2
+	// v2017.
 	//   "SIGNAL_TYPE_LOGS_NOT_OPTIMIZED_FOR_TROUBLESHOOTING" - Represents if
 	// log_checkpoints database flag for a Cloud SQL for PostgreSQL instance is not
 	// set to on.
@@ -3164,9 +3369,9 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDatabasecenterPartnerapiV1mainEntitlement: Proto representing the
@@ -3202,18 +3407,53 @@ type StorageDatabasecenterPartnerapiV1mainEntitlement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainEntitlement) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainEntitlement) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainEntitlement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata: Metadata for
+// individual internal resources in an instance. e.g. spanner instance can have
+// multiple databases with unique configuration settings. Similarly bigtable
+// can have multiple clusters within same bigtable instance.
+type StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata struct {
+	// BackupConfiguration: Backup configuration for this database
+	BackupConfiguration *StorageDatabasecenterPartnerapiV1mainBackupConfiguration `json:"backupConfiguration,omitempty"`
+	// BackupRun: Information about the last backup attempt for this database
+	BackupRun  *StorageDatabasecenterPartnerapiV1mainBackupRun          `json:"backupRun,omitempty"`
+	Product    *StorageDatabasecenterProtoCommonProduct                 `json:"product,omitempty"`
+	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
+	// ResourceName: Required. internal resource name for spanner this will be
+	// database name
+	// e.g."spanner.googleapis.com/projects/123/abc/instances/inst1/databases/db1"
+	ResourceName string `json:"resourceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupConfiguration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupConfiguration") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDatabasecenterPartnerapiV1mainMachineConfiguration:
 // MachineConfiguration describes the configuration of a machine specific to
 // Database Resource.
 type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
-	// CpuCount: The number of CPUs.
+	// CpuCount: The number of CPUs. TODO(b/342344482, b/342346271) add proto
+	// validations again after bug fix.
 	CpuCount int64 `json:"cpuCount,omitempty"`
-	// MemorySizeInBytes: Memory size in bytes.
+	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482, b/342346271) add
+	// proto validations again after bug fix.
 	MemorySizeInBytes int64 `json:"memorySizeInBytes,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "CpuCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3228,59 +3468,58 @@ type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainMachineConfiguration) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainMachineConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainMachineConfiguration
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type StorageDatabasecenterPartnerapiV1mainObservabilityMetricData struct {
-	// MetricTimestamp: Required. The timestamp of the metric value.
-	MetricTimestamp string `json:"metricTimestamp,omitempty"`
+	// AggregationType: Required. Type of aggregation performed on the metric.
+	//
+	// Possible values:
+	//   "AGGREGATION_TYPE_UNSPECIFIED" - Unspecified aggregation type.
+	//   "PEAK" - PEAK aggregation type.
+	//   "P99" - P99 aggregation type.
+	//   "P95" - P95 aggregation type.
+	//   "CURRENT" - current aggregation type.
+	AggregationType string `json:"aggregationType,omitempty"`
 	// MetricType: Required. Type of metric like CPU, Memory, etc.
 	//
 	// Possible values:
-	//   "METRIC_TYPE_UNSPECIFIED"
-	//   "INSTANCE_PEAK_CPU_UTILISATION" - Peak CPU utilization for a DB instance
-	// as a fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases)
-	// List will keep increasing, e.g. PEAK_MEMORY_UTILISATION,
-	// NUMBER_OF_CONNECTIONS, SUCCESS_RATIO_FOR_QUERIES, etc.
+	//   "METRIC_TYPE_UNSPECIFIED" - Unspecified metric type.
+	//   "CPU_UTILIZATION" - CPU utilization for a resource. The value is a
+	// fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases).
+	//   "MEMORY_UTILIZATION" - Memory utilization for a resource. The value is a
+	// fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases).
+	//   "NETWORK_CONNECTIONS" - Number of network connections for a resource.
+	//   "STORAGE_UTILIZATION" - Storage utilization for a resource. The value is a
+	// fraction between 0.0 and 1.0 (may momentarily exceed 1.0 in some cases).
+	//   "STORAGE_USED_BYTES" - Sotrage used by a resource.
 	MetricType string `json:"metricType,omitempty"`
+	// ObservationTime: Required. The time the metric value was observed.
+	ObservationTime string `json:"observationTime,omitempty"`
 	// ResourceName: Required. Database resource name associated with the signal.
 	// Resource name to follow CAIS resource_name format as noted here
 	// go/condor-common-datamodel
 	ResourceName string `json:"resourceName,omitempty"`
 	// Value: Required. Value of the metric type.
-	Value float64 `json:"value,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MetricTimestamp") to
+	Value *StorageDatabasecenterProtoCommonTypedValue `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AggregationType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MetricTimestamp") to include in
+	// NullFields is a list of field names (e.g. "AggregationType") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainObservabilityMetricData) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainObservabilityMetricData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData) UnmarshalJSON(data []byte) error {
-	type NoMethod StorageDatabasecenterPartnerapiV1mainObservabilityMetricData
-	var s1 struct {
-		Value gensupport.JSONFloat64 `json:"value"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Value = float64(s1.Value)
-	return nil
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDatabasecenterPartnerapiV1mainOperationError: An error that occurred
@@ -3315,9 +3554,9 @@ type StorageDatabasecenterPartnerapiV1mainOperationError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainOperationError) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainOperationError) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainOperationError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type StorageDatabasecenterPartnerapiV1mainRetentionSettings struct {
@@ -3346,9 +3585,9 @@ type StorageDatabasecenterPartnerapiV1mainRetentionSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainRetentionSettings) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainRetentionSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainRetentionSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDatabasecenterPartnerapiV1mainUserLabels: Message type for storing
@@ -3370,9 +3609,9 @@ type StorageDatabasecenterPartnerapiV1mainUserLabels struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterPartnerapiV1mainUserLabels) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterPartnerapiV1mainUserLabels) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainUserLabels
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StorageDatabasecenterProtoCommonProduct: Product specification for Condor
@@ -3403,6 +3642,8 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	// dialect.
 	//   "ENGINE_OTHER" - Other refers to rest of other database engine. This is to
 	// be when engine is known, but it is not present in this enum.
+	//   "ENGINE_FIRESTORE_WITH_NATIVE_MODE" - Firestore with native mode.
+	//   "ENGINE_FIRESTORE_WITH_DATASTORE_MODE" - Firestore with datastore mode.
 	Engine string `json:"engine,omitempty"`
 	// Type: Type of specific database product. It could be CloudSQL, AlloyDB etc..
 	//
@@ -3420,6 +3661,7 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	//   "PRODUCT_TYPE_BIGTABLE" - Bigtable product area in GCP
 	//   "PRODUCT_TYPE_OTHER" - Other refers to rest of other product type. This is
 	// to be when product type is known, but it is not present in this enum.
+	//   "PRODUCT_TYPE_FIRESTORE" - Firestore product area in GCP.
 	Type string `json:"type,omitempty"`
 	// Version: Version of the underlying database engine. Example values: For
 	// MySQL, it could be "8.0", "5.7" etc.. For Postgres, it could be "14", "15"
@@ -3438,9 +3680,52 @@ type StorageDatabasecenterProtoCommonProduct struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StorageDatabasecenterProtoCommonProduct) MarshalJSON() ([]byte, error) {
+func (s StorageDatabasecenterProtoCommonProduct) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterProtoCommonProduct
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StorageDatabasecenterProtoCommonTypedValue: TypedValue represents the value
+// of a metric type. It can either be a double, an int64, a string or a bool.
+type StorageDatabasecenterProtoCommonTypedValue struct {
+	// BoolValue: For boolean value
+	BoolValue bool `json:"boolValue,omitempty"`
+	// DoubleValue: For double value
+	DoubleValue float64 `json:"doubleValue,omitempty"`
+	// Int64Value: For integer value
+	Int64Value int64 `json:"int64Value,omitempty,string"`
+	// StringValue: For string value
+	StringValue string `json:"stringValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StorageDatabasecenterProtoCommonTypedValue) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterProtoCommonTypedValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *StorageDatabasecenterProtoCommonTypedValue) UnmarshalJSON(data []byte) error {
+	type NoMethod StorageDatabasecenterProtoCommonTypedValue
+	var s1 struct {
+		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValue = float64(s1.DoubleValue)
+	return nil
 }
 
 // StringRestrictions: Restrictions on STRING type values
@@ -3461,9 +3746,9 @@ type StringRestrictions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StringRestrictions) MarshalJSON() ([]byte, error) {
+func (s StringRestrictions) MarshalJSON() ([]byte, error) {
 	type NoMethod StringRestrictions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SupportedDatabaseFlag: SupportedDatabaseFlag gives general information about
@@ -3499,6 +3784,7 @@ type SupportedDatabaseFlag struct {
 	//   "POSTGRES_13" - DEPRECATED - The database version is Postgres 13.
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
+	//   "POSTGRES_16" - The database version is Postgres 16.
 	SupportedDbVersions []string `json:"supportedDbVersions,omitempty"`
 	// Possible values:
 	//   "VALUE_TYPE_UNSPECIFIED" - This is an unknown flag type.
@@ -3520,9 +3806,45 @@ type SupportedDatabaseFlag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SupportedDatabaseFlag) MarshalJSON() ([]byte, error) {
+func (s SupportedDatabaseFlag) MarshalJSON() ([]byte, error) {
 	type NoMethod SupportedDatabaseFlag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SwitchoverClusterRequest: Message for switching over to a cluster
+type SwitchoverClusterRequest struct {
+	// RequestId: Optional. An optional request ID to identify requests. Specify a
+	// unique request ID so that if you must retry your request, the server will
+	// know to ignore the request if it has already been completed. The server will
+	// guarantee that for at least 60 minutes after the first request. For example,
+	// consider a situation where you make an initial request and the request times
+	// out. If you make the request again with the same request ID, the server can
+	// check if original operation with the same request ID was received, and if
+	// so, will ignore the second request. This prevents clients from accidentally
+	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// exception that zero UUID is not supported
+	// (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+	// ValidateOnly: Optional. If set, performs request validation (e.g. permission
+	// checks and any other type of validation), but do not actually execute the
+	// delete.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SwitchoverClusterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SwitchoverClusterRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeBasedRetention: A time based retention policy specifies that all backups
@@ -3543,9 +3865,38 @@ type TimeBasedRetention struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeBasedRetention) MarshalJSON() ([]byte, error) {
+func (s TimeBasedRetention) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeBasedRetention
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TrialMetadata: Contains information and all metadata related to TRIAL
+// clusters.
+type TrialMetadata struct {
+	// EndTime: End time of the trial cluster.
+	EndTime string `json:"endTime,omitempty"`
+	// GraceEndTime: grace end time of the cluster.
+	GraceEndTime string `json:"graceEndTime,omitempty"`
+	// StartTime: start time of the trial cluster.
+	StartTime string `json:"startTime,omitempty"`
+	// UpgradeTime: Upgrade time of trial cluster to Standard cluster.
+	UpgradeTime string `json:"upgradeTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TrialMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod TrialMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdatePolicy: Policy to be used while updating the instance.
@@ -3571,9 +3922,93 @@ type UpdatePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdatePolicy) MarshalJSON() ([]byte, error) {
+func (s UpdatePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdatePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpgradeClusterRequest: Upgrades a cluster.
+type UpgradeClusterRequest struct {
+	// Etag: Optional. The current etag of the Cluster. If an etag is provided and
+	// does not match the current etag of the Cluster, upgrade will be blocked and
+	// an ABORTED error will be returned.
+	Etag string `json:"etag,omitempty"`
+	// RequestId: Optional. An optional request ID to identify requests. Specify a
+	// unique request ID so that if you must retry your request, the server will
+	// know to ignore the request if it has already been completed. The server will
+	// guarantee that for at least 60 minutes after the first request. For example,
+	// consider a situation where you make an initial request and the request times
+	// out. If you make the request again with the same request ID, the server can
+	// check if original operation with the same request ID was received, and if
+	// so, will ignore the second request. This prevents clients from accidentally
+	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// exception that zero UUID is not supported
+	// (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+	// ValidateOnly: Optional. If set, performs request validation (e.g. permission
+	// checks and any other type of validation), but does not actually execute the
+	// upgrade.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// Version: Required. The version the cluster is going to be upgraded to.
+	//
+	// Possible values:
+	//   "DATABASE_VERSION_UNSPECIFIED" - This is an unknown database version.
+	//   "POSTGRES_13" - DEPRECATED - The database version is Postgres 13.
+	//   "POSTGRES_14" - The database version is Postgres 14.
+	//   "POSTGRES_15" - The database version is Postgres 15.
+	//   "POSTGRES_16" - The database version is Postgres 16.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpgradeClusterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeClusterRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpgradeClusterResponse: UpgradeClusterResponse contains the response for
+// upgrade cluster operation.
+type UpgradeClusterResponse struct {
+	// ClusterUpgradeDetails: Array of upgrade details for the current cluster and
+	// all the secondary clusters associated with this cluster.
+	ClusterUpgradeDetails []*ClusterUpgradeDetails `json:"clusterUpgradeDetails,omitempty"`
+	// Message: A user friendly message summarising the upgrade operation details
+	// and the next steps for the user if there is any.
+	Message string `json:"message,omitempty"`
+	// Status: Status of upgrade operation.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "SUCCESS" - Operation succeeded.
+	//   "FAILED" - Operation failed.
+	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClusterUpgradeDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClusterUpgradeDetails") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpgradeClusterResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeClusterResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // User: Message describing User object.
@@ -3611,9 +4046,9 @@ type User struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *User) MarshalJSON() ([]byte, error) {
+func (s User) MarshalJSON() ([]byte, error) {
 	type NoMethod User
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserPassword: The username/password for a database user. Used for specifying
@@ -3636,9 +4071,9 @@ type UserPassword struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserPassword) MarshalJSON() ([]byte, error) {
+func (s UserPassword) MarshalJSON() ([]byte, error) {
 	type NoMethod UserPassword
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WeeklySchedule: A weekly schedule starts a backup at prescribed start times
@@ -3678,9 +4113,9 @@ type WeeklySchedule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WeeklySchedule) MarshalJSON() ([]byte, error) {
+func (s WeeklySchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod WeeklySchedule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {
@@ -5634,6 +6069,211 @@ func (c *ProjectsLocationsClustersRestoreCall) doRequest(alt string) (*http.Resp
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsClustersRestoreCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsClustersSwitchoverCall struct {
+	s                        *Service
+	name                     string
+	switchoverclusterrequest *SwitchoverClusterRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Switchover: Switches the role of PRIMARY and SECONDARY cluster without any
+// data loss. This promotes the SECONDARY cluster to PRIMARY and sets up
+// original PRIMARY cluster to replicate from this newly promoted cluster.
+//
+//   - name: The name of the resource. For the required format, see the comment
+//     on the Cluster.name field.
+func (r *ProjectsLocationsClustersService) Switchover(name string, switchoverclusterrequest *SwitchoverClusterRequest) *ProjectsLocationsClustersSwitchoverCall {
+	c := &ProjectsLocationsClustersSwitchoverCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.switchoverclusterrequest = switchoverclusterrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersSwitchoverCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersSwitchoverCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersSwitchoverCall) Context(ctx context.Context) *ProjectsLocationsClustersSwitchoverCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersSwitchoverCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersSwitchoverCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.switchoverclusterrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:switchover")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alloydb.projects.locations.clusters.switchover" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersSwitchoverCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsClustersUpgradeCall struct {
+	s                     *Service
+	name                  string
+	upgradeclusterrequest *UpgradeClusterRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Upgrade: Upgrades a single Cluster. Imperative only.
+//
+// - name: The resource name of the cluster.
+func (r *ProjectsLocationsClustersService) Upgrade(name string, upgradeclusterrequest *UpgradeClusterRequest) *ProjectsLocationsClustersUpgradeCall {
+	c := &ProjectsLocationsClustersUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.upgradeclusterrequest = upgradeclusterrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersUpgradeCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersUpgradeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersUpgradeCall) Context(ctx context.Context) *ProjectsLocationsClustersUpgradeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersUpgradeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersUpgradeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.upgradeclusterrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:upgrade")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alloydb.projects.locations.clusters.upgrade" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersUpgradeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {

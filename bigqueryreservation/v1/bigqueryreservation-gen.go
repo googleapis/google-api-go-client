@@ -272,9 +272,9 @@ type Assignment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Assignment) MarshalJSON() ([]byte, error) {
+func (s Assignment) MarshalJSON() ([]byte, error) {
 	type NoMethod Assignment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Autoscale: Auto scaling settings.
@@ -297,9 +297,9 @@ type Autoscale struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Autoscale) MarshalJSON() ([]byte, error) {
+func (s Autoscale) MarshalJSON() ([]byte, error) {
 	type NoMethod Autoscale
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BiReservation: Represents a BI Reservation.
@@ -329,9 +329,9 @@ type BiReservation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BiReservation) MarshalJSON() ([]byte, error) {
+func (s BiReservation) MarshalJSON() ([]byte, error) {
 	type NoMethod BiReservation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CapacityCommitment: Capacity commitment is a way to purchase compute
@@ -475,9 +475,9 @@ type CapacityCommitment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CapacityCommitment) MarshalJSON() ([]byte, error) {
+func (s CapacityCommitment) MarshalJSON() ([]byte, error) {
 	type NoMethod CapacityCommitment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -518,9 +518,9 @@ type ListAssignmentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAssignmentsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAssignmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAssignmentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCapacityCommitmentsResponse: The response for
@@ -547,9 +547,9 @@ type ListCapacityCommitmentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCapacityCommitmentsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCapacityCommitmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCapacityCommitmentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListReservationsResponse: The response for
@@ -576,9 +576,9 @@ type ListReservationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListReservationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListReservationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReservationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MergeCapacityCommitmentsRequest: The request for
@@ -602,9 +602,9 @@ type MergeCapacityCommitmentsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MergeCapacityCommitmentsRequest) MarshalJSON() ([]byte, error) {
+func (s MergeCapacityCommitmentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MergeCapacityCommitmentsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MoveAssignmentRequest: The request for ReservationService.MoveAssignment.
@@ -633,9 +633,9 @@ type MoveAssignmentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MoveAssignmentRequest) MarshalJSON() ([]byte, error) {
+func (s MoveAssignmentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MoveAssignmentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Reservation: A reservation is a mechanism used to guarantee slots to users.
@@ -732,9 +732,9 @@ type Reservation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Reservation) MarshalJSON() ([]byte, error) {
+func (s Reservation) MarshalJSON() ([]byte, error) {
 	type NoMethod Reservation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchAllAssignmentsResponse: The response for
@@ -761,9 +761,9 @@ type SearchAllAssignmentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchAllAssignmentsResponse) MarshalJSON() ([]byte, error) {
+func (s SearchAllAssignmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchAllAssignmentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchAssignmentsResponse: The response for
@@ -790,9 +790,9 @@ type SearchAssignmentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchAssignmentsResponse) MarshalJSON() ([]byte, error) {
+func (s SearchAssignmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchAssignmentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SplitCapacityCommitmentRequest: The request for
@@ -813,9 +813,9 @@ type SplitCapacityCommitmentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SplitCapacityCommitmentRequest) MarshalJSON() ([]byte, error) {
+func (s SplitCapacityCommitmentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SplitCapacityCommitmentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SplitCapacityCommitmentResponse: The response for
@@ -841,9 +841,9 @@ type SplitCapacityCommitmentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SplitCapacityCommitmentResponse) MarshalJSON() ([]byte, error) {
+func (s SplitCapacityCommitmentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SplitCapacityCommitmentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -875,9 +875,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableReference: Fully qualified reference to BigQuery table. Internally
@@ -902,9 +902,9 @@ type TableReference struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableReference) MarshalJSON() ([]byte, error) {
+func (s TableReference) MarshalJSON() ([]byte, error) {
 	type NoMethod TableReference
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetBiReservationCall struct {

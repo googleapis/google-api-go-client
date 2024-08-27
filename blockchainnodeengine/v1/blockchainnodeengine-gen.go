@@ -265,9 +265,9 @@ type BlockchainNode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlockchainNode) MarshalJSON() ([]byte, error) {
+func (s BlockchainNode) MarshalJSON() ([]byte, error) {
 	type NoMethod BlockchainNode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -298,9 +298,9 @@ type ConnectionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConnectionInfo) MarshalJSON() ([]byte, error) {
+func (s ConnectionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EndpointInfo: Contains endpoint information through which to interact with a
@@ -325,9 +325,9 @@ type EndpointInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EndpointInfo) MarshalJSON() ([]byte, error) {
+func (s EndpointInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod EndpointInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EthereumDetails: Ethereum-specific blockchain node details.
@@ -405,9 +405,9 @@ type EthereumDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EthereumDetails) MarshalJSON() ([]byte, error) {
+func (s EthereumDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod EthereumDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EthereumEndpoints: Contains endpoint information specific to Ethereum nodes.
@@ -436,9 +436,9 @@ type EthereumEndpoints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EthereumEndpoints) MarshalJSON() ([]byte, error) {
+func (s EthereumEndpoints) MarshalJSON() ([]byte, error) {
 	type NoMethod EthereumEndpoints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GethDetails: Options for the Geth execution client. See Command-line Options
@@ -473,9 +473,9 @@ type GethDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GethDetails) MarshalJSON() ([]byte, error) {
+func (s GethDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GethDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -514,9 +514,9 @@ type ListBlockchainNodesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBlockchainNodesResponse) MarshalJSON() ([]byte, error) {
+func (s ListBlockchainNodesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBlockchainNodesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -542,9 +542,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -570,9 +570,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -608,9 +608,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -655,9 +655,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -693,9 +693,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -727,9 +727,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValidatorConfig: Configuration for validator-related parameters on the
@@ -762,9 +762,9 @@ type ValidatorConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValidatorConfig) MarshalJSON() ([]byte, error) {
+func (s ValidatorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidatorConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {

@@ -245,9 +245,9 @@ type GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1AcknowledgeViolationResponse: Response for
@@ -280,9 +280,9 @@ type GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1AssetMoveAnalysis: Represents move analysis
@@ -311,9 +311,9 @@ type GoogleCloudAssuredworkloadsV1AssetMoveAnalysis struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1AssetMoveAnalysis) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1AssetMoveAnalysis) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1AssetMoveAnalysis
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata: Operation
@@ -330,35 +330,25 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	//   "FEDRAMP_MODERATE" - FedRAMP Moderate data protection controls
 	//   "US_REGIONAL_ACCESS" - Assured Workloads For US Regions data protection
 	// controls
-	//   "REGIONAL_CONTROLS_PREMIUM_US" - Assured Workloads For US Regions data
-	// protection controls
 	//   "HIPAA" - Health Insurance Portability and Accountability Act controls
 	//   "HITRUST" - Health Information Trust Alliance controls
 	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and Support
 	// controls
-	//   "REGIONAL_CONTROLS_PREMIUM_EU" - Assured Workloads For EU Regions and
-	// Support controls
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
-	// Support controls
-	//   "REGIONAL_CONTROLS_PREMIUM_CA" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
 	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia Regions and
 	// Support controls
-	//   "REGIONAL_CONTROLS_PREMIUM_AU" - Assured Workloads for Australia Regions
-	// and Support controls
 	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
 	//   "ISR_REGIONS" - Assured Workloads for Israel Regions
-	//   "REGIONAL_CONTROLS_PREMIUM_ISR" - Assured Workloads for Israel
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
 	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
 	//   "IL5" - Information protection as per DoD IL5 requirements.
 	//   "IL2" - Information protection as per DoD IL2 requirements.
 	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
-	//   "REGIONAL_CONTROLS_PREMIUM_JP" - Assured Workloads for Japan Regions
-	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - KSA R5 Controls.
-	//   "REGIONAL_CONTROLS" - Assured Workloads for Regional Controls/Free Regions
-	//   "FREE_REGIONS" - Assured Workloads for Regional Controls/Free Regions
+	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - Assured Workloads
+	// Sovereign Controls KSA
+	//   "REGIONAL_CONTROLS" - Assured Workloads for Regional Controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// CreateTime: Optional. Time when the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -379,9 +369,9 @@ type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1EnableResourceMonitoringResponse: Response for
@@ -414,9 +404,9 @@ type GoogleCloudAssuredworkloadsV1ListViolationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1ListViolationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1ListViolationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1ListViolationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1ListWorkloadsResponse: Response of
@@ -442,9 +432,9 @@ type GoogleCloudAssuredworkloadsV1ListWorkloadsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1ListWorkloadsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1ListWorkloadsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1ListWorkloadsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1MoveAnalysisGroup: Represents a logical group
@@ -470,9 +460,9 @@ type GoogleCloudAssuredworkloadsV1MoveAnalysisGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1MoveAnalysisGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1MoveAnalysisGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1MoveAnalysisGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1MoveAnalysisResult: Represents the successful
@@ -497,9 +487,9 @@ type GoogleCloudAssuredworkloadsV1MoveAnalysisResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1MoveAnalysisResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1MoveAnalysisResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1MoveAnalysisResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1MoveImpact: Represents the impact of moving the
@@ -520,9 +510,9 @@ type GoogleCloudAssuredworkloadsV1MoveImpact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1MoveImpact) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1MoveImpact) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1MoveImpact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1MutatePartnerPermissionsRequest: Request for
@@ -549,9 +539,9 @@ type GoogleCloudAssuredworkloadsV1MutatePartnerPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1MutatePartnerPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1MutatePartnerPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1MutatePartnerPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1RestrictAllowedResourcesRequest: Request for
@@ -587,9 +577,9 @@ type GoogleCloudAssuredworkloadsV1RestrictAllowedResourcesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1RestrictAllowedResourcesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1RestrictAllowedResourcesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1RestrictAllowedResourcesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1RestrictAllowedResourcesResponse: Response for
@@ -693,9 +683,9 @@ type GoogleCloudAssuredworkloadsV1Violation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1Violation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1Violation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1Violation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1ViolationExceptionContext: Violation exception
@@ -722,9 +712,9 @@ type GoogleCloudAssuredworkloadsV1ViolationExceptionContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1ViolationExceptionContext) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1ViolationExceptionContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1ViolationExceptionContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1ViolationRemediation: Represents remediation
@@ -751,6 +741,8 @@ type GoogleCloudAssuredworkloadsV1ViolationRemediation struct {
 	// Remediation type for gcp.restrictCmekCryptoKeyProjects
 	//   "REMEDIATION_RESOURCE_VIOLATION" - Remediation type for resource
 	// violation.
+	//   "REMEDIATION_RESOURCE_VIOLATION_NON_CMEK_SERVICES" - Remediation type for
+	// resource violation due to gcp.restrictNonCmekServices
 	RemediationType string `json:"remediationType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CompliantValues") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -765,9 +757,9 @@ type GoogleCloudAssuredworkloadsV1ViolationRemediation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1ViolationRemediation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1ViolationRemediation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1ViolationRemediation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1ViolationRemediationInstructions: Instructions
@@ -792,9 +784,9 @@ type GoogleCloudAssuredworkloadsV1ViolationRemediationInstructions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1ViolationRemediationInstructions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1ViolationRemediationInstructions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1ViolationRemediationInstructions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsConsole:
@@ -819,9 +811,9 @@ type GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsConsole struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsConsole) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsConsole) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsConsole
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsGcloud:
@@ -846,9 +838,9 @@ type GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsGcloud struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsGcloud) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsGcloud) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsGcloud
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1Workload: A Workload object for managing highly
@@ -873,35 +865,25 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//   "FEDRAMP_MODERATE" - FedRAMP Moderate data protection controls
 	//   "US_REGIONAL_ACCESS" - Assured Workloads For US Regions data protection
 	// controls
-	//   "REGIONAL_CONTROLS_PREMIUM_US" - Assured Workloads For US Regions data
-	// protection controls
 	//   "HIPAA" - Health Insurance Portability and Accountability Act controls
 	//   "HITRUST" - Health Information Trust Alliance controls
 	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and Support
 	// controls
-	//   "REGIONAL_CONTROLS_PREMIUM_EU" - Assured Workloads For EU Regions and
-	// Support controls
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
-	// Support controls
-	//   "REGIONAL_CONTROLS_PREMIUM_CA" - Assured Workloads For Canada Regions and
 	// Support controls
 	//   "ITAR" - International Traffic in Arms Regulations
 	//   "AU_REGIONS_AND_US_SUPPORT" - Assured Workloads for Australia Regions and
 	// Support controls
-	//   "REGIONAL_CONTROLS_PREMIUM_AU" - Assured Workloads for Australia Regions
-	// and Support controls
 	//   "ASSURED_WORKLOADS_FOR_PARTNERS" - Assured Workloads for Partners;
 	//   "ISR_REGIONS" - Assured Workloads for Israel Regions
-	//   "REGIONAL_CONTROLS_PREMIUM_ISR" - Assured Workloads for Israel
 	//   "ISR_REGIONS_AND_SUPPORT" - Assured Workloads for Israel Regions
 	//   "CA_PROTECTED_B" - Assured Workloads for Canada Protected B regime
 	//   "IL5" - Information protection as per DoD IL5 requirements.
 	//   "IL2" - Information protection as per DoD IL2 requirements.
 	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
-	//   "REGIONAL_CONTROLS_PREMIUM_JP" - Assured Workloads for Japan Regions
-	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - KSA R5 Controls.
-	//   "REGIONAL_CONTROLS" - Assured Workloads for Regional Controls/Free Regions
-	//   "FREE_REGIONS" - Assured Workloads for Regional Controls/Free Regions
+	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - Assured Workloads
+	// Sovereign Controls KSA
+	//   "REGIONAL_CONTROLS" - Assured Workloads for Regional Controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// ComplianceStatus: Output only. Count of active Violations in the Workload.
 	ComplianceStatus *GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus `json:"complianceStatus,omitempty"`
@@ -956,10 +938,21 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	//   "SOVEREIGN_CONTROLS_BY_SIA_MINSAIT" - Enum representing SIA_MINSAIT
 	// (Indra) partner.
 	//   "SOVEREIGN_CONTROLS_BY_PSN" - Enum representing PSN (TIM) partner.
+	//   "SOVEREIGN_CONTROLS_BY_CNTXT" - Enum representing CNTXT (Kingdom of Saudi
+	// Arabia) partner.
+	//   "SOVEREIGN_CONTROLS_BY_CNTXT_NO_EKM" - Enum representing CNTXT (Kingdom of
+	// Saudi Arabia) partner offering without EKM.
 	Partner string `json:"partner,omitempty"`
 	// PartnerPermissions: Optional. Permissions granted to the AW Partner SA
 	// account for the customer workload
 	PartnerPermissions *GoogleCloudAssuredworkloadsV1WorkloadPartnerPermissions `json:"partnerPermissions,omitempty"`
+	// PartnerServicesBillingAccount: Optional. Billing account necessary for
+	// purchasing services from Sovereign Partners. This field is required for
+	// creating SIA/PSN partner workloads. The caller should have
+	// 'billing.resourceAssociations.create' IAM permission on this
+	// billing-account. The format of this string is
+	// billingAccounts/AAAAAA-BBBBBB-CCCCCC
+	PartnerServicesBillingAccount string `json:"partnerServicesBillingAccount,omitempty"`
 	// ProvisionedResourcesParent: Input only. The parent resource for the
 	// resources managed by this Assured Workload. May be either empty or a folder
 	// resource which is a child of the Workload parent. If not specified all
@@ -1007,9 +1000,9 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1Workload) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1Workload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1Workload
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus: Represents the
@@ -1042,9 +1035,9 @@ type GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1WorkloadComplianceStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1WorkloadEkmProvisioningResponse: External key
@@ -1096,9 +1089,9 @@ type GoogleCloudAssuredworkloadsV1WorkloadEkmProvisioningResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1WorkloadEkmProvisioningResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1WorkloadEkmProvisioningResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1WorkloadEkmProvisioningResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1WorkloadKMSSettings: Settings specific to the
@@ -1125,14 +1118,17 @@ type GoogleCloudAssuredworkloadsV1WorkloadKMSSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1WorkloadKMSSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1WorkloadKMSSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1WorkloadKMSSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1WorkloadPartnerPermissions: Permissions granted
 // to the AW Partner SA account for the customer workload
 type GoogleCloudAssuredworkloadsV1WorkloadPartnerPermissions struct {
+	// AccessTransparencyLogsSupportCaseViewer: Optional. Allow partner to view
+	// support case details for an AXT log
+	AccessTransparencyLogsSupportCaseViewer bool `json:"accessTransparencyLogsSupportCaseViewer,omitempty"`
 	// AssuredWorkloadsMonitoring: Optional. Allow partner to view violation
 	// alerts.
 	AssuredWorkloadsMonitoring bool `json:"assuredWorkloadsMonitoring,omitempty"`
@@ -1141,22 +1137,24 @@ type GoogleCloudAssuredworkloadsV1WorkloadPartnerPermissions struct {
 	DataLogsViewer bool `json:"dataLogsViewer,omitempty"`
 	// ServiceAccessApprover: Optional. Allow partner to view access approval logs.
 	ServiceAccessApprover bool `json:"serviceAccessApprover,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AssuredWorkloadsMonitoring")
-	// to unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AccessTransparencyLogsSupportCaseViewer") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AssuredWorkloadsMonitoring") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AccessTransparencyLogsSupportCaseViewer") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted from
+	// API requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields
+	// for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1WorkloadPartnerPermissions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1WorkloadPartnerPermissions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1WorkloadPartnerPermissions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1WorkloadResourceInfo: Represent the resources
@@ -1189,9 +1187,9 @@ type GoogleCloudAssuredworkloadsV1WorkloadResourceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1WorkloadResourceInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1WorkloadResourceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1WorkloadResourceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1WorkloadResourceSettings: Represent the custom
@@ -1231,9 +1229,9 @@ type GoogleCloudAssuredworkloadsV1WorkloadResourceSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1WorkloadResourceSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1WorkloadResourceSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1WorkloadResourceSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1WorkloadSaaEnrollmentResponse: Signed Access
@@ -1272,9 +1270,9 @@ type GoogleCloudAssuredworkloadsV1WorkloadSaaEnrollmentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudAssuredworkloadsV1WorkloadSaaEnrollmentResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudAssuredworkloadsV1WorkloadSaaEnrollmentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1WorkloadSaaEnrollmentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningListOperationsResponse: The response message for
@@ -1301,9 +1299,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -1348,9 +1346,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -1392,9 +1390,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OrganizationsLocationsOperationsGetCall struct {

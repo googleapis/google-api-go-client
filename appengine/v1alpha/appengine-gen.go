@@ -359,9 +359,9 @@ type AuthorizedCertificate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuthorizedCertificate) MarshalJSON() ([]byte, error) {
+func (s AuthorizedCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthorizedCertificate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuthorizedDomain: A domain that a user has been authorized to administer. To
@@ -387,9 +387,9 @@ type AuthorizedDomain struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuthorizedDomain) MarshalJSON() ([]byte, error) {
+func (s AuthorizedDomain) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthorizedDomain
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateRawData: An SSL certificate obtained from a certificate
@@ -417,9 +417,9 @@ type CertificateRawData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertificateRawData) MarshalJSON() ([]byte, error) {
+func (s CertificateRawData) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateRawData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContainerState: ContainerState contains the externally-visible container
@@ -476,9 +476,9 @@ type ContainerState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContainerState) MarshalJSON() ([]byte, error) {
+func (s ContainerState) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateVersionMetadataV1: Metadata for the given google.longrunning.Operation
@@ -500,9 +500,9 @@ type CreateVersionMetadataV1 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateVersionMetadataV1) MarshalJSON() ([]byte, error) {
+func (s CreateVersionMetadataV1) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateVersionMetadataV1
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateVersionMetadataV1Alpha: Metadata for the given
@@ -525,9 +525,9 @@ type CreateVersionMetadataV1Alpha struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateVersionMetadataV1Alpha) MarshalJSON() ([]byte, error) {
+func (s CreateVersionMetadataV1Alpha) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateVersionMetadataV1Alpha
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateVersionMetadataV1Beta: Metadata for the given
@@ -550,9 +550,9 @@ type CreateVersionMetadataV1Beta struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateVersionMetadataV1Beta) MarshalJSON() ([]byte, error) {
+func (s CreateVersionMetadataV1Beta) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateVersionMetadataV1Beta
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DomainMapping: A domain serving an App Engine application.
@@ -586,9 +586,9 @@ type DomainMapping struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DomainMapping) MarshalJSON() ([]byte, error) {
+func (s DomainMapping) MarshalJSON() ([]byte, error) {
 	type NoMethod DomainMapping
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -626,9 +626,9 @@ type GoogleAppengineV1betaLocationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppengineV1betaLocationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleAppengineV1betaLocationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppengineV1betaLocationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAuthorizedCertificatesResponse: Response message for
@@ -654,9 +654,9 @@ type ListAuthorizedCertificatesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAuthorizedCertificatesResponse) MarshalJSON() ([]byte, error) {
+func (s ListAuthorizedCertificatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAuthorizedCertificatesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAuthorizedDomainsResponse: Response message for
@@ -682,9 +682,9 @@ type ListAuthorizedDomainsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAuthorizedDomainsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAuthorizedDomainsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAuthorizedDomainsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDomainMappingsResponse: Response message for
@@ -710,9 +710,9 @@ type ListDomainMappingsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDomainMappingsResponse) MarshalJSON() ([]byte, error) {
+func (s ListDomainMappingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDomainMappingsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -738,9 +738,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -766,9 +766,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -803,9 +803,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocationMetadata: Metadata for the given google.cloud.location.Location.
@@ -833,9 +833,9 @@ type LocationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
+func (s LocationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ManagedCertificate: A certificate managed by App Engine.
@@ -890,9 +890,9 @@ type ManagedCertificate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManagedCertificate) MarshalJSON() ([]byte, error) {
+func (s ManagedCertificate) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedCertificate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -936,9 +936,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadataV1: Metadata for the given google.longrunning.Operation.
@@ -974,9 +974,9 @@ type OperationMetadataV1 struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadataV1) MarshalJSON() ([]byte, error) {
+func (s OperationMetadataV1) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadataV1
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadataV1Alpha: Metadata for the given
@@ -1013,9 +1013,9 @@ type OperationMetadataV1Alpha struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadataV1Alpha) MarshalJSON() ([]byte, error) {
+func (s OperationMetadataV1Alpha) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadataV1Alpha
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadataV1Beta: Metadata for the given
@@ -1052,9 +1052,9 @@ type OperationMetadataV1Beta struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadataV1Beta) MarshalJSON() ([]byte, error) {
+func (s OperationMetadataV1Beta) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadataV1Beta
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProjectEvent: The request sent to CLHs during project events.
@@ -1088,9 +1088,9 @@ type ProjectEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProjectEvent) MarshalJSON() ([]byte, error) {
+func (s ProjectEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod ProjectEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProjectsMetadata: ProjectsMetadata is the metadata CCFE stores about the all
@@ -1150,9 +1150,9 @@ type ProjectsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProjectsMetadata) MarshalJSON() ([]byte, error) {
+func (s ProjectsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ProjectsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Reasons: Containers transition between and within states based on reasons
@@ -1263,9 +1263,9 @@ type Reasons struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Reasons) MarshalJSON() ([]byte, error) {
+func (s Reasons) MarshalJSON() ([]byte, error) {
 	type NoMethod Reasons
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceRecord: A DNS resource record.
@@ -1296,9 +1296,9 @@ type ResourceRecord struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourceRecord) MarshalJSON() ([]byte, error) {
+func (s ResourceRecord) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceRecord
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SslSettings: SSL configuration for a DomainMapping resource.
@@ -1329,9 +1329,9 @@ type SslSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SslSettings) MarshalJSON() ([]byte, error) {
+func (s SslSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod SslSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The Status type defines a logical error model that is suitable for
@@ -1363,9 +1363,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AppsAuthorizedCertificatesCreateCall struct {

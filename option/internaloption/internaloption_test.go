@@ -58,6 +58,6 @@ func TestDefaultApply(t *testing.T) {
 		cmpopts.IgnoreFields(google.Credentials{}, "udMu", "universeDomain"),
 	}
 	if !cmp.Equal(got, want, ignore...) {
-		t.Errorf(cmp.Diff(got, want, ignore...))
+		t.Error(cmp.Diff(got, want, ignore...))
 	}
 }

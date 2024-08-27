@@ -250,13 +250,27 @@ type Callback struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Callback) MarshalJSON() ([]byte, error) {
+func (s Callback) MarshalJSON() ([]byte, error) {
 	type NoMethod Callback
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelExecutionRequest: Request for the CancelExecution method.
 type CancelExecutionRequest struct {
+}
+
+// DeleteExecutionHistoryRequest: Request for the DeleteExecutionHistory
+// method.
+type DeleteExecutionHistoryRequest struct {
+}
+
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // Error: Error describes why the execution was abnormally terminated.
@@ -281,9 +295,9 @@ type Error struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Error) MarshalJSON() ([]byte, error) {
+func (s Error) MarshalJSON() ([]byte, error) {
 	type NoMethod Error
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Exception: Exception describes why the step entry failed.
@@ -303,9 +317,9 @@ type Exception struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Exception) MarshalJSON() ([]byte, error) {
+func (s Exception) MarshalJSON() ([]byte, error) {
 	type NoMethod Exception
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Execution: A running instance of a Workflow
@@ -340,6 +354,19 @@ type Execution struct {
 	// prematurely. The value is only present if the execution's state is `FAILED`
 	// or `CANCELLED`.
 	Error *Error `json:"error,omitempty"`
+	// ExecutionHistoryLevel: Optional. Describes the level of the execution
+	// history feature to apply to this execution. If not specified, the level of
+	// the execution history feature will be determined by its workflow's execution
+	// history level. If the value is different from its workflow's value, it will
+	// override the workflow's execution history level for this exeuction.
+	//
+	// Possible values:
+	//   "EXECUTION_HISTORY_LEVEL_UNSPECIFIED" - The default/unset value.
+	//   "EXECUTION_HISTORY_BASIC" - Enable execution history basic feature for
+	// this execution.
+	//   "EXECUTION_HISTORY_DETAILED" - Enable execution history detailed feature
+	// for this execution.
+	ExecutionHistoryLevel string `json:"executionHistoryLevel,omitempty"`
 	// Labels: Labels associated with this execution. Labels can contain at most 64
 	// entries. Keys and values can be no longer than 63 characters and can only
 	// contain lowercase letters, numeric characters, underscores, and dashes.
@@ -395,9 +422,9 @@ type Execution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Execution) MarshalJSON() ([]byte, error) {
+func (s Execution) MarshalJSON() ([]byte, error) {
 	type NoMethod Execution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExportDataResponse: Response for the ExportData method.
@@ -421,9 +448,9 @@ type ExportDataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportDataResponse) MarshalJSON() ([]byte, error) {
+func (s ExportDataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportDataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCallbacksResponse: RPC response object for the ListCallbacks method.
@@ -449,9 +476,9 @@ type ListCallbacksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCallbacksResponse) MarshalJSON() ([]byte, error) {
+func (s ListCallbacksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCallbacksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListExecutionsResponse: Response for the ListExecutions method.
@@ -477,9 +504,9 @@ type ListExecutionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListExecutionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListExecutionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListExecutionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListStepEntriesResponse: Response message for
@@ -511,9 +538,9 @@ type ListStepEntriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListStepEntriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListStepEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListStepEntriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NavigationInfo: NavigationInfo describes what steps if any come before or
@@ -542,9 +569,9 @@ type NavigationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NavigationInfo) MarshalJSON() ([]byte, error) {
+func (s NavigationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod NavigationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Position: Position contains source position information about the stack
@@ -573,9 +600,9 @@ type Position struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Position) MarshalJSON() ([]byte, error) {
+func (s Position) MarshalJSON() ([]byte, error) {
 	type NoMethod Position
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PubsubMessage: A message that is published by publishers and consumed by
@@ -625,9 +652,9 @@ type PubsubMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PubsubMessage) MarshalJSON() ([]byte, error) {
+func (s PubsubMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StackTrace: A collection of stack elements (frames) where an error occurred.
@@ -647,9 +674,9 @@ type StackTrace struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StackTrace) MarshalJSON() ([]byte, error) {
+func (s StackTrace) MarshalJSON() ([]byte, error) {
 	type NoMethod StackTrace
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StackTraceElement: A single stack element (frame) where an error occurred.
@@ -673,9 +700,9 @@ type StackTraceElement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StackTraceElement) MarshalJSON() ([]byte, error) {
+func (s StackTraceElement) MarshalJSON() ([]byte, error) {
 	type NoMethod StackTraceElement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StateError: Describes an error related to the current state of the Execution
@@ -702,9 +729,9 @@ type StateError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StateError) MarshalJSON() ([]byte, error) {
+func (s StateError) MarshalJSON() ([]byte, error) {
 	type NoMethod StateError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: Represents the current status of this execution.
@@ -730,9 +757,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Step: Represents a step of the workflow this execution is running.
@@ -754,9 +781,9 @@ type Step struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Step) MarshalJSON() ([]byte, error) {
+func (s Step) MarshalJSON() ([]byte, error) {
 	type NoMethod Step
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StepEntry: An StepEntry contains debugging information for a step transition
@@ -826,6 +853,8 @@ type StepEntry struct {
 	StepType string `json:"stepType,omitempty"`
 	// UpdateTime: Output only. The most recently updated time of the step entry.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// VariableData: Output only. The VariableData associated to this step.
+	VariableData *VariableData `json:"variableData,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -842,14 +871,17 @@ type StepEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StepEntry) MarshalJSON() ([]byte, error) {
+func (s StepEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod StepEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StepEntryMetadata: StepEntryMetadata contains metadata information about
 // this step.
 type StepEntryMetadata struct {
+	// ExpectedIteration: Expected iteration represents the expected number of
+	// iterations in the step's progress.
+	ExpectedIteration int64 `json:"expectedIteration,omitempty,string"`
 	// ProgressNumber: Progress number represents the current state of the current
 	// progress. eg: A step entry represents the 4th iteration in a progress of
 	// PROGRESS_TYPE_FOR.
@@ -870,22 +902,22 @@ type StepEntryMetadata struct {
 	ProgressType string `json:"progressType,omitempty"`
 	// ThreadId: Child thread id that this step entry belongs to.
 	ThreadId string `json:"threadId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ProgressNumber") to
+	// ForceSendFields is a list of field names (e.g. "ExpectedIteration") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ProgressNumber") to include in
+	// NullFields is a list of field names (e.g. "ExpectedIteration") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *StepEntryMetadata) MarshalJSON() ([]byte, error) {
+func (s StepEntryMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod StepEntryMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TriggerPubsubExecutionRequest: Request for the TriggerPubsubExecution
@@ -918,9 +950,31 @@ type TriggerPubsubExecutionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TriggerPubsubExecutionRequest) MarshalJSON() ([]byte, error) {
+func (s TriggerPubsubExecutionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TriggerPubsubExecutionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VariableData: VariableData contains the variable data for this step.
+type VariableData struct {
+	// Variables: Variables that are associated with this step.
+	Variables googleapi.RawMessage `json:"variables,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Variables") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Variables") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VariableData) MarshalJSON() ([]byte, error) {
+	type NoMethod VariableData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsWorkflowsTriggerPubsubExecutionCall struct {
@@ -1233,6 +1287,110 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Do(opts ...googleapi.Ca
 	return ret, nil
 }
 
+type ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall struct {
+	s                             *Service
+	name                          string
+	deleteexecutionhistoryrequest *DeleteExecutionHistoryRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// DeleteExecutionHistory: Deletes all step entries for an execution.
+//
+//   - name: Name of the execution for which step entries should be deleted.
+//     Format:
+//     projects/{project}/locations/{location}/workflows/{workflow}/executions/{ex
+//     ecution}.
+func (r *ProjectsLocationsWorkflowsExecutionsService) DeleteExecutionHistory(name string, deleteexecutionhistoryrequest *DeleteExecutionHistoryRequest) *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall {
+	c := &ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.deleteexecutionhistoryrequest = deleteexecutionhistoryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall) Fields(s ...googleapi.Field) *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall) Context(ctx context.Context) *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.deleteexecutionhistoryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:deleteExecutionHistory")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "workflowexecutions.projects.locations.workflows.executions.deleteExecutionHistory" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsWorkflowsExecutionsDeleteExecutionHistoryCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsWorkflowsExecutionsExportDataCall struct {
 	s            *Service
 	name         string
@@ -1495,8 +1653,9 @@ func (r *ProjectsLocationsWorkflowsExecutionsService) List(parent string) *Proje
 // `[Executions.ListExecutions]` results. The following fields are supported
 // for filtering: `executionId`, `state`, `createTime`, `startTime`, `endTime`,
 // `duration`, `workflowRevisionId`, `stepName`, and `label`. For details, see
-// AIP-160. For example, if you are using the Google APIs Explorer:
-// `state="SUCCEEDED" or `startTime>"2023-08-01" AND state="FAILED"
+// AIP-160. For more information, see Filter executions. For example, if you
+// are using the Google APIs Explorer: `state="SUCCEEDED" or
+// `startTime>"2023-08-01" AND state="FAILED"
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) Filter(filter string) *ProjectsLocationsWorkflowsExecutionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1833,6 +1992,21 @@ func (r *ProjectsLocationsWorkflowsExecutionsStepEntriesService) Get(name string
 	return c
 }
 
+// View sets the optional parameter "view": Deprecated field.
+//
+// Possible values:
+//
+//	"EXECUTION_ENTRY_VIEW_UNSPECIFIED" - The default/unset value.
+//	"EXECUTION_ENTRY_VIEW_BASIC" - Include basic information in the step
+//
+// entries. All fields in StepEntry are returned except for variable_data.
+//
+//	"EXECUTION_ENTRY_VIEW_DETAILED" - Include all data.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall) View(view string) *ProjectsLocationsWorkflowsExecutionsStepEntriesGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -1936,7 +2110,7 @@ type ProjectsLocationsWorkflowsExecutionsStepEntriesListCall struct {
 //
 //   - parent: Name of the workflow execution to list entries for. Format:
 //     projects/{project}/locations/{location}/workflows/{workflow}/executions/{ex
-//     ecution}/stepEntries/.
+//     ecution}.
 func (r *ProjectsLocationsWorkflowsExecutionsStepEntriesService) List(parent string) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
 	c := &ProjectsLocationsWorkflowsExecutionsStepEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1946,9 +2120,9 @@ func (r *ProjectsLocationsWorkflowsExecutionsStepEntriesService) List(parent str
 // Filter sets the optional parameter "filter": Filters applied to the
 // `[StepEntries.ListStepEntries]` results. The following fields are supported
 // for filtering: `entryId`, `createTime`, `updateTime`, `routine`, `step`,
-// `stepType`, `state`. For details, see AIP-160. For example, if you are using
-// the Google APIs Explorer: `state="SUCCEEDED" or `createTime>"2023-08-01"
-// AND state="FAILED"
+// `stepType`, `parent`, `state`. For details, see AIP-160. For example, if you
+// are using the Google APIs Explorer: `state="SUCCEEDED" or
+// `createTime>"2023-08-01" AND state="FAILED"
 func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) Filter(filter string) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1987,6 +2161,21 @@ func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) PageToken(page
 // page.
 func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) Skip(skip int64) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
 	c.urlParams_.Set("skip", fmt.Sprint(skip))
+	return c
+}
+
+// View sets the optional parameter "view": Deprecated field.
+//
+// Possible values:
+//
+//	"EXECUTION_ENTRY_VIEW_UNSPECIFIED" - The default/unset value.
+//	"EXECUTION_ENTRY_VIEW_BASIC" - Include basic information in the step
+//
+// entries. All fields in StepEntry are returned except for variable_data.
+//
+//	"EXECUTION_ENTRY_VIEW_DETAILED" - Include all data.
+func (c *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall) View(view string) *ProjectsLocationsWorkflowsExecutionsStepEntriesListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 

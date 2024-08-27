@@ -134,6 +134,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.DeviceRecall = NewDeviceRecallService(s)
 	s.V1 = NewV1Service(s)
 	return s, nil
 }
@@ -143,6 +144,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	DeviceRecall *DeviceRecallService
+
 	V1 *V1Service
 }
 
@@ -151,6 +154,15 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewDeviceRecallService(s *Service) *DeviceRecallService {
+	rs := &DeviceRecallService{s: s}
+	return rs
+}
+
+type DeviceRecallService struct {
+	s *Service
 }
 
 func NewV1Service(s *Service) *V1Service {
@@ -192,9 +204,9 @@ type AccountActivity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountActivity) MarshalJSON() ([]byte, error) {
+func (s AccountActivity) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountActivity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccountDetails: Contains the account information such as the licensing
@@ -230,9 +242,9 @@ type AccountDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountDetails) MarshalJSON() ([]byte, error) {
+func (s AccountDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppAccessRiskVerdict: Contains signals about others apps on the device which
@@ -319,9 +331,9 @@ type AppAccessRiskVerdict struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppAccessRiskVerdict) MarshalJSON() ([]byte, error) {
+func (s AppAccessRiskVerdict) MarshalJSON() ([]byte, error) {
 	type NoMethod AppAccessRiskVerdict
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppIntegrity: Contains the application integrity information.
@@ -362,9 +374,9 @@ type AppIntegrity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppIntegrity) MarshalJSON() ([]byte, error) {
+func (s AppIntegrity) MarshalJSON() ([]byte, error) {
 	type NoMethod AppIntegrity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DecodeIntegrityTokenRequest: Request to decode the integrity token.
@@ -384,9 +396,9 @@ type DecodeIntegrityTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DecodeIntegrityTokenRequest) MarshalJSON() ([]byte, error) {
+func (s DecodeIntegrityTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DecodeIntegrityTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DecodeIntegrityTokenResponse: Response containing the decoded integrity
@@ -411,13 +423,15 @@ type DecodeIntegrityTokenResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DecodeIntegrityTokenResponse) MarshalJSON() ([]byte, error) {
+func (s DecodeIntegrityTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DecodeIntegrityTokenResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DeviceIntegrity: Contains the device attestation information. Next tag: 4
+// DeviceIntegrity: Contains the device attestation information.
 type DeviceIntegrity struct {
+	// DeviceRecall: Details about the device recall bits set by the developer.
+	DeviceRecall *DeviceRecall `json:"deviceRecall,omitempty"`
 	// DeviceRecognitionVerdict: Details about the integrity of the device the app
 	// is running on.
 	//
@@ -438,22 +452,46 @@ type DeviceIntegrity struct {
 	// RecentDeviceActivity: Details about the device activity of the device the
 	// app is running on.
 	RecentDeviceActivity *RecentDeviceActivity `json:"recentDeviceActivity,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DeviceRecognitionVerdict")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "DeviceRecall") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DeviceRecognitionVerdict") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DeviceRecall") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceIntegrity) MarshalJSON() ([]byte, error) {
+func (s DeviceIntegrity) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceIntegrity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeviceRecall: Contains the recall bits per device set by the developer.
+type DeviceRecall struct {
+	// Values: Required. Contains the recall bits values.
+	Values *Values `json:"values,omitempty"`
+	// WriteDates: Required. Contains the recall bits write dates.
+	WriteDates *WriteDates `json:"writeDates,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeviceRecall) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceRecall
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnvironmentDetails: Contains information about the environment Play
@@ -488,9 +526,9 @@ type EnvironmentDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnvironmentDetails) MarshalJSON() ([]byte, error) {
+func (s EnvironmentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvironmentDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RecentDeviceActivity: Recent device activity can help developers identify
@@ -525,9 +563,9 @@ type RecentDeviceActivity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RecentDeviceActivity) MarshalJSON() ([]byte, error) {
+func (s RecentDeviceActivity) MarshalJSON() ([]byte, error) {
 	type NoMethod RecentDeviceActivity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RequestDetails: Contains the integrity request information.
@@ -558,9 +596,9 @@ type RequestDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RequestDetails) MarshalJSON() ([]byte, error) {
+func (s RequestDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod RequestDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestingDetails: Contains additional information generated for testing
@@ -583,9 +621,9 @@ type TestingDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestingDetails) MarshalJSON() ([]byte, error) {
+func (s TestingDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod TestingDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TokenPayloadExternal: Contains basic app information and integrity signals
@@ -618,9 +656,203 @@ type TokenPayloadExternal struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TokenPayloadExternal) MarshalJSON() ([]byte, error) {
+func (s TokenPayloadExternal) MarshalJSON() ([]byte, error) {
 	type NoMethod TokenPayloadExternal
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Values: Contains the recall bits values.
+type Values struct {
+	// BitFirst: Required. First recall bit value.
+	BitFirst bool `json:"bitFirst,omitempty"`
+	// BitSecond: Required. Second recall bit value.
+	BitSecond bool `json:"bitSecond,omitempty"`
+	// BitThird: Required. Third recall bit value.
+	BitThird bool `json:"bitThird,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BitFirst") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BitFirst") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Values) MarshalJSON() ([]byte, error) {
+	type NoMethod Values
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WriteDates: Contains the recall bits write dates.
+type WriteDates struct {
+	// YyyymmFirst: Optional. Write time in YYYYMM format (in UTC, e.g. 202402) for
+	// the first bit. Note that this value won't be set if the first bit is false.
+	YyyymmFirst int64 `json:"yyyymmFirst,omitempty"`
+	// YyyymmSecond: Optional. Write time in YYYYMM format (in UTC, e.g. 202402)
+	// for the second bit. Note that this value won't be set if the second bit is
+	// false.
+	YyyymmSecond int64 `json:"yyyymmSecond,omitempty"`
+	// YyyymmThird: Optional. Write time in YYYYMM format (in UTC, e.g. 202402) for
+	// the third bit. Note that this value won't be set if the third bit is false.
+	YyyymmThird int64 `json:"yyyymmThird,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "YyyymmFirst") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "YyyymmFirst") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WriteDates) MarshalJSON() ([]byte, error) {
+	type NoMethod WriteDates
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WriteDeviceRecallRequest: Request to write device recall bits.
+type WriteDeviceRecallRequest struct {
+	// IntegrityToken: Required. Integrity token obtained from calling Play
+	// Integrity API.
+	IntegrityToken string `json:"integrityToken,omitempty"`
+	// NewValues: Required. The new values for the device recall bits to be
+	// written.
+	NewValues *Values `json:"newValues,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IntegrityToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IntegrityToken") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WriteDeviceRecallRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod WriteDeviceRecallRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WriteDeviceRecallResponse: Response for the Write Device Recall action.
+// Currently empty.
+type WriteDeviceRecallResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+type DeviceRecallWriteCall struct {
+	s                        *Service
+	packageName              string
+	writedevicerecallrequest *WriteDeviceRecallRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Write: Writes recall bits for the device where Play Integrity API token is
+// obtained. The endpoint is available to select Play partners in an early
+// access program (EAP).
+//
+//   - packageName: Package name of the app the attached integrity token belongs
+//     to.
+func (r *DeviceRecallService) Write(packageName string, writedevicerecallrequest *WriteDeviceRecallRequest) *DeviceRecallWriteCall {
+	c := &DeviceRecallWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.writedevicerecallrequest = writedevicerecallrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DeviceRecallWriteCall) Fields(s ...googleapi.Field) *DeviceRecallWriteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DeviceRecallWriteCall) Context(ctx context.Context) *DeviceRecallWriteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DeviceRecallWriteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DeviceRecallWriteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.writedevicerecallrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+packageName}/deviceRecall:write")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "playintegrity.deviceRecall.write" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *WriteDeviceRecallResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DeviceRecallWriteCall) Do(opts ...googleapi.CallOption) (*WriteDeviceRecallResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WriteDeviceRecallResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type V1DecodeIntegrityTokenCall struct {

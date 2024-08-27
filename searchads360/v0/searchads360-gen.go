@@ -262,9 +262,31 @@ type GoogleAdsSearchads360V0Common__AdScheduleInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__AdScheduleInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__AdScheduleInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__AdScheduleInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Common__AdTextAsset: A text asset used inside an ad.
+type GoogleAdsSearchads360V0Common__AdTextAsset struct {
+	// Text: Asset text.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V0Common__AdTextAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__AdTextAsset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__AgeRangeInfo: An age range criterion.
@@ -296,9 +318,9 @@ type GoogleAdsSearchads360V0Common__AgeRangeInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__AgeRangeInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__AgeRangeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__AgeRangeInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__AssetInteractionTarget: An
@@ -323,9 +345,9 @@ type GoogleAdsSearchads360V0Common__AssetInteractionTarget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__AssetInteractionTarget) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__AssetInteractionTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__AssetInteractionTarget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__AssetUsage: Contains the usage information of
@@ -393,9 +415,9 @@ type GoogleAdsSearchads360V0Common__AssetUsage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__AssetUsage) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__AssetUsage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__AssetUsage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__AudienceInfo: An audience criterion.
@@ -415,9 +437,9 @@ type GoogleAdsSearchads360V0Common__AudienceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__AudienceInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__AudienceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__AudienceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__BusinessProfileLocation: Business Profile
@@ -445,9 +467,9 @@ type GoogleAdsSearchads360V0Common__BusinessProfileLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__BusinessProfileLocation) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__BusinessProfileLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__BusinessProfileLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__CallToActionAsset: A call to action asset.
@@ -489,9 +511,9 @@ type GoogleAdsSearchads360V0Common__CallToActionAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__CallToActionAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__CallToActionAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__CallToActionAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__CustomParameter: A mapping that can be used
@@ -515,9 +537,9 @@ type GoogleAdsSearchads360V0Common__CustomParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__CustomParameter) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__CustomParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__CustomParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__DeviceInfo: A device criterion.
@@ -546,9 +568,9 @@ type GoogleAdsSearchads360V0Common__DeviceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__DeviceInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__DeviceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__DeviceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__EnhancedCpc: An automated bidding strategy
@@ -590,9 +612,9 @@ type GoogleAdsSearchads360V0Common__GenderInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__GenderInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__GenderInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__GenderInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__ImageAsset: An Image asset.
@@ -633,9 +655,9 @@ type GoogleAdsSearchads360V0Common__ImageAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__ImageAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__ImageAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__ImageAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__ImageDimension: Metadata for an image at a
@@ -660,9 +682,9 @@ type GoogleAdsSearchads360V0Common__ImageDimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__ImageDimension) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__ImageDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__ImageDimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__Keyword: A Keyword criterion segment.
@@ -684,9 +706,9 @@ type GoogleAdsSearchads360V0Common__Keyword struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__Keyword) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__Keyword) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__Keyword
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__KeywordInfo: A keyword criterion.
@@ -716,9 +738,9 @@ type GoogleAdsSearchads360V0Common__KeywordInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__KeywordInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__KeywordInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__KeywordInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__LanguageInfo: A language criterion.
@@ -738,9 +760,9 @@ type GoogleAdsSearchads360V0Common__LanguageInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__LanguageInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__LanguageInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__LanguageInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__ListingGroupInfo: A listing group criterion.
@@ -769,9 +791,9 @@ type GoogleAdsSearchads360V0Common__ListingGroupInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__ListingGroupInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__ListingGroupInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__ListingGroupInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__LocationGroupInfo: A radius around a list of
@@ -814,9 +836,9 @@ type GoogleAdsSearchads360V0Common__LocationGroupInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__LocationGroupInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__LocationGroupInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__LocationGroupInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__LocationInfo: A location criterion.
@@ -836,9 +858,9 @@ type GoogleAdsSearchads360V0Common__LocationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__LocationInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__LocationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__LocationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__ManualCpa: Manual bidding strategy that
@@ -865,9 +887,9 @@ type GoogleAdsSearchads360V0Common__ManualCpc struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__ManualCpc) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__ManualCpc) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__ManualCpc
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__ManualCpm: Manual impression-based bidding
@@ -906,9 +928,9 @@ type GoogleAdsSearchads360V0Common__MaximizeConversionValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__MaximizeConversionValue) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__MaximizeConversionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__MaximizeConversionValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAdsSearchads360V0Common__MaximizeConversionValue) UnmarshalJSON(data []byte) error {
@@ -957,9 +979,9 @@ type GoogleAdsSearchads360V0Common__MaximizeConversions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__MaximizeConversions) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__MaximizeConversions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__MaximizeConversions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__Metrics: Metrics data.
@@ -1035,6 +1057,8 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// metrics_currency parameter at
 	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
 	AverageCpm float64 `json:"averageCpm,omitempty"`
+	// AverageQualityScore: The average quality score.
+	AverageQualityScore float64 `json:"averageQualityScore,omitempty"`
 	// Clicks: The number of clicks.
 	Clicks int64 `json:"clicks,omitempty,string"`
 	// ClientAccountConversions: The number of client account conversions. This
@@ -1548,9 +1572,9 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__Metrics) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__Metrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__Metrics
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) error {
@@ -1574,6 +1598,7 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 		AverageCost                                       gensupport.JSONFloat64 `json:"averageCost"`
 		AverageCpc                                        gensupport.JSONFloat64 `json:"averageCpc"`
 		AverageCpm                                        gensupport.JSONFloat64 `json:"averageCpm"`
+		AverageQualityScore                               gensupport.JSONFloat64 `json:"averageQualityScore"`
 		ClientAccountConversions                          gensupport.JSONFloat64 `json:"clientAccountConversions"`
 		ClientAccountConversionsValue                     gensupport.JSONFloat64 `json:"clientAccountConversionsValue"`
 		ClientAccountCrossSellUnitsSold                   gensupport.JSONFloat64 `json:"clientAccountCrossSellUnitsSold"`
@@ -1640,6 +1665,7 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 	s.AverageCost = float64(s1.AverageCost)
 	s.AverageCpc = float64(s1.AverageCpc)
 	s.AverageCpm = float64(s1.AverageCpm)
+	s.AverageQualityScore = float64(s1.AverageQualityScore)
 	s.ClientAccountConversions = float64(s1.ClientAccountConversions)
 	s.ClientAccountConversionsValue = float64(s1.ClientAccountConversionsValue)
 	s.ClientAccountCrossSellUnitsSold = float64(s1.ClientAccountCrossSellUnitsSold)
@@ -1715,9 +1741,9 @@ type GoogleAdsSearchads360V0Common__MobileAppAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__MobileAppAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__MobileAppAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__MobileAppAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__PercentCpc: A bidding strategy where bids are
@@ -1746,9 +1772,9 @@ type GoogleAdsSearchads360V0Common__PercentCpc struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__PercentCpc) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__PercentCpc) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__PercentCpc
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__RealTimeBiddingSetting: Settings for
@@ -1770,9 +1796,9 @@ type GoogleAdsSearchads360V0Common__RealTimeBiddingSetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__RealTimeBiddingSetting) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__RealTimeBiddingSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__RealTimeBiddingSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__SearchAds360ExpandedDynamicSearchAdInfo: An
@@ -1797,9 +1823,9 @@ type GoogleAdsSearchads360V0Common__SearchAds360ExpandedDynamicSearchAdInfo stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__SearchAds360ExpandedDynamicSearchAdInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__SearchAds360ExpandedDynamicSearchAdInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__SearchAds360ExpandedDynamicSearchAdInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo: A Search Ads
@@ -1834,9 +1860,9 @@ type GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__SearchAds360ProductAdInfo: A Search Ads 360
@@ -1849,6 +1875,12 @@ type GoogleAdsSearchads360V0Common__SearchAds360ProductAdInfo struct {
 type GoogleAdsSearchads360V0Common__SearchAds360ResponsiveSearchAdInfo struct {
 	// AdTrackingId: The tracking id of the ad.
 	AdTrackingId int64 `json:"adTrackingId,omitempty,string"`
+	// Descriptions: List of text assets for descriptions. When the ad serves the
+	// descriptions will be selected from this list.
+	Descriptions []*GoogleAdsSearchads360V0Common__AdTextAsset `json:"descriptions,omitempty"`
+	// Headlines: List of text assets for headlines. When the ad serves the
+	// headlines will be selected from this list.
+	Headlines []*GoogleAdsSearchads360V0Common__AdTextAsset `json:"headlines,omitempty"`
 	// Path1: Text appended to the auto-generated visible URL with a delimiter.
 	Path1 string `json:"path1,omitempty"`
 	// Path2: Text appended to path1 with a delimiter.
@@ -1866,9 +1898,9 @@ type GoogleAdsSearchads360V0Common__SearchAds360ResponsiveSearchAdInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__SearchAds360ResponsiveSearchAdInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__SearchAds360ResponsiveSearchAdInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__SearchAds360ResponsiveSearchAdInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo: A Search Ads 360 text
@@ -1899,9 +1931,9 @@ type GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__Segments: Segment only fields.
@@ -2008,6 +2040,20 @@ type GoogleAdsSearchads360V0Common__Segments struct {
 	//   "CONNECTED_TV" - Smart TVs and game consoles.
 	//   "OTHER" - Other device types.
 	Device string `json:"device,omitempty"`
+	// GeoTargetCity: Resource name of the geo target constant that represents a
+	// city.
+	GeoTargetCity string `json:"geoTargetCity,omitempty"`
+	// GeoTargetCountry: Resource name of the geo target constant that represents a
+	// country.
+	GeoTargetCountry string `json:"geoTargetCountry,omitempty"`
+	// GeoTargetMetro: Resource name of the geo target constant that represents a
+	// metro.
+	GeoTargetMetro string `json:"geoTargetMetro,omitempty"`
+	// GeoTargetRegion: Resource name of the geo target constant that represents a
+	// region.
+	GeoTargetRegion string `json:"geoTargetRegion,omitempty"`
+	// Hour: Hour of day as a number between 0 and 23, inclusive.
+	Hour int64 `json:"hour,omitempty"`
 	// Keyword: Keyword criterion.
 	Keyword *GoogleAdsSearchads360V0Common__Keyword `json:"keyword,omitempty"`
 	// Month: Month as represented by the date of the first day of a month.
@@ -2165,9 +2211,9 @@ type GoogleAdsSearchads360V0Common__Segments struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__Segments) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__Segments) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__Segments
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__TargetCpa: An automated bid strategy that
@@ -2198,9 +2244,9 @@ type GoogleAdsSearchads360V0Common__TargetCpa struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__TargetCpa) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__TargetCpa) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__TargetCpa
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__TargetCpm: Target CPM (cost per thousand
@@ -2243,9 +2289,9 @@ type GoogleAdsSearchads360V0Common__TargetImpressionShare struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__TargetImpressionShare) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__TargetImpressionShare) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__TargetImpressionShare
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__TargetOutrankShare: An automated bidding
@@ -2269,9 +2315,9 @@ type GoogleAdsSearchads360V0Common__TargetOutrankShare struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__TargetOutrankShare) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__TargetOutrankShare) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__TargetOutrankShare
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__TargetRestriction: The list of
@@ -2319,9 +2365,9 @@ type GoogleAdsSearchads360V0Common__TargetRestriction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__TargetRestriction) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__TargetRestriction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__TargetRestriction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__TargetRoas: An automated bidding strategy
@@ -2352,9 +2398,9 @@ type GoogleAdsSearchads360V0Common__TargetRoas struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__TargetRoas) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__TargetRoas) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__TargetRoas
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAdsSearchads360V0Common__TargetRoas) UnmarshalJSON(data []byte) error {
@@ -2377,10 +2423,11 @@ type GoogleAdsSearchads360V0Common__TargetSpend struct {
 	// CpcBidCeilingMicros: Maximum bid limit that can be set by the bid strategy.
 	// The limit applies to all keywords managed by the strategy.
 	CpcBidCeilingMicros int64 `json:"cpcBidCeilingMicros,omitempty,string"`
-	// TargetSpendMicros: The spend target under which to maximize clicks. A
-	// TargetSpend bidder will attempt to spend the smaller of this value or the
-	// natural throttling spend amount. If not specified, the budget is used as the
-	// spend target. This field is deprecated and should no longer be used. See
+	// TargetSpendMicros: Deprecated: The spend target under which to maximize
+	// clicks. A TargetSpend bidder will attempt to spend the smaller of this value
+	// or the natural throttling spend amount. If not specified, the budget is used
+	// as the spend target. This field is deprecated and should no longer be used.
+	// See
 	// https://ads-developers.googleblog.com/2020/05/reminder-about-sunset-creation-of.html
 	// for details.
 	TargetSpendMicros int64 `json:"targetSpendMicros,omitempty,string"`
@@ -2397,9 +2444,9 @@ type GoogleAdsSearchads360V0Common__TargetSpend struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__TargetSpend) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__TargetSpend) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__TargetSpend
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__TargetingSetting: Settings for the
@@ -2423,9 +2470,9 @@ type GoogleAdsSearchads360V0Common__TargetingSetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__TargetingSetting) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__TargetingSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__TargetingSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__TextAsset: A Text asset.
@@ -2445,15 +2492,15 @@ type GoogleAdsSearchads360V0Common__TextAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__TextAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__TextAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__TextAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__TextLabel: A type of label displaying text on
 // a colored background.
 type GoogleAdsSearchads360V0Common__TextLabel struct {
-	// BackgroundColor: Background color of the label in RGB format. This string
+	// BackgroundColor: Background color of the label in HEX format. This string
 	// must match the regular expression '^\#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$'.
 	// Note: The background color may not be visible for manager accounts.
 	BackgroundColor string `json:"backgroundColor,omitempty"`
@@ -2473,9 +2520,9 @@ type GoogleAdsSearchads360V0Common__TextLabel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__TextLabel) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__TextLabel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__TextLabel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__UnifiedCallAsset: A unified call asset.
@@ -2538,9 +2585,9 @@ type GoogleAdsSearchads360V0Common__UnifiedCallAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__UnifiedCallAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__UnifiedCallAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__UnifiedCallAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__UnifiedCalloutAsset: A unified callout asset.
@@ -2574,9 +2621,9 @@ type GoogleAdsSearchads360V0Common__UnifiedCalloutAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__UnifiedCalloutAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__UnifiedCalloutAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__UnifiedCalloutAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__UnifiedLocationAsset: A unified location
@@ -2617,9 +2664,9 @@ type GoogleAdsSearchads360V0Common__UnifiedLocationAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__UnifiedLocationAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__UnifiedLocationAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__UnifiedLocationAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__UnifiedPageFeedAsset: A Unified Page Feed
@@ -2642,9 +2689,9 @@ type GoogleAdsSearchads360V0Common__UnifiedPageFeedAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__UnifiedPageFeedAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__UnifiedPageFeedAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__UnifiedPageFeedAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__UnifiedSitelinkAsset: A unified sitelink
@@ -2693,9 +2740,9 @@ type GoogleAdsSearchads360V0Common__UnifiedSitelinkAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__UnifiedSitelinkAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__UnifiedSitelinkAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__UnifiedSitelinkAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__UserListInfo: A User List criterion.
@@ -2716,9 +2763,9 @@ type GoogleAdsSearchads360V0Common__UserListInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__UserListInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__UserListInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__UserListInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__Value: A generic data container.
@@ -2746,9 +2793,9 @@ type GoogleAdsSearchads360V0Common__Value struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__Value) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__Value) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__Value
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAdsSearchads360V0Common__Value) UnmarshalJSON(data []byte) error {
@@ -2809,9 +2856,9 @@ type GoogleAdsSearchads360V0Common__WebpageConditionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__WebpageConditionInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__WebpageConditionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__WebpageConditionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Common__WebpageInfo: Represents a criterion for
@@ -2847,9 +2894,9 @@ type GoogleAdsSearchads360V0Common__WebpageInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__WebpageInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__WebpageInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__WebpageInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAdsSearchads360V0Common__WebpageInfo) UnmarshalJSON(data []byte) error {
@@ -2886,9 +2933,9 @@ type GoogleAdsSearchads360V0Common__YoutubeVideoAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Common__YoutubeVideoAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Common__YoutubeVideoAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__YoutubeVideoAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ErrorsErrorLocationFieldPathElement: A part of a
@@ -2911,9 +2958,9 @@ type GoogleAdsSearchads360V0ErrorsErrorLocationFieldPathElement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ErrorsErrorLocationFieldPathElement) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ErrorsErrorLocationFieldPathElement) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ErrorsErrorLocationFieldPathElement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Errors__ErrorCode: The error reason represented by
@@ -3247,9 +3294,9 @@ type GoogleAdsSearchads360V0Errors__ErrorCode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Errors__ErrorCode) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Errors__ErrorCode) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Errors__ErrorCode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Errors__ErrorDetails: Additional error details.
@@ -3274,9 +3321,9 @@ type GoogleAdsSearchads360V0Errors__ErrorDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Errors__ErrorDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Errors__ErrorDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Errors__ErrorDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Errors__ErrorLocation: Describes the part of the
@@ -3298,9 +3345,9 @@ type GoogleAdsSearchads360V0Errors__ErrorLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Errors__ErrorLocation) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Errors__ErrorLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Errors__ErrorLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Errors__QuotaErrorDetails: Additional quota error
@@ -3334,12 +3381,12 @@ type GoogleAdsSearchads360V0Errors__QuotaErrorDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Errors__QuotaErrorDetails) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Errors__QuotaErrorDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Errors__QuotaErrorDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAdsSearchads360V0Errors__SearchAds360Error: SearchAds360-specific
+// GoogleAdsSearchads360V0Errors__SearchAds360Error: Search Ads 360-specific
 // error.
 type GoogleAdsSearchads360V0Errors__SearchAds360Error struct {
 	// Details: Additional error details, which are returned by certain error
@@ -3366,9 +3413,9 @@ type GoogleAdsSearchads360V0Errors__SearchAds360Error struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Errors__SearchAds360Error) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Errors__SearchAds360Error) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Errors__SearchAds360Error
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Errors__SearchAds360Failure: Describes how a Search
@@ -3392,9 +3439,9 @@ type GoogleAdsSearchads360V0Errors__SearchAds360Failure struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Errors__SearchAds360Failure) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Errors__SearchAds360Failure) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Errors__SearchAds360Failure
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversionVa
@@ -3420,9 +3467,9 @@ type GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversion
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversionValue) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversionValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversionValue) UnmarshalJSON(data []byte) error {
@@ -3464,9 +3511,9 @@ type GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversion
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversions) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetCpa: An
@@ -3490,9 +3537,9 @@ type GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetCpa struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetCpa) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetCpa) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetCpa
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetImpressionShar
@@ -3530,9 +3577,9 @@ type GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetImpressionSh
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetImpressionShare) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetImpressionShare) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetImpressionShare
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetRoas: An
@@ -3555,9 +3602,9 @@ type GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetRoas struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetRoas) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetRoas) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetRoas
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetRoas) UnmarshalJSON(data []byte) error {
@@ -3602,9 +3649,9 @@ type GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetSpend struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetSpend) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetSpend) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetSpend
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesAdGroupCriterionPositionEstimates: Estimates
@@ -3626,9 +3673,9 @@ type GoogleAdsSearchads360V0ResourcesAdGroupCriterionPositionEstimates struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesAdGroupCriterionPositionEstimates) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesAdGroupCriterionPositionEstimates) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesAdGroupCriterionPositionEstimates
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesAdGroupCriterionQualityInfo: A container for
@@ -3650,9 +3697,9 @@ type GoogleAdsSearchads360V0ResourcesAdGroupCriterionQualityInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesAdGroupCriterionQualityInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesAdGroupCriterionQualityInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesAdGroupCriterionQualityInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesCampaignDynamicSearchAdsSetting: The setting
@@ -3680,9 +3727,9 @@ type GoogleAdsSearchads360V0ResourcesCampaignDynamicSearchAdsSetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesCampaignDynamicSearchAdsSetting) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesCampaignDynamicSearchAdsSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesCampaignDynamicSearchAdsSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesCampaignGeoTargetTypeSetting: Represents a
@@ -3726,9 +3773,9 @@ type GoogleAdsSearchads360V0ResourcesCampaignGeoTargetTypeSetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesCampaignGeoTargetTypeSetting) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesCampaignGeoTargetTypeSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesCampaignGeoTargetTypeSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesCampaignNetworkSettings: The network
@@ -3760,9 +3807,9 @@ type GoogleAdsSearchads360V0ResourcesCampaignNetworkSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesCampaignNetworkSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesCampaignNetworkSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesCampaignNetworkSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesCampaignOptimizationGoalSetting:
@@ -3797,9 +3844,9 @@ type GoogleAdsSearchads360V0ResourcesCampaignOptimizationGoalSetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesCampaignOptimizationGoalSetting) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesCampaignOptimizationGoalSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesCampaignOptimizationGoalSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesCampaignSelectiveOptimization: Selective
@@ -3824,9 +3871,9 @@ type GoogleAdsSearchads360V0ResourcesCampaignSelectiveOptimization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesCampaignSelectiveOptimization) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesCampaignSelectiveOptimization) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesCampaignSelectiveOptimization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesCampaignShoppingSetting: The setting for
@@ -3869,9 +3916,9 @@ type GoogleAdsSearchads360V0ResourcesCampaignShoppingSetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesCampaignShoppingSetting) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesCampaignShoppingSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesCampaignShoppingSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesCampaignTrackingSetting: Campaign-level
@@ -3892,9 +3939,9 @@ type GoogleAdsSearchads360V0ResourcesCampaignTrackingSetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesCampaignTrackingSetting) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesCampaignTrackingSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesCampaignTrackingSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesConversionActionAttributionModelSettings:
@@ -3954,9 +4001,9 @@ type GoogleAdsSearchads360V0ResourcesConversionActionAttributionModelSettings st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesConversionActionAttributionModelSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesConversionActionAttributionModelSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesConversionActionAttributionModelSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesConversionActionFloodlightSettings: Settings
@@ -3984,9 +4031,9 @@ type GoogleAdsSearchads360V0ResourcesConversionActionFloodlightSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesConversionActionFloodlightSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesConversionActionFloodlightSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesConversionActionFloodlightSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesConversionActionValueSettings: Settings
@@ -4018,9 +4065,9 @@ type GoogleAdsSearchads360V0ResourcesConversionActionValueSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesConversionActionValueSettings) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesConversionActionValueSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesConversionActionValueSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAdsSearchads360V0ResourcesConversionActionValueSettings) UnmarshalJSON(data []byte) error {
@@ -4078,9 +4125,9 @@ type GoogleAdsSearchads360V0ResourcesConversionCustomVariableFloodlightConversio
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesConversionCustomVariableFloodlightConversionCustomVariableInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesConversionCustomVariableFloodlightConversionCustomVariableInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesConversionCustomVariableFloodlightConversionCustomVariableInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBiddingCate
@@ -4119,9 +4166,9 @@ type GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBiddingCa
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBiddingCategory) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBiddingCategory) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBiddingCategory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBrand:
@@ -4142,9 +4189,9 @@ type GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBrand str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBrand) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBrand) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBrand
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductChannel:
@@ -4172,9 +4219,9 @@ type GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductChannel s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductChannel) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductChannel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductChannel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCondition:
@@ -4203,9 +4250,9 @@ type GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCondition
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCondition) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCustomAttri
@@ -4238,9 +4285,9 @@ type GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCustomAtt
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCustomAttribute) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCustomAttribute) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductCustomAttribute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductItemId:
@@ -4261,9 +4308,9 @@ type GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductItemId st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductItemId) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductItemId) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductItemId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductType: Type
@@ -4296,9 +4343,9 @@ type GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductType stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductType) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductType) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AccessibleBiddingStrategy: Represents a
@@ -4407,9 +4454,9 @@ type GoogleAdsSearchads360V0Resources__AccessibleBiddingStrategy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AccessibleBiddingStrategy) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AccessibleBiddingStrategy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AccessibleBiddingStrategy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__Ad: An ad.
@@ -4481,6 +4528,7 @@ type GoogleAdsSearchads360V0Resources__Ad struct {
 	//   "DISCOVERY_CAROUSEL_AD" - Discovery carousel ad.
 	//   "TRAVEL_AD" - Travel ad.
 	//   "DISCOVERY_VIDEO_RESPONSIVE_AD" - Discovery video responsive ad.
+	//   "MULTIMEDIA_AD" - Multimedia ad.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayUrl") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4495,9 +4543,9 @@ type GoogleAdsSearchads360V0Resources__Ad struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__Ad) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__Ad) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__Ad
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AdGroup: An ad group.
@@ -4630,9 +4678,9 @@ type GoogleAdsSearchads360V0Resources__AdGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AdGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AdGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AdGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AdGroupAd: An ad group ad.
@@ -4644,8 +4692,8 @@ type GoogleAdsSearchads360V0Resources__AdGroupAd struct {
 	// HH:mm:ss.ssssss" format.
 	CreationTime string `json:"creationTime,omitempty"`
 	// EngineId: Output only. ID of the ad in the external engine account. This
-	// field is for SearchAds 360 account only, for example, Yahoo Japan,
-	// Microsoft, Baidu etc. For non-SearchAds 360 entity, use "ad_group_ad.ad.id"
+	// field is for Search Ads 360 account only, for example, Yahoo Japan,
+	// Microsoft, Baidu etc. For non-Search Ads 360 entity, use "ad_group_ad.ad.id"
 	// instead.
 	EngineId string `json:"engineId,omitempty"`
 	// EngineStatus: Output only. Additional status of the ad in the external
@@ -4714,9 +4762,9 @@ type GoogleAdsSearchads360V0Resources__AdGroupAd struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AdGroupAd) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AdGroupAd) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupAd
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AdGroupAdLabel: A relationship between an
@@ -4726,6 +4774,8 @@ type GoogleAdsSearchads360V0Resources__AdGroupAdLabel struct {
 	AdGroupAd string `json:"adGroupAd,omitempty"`
 	// Label: Immutable. The label assigned to the ad group ad.
 	Label string `json:"label,omitempty"`
+	// OwnerCustomerId: Output only. The ID of the Customer which owns the label.
+	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
 	// ResourceName: Immutable. The resource name of the ad group ad label. Ad
 	// group ad label resource names have the form:
 	// `customers/{customer_id}/adGroupAdLabels/{ad_group_id}~{ad_id}~{label_id}`
@@ -4743,9 +4793,9 @@ type GoogleAdsSearchads360V0Resources__AdGroupAdLabel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AdGroupAdLabel) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AdGroupAdLabel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupAdLabel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AdGroupAsset: A link between an ad group
@@ -4782,9 +4832,9 @@ type GoogleAdsSearchads360V0Resources__AdGroupAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AdGroupAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AdGroupAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AdGroupAssetSet: AdGroupAssetSet is the
@@ -4821,9 +4871,9 @@ type GoogleAdsSearchads360V0Resources__AdGroupAssetSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AdGroupAssetSet) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AdGroupAssetSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupAssetSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AdGroupAudienceView: An ad group audience
@@ -4848,9 +4898,9 @@ type GoogleAdsSearchads360V0Resources__AdGroupAudienceView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AdGroupAudienceView) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AdGroupAudienceView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupAudienceView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AdGroupBidModifier: Represents an ad group
@@ -4879,9 +4929,9 @@ type GoogleAdsSearchads360V0Resources__AdGroupBidModifier struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AdGroupBidModifier) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AdGroupBidModifier) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupBidModifier
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAdsSearchads360V0Resources__AdGroupBidModifier) UnmarshalJSON(data []byte) error {
@@ -5079,9 +5129,9 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AdGroupCriterion) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AdGroupCriterion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupCriterion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAdsSearchads360V0Resources__AdGroupCriterion) UnmarshalJSON(data []byte) error {
@@ -5106,6 +5156,8 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel struct {
 	AdGroupCriterion string `json:"adGroupCriterion,omitempty"`
 	// Label: Immutable. The label assigned to the ad group criterion.
 	Label string `json:"label,omitempty"`
+	// OwnerCustomerId: Output only. The ID of the Customer which owns the label.
+	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
 	// ResourceName: Immutable. The resource name of the ad group criterion label.
 	// Ad group criterion label resource names have the form:
 	// `customers/{customer_id}/adGroupCriterionLabels/{ad_group_id}~{criterion_id}~
@@ -5124,9 +5176,9 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AdGroupLabel: A relationship between an ad
@@ -5136,6 +5188,8 @@ type GoogleAdsSearchads360V0Resources__AdGroupLabel struct {
 	AdGroup string `json:"adGroup,omitempty"`
 	// Label: Immutable. The label assigned to the ad group.
 	Label string `json:"label,omitempty"`
+	// OwnerCustomerId: Output only. The ID of the Customer which owns the label.
+	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
 	// ResourceName: Immutable. The resource name of the ad group label. Ad group
 	// label resource names have the form:
 	// `customers/{customer_id}/adGroupLabels/{ad_group_id}~{label_id}`
@@ -5153,9 +5207,9 @@ type GoogleAdsSearchads360V0Resources__AdGroupLabel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AdGroupLabel) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AdGroupLabel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupLabel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AgeRangeView: An age range view.
@@ -5177,9 +5231,9 @@ type GoogleAdsSearchads360V0Resources__AgeRangeView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AgeRangeView) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AgeRangeView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AgeRangeView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__Asset: Asset is a part of an ad which can
@@ -5298,9 +5352,9 @@ type GoogleAdsSearchads360V0Resources__Asset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__Asset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__Asset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__Asset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AssetGroup: An asset group.
@@ -5368,9 +5422,9 @@ type GoogleAdsSearchads360V0Resources__AssetGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AssetGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AssetGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AssetGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AssetGroupAsset: AssetGroupAsset is the
@@ -5454,9 +5508,9 @@ type GoogleAdsSearchads360V0Resources__AssetGroupAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AssetGroupAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AssetGroupAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AssetGroupAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AssetGroupAssetCombinationData: Asset
@@ -5477,9 +5531,9 @@ type GoogleAdsSearchads360V0Resources__AssetGroupAssetCombinationData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AssetGroupAssetCombinationData) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AssetGroupAssetCombinationData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AssetGroupAssetCombinationData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AssetGroupListingGroupFilter:
@@ -5538,9 +5592,9 @@ type GoogleAdsSearchads360V0Resources__AssetGroupListingGroupFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AssetGroupListingGroupFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AssetGroupListingGroupFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AssetGroupListingGroupFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AssetGroupSignal: AssetGroupSignal
@@ -5572,9 +5626,9 @@ type GoogleAdsSearchads360V0Resources__AssetGroupSignal struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AssetGroupSignal) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AssetGroupSignal) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AssetGroupSignal
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AssetGroupTopCombinationView: A view on
@@ -5602,9 +5656,9 @@ type GoogleAdsSearchads360V0Resources__AssetGroupTopCombinationView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AssetGroupTopCombinationView) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AssetGroupTopCombinationView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AssetGroupTopCombinationView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AssetSet: An asset set representing a
@@ -5629,9 +5683,9 @@ type GoogleAdsSearchads360V0Resources__AssetSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AssetSet) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AssetSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AssetSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AssetSetAsset: AssetSetAsset is the link
@@ -5668,9 +5722,9 @@ type GoogleAdsSearchads360V0Resources__AssetSetAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__AssetSetAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__AssetSetAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AssetSetAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__Audience: Audience is an effective
@@ -5701,9 +5755,9 @@ type GoogleAdsSearchads360V0Resources__Audience struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__Audience) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__Audience) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__Audience
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__BiddingStrategy: A bidding strategy.
@@ -5845,9 +5899,9 @@ type GoogleAdsSearchads360V0Resources__BiddingStrategy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__BiddingStrategy) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__BiddingStrategy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__BiddingStrategy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__Campaign: A campaign.
@@ -5915,6 +5969,7 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	//   "VIDEO_REACH_TARGET_FREQUENCY" - Video reach campaign with Target
 	// Frequency bidding strategy.
 	//   "TRAVEL_ACTIVITIES" - Travel Activities campaigns.
+	//   "SOCIAL_FACEBOOK_TRACKING_ONLY" - Facebook tracking only social campaigns.
 	AdvertisingChannelSubType string `json:"advertisingChannelSubType,omitempty"`
 	// AdvertisingChannelType: Immutable. The primary serving target for ads within
 	// the campaign. The targeting options can be refined in `network_settings`.
@@ -5941,6 +5996,7 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	//   "LOCAL_SERVICES" - Local services campaigns.
 	//   "DISCOVERY" - Discovery campaigns.
 	//   "TRAVEL" - Travel campaigns.
+	//   "SOCIAL" - Social campaigns.
 	AdvertisingChannelType string `json:"advertisingChannelType,omitempty"`
 	// BiddingStrategy: Portfolio bidding strategy used by campaign.
 	BiddingStrategy string `json:"biddingStrategy,omitempty"`
@@ -6263,9 +6319,9 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__Campaign) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__Campaign) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__Campaign
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__CampaignAsset: A link between a Campaign
@@ -6303,9 +6359,9 @@ type GoogleAdsSearchads360V0Resources__CampaignAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__CampaignAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__CampaignAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__CampaignAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__CampaignAssetSet: CampaignAssetSet is the
@@ -6342,9 +6398,9 @@ type GoogleAdsSearchads360V0Resources__CampaignAssetSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__CampaignAssetSet) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__CampaignAssetSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__CampaignAssetSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__CampaignAudienceView: A campaign audience
@@ -6370,9 +6426,9 @@ type GoogleAdsSearchads360V0Resources__CampaignAudienceView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__CampaignAudienceView) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__CampaignAudienceView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__CampaignAudienceView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__CampaignBudget: A campaign budget.
@@ -6423,9 +6479,9 @@ type GoogleAdsSearchads360V0Resources__CampaignBudget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__CampaignBudget) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__CampaignBudget) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__CampaignBudget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__CampaignCriterion: A campaign criterion.
@@ -6539,9 +6595,9 @@ type GoogleAdsSearchads360V0Resources__CampaignCriterion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__CampaignCriterion) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__CampaignCriterion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__CampaignCriterion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleAdsSearchads360V0Resources__CampaignCriterion) UnmarshalJSON(data []byte) error {
@@ -6565,6 +6621,8 @@ type GoogleAdsSearchads360V0Resources__CampaignLabel struct {
 	Campaign string `json:"campaign,omitempty"`
 	// Label: Immutable. The label assigned to the campaign.
 	Label string `json:"label,omitempty"`
+	// OwnerCustomerId: Output only. The ID of the Customer which owns the label.
+	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
 	// ResourceName: Immutable. Name of the resource. Campaign label resource names
 	// have the form:
 	// `customers/{customer_id}/campaignLabels/{campaign_id}~{label_id}`
@@ -6582,9 +6640,9 @@ type GoogleAdsSearchads360V0Resources__CampaignLabel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__CampaignLabel) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__CampaignLabel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__CampaignLabel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__CartDataSalesView: Cart data sales view.
@@ -6606,9 +6664,9 @@ type GoogleAdsSearchads360V0Resources__CartDataSalesView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__CartDataSalesView) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__CartDataSalesView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__CartDataSalesView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__Conversion: A conversion.
@@ -6711,9 +6769,9 @@ type GoogleAdsSearchads360V0Resources__Conversion struct {
 	FloodlightOriginalRevenue int64 `json:"floodlightOriginalRevenue,omitempty,string"`
 	// Id: Output only. The ID of the conversion
 	Id int64 `json:"id,omitempty,string"`
-	// MerchantId: Output only. The SearchAds360 inventory account ID containing
-	// the product that was clicked on. SearchAds360 generates this ID when you
-	// link an inventory account in SearchAds360.
+	// MerchantId: Output only. The Search Ads 360 inventory account ID containing
+	// the product that was clicked on. Search Ads 360 generates this ID when you
+	// link an inventory account in Search Ads 360.
 	MerchantId int64 `json:"merchantId,omitempty,string"`
 	// ProductChannel: Output only. The sales channel of the product that was
 	// clicked on: Online or Local.
@@ -6752,7 +6810,7 @@ type GoogleAdsSearchads360V0Resources__Conversion struct {
 	//   "ENABLED" - The conversion is enabled.
 	//   "REMOVED" - The conversion has been removed.
 	Status string `json:"status,omitempty"`
-	// VisitId: Output only. The SearchAds360 visit ID that the conversion is
+	// VisitId: Output only. The Search Ads 360 visit ID that the conversion is
 	// attributed to.
 	VisitId int64 `json:"visitId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "AdId") to unconditionally
@@ -6768,9 +6826,9 @@ type GoogleAdsSearchads360V0Resources__Conversion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__Conversion) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__Conversion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__Conversion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__ConversionAction: A conversion action.
@@ -6984,9 +7042,9 @@ type GoogleAdsSearchads360V0Resources__ConversionAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__ConversionAction) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__ConversionAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__ConversionAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__ConversionCustomVariable: A conversion
@@ -7078,9 +7136,9 @@ type GoogleAdsSearchads360V0Resources__ConversionCustomVariable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__ConversionCustomVariable) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__ConversionCustomVariable) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__ConversionCustomVariable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__ConversionTrackingSetting: A collection of
@@ -7146,9 +7204,9 @@ type GoogleAdsSearchads360V0Resources__ConversionTrackingSetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__ConversionTrackingSetting) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__ConversionTrackingSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__ConversionTrackingSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__CustomColumn: A custom column. See Search
@@ -7175,6 +7233,22 @@ type GoogleAdsSearchads360V0Resources__CustomColumn struct {
 	// ReferencesMetrics: Output only. True when the custom column is referring to
 	// one or more metrics.
 	ReferencesMetrics bool `json:"referencesMetrics,omitempty"`
+	// RenderType: Output only. How the result value of the custom column should be
+	// interpreted.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Unknown.
+	//   "NUMBER" - The custom column is a raw numerical value. See value_type
+	// field to determine if it is an integer or a double.
+	//   "PERCENT" - The custom column should be multiplied by 100 to retrieve the
+	// percentage value.
+	//   "MONEY" - The custom column value is a monetary value and is in micros.
+	//   "STRING" - The custom column value is a string.
+	//   "BOOLEAN" - The custom column value is a boolean.
+	//   "DATE" - The custom column value is a date represented as an integer in
+	// YYYYMMDD format.
+	RenderType string `json:"renderType,omitempty"`
 	// ResourceName: Immutable. The resource name of the custom column. Custom
 	// column resource names have the form:
 	// `customers/{customer_id}/customColumns/{custom_column_id}`
@@ -7188,6 +7262,7 @@ type GoogleAdsSearchads360V0Resources__CustomColumn struct {
 	//   "INT64" - The custom column value is an int64 number.
 	//   "DOUBLE" - The custom column value is a double number.
 	//   "BOOLEAN" - The custom column value is a boolean.
+	//   "DATE" - The custom column value is a date, in YYYYMMDD format.
 	ValueType string `json:"valueType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -7205,9 +7280,9 @@ type GoogleAdsSearchads360V0Resources__CustomColumn struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__CustomColumn) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__CustomColumn) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__CustomColumn
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__Customer: A customer.
@@ -7304,9 +7379,9 @@ type GoogleAdsSearchads360V0Resources__Customer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__Customer) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__Customer) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__Customer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__CustomerAsset: A link between a customer
@@ -7341,9 +7416,9 @@ type GoogleAdsSearchads360V0Resources__CustomerAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__CustomerAsset) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__CustomerAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__CustomerAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__CustomerAssetSet: CustomerAssetSet is the
@@ -7380,9 +7455,9 @@ type GoogleAdsSearchads360V0Resources__CustomerAssetSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__CustomerAssetSet) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__CustomerAssetSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__CustomerAssetSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__CustomerClient: A link between the given
@@ -7449,9 +7524,9 @@ type GoogleAdsSearchads360V0Resources__CustomerClient struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__CustomerClient) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__CustomerClient) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__CustomerClient
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__CustomerManagerLink: Represents
@@ -7467,6 +7542,10 @@ type GoogleAdsSearchads360V0Resources__CustomerManagerLink struct {
 	// `customers/{customer_id}/customerManagerLinks/{manager_customer_id}~{manager_
 	// link_id}`
 	ResourceName string `json:"resourceName,omitempty"`
+	// StartTime: Output only. The timestamp when the CustomerManagerLink was
+	// created. The timestamp is in the customer's time zone and in "yyyy-MM-dd
+	// HH:mm:ss" format.
+	StartTime string `json:"startTime,omitempty"`
 	// Status: Status of the link between the customer and the manager.
 	//
 	// Possible values:
@@ -7495,9 +7574,9 @@ type GoogleAdsSearchads360V0Resources__CustomerManagerLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__CustomerManagerLink) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__CustomerManagerLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__CustomerManagerLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__DoubleClickCampaignManagerSetting:
@@ -7526,9 +7605,9 @@ type GoogleAdsSearchads360V0Resources__DoubleClickCampaignManagerSetting struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__DoubleClickCampaignManagerSetting) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__DoubleClickCampaignManagerSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__DoubleClickCampaignManagerSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__DynamicSearchAdsSearchTermView: A dynamic
@@ -7557,9 +7636,9 @@ type GoogleAdsSearchads360V0Resources__DynamicSearchAdsSearchTermView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__DynamicSearchAdsSearchTermView) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__DynamicSearchAdsSearchTermView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__DynamicSearchAdsSearchTermView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__GenderView: A gender view. The gender_view
@@ -7584,9 +7663,9 @@ type GoogleAdsSearchads360V0Resources__GenderView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__GenderView) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__GenderView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__GenderView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__GeoTargetConstant: A geo target constant.
@@ -7634,9 +7713,9 @@ type GoogleAdsSearchads360V0Resources__GeoTargetConstant struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__GeoTargetConstant) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__GeoTargetConstant) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__GeoTargetConstant
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__KeywordView: A keyword view.
@@ -7658,9 +7737,9 @@ type GoogleAdsSearchads360V0Resources__KeywordView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__KeywordView) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__KeywordView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__KeywordView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__Label: A label.
@@ -7698,9 +7777,9 @@ type GoogleAdsSearchads360V0Resources__Label struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__Label) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__Label) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__Label
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__LanguageConstant: A language.
@@ -7732,9 +7811,9 @@ type GoogleAdsSearchads360V0Resources__LanguageConstant struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__LanguageConstant) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__LanguageConstant) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__LanguageConstant
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__ListingGroupFilterDimension: Listing
@@ -7767,9 +7846,9 @@ type GoogleAdsSearchads360V0Resources__ListingGroupFilterDimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__ListingGroupFilterDimension) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__ListingGroupFilterDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__ListingGroupFilterDimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__ListingGroupFilterDimensionPath: The path
@@ -7792,9 +7871,9 @@ type GoogleAdsSearchads360V0Resources__ListingGroupFilterDimensionPath struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__ListingGroupFilterDimensionPath) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__ListingGroupFilterDimensionPath) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__ListingGroupFilterDimensionPath
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__LocationView: A location view summarizes
@@ -7817,9 +7896,9 @@ type GoogleAdsSearchads360V0Resources__LocationView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__LocationView) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__LocationView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__LocationView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__ProductBiddingCategoryConstant: A Product
@@ -7878,9 +7957,9 @@ type GoogleAdsSearchads360V0Resources__ProductBiddingCategoryConstant struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__ProductBiddingCategoryConstant) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__ProductBiddingCategoryConstant) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__ProductBiddingCategoryConstant
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__ProductGroupView: A product group view.
@@ -7902,9 +7981,9 @@ type GoogleAdsSearchads360V0Resources__ProductGroupView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__ProductGroupView) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__ProductGroupView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__ProductGroupView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__SearchAds360Field: A field or resource
@@ -8010,9 +8089,9 @@ type GoogleAdsSearchads360V0Resources__SearchAds360Field struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__SearchAds360Field) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__SearchAds360Field) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__SearchAds360Field
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__ShoppingPerformanceView: Shopping
@@ -8039,9 +8118,9 @@ type GoogleAdsSearchads360V0Resources__ShoppingPerformanceView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__ShoppingPerformanceView) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__ShoppingPerformanceView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__ShoppingPerformanceView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__UserList: A user list. This is a list of
@@ -8085,9 +8164,9 @@ type GoogleAdsSearchads360V0Resources__UserList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__UserList) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__UserList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__UserList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__Visit: A visit.
@@ -8195,9 +8274,9 @@ type GoogleAdsSearchads360V0Resources__Visit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__Visit) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__Visit) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__Visit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__WebpageView: A webpage view.
@@ -8219,9 +8298,9 @@ type GoogleAdsSearchads360V0Resources__WebpageView struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Resources__WebpageView) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Resources__WebpageView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__WebpageView
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Services__ConversionCustomDimensionHeader: Message
@@ -8244,9 +8323,9 @@ type GoogleAdsSearchads360V0Services__ConversionCustomDimensionHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Services__ConversionCustomDimensionHeader) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Services__ConversionCustomDimensionHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Services__ConversionCustomDimensionHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Services__ConversionCustomMetricHeader: Message for
@@ -8269,9 +8348,9 @@ type GoogleAdsSearchads360V0Services__ConversionCustomMetricHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Services__ConversionCustomMetricHeader) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Services__ConversionCustomMetricHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Services__ConversionCustomMetricHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Services__CustomColumnHeader: Message for custom
@@ -8296,9 +8375,9 @@ type GoogleAdsSearchads360V0Services__CustomColumnHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Services__CustomColumnHeader) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Services__CustomColumnHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Services__CustomColumnHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse: Response
@@ -8323,9 +8402,9 @@ type GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Services__ListCustomColumnsResponse: Response message
@@ -8349,9 +8428,9 @@ type GoogleAdsSearchads360V0Services__ListCustomColumnsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Services__ListCustomColumnsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Services__ListCustomColumnsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Services__ListCustomColumnsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Services__RawEventConversionDimensionHeader: Message
@@ -8374,9 +8453,9 @@ type GoogleAdsSearchads360V0Services__RawEventConversionDimensionHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Services__RawEventConversionDimensionHeader) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Services__RawEventConversionDimensionHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Services__RawEventConversionDimensionHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Services__RawEventConversionMetricHeader: Message for
@@ -8399,9 +8478,9 @@ type GoogleAdsSearchads360V0Services__RawEventConversionMetricHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Services__RawEventConversionMetricHeader) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Services__RawEventConversionMetricHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Services__RawEventConversionMetricHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Services__SearchAds360Row: A returned row from the
@@ -8535,9 +8614,9 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Services__SearchAds360Row) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Services__SearchAds360Row) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Services__SearchAds360Row
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Services__SearchSearchAds360FieldsRequest: Request
@@ -8566,9 +8645,9 @@ type GoogleAdsSearchads360V0Services__SearchSearchAds360FieldsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Services__SearchSearchAds360FieldsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Services__SearchSearchAds360FieldsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Services__SearchSearchAds360FieldsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Services__SearchSearchAds360FieldsResponse: Response
@@ -8599,9 +8678,9 @@ type GoogleAdsSearchads360V0Services__SearchSearchAds360FieldsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Services__SearchSearchAds360FieldsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Services__SearchSearchAds360FieldsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Services__SearchSearchAds360FieldsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Services__SearchSearchAds360Request: Request message
@@ -8649,9 +8728,9 @@ type GoogleAdsSearchads360V0Services__SearchSearchAds360Request struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Services__SearchSearchAds360Request) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Services__SearchSearchAds360Request) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Services__SearchSearchAds360Request
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Services__SearchSearchAds360Response: Response
@@ -8704,9 +8783,9 @@ type GoogleAdsSearchads360V0Services__SearchSearchAds360Response struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAdsSearchads360V0Services__SearchSearchAds360Response) MarshalJSON() ([]byte, error) {
+func (s GoogleAdsSearchads360V0Services__SearchSearchAds360Response) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Services__SearchSearchAds360Response
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CustomersListAccessibleCustomersCall struct {

@@ -265,9 +265,9 @@ type Accelerator struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Accelerator) MarshalJSON() ([]byte, error) {
+func (s Accelerator) MarshalJSON() ([]byte, error) {
 	type NoMethod Accelerator
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActionCondition: Conditions for actions to deal with task failures.
@@ -289,9 +289,9 @@ type ActionCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActionCondition) MarshalJSON() ([]byte, error) {
+func (s ActionCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod ActionCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentContainer: Container runnable representation on the agent side.
@@ -324,9 +324,9 @@ type AgentContainer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgentContainer) MarshalJSON() ([]byte, error) {
+func (s AgentContainer) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentContainer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentEnvironment: AgentEnvironment is the Environment representation between
@@ -355,9 +355,9 @@ type AgentEnvironment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgentEnvironment) MarshalJSON() ([]byte, error) {
+func (s AgentEnvironment) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentEnvironment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentInfo: VM Agent Info.
@@ -393,9 +393,9 @@ type AgentInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgentInfo) MarshalJSON() ([]byte, error) {
+func (s AgentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentKMSEnvMap: AgentKMSEnvMap contains the encrypted key/value pair to be
@@ -419,9 +419,9 @@ type AgentKMSEnvMap struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgentKMSEnvMap) MarshalJSON() ([]byte, error) {
+func (s AgentKMSEnvMap) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentKMSEnvMap
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentMetadata: VM Agent Metadata.
@@ -462,9 +462,9 @@ type AgentMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgentMetadata) MarshalJSON() ([]byte, error) {
+func (s AgentMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentScript: Script runnable representation on the agent side.
@@ -496,9 +496,9 @@ type AgentScript struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgentScript) MarshalJSON() ([]byte, error) {
+func (s AgentScript) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentScript
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentTask: TODO(b/182501497) The message needs to be redefined when the
@@ -552,9 +552,9 @@ type AgentTask struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgentTask) MarshalJSON() ([]byte, error) {
+func (s AgentTask) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentTask
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentTaskInfo: Task Info
@@ -581,9 +581,9 @@ type AgentTaskInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgentTaskInfo) MarshalJSON() ([]byte, error) {
+func (s AgentTaskInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentTaskInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentTaskRunnable: AgentTaskRunnable is the Runnable representation between
@@ -626,9 +626,9 @@ type AgentTaskRunnable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgentTaskRunnable) MarshalJSON() ([]byte, error) {
+func (s AgentTaskRunnable) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentTaskRunnable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentTaskSpec: AgentTaskSpec is the user's TaskSpec representation between
@@ -665,9 +665,9 @@ type AgentTaskSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgentTaskSpec) MarshalJSON() ([]byte, error) {
+func (s AgentTaskSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentTaskSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentTaskUserAccount: AgentTaskUserAccount contains the information of a
@@ -692,9 +692,9 @@ type AgentTaskUserAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgentTaskUserAccount) MarshalJSON() ([]byte, error) {
+func (s AgentTaskUserAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentTaskUserAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentTimingInfo: VM timing information
@@ -718,9 +718,9 @@ type AgentTimingInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgentTimingInfo) MarshalJSON() ([]byte, error) {
+func (s AgentTimingInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentTimingInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AllocationPolicy: A Job's resource allocation policy describes when, where,
@@ -770,9 +770,9 @@ type AllocationPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AllocationPolicy) MarshalJSON() ([]byte, error) {
+func (s AllocationPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod AllocationPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AttachedDisk: A new or an existing persistent disk (PD) or a local ssd
@@ -799,12 +799,13 @@ type AttachedDisk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AttachedDisk) MarshalJSON() ([]byte, error) {
+func (s AttachedDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod AttachedDisk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Barrier: Barrier runnable blocks until all tasks in a taskgroup reach it.
+// Barrier: A barrier runnable automatically blocks the execution of subsequent
+// runnables until all the tasks in the task group reach the barrier.
 type Barrier struct {
 	// Name: Barriers are identified by their index in runnable list. Names are not
 	// required, but if present should be an identifier.
@@ -822,9 +823,9 @@ type Barrier struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Barrier) MarshalJSON() ([]byte, error) {
+func (s Barrier) MarshalJSON() ([]byte, error) {
 	type NoMethod Barrier
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -856,9 +857,9 @@ type CloudLoggingOption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudLoggingOption) MarshalJSON() ([]byte, error) {
+func (s CloudLoggingOption) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudLoggingOption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComputeResource: Compute resource requirements. ComputeResource defines the
@@ -910,9 +911,9 @@ type ComputeResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComputeResource) MarshalJSON() ([]byte, error) {
+func (s ComputeResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Container: Container runnable.
@@ -922,9 +923,10 @@ type Container struct {
 	// as true can still communicate with each other, network cannot be specified
 	// in the `container.options` field.
 	BlockExternalNetwork bool `json:"blockExternalNetwork,omitempty"`
-	// Commands: Overrides the `CMD` specified in the container. If there is an
-	// ENTRYPOINT (either in the container image or with the entrypoint field
-	// below) then commands are appended as arguments to the ENTRYPOINT.
+	// Commands: Required for some container images. Overrides the `CMD` specified
+	// in the container. If there is an `ENTRYPOINT` (either in the container image
+	// or with the `entrypoint` field below) then these commands are appended as
+	// arguments to the `ENTRYPOINT`.
 	Commands []string `json:"commands,omitempty"`
 	// EnableImageStreaming: Optional. If set to true, this container runnable uses
 	// Image streaming. Use Image streaming to allow the runnable to initialize
@@ -938,12 +940,15 @@ type Container struct {
 	// using Image streaming with Batch, see the `image-streaming` sample on GitHub
 	// (https://github.com/GoogleCloudPlatform/batch-samples/tree/main/api-samples/image-streaming).
 	EnableImageStreaming bool `json:"enableImageStreaming,omitempty"`
-	// Entrypoint: Overrides the `ENTRYPOINT` specified in the container.
+	// Entrypoint: Required for some container images. Overrides the `ENTRYPOINT`
+	// specified in the container.
 	Entrypoint string `json:"entrypoint,omitempty"`
-	// ImageUri: The URI to pull the container image from.
+	// ImageUri: Required. The URI to pull the container image from.
 	ImageUri string `json:"imageUri,omitempty"`
-	// Options: Arbitrary additional options to include in the "docker run" command
-	// when running this container, e.g. "--network host".
+	// Options: Required for some container images. Arbitrary additional options to
+	// include in the `docker run` command when running this container—for
+	// example, `--network host`. For the `--volume` option, use the `volumes`
+	// field for the container.
 	Options string `json:"options,omitempty"`
 	// Password: Required if the container image is from a private Docker registry.
 	// The password to login to the Docker registry that contains the image. For
@@ -970,14 +975,15 @@ type Container struct {
 	// (https://cloud.google.com/batch/docs/create-run-job-secret-manager).
 	Username string `json:"username,omitempty"`
 	// Volumes: Volumes to mount (bind mount) from the host machine files or
-	// directories into the container, formatted to match docker run's --volume
-	// option, e.g. /foo:/bar, or /foo:/bar:ro If the `TaskSpec.Volumes` field is
-	// specified but this field is not, Batch will mount each volume from the host
-	// machine to the container with the same mount path by default. In this case,
-	// the default mount option for containers will be read-only (ro) for existing
-	// persistent disks and read-write (rw) for other volume types, regardless of
-	// the original mount options specified in `TaskSpec.Volumes`. If you need
-	// different mount settings, you can explicitly configure them in this field.
+	// directories into the container, formatted to match `--volume` option for the
+	// `docker run` command—for example, `/foo:/bar` or `/foo:/bar:ro`. If the
+	// `TaskSpec.Volumes` field is specified but this field is not, Batch will
+	// mount each volume from the host machine to the container with the same mount
+	// path by default. In this case, the default mount option for containers will
+	// be read-only (`ro`) for existing persistent disks and read-write (`rw`) for
+	// other volume types, regardless of the original mount options specified in
+	// `TaskSpec.Volumes`. If you need different mount settings, you can explicitly
+	// configure them in this field.
 	Volumes []string `json:"volumes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BlockExternalNetwork") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -992,9 +998,9 @@ type Container struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Container) MarshalJSON() ([]byte, error) {
+func (s Container) MarshalJSON() ([]byte, error) {
 	type NoMethod Container
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Disk: A new persistent disk or a local ssd. A VM can only have one local SSD
@@ -1014,9 +1020,8 @@ type Disk struct {
 	// image version: projects/{project}/global/images/{image_version} You can also
 	// use Batch customized image in short names. The following image values are
 	// supported for a boot disk: * `batch-debian`: use Batch Debian images. *
-	// `batch-centos`: use Batch CentOS images. * `batch-cos`: use Batch
-	// Container-Optimized images. * `batch-hpc-centos`: use Batch HPC CentOS
-	// images. * `batch-hpc-rocky`: use Batch HPC Rocky Linux images.
+	// `batch-cos`: use Batch Container-Optimized images. * `batch-hpc-rocky`: use
+	// Batch HPC Rocky Linux images.
 	Image string `json:"image,omitempty"`
 	// SizeGb: Disk size in GB. **Non-Boot Disk**: If the `type` specifies a
 	// persistent disk, this field is ignored if `data_source` is set as `image` or
@@ -1036,7 +1041,9 @@ type Disk struct {
 	Snapshot string `json:"snapshot,omitempty"`
 	// Type: Disk type as shown in `gcloud compute disk-types list`. For example,
 	// local SSD uses type "local-ssd". Persistent disks and boot disks use
-	// "pd-balanced", "pd-extreme", "pd-ssd" or "pd-standard".
+	// "pd-balanced", "pd-extreme", "pd-ssd" or "pd-standard". If not specified,
+	// "pd-standard" will be used as the default type for non-boot disks,
+	// "pd-balanced" will be used as the default type for boot disks.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiskInterface") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1051,9 +1058,9 @@ type Disk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Disk) MarshalJSON() ([]byte, error) {
+func (s Disk) MarshalJSON() ([]byte, error) {
 	type NoMethod Disk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1090,9 +1097,9 @@ type Environment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Environment) MarshalJSON() ([]byte, error) {
+func (s Environment) MarshalJSON() ([]byte, error) {
 	type NoMethod Environment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GCS: Represents a Google Cloud Storage volume.
@@ -1113,9 +1120,9 @@ type GCS struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GCS) MarshalJSON() ([]byte, error) {
+func (s GCS) MarshalJSON() ([]byte, error) {
 	type NoMethod GCS
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancePolicy: InstancePolicy describes an instance type and resources
@@ -1165,9 +1172,9 @@ type InstancePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancePolicy) MarshalJSON() ([]byte, error) {
+func (s InstancePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstancePolicyOrTemplate: InstancePolicyOrTemplate lets you define the type
@@ -1175,6 +1182,18 @@ func (s *InstancePolicy) MarshalJSON() ([]byte, error) {
 // instance template. If undefined, Batch picks the type of VM to use and
 // doesn't include optional VM resources such as GPUs and extra disks.
 type InstancePolicyOrTemplate struct {
+	// BlockProjectSshKeys: Optional. Set this field to `true` if you want Batch to
+	// block project-level SSH keys from accessing this job's VMs. Alternatively,
+	// you can configure the job to specify a VM instance template that blocks
+	// project-level SSH keys. In either case, Batch blocks project-level SSH keys
+	// while creating the VMs for this job. Batch allows project-level SSH keys for
+	// a job's VMs only if all the following are true: + This field is undefined or
+	// set to `false`. + The job's VM instance template (if any) doesn't block
+	// project-level SSH keys. Notably, you can override this behavior by manually
+	// updating a VM to block or allow project-level SSH keys. For more information
+	// about blocking project-level SSH keys, see the Compute Engine documentation:
+	// https://cloud.google.com/compute/docs/connect/restrict-ssh-keys#block-keys
+	BlockProjectSshKeys bool `json:"blockProjectSshKeys,omitempty"`
 	// InstallGpuDrivers: Set this field true if you want Batch to help fetch
 	// drivers from a third party location and install them for GPUs specified in
 	// `policy.accelerators` or `instance_template` on your behalf. Default is
@@ -1184,28 +1203,31 @@ type InstancePolicyOrTemplate struct {
 	// Container-Optimized Image cases, following
 	// https://github.com/GoogleCloudPlatform/compute-gpu-installation/blob/main/linux/install_gpu_driver.py.
 	InstallGpuDrivers bool `json:"installGpuDrivers,omitempty"`
+	// InstallOpsAgent: Optional. Set this field true if you want Batch to install
+	// Ops Agent on your behalf. Default is false.
+	InstallOpsAgent bool `json:"installOpsAgent,omitempty"`
 	// InstanceTemplate: Name of an instance template used to create VMs. Named the
 	// field as 'instance_template' instead of 'template' to avoid c++ keyword
 	// conflict.
 	InstanceTemplate string `json:"instanceTemplate,omitempty"`
 	// Policy: InstancePolicy.
 	Policy *InstancePolicy `json:"policy,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InstallGpuDrivers") to
+	// ForceSendFields is a list of field names (e.g. "BlockProjectSshKeys") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InstallGpuDrivers") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BlockProjectSshKeys") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *InstancePolicyOrTemplate) MarshalJSON() ([]byte, error) {
+func (s InstancePolicyOrTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancePolicyOrTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstanceStatus: VM instance status.
@@ -1240,9 +1262,9 @@ type InstanceStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InstanceStatus) MarshalJSON() ([]byte, error) {
+func (s InstanceStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Job: The Cloud Batch Job description.
@@ -1295,9 +1317,9 @@ type Job struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Job) MarshalJSON() ([]byte, error) {
+func (s Job) MarshalJSON() ([]byte, error) {
 	type NoMethod Job
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobNotification: Notification configurations.
@@ -1305,11 +1327,15 @@ type JobNotification struct {
 	// Message: The attribute requirements of messages to be sent to this Pub/Sub
 	// topic. Without this field, no message will be sent.
 	Message *Message `json:"message,omitempty"`
-	// PubsubTopic: The Pub/Sub topic where notifications like the job state
-	// changes will be published. The topic must exist in the same project as the
-	// job and billings will be charged to this project. If not specified, no
-	// Pub/Sub messages will be sent. Topic format:
-	// `projects/{project}/topics/{topic}`.
+	// PubsubTopic: The Pub/Sub topic where notifications for the job, like state
+	// changes, will be published. If undefined, no Pub/Sub notifications are sent
+	// for this job. Specify the topic using the following format:
+	// `projects/{project}/topics/{topic}`. Notably, if you want to specify a
+	// Pub/Sub topic that is in a different project than the job, your
+	// administrator must grant your project's Batch service agent permission to
+	// publish to that topic. For more information about configuring Pub/Sub
+	// notifications for a job, see
+	// https://cloud.google.com/batch/docs/enable-notifications.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1324,9 +1350,9 @@ type JobNotification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobNotification) MarshalJSON() ([]byte, error) {
+func (s JobNotification) MarshalJSON() ([]byte, error) {
 	type NoMethod JobNotification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JobStatus: Job status.
@@ -1368,9 +1394,9 @@ type JobStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JobStatus) MarshalJSON() ([]byte, error) {
+func (s JobStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod JobStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type KMSEnvMap struct {
@@ -1392,9 +1418,9 @@ type KMSEnvMap struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KMSEnvMap) MarshalJSON() ([]byte, error) {
+func (s KMSEnvMap) MarshalJSON() ([]byte, error) {
 	type NoMethod KMSEnvMap
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LifecyclePolicy: LifecyclePolicy describes how to deal with task failures
@@ -1428,9 +1454,9 @@ type LifecyclePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LifecyclePolicy) MarshalJSON() ([]byte, error) {
+func (s LifecyclePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod LifecyclePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListJobsResponse: ListJob Response.
@@ -1457,9 +1483,9 @@ type ListJobsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListJobsResponse) MarshalJSON() ([]byte, error) {
+func (s ListJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListJobsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -1485,9 +1511,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -1513,9 +1539,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTasksResponse: ListTasks Response.
@@ -1542,9 +1568,9 @@ type ListTasksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTasksResponse) MarshalJSON() ([]byte, error) {
+func (s ListTasksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTasksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -1580,9 +1606,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LocationPolicy struct {
@@ -1610,9 +1636,9 @@ type LocationPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationPolicy) MarshalJSON() ([]byte, error) {
+func (s LocationPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LogsPolicy: LogsPolicy describes how outputs from a Job's Tasks
@@ -1646,9 +1672,9 @@ type LogsPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LogsPolicy) MarshalJSON() ([]byte, error) {
+func (s LogsPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod LogsPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Message: Message details. Describe the conditions under which messages will
@@ -1706,9 +1732,9 @@ type Message struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Message) MarshalJSON() ([]byte, error) {
+func (s Message) MarshalJSON() ([]byte, error) {
 	type NoMethod Message
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NFS: Represents an NFS volume.
@@ -1730,9 +1756,9 @@ type NFS struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NFS) MarshalJSON() ([]byte, error) {
+func (s NFS) MarshalJSON() ([]byte, error) {
 	type NoMethod NFS
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkInterface: A network interface.
@@ -1771,9 +1797,9 @@ type NetworkInterface struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkInterface) MarshalJSON() ([]byte, error) {
+func (s NetworkInterface) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkInterface
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkPolicy: NetworkPolicy describes VM instance network configurations.
@@ -1793,9 +1819,9 @@ type NetworkPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkPolicy) MarshalJSON() ([]byte, error) {
+func (s NetworkPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1840,9 +1866,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -1878,9 +1904,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlacementPolicy: PlacementPolicy describes a group placement policy for the
@@ -1910,9 +1936,9 @@ type PlacementPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlacementPolicy) MarshalJSON() ([]byte, error) {
+func (s PlacementPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod PlacementPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportAgentStateRequest: Request to report agent's state. The Request itself
@@ -1937,9 +1963,9 @@ type ReportAgentStateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportAgentStateRequest) MarshalJSON() ([]byte, error) {
+func (s ReportAgentStateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportAgentStateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportAgentStateResponse: Response to ReportAgentStateRequest.
@@ -1970,9 +1996,9 @@ type ReportAgentStateResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportAgentStateResponse) MarshalJSON() ([]byte, error) {
+func (s ReportAgentStateResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportAgentStateResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Runnable: Runnable describes instructions for executing a specific script or
@@ -1985,10 +2011,16 @@ type Runnable struct {
 	// Task's overall max_run_duration. If the max_run_duration has expired then no
 	// further Runnables will execute, not even always_run Runnables.
 	AlwaysRun bool `json:"alwaysRun,omitempty"`
-	// Background: This flag allows a Runnable to continue running in the
-	// background while the Task executes subsequent Runnables. This is useful to
-	// provide services to other Runnables (or to provide debugging support tools
-	// like SSH servers).
+	// Background: Normally, a runnable that doesn't exit causes its task to fail.
+	// However, you can set this field to `true` to configure a background
+	// runnable. Background runnables are allowed continue running in the
+	// background while the task executes subsequent runnables. For example,
+	// background runnables are useful for providing services to other runnables or
+	// providing debugging-support tools like SSH servers. Specifically, background
+	// runnables are killed automatically (if they have not already exited) a short
+	// time after all foreground runnables have completed. Even though this is
+	// likely to result in a non-zero exit status for the background runnable,
+	// these automatic kills are not treated as task failures.
 	Background bool `json:"background,omitempty"`
 	// Barrier: Barrier runnable.
 	Barrier *Barrier `json:"barrier,omitempty"`
@@ -2002,8 +2034,10 @@ type Runnable struct {
 	// Environment: Environment variables for this Runnable (overrides variables
 	// set for the whole Task or TaskGroup).
 	Environment *Environment `json:"environment,omitempty"`
-	// IgnoreExitStatus: Normally, a non-zero exit status causes the Task to fail.
-	// This flag allows execution of other Runnables to continue instead.
+	// IgnoreExitStatus: Normally, a runnable that returns a non-zero exit status
+	// fails and causes the task to fail. However, you can set this field to `true`
+	// to allow the task to continue executing its other runnables even if this
+	// runnable fails.
 	IgnoreExitStatus bool `json:"ignoreExitStatus,omitempty"`
 	// Labels: Labels for this Runnable.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -2024,26 +2058,28 @@ type Runnable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Runnable) MarshalJSON() ([]byte, error) {
+func (s Runnable) MarshalJSON() ([]byte, error) {
 	type NoMethod Runnable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Script: Script runnable.
 type Script struct {
-	// Path: Script file path on the host VM. To specify an interpreter, please add
-	// a `#!`(also known as shebang line
-	// (https://en.wikipedia.org/wiki/Shebang_(Unix))) as the first line of the
-	// file.(For example, to execute the script using bash, `#!/bin/bash` should be
-	// the first line of the file. To execute the script using`Python3`,
-	// `#!/usr/bin/env python3` should be the first line of the file.) Otherwise,
-	// the file will by default be executed by `/bin/sh`.
+	// Path: The path to a script file that is accessible from the host VM(s).
+	// Unless the script file supports the default `#!/bin/sh` shell interpreter,
+	// you must specify an interpreter by including a shebang line
+	// (https://en.wikipedia.org/wiki/Shebang_(Unix) as the first line of the file.
+	// For example, to execute the script using bash, include `#!/bin/bash` as the
+	// first line of the file. Alternatively, to execute the script using Python3,
+	// include `#!/usr/bin/env python3` as the first line of the file.
 	Path string `json:"path,omitempty"`
-	// Text: Shell script text. To specify an interpreter, please add a `#!\n` at
-	// the beginning of the text.(For example, to execute the script using bash,
-	// `#!/bin/bash\n` should be added. To execute the script using`Python3`,
-	// `#!/usr/bin/env python3\n` should be added.) Otherwise, the script will by
-	// default be executed by `/bin/sh`.
+	// Text: The text for a script. Unless the script text supports the default
+	// `#!/bin/sh` shell interpreter, you must specify an interpreter by including
+	// a shebang line (https://en.wikipedia.org/wiki/Shebang_(Unix) at the
+	// beginning of the text. For example, to execute the script using bash,
+	// include `#!/bin/bash\n` at the beginning of the text. Alternatively, to
+	// execute the script using Python3, include `#!/usr/bin/env python3\n` at the
+	// beginning of the text.
 	Text string `json:"text,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2058,9 +2094,9 @@ type Script struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Script) MarshalJSON() ([]byte, error) {
+func (s Script) MarshalJSON() ([]byte, error) {
 	type NoMethod Script
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceAccount: Carries information about a Google Cloud service account.
@@ -2082,9 +2118,9 @@ type ServiceAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
+func (s ServiceAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -2116,20 +2152,22 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StatusEvent: Status event
+// StatusEvent: Status event.
 type StatusEvent struct {
 	// Description: Description of the event.
 	Description string `json:"description,omitempty"`
 	// EventTime: The time this event occurred.
 	EventTime string `json:"eventTime,omitempty"`
-	// TaskExecution: Task Execution
+	// TaskExecution: Task Execution. This field is only defined for task-level
+	// status events where the task fails.
 	TaskExecution *TaskExecution `json:"taskExecution,omitempty"`
-	// TaskState: Task State
+	// TaskState: Task State. This field is only defined for task-level status
+	// events.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unknown state.
@@ -2155,9 +2193,9 @@ type StatusEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StatusEvent) MarshalJSON() ([]byte, error) {
+func (s StatusEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod StatusEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Task: A Cloud Batch task.
@@ -2185,9 +2223,9 @@ type Task struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Task) MarshalJSON() ([]byte, error) {
+func (s Task) MarshalJSON() ([]byte, error) {
 	type NoMethod Task
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TaskExecution: This Task Execution field includes detail information for
@@ -2215,9 +2253,9 @@ type TaskExecution struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TaskExecution) MarshalJSON() ([]byte, error) {
+func (s TaskExecution) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskExecution
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TaskGroup: A TaskGroup defines one or more Tasks that all share the same
@@ -2286,9 +2324,9 @@ type TaskGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TaskGroup) MarshalJSON() ([]byte, error) {
+func (s TaskGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TaskGroupStatus: Aggregated task status for a TaskGroup.
@@ -2311,9 +2349,9 @@ type TaskGroupStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TaskGroupStatus) MarshalJSON() ([]byte, error) {
+func (s TaskGroupStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskGroupStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TaskSpec: Spec of a task
@@ -2345,14 +2383,14 @@ type TaskSpec struct {
 	// time for a job listed at
 	// https://cloud.google.com/batch/quotas#max-job-duration.
 	MaxRunDuration string `json:"maxRunDuration,omitempty"`
-	// Runnables: The sequence of scripts or containers to run for this Task. Each
-	// Task using this TaskSpec executes its list of runnables in order. The Task
-	// succeeds if all of its runnables either exit with a zero status or any that
-	// exit with a non-zero status have the ignore_exit_status flag. Background
-	// runnables are killed automatically (if they have not already exited) a short
-	// time after all foreground runnables have completed. Even though this is
-	// likely to result in a non-zero exit status for the background runnable,
-	// these automatic kills are not treated as Task failures.
+	// Runnables: Required. The sequence of one or more runnables (executable
+	// scripts, executable containers, and/or barriers) for each task in this task
+	// group to run. Each task runs this list of runnables in order. For a task to
+	// succeed, all of its script and container runnables each must meet at least
+	// one of the following conditions: + The runnable exited with a zero status. +
+	// The runnable didn't finish, but you enabled its `background` subfield. + The
+	// runnable exited with a non-zero status, but you enabled its
+	// `ignore_exit_status` subfield.
 	Runnables []*Runnable `json:"runnables,omitempty"`
 	// Volumes: Volumes to mount before running Tasks using this TaskSpec.
 	Volumes []*Volume `json:"volumes,omitempty"`
@@ -2369,14 +2407,14 @@ type TaskSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TaskSpec) MarshalJSON() ([]byte, error) {
+func (s TaskSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TaskStatus: Status of a task
+// TaskStatus: Status of a task.
 type TaskStatus struct {
-	// State: Task state
+	// State: Task state.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unknown state.
@@ -2402,9 +2440,9 @@ type TaskStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TaskStatus) MarshalJSON() ([]byte, error) {
+func (s TaskStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Volume: Volume describes a volume and parameters for it to be mounted to a
@@ -2418,16 +2456,15 @@ type Volume struct {
 	DeviceName string `json:"deviceName,omitempty"`
 	// Gcs: A Google Cloud Storage (GCS) volume.
 	Gcs *GCS `json:"gcs,omitempty"`
-	// MountOptions: For Google Cloud Storage (GCS), mount options are the options
-	// supported by the gcsfuse tool
-	// (https://github.com/GoogleCloudPlatform/gcsfuse). For existing persistent
-	// disks, mount options provided by the mount command
+	// MountOptions: Mount options vary based on the type of storage volume: * For
+	// a Cloud Storage bucket, all the mount options provided by the `gcsfuse` tool
+	// (https://cloud.google.com/storage/docs/gcsfuse-cli) are supported. * For an
+	// existing persistent disk, all mount options provided by the `mount` command
 	// (https://man7.org/linux/man-pages/man8/mount.8.html) except writing are
 	// supported. This is due to restrictions of multi-writer mode
-	// (https://cloud.google.com/compute/docs/disks/sharing-disks-between-vms). For
-	// other attached disks and Network File System (NFS), mount options are these
-	// supported by the mount command
-	// (https://man7.org/linux/man-pages/man8/mount.8.html).
+	// (https://cloud.google.com/compute/docs/disks/sharing-disks-between-vms). *
+	// For any other disk or a Network File System (NFS), all the mount options
+	// provided by the `mount` command are supported.
 	MountOptions []string `json:"mountOptions,omitempty"`
 	// MountPath: The mount path for the volume, e.g. /mnt/disks/share.
 	MountPath string `json:"mountPath,omitempty"`
@@ -2447,9 +2484,9 @@ type Volume struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Volume) MarshalJSON() ([]byte, error) {
+func (s Volume) MarshalJSON() ([]byte, error) {
 	type NoMethod Volume
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {

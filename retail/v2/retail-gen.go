@@ -385,9 +385,9 @@ type GoogleApiHttpBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleApiHttpBody) MarshalJSON() ([]byte, error) {
+func (s GoogleApiHttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiHttpBody
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailLoggingErrorContext: A description of the context in which
@@ -412,9 +412,9 @@ type GoogleCloudRetailLoggingErrorContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailLoggingErrorContext) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailLoggingErrorContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailLoggingErrorContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailLoggingErrorLog: An error log which is reported to the
@@ -459,9 +459,9 @@ type GoogleCloudRetailLoggingErrorLog struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailLoggingErrorLog) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailLoggingErrorLog) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailLoggingErrorLog
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailLoggingHttpRequestContext: HTTP request data that is
@@ -482,9 +482,9 @@ type GoogleCloudRetailLoggingHttpRequestContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailLoggingHttpRequestContext) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailLoggingHttpRequestContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailLoggingHttpRequestContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailLoggingImportErrorContext: The error payload that is
@@ -521,9 +521,9 @@ type GoogleCloudRetailLoggingImportErrorContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailLoggingImportErrorContext) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailLoggingImportErrorContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailLoggingImportErrorContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailLoggingServiceContext: Describes a running service that
@@ -544,9 +544,9 @@ type GoogleCloudRetailLoggingServiceContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailLoggingServiceContext) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailLoggingServiceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailLoggingServiceContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailLoggingSourceLocation: Indicates a location in the source
@@ -568,9 +568,9 @@ type GoogleCloudRetailLoggingSourceLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailLoggingSourceLocation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailLoggingSourceLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailLoggingSourceLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2AddCatalogAttributeRequest: Request for
@@ -591,9 +591,9 @@ type GoogleCloudRetailV2AddCatalogAttributeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2AddCatalogAttributeRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2AddCatalogAttributeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2AddCatalogAttributeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2AddControlRequest: Request for AddControl method.
@@ -615,9 +615,9 @@ type GoogleCloudRetailV2AddControlRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2AddControlRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2AddControlRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2AddControlRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2AddFulfillmentPlacesMetadata: Metadata related to the
@@ -669,9 +669,9 @@ type GoogleCloudRetailV2AddFulfillmentPlacesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2AddFulfillmentPlacesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2AddFulfillmentPlacesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2AddFulfillmentPlacesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2AddFulfillmentPlacesResponse: Response of the
@@ -725,9 +725,9 @@ type GoogleCloudRetailV2AddLocalInventoriesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2AddLocalInventoriesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2AddLocalInventoriesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2AddLocalInventoriesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2AddLocalInventoriesResponse: Response of the
@@ -776,9 +776,9 @@ type GoogleCloudRetailV2AttributesConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2AttributesConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2AttributesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2AttributesConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2Audience: An intended audience of the Product for whom
@@ -816,9 +816,9 @@ type GoogleCloudRetailV2Audience struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2Audience) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2Audience) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2Audience
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2BigQueryOutputResult: A BigQuery output result.
@@ -840,9 +840,9 @@ type GoogleCloudRetailV2BigQueryOutputResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2BigQueryOutputResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2BigQueryOutputResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2BigQueryOutputResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2BigQuerySource: BigQuery source import data from.
@@ -891,9 +891,9 @@ type GoogleCloudRetailV2BigQuerySource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2BigQuerySource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2BigQuerySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2BigQuerySource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2Catalog: The catalog configuration.
@@ -922,9 +922,9 @@ type GoogleCloudRetailV2Catalog struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2Catalog) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2Catalog) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2Catalog
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2CatalogAttribute: Catalog level attribute config for an
@@ -1037,9 +1037,9 @@ type GoogleCloudRetailV2CatalogAttribute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2CatalogAttribute) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2CatalogAttribute) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CatalogAttribute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2CatalogAttributeFacetConfig: Possible options for the
@@ -1087,9 +1087,9 @@ type GoogleCloudRetailV2CatalogAttributeFacetConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2CatalogAttributeFacetConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2CatalogAttributeFacetConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CatalogAttributeFacetConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2CatalogAttributeFacetConfigIgnoredFacetValues: Facet
@@ -1124,9 +1124,9 @@ type GoogleCloudRetailV2CatalogAttributeFacetConfigIgnoredFacetValues struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2CatalogAttributeFacetConfigIgnoredFacetValues) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2CatalogAttributeFacetConfigIgnoredFacetValues) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CatalogAttributeFacetConfigIgnoredFacetValues
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2CatalogAttributeFacetConfigMergedFacet: The current facet
@@ -1142,10 +1142,6 @@ type GoogleCloudRetailV2CatalogAttributeFacetConfigMergedFacet struct {
 	// path of length 2). This merged facet key needs to be either a textual custom
 	// attribute or a numerical custom attribute.
 	MergedFacetKey string `json:"mergedFacetKey,omitempty"`
-	// MergedFacetValues: Each instance is a list of facet values that map into the
-	// same (possibly different) merged facet value. For the current attribute
-	// config, each facet value should map to at most one merged facet value.
-	MergedFacetValues []*GoogleCloudRetailV2CatalogAttributeFacetConfigMergedFacetValue `json:"mergedFacetValues,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MergedFacetKey") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1159,9 +1155,9 @@ type GoogleCloudRetailV2CatalogAttributeFacetConfigMergedFacet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2CatalogAttributeFacetConfigMergedFacet) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2CatalogAttributeFacetConfigMergedFacet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CatalogAttributeFacetConfigMergedFacet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2CatalogAttributeFacetConfigMergedFacetValue: Replaces a
@@ -1191,9 +1187,9 @@ type GoogleCloudRetailV2CatalogAttributeFacetConfigMergedFacetValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2CatalogAttributeFacetConfigMergedFacetValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2CatalogAttributeFacetConfigMergedFacetValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CatalogAttributeFacetConfigMergedFacetValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2CatalogAttributeFacetConfigRerankConfig: Options to
@@ -1226,9 +1222,9 @@ type GoogleCloudRetailV2CatalogAttributeFacetConfigRerankConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2CatalogAttributeFacetConfigRerankConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2CatalogAttributeFacetConfigRerankConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CatalogAttributeFacetConfigRerankConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ColorInfo: The color information of a Product.
@@ -1266,14 +1262,18 @@ type GoogleCloudRetailV2ColorInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ColorInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ColorInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ColorInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2CompleteQueryResponse: Response of the autocomplete
 // query.
 type GoogleCloudRetailV2CompleteQueryResponse struct {
+	// AttributeResults: A map of matched attribute suggestions. This field is only
+	// available for "cloud-retail" dataset. Current supported keys: * `brands` *
+	// `categories`
+	AttributeResults map[string]GoogleCloudRetailV2CompleteQueryResponseAttributeResult `json:"attributeResults,omitempty"`
 	// AttributionToken: A unique complete token. This should be included in the
 	// UserEvent.completion_detail for search events resulting from this
 	// completion, which enables accurate attribution of complete model
@@ -1295,22 +1295,44 @@ type GoogleCloudRetailV2CompleteQueryResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AttributionToken") to
+	// ForceSendFields is a list of field names (e.g. "AttributeResults") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AttributionToken") to include in
+	// NullFields is a list of field names (e.g. "AttributeResults") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2CompleteQueryResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2CompleteQueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CompleteQueryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2CompleteQueryResponseAttributeResult: Resource that
+// represents attribute results.
+type GoogleCloudRetailV2CompleteQueryResponseAttributeResult struct {
+	Suggestions []string `json:"suggestions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Suggestions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Suggestions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2CompleteQueryResponseAttributeResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2CompleteQueryResponseAttributeResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2CompleteQueryResponseCompletionResult: Resource that
@@ -1336,13 +1358,13 @@ type GoogleCloudRetailV2CompleteQueryResponseCompletionResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2CompleteQueryResponseCompletionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2CompleteQueryResponseCompletionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CompleteQueryResponseCompletionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRetailV2CompleteQueryResponseRecentSearchResult: Recent search of
-// this user.
+// GoogleCloudRetailV2CompleteQueryResponseRecentSearchResult: Deprecated:
+// Recent search of this user.
 type GoogleCloudRetailV2CompleteQueryResponseRecentSearchResult struct {
 	// RecentSearch: The recent search query.
 	RecentSearch string `json:"recentSearch,omitempty"`
@@ -1359,9 +1381,9 @@ type GoogleCloudRetailV2CompleteQueryResponseRecentSearchResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2CompleteQueryResponseRecentSearchResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2CompleteQueryResponseRecentSearchResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CompleteQueryResponseRecentSearchResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2CompletionConfig: Catalog level autocomplete config for
@@ -1426,9 +1448,9 @@ type GoogleCloudRetailV2CompletionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2CompletionConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2CompletionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CompletionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2CompletionDataInputConfig: The input config source for
@@ -1452,9 +1474,9 @@ type GoogleCloudRetailV2CompletionDataInputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2CompletionDataInputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2CompletionDataInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CompletionDataInputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2CompletionDetail: Detailed completion information
@@ -1482,9 +1504,9 @@ type GoogleCloudRetailV2CompletionDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2CompletionDetail) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2CompletionDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CompletionDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2Condition: Metadata that is used to define a condition
@@ -1520,9 +1542,9 @@ type GoogleCloudRetailV2Condition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2Condition) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2Condition) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2Condition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ConditionQueryTerm: Query terms that we want to match on.
@@ -1547,9 +1569,9 @@ type GoogleCloudRetailV2ConditionQueryTerm struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ConditionQueryTerm) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ConditionQueryTerm) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ConditionQueryTerm
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ConditionTimeRange: Used for time-dependent conditions.
@@ -1572,9 +1594,9 @@ type GoogleCloudRetailV2ConditionTimeRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ConditionTimeRange) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ConditionTimeRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ConditionTimeRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2Control: Configures dynamic metadata that can be linked
@@ -1636,9 +1658,9 @@ type GoogleCloudRetailV2Control struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2Control) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2Control) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2Control
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2CreateModelMetadata: Metadata associated with a create
@@ -1661,9 +1683,9 @@ type GoogleCloudRetailV2CreateModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2CreateModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2CreateModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CreateModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2CustomAttribute: A custom attribute that is not
@@ -1710,9 +1732,9 @@ type GoogleCloudRetailV2CustomAttribute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2CustomAttribute) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2CustomAttribute) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2CustomAttribute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRetailV2CustomAttribute) UnmarshalJSON(data []byte) error {
@@ -1757,9 +1779,9 @@ type GoogleCloudRetailV2ExperimentInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ExperimentInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ExperimentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ExperimentInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ExperimentInfoServingConfigExperiment: Metadata for
@@ -1788,9 +1810,9 @@ type GoogleCloudRetailV2ExperimentInfoServingConfigExperiment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ExperimentInfoServingConfigExperiment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ExperimentInfoServingConfigExperiment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ExperimentInfoServingConfigExperiment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ExportAnalyticsMetricsRequest: Request message for the
@@ -1822,9 +1844,9 @@ type GoogleCloudRetailV2ExportAnalyticsMetricsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ExportAnalyticsMetricsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ExportAnalyticsMetricsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ExportAnalyticsMetricsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ExportAnalyticsMetricsResponse: Response of the
@@ -1851,9 +1873,9 @@ type GoogleCloudRetailV2ExportAnalyticsMetricsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ExportAnalyticsMetricsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ExportAnalyticsMetricsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ExportAnalyticsMetricsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ExportErrorsConfig: Configuration of destination for
@@ -1877,9 +1899,9 @@ type GoogleCloudRetailV2ExportErrorsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ExportErrorsConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ExportErrorsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ExportErrorsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ExportMetadata: Metadata related to the progress of the
@@ -1904,9 +1926,9 @@ type GoogleCloudRetailV2ExportMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ExportMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ExportMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ExportMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2FulfillmentInfo: Fulfillment information, such as the
@@ -1940,9 +1962,9 @@ type GoogleCloudRetailV2FulfillmentInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2FulfillmentInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2FulfillmentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2FulfillmentInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2GcsOutputResult: A Gcs output result.
@@ -1962,9 +1984,9 @@ type GoogleCloudRetailV2GcsOutputResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2GcsOutputResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2GcsOutputResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2GcsOutputResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2GcsSource: Google Cloud Storage location for input
@@ -2004,9 +2026,9 @@ type GoogleCloudRetailV2GcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2GcsSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2GcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2GetDefaultBranchResponse: Response message of
@@ -2035,9 +2057,9 @@ type GoogleCloudRetailV2GetDefaultBranchResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2GetDefaultBranchResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2GetDefaultBranchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2GetDefaultBranchResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2Image: Product image. Recommendations AI and Retail
@@ -2070,9 +2092,9 @@ type GoogleCloudRetailV2Image struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2Image) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2Image) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2Image
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ImportCompletionDataRequest: Request message for
@@ -2098,9 +2120,9 @@ type GoogleCloudRetailV2ImportCompletionDataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ImportCompletionDataRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ImportCompletionDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ImportCompletionDataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ImportCompletionDataResponse: Response of the
@@ -2123,9 +2145,9 @@ type GoogleCloudRetailV2ImportCompletionDataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ImportCompletionDataResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ImportCompletionDataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ImportCompletionDataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ImportErrorsConfig: Configuration of destination for
@@ -2149,9 +2171,9 @@ type GoogleCloudRetailV2ImportErrorsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ImportErrorsConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ImportErrorsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ImportErrorsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ImportMetadata: Metadata related to the progress of the
@@ -2187,9 +2209,9 @@ type GoogleCloudRetailV2ImportMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ImportMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ImportMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ImportMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ImportProductsRequest: Request message for Import
@@ -2237,9 +2259,9 @@ type GoogleCloudRetailV2ImportProductsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ImportProductsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ImportProductsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ImportProductsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ImportProductsResponse: Response of the
@@ -2265,9 +2287,9 @@ type GoogleCloudRetailV2ImportProductsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ImportProductsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ImportProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ImportProductsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ImportUserEventsRequest: Request message for the
@@ -2291,9 +2313,9 @@ type GoogleCloudRetailV2ImportUserEventsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ImportUserEventsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ImportUserEventsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ImportUserEventsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ImportUserEventsResponse: Response of the
@@ -2321,9 +2343,9 @@ type GoogleCloudRetailV2ImportUserEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ImportUserEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ImportUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ImportUserEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2Interval: A floating point interval.
@@ -2349,9 +2371,9 @@ type GoogleCloudRetailV2Interval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2Interval) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2Interval) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2Interval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRetailV2Interval) UnmarshalJSON(data []byte) error {
@@ -2399,9 +2421,9 @@ type GoogleCloudRetailV2ListCatalogsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ListCatalogsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ListCatalogsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ListCatalogsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ListControlsResponse: Response for ListControls method.
@@ -2426,9 +2448,9 @@ type GoogleCloudRetailV2ListControlsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ListControlsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ListControlsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ListControlsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ListModelsResponse: Response to a ListModelRequest.
@@ -2453,9 +2475,9 @@ type GoogleCloudRetailV2ListModelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ListModelsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ListModelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ListModelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ListProductsResponse: Response message for
@@ -2483,9 +2505,9 @@ type GoogleCloudRetailV2ListProductsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ListProductsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ListProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ListProductsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ListServingConfigsResponse: Response for
@@ -2511,9 +2533,9 @@ type GoogleCloudRetailV2ListServingConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ListServingConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ListServingConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ListServingConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2LocalInventory: The inventory information at a place
@@ -2559,9 +2581,9 @@ type GoogleCloudRetailV2LocalInventory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2LocalInventory) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2LocalInventory) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2LocalInventory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2Model: Metadata that describes the training and serving
@@ -2698,9 +2720,9 @@ type GoogleCloudRetailV2Model struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2Model) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2Model) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2Model
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig: Additional
@@ -2732,9 +2754,9 @@ type GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ModelModelFeaturesConfig: Additional model features
@@ -2757,9 +2779,9 @@ type GoogleCloudRetailV2ModelModelFeaturesConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ModelModelFeaturesConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ModelModelFeaturesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ModelModelFeaturesConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ModelServingConfigList: Represents an ordered combination
@@ -2782,9 +2804,9 @@ type GoogleCloudRetailV2ModelServingConfigList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ModelServingConfigList) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ModelServingConfigList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ModelServingConfigList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2OutputConfig: The output configuration setting.
@@ -2808,9 +2830,9 @@ type GoogleCloudRetailV2OutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2OutputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2OutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2OutputConfigBigQueryDestination: The BigQuery output
@@ -2837,9 +2859,9 @@ type GoogleCloudRetailV2OutputConfigBigQueryDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2OutputConfigBigQueryDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2OutputConfigBigQueryDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2OutputConfigBigQueryDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2OutputConfigGcsDestination: The Google Cloud Storage
@@ -2865,9 +2887,9 @@ type GoogleCloudRetailV2OutputConfigGcsDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2OutputConfigGcsDestination) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2OutputConfigGcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2OutputConfigGcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2OutputResult: Output result that stores the information
@@ -2890,9 +2912,9 @@ type GoogleCloudRetailV2OutputResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2OutputResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2OutputResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2OutputResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2PauseModelRequest: Request for pausing training of a
@@ -2994,9 +3016,9 @@ type GoogleCloudRetailV2PredictRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2PredictRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2PredictRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2PredictRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2PredictResponse: Response message for predict method.
@@ -3029,9 +3051,9 @@ type GoogleCloudRetailV2PredictResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2PredictResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2PredictResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2PredictResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2PredictResponsePredictionResult: PredictionResult
@@ -3058,9 +3080,9 @@ type GoogleCloudRetailV2PredictResponsePredictionResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2PredictResponsePredictionResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2PredictResponsePredictionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2PredictResponsePredictionResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2PriceInfo: The price information of a Product.
@@ -3116,9 +3138,9 @@ type GoogleCloudRetailV2PriceInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2PriceInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2PriceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2PriceInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRetailV2PriceInfo) UnmarshalJSON(data []byte) error {
@@ -3161,9 +3183,9 @@ type GoogleCloudRetailV2PriceInfoPriceRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2PriceInfoPriceRange) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2PriceInfoPriceRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2PriceInfoPriceRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2Product: Product captures all metadata information of
@@ -3466,9 +3488,9 @@ type GoogleCloudRetailV2Product struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2Product) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2Product) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2Product
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ProductDetail: Detailed product information associated
@@ -3499,9 +3521,9 @@ type GoogleCloudRetailV2ProductDetail struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ProductDetail) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ProductDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ProductDetail
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ProductInlineSource: The inline source for the input
@@ -3523,9 +3545,9 @@ type GoogleCloudRetailV2ProductInlineSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ProductInlineSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ProductInlineSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ProductInlineSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ProductInputConfig: The input config source for products.
@@ -3549,9 +3571,9 @@ type GoogleCloudRetailV2ProductInputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ProductInputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ProductInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ProductInputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ProductLevelConfig: Configures what level the product
@@ -3595,9 +3617,9 @@ type GoogleCloudRetailV2ProductLevelConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ProductLevelConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ProductLevelConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ProductLevelConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2Promotion: Promotion specification.
@@ -3624,9 +3646,9 @@ type GoogleCloudRetailV2Promotion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2Promotion) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2Promotion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2Promotion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2PurchaseTransaction: A transaction represents the entire
@@ -3659,9 +3681,9 @@ type GoogleCloudRetailV2PurchaseTransaction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2PurchaseTransaction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2PurchaseTransaction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2PurchaseTransaction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRetailV2PurchaseTransaction) UnmarshalJSON(data []byte) error {
@@ -3714,9 +3736,9 @@ type GoogleCloudRetailV2PurgeProductsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2PurgeProductsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2PurgeProductsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2PurgeProductsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2PurgeProductsRequest: Request message for PurgeProducts
@@ -3755,9 +3777,9 @@ type GoogleCloudRetailV2PurgeProductsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2PurgeProductsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2PurgeProductsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2PurgeProductsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2PurgeProductsResponse: Response of the
@@ -3784,9 +3806,9 @@ type GoogleCloudRetailV2PurgeProductsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2PurgeProductsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2PurgeProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2PurgeProductsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2PurgeUserEventsRequest: Request message for
@@ -3821,9 +3843,9 @@ type GoogleCloudRetailV2PurgeUserEventsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2PurgeUserEventsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2PurgeUserEventsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2PurgeUserEventsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2PurgeUserEventsResponse: Response of the
@@ -3847,9 +3869,9 @@ type GoogleCloudRetailV2PurgeUserEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2PurgeUserEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2PurgeUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2PurgeUserEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2Rating: The rating of a Product.
@@ -3880,9 +3902,9 @@ type GoogleCloudRetailV2Rating struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2Rating) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2Rating) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2Rating
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRetailV2Rating) UnmarshalJSON(data []byte) error {
@@ -3933,9 +3955,9 @@ type GoogleCloudRetailV2RejoinUserEventsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RejoinUserEventsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RejoinUserEventsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RejoinUserEventsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RejoinUserEventsResponse: Response message for
@@ -3957,9 +3979,9 @@ type GoogleCloudRetailV2RejoinUserEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RejoinUserEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RejoinUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RejoinUserEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RemoveCatalogAttributeRequest: Request for
@@ -3980,9 +4002,9 @@ type GoogleCloudRetailV2RemoveCatalogAttributeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RemoveCatalogAttributeRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RemoveCatalogAttributeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RemoveCatalogAttributeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RemoveControlRequest: Request for RemoveControl method.
@@ -4003,9 +4025,9 @@ type GoogleCloudRetailV2RemoveControlRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RemoveControlRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RemoveControlRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RemoveControlRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RemoveFulfillmentPlacesMetadata: Metadata related to the
@@ -4055,9 +4077,9 @@ type GoogleCloudRetailV2RemoveFulfillmentPlacesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RemoveFulfillmentPlacesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RemoveFulfillmentPlacesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RemoveFulfillmentPlacesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RemoveFulfillmentPlacesResponse: Response of the
@@ -4102,9 +4124,9 @@ type GoogleCloudRetailV2RemoveLocalInventoriesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RemoveLocalInventoriesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RemoveLocalInventoriesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RemoveLocalInventoriesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RemoveLocalInventoriesResponse: Response of the
@@ -4136,9 +4158,9 @@ type GoogleCloudRetailV2ReplaceCatalogAttributeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ReplaceCatalogAttributeRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ReplaceCatalogAttributeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ReplaceCatalogAttributeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ResumeModelRequest: Request for resuming training of a
@@ -4191,9 +4213,9 @@ type GoogleCloudRetailV2Rule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2Rule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2Rule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2Rule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RuleBoostAction: A boost action to apply to results
@@ -4232,9 +4254,9 @@ type GoogleCloudRetailV2RuleBoostAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RuleBoostAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RuleBoostAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RuleBoostAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRetailV2RuleBoostAction) UnmarshalJSON(data []byte) error {
@@ -4277,9 +4299,9 @@ type GoogleCloudRetailV2RuleDoNotAssociateAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RuleDoNotAssociateAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RuleDoNotAssociateAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RuleDoNotAssociateAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RuleFilterAction: * Rule Condition: - No
@@ -4313,9 +4335,9 @@ type GoogleCloudRetailV2RuleFilterAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RuleFilterAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RuleFilterAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RuleFilterAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RuleForceReturnFacetAction: Force returns an
@@ -4333,7 +4355,7 @@ func (s *GoogleCloudRetailV2RuleFilterAction) MarshalJSON() ([]byte, error) {
 // current rank.
 type GoogleCloudRetailV2RuleForceReturnFacetAction struct {
 	// FacetPositionAdjustments: Each instance corresponds to a force return
-	// attribute for the given condition. There can't be more 3 instances here.
+	// attribute for the given condition. There can't be more 15 instances here.
 	FacetPositionAdjustments []*GoogleCloudRetailV2RuleForceReturnFacetActionFacetPositionAdjustment `json:"facetPositionAdjustments,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FacetPositionAdjustments")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -4348,9 +4370,9 @@ type GoogleCloudRetailV2RuleForceReturnFacetAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RuleForceReturnFacetAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RuleForceReturnFacetAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RuleForceReturnFacetAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RuleForceReturnFacetActionFacetPositionAdjustment: Each
@@ -4377,9 +4399,9 @@ type GoogleCloudRetailV2RuleForceReturnFacetActionFacetPositionAdjustment struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RuleForceReturnFacetActionFacetPositionAdjustment) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RuleForceReturnFacetActionFacetPositionAdjustment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RuleForceReturnFacetActionFacetPositionAdjustment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RuleIgnoreAction: Prevents a term in the query from being
@@ -4400,9 +4422,9 @@ type GoogleCloudRetailV2RuleIgnoreAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RuleIgnoreAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RuleIgnoreAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RuleIgnoreAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RuleOnewaySynonymsAction: Maps a set of terms to a set of
@@ -4433,9 +4455,9 @@ type GoogleCloudRetailV2RuleOnewaySynonymsAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RuleOnewaySynonymsAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RuleOnewaySynonymsAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RuleOnewaySynonymsAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RuleRedirectAction: Redirects a shopper to a specific
@@ -4457,9 +4479,9 @@ type GoogleCloudRetailV2RuleRedirectAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RuleRedirectAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RuleRedirectAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RuleRedirectAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RuleRemoveFacetAction: Removes an attribute/facet in the
@@ -4489,9 +4511,9 @@ type GoogleCloudRetailV2RuleRemoveFacetAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RuleRemoveFacetAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RuleRemoveFacetAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RuleRemoveFacetAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RuleReplacementAction: Replaces a term in the query.
@@ -4519,9 +4541,9 @@ type GoogleCloudRetailV2RuleReplacementAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RuleReplacementAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RuleReplacementAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RuleReplacementAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2RuleTwowaySynonymsAction: Creates a set of terms that
@@ -4545,9 +4567,9 @@ type GoogleCloudRetailV2RuleTwowaySynonymsAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2RuleTwowaySynonymsAction) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2RuleTwowaySynonymsAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2RuleTwowaySynonymsAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SearchRequest: Request message for SearchService.Search
@@ -4728,9 +4750,9 @@ type GoogleCloudRetailV2SearchRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SearchRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SearchRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SearchRequestBoostSpec: Boost specification to boost
@@ -4758,9 +4780,9 @@ type GoogleCloudRetailV2SearchRequestBoostSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SearchRequestBoostSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SearchRequestBoostSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchRequestBoostSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SearchRequestBoostSpecConditionBoostSpec: Boost applies
@@ -4798,9 +4820,9 @@ type GoogleCloudRetailV2SearchRequestBoostSpecConditionBoostSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SearchRequestBoostSpecConditionBoostSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SearchRequestBoostSpecConditionBoostSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchRequestBoostSpecConditionBoostSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRetailV2SearchRequestBoostSpecConditionBoostSpec) UnmarshalJSON(data []byte) error {
@@ -4841,9 +4863,9 @@ type GoogleCloudRetailV2SearchRequestDynamicFacetSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SearchRequestDynamicFacetSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SearchRequestDynamicFacetSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchRequestDynamicFacetSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SearchRequestFacetSpec: A facet specification to perform
@@ -4907,9 +4929,9 @@ type GoogleCloudRetailV2SearchRequestFacetSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SearchRequestFacetSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SearchRequestFacetSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchRequestFacetSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SearchRequestFacetSpecFacetKey: Specifies how a facet is
@@ -5001,9 +5023,9 @@ type GoogleCloudRetailV2SearchRequestFacetSpecFacetKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SearchRequestFacetSpecFacetKey) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SearchRequestFacetSpecFacetKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchRequestFacetSpecFacetKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SearchRequestPersonalizationSpec: The specification for
@@ -5031,9 +5053,9 @@ type GoogleCloudRetailV2SearchRequestPersonalizationSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SearchRequestPersonalizationSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SearchRequestPersonalizationSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchRequestPersonalizationSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SearchRequestQueryExpansionSpec: Specification to
@@ -5066,9 +5088,9 @@ type GoogleCloudRetailV2SearchRequestQueryExpansionSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SearchRequestQueryExpansionSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SearchRequestQueryExpansionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchRequestQueryExpansionSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SearchRequestSpellCorrectionSpec: The specification for
@@ -5099,9 +5121,9 @@ type GoogleCloudRetailV2SearchRequestSpellCorrectionSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SearchRequestSpellCorrectionSpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SearchRequestSpellCorrectionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchRequestSpellCorrectionSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SearchResponse: Response message for SearchService.Search
@@ -5159,9 +5181,9 @@ type GoogleCloudRetailV2SearchResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SearchResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SearchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SearchResponseFacet: A facet result.
@@ -5186,9 +5208,9 @@ type GoogleCloudRetailV2SearchResponseFacet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SearchResponseFacet) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SearchResponseFacet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchResponseFacet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SearchResponseFacetFacetValue: A facet value which
@@ -5221,9 +5243,9 @@ type GoogleCloudRetailV2SearchResponseFacetFacetValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SearchResponseFacetFacetValue) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SearchResponseFacetFacetValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchResponseFacetFacetValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRetailV2SearchResponseFacetFacetValue) UnmarshalJSON(data []byte) error {
@@ -5264,9 +5286,9 @@ type GoogleCloudRetailV2SearchResponseQueryExpansionInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SearchResponseQueryExpansionInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SearchResponseQueryExpansionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchResponseQueryExpansionInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SearchResponseSearchResult: Represents the search
@@ -5327,9 +5349,9 @@ type GoogleCloudRetailV2SearchResponseSearchResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SearchResponseSearchResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SearchResponseSearchResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchResponseSearchResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2ServingConfig: Configures metadata that is used to
@@ -5478,9 +5500,9 @@ type GoogleCloudRetailV2ServingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2ServingConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2ServingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2ServingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SetDefaultBranchRequest: Request message to set a
@@ -5512,9 +5534,9 @@ type GoogleCloudRetailV2SetDefaultBranchRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SetDefaultBranchRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SetDefaultBranchRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SetDefaultBranchRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SetInventoryMetadata: Metadata related to the progress of
@@ -5581,9 +5603,9 @@ type GoogleCloudRetailV2SetInventoryRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2SetInventoryRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2SetInventoryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SetInventoryRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SetInventoryResponse: Response of the
@@ -5612,9 +5634,9 @@ type GoogleCloudRetailV2TuneModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2TuneModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2TuneModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2TuneModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2TuneModelRequest: Request to manually start a tuning
@@ -5796,9 +5818,9 @@ type GoogleCloudRetailV2UserEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2UserEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2UserEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2UserEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2UserEventImportSummary: A summary of import result. The
@@ -5823,9 +5845,9 @@ type GoogleCloudRetailV2UserEventImportSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2UserEventImportSummary) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2UserEventImportSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2UserEventImportSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2UserEventInlineSource: The inline source for the input
@@ -5847,9 +5869,9 @@ type GoogleCloudRetailV2UserEventInlineSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2UserEventInlineSource) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2UserEventInlineSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2UserEventInlineSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2UserEventInputConfig: The input config source for user
@@ -5875,9 +5897,9 @@ type GoogleCloudRetailV2UserEventInputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2UserEventInputConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2UserEventInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2UserEventInputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2UserInfo: Information of an end user.
@@ -5925,9 +5947,9 @@ type GoogleCloudRetailV2UserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2UserInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2UserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2UserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaAddFulfillmentPlacesMetadata: Metadata related to
@@ -5976,9 +5998,9 @@ type GoogleCloudRetailV2alphaBigQueryOutputResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaBigQueryOutputResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaBigQueryOutputResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaBigQueryOutputResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaCreateMerchantCenterAccountLinkMetadata: Common
@@ -6002,9 +6024,9 @@ type GoogleCloudRetailV2alphaCreateMerchantCenterAccountLinkMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaCreateMerchantCenterAccountLinkMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaCreateMerchantCenterAccountLinkMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaCreateMerchantCenterAccountLinkMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaCreateModelMetadata: Metadata associated with a
@@ -6027,9 +6049,9 @@ type GoogleCloudRetailV2alphaCreateModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaCreateModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaCreateModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaCreateModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaEnrollSolutionMetadata: Metadata related to the
@@ -6061,9 +6083,9 @@ type GoogleCloudRetailV2alphaEnrollSolutionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaEnrollSolutionResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaEnrollSolutionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaEnrollSolutionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaExportAnalyticsMetricsResponse: Response of the
@@ -6090,9 +6112,9 @@ type GoogleCloudRetailV2alphaExportAnalyticsMetricsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaExportAnalyticsMetricsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaExportAnalyticsMetricsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaExportAnalyticsMetricsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaExportErrorsConfig: Configuration of destination for
@@ -6116,9 +6138,9 @@ type GoogleCloudRetailV2alphaExportErrorsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaExportErrorsConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaExportErrorsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaExportErrorsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaExportMetadata: Metadata related to the progress of
@@ -6143,9 +6165,9 @@ type GoogleCloudRetailV2alphaExportMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaExportMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaExportMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaExportMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaExportProductsResponse: Response of the
@@ -6172,9 +6194,9 @@ type GoogleCloudRetailV2alphaExportProductsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaExportProductsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaExportProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaExportProductsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaExportUserEventsResponse: Response of the
@@ -6201,9 +6223,9 @@ type GoogleCloudRetailV2alphaExportUserEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaExportUserEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaExportUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaExportUserEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaGcsOutputResult: A Gcs output result.
@@ -6223,9 +6245,9 @@ type GoogleCloudRetailV2alphaGcsOutputResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaGcsOutputResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaGcsOutputResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaGcsOutputResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaImportCompletionDataResponse: Response of the
@@ -6248,9 +6270,9 @@ type GoogleCloudRetailV2alphaImportCompletionDataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaImportCompletionDataResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaImportCompletionDataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaImportCompletionDataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaImportErrorsConfig: Configuration of destination for
@@ -6274,9 +6296,9 @@ type GoogleCloudRetailV2alphaImportErrorsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaImportErrorsConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaImportErrorsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaImportErrorsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaImportMetadata: Metadata related to the progress of
@@ -6314,9 +6336,9 @@ type GoogleCloudRetailV2alphaImportMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaImportMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaImportMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaImportMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaImportProductsResponse: Response of the
@@ -6342,9 +6364,9 @@ type GoogleCloudRetailV2alphaImportProductsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaImportProductsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaImportProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaImportProductsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaImportUserEventsResponse: Response of the
@@ -6372,9 +6394,9 @@ type GoogleCloudRetailV2alphaImportUserEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaImportUserEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaImportUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaImportUserEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaMerchantCenterAccountLink: Represents a link between
@@ -6445,9 +6467,9 @@ type GoogleCloudRetailV2alphaMerchantCenterAccountLink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaMerchantCenterAccountLink) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaMerchantCenterAccountLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaMerchantCenterAccountLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter:
@@ -6471,9 +6493,9 @@ type GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaMerchantCenterAccountLinkMerchantCenterFeedFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaModel: Metadata that describes the training and
@@ -6609,9 +6631,9 @@ type GoogleCloudRetailV2alphaModel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaModel) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaModel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaModel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig:
@@ -6643,9 +6665,9 @@ type GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig struct 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaModelModelFeaturesConfig: Additional model features
@@ -6668,9 +6690,9 @@ type GoogleCloudRetailV2alphaModelModelFeaturesConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaModelModelFeaturesConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaModelModelFeaturesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaModelModelFeaturesConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaModelPageOptimizationConfig: The
@@ -6759,9 +6781,9 @@ type GoogleCloudRetailV2alphaModelPageOptimizationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaModelPageOptimizationConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaModelPageOptimizationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaModelPageOptimizationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaModelPageOptimizationConfigCandidate: A candidate to
@@ -6786,9 +6808,9 @@ type GoogleCloudRetailV2alphaModelPageOptimizationConfigCandidate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaModelPageOptimizationConfigCandidate) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaModelPageOptimizationConfigCandidate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaModelPageOptimizationConfigCandidate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaModelPageOptimizationConfigPanel: An individual
@@ -6814,9 +6836,9 @@ type GoogleCloudRetailV2alphaModelPageOptimizationConfigPanel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaModelPageOptimizationConfigPanel) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaModelPageOptimizationConfigPanel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaModelPageOptimizationConfigPanel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaModelServingConfigList: Represents an ordered
@@ -6839,9 +6861,9 @@ type GoogleCloudRetailV2alphaModelServingConfigList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaModelServingConfigList) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaModelServingConfigList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaModelServingConfigList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaOutputResult: Output result that stores the
@@ -6864,9 +6886,9 @@ type GoogleCloudRetailV2alphaOutputResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaOutputResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaOutputResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaOutputResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaPurgeMetadata: Metadata related to the progress of
@@ -6901,9 +6923,9 @@ type GoogleCloudRetailV2alphaPurgeProductsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaPurgeProductsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaPurgeProductsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaPurgeProductsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaPurgeProductsResponse: Response of the
@@ -6930,9 +6952,9 @@ type GoogleCloudRetailV2alphaPurgeProductsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaPurgeProductsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaPurgeProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaPurgeProductsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaPurgeUserEventsResponse: Response of the
@@ -6956,9 +6978,9 @@ type GoogleCloudRetailV2alphaPurgeUserEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaPurgeUserEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaPurgeUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaPurgeUserEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaRejoinUserEventsMetadata: Metadata for
@@ -6985,9 +7007,9 @@ type GoogleCloudRetailV2alphaRejoinUserEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaRejoinUserEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaRejoinUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaRejoinUserEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaRemoveFulfillmentPlacesMetadata: Metadata related to
@@ -7053,9 +7075,9 @@ type GoogleCloudRetailV2alphaTransformedUserEventsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaTransformedUserEventsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaTransformedUserEventsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaTransformedUserEventsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaTuneModelMetadata: Metadata associated with a tune
@@ -7078,9 +7100,9 @@ type GoogleCloudRetailV2alphaTuneModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaTuneModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaTuneModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaTuneModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2alphaTuneModelResponse: Response associated with a tune
@@ -7110,9 +7132,9 @@ type GoogleCloudRetailV2alphaUserEventImportSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2alphaUserEventImportSummary) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2alphaUserEventImportSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaUserEventImportSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaAddFulfillmentPlacesMetadata: Metadata related to the
@@ -7161,35 +7183,9 @@ type GoogleCloudRetailV2betaBigQueryOutputResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaBigQueryOutputResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaBigQueryOutputResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaBigQueryOutputResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata: Common
-// metadata related to the progress of the operations.
-type GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata struct {
-	// CreateTime: Operation create time.
-	CreateTime string `json:"createTime,omitempty"`
-	// UpdateTime: Operation last update time. If the operation is done, this is
-	// also the finish time.
-	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2betaCreateMerchantCenterAccountLinkMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaCreateModelMetadata: Metadata associated with a
@@ -7212,9 +7208,9 @@ type GoogleCloudRetailV2betaCreateModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaCreateModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaCreateModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaCreateModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaExportAnalyticsMetricsResponse: Response of the
@@ -7241,9 +7237,9 @@ type GoogleCloudRetailV2betaExportAnalyticsMetricsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaExportAnalyticsMetricsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaExportAnalyticsMetricsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaExportAnalyticsMetricsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaExportErrorsConfig: Configuration of destination for
@@ -7267,9 +7263,9 @@ type GoogleCloudRetailV2betaExportErrorsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaExportErrorsConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaExportErrorsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaExportErrorsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaExportMetadata: Metadata related to the progress of
@@ -7294,9 +7290,9 @@ type GoogleCloudRetailV2betaExportMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaExportMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaExportMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaExportMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaExportProductsResponse: Response of the
@@ -7323,9 +7319,9 @@ type GoogleCloudRetailV2betaExportProductsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaExportProductsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaExportProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaExportProductsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaExportUserEventsResponse: Response of the
@@ -7352,9 +7348,9 @@ type GoogleCloudRetailV2betaExportUserEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaExportUserEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaExportUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaExportUserEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaGcsOutputResult: A Gcs output result.
@@ -7374,9 +7370,9 @@ type GoogleCloudRetailV2betaGcsOutputResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaGcsOutputResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaGcsOutputResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaGcsOutputResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaImportCompletionDataResponse: Response of the
@@ -7399,9 +7395,9 @@ type GoogleCloudRetailV2betaImportCompletionDataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaImportCompletionDataResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaImportCompletionDataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaImportCompletionDataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaImportErrorsConfig: Configuration of destination for
@@ -7425,9 +7421,9 @@ type GoogleCloudRetailV2betaImportErrorsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaImportErrorsConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaImportErrorsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaImportErrorsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaImportMetadata: Metadata related to the progress of
@@ -7463,9 +7459,9 @@ type GoogleCloudRetailV2betaImportMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaImportMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaImportMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaImportMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaImportProductsResponse: Response of the
@@ -7491,9 +7487,9 @@ type GoogleCloudRetailV2betaImportProductsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaImportProductsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaImportProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaImportProductsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaImportUserEventsResponse: Response of the
@@ -7521,108 +7517,9 @@ type GoogleCloudRetailV2betaImportUserEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaImportUserEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaImportUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaImportUserEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2betaMerchantCenterAccountLink: Represents a link between
-// a Merchant Center account and a branch. After a link is established,
-// products from the linked Merchant Center account are streamed to the linked
-// branch.
-type GoogleCloudRetailV2betaMerchantCenterAccountLink struct {
-	// BranchId: Required. The branch ID (e.g. 0/1/2) within the catalog that
-	// products from merchant_center_account_id are streamed to. When updating this
-	// field, an empty value will use the currently configured default branch.
-	// However, changing the default branch later on won't change the linked branch
-	// here. A single branch ID can only have one linked Merchant Center account
-	// ID.
-	BranchId string `json:"branchId,omitempty"`
-	// FeedFilters: Criteria for the Merchant Center feeds to be ingested via the
-	// link. All offers will be ingested if the list is empty. Otherwise the offers
-	// will be ingested from selected feeds.
-	FeedFilters []*GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter `json:"feedFilters,omitempty"`
-	// FeedLabel: The FeedLabel used to perform filtering. Note: this replaces
-	// region_id
-	// (https://developers.google.com/shopping-content/reference/rest/v2.1/products#Product.FIELDS.feed_label).
-	// Example value: `US`. Example value: `FeedLabel1`.
-	FeedLabel string `json:"feedLabel,omitempty"`
-	// Id: Output only. Immutable. MerchantCenterAccountLink identifier, which is
-	// the final component of name. This field is auto generated and follows the
-	// convention: `BranchId_MerchantCenterAccountId`.
-	// `projects/*/locations/global/catalogs/default_catalog/merchantCenterAccountLi
-	// nks/id_1`.
-	Id string `json:"id,omitempty"`
-	// LanguageCode: Language of the title/description and other string attributes.
-	// Use language tags defined by BCP 47
-	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt). ISO 639-1. This specifies
-	// the language of offers in Merchant Center that will be accepted. If empty,
-	// no language filtering will be performed. Example value: `en`.
-	LanguageCode string `json:"languageCode,omitempty"`
-	// MerchantCenterAccountId: Required. The linked Merchant center account id
-	// (https://developers.google.com/shopping-content/guides/accountstatuses). The
-	// account must be a standalone account or a sub-account of a MCA.
-	MerchantCenterAccountId int64 `json:"merchantCenterAccountId,omitempty,string"`
-	// Name: Output only. Immutable. Full resource name of the Merchant Center
-	// Account Link, such as
-	// `projects/*/locations/global/catalogs/default_catalog/merchantCenterAccountLi
-	// nks/merchant_center_account_link`.
-	Name string `json:"name,omitempty"`
-	// ProjectId: Output only. Google Cloud project ID.
-	ProjectId string `json:"projectId,omitempty"`
-	// Source: Optional. An optional arbitrary string that could be used as a tag
-	// for tracking link source.
-	Source string `json:"source,omitempty"`
-	// State: Output only. Represents the state of the link.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Default value.
-	//   "PENDING" - Link is created and LRO is not complete.
-	//   "ACTIVE" - Link is active.
-	//   "FAILED" - Link creation failed.
-	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BranchId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BranchId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2betaMerchantCenterAccountLink) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2betaMerchantCenterAccountLink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter:
-// Merchant Center Feed filter criterion.
-type GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter struct {
-	// PrimaryFeedId: Merchant Center primary feed ID.
-	PrimaryFeedId int64 `json:"primaryFeedId,omitempty,string"`
-	// PrimaryFeedName: Merchant Center primary feed name. The name is used for the
-	// display purposes only.
-	PrimaryFeedName string `json:"primaryFeedName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PrimaryFeedId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PrimaryFeedId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2betaMerchantCenterAccountLinkMerchantCenterFeedFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaModel: Metadata that describes the training and
@@ -7756,9 +7653,9 @@ type GoogleCloudRetailV2betaModel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaModel) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaModel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaModel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig:
@@ -7790,9 +7687,9 @@ type GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaModelModelFeaturesConfig: Additional model features
@@ -7815,9 +7712,9 @@ type GoogleCloudRetailV2betaModelModelFeaturesConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaModelModelFeaturesConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaModelModelFeaturesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaModelModelFeaturesConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaModelServingConfigList: Represents an ordered
@@ -7840,9 +7737,9 @@ type GoogleCloudRetailV2betaModelServingConfigList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaModelServingConfigList) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaModelServingConfigList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaModelServingConfigList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaOutputResult: Output result that stores the
@@ -7865,9 +7762,9 @@ type GoogleCloudRetailV2betaOutputResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaOutputResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaOutputResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaOutputResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaPurgeMetadata: Metadata related to the progress of
@@ -7902,9 +7799,9 @@ type GoogleCloudRetailV2betaPurgeProductsMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaPurgeProductsMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaPurgeProductsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaPurgeProductsMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaPurgeProductsResponse: Response of the
@@ -7931,9 +7828,9 @@ type GoogleCloudRetailV2betaPurgeProductsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaPurgeProductsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaPurgeProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaPurgeProductsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaPurgeUserEventsResponse: Response of the
@@ -7957,9 +7854,9 @@ type GoogleCloudRetailV2betaPurgeUserEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaPurgeUserEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaPurgeUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaPurgeUserEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaRejoinUserEventsMetadata: Metadata for
@@ -7986,9 +7883,9 @@ type GoogleCloudRetailV2betaRejoinUserEventsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaRejoinUserEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaRejoinUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaRejoinUserEventsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaRemoveFulfillmentPlacesMetadata: Metadata related to
@@ -8051,9 +7948,9 @@ type GoogleCloudRetailV2betaTuneModelMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaTuneModelMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaTuneModelMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaTuneModelMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaTuneModelResponse: Response associated with a tune
@@ -8083,9 +7980,9 @@ type GoogleCloudRetailV2betaUserEventImportSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudRetailV2betaUserEventImportSummary) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudRetailV2betaUserEventImportSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaUserEventImportSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningListOperationsResponse: The response message for
@@ -8112,9 +8009,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -8159,9 +8056,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -8203,9 +8100,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeDate: Represents a whole or partial calendar date, such as a
@@ -8241,9 +8138,9 @@ type GoogleTypeDate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsCatalogsCompleteQueryCall struct {
@@ -8294,8 +8191,8 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) DeviceType(deviceType strin
 
 // EnableAttributeSuggestions sets the optional parameter
 // "enableAttributeSuggestions": If true, attribute suggestions are enabled and
-// provided in response. This field is only available for "cloud-retail"
-// dataset.
+// provided in the response. This field is only available for the
+// "cloud-retail" dataset.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) EnableAttributeSuggestions(enableAttributeSuggestions bool) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.Set("enableAttributeSuggestions", fmt.Sprint(enableAttributeSuggestions))
 	return c

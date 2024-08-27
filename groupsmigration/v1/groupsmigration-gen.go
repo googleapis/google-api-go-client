@@ -184,9 +184,9 @@ type Groups struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Groups) MarshalJSON() ([]byte, error) {
+func (s Groups) MarshalJSON() ([]byte, error) {
 	type NoMethod Groups
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ArchiveInsertCall struct {

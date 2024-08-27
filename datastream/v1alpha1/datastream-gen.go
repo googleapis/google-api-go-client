@@ -271,9 +271,9 @@ type BackfillAllStrategy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BackfillAllStrategy) MarshalJSON() ([]byte, error) {
+func (s BackfillAllStrategy) MarshalJSON() ([]byte, error) {
 	type NoMethod BackfillAllStrategy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BackfillJob: Represents a backfill job on a specific stream object.
@@ -321,9 +321,9 @@ type BackfillJob struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BackfillJob) MarshalJSON() ([]byte, error) {
+func (s BackfillJob) MarshalJSON() ([]byte, error) {
 	type NoMethod BackfillJob
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BackfillNoneStrategy: Backfill strategy to disable automatic backfill for
@@ -376,9 +376,9 @@ type ConnectionProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConnectionProfile) MarshalJSON() ([]byte, error) {
+func (s ConnectionProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectionProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DestinationConfig: The configuration of the stream destination.
@@ -403,9 +403,9 @@ type DestinationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DestinationConfig) MarshalJSON() ([]byte, error) {
+func (s DestinationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DestinationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DiscoverConnectionProfileRequest: Request message for 'discover'
@@ -438,9 +438,9 @@ type DiscoverConnectionProfileRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiscoverConnectionProfileRequest) MarshalJSON() ([]byte, error) {
+func (s DiscoverConnectionProfileRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DiscoverConnectionProfileRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DiscoverConnectionProfileResponse struct {
@@ -464,9 +464,9 @@ type DiscoverConnectionProfileResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DiscoverConnectionProfileResponse) MarshalJSON() ([]byte, error) {
+func (s DiscoverConnectionProfileResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DiscoverConnectionProfileResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DropLargeObjects: Configuration to drop large object values.
@@ -509,9 +509,9 @@ type Error struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Error) MarshalJSON() ([]byte, error) {
+func (s Error) MarshalJSON() ([]byte, error) {
 	type NoMethod Error
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FetchErrorsRequest: Request message for 'FetchErrors' request.
@@ -535,9 +535,9 @@ type FetchErrorsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FetchErrorsResponse) MarshalJSON() ([]byte, error) {
+func (s FetchErrorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchErrorsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FetchStaticIpsResponse: Response message for a 'FetchStaticIps' response.
@@ -563,9 +563,9 @@ type FetchStaticIpsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FetchStaticIpsResponse) MarshalJSON() ([]byte, error) {
+func (s FetchStaticIpsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchStaticIpsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ForwardSshTunnelConnectivity: Forward SSH Tunnel connectivity.
@@ -593,9 +593,9 @@ type ForwardSshTunnelConnectivity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ForwardSshTunnelConnectivity) MarshalJSON() ([]byte, error) {
+func (s ForwardSshTunnelConnectivity) MarshalJSON() ([]byte, error) {
 	type NoMethod ForwardSshTunnelConnectivity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcsDestinationConfig: Google Cloud Storage destination configuration
@@ -631,9 +631,9 @@ type GcsDestinationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GcsDestinationConfig) MarshalJSON() ([]byte, error) {
+func (s GcsDestinationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GcsDestinationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcsProfile: Cloud Storage bucket profile.
@@ -656,9 +656,9 @@ type GcsProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GcsProfile) MarshalJSON() ([]byte, error) {
+func (s GcsProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod GcsProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // JsonFileFormat: JSON file format configuration.
@@ -690,9 +690,9 @@ type JsonFileFormat struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *JsonFileFormat) MarshalJSON() ([]byte, error) {
+func (s JsonFileFormat) MarshalJSON() ([]byte, error) {
 	type NoMethod JsonFileFormat
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListConnectionProfilesResponse struct {
@@ -719,9 +719,9 @@ type ListConnectionProfilesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListConnectionProfilesResponse) MarshalJSON() ([]byte, error) {
+func (s ListConnectionProfilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListConnectionProfilesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -747,9 +747,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -775,9 +775,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListPrivateConnectionsResponse struct {
@@ -804,9 +804,9 @@ type ListPrivateConnectionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPrivateConnectionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListPrivateConnectionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPrivateConnectionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRoutesResponse: route list response
@@ -834,9 +834,9 @@ type ListRoutesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRoutesResponse) MarshalJSON() ([]byte, error) {
+func (s ListRoutesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRoutesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListStreamObjectsResponse: Response containing the objects for a stream.
@@ -862,9 +862,9 @@ type ListStreamObjectsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListStreamObjectsResponse) MarshalJSON() ([]byte, error) {
+func (s ListStreamObjectsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListStreamObjectsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListStreamsResponse struct {
@@ -891,9 +891,9 @@ type ListStreamsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListStreamsResponse) MarshalJSON() ([]byte, error) {
+func (s ListStreamsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListStreamsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -929,9 +929,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MysqlColumn: MySQL Column.
@@ -964,9 +964,9 @@ type MysqlColumn struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MysqlColumn) MarshalJSON() ([]byte, error) {
+func (s MysqlColumn) MarshalJSON() ([]byte, error) {
 	type NoMethod MysqlColumn
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MysqlDatabase: MySQL database.
@@ -988,9 +988,9 @@ type MysqlDatabase struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MysqlDatabase) MarshalJSON() ([]byte, error) {
+func (s MysqlDatabase) MarshalJSON() ([]byte, error) {
 	type NoMethod MysqlDatabase
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MysqlObjectIdentifier: Mysql data source object identifier.
@@ -1012,9 +1012,9 @@ type MysqlObjectIdentifier struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MysqlObjectIdentifier) MarshalJSON() ([]byte, error) {
+func (s MysqlObjectIdentifier) MarshalJSON() ([]byte, error) {
 	type NoMethod MysqlObjectIdentifier
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MysqlProfile: MySQL database profile.
@@ -1042,9 +1042,9 @@ type MysqlProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MysqlProfile) MarshalJSON() ([]byte, error) {
+func (s MysqlProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod MysqlProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MysqlRdbms: MySQL database structure
@@ -1064,9 +1064,9 @@ type MysqlRdbms struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MysqlRdbms) MarshalJSON() ([]byte, error) {
+func (s MysqlRdbms) MarshalJSON() ([]byte, error) {
 	type NoMethod MysqlRdbms
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MysqlSourceConfig: MySQL source configuration
@@ -1088,9 +1088,9 @@ type MysqlSourceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MysqlSourceConfig) MarshalJSON() ([]byte, error) {
+func (s MysqlSourceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MysqlSourceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MysqlSslConfig: MySQL SSL configuration information.
@@ -1128,9 +1128,9 @@ type MysqlSslConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MysqlSslConfig) MarshalJSON() ([]byte, error) {
+func (s MysqlSslConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MysqlSslConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MysqlTable: MySQL table.
@@ -1153,9 +1153,9 @@ type MysqlTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MysqlTable) MarshalJSON() ([]byte, error) {
+func (s MysqlTable) MarshalJSON() ([]byte, error) {
 	type NoMethod MysqlTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NoConnectivitySettings: No connectivity settings.
@@ -1204,9 +1204,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -1245,9 +1245,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OracleColumn: Oracle Column.
@@ -1283,9 +1283,9 @@ type OracleColumn struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OracleColumn) MarshalJSON() ([]byte, error) {
+func (s OracleColumn) MarshalJSON() ([]byte, error) {
 	type NoMethod OracleColumn
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OracleObjectIdentifier: Oracle data source object identifier.
@@ -1307,9 +1307,9 @@ type OracleObjectIdentifier struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OracleObjectIdentifier) MarshalJSON() ([]byte, error) {
+func (s OracleObjectIdentifier) MarshalJSON() ([]byte, error) {
 	type NoMethod OracleObjectIdentifier
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OracleProfile: Oracle database profile.
@@ -1339,9 +1339,9 @@ type OracleProfile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OracleProfile) MarshalJSON() ([]byte, error) {
+func (s OracleProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod OracleProfile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OracleRdbms: Oracle database structure.
@@ -1361,9 +1361,9 @@ type OracleRdbms struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OracleRdbms) MarshalJSON() ([]byte, error) {
+func (s OracleRdbms) MarshalJSON() ([]byte, error) {
 	type NoMethod OracleRdbms
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OracleSchema: Oracle schema.
@@ -1385,9 +1385,9 @@ type OracleSchema struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OracleSchema) MarshalJSON() ([]byte, error) {
+func (s OracleSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod OracleSchema
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OracleSourceConfig: Oracle data source configuration
@@ -1411,9 +1411,9 @@ type OracleSourceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OracleSourceConfig) MarshalJSON() ([]byte, error) {
+func (s OracleSourceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod OracleSourceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OracleTable: Oracle table.
@@ -1436,9 +1436,9 @@ type OracleTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OracleTable) MarshalJSON() ([]byte, error) {
+func (s OracleTable) MarshalJSON() ([]byte, error) {
 	type NoMethod OracleTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PrivateConnection: The PrivateConnection resource is used to establish
@@ -1488,9 +1488,9 @@ type PrivateConnection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrivateConnection) MarshalJSON() ([]byte, error) {
+func (s PrivateConnection) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivateConnection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PrivateConnectivity: Private Connectivity
@@ -1509,9 +1509,9 @@ type PrivateConnectivity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrivateConnectivity) MarshalJSON() ([]byte, error) {
+func (s PrivateConnectivity) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivateConnectivity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Route: The Route resource is the child of the PrivateConnection resource. It
@@ -1547,9 +1547,9 @@ type Route struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Route) MarshalJSON() ([]byte, error) {
+func (s Route) MarshalJSON() ([]byte, error) {
 	type NoMethod Route
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SourceConfig: The configuration of the stream source.
@@ -1573,9 +1573,9 @@ type SourceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SourceConfig) MarshalJSON() ([]byte, error) {
+func (s SourceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SourceObjectIdentifier: Represents an identifier of an object in the data
@@ -1598,9 +1598,9 @@ type SourceObjectIdentifier struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SourceObjectIdentifier) MarshalJSON() ([]byte, error) {
+func (s SourceObjectIdentifier) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceObjectIdentifier
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartBackfillJobResponse: Response for manually initiating a backfill job
@@ -1624,9 +1624,9 @@ type StartBackfillJobResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StartBackfillJobResponse) MarshalJSON() ([]byte, error) {
+func (s StartBackfillJobResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod StartBackfillJobResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StaticServiceIpConnectivity: Static IP address connectivity.
@@ -1662,9 +1662,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StopBackfillJobResponse: Response for manually stop a backfill job for a
@@ -1688,9 +1688,9 @@ type StopBackfillJobResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StopBackfillJobResponse) MarshalJSON() ([]byte, error) {
+func (s StopBackfillJobResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod StopBackfillJobResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Stream struct {
@@ -1752,9 +1752,9 @@ type Stream struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Stream) MarshalJSON() ([]byte, error) {
+func (s Stream) MarshalJSON() ([]byte, error) {
 	type NoMethod Stream
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StreamObject: A specific stream object (e.g a specific DB table).
@@ -1790,9 +1790,9 @@ type StreamObject struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StreamObject) MarshalJSON() ([]byte, error) {
+func (s StreamObject) MarshalJSON() ([]byte, error) {
 	type NoMethod StreamObject
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type Validation struct {
@@ -1823,9 +1823,9 @@ type Validation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Validation) MarshalJSON() ([]byte, error) {
+func (s Validation) MarshalJSON() ([]byte, error) {
 	type NoMethod Validation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValidationMessage: Represent user-facing validation result message.
@@ -1856,9 +1856,9 @@ type ValidationMessage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValidationMessage) MarshalJSON() ([]byte, error) {
+func (s ValidationMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidationMessage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ValidationResult: Contains the current validation results.
@@ -1879,9 +1879,9 @@ type ValidationResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ValidationResult) MarshalJSON() ([]byte, error) {
+func (s ValidationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidationResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VpcPeeringConfig: The VPC Peering configuration is used to create VPC
@@ -1904,9 +1904,9 @@ type VpcPeeringConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VpcPeeringConfig) MarshalJSON() ([]byte, error) {
+func (s VpcPeeringConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VpcPeeringConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsFetchStaticIpsCall struct {

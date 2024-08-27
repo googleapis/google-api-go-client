@@ -212,9 +212,9 @@ type LicenseAssignment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LicenseAssignment) MarshalJSON() ([]byte, error) {
+func (s LicenseAssignment) MarshalJSON() ([]byte, error) {
 	type NoMethod LicenseAssignment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LicenseAssignmentInsert: Representation of a license assignment.
@@ -234,9 +234,9 @@ type LicenseAssignmentInsert struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LicenseAssignmentInsert) MarshalJSON() ([]byte, error) {
+func (s LicenseAssignmentInsert) MarshalJSON() ([]byte, error) {
 	type NoMethod LicenseAssignmentInsert
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LicenseAssignmentList struct {
@@ -267,9 +267,9 @@ type LicenseAssignmentList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LicenseAssignmentList) MarshalJSON() ([]byte, error) {
+func (s LicenseAssignmentList) MarshalJSON() ([]byte, error) {
 	type NoMethod LicenseAssignmentList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LicenseAssignmentsDeleteCall struct {

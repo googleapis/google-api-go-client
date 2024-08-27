@@ -241,9 +241,9 @@ type Accessibility struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Accessibility) MarshalJSON() ([]byte, error) {
+func (s Accessibility) MarshalJSON() ([]byte, error) {
 	type NoMethod Accessibility
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Activities: Amenities and features related to leisure and play.
@@ -534,9 +534,9 @@ type Activities struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Activities) MarshalJSON() ([]byte, error) {
+func (s Activities) MarshalJSON() ([]byte, error) {
 	type NoMethod Activities
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Business: Features of the property of specific interest to the business
@@ -601,9 +601,9 @@ type Business struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Business) MarshalJSON() ([]byte, error) {
+func (s Business) MarshalJSON() ([]byte, error) {
 	type NoMethod Business
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Connectivity: The ways in which the property provides guests with the
@@ -680,9 +680,9 @@ type Connectivity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Connectivity) MarshalJSON() ([]byte, error) {
+func (s Connectivity) MarshalJSON() ([]byte, error) {
 	type NoMethod Connectivity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EcoCertification: An eco certificate awarded to the hotel. Deprecated: this
@@ -752,9 +752,9 @@ type EcoCertification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EcoCertification) MarshalJSON() ([]byte, error) {
+func (s EcoCertification) MarshalJSON() ([]byte, error) {
 	type NoMethod EcoCertification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnergyEfficiency: Energy efficiency practices implemented at the hotel.
@@ -902,9 +902,9 @@ type EnergyEfficiency struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnergyEfficiency) MarshalJSON() ([]byte, error) {
+func (s EnergyEfficiency) MarshalJSON() ([]byte, error) {
 	type NoMethod EnergyEfficiency
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnhancedCleaning: Enhanced cleaning measures implemented by the hotel during
@@ -1013,9 +1013,9 @@ type EnhancedCleaning struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnhancedCleaning) MarshalJSON() ([]byte, error) {
+func (s EnhancedCleaning) MarshalJSON() ([]byte, error) {
 	type NoMethod EnhancedCleaning
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Families: Services and amenities for families and young guests.
@@ -1097,9 +1097,9 @@ type Families struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Families) MarshalJSON() ([]byte, error) {
+func (s Families) MarshalJSON() ([]byte, error) {
 	type NoMethod Families
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FoodAndDrink: Meals, snacks, and beverages available at the property.
@@ -1295,9 +1295,9 @@ type FoodAndDrink struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FoodAndDrink) MarshalJSON() ([]byte, error) {
+func (s FoodAndDrink) MarshalJSON() ([]byte, error) {
 	type NoMethod FoodAndDrink
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetGoogleUpdatedLodgingResponse: Response message for
@@ -1324,9 +1324,9 @@ type GetGoogleUpdatedLodgingResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetGoogleUpdatedLodgingResponse) MarshalJSON() ([]byte, error) {
+func (s GetGoogleUpdatedLodgingResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetGoogleUpdatedLodgingResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GuestUnitFeatures: Features and available amenities in the guest unit.
@@ -1500,9 +1500,9 @@ type GuestUnitFeatures struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GuestUnitFeatures) MarshalJSON() ([]byte, error) {
+func (s GuestUnitFeatures) MarshalJSON() ([]byte, error) {
 	type NoMethod GuestUnitFeatures
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GuestUnitType: A specific type of unit primarily defined by its features.
@@ -1528,9 +1528,9 @@ type GuestUnitType struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GuestUnitType) MarshalJSON() ([]byte, error) {
+func (s GuestUnitType) MarshalJSON() ([]byte, error) {
 	type NoMethod GuestUnitType
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HealthAndSafety: Health and safety measures implemented by the hotel during
@@ -1564,9 +1564,9 @@ type HealthAndSafety struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HealthAndSafety) MarshalJSON() ([]byte, error) {
+func (s HealthAndSafety) MarshalJSON() ([]byte, error) {
 	type NoMethod HealthAndSafety
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Housekeeping: Conveniences provided in guest units to facilitate an easier,
@@ -1629,9 +1629,9 @@ type Housekeeping struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Housekeeping) MarshalJSON() ([]byte, error) {
+func (s Housekeeping) MarshalJSON() ([]byte, error) {
 	type NoMethod Housekeeping
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IncreasedFoodSafety: Increased food safety measures implemented by the hotel
@@ -1719,9 +1719,9 @@ type IncreasedFoodSafety struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IncreasedFoodSafety) MarshalJSON() ([]byte, error) {
+func (s IncreasedFoodSafety) MarshalJSON() ([]byte, error) {
 	type NoMethod IncreasedFoodSafety
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LanguageSpoken: Language spoken by at least one staff member.
@@ -1756,9 +1756,9 @@ type LanguageSpoken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LanguageSpoken) MarshalJSON() ([]byte, error) {
+func (s LanguageSpoken) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageSpoken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LivingArea: An individual room, such as kitchen, bathroom, bedroom, within a
@@ -1787,9 +1787,9 @@ type LivingArea struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LivingArea) MarshalJSON() ([]byte, error) {
+func (s LivingArea) MarshalJSON() ([]byte, error) {
 	type NoMethod LivingArea
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LivingAreaAccessibility: Accessibility features of the living area.
@@ -1930,9 +1930,9 @@ type LivingAreaAccessibility struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LivingAreaAccessibility) MarshalJSON() ([]byte, error) {
+func (s LivingAreaAccessibility) MarshalJSON() ([]byte, error) {
 	type NoMethod LivingAreaAccessibility
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LivingAreaEating: Information about eating features in the living area.
@@ -2185,9 +2185,9 @@ type LivingAreaEating struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LivingAreaEating) MarshalJSON() ([]byte, error) {
+func (s LivingAreaEating) MarshalJSON() ([]byte, error) {
 	type NoMethod LivingAreaEating
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LivingAreaFeatures: Features in the living area.
@@ -2498,9 +2498,9 @@ type LivingAreaFeatures struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LivingAreaFeatures) MarshalJSON() ([]byte, error) {
+func (s LivingAreaFeatures) MarshalJSON() ([]byte, error) {
 	type NoMethod LivingAreaFeatures
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LivingAreaLayout: Information about the layout of the living area.
@@ -2605,9 +2605,9 @@ type LivingAreaLayout struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LivingAreaLayout) MarshalJSON() ([]byte, error) {
+func (s LivingAreaLayout) MarshalJSON() ([]byte, error) {
 	type NoMethod LivingAreaLayout
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LivingAreaLayout) UnmarshalJSON(data []byte) error {
@@ -2846,9 +2846,9 @@ type LivingAreaSleeping struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LivingAreaSleeping) MarshalJSON() ([]byte, error) {
+func (s LivingAreaSleeping) MarshalJSON() ([]byte, error) {
 	type NoMethod LivingAreaSleeping
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Lodging: Lodging of a location that provides accomodations.
@@ -2929,9 +2929,9 @@ type Lodging struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Lodging) MarshalJSON() ([]byte, error) {
+func (s Lodging) MarshalJSON() ([]byte, error) {
 	type NoMethod Lodging
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LodgingMetadata: Metadata for the Lodging.
@@ -2953,9 +2953,9 @@ type LodgingMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LodgingMetadata) MarshalJSON() ([]byte, error) {
+func (s LodgingMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod LodgingMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MinimizedContact: Minimized contact measures implemented by the hotel during
@@ -3071,9 +3071,9 @@ type MinimizedContact struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MinimizedContact) MarshalJSON() ([]byte, error) {
+func (s MinimizedContact) MarshalJSON() ([]byte, error) {
 	type NoMethod MinimizedContact
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Parking: Parking options at the property.
@@ -3198,9 +3198,9 @@ type Parking struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Parking) MarshalJSON() ([]byte, error) {
+func (s Parking) MarshalJSON() ([]byte, error) {
 	type NoMethod Parking
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PaymentOptions: Forms of payment accepted at the property.
@@ -3290,9 +3290,9 @@ type PaymentOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PaymentOptions) MarshalJSON() ([]byte, error) {
+func (s PaymentOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod PaymentOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PersonalProtection: Personal protection measures implemented by the hotel
@@ -3369,9 +3369,9 @@ type PersonalProtection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PersonalProtection) MarshalJSON() ([]byte, error) {
+func (s PersonalProtection) MarshalJSON() ([]byte, error) {
 	type NoMethod PersonalProtection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Pets: Policies regarding guest-owned animals.
@@ -3450,9 +3450,9 @@ type Pets struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Pets) MarshalJSON() ([]byte, error) {
+func (s Pets) MarshalJSON() ([]byte, error) {
 	type NoMethod Pets
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PhysicalDistancing: Physical distancing measures implemented by the hotel
@@ -3544,9 +3544,9 @@ type PhysicalDistancing struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PhysicalDistancing) MarshalJSON() ([]byte, error) {
+func (s PhysicalDistancing) MarshalJSON() ([]byte, error) {
 	type NoMethod PhysicalDistancing
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policies: Property rules that impact guests.
@@ -3685,9 +3685,9 @@ type Policies struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policies) MarshalJSON() ([]byte, error) {
+func (s Policies) MarshalJSON() ([]byte, error) {
 	type NoMethod Policies
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Pools: Swimming pool or recreational water facilities available at the
@@ -3913,9 +3913,9 @@ type Pools struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Pools) MarshalJSON() ([]byte, error) {
+func (s Pools) MarshalJSON() ([]byte, error) {
 	type NoMethod Pools
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Property: General factual information about the property's physical
@@ -3994,9 +3994,9 @@ type Property struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Property) MarshalJSON() ([]byte, error) {
+func (s Property) MarshalJSON() ([]byte, error) {
 	type NoMethod Property
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Services: Conveniences or help provided by the property to facilitate an
@@ -4200,9 +4200,9 @@ type Services struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Services) MarshalJSON() ([]byte, error) {
+func (s Services) MarshalJSON() ([]byte, error) {
 	type NoMethod Services
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Sustainability: Sustainability practices implemented at the hotel.
@@ -4233,9 +4233,9 @@ type Sustainability struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Sustainability) MarshalJSON() ([]byte, error) {
+func (s Sustainability) MarshalJSON() ([]byte, error) {
 	type NoMethod Sustainability
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SustainabilityCertifications: Sustainability certifications the hotel has
@@ -4301,9 +4301,9 @@ type SustainabilityCertifications struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SustainabilityCertifications) MarshalJSON() ([]byte, error) {
+func (s SustainabilityCertifications) MarshalJSON() ([]byte, error) {
 	type NoMethod SustainabilityCertifications
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SustainableSourcing: Sustainable sourcing practices implemented at the
@@ -4453,9 +4453,9 @@ type SustainableSourcing struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SustainableSourcing) MarshalJSON() ([]byte, error) {
+func (s SustainableSourcing) MarshalJSON() ([]byte, error) {
 	type NoMethod SustainableSourcing
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeOfDay: Represents a time of day. The date and time zone are either not
@@ -4486,9 +4486,9 @@ type TimeOfDay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeOfDay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Transportation: Vehicles or vehicular services facilitated or owned by the
@@ -4617,9 +4617,9 @@ type Transportation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Transportation) MarshalJSON() ([]byte, error) {
+func (s Transportation) MarshalJSON() ([]byte, error) {
 	type NoMethod Transportation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ViewsFromUnit: Views available from the guest unit itself.
@@ -4749,9 +4749,9 @@ type ViewsFromUnit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ViewsFromUnit) MarshalJSON() ([]byte, error) {
+func (s ViewsFromUnit) MarshalJSON() ([]byte, error) {
 	type NoMethod ViewsFromUnit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WasteReduction: Waste reduction practices implemented at the hotel.
@@ -5029,9 +5029,9 @@ type WasteReduction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WasteReduction) MarshalJSON() ([]byte, error) {
+func (s WasteReduction) MarshalJSON() ([]byte, error) {
 	type NoMethod WasteReduction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WaterConservation: Water conservation practices implemented at the hotel.
@@ -5145,9 +5145,9 @@ type WaterConservation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WaterConservation) MarshalJSON() ([]byte, error) {
+func (s WaterConservation) MarshalJSON() ([]byte, error) {
 	type NoMethod WaterConservation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Wellness: Guest facilities at the property to promote or maintain health,
@@ -5348,9 +5348,9 @@ type Wellness struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Wellness) MarshalJSON() ([]byte, error) {
+func (s Wellness) MarshalJSON() ([]byte, error) {
 	type NoMethod Wellness
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LocationsGetLodgingCall struct {

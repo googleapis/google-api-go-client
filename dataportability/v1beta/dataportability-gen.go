@@ -477,9 +477,9 @@ type InitiatePortabilityArchiveRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InitiatePortabilityArchiveRequest) MarshalJSON() ([]byte, error) {
+func (s InitiatePortabilityArchiveRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InitiatePortabilityArchiveRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InitiatePortabilityArchiveResponse: Response from initiating an Archive job.
@@ -503,9 +503,9 @@ type InitiatePortabilityArchiveResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InitiatePortabilityArchiveResponse) MarshalJSON() ([]byte, error) {
+func (s InitiatePortabilityArchiveResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod InitiatePortabilityArchiveResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PortabilityArchiveState: Resource that contains the state of an Archive job.
@@ -542,9 +542,9 @@ type PortabilityArchiveState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PortabilityArchiveState) MarshalJSON() ([]byte, error) {
+func (s PortabilityArchiveState) MarshalJSON() ([]byte, error) {
 	type NoMethod PortabilityArchiveState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResetAuthorizationRequest: Request to reset exhausted OAuth scopes.
@@ -578,9 +578,9 @@ type RetryPortabilityArchiveResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RetryPortabilityArchiveResponse) MarshalJSON() ([]byte, error) {
+func (s RetryPortabilityArchiveResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RetryPortabilityArchiveResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ArchiveJobsGetPortabilityArchiveStateCall struct {

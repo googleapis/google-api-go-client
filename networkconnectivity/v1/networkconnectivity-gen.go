@@ -372,9 +372,9 @@ type AcceptHubSpokeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AcceptHubSpokeRequest) MarshalJSON() ([]byte, error) {
+func (s AcceptHubSpokeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AcceptHubSpokeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AcceptHubSpokeResponse: The response for HubService.AcceptHubSpoke.
@@ -394,9 +394,9 @@ type AcceptHubSpokeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AcceptHubSpokeResponse) MarshalJSON() ([]byte, error) {
+func (s AcceptHubSpokeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AcceptHubSpokeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -435,9 +435,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -470,9 +470,9 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutoAccept: The auto-accept setting for a group controls whether proposed
@@ -499,9 +499,9 @@ type AutoAccept struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoAccept) MarshalJSON() ([]byte, error) {
+func (s AutoAccept) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoAccept
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -598,14 +598,20 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConsumerPscConfig: Allow the producer to specify which consumers can connect
 // to it.
 type ConsumerPscConfig struct {
+	// ConsumerInstanceProject: Required. The project ID or project number of the
+	// consumer project. This project is the one that the consumer uses to interact
+	// with the producer instance. From the perspective of a consumer who's created
+	// a producer instance, this is the project of the producer instance. Format:
+	// 'projects/' Eg. 'projects/consumer-project' or 'projects/1234'
+	ConsumerInstanceProject string `json:"consumerInstanceProject,omitempty"`
 	// DisableGlobalAccess: This is used in PSC consumer ForwardingRule to control
 	// whether the PSC endpoint can be accessed from another region.
 	DisableGlobalAccess bool `json:"disableGlobalAccess,omitempty"`
@@ -620,6 +626,10 @@ type ConsumerPscConfig struct {
 	// Project: The consumer project where PSC connections are allowed to be
 	// created in.
 	Project string `json:"project,omitempty"`
+	// ServiceAttachmentIpAddressMap: Output only. A map to store mapping between
+	// customer vip and target service attachment. Only service attachment with
+	// producer specified ip addresses are stored here.
+	ServiceAttachmentIpAddressMap map[string]string `json:"serviceAttachmentIpAddressMap,omitempty"`
 	// State: Output only. Overall state of PSC Connections management for this
 	// consumer psc config.
 	//
@@ -633,23 +643,26 @@ type ConsumerPscConfig struct {
 	// network and Service Class
 	//   "POLICY_LIMIT_REACHED" - Service Connection Policy limit reached for this
 	// network and Service Class
+	//   "CONSUMER_INSTANCE_PROJECT_NOT_ALLOWLISTED" - The consumer instance
+	// project is not in AllowedGoogleProducersResourceHierarchyLevels of the
+	// matching ServiceConnectionPolicy.
 	State string `json:"state,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisableGlobalAccess") to
+	// ForceSendFields is a list of field names (e.g. "ConsumerInstanceProject") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisableGlobalAccess") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConsumerInstanceProject") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ConsumerPscConfig) MarshalJSON() ([]byte, error) {
+func (s ConsumerPscConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ConsumerPscConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConsumerPscConnection: PSC connection details on consumer side.
@@ -720,9 +733,9 @@ type ConsumerPscConnection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConsumerPscConnection) MarshalJSON() ([]byte, error) {
+func (s ConsumerPscConnection) MarshalJSON() ([]byte, error) {
 	type NoMethod ConsumerPscConnection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -777,9 +790,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Filter: Filter matches L4 traffic.
@@ -792,7 +805,8 @@ type Filter struct {
 	// to. Valid values are 'TCP', 'UDP', and 'ALL'. Default is 'ALL'.
 	IpProtocol string `json:"ipProtocol,omitempty"`
 	// ProtocolVersion: Required. Internet protocol versions this policy-based
-	// route applies to. For this version, only IPV4 is supported.
+	// route applies to. For this version, only IPV4 is supported. IPV6 is
+	// supported in preview.
 	//
 	// Possible values:
 	//   "PROTOCOL_VERSION_UNSPECIFIED" - Default value.
@@ -815,9 +829,9 @@ type Filter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Filter) MarshalJSON() ([]byte, error) {
+func (s Filter) MarshalJSON() ([]byte, error) {
 	type NoMethod Filter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningCancelOperationRequest: The request message for
@@ -849,9 +863,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -896,9 +910,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleRpcErrorInfo: Describes the cause of the error with structured
@@ -944,9 +958,9 @@ type GoogleRpcErrorInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcErrorInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcErrorInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcErrorInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that is
@@ -978,9 +992,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Group: A group represents a subset of spokes attached to a hub.
@@ -1041,9 +1055,9 @@ type Group struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Group) MarshalJSON() ([]byte, error) {
+func (s Group) MarshalJSON() ([]byte, error) {
 	type NoMethod Group
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Hub: A Network Connectivity Center hub is a global management resource to
@@ -1143,9 +1157,9 @@ type Hub struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Hub) MarshalJSON() ([]byte, error) {
+func (s Hub) MarshalJSON() ([]byte, error) {
 	type NoMethod Hub
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InterconnectAttachment: InterconnectAttachment that this route applies to.
@@ -1167,9 +1181,9 @@ type InterconnectAttachment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InterconnectAttachment) MarshalJSON() ([]byte, error) {
+func (s InterconnectAttachment) MarshalJSON() ([]byte, error) {
 	type NoMethod InterconnectAttachment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InternalRange: The internal range resource for IPAM operations within a VPC
@@ -1279,9 +1293,9 @@ type InternalRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InternalRange) MarshalJSON() ([]byte, error) {
+func (s InternalRange) MarshalJSON() ([]byte, error) {
 	type NoMethod InternalRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LinkedInterconnectAttachments: A collection of VLAN attachment resources.
@@ -1289,6 +1303,10 @@ func (s *InternalRange) MarshalJSON() ([]byte, error) {
 // prefixes to Google Cloud. Alternatively, in active/passive configurations,
 // all attachments should be capable of advertising the same prefixes.
 type LinkedInterconnectAttachments struct {
+	// IncludeImportRanges: Optional. IP ranges allowed to be included during
+	// import from hub.(does not control transit connectivity) The only allowed
+	// value for now is "ALL_IPV4_RANGES".
+	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
 	// transfer is enabled for these resources. Data transfer is available only in
 	// supported locations
@@ -1299,22 +1317,22 @@ type LinkedInterconnectAttachments struct {
 	// VpcNetwork: Output only. The VPC network where these VLAN attachments are
 	// located.
 	VpcNetwork string `json:"vpcNetwork,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// ForceSendFields is a list of field names (e.g. "IncludeImportRanges") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "IncludeImportRanges") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *LinkedInterconnectAttachments) MarshalJSON() ([]byte, error) {
+func (s LinkedInterconnectAttachments) MarshalJSON() ([]byte, error) {
 	type NoMethod LinkedInterconnectAttachments
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LinkedRouterApplianceInstances: A collection of router appliance instances.
@@ -1322,6 +1340,10 @@ func (s *LinkedInterconnectAttachments) MarshalJSON() ([]byte, error) {
 // the same set of sites outside of Google Cloud, we recommend that you
 // associate those instances with the same spoke.
 type LinkedRouterApplianceInstances struct {
+	// IncludeImportRanges: Optional. IP ranges allowed to be included during
+	// import from hub.(does not control transit connectivity) The only allowed
+	// value for now is "ALL_IPV4_RANGES".
+	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
 	// Instances: The list of router appliance instances.
 	Instances []*RouterApplianceInstance `json:"instances,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
@@ -1332,22 +1354,22 @@ type LinkedRouterApplianceInstances struct {
 	// VpcNetwork: Output only. The VPC network where these router appliance
 	// instances are located.
 	VpcNetwork string `json:"vpcNetwork,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Instances") to
+	// ForceSendFields is a list of field names (e.g. "IncludeImportRanges") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Instances") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "IncludeImportRanges") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *LinkedRouterApplianceInstances) MarshalJSON() ([]byte, error) {
+func (s LinkedRouterApplianceInstances) MarshalJSON() ([]byte, error) {
 	type NoMethod LinkedRouterApplianceInstances
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LinkedVpcNetwork: An existing VPC network.
@@ -1355,6 +1377,13 @@ type LinkedVpcNetwork struct {
 	// ExcludeExportRanges: Optional. IP ranges encompassing the subnets to be
 	// excluded from peering.
 	ExcludeExportRanges []string `json:"excludeExportRanges,omitempty"`
+	// IncludeExportRanges: Optional. IP ranges allowed to be included from
+	// peering.
+	IncludeExportRanges []string `json:"includeExportRanges,omitempty"`
+	// ProducerVpcSpokes: Output only. The list of Producer VPC spokes that this
+	// VPC spoke is a service consumer VPC spoke for. These producer VPCs are
+	// connected through VPC peering to this spoke's backing VPC network.
+	ProducerVpcSpokes []string `json:"producerVpcSpokes,omitempty"`
 	// Uri: Required. The URI of the VPC network resource.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludeExportRanges") to
@@ -1370,9 +1399,9 @@ type LinkedVpcNetwork struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LinkedVpcNetwork) MarshalJSON() ([]byte, error) {
+func (s LinkedVpcNetwork) MarshalJSON() ([]byte, error) {
 	type NoMethod LinkedVpcNetwork
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LinkedVpnTunnels: A collection of Cloud VPN tunnel resources. These
@@ -1380,6 +1409,10 @@ func (s *LinkedVpcNetwork) MarshalJSON() ([]byte, error) {
 // prefixes to Google Cloud. Alternatively, in a passive/active configuration,
 // all tunnels should be capable of advertising the same prefixes.
 type LinkedVpnTunnels struct {
+	// IncludeImportRanges: Optional. IP ranges allowed to be included during
+	// import from hub.(does not control transit connectivity) The only allowed
+	// value for now is "ALL_IPV4_RANGES".
+	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
 	// transfer is enabled for these resources. Data transfer is available only in
 	// supported locations
@@ -1390,22 +1423,22 @@ type LinkedVpnTunnels struct {
 	// VpcNetwork: Output only. The VPC network where these VPN tunnels are
 	// located.
 	VpcNetwork string `json:"vpcNetwork,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// ForceSendFields is a list of field names (e.g. "IncludeImportRanges") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "IncludeImportRanges") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *LinkedVpnTunnels) MarshalJSON() ([]byte, error) {
+func (s LinkedVpnTunnels) MarshalJSON() ([]byte, error) {
 	type NoMethod LinkedVpnTunnels
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGroupsResponse: Response for HubService.ListGroups method.
@@ -1434,9 +1467,9 @@ type ListGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s ListGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListHubSpokesResponse: The response for HubService.ListHubSpokes.
@@ -1466,9 +1499,9 @@ type ListHubSpokesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListHubSpokesResponse) MarshalJSON() ([]byte, error) {
+func (s ListHubSpokesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListHubSpokesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListHubsResponse: Response for HubService.ListHubs method.
@@ -1497,9 +1530,9 @@ type ListHubsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListHubsResponse) MarshalJSON() ([]byte, error) {
+func (s ListHubsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListHubsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInternalRangesResponse: Response for InternalRange.ListInternalRanges
@@ -1528,9 +1561,9 @@ type ListInternalRangesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInternalRangesResponse) MarshalJSON() ([]byte, error) {
+func (s ListInternalRangesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInternalRangesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -1556,9 +1589,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPolicyBasedRoutesResponse: Response for
@@ -1588,9 +1621,9 @@ type ListPolicyBasedRoutesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPolicyBasedRoutesResponse) MarshalJSON() ([]byte, error) {
+func (s ListPolicyBasedRoutesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPolicyBasedRoutesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRegionalEndpointsResponse: Response for ListRegionalEndpoints.
@@ -1619,9 +1652,9 @@ type ListRegionalEndpointsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRegionalEndpointsResponse) MarshalJSON() ([]byte, error) {
+func (s ListRegionalEndpointsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRegionalEndpointsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRouteTablesResponse: Response for HubService.ListRouteTables method.
@@ -1650,9 +1683,9 @@ type ListRouteTablesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRouteTablesResponse) MarshalJSON() ([]byte, error) {
+func (s ListRouteTablesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRouteTablesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListRoutesResponse: Response for HubService.ListRoutes method.
@@ -1681,9 +1714,9 @@ type ListRoutesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListRoutesResponse) MarshalJSON() ([]byte, error) {
+func (s ListRoutesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRoutesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListServiceClassesResponse: Response for ListServiceClasses.
@@ -1712,9 +1745,9 @@ type ListServiceClassesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListServiceClassesResponse) MarshalJSON() ([]byte, error) {
+func (s ListServiceClassesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListServiceClassesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListServiceConnectionMapsResponse: Response for ListServiceConnectionMaps.
@@ -1743,9 +1776,9 @@ type ListServiceConnectionMapsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListServiceConnectionMapsResponse) MarshalJSON() ([]byte, error) {
+func (s ListServiceConnectionMapsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListServiceConnectionMapsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListServiceConnectionPoliciesResponse: Response for
@@ -1775,9 +1808,9 @@ type ListServiceConnectionPoliciesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListServiceConnectionPoliciesResponse) MarshalJSON() ([]byte, error) {
+func (s ListServiceConnectionPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListServiceConnectionPoliciesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListServiceConnectionTokensResponse: Response for
@@ -1807,9 +1840,9 @@ type ListServiceConnectionTokensResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListServiceConnectionTokensResponse) MarshalJSON() ([]byte, error) {
+func (s ListServiceConnectionTokensResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListServiceConnectionTokensResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSpokesResponse: The response for HubService.ListSpokes.
@@ -1838,9 +1871,9 @@ type ListSpokesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSpokesResponse) MarshalJSON() ([]byte, error) {
+func (s ListSpokesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSpokesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -1876,9 +1909,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocationMetadata: Metadata about locations
@@ -1905,9 +1938,98 @@ type LocationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
+func (s LocationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NextHopInterconnectAttachment: A route next hop that leads to an
+// interconnect attachment resource.
+type NextHopInterconnectAttachment struct {
+	// SiteToSiteDataTransfer: Indicates whether site-to-site data transfer is
+	// allowed for this interconnect attachment resource. Data transfer is
+	// available only in supported locations
+	// (https://cloud.google.com/network-connectivity/docs/network-connectivity-center/concepts/locations).
+	SiteToSiteDataTransfer bool `json:"siteToSiteDataTransfer,omitempty"`
+	// Uri: The URI of the interconnect attachment resource.
+	Uri string `json:"uri,omitempty"`
+	// VpcNetwork: The VPC network where this interconnect attachment is located.
+	VpcNetwork string `json:"vpcNetwork,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NextHopInterconnectAttachment) MarshalJSON() ([]byte, error) {
+	type NoMethod NextHopInterconnectAttachment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NextHopRouterApplianceInstance: A route next hop that leads to a Router
+// appliance instance.
+type NextHopRouterApplianceInstance struct {
+	// SiteToSiteDataTransfer: Indicates whether site-to-site data transfer is
+	// allowed for this Router appliance instance resource. Data transfer is
+	// available only in supported locations
+	// (https://cloud.google.com/network-connectivity/docs/network-connectivity-center/concepts/locations).
+	SiteToSiteDataTransfer bool `json:"siteToSiteDataTransfer,omitempty"`
+	// Uri: The URI of the Router appliance instance.
+	Uri string `json:"uri,omitempty"`
+	// VpcNetwork: The VPC network where this VM is located.
+	VpcNetwork string `json:"vpcNetwork,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NextHopRouterApplianceInstance) MarshalJSON() ([]byte, error) {
+	type NoMethod NextHopRouterApplianceInstance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NextHopVPNTunnel: A route next hop that leads to a VPN tunnel resource.
+type NextHopVPNTunnel struct {
+	// SiteToSiteDataTransfer: Indicates whether site-to-site data transfer is
+	// allowed for this VPN tunnel resource. Data transfer is available only in
+	// supported locations
+	// (https://cloud.google.com/network-connectivity/docs/network-connectivity-center/concepts/locations).
+	SiteToSiteDataTransfer bool `json:"siteToSiteDataTransfer,omitempty"`
+	// Uri: The URI of the VPN tunnel resource.
+	Uri string `json:"uri,omitempty"`
+	// VpcNetwork: The VPC network where this VPN tunnel is located.
+	VpcNetwork string `json:"vpcNetwork,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SiteToSiteDataTransfer") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NextHopVPNTunnel) MarshalJSON() ([]byte, error) {
+	type NoMethod NextHopVPNTunnel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type NextHopVpcNetwork struct {
@@ -1926,9 +2048,9 @@ type NextHopVpcNetwork struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NextHopVpcNetwork) MarshalJSON() ([]byte, error) {
+func (s NextHopVpcNetwork) MarshalJSON() ([]byte, error) {
 	type NoMethod NextHopVpcNetwork
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -1964,9 +2086,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -2056,15 +2178,15 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PolicyBasedRoute: Policy-based routes route L4 network traffic based on not
 // just destination IP address, but also source IP address, protocol, and more.
 // If a policy-based route conflicts with other types of routes, the
-// policy-based route always take precedence.
+// policy-based route always takes precedence.
 type PolicyBasedRoute struct {
 	// CreateTime: Output only. Time when the policy-based route was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2099,8 +2221,8 @@ type PolicyBasedRoute struct {
 	//   "OTHER_ROUTES_UNSPECIFIED" - Default value.
 	//   "DEFAULT_ROUTING" - Use the routes from the default routing tables
 	// (system-generated routes, custom routes, peering route) to determine the
-	// next hop. This will effectively exclude matching packets being applied on
-	// other PBRs with a lower priority.
+	// next hop. This effectively excludes matching packets being applied on other
+	// PBRs with a lower priority.
 	NextHopOtherRoutes string `json:"nextHopOtherRoutes,omitempty"`
 	// Priority: Optional. The priority of this policy-based route. Priority is
 	// used to break ties in cases where there are more than one matching
@@ -2112,8 +2234,8 @@ type PolicyBasedRoute struct {
 	SelfLink string `json:"selfLink,omitempty"`
 	// UpdateTime: Output only. Time when the policy-based route was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// VirtualMachine: Optional. VM instances to which this policy-based route
-	// applies to.
+	// VirtualMachine: Optional. VM instances that this policy-based route applies
+	// to.
 	VirtualMachine *VirtualMachine `json:"virtualMachine,omitempty"`
 	// Warnings: Output only. If potential misconfigurations are detected for this
 	// route, this field will be populated with warning messages.
@@ -2134,9 +2256,9 @@ type PolicyBasedRoute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicyBasedRoute) MarshalJSON() ([]byte, error) {
+func (s PolicyBasedRoute) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyBasedRoute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProducerPscConfig: The PSC configurations on producer side.
@@ -2157,36 +2279,66 @@ type ProducerPscConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProducerPscConfig) MarshalJSON() ([]byte, error) {
+func (s ProducerPscConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ProducerPscConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PscConfig: Configuration used for Private Service Connect connections. Used
 // when Infrastructure is PSC.
 type PscConfig struct {
+	// AllowedGoogleProducersResourceHierarchyLevel: Optional. List of Projects,
+	// Folders, or Organizations from where the Producer instance can be within.
+	// For example, a network administrator can provide both 'organizations/foo'
+	// and 'projects/bar' as allowed_google_producers_resource_hierarchy_levels.
+	// This allowlists this network to connect with any Producer instance within
+	// the 'foo' organization or the 'bar' project. By default,
+	// allowed_google_producers_resource_hierarchy_level is empty. The format for
+	// each allowed_google_producers_resource_hierarchy_level is / where is one of
+	// 'projects', 'folders', or 'organizations' and is either the ID or the number
+	// of the resource type. Format for each
+	// allowed_google_producers_resource_hierarchy_level value: 'projects/' or
+	// 'folders/' or 'organizations/' Eg. [projects/my-project-id, projects/567,
+	// folders/891, organizations/123]
+	AllowedGoogleProducersResourceHierarchyLevel []string `json:"allowedGoogleProducersResourceHierarchyLevel,omitempty"`
 	// Limit: Optional. Max number of PSC connections for this policy.
 	Limit int64 `json:"limit,omitempty,string"`
+	// ProducerInstanceLocation: Required. ProducerInstanceLocation is used to
+	// specify which authorization mechanism to use to determine which projects the
+	// Producer instance can be within.
+	//
+	// Possible values:
+	//   "PRODUCER_INSTANCE_LOCATION_UNSPECIFIED" - Producer instance location is
+	// not specified. When this option is chosen, then the PSC connections created
+	// by this ServiceConnectionPolicy must be within the same project as the
+	// Producer instance. This is the default ProducerInstanceLocation value. To
+	// allow for PSC connections from this network to other networks, use the
+	// CUSTOM_RESOURCE_HIERARCHY_LEVELS option.
+	//   "CUSTOM_RESOURCE_HIERARCHY_LEVELS" - Producer instance must be within one
+	// of the values provided in allowed_google_producers_resource_hierarchy_level.
+	ProducerInstanceLocation string `json:"producerInstanceLocation,omitempty"`
 	// Subnetworks: The resource paths of subnetworks to use for IP address
 	// management. Example:
 	// projects/{projectNumOrId}/regions/{region}/subnetworks/{resourceId}.
 	Subnetworks []string `json:"subnetworks,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Limit") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedGoogleProducersResourceHierarchyLevel") to unconditionally include
+	// in API requests. By default, fields with empty or default values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Limit") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g.
+	// "AllowedGoogleProducersResourceHierarchyLevel") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *PscConfig) MarshalJSON() ([]byte, error) {
+func (s PscConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PscConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PscConnection: Information about a specific Private Service Connect
@@ -2247,9 +2399,9 @@ type PscConnection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PscConnection) MarshalJSON() ([]byte, error) {
+func (s PscConnection) MarshalJSON() ([]byte, error) {
 	type NoMethod PscConnection
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegionalEndpoint: The RegionalEndpoint resource.
@@ -2317,9 +2469,9 @@ type RegionalEndpoint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegionalEndpoint) MarshalJSON() ([]byte, error) {
+func (s RegionalEndpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalEndpoint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RejectHubSpokeRequest: The request for HubService.RejectHubSpoke.
@@ -2353,9 +2505,9 @@ type RejectHubSpokeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RejectHubSpokeRequest) MarshalJSON() ([]byte, error) {
+func (s RejectHubSpokeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RejectHubSpokeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RejectHubSpokeResponse: The response for HubService.RejectHubSpoke.
@@ -2375,9 +2527,9 @@ type RejectHubSpokeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RejectHubSpokeResponse) MarshalJSON() ([]byte, error) {
+func (s RejectHubSpokeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RejectHubSpokeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Route: A route defines a path from VM instances within a spoke to a specific
@@ -2402,9 +2554,22 @@ type Route struct {
 	// `projects/{project_number}/locations/global/hubs/{hub}/routeTables/{route_tab
 	// le_id}/routes/{route_id}`
 	Name string `json:"name,omitempty"`
+	// NextHopInterconnectAttachment: Immutable. The next-hop VLAN attachment for
+	// packets on this route.
+	NextHopInterconnectAttachment *NextHopInterconnectAttachment `json:"nextHopInterconnectAttachment,omitempty"`
+	// NextHopRouterApplianceInstance: Immutable. The next-hop Router appliance
+	// instance for packets on this route.
+	NextHopRouterApplianceInstance *NextHopRouterApplianceInstance `json:"nextHopRouterApplianceInstance,omitempty"`
 	// NextHopVpcNetwork: Immutable. The destination VPC network for packets on
 	// this route.
 	NextHopVpcNetwork *NextHopVpcNetwork `json:"nextHopVpcNetwork,omitempty"`
+	// NextHopVpnTunnel: Immutable. The next-hop VPN tunnel for packets on this
+	// route.
+	NextHopVpnTunnel *NextHopVPNTunnel `json:"nextHopVpnTunnel,omitempty"`
+	// Priority: Output only. The priority of this route. Priority is used to break
+	// ties in cases where a destination matches more than one route. In these
+	// cases the route with the lowest-numbered priority value wins.
+	Priority int64 `json:"priority,omitempty,string"`
 	// Spoke: Immutable. The spoke that this route leads to. Example:
 	// projects/12345/locations/global/spokes/SPOKE
 	Spoke string `json:"spoke,omitempty"`
@@ -2431,6 +2596,9 @@ type Route struct {
 	// address range of the VPC network's subnet.
 	//   "VPC_SECONDARY_SUBNET" - The route leads to a destination within the
 	// secondary address range of the VPC network's subnet.
+	//   "DYNAMIC_ROUTE" - The route leads to a destination in a dynamic route.
+	// Dynamic routes are derived from Border Gateway Protocol (BGP) advertisements
+	// received from an NCC hybrid spoke.
 	Type string `json:"type,omitempty"`
 	// Uid: Output only. The Google-generated UUID for the route. This value is
 	// unique across all Network Connectivity Center route resources. If a route is
@@ -2455,9 +2623,9 @@ type Route struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Route) MarshalJSON() ([]byte, error) {
+func (s Route) MarshalJSON() ([]byte, error) {
 	type NoMethod Route
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type RouteTable struct {
@@ -2511,9 +2679,9 @@ type RouteTable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RouteTable) MarshalJSON() ([]byte, error) {
+func (s RouteTable) MarshalJSON() ([]byte, error) {
 	type NoMethod RouteTable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RouterApplianceInstance: A router appliance instance is a Compute Engine
@@ -2538,9 +2706,9 @@ type RouterApplianceInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RouterApplianceInstance) MarshalJSON() ([]byte, error) {
+func (s RouterApplianceInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod RouterApplianceInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RoutingVPC: RoutingVPC contains information about the VPC networks
@@ -2570,9 +2738,9 @@ type RoutingVPC struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RoutingVPC) MarshalJSON() ([]byte, error) {
+func (s RoutingVPC) MarshalJSON() ([]byte, error) {
 	type NoMethod RoutingVPC
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceClass: The ServiceClass resource. Next id: 9
@@ -2613,9 +2781,9 @@ type ServiceClass struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceClass) MarshalJSON() ([]byte, error) {
+func (s ServiceClass) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceClass
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceConnectionMap: The ServiceConnectionMap resource. Next id: 15
@@ -2677,9 +2845,9 @@ type ServiceConnectionMap struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceConnectionMap) MarshalJSON() ([]byte, error) {
+func (s ServiceConnectionMap) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceConnectionMap
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceConnectionPolicy: The ServiceConnectionPolicy resource. Next id: 12
@@ -2719,8 +2887,9 @@ type ServiceConnectionPolicy struct {
 	// ServiceClass: The service class identifier for which this
 	// ServiceConnectionPolicy is for. The service class identifier is a unique,
 	// symbolic representation of a ServiceClass. It is provided by the Service
-	// Producer. Google services have a prefix of gcp. For example, gcp-cloud-sql.
-	// 3rd party services do not. For example, test-service-a3dfcx.
+	// Producer. Google services have a prefix of gcp or google-cloud. For example,
+	// gcp-memorystore-redis or google-cloud-sql. 3rd party services do not. For
+	// example, test-service-a3dfcx.
 	ServiceClass string `json:"serviceClass,omitempty"`
 	// UpdateTime: Output only. Time when the ServiceConnectionMap was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -2740,9 +2909,9 @@ type ServiceConnectionPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceConnectionPolicy) MarshalJSON() ([]byte, error) {
+func (s ServiceConnectionPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceConnectionPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceConnectionToken: The ServiceConnectionToken resource. Next id: 10
@@ -2787,9 +2956,9 @@ type ServiceConnectionToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceConnectionToken) MarshalJSON() ([]byte, error) {
+func (s ServiceConnectionToken) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceConnectionToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -2816,9 +2985,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Spoke: A Network Connectivity Center spoke represents one or more network
@@ -2901,9 +3070,9 @@ type Spoke struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Spoke) MarshalJSON() ([]byte, error) {
+func (s Spoke) MarshalJSON() ([]byte, error) {
 	type NoMethod Spoke
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpokeStateCount: The number of spokes that are in a particular state and
@@ -2939,9 +3108,9 @@ type SpokeStateCount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpokeStateCount) MarshalJSON() ([]byte, error) {
+func (s SpokeStateCount) MarshalJSON() ([]byte, error) {
 	type NoMethod SpokeStateCount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpokeStateReasonCount: The number of spokes in the hub that are inactive for
@@ -2974,9 +3143,9 @@ type SpokeStateReasonCount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpokeStateReasonCount) MarshalJSON() ([]byte, error) {
+func (s SpokeStateReasonCount) MarshalJSON() ([]byte, error) {
 	type NoMethod SpokeStateReasonCount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpokeSummary: Summarizes information about the spokes associated with a hub.
@@ -3006,9 +3175,9 @@ type SpokeSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpokeSummary) MarshalJSON() ([]byte, error) {
+func (s SpokeSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod SpokeSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SpokeTypeCount: The number of spokes of a given type that are associated
@@ -3040,9 +3209,9 @@ type SpokeTypeCount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SpokeTypeCount) MarshalJSON() ([]byte, error) {
+func (s SpokeTypeCount) MarshalJSON() ([]byte, error) {
 	type NoMethod SpokeTypeCount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StateReason: The reason a spoke is inactive.
@@ -3076,9 +3245,9 @@ type StateReason struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StateReason) MarshalJSON() ([]byte, error) {
+func (s StateReason) MarshalJSON() ([]byte, error) {
 	type NoMethod StateReason
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -3101,9 +3270,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -3128,16 +3297,16 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// VirtualMachine: VM instances to which this policy-based route applies to.
+// VirtualMachine: VM instances that this policy-based route applies to.
 type VirtualMachine struct {
-	// Tags: Optional. A list of VM instance tags the this policy-based route
-	// applies to. VM instances that have ANY of tags specified here will install
-	// this PBR.
+	// Tags: Optional. A list of VM instance tags that this policy-based route
+	// applies to. VM instances that have ANY of tags specified here installs this
+	// PBR.
 	Tags []string `json:"tags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Tags") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3152,9 +3321,9 @@ type VirtualMachine struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VirtualMachine) MarshalJSON() ([]byte, error) {
+func (s VirtualMachine) MarshalJSON() ([]byte, error) {
 	type NoMethod VirtualMachine
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Warnings: Informational warning message.
@@ -3164,7 +3333,7 @@ type Warnings struct {
 	// Possible values:
 	//   "WARNING_UNSPECIFIED" - Default value.
 	//   "RESOURCE_NOT_ACTIVE" - The policy-based route is not active and
-	// functioning. Common causes are the dependent network was deleted or the
+	// functioning. Common causes are that the dependent network was deleted or the
 	// resource project was turned off.
 	//   "RESOURCE_BEING_MODIFIED" - The policy-based route is being modified (e.g.
 	// created/deleted) at this time.
@@ -3192,9 +3361,9 @@ type Warnings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Warnings) MarshalJSON() ([]byte, error) {
+func (s Warnings) MarshalJSON() ([]byte, error) {
 	type NoMethod Warnings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {
@@ -6123,13 +6292,13 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) PolicyBasedRouteId(
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the same
+// request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) RequestId(requestId string) *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall {
@@ -6239,13 +6408,13 @@ func (r *ProjectsLocationsGlobalPolicyBasedRoutesService) Delete(name string) *P
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes after the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the same
+// request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall) RequestId(requestId string) *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall {

@@ -354,9 +354,9 @@ type Account struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Account) MarshalJSON() ([]byte, error) {
+func (s Account) MarshalJSON() ([]byte, error) {
 	type NoMethod Account
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AccountAccess: Defines the Google Tag Manager Account access permissions.
@@ -386,9 +386,9 @@ type AccountAccess struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AccountAccess) MarshalJSON() ([]byte, error) {
+func (s AccountAccess) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountAccess
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Condition: Represents a predicate.
@@ -434,9 +434,9 @@ type Condition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Condition) MarshalJSON() ([]byte, error) {
+func (s Condition) MarshalJSON() ([]byte, error) {
 	type NoMethod Condition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Container: Represents a Google Tag Manager Container.
@@ -612,9 +612,9 @@ type Container struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Container) MarshalJSON() ([]byte, error) {
+func (s Container) MarshalJSON() ([]byte, error) {
 	type NoMethod Container
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContainerAccess: Defines the Google Tag Manager Container access
@@ -649,9 +649,9 @@ type ContainerAccess struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContainerAccess) MarshalJSON() ([]byte, error) {
+func (s ContainerAccess) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerAccess
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContainerVersion: Represents a Google Tag Manager Container Version.
@@ -705,9 +705,9 @@ type ContainerVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContainerVersion) MarshalJSON() ([]byte, error) {
+func (s ContainerVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContainerVersionHeader: Represents a Google Tag Manager Container Version
@@ -747,9 +747,9 @@ type ContainerVersionHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContainerVersionHeader) MarshalJSON() ([]byte, error) {
+func (s ContainerVersionHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerVersionHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateContainerVersionRequestVersionOptions: Options for new container
@@ -775,9 +775,9 @@ type CreateContainerVersionRequestVersionOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateContainerVersionRequestVersionOptions) MarshalJSON() ([]byte, error) {
+func (s CreateContainerVersionRequestVersionOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateContainerVersionRequestVersionOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateContainerVersionResponse: Create container versions response.
@@ -802,9 +802,9 @@ type CreateContainerVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateContainerVersionResponse) MarshalJSON() ([]byte, error) {
+func (s CreateContainerVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateContainerVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Environment: Represents a Google Tag Manager Environment. Note that a user
@@ -870,9 +870,9 @@ type Environment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Environment) MarshalJSON() ([]byte, error) {
+func (s Environment) MarshalJSON() ([]byte, error) {
 	type NoMethod Environment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Folder: Represents a Google Tag Manager Folder.
@@ -906,9 +906,9 @@ type Folder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Folder) MarshalJSON() ([]byte, error) {
+func (s Folder) MarshalJSON() ([]byte, error) {
 	type NoMethod Folder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FolderEntities: Represents a Google Tag Manager Folder's contents.
@@ -935,9 +935,9 @@ type FolderEntities struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FolderEntities) MarshalJSON() ([]byte, error) {
+func (s FolderEntities) MarshalJSON() ([]byte, error) {
 	type NoMethod FolderEntities
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccountUsersResponse: List AccountUsers Response.
@@ -960,9 +960,9 @@ type ListAccountUsersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAccountUsersResponse) MarshalJSON() ([]byte, error) {
+func (s ListAccountUsersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccountUsersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccountsResponse: List Accounts Response.
@@ -985,9 +985,9 @@ type ListAccountsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAccountsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccountsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListContainerVersionsResponse: List container versions response.
@@ -1012,9 +1012,9 @@ type ListContainerVersionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListContainerVersionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListContainerVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListContainerVersionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListContainersResponse: List Containers Response.
@@ -1037,9 +1037,9 @@ type ListContainersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListContainersResponse) MarshalJSON() ([]byte, error) {
+func (s ListContainersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListContainersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEnvironmentsResponse: List Environments Response.
@@ -1062,9 +1062,9 @@ type ListEnvironmentsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
+func (s ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEnvironmentsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListFoldersResponse: List Folders Response.
@@ -1087,9 +1087,9 @@ type ListFoldersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListFoldersResponse) MarshalJSON() ([]byte, error) {
+func (s ListFoldersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFoldersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTagsResponse: List Tags Response.
@@ -1112,9 +1112,9 @@ type ListTagsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTagsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTagsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTagsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTriggersResponse: List triggers response.
@@ -1137,9 +1137,9 @@ type ListTriggersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTriggersResponse) MarshalJSON() ([]byte, error) {
+func (s ListTriggersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTriggersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVariablesResponse: List Variables Response.
@@ -1162,9 +1162,9 @@ type ListVariablesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListVariablesResponse) MarshalJSON() ([]byte, error) {
+func (s ListVariablesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVariablesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Macro: Represents a Google Tag Manager Macro.
@@ -1228,9 +1228,9 @@ type Macro struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Macro) MarshalJSON() ([]byte, error) {
+func (s Macro) MarshalJSON() ([]byte, error) {
 	type NoMethod Macro
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Parameter: Represents a Google Tag Manager Parameter.
@@ -1306,9 +1306,9 @@ type Parameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Parameter) MarshalJSON() ([]byte, error) {
+func (s Parameter) MarshalJSON() ([]byte, error) {
 	type NoMethod Parameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PublishContainerVersionResponse: Publish container version response.
@@ -1333,9 +1333,9 @@ type PublishContainerVersionResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PublishContainerVersionResponse) MarshalJSON() ([]byte, error) {
+func (s PublishContainerVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishContainerVersionResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Rule: Represents a Google Tag Manager Rule.
@@ -1374,9 +1374,9 @@ type Rule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Rule) MarshalJSON() ([]byte, error) {
+func (s Rule) MarshalJSON() ([]byte, error) {
 	type NoMethod Rule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SetupTag struct {
@@ -1399,9 +1399,9 @@ type SetupTag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetupTag) MarshalJSON() ([]byte, error) {
+func (s SetupTag) MarshalJSON() ([]byte, error) {
 	type NoMethod SetupTag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Tag: Represents a Google Tag Manager Tag.
@@ -1503,9 +1503,9 @@ type Tag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Tag) MarshalJSON() ([]byte, error) {
+func (s Tag) MarshalJSON() ([]byte, error) {
 	type NoMethod Tag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TeardownTag struct {
@@ -1528,9 +1528,9 @@ type TeardownTag struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TeardownTag) MarshalJSON() ([]byte, error) {
+func (s TeardownTag) MarshalJSON() ([]byte, error) {
 	type NoMethod TeardownTag
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Trigger: Represents a Google Tag Manager Trigger
@@ -1700,9 +1700,9 @@ type Trigger struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Trigger) MarshalJSON() ([]byte, error) {
+func (s Trigger) MarshalJSON() ([]byte, error) {
 	type NoMethod Trigger
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserAccess: Represents a user's permissions to an account and its container.
@@ -1738,9 +1738,9 @@ type UserAccess struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserAccess) MarshalJSON() ([]byte, error) {
+func (s UserAccess) MarshalJSON() ([]byte, error) {
 	type NoMethod UserAccess
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Variable: Represents a Google Tag Manager Variable.
@@ -1810,9 +1810,9 @@ type Variable struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Variable) MarshalJSON() ([]byte, error) {
+func (s Variable) MarshalJSON() ([]byte, error) {
 	type NoMethod Variable
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsGetCall struct {

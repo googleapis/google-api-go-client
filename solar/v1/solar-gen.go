@@ -209,11 +209,14 @@ type BuildingInsights struct {
 	//
 	// Possible values:
 	//   "IMAGERY_QUALITY_UNSPECIFIED" - No quality is known.
-	//   "HIGH" - The underlying imagery and DSM data were processed at 0.1
-	// m/pixel.
-	//   "MEDIUM" - The underlying imagery and DSM data were processed at 0.25
-	// m/pixel.
-	//   "LOW" - The underlying imagery and DSM data were processed at 0.5 m/pixel.
+	//   "HIGH" - Solar data is derived from aerial imagery captured at
+	// low-altitude and processed at 0.1 m/pixel.
+	//   "MEDIUM" - Solar data is derived from enhanced aerial imagery captured at
+	// high-altitude and processed at 0.25 m/pixel.
+	//   "LOW" - Solar data is derived from enhanced satellite imagery processed at
+	// 0.25 m/pixel.
+	//   "BASE" - Solar data is derived from enhanced satellite imagery processed
+	// at 0.25 m/pixel.
 	ImageryQuality string `json:"imageryQuality,omitempty"`
 	// Name: The resource name for the building, of the format `building/`.
 	Name string `json:"name,omitempty"`
@@ -242,9 +245,9 @@ type BuildingInsights struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BuildingInsights) MarshalJSON() ([]byte, error) {
+func (s BuildingInsights) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildingInsights
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CashPurchaseSavings: Cost and benefit of an outright purchase of a
@@ -279,9 +282,9 @@ type CashPurchaseSavings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CashPurchaseSavings) MarshalJSON() ([]byte, error) {
+func (s CashPurchaseSavings) MarshalJSON() ([]byte, error) {
 	type NoMethod CashPurchaseSavings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CashPurchaseSavings) UnmarshalJSON(data []byte) error {
@@ -352,11 +355,14 @@ type DataLayers struct {
 	//
 	// Possible values:
 	//   "IMAGERY_QUALITY_UNSPECIFIED" - No quality is known.
-	//   "HIGH" - The underlying imagery and DSM data were processed at 0.1
-	// m/pixel.
-	//   "MEDIUM" - The underlying imagery and DSM data were processed at 0.25
-	// m/pixel.
-	//   "LOW" - The underlying imagery and DSM data were processed at 0.5 m/pixel.
+	//   "HIGH" - Solar data is derived from aerial imagery captured at
+	// low-altitude and processed at 0.1 m/pixel.
+	//   "MEDIUM" - Solar data is derived from enhanced aerial imagery captured at
+	// high-altitude and processed at 0.25 m/pixel.
+	//   "LOW" - Solar data is derived from enhanced satellite imagery processed at
+	// 0.25 m/pixel.
+	//   "BASE" - Solar data is derived from enhanced satellite imagery processed
+	// at 0.25 m/pixel.
 	ImageryQuality string `json:"imageryQuality,omitempty"`
 	// MaskUrl: The URL for the building mask image: one bit per pixel saying
 	// whether that pixel is considered to be part of a rooftop or not.
@@ -384,9 +390,9 @@ type DataLayers struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DataLayers) MarshalJSON() ([]byte, error) {
+func (s DataLayers) MarshalJSON() ([]byte, error) {
 	type NoMethod DataLayers
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a birthday. The
@@ -422,9 +428,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FinancedPurchaseSavings: Cost and benefit of using a loan to buy a
@@ -454,9 +460,9 @@ type FinancedPurchaseSavings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FinancedPurchaseSavings) MarshalJSON() ([]byte, error) {
+func (s FinancedPurchaseSavings) MarshalJSON() ([]byte, error) {
 	type NoMethod FinancedPurchaseSavings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *FinancedPurchaseSavings) UnmarshalJSON(data []byte) error {
@@ -512,9 +518,9 @@ type FinancialAnalysis struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FinancialAnalysis) MarshalJSON() ([]byte, error) {
+func (s FinancialAnalysis) MarshalJSON() ([]byte, error) {
 	type NoMethod FinancialAnalysis
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *FinancialAnalysis) UnmarshalJSON(data []byte) error {
@@ -581,9 +587,9 @@ type FinancialDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FinancialDetails) MarshalJSON() ([]byte, error) {
+func (s FinancialDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod FinancialDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *FinancialDetails) UnmarshalJSON(data []byte) error {
@@ -646,9 +652,9 @@ type HttpBody struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpBody) MarshalJSON() ([]byte, error) {
+func (s HttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpBody
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LatLng: An object that represents a latitude/longitude pair. This is
@@ -674,9 +680,9 @@ type LatLng struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LatLng) MarshalJSON() ([]byte, error) {
+func (s LatLng) MarshalJSON() ([]byte, error) {
 	type NoMethod LatLng
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LatLng) UnmarshalJSON(data []byte) error {
@@ -714,9 +720,9 @@ type LatLngBox struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LatLngBox) MarshalJSON() ([]byte, error) {
+func (s LatLngBox) MarshalJSON() ([]byte, error) {
 	type NoMethod LatLngBox
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LeasingSavings: Cost and benefit of leasing a particular configuration of
@@ -749,9 +755,9 @@ type LeasingSavings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LeasingSavings) MarshalJSON() ([]byte, error) {
+func (s LeasingSavings) MarshalJSON() ([]byte, error) {
 	type NoMethod LeasingSavings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Money: Represents an amount of money with its currency type.
@@ -780,9 +786,9 @@ type Money struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Money) MarshalJSON() ([]byte, error) {
+func (s Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RoofSegmentSizeAndSunshineStats: Information about the size and sunniness
@@ -820,9 +826,9 @@ type RoofSegmentSizeAndSunshineStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RoofSegmentSizeAndSunshineStats) MarshalJSON() ([]byte, error) {
+func (s RoofSegmentSizeAndSunshineStats) MarshalJSON() ([]byte, error) {
 	type NoMethod RoofSegmentSizeAndSunshineStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *RoofSegmentSizeAndSunshineStats) UnmarshalJSON(data []byte) error {
@@ -875,9 +881,9 @@ type RoofSegmentSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RoofSegmentSummary) MarshalJSON() ([]byte, error) {
+func (s RoofSegmentSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod RoofSegmentSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *RoofSegmentSummary) UnmarshalJSON(data []byte) error {
@@ -930,9 +936,9 @@ type SavingsOverTime struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SavingsOverTime) MarshalJSON() ([]byte, error) {
+func (s SavingsOverTime) MarshalJSON() ([]byte, error) {
 	type NoMethod SavingsOverTime
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SizeAndSunshineStats: Size and sunniness quantiles of a roof, or part of a
@@ -962,9 +968,9 @@ type SizeAndSunshineStats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SizeAndSunshineStats) MarshalJSON() ([]byte, error) {
+func (s SizeAndSunshineStats) MarshalJSON() ([]byte, error) {
 	type NoMethod SizeAndSunshineStats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *SizeAndSunshineStats) UnmarshalJSON(data []byte) error {
@@ -1024,9 +1030,9 @@ type SolarPanel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SolarPanel) MarshalJSON() ([]byte, error) {
+func (s SolarPanel) MarshalJSON() ([]byte, error) {
 	type NoMethod SolarPanel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *SolarPanel) UnmarshalJSON(data []byte) error {
@@ -1070,9 +1076,9 @@ type SolarPanelConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SolarPanelConfig) MarshalJSON() ([]byte, error) {
+func (s SolarPanelConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SolarPanelConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *SolarPanelConfig) UnmarshalJSON(data []byte) error {
@@ -1163,9 +1169,9 @@ type SolarPotential struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SolarPotential) MarshalJSON() ([]byte, error) {
+func (s SolarPotential) MarshalJSON() ([]byte, error) {
 	type NoMethod SolarPotential
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *SolarPotential) UnmarshalJSON(data []byte) error {
@@ -1208,6 +1214,20 @@ func (r *BuildingInsightsService) FindClosest() *BuildingInsightsFindClosestCall
 	return c
 }
 
+// Experiments sets the optional parameter "experiments": Specifies the pre-GA
+// features to enable.
+//
+// Possible values:
+//
+//	"EXPERIMENT_UNSPECIFIED" - No experiments are specified.
+//	"EXPANDED_COVERAGE" - Expands the geographic region available for querying
+//
+// solar data.
+func (c *BuildingInsightsFindClosestCall) Experiments(experiments ...string) *BuildingInsightsFindClosestCall {
+	c.urlParams_.SetMulti("experiments", append([]string{}, experiments...))
+	return c
+}
+
 // LocationLatitude sets the optional parameter "location.latitude": The
 // latitude in degrees. It must be in the range [-90.0, +90.0].
 func (c *BuildingInsightsFindClosestCall) LocationLatitude(locationLatitude float64) *BuildingInsightsFindClosestCall {
@@ -1230,15 +1250,21 @@ func (c *BuildingInsightsFindClosestCall) LocationLongitude(locationLongitude fl
 // Possible values:
 //
 //	"IMAGERY_QUALITY_UNSPECIFIED" - No quality is known.
-//	"HIGH" - The underlying imagery and DSM data were processed at 0.1
+//	"HIGH" - Solar data is derived from aerial imagery captured at
 //
-// m/pixel.
+// low-altitude and processed at 0.1 m/pixel.
 //
-//	"MEDIUM" - The underlying imagery and DSM data were processed at 0.25
+//	"MEDIUM" - Solar data is derived from enhanced aerial imagery captured at
 //
-// m/pixel.
+// high-altitude and processed at 0.25 m/pixel.
 //
-//	"LOW" - The underlying imagery and DSM data were processed at 0.5 m/pixel.
+//	"LOW" - Solar data is derived from enhanced satellite imagery processed at
+//
+// 0.25 m/pixel.
+//
+//	"BASE" - Solar data is derived from enhanced satellite imagery processed
+//
+// at 0.25 m/pixel.
 func (c *BuildingInsightsFindClosestCall) RequiredQuality(requiredQuality string) *BuildingInsightsFindClosestCall {
 	c.urlParams_.Set("requiredQuality", requiredQuality)
 	return c
@@ -1358,6 +1384,20 @@ func (c *DataLayersGetCall) ExactQualityRequired(exactQualityRequired bool) *Dat
 	return c
 }
 
+// Experiments sets the optional parameter "experiments": Specifies the pre-GA
+// experiments to enable.
+//
+// Possible values:
+//
+//	"EXPERIMENT_UNSPECIFIED" - No experiments are specified.
+//	"EXPANDED_COVERAGE" - Expands the geographic region available for querying
+//
+// solar data.
+func (c *DataLayersGetCall) Experiments(experiments ...string) *DataLayersGetCall {
+	c.urlParams_.SetMulti("experiments", append([]string{}, experiments...))
+	return c
+}
+
 // LocationLatitude sets the optional parameter "location.latitude": The
 // latitude in degrees. It must be in the range [-90.0, +90.0].
 func (c *DataLayersGetCall) LocationLatitude(locationLatitude float64) *DataLayersGetCall {
@@ -1405,15 +1445,21 @@ func (c *DataLayersGetCall) RadiusMeters(radiusMeters float64) *DataLayersGetCal
 // Possible values:
 //
 //	"IMAGERY_QUALITY_UNSPECIFIED" - No quality is known.
-//	"HIGH" - The underlying imagery and DSM data were processed at 0.1
+//	"HIGH" - Solar data is derived from aerial imagery captured at
 //
-// m/pixel.
+// low-altitude and processed at 0.1 m/pixel.
 //
-//	"MEDIUM" - The underlying imagery and DSM data were processed at 0.25
+//	"MEDIUM" - Solar data is derived from enhanced aerial imagery captured at
 //
-// m/pixel.
+// high-altitude and processed at 0.25 m/pixel.
 //
-//	"LOW" - The underlying imagery and DSM data were processed at 0.5 m/pixel.
+//	"LOW" - Solar data is derived from enhanced satellite imagery processed at
+//
+// 0.25 m/pixel.
+//
+//	"BASE" - Solar data is derived from enhanced satellite imagery processed
+//
+// at 0.25 m/pixel.
 func (c *DataLayersGetCall) RequiredQuality(requiredQuality string) *DataLayersGetCall {
 	c.urlParams_.Set("requiredQuality", requiredQuality)
 	return c

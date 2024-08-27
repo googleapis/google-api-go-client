@@ -155,9 +155,9 @@ type TableDataInsertAllRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableDataInsertAllRequest) MarshalJSON() ([]byte, error) {
+func (s TableDataInsertAllRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TableDataInsertAllRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TableDataInsertAllRequestRows struct {
@@ -177,7 +177,7 @@ type TableDataInsertAllRequestRows struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TableDataInsertAllRequestRows) MarshalJSON() ([]byte, error) {
+func (s TableDataInsertAllRequestRows) MarshalJSON() ([]byte, error) {
 	type NoMethod TableDataInsertAllRequestRows
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }

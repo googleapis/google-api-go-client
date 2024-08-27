@@ -297,10 +297,22 @@ type ProjectsAppsSafetyNetConfigService struct {
 
 func NewProjectsServicesService(s *Service) *ProjectsServicesService {
 	rs := &ProjectsServicesService{s: s}
+	rs.ResourcePolicies = NewProjectsServicesResourcePoliciesService(s)
 	return rs
 }
 
 type ProjectsServicesService struct {
+	s *Service
+
+	ResourcePolicies *ProjectsServicesResourcePoliciesService
+}
+
+func NewProjectsServicesResourcePoliciesService(s *Service) *ProjectsServicesResourcePoliciesService {
+	rs := &ProjectsServicesResourcePoliciesService{s: s}
+	return rs
+}
+
+type ProjectsServicesResourcePoliciesService struct {
 	s *Service
 }
 
@@ -337,9 +349,9 @@ type GoogleFirebaseAppcheckV1AppAttestConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1AppAttestConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1AppAttestConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1AppAttestConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1AppCheckToken: Encapsulates an *App Check token*,
@@ -374,9 +386,9 @@ type GoogleFirebaseAppcheckV1AppCheckToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1AppCheckToken) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1AppCheckToken) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1AppCheckToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse: Response message
@@ -400,9 +412,9 @@ type GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetAppAttestConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse: Response message
@@ -426,9 +438,9 @@ type GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetDeviceCheckConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse: Response
@@ -452,9 +464,9 @@ type GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetPlayIntegrityConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse: Response
@@ -478,9 +490,9 @@ type GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetRecaptchaEnterpriseConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse: Response message
@@ -504,9 +516,9 @@ type GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetRecaptchaV3ConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse: Response message
@@ -530,9 +542,66 @@ type GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchGetSafetyNetConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1BatchUpdateResourcePoliciesRequest: Request message
+// for the BatchUpdateResourcePolicies method.
+type GoogleFirebaseAppcheckV1BatchUpdateResourcePoliciesRequest struct {
+	// Requests: Required. The request messages specifying the ResourcePolicy
+	// objects to update. A maximum of 100 objects can be updated in a batch.
+	Requests []*GoogleFirebaseAppcheckV1UpdateResourcePolicyRequest `json:"requests,omitempty"`
+	// UpdateMask: Optional. A comma-separated list of names of fields in the
+	// ResourcePolicy objects to update. Example: `enforcement_mode`. If this field
+	// is present, the `update_mask` field in the UpdateResourcePolicyRequest
+	// messages must all match this field, or the entire batch fails and no updates
+	// will be committed.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1BatchUpdateResourcePoliciesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1BatchUpdateResourcePoliciesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1BatchUpdateResourcePoliciesResponse: Response
+// message for the BatchUpdateResourcePolicies method.
+type GoogleFirebaseAppcheckV1BatchUpdateResourcePoliciesResponse struct {
+	// ResourcePolicies: ResourcePolicy objects after the updates have been
+	// applied.
+	ResourcePolicies []*GoogleFirebaseAppcheckV1ResourcePolicy `json:"resourcePolicies,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ResourcePolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourcePolicies") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1BatchUpdateResourcePoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1BatchUpdateResourcePoliciesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchUpdateServicesRequest: Request message for the
@@ -559,9 +628,9 @@ type GoogleFirebaseAppcheckV1BatchUpdateServicesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchUpdateServicesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchUpdateServicesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchUpdateServicesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1BatchUpdateServicesResponse: Response message for
@@ -585,9 +654,9 @@ type GoogleFirebaseAppcheckV1BatchUpdateServicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1BatchUpdateServicesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1BatchUpdateServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1BatchUpdateServicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1DebugToken: A *debug token* is a secret used during
@@ -629,9 +698,9 @@ type GoogleFirebaseAppcheckV1DebugToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1DebugToken) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1DebugToken) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1DebugToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1DeviceCheckConfig: An app's DeviceCheck
@@ -678,9 +747,9 @@ type GoogleFirebaseAppcheckV1DeviceCheckConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1DeviceCheckConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1DeviceCheckConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1DeviceCheckConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest: Request message
@@ -713,9 +782,9 @@ type GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeAppAttestAssertionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest: Request message
@@ -748,9 +817,9 @@ type GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse: Response
@@ -777,9 +846,9 @@ type GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeAppAttestAttestationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest: Request message for the
@@ -806,9 +875,9 @@ type GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest: Request message for the
@@ -835,9 +904,9 @@ type GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeDebugTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest: Request message for
@@ -866,9 +935,9 @@ type GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeDeviceCheckTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest: Request message
@@ -897,9 +966,9 @@ type GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangePlayIntegrityTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest: Request
@@ -927,9 +996,9 @@ type GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeRecaptchaEnterpriseTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest: Request message for
@@ -956,9 +1025,9 @@ type GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeRecaptchaV3TokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest: Request message for
@@ -981,9 +1050,9 @@ type GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ExchangeSafetyNetTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1GenerateAppAttestChallengeRequest: Request message
@@ -1018,9 +1087,9 @@ type GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1GenerateAppAttestChallengeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeRequest: Request
@@ -1056,9 +1125,9 @@ type GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ListDebugTokensResponse: Response message for the
@@ -1088,9 +1157,41 @@ type GoogleFirebaseAppcheckV1ListDebugTokensResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ListDebugTokensResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ListDebugTokensResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ListDebugTokensResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1ListResourcePoliciesResponse: Response message for
+// the ListResourcePolicies method.
+type GoogleFirebaseAppcheckV1ListResourcePoliciesResponse struct {
+	// NextPageToken: If the result list is too large to fit in a single response,
+	// then a token is returned. If the string is empty or omitted, then this
+	// response is the last page of results. This token can be used in a subsequent
+	// call to ListResourcePolicies to find the next group of ResourcePolicy
+	// objects. Page tokens are short-lived and should not be persisted.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// ResourcePolicies: The ResourcePolicy objects retrieved.
+	ResourcePolicies []*GoogleFirebaseAppcheckV1ResourcePolicy `json:"resourcePolicies,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1ListResourcePoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1ListResourcePoliciesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1ListServicesResponse: Response message for the
@@ -1120,9 +1221,9 @@ type GoogleFirebaseAppcheckV1ListServicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1ListServicesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1ListServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ListServicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1PlayIntegrityConfig: An app's Play Integrity
@@ -1157,9 +1258,9 @@ type GoogleFirebaseAppcheckV1PlayIntegrityConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1PlayIntegrityConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1PlayIntegrityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1PlayIntegrityConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1PublicJwk: A JWK as specified by section 4 of RFC
@@ -1197,9 +1298,9 @@ type GoogleFirebaseAppcheckV1PublicJwk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1PublicJwk) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1PublicJwk) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1PublicJwk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1PublicJwkSet: The currently active set of public
@@ -1227,9 +1328,9 @@ type GoogleFirebaseAppcheckV1PublicJwkSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1PublicJwkSet) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1PublicJwkSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1PublicJwkSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig: An app's reCAPTCHA
@@ -1269,9 +1370,9 @@ type GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1RecaptchaEnterpriseConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1RecaptchaV3Config: An app's reCAPTCHA v3
@@ -1312,9 +1413,97 @@ type GoogleFirebaseAppcheckV1RecaptchaV3Config struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1RecaptchaV3Config) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1RecaptchaV3Config) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1RecaptchaV3Config
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1ResourcePolicy: App Check enforcement policy for a
+// specific resource of a Firebase service supported by App Check. Note that
+// this policy will override the service-level configuration.
+type GoogleFirebaseAppcheckV1ResourcePolicy struct {
+	// EnforcementMode: Required. The App Check enforcement mode for this resource.
+	// This will override the EnforcementMode setting on the service.
+	//
+	// Possible values:
+	//   "OFF" - Firebase App Check is not enforced for the service, nor are App
+	// Check metrics collected. Though the service is not protected by App Check in
+	// this mode, other applicable protections, such as user authorization, are
+	// still enforced. An unconfigured service is in this mode by default.
+	//   "UNENFORCED" - Firebase App Check is not enforced for the service. App
+	// Check metrics are collected to help you decide when to turn on enforcement
+	// for the service. Though the service is not protected by App Check in this
+	// mode, other applicable protections, such as user authorization, are still
+	// enforced. Some services require certain conditions to be met before they
+	// will work with App Check, such as requiring you to upgrade to a specific
+	// service tier. Until those requirements are met for a service, this
+	// `UNENFORCED` setting will have no effect and App Check will not work with
+	// that service.
+	//   "ENFORCED" - Firebase App Check is enforced for the service. The service
+	// will reject any request that attempts to access your project's resources if
+	// it does not have valid App Check token attached, with some exceptions
+	// depending on the service; for example, some services will still allow
+	// requests bearing the developer's privileged service account credentials
+	// without an App Check token. App Check metrics continue to be collected to
+	// help you detect issues with your App Check integration and monitor the
+	// composition of your callers. While the service is protected by App Check,
+	// other applicable protections, such as user authorization, continue to be
+	// enforced at the same time. Use caution when choosing to enforce App Check on
+	// a Firebase service. If your users have not updated to an App Check capable
+	// version of your app, their apps will no longer be able to use your Firebase
+	// services that are enforcing App Check. App Check metrics can help you decide
+	// whether to enforce App Check on your Firebase services. If your app has not
+	// launched yet, you should enable enforcement immediately, since there are no
+	// outdated clients in use. Some services require certain conditions to be met
+	// before they will work with App Check, such as requiring you to upgrade to a
+	// specific service tier. Until those requirements are met for a service, this
+	// `ENFORCED` setting will have no effect and App Check will not work with that
+	// service.
+	EnforcementMode string `json:"enforcementMode,omitempty"`
+	// Etag: This checksum is computed by the server based on the value of other
+	// fields, and may be sent on update and delete requests to ensure the client
+	// has an up-to-date value before proceeding. This etag is strongly validated
+	// as defined by RFC 7232.
+	Etag string `json:"etag,omitempty"`
+	// Name: Required. Identifier. The relative name of the resource policy object,
+	// in the format: ```
+	// projects/{project_number}/services/{service_id}/resourcePolicies/{resource_po
+	// licy_id} ``` Note that the `service_id` element must be a supported service
+	// ID. Currently, the following service IDs are supported: *
+	// `oauth2.googleapis.com` (Google Identity for iOS) `resource_policy_id` is a
+	// system-generated UID.
+	Name string `json:"name,omitempty"`
+	// TargetResource: Required. Service specific name of the resource object to
+	// which this policy applies, in the format: *
+	// `//oauth2.googleapis.com/projects/{project_number}/oauthClients/{oauth_client
+	// _id}` (Google Identity for iOS) Note that the resource must belong to the
+	// service specified in the `name` and be from the same project as this policy,
+	// but the resource is allowed to be missing at the time of creation of this
+	// policy; in that case, we make a best-effort attempt at respecting this
+	// policy, but it may not have any effect until the resource is fully created.
+	TargetResource string `json:"targetResource,omitempty"`
+	// UpdateTime: Output only. Timestamp when this resource policy configuration
+	// object was most recently updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EnforcementMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnforcementMode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1ResourcePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1ResourcePolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1SafetyNetConfig: An app's SafetyNet configuration
@@ -1349,9 +1538,9 @@ type GoogleFirebaseAppcheckV1SafetyNetConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1SafetyNetConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1SafetyNetConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1SafetyNetConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1Service: The enforcement configuration for a
@@ -1418,9 +1607,42 @@ type GoogleFirebaseAppcheckV1Service struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1Service) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1Service) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1Service
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1UpdateResourcePolicyRequest: Request message for the
+// UpdateResourcePolicy method as well as an individual update message for the
+// BatchUpdateResourcePolicies method.
+type GoogleFirebaseAppcheckV1UpdateResourcePolicyRequest struct {
+	// ResourcePolicy: Required. The ResourcePolicy to update. The ResourcePolicy's
+	// `name` field is used to identify the ResourcePolicy to be updated, in the
+	// format: ```
+	// projects/{project_number}/services/{service_id}/resourcePolicies/{resource_po
+	// licy_id} ``` Note that the `service_id` element must be a supported service
+	// ID. Currently, the following service IDs are supported: *
+	// `oauth2.googleapis.com` (Google Identity for iOS)
+	ResourcePolicy *GoogleFirebaseAppcheckV1ResourcePolicy `json:"resourcePolicy,omitempty"`
+	// UpdateMask: Required. A comma-separated list of names of fields in the
+	// ResourcePolicy to update. Example: `enforcement_mode`.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourcePolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourcePolicy") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1UpdateResourcePolicyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1UpdateResourcePolicyRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseAppcheckV1UpdateServiceRequest: Request message for the
@@ -1451,9 +1673,9 @@ type GoogleFirebaseAppcheckV1UpdateServiceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseAppcheckV1UpdateServiceRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseAppcheckV1UpdateServiceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1UpdateServiceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -6343,6 +6565,729 @@ func (c *ProjectsServicesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFir
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleFirebaseAppcheckV1Service{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsServicesResourcePoliciesBatchUpdateCall struct {
+	s                                                          *Service
+	parent                                                     string
+	googlefirebaseappcheckv1batchupdateresourcepoliciesrequest *GoogleFirebaseAppcheckV1BatchUpdateResourcePoliciesRequest
+	urlParams_                                                 gensupport.URLParams
+	ctx_                                                       context.Context
+	header_                                                    http.Header
+}
+
+// BatchUpdate: Atomically updates the specified ResourcePolicy configurations.
+//
+//   - parent: The parent service name, in the format ```
+//     projects/{project_number}/services/{service_id} ``` The parent collection
+//     in the `name` field of any resource being updated must match this field,
+//     or the entire batch fails.
+func (r *ProjectsServicesResourcePoliciesService) BatchUpdate(parent string, googlefirebaseappcheckv1batchupdateresourcepoliciesrequest *GoogleFirebaseAppcheckV1BatchUpdateResourcePoliciesRequest) *ProjectsServicesResourcePoliciesBatchUpdateCall {
+	c := &ProjectsServicesResourcePoliciesBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlefirebaseappcheckv1batchupdateresourcepoliciesrequest = googlefirebaseappcheckv1batchupdateresourcepoliciesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsServicesResourcePoliciesBatchUpdateCall) Fields(s ...googleapi.Field) *ProjectsServicesResourcePoliciesBatchUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsServicesResourcePoliciesBatchUpdateCall) Context(ctx context.Context) *ProjectsServicesResourcePoliciesBatchUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsServicesResourcePoliciesBatchUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsServicesResourcePoliciesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1batchupdateresourcepoliciesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourcePolicies:batchUpdate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.services.resourcePolicies.batchUpdate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1BatchUpdateResourcePoliciesResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsServicesResourcePoliciesBatchUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1BatchUpdateResourcePoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1BatchUpdateResourcePoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsServicesResourcePoliciesCreateCall struct {
+	s                                      *Service
+	parent                                 string
+	googlefirebaseappcheckv1resourcepolicy *GoogleFirebaseAppcheckV1ResourcePolicy
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Create: Creates the specified ResourcePolicy configuration.
+//
+//   - parent: The relative resource name of the parent Service in which the
+//     specified ResourcePolicy will be created, in the format: ```
+//     projects/{project_number}/services/{service_id} ``` Note that the
+//     `service_id` element must be a supported service ID. Currently, the
+//     following service IDs are supported: * `oauth2.googleapis.com` (Google
+//     Identity for iOS).
+func (r *ProjectsServicesResourcePoliciesService) Create(parent string, googlefirebaseappcheckv1resourcepolicy *GoogleFirebaseAppcheckV1ResourcePolicy) *ProjectsServicesResourcePoliciesCreateCall {
+	c := &ProjectsServicesResourcePoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlefirebaseappcheckv1resourcepolicy = googlefirebaseappcheckv1resourcepolicy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsServicesResourcePoliciesCreateCall) Fields(s ...googleapi.Field) *ProjectsServicesResourcePoliciesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsServicesResourcePoliciesCreateCall) Context(ctx context.Context) *ProjectsServicesResourcePoliciesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsServicesResourcePoliciesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsServicesResourcePoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1resourcepolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourcePolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.services.resourcePolicies.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1ResourcePolicy.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsServicesResourcePoliciesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1ResourcePolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1ResourcePolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsServicesResourcePoliciesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified ResourcePolicy configuration.
+//
+//   - name: The relative resource name of the ResourcePolicy to delete, in the
+//     format: ```
+//     projects/{project_number}/services/{service_id}/resourcePolicies/{resource_
+//     policy_id} ```.
+func (r *ProjectsServicesResourcePoliciesService) Delete(name string) *ProjectsServicesResourcePoliciesDeleteCall {
+	c := &ProjectsServicesResourcePoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": The checksum to be validated
+// against the current ResourcePolicy, to ensure the client has an up-to-date
+// value before proceeding. This checksum is computed by the server based on
+// the values of fields in the ResourcePolicy object, and can be obtained from
+// the ResourcePolicy object received from the last CreateResourcePolicy,
+// GetResourcePolicy, ListResourcePolicies, UpdateResourcePolicy, or
+// BatchUpdateResourcePolicies call. This etag is strongly validated as defined
+// by RFC 7232.
+func (c *ProjectsServicesResourcePoliciesDeleteCall) Etag(etag string) *ProjectsServicesResourcePoliciesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsServicesResourcePoliciesDeleteCall) Fields(s ...googleapi.Field) *ProjectsServicesResourcePoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsServicesResourcePoliciesDeleteCall) Context(ctx context.Context) *ProjectsServicesResourcePoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsServicesResourcePoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsServicesResourcePoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.services.resourcePolicies.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsServicesResourcePoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsServicesResourcePoliciesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the requested ResourcePolicy configuration.
+//
+//   - name: The relative resource name of the ResourcePolicy to retrieve, in the
+//     format: ```
+//     projects/{project_number}/services/{service_id}/resourcePolicies/{resource_
+//     policy_id} ``` Note that the `service_id` element must be a supported
+//     service ID. Currently, the following service IDs are supported: *
+//     `oauth2.googleapis.com` (Google Identity for iOS).
+func (r *ProjectsServicesResourcePoliciesService) Get(name string) *ProjectsServicesResourcePoliciesGetCall {
+	c := &ProjectsServicesResourcePoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsServicesResourcePoliciesGetCall) Fields(s ...googleapi.Field) *ProjectsServicesResourcePoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsServicesResourcePoliciesGetCall) IfNoneMatch(entityTag string) *ProjectsServicesResourcePoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsServicesResourcePoliciesGetCall) Context(ctx context.Context) *ProjectsServicesResourcePoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsServicesResourcePoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsServicesResourcePoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.services.resourcePolicies.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1ResourcePolicy.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsServicesResourcePoliciesGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1ResourcePolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1ResourcePolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsServicesResourcePoliciesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all ResourcePolicy configurations for the specified project and
+// service.
+//
+//   - parent: The relative resource name of the parent Service for which to list
+//     each associated ResourcePolicy, in the format: ```
+//     projects/{project_number}/services/{service_id} ``` Note that the
+//     `service_id` element must be a supported service ID. Currently, the
+//     following service IDs are supported: * `oauth2.googleapis.com` (Google
+//     Identity for iOS).
+func (r *ProjectsServicesResourcePoliciesService) List(parent string) *ProjectsServicesResourcePoliciesListCall {
+	c := &ProjectsServicesResourcePoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filters the results by the
+// specified rule. For the exact syntax of this field, please consult the
+// AIP-160 (https://google.aip.dev/160) standard. Currently, since the only
+// fields in the ResourcePolicy resource are the scalar fields
+// `enforcement_mode` and `target_resource`, this method does not support the
+// traversal operator (`.`) or the has operator (`:`). Here are some examples
+// of valid filters: * `enforcement_mode = ENFORCED` * `target_resource =
+// "//oauth2.googleapis.com/projects/12345/oauthClients/" * `enforcement_mode
+// = ENFORCED AND target_resource =
+// "//oauth2.googleapis.com/projects/12345/oauthClients/"
+func (c *ProjectsServicesResourcePoliciesListCall) Filter(filter string) *ProjectsServicesResourcePoliciesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// ResourcePolicy objects to return in the response. The server may return
+// fewer than this at its own discretion. If no value is specified (or too
+// large a value is specified), the server will impose its own limit.
+func (c *ProjectsServicesResourcePoliciesListCall) PageSize(pageSize int64) *ProjectsServicesResourcePoliciesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned from a
+// previous call to ListResourcePolicies indicating where in the set of
+// ResourcePolicy objects to resume listing. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// ListResourcePolicies must match the call that provided the page token; if
+// they do not match, the result is undefined.
+func (c *ProjectsServicesResourcePoliciesListCall) PageToken(pageToken string) *ProjectsServicesResourcePoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsServicesResourcePoliciesListCall) Fields(s ...googleapi.Field) *ProjectsServicesResourcePoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsServicesResourcePoliciesListCall) IfNoneMatch(entityTag string) *ProjectsServicesResourcePoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsServicesResourcePoliciesListCall) Context(ctx context.Context) *ProjectsServicesResourcePoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsServicesResourcePoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsServicesResourcePoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/resourcePolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.services.resourcePolicies.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1ListResourcePoliciesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsServicesResourcePoliciesListCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1ListResourcePoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1ListResourcePoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsServicesResourcePoliciesListCall) Pages(ctx context.Context, f func(*GoogleFirebaseAppcheckV1ListResourcePoliciesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsServicesResourcePoliciesPatchCall struct {
+	s                                      *Service
+	name                                   string
+	googlefirebaseappcheckv1resourcepolicy *GoogleFirebaseAppcheckV1ResourcePolicy
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Patch: Updates the specified ResourcePolicy configuration.
+//
+//   - name: Identifier. The relative name of the resource policy object, in the
+//     format: ```
+//     projects/{project_number}/services/{service_id}/resourcePolicies/{resource_
+//     policy_id} ``` Note that the `service_id` element must be a supported
+//     service ID. Currently, the following service IDs are supported: *
+//     `oauth2.googleapis.com` (Google Identity for iOS) `resource_policy_id` is
+//     a system-generated UID.
+func (r *ProjectsServicesResourcePoliciesService) Patch(name string, googlefirebaseappcheckv1resourcepolicy *GoogleFirebaseAppcheckV1ResourcePolicy) *ProjectsServicesResourcePoliciesPatchCall {
+	c := &ProjectsServicesResourcePoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlefirebaseappcheckv1resourcepolicy = googlefirebaseappcheckv1resourcepolicy
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. A
+// comma-separated list of names of fields in the ResourcePolicy to update.
+// Example: `enforcement_mode`.
+func (c *ProjectsServicesResourcePoliciesPatchCall) UpdateMask(updateMask string) *ProjectsServicesResourcePoliciesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsServicesResourcePoliciesPatchCall) Fields(s ...googleapi.Field) *ProjectsServicesResourcePoliciesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsServicesResourcePoliciesPatchCall) Context(ctx context.Context) *ProjectsServicesResourcePoliciesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsServicesResourcePoliciesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsServicesResourcePoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappcheckv1resourcepolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.services.resourcePolicies.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1ResourcePolicy.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsServicesResourcePoliciesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1ResourcePolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1ResourcePolicy{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

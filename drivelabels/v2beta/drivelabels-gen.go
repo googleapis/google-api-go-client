@@ -290,9 +290,9 @@ type GoogleAppsDriveLabelsV2betaBadgeColors struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaBadgeColors) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaBadgeColors) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaBadgeColors
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaBadgeConfig: Badge status of the label.
@@ -317,9 +317,9 @@ type GoogleAppsDriveLabelsV2betaBadgeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaBadgeConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaBadgeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaBadgeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest: Deletes one
@@ -346,9 +346,9 @@ type GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaBatchDeleteLabelPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsRequest: Updates one
@@ -375,9 +375,9 @@ type GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsResponse: Response for
@@ -401,9 +401,9 @@ type GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaBatchUpdateLabelPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDateLimits: Limits for date Field type.
@@ -425,9 +425,9 @@ type GoogleAppsDriveLabelsV2betaDateLimits struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDateLimits) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDateLimits) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDateLimits
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeleteLabelPermissionRequest: Deletes a Label
@@ -453,9 +453,9 @@ type GoogleAppsDriveLabelsV2betaDeleteLabelPermissionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeleteLabelPermissionRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeleteLabelPermissionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeleteLabelPermissionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequest: The set of requests for
@@ -495,9 +495,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateFieldRequest:
@@ -518,9 +518,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateFieldRequest struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateFieldRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateFieldRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateFieldRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateSelectionChoiceReques
@@ -543,9 +543,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateSelectionChoiceRequ
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateSelectionChoiceRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateSelectionChoiceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestCreateSelectionChoiceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteFieldRequest:
@@ -566,9 +566,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteFieldRequest struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteFieldRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteFieldRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteFieldRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteSelectionChoiceReques
@@ -591,9 +591,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteSelectionChoiceRequ
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteSelectionChoiceRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteSelectionChoiceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDeleteSelectionChoiceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableFieldRequest:
@@ -620,9 +620,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableFieldRequest struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableFieldRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableFieldRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableFieldRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableSelectionChoiceReque
@@ -651,9 +651,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableSelectionChoiceReq
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableSelectionChoiceRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableSelectionChoiceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestDisableSelectionChoiceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableFieldRequest:
@@ -674,9 +674,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableFieldRequest struct
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableFieldRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableFieldRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableFieldRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableSelectionChoiceReques
@@ -699,9 +699,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableSelectionChoiceRequ
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableSelectionChoiceRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableSelectionChoiceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestEnableSelectionChoiceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestRequest: A single kind of
@@ -745,9 +745,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldPropertiesReques
@@ -774,9 +774,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldPropertiesRequ
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldPropertiesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldPropertiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldPropertiesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldTypeRequest:
@@ -811,9 +811,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldTypeRequest st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldTypeRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldTypeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateFieldTypeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateLabelPropertiesReques
@@ -838,9 +838,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateLabelPropertiesRequ
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateLabelPropertiesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateLabelPropertiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateLabelPropertiesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateSelectionChoiceProper
@@ -869,9 +869,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateSelectionChoiceProp
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateSelectionChoicePropertiesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateSelectionChoicePropertiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelRequestUpdateSelectionChoicePropertiesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponse: Response for Label
@@ -900,9 +900,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateFieldResponse:
@@ -927,9 +927,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateFieldResponse stru
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateFieldResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateFieldResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateFieldResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateSelectionChoiceRespo
@@ -952,9 +952,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateSelectionChoiceRes
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateSelectionChoiceResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateSelectionChoiceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseCreateSelectionChoiceResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseDeleteFieldResponse:
@@ -1028,9 +1028,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateFieldPropertiesRespo
@@ -1052,9 +1052,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateFieldPropertiesRes
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateFieldPropertiesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateFieldPropertiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateFieldPropertiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateFieldTypeResponse:
@@ -1086,9 +1086,9 @@ type GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateSelectionChoicePro
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateSelectionChoicePropertiesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateSelectionChoicePropertiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDeltaUpdateLabelResponseUpdateSelectionChoicePropertiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaDisableLabelRequest: Request to deprecate a
@@ -1124,9 +1124,9 @@ type GoogleAppsDriveLabelsV2betaDisableLabelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaDisableLabelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaDisableLabelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaDisableLabelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaEnableLabelRequest: Request to enable a label.
@@ -1155,9 +1155,9 @@ type GoogleAppsDriveLabelsV2betaEnableLabelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaEnableLabelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaEnableLabelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaEnableLabelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaField: Defines a field that has a display name,
@@ -1225,9 +1225,9 @@ type GoogleAppsDriveLabelsV2betaField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaField) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaField
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldAppliedCapabilities: The capabilities
@@ -1253,9 +1253,9 @@ type GoogleAppsDriveLabelsV2betaFieldAppliedCapabilities struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldAppliedCapabilities) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldAppliedCapabilities) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldAppliedCapabilities
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldDateOptions: Options for the date field
@@ -1290,9 +1290,9 @@ type GoogleAppsDriveLabelsV2betaFieldDateOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldDateOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldDateOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldDateOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldDisplayHints: UI display hints for rendering
@@ -1321,9 +1321,9 @@ type GoogleAppsDriveLabelsV2betaFieldDisplayHints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldDisplayHints) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldDisplayHints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldDisplayHints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldIntegerOptions: Options for the Integer
@@ -1346,9 +1346,9 @@ type GoogleAppsDriveLabelsV2betaFieldIntegerOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldIntegerOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldIntegerOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldIntegerOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldLimits: Field constants governing the
@@ -1387,9 +1387,9 @@ type GoogleAppsDriveLabelsV2betaFieldLimits struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldLimits) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldLimits) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldLimits
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldListOptions: Options for a multi-valued
@@ -1410,9 +1410,9 @@ type GoogleAppsDriveLabelsV2betaFieldListOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldListOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldListOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldListOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldProperties: The basic properties of the
@@ -1439,9 +1439,9 @@ type GoogleAppsDriveLabelsV2betaFieldProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldProperties) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldSchemaCapabilities: The capabilities related
@@ -1471,9 +1471,9 @@ type GoogleAppsDriveLabelsV2betaFieldSchemaCapabilities struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldSchemaCapabilities) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldSchemaCapabilities) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldSchemaCapabilities
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldSelectionOptions: Options for the selection
@@ -1498,9 +1498,9 @@ type GoogleAppsDriveLabelsV2betaFieldSelectionOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldSelectionOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldSelectionOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldSelectionOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoice: Selection field
@@ -1556,9 +1556,9 @@ type GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoice) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceAppliedCapabilities:
@@ -1583,9 +1583,9 @@ type GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceAppliedCapabilities s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceAppliedCapabilities) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceAppliedCapabilities) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceAppliedCapabilities
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceDisplayHints: UI
@@ -1624,9 +1624,9 @@ type GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceDisplayHints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceDisplayHints) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceDisplayHints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceDisplayHints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceProperties: Basic
@@ -1656,9 +1656,9 @@ type GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceProperties) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceSchemaCapabilities:
@@ -1685,9 +1685,9 @@ type GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceSchemaCapabilities st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceSchemaCapabilities) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceSchemaCapabilities) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldSelectionOptionsChoiceSchemaCapabilities
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldTextOptions: Options for the Text field
@@ -1712,9 +1712,9 @@ type GoogleAppsDriveLabelsV2betaFieldTextOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldTextOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldTextOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldTextOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaFieldUserOptions: Options for the user field
@@ -1736,9 +1736,9 @@ type GoogleAppsDriveLabelsV2betaFieldUserOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaFieldUserOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaFieldUserOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaFieldUserOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaIntegerLimits: Limits for integer Field type.
@@ -1760,9 +1760,9 @@ type GoogleAppsDriveLabelsV2betaIntegerLimits struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaIntegerLimits) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaIntegerLimits) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaIntegerLimits
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaLabel: A label defines a taxonomy that can be
@@ -1855,9 +1855,9 @@ type GoogleAppsDriveLabelsV2betaLabel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaLabel) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaLabel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaLabel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaLabelAppliedCapabilities: The capabilities a user
@@ -1882,9 +1882,9 @@ type GoogleAppsDriveLabelsV2betaLabelAppliedCapabilities struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaLabelAppliedCapabilities) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaLabelAppliedCapabilities) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaLabelAppliedCapabilities
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaLabelAppliedLabelPolicy: Behavior of this label
@@ -1915,9 +1915,9 @@ type GoogleAppsDriveLabelsV2betaLabelAppliedLabelPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaLabelAppliedLabelPolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaLabelAppliedLabelPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaLabelAppliedLabelPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaLabelDisplayHints: UI display hints for rendering
@@ -1946,9 +1946,9 @@ type GoogleAppsDriveLabelsV2betaLabelDisplayHints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaLabelDisplayHints) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaLabelDisplayHints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaLabelDisplayHints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaLabelLimits: Label constraints governing the
@@ -1988,9 +1988,9 @@ type GoogleAppsDriveLabelsV2betaLabelLimits struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaLabelLimits) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaLabelLimits) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaLabelLimits
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaLabelLock: A Lock that can be applied to a Label,
@@ -2037,9 +2037,9 @@ type GoogleAppsDriveLabelsV2betaLabelLock struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaLabelLock) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaLabelLock) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaLabelLock
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaLabelLockCapabilities: A description of a user's
@@ -2060,9 +2060,9 @@ type GoogleAppsDriveLabelsV2betaLabelLockCapabilities struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaLabelLockCapabilities) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaLabelLockCapabilities) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaLabelLockCapabilities
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaLabelPermission: The permission that applies to a
@@ -2112,9 +2112,9 @@ type GoogleAppsDriveLabelsV2betaLabelPermission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaLabelPermission) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaLabelPermission) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaLabelPermission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaLabelProperties: Basic properties of the label.
@@ -2136,9 +2136,9 @@ type GoogleAppsDriveLabelsV2betaLabelProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaLabelProperties) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaLabelProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaLabelProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaLabelSchemaCapabilities: The capabilities related
@@ -2168,9 +2168,9 @@ type GoogleAppsDriveLabelsV2betaLabelSchemaCapabilities struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaLabelSchemaCapabilities) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaLabelSchemaCapabilities) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaLabelSchemaCapabilities
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaLifecycle: The lifecycle state of an object, such
@@ -2218,9 +2218,9 @@ type GoogleAppsDriveLabelsV2betaLifecycle struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaLifecycle) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaLifecycle) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaLifecycle
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaLifecycleDisabledPolicy: The policy that governs
@@ -2251,9 +2251,9 @@ type GoogleAppsDriveLabelsV2betaLifecycleDisabledPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaLifecycleDisabledPolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaLifecycleDisabledPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaLifecycleDisabledPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaListLabelLocksResponse: The response to a
@@ -2279,9 +2279,9 @@ type GoogleAppsDriveLabelsV2betaListLabelLocksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaListLabelLocksResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaListLabelLocksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaListLabelLocksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaListLabelPermissionsResponse: Response for
@@ -2307,9 +2307,9 @@ type GoogleAppsDriveLabelsV2betaListLabelPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaListLabelPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaListLabelPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaListLabelPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaListLabelsResponse: Response for listing Labels.
@@ -2334,9 +2334,9 @@ type GoogleAppsDriveLabelsV2betaListLabelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaListLabelsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaListLabelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaListLabelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaListLimits: Limits for list-variant of a Field
@@ -2357,9 +2357,9 @@ type GoogleAppsDriveLabelsV2betaListLimits struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaListLimits) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaListLimits) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaListLimits
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaLockStatus: Contains information about whether a
@@ -2383,9 +2383,9 @@ type GoogleAppsDriveLabelsV2betaLockStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaLockStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaLockStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaLockStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaLongTextLimits: Limits for long text Field type.
@@ -2407,9 +2407,9 @@ type GoogleAppsDriveLabelsV2betaLongTextLimits struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaLongTextLimits) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaLongTextLimits) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaLongTextLimits
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaPublishLabelRequest: Request to publish a label.
@@ -2438,9 +2438,9 @@ type GoogleAppsDriveLabelsV2betaPublishLabelRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaPublishLabelRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaPublishLabelRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaPublishLabelRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaSelectionLimits: Limits for selection Field type.
@@ -2468,9 +2468,9 @@ type GoogleAppsDriveLabelsV2betaSelectionLimits struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaSelectionLimits) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaSelectionLimits) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaSelectionLimits
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaTextLimits: Limits for text Field type.
@@ -2492,9 +2492,9 @@ type GoogleAppsDriveLabelsV2betaTextLimits struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaTextLimits) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaTextLimits) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaTextLimits
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaUpdateLabelCopyModeRequest: Request to update the
@@ -2542,9 +2542,9 @@ type GoogleAppsDriveLabelsV2betaUpdateLabelCopyModeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaUpdateLabelCopyModeRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaUpdateLabelCopyModeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaUpdateLabelCopyModeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaUpdateLabelPermissionRequest: Updates a Label
@@ -2572,9 +2572,9 @@ type GoogleAppsDriveLabelsV2betaUpdateLabelPermissionRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaUpdateLabelPermissionRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaUpdateLabelPermissionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaUpdateLabelPermissionRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaUserCapabilities: The capabilities of a user.
@@ -2609,9 +2609,9 @@ type GoogleAppsDriveLabelsV2betaUserCapabilities struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaUserCapabilities) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaUserCapabilities) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaUserCapabilities
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaUserInfo: Information about a user.
@@ -2632,9 +2632,9 @@ type GoogleAppsDriveLabelsV2betaUserInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaUserInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaUserInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaUserLimits: Limits for Field.Type.USER.
@@ -2654,9 +2654,9 @@ type GoogleAppsDriveLabelsV2betaUserLimits struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaUserLimits) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaUserLimits) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaUserLimits
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsDriveLabelsV2betaWriteControl: Provides control over how write
@@ -2679,9 +2679,9 @@ type GoogleAppsDriveLabelsV2betaWriteControl struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAppsDriveLabelsV2betaWriteControl) MarshalJSON() ([]byte, error) {
+func (s GoogleAppsDriveLabelsV2betaWriteControl) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsDriveLabelsV2betaWriteControl
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -2772,9 +2772,9 @@ type GoogleTypeColor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeColor) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeColor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeColor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleTypeColor) UnmarshalJSON(data []byte) error {
@@ -2830,9 +2830,9 @@ type GoogleTypeDate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LabelsCreateCall struct {

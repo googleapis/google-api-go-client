@@ -172,9 +172,9 @@ type Axis struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Axis) MarshalJSON() ([]byte, error) {
+func (s Axis) MarshalJSON() ([]byte, error) {
 	type NoMethod Axis
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Axis) UnmarshalJSON(data []byte) error {
@@ -233,9 +233,9 @@ type Webfont struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Webfont) MarshalJSON() ([]byte, error) {
+func (s Webfont) MarshalJSON() ([]byte, error) {
 	type NoMethod Webfont
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebfontList: Response containing the list of fonts currently served by the
@@ -262,9 +262,9 @@ type WebfontList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebfontList) MarshalJSON() ([]byte, error) {
+func (s WebfontList) MarshalJSON() ([]byte, error) {
 	type NoMethod WebfontList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type WebfontsListCall struct {

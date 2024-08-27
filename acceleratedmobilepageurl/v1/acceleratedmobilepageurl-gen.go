@@ -173,9 +173,9 @@ type AmpUrl struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AmpUrl) MarshalJSON() ([]byte, error) {
+func (s AmpUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod AmpUrl
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AmpUrlError: AMP URL Error resource for a requested URL that couldn't be
@@ -215,9 +215,9 @@ type AmpUrlError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AmpUrlError) MarshalJSON() ([]byte, error) {
+func (s AmpUrlError) MarshalJSON() ([]byte, error) {
 	type NoMethod AmpUrlError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchGetAmpUrlsRequest: AMP URL request for a batch of URLs.
@@ -252,9 +252,9 @@ type BatchGetAmpUrlsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchGetAmpUrlsRequest) MarshalJSON() ([]byte, error) {
+func (s BatchGetAmpUrlsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetAmpUrlsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchGetAmpUrlsResponse: Batch AMP URL response.
@@ -281,9 +281,9 @@ type BatchGetAmpUrlsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchGetAmpUrlsResponse) MarshalJSON() ([]byte, error) {
+func (s BatchGetAmpUrlsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetAmpUrlsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AmpUrlsBatchGetCall struct {

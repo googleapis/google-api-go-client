@@ -182,9 +182,9 @@ type Challenge struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Challenge) MarshalJSON() ([]byte, error) {
+func (s Challenge) MarshalJSON() ([]byte, error) {
 	type NoMethod Challenge
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CrowdStrikeAgent: Properties of the CrowdStrike agent installed on a device.
@@ -206,9 +206,9 @@ type CrowdStrikeAgent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CrowdStrikeAgent) MarshalJSON() ([]byte, error) {
+func (s CrowdStrikeAgent) MarshalJSON() ([]byte, error) {
 	type NoMethod CrowdStrikeAgent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceSignals: The device signals as reported by Chrome. Unless otherwise
@@ -404,9 +404,9 @@ type DeviceSignals struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceSignals) MarshalJSON() ([]byte, error) {
+func (s DeviceSignals) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceSignals
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -440,9 +440,9 @@ type VerifyChallengeResponseRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VerifyChallengeResponseRequest) MarshalJSON() ([]byte, error) {
+func (s VerifyChallengeResponseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyChallengeResponseRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VerifyChallengeResponseResult: Result message for
@@ -516,9 +516,9 @@ type VerifyChallengeResponseResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VerifyChallengeResponseResult) MarshalJSON() ([]byte, error) {
+func (s VerifyChallengeResponseResult) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyChallengeResponseResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ChallengeGenerateCall struct {

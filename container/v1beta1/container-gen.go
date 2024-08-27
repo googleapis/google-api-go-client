@@ -329,9 +329,9 @@ type AcceleratorConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
+func (s AcceleratorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AcceleratorConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdditionalNodeNetworkConfig: AdditionalNodeNetworkConfig is the
@@ -355,21 +355,21 @@ type AdditionalNodeNetworkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdditionalNodeNetworkConfig) MarshalJSON() ([]byte, error) {
+func (s AdditionalNodeNetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AdditionalNodeNetworkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdditionalPodNetworkConfig: AdditionalPodNetworkConfig is the configuration
 // for additional pod networks within the NodeNetworkConfig message
 type AdditionalPodNetworkConfig struct {
 	// MaxPodsPerNode: The maximum number of pods per node which use this pod
-	// network
+	// network.
 	MaxPodsPerNode *MaxPodsConstraint `json:"maxPodsPerNode,omitempty"`
 	// SecondaryPodRange: The name of the secondary range on the subnet which
-	// provides IP address for this pod range
+	// provides IP address for this pod range.
 	SecondaryPodRange string `json:"secondaryPodRange,omitempty"`
-	// Subnetwork: Name of the subnetwork where the additional pod network belongs
+	// Subnetwork: Name of the subnetwork where the additional pod network belongs.
 	Subnetwork string `json:"subnetwork,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MaxPodsPerNode") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -384,16 +384,15 @@ type AdditionalPodNetworkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdditionalPodNetworkConfig) MarshalJSON() ([]byte, error) {
+func (s AdditionalPodNetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AdditionalPodNetworkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdditionalPodRangesConfig: AdditionalPodRangesConfig is the configuration
 // for additional pod secondary ranges supporting the ClusterUpdate message.
 type AdditionalPodRangesConfig struct {
-	// PodRangeInfo: Output only. [Output only] Information for additional pod
-	// range.
+	// PodRangeInfo: Output only. Information for additional pod range.
 	PodRangeInfo []*RangeInfo `json:"podRangeInfo,omitempty"`
 	// PodRangeNames: Name for pod secondary ipv4 range which has the actual range
 	// defined ahead.
@@ -411,9 +410,9 @@ type AdditionalPodRangesConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdditionalPodRangesConfig) MarshalJSON() ([]byte, error) {
+func (s AdditionalPodRangesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AdditionalPodRangesConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AddonsConfig: Configuration for the addons that can be automatically spun up
@@ -463,6 +462,8 @@ type AddonsConfig struct {
 	// whether the addon is enabled or not on the Master, it does not track whether
 	// network policy is enabled for the nodes.
 	NetworkPolicyConfig *NetworkPolicyConfig `json:"networkPolicyConfig,omitempty"`
+	// RayOperatorConfig: Optional. Configuration for Ray Operator addon.
+	RayOperatorConfig *RayOperatorConfig `json:"rayOperatorConfig,omitempty"`
 	// StatefulHaConfig: Optional. Configuration for the StatefulHA add-on.
 	StatefulHaConfig *StatefulHAConfig `json:"statefulHaConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudRunConfig") to
@@ -478,9 +479,9 @@ type AddonsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddonsConfig) MarshalJSON() ([]byte, error) {
+func (s AddonsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AddonsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdvancedDatapathObservabilityConfig: AdvancedDatapathObservabilityConfig
@@ -511,9 +512,9 @@ type AdvancedDatapathObservabilityConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdvancedDatapathObservabilityConfig) MarshalJSON() ([]byte, error) {
+func (s AdvancedDatapathObservabilityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvancedDatapathObservabilityConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdvancedMachineFeatures: Specifies options for controlling advanced machine
@@ -539,9 +540,9 @@ type AdvancedMachineFeatures struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdvancedMachineFeatures) MarshalJSON() ([]byte, error) {
+func (s AdvancedMachineFeatures) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvancedMachineFeatures
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuthenticatorGroupsConfig: Configuration for returning group information
@@ -566,19 +567,19 @@ type AuthenticatorGroupsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuthenticatorGroupsConfig) MarshalJSON() ([]byte, error) {
+func (s AuthenticatorGroupsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthenticatorGroupsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutoUpgradeOptions: AutoUpgradeOptions defines the set of options for the
 // user to control how the Auto Upgrades will proceed.
 type AutoUpgradeOptions struct {
-	// AutoUpgradeStartTime: [Output only] This field is set when upgrades are
-	// about to commence with the approximate start time for the upgrades, in
-	// RFC3339 (https://www.ietf.org/rfc/rfc3339.txt) text format.
+	// AutoUpgradeStartTime: Output only. This field is set when upgrades are about
+	// to commence with the approximate start time for the upgrades, in RFC3339
+	// (https://www.ietf.org/rfc/rfc3339.txt) text format.
 	AutoUpgradeStartTime string `json:"autoUpgradeStartTime,omitempty"`
-	// Description: [Output only] This field is set when upgrades are about to
+	// Description: Output only. This field is set when upgrades are about to
 	// commence with the description of the upgrade.
 	Description string `json:"description,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoUpgradeStartTime") to
@@ -594,9 +595,9 @@ type AutoUpgradeOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoUpgradeOptions) MarshalJSON() ([]byte, error) {
+func (s AutoUpgradeOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoUpgradeOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Autopilot: Autopilot is the configuration for Autopilot settings on the
@@ -621,9 +622,9 @@ type Autopilot struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Autopilot) MarshalJSON() ([]byte, error) {
+func (s Autopilot) MarshalJSON() ([]byte, error) {
 	type NoMethod Autopilot
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutopilotCompatibilityIssue: AutopilotCompatibilityIssue contains
@@ -665,9 +666,9 @@ type AutopilotCompatibilityIssue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutopilotCompatibilityIssue) MarshalJSON() ([]byte, error) {
+func (s AutopilotCompatibilityIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod AutopilotCompatibilityIssue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutopilotConversionStatus: AutopilotConversionStatus represents conversion
@@ -694,9 +695,9 @@ type AutopilotConversionStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutopilotConversionStatus) MarshalJSON() ([]byte, error) {
+func (s AutopilotConversionStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod AutopilotConversionStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutoprovisioningNodePoolDefaults: AutoprovisioningNodePoolDefaults contains
@@ -769,9 +770,9 @@ type AutoprovisioningNodePoolDefaults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AutoprovisioningNodePoolDefaults) MarshalJSON() ([]byte, error) {
+func (s AutoprovisioningNodePoolDefaults) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoprovisioningNodePoolDefaults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AutoscaledRolloutPolicy: Autoscaled rollout policy uses cluster autoscaler
@@ -798,9 +799,9 @@ type AvailableVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AvailableVersion) MarshalJSON() ([]byte, error) {
+func (s AvailableVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod AvailableVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BestEffortProvisioning: Best effort provisioning.
@@ -826,9 +827,9 @@ type BestEffortProvisioning struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BestEffortProvisioning) MarshalJSON() ([]byte, error) {
+func (s BestEffortProvisioning) MarshalJSON() ([]byte, error) {
 	type NoMethod BestEffortProvisioning
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BigQueryDestination: Parameters for using BigQuery as the destination of
@@ -849,9 +850,9 @@ type BigQueryDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BigQueryDestination) MarshalJSON() ([]byte, error) {
+func (s BigQueryDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod BigQueryDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BinaryAuthorization: Configuration for Binary Authorization.
@@ -891,9 +892,9 @@ type BinaryAuthorization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BinaryAuthorization) MarshalJSON() ([]byte, error) {
+func (s BinaryAuthorization) MarshalJSON() ([]byte, error) {
 	type NoMethod BinaryAuthorization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BlueGreenInfo: Information relevant to blue-green upgrade.
@@ -939,9 +940,9 @@ type BlueGreenInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlueGreenInfo) MarshalJSON() ([]byte, error) {
+func (s BlueGreenInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod BlueGreenInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BlueGreenSettings: Settings for blue-green upgrade.
@@ -967,9 +968,9 @@ type BlueGreenSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BlueGreenSettings) MarshalJSON() ([]byte, error) {
+func (s BlueGreenSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod BlueGreenSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: CancelOperationRequest cancels a single operation.
@@ -1003,9 +1004,9 @@ type CancelOperationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CancelOperationRequest) MarshalJSON() ([]byte, error) {
+func (s CancelOperationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CancelOperationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateAuthorityDomainConfig: CertificateAuthorityDomainConfig
@@ -1032,9 +1033,9 @@ type CertificateAuthorityDomainConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertificateAuthorityDomainConfig) MarshalJSON() ([]byte, error) {
+func (s CertificateAuthorityDomainConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateAuthorityDomainConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CheckAutopilotCompatibilityResponse: CheckAutopilotCompatibilityResponse has
@@ -1060,9 +1061,9 @@ type CheckAutopilotCompatibilityResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CheckAutopilotCompatibilityResponse) MarshalJSON() ([]byte, error) {
+func (s CheckAutopilotCompatibilityResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CheckAutopilotCompatibilityResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CidrBlock: CidrBlock contains an optional name and one CIDR block.
@@ -1085,9 +1086,9 @@ type CidrBlock struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CidrBlock) MarshalJSON() ([]byte, error) {
+func (s CidrBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod CidrBlock
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClientCertificateConfig: Configuration for client certificates on the
@@ -1108,9 +1109,9 @@ type ClientCertificateConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClientCertificateConfig) MarshalJSON() ([]byte, error) {
+func (s ClientCertificateConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ClientCertificateConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudRunConfig: Configuration options for the Cloud Run feature.
@@ -1140,9 +1141,9 @@ type CloudRunConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudRunConfig) MarshalJSON() ([]byte, error) {
+func (s CloudRunConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudRunConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Cluster: A Google Kubernetes Engine cluster.
@@ -1177,17 +1178,16 @@ type Cluster struct {
 	// CostManagementConfig: Configuration for the fine-grained cost management
 	// feature.
 	CostManagementConfig *CostManagementConfig `json:"costManagementConfig,omitempty"`
-	// CreateTime: [Output only] The time the cluster was created, in RFC3339
+	// CreateTime: Output only. The time the cluster was created, in RFC3339
 	// (https://www.ietf.org/rfc/rfc3339.txt) text format.
 	CreateTime string `json:"createTime,omitempty"`
-	// CurrentMasterVersion: [Output only] The current software version of the
+	// CurrentMasterVersion: Output only. The current software version of the
 	// master endpoint.
 	CurrentMasterVersion string `json:"currentMasterVersion,omitempty"`
-	// CurrentNodeCount: [Output only] The number of nodes currently in the
-	// cluster. Deprecated. Call Kubernetes API directly to retrieve node
-	// information.
+	// CurrentNodeCount: Output only. The number of nodes currently in the cluster.
+	// Deprecated. Call Kubernetes API directly to retrieve node information.
 	CurrentNodeCount int64 `json:"currentNodeCount,omitempty"`
-	// CurrentNodeVersion: [Output only] Deprecated, use NodePool.version
+	// CurrentNodeVersion: Output only. Deprecated, use NodePool.version
 	// (https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters.nodePools)
 	// instead. The current version of the node software components. If they are
 	// currently at multiple versions because they're in the process of being
@@ -1213,8 +1213,8 @@ type Cluster struct {
 	// EnableTpu: Enable the ability to use Cloud TPUs in this cluster. This field
 	// is deprecated, use tpu_config.enabled instead.
 	EnableTpu bool `json:"enableTpu,omitempty"`
-	// Endpoint: [Output only] The IP address of this cluster's master endpoint.
-	// The endpoint can be accessed from the internet at
+	// Endpoint: Output only. The IP address of this cluster's master endpoint. The
+	// endpoint can be accessed from the internet at
 	// `https://username:password@endpoint/`. See the `masterAuth` property of this
 	// resource for username and password information.
 	Endpoint string `json:"endpoint,omitempty"`
@@ -1224,7 +1224,7 @@ type Cluster struct {
 	// fields, and may be sent on update requests to ensure the client has an
 	// up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-	// ExpireTime: [Output only] The time the cluster will be automatically deleted
+	// ExpireTime: Output only. The time the cluster will be automatically deleted
 	// in RFC3339 (https://www.ietf.org/rfc/rfc3339.txt) text format.
 	ExpireTime string `json:"expireTime,omitempty"`
 	// Fleet: Fleet information for the cluster.
@@ -1254,7 +1254,8 @@ type Cluster struct {
 	// a node_pool at the same time. This field is deprecated, use
 	// node_pool.initial_node_count instead.
 	InitialNodeCount int64 `json:"initialNodeCount,omitempty"`
-	// InstanceGroupUrls: Deprecated. Use node_pools.instance_group_urls.
+	// InstanceGroupUrls: Output only. Deprecated. Use
+	// node_pools.instance_group_urls.
 	InstanceGroupUrls []string `json:"instanceGroupUrls,omitempty"`
 	// IpAllocationPolicy: Configuration for cluster IP allocation.
 	IpAllocationPolicy *IPAllocationPolicy `json:"ipAllocationPolicy,omitempty"`
@@ -1262,7 +1263,7 @@ type Cluster struct {
 	LabelFingerprint string `json:"labelFingerprint,omitempty"`
 	// LegacyAbac: Configuration for the legacy ABAC authorization mode.
 	LegacyAbac *LegacyAbac `json:"legacyAbac,omitempty"`
-	// Location: [Output only] The name of the Google Compute Engine zone
+	// Location: Output only. The name of the Google Compute Engine zone
 	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
 	// or region
 	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
@@ -1342,7 +1343,7 @@ type Cluster struct {
 	// node pool, see `node_pool.config`) If unspecified, the defaults are used.
 	// This field is deprecated, use node_pool.config instead.
 	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
-	// NodeIpv4CidrSize: [Output only] The size of the address space on each node
+	// NodeIpv4CidrSize: Output only. The size of the address space on each node
 	// for hosting containers. This is provisioned from within the
 	// `container_ipv4_cidr` range. This field will only be set when cluster is in
 	// route-based network mode.
@@ -1375,6 +1376,9 @@ type Cluster struct {
 	// ProtectConfig: Deprecated: Use SecurityPostureConfig instead. Enable/Disable
 	// Protect API features for the cluster.
 	ProtectConfig *ProtectConfig `json:"protectConfig,omitempty"`
+	// RbacBindingConfig: RBACBindingConfig allows user to restrict
+	// ClusterRoleBindings an RoleBindings that can be created.
+	RbacBindingConfig *RBACBindingConfig `json:"rbacBindingConfig,omitempty"`
 	// ReleaseChannel: Release channel configuration. If left unspecified on
 	// cluster creation and a version is specified, the cluster is enrolled in the
 	// most mature release channel where the version is available (first checking
@@ -1397,9 +1401,9 @@ type Cluster struct {
 	// SecurityPostureConfig: Enable/Disable Security Posture API features for the
 	// cluster.
 	SecurityPostureConfig *SecurityPostureConfig `json:"securityPostureConfig,omitempty"`
-	// SelfLink: [Output only] Server-defined URL for the resource.
+	// SelfLink: Output only. Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
-	// ServicesIpv4Cidr: [Output only] The IP address range of the Kubernetes
+	// ServicesIpv4Cidr: Output only. The IP address range of the Kubernetes
 	// services in this cluster, in CIDR
 	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g.
 	// `1.2.3.4/29`). Service addresses are typically put in the last `/16` from
@@ -1407,7 +1411,7 @@ type Cluster struct {
 	ServicesIpv4Cidr string `json:"servicesIpv4Cidr,omitempty"`
 	// ShieldedNodes: Shielded Nodes configuration.
 	ShieldedNodes *ShieldedNodes `json:"shieldedNodes,omitempty"`
-	// Status: [Output only] The current status of this cluster.
+	// Status: Output only. The current status of this cluster.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Not set.
@@ -1425,7 +1429,7 @@ type Cluster struct {
 	// to restore full functionality. Details can be found in the `statusMessage`
 	// field.
 	Status string `json:"status,omitempty"`
-	// StatusMessage: [Output only] Deprecated. Use conditions instead. Additional
+	// StatusMessage: Output only. Deprecated. Use conditions instead. Additional
 	// information about the current status of this cluster, if available.
 	StatusMessage string `json:"statusMessage,omitempty"`
 	// Subnetwork: The name of the Google Compute Engine subnetwork
@@ -1434,7 +1438,7 @@ type Cluster struct {
 	Subnetwork string `json:"subnetwork,omitempty"`
 	// TpuConfig: Configuration for Cloud TPU support;
 	TpuConfig *TpuConfig `json:"tpuConfig,omitempty"`
-	// TpuIpv4CidrBlock: [Output only] The IP address range of the Cloud TPUs in
+	// TpuIpv4CidrBlock: Output only. The IP address range of the Cloud TPUs in
 	// this cluster, in CIDR
 	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g.
 	// `1.2.3.4/29`).
@@ -1451,7 +1455,7 @@ type Cluster struct {
 	// WorkloadIdentityConfig: Configuration for the use of Kubernetes Service
 	// Accounts in GCP IAM policies.
 	WorkloadIdentityConfig *WorkloadIdentityConfig `json:"workloadIdentityConfig,omitempty"`
-	// Zone: [Output only] The name of the Google Compute Engine zone
+	// Zone: Output only. The name of the Google Compute Engine zone
 	// (https://cloud.google.com/compute/docs/zones#available) in which the cluster
 	// resides. This field is deprecated, use location instead.
 	Zone string `json:"zone,omitempty"`
@@ -1471,9 +1475,9 @@ type Cluster struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Cluster) MarshalJSON() ([]byte, error) {
+func (s Cluster) MarshalJSON() ([]byte, error) {
 	type NoMethod Cluster
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClusterAutoscaling: ClusterAutoscaling contains global, per-cluster
@@ -1513,9 +1517,9 @@ type ClusterAutoscaling struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClusterAutoscaling) MarshalJSON() ([]byte, error) {
+func (s ClusterAutoscaling) MarshalJSON() ([]byte, error) {
 	type NoMethod ClusterAutoscaling
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClusterNetworkPerformanceConfig: Configuration of all network bandwidth
@@ -1541,9 +1545,9 @@ type ClusterNetworkPerformanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClusterNetworkPerformanceConfig) MarshalJSON() ([]byte, error) {
+func (s ClusterNetworkPerformanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ClusterNetworkPerformanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClusterTelemetry: Telemetry integration for the cluster.
@@ -1569,9 +1573,9 @@ type ClusterTelemetry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClusterTelemetry) MarshalJSON() ([]byte, error) {
+func (s ClusterTelemetry) MarshalJSON() ([]byte, error) {
 	type NoMethod ClusterTelemetry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClusterUpdate: ClusterUpdate describes an update to the cluster. Exactly one
@@ -1774,6 +1778,9 @@ type ClusterUpdate struct {
 	// DesiredProtectConfig: Deprecated: Use DesiredSecurityPostureConfig instead.
 	// Enable/Disable Protect API features for the cluster.
 	DesiredProtectConfig *ProtectConfig `json:"desiredProtectConfig,omitempty"`
+	// DesiredRbacBindingConfig: RBACBindingConfig allows user to restrict
+	// ClusterRoleBindings an RoleBindings that can be created.
+	DesiredRbacBindingConfig *RBACBindingConfig `json:"desiredRbacBindingConfig,omitempty"`
 	// DesiredReleaseChannel: The desired release channel configuration.
 	DesiredReleaseChannel *ReleaseChannel `json:"desiredReleaseChannel,omitempty"`
 	// DesiredResourceUsageExportConfig: The desired configuration for exporting
@@ -1838,9 +1845,9 @@ type ClusterUpdate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ClusterUpdate) MarshalJSON() ([]byte, error) {
+func (s ClusterUpdate) MarshalJSON() ([]byte, error) {
 	type NoMethod ClusterUpdate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompleteIPRotationRequest: CompleteIPRotationRequest moves the cluster
@@ -1874,9 +1881,9 @@ type CompleteIPRotationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompleteIPRotationRequest) MarshalJSON() ([]byte, error) {
+func (s CompleteIPRotationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CompleteIPRotationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompleteNodePoolUpgradeRequest: CompleteNodePoolUpgradeRequest sets the name
@@ -1909,9 +1916,9 @@ type CompliancePostureConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompliancePostureConfig) MarshalJSON() ([]byte, error) {
+func (s CompliancePostureConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CompliancePostureConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComplianceStandard: Defines the details of a compliance standard.
@@ -1931,9 +1938,9 @@ type ComplianceStandard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComplianceStandard) MarshalJSON() ([]byte, error) {
+func (s ComplianceStandard) MarshalJSON() ([]byte, error) {
 	type NoMethod ComplianceStandard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConfidentialNodes: ConfidentialNodes is configuration for the confidential
@@ -1954,9 +1961,9 @@ type ConfidentialNodes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConfidentialNodes) MarshalJSON() ([]byte, error) {
+func (s ConfidentialNodes) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfidentialNodes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConfigConnectorConfig: Configuration options for the Config Connector
@@ -1977,9 +1984,9 @@ type ConfigConnectorConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConfigConnectorConfig) MarshalJSON() ([]byte, error) {
+func (s ConfigConnectorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfigConnectorConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConsumptionMeteringConfig: Parameters for controlling consumption metering.
@@ -2001,9 +2008,9 @@ type ConsumptionMeteringConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConsumptionMeteringConfig) MarshalJSON() ([]byte, error) {
+func (s ConsumptionMeteringConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ConsumptionMeteringConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContainerdConfig: ContainerdConfig contains configuration to customize
@@ -2025,9 +2032,9 @@ type ContainerdConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContainerdConfig) MarshalJSON() ([]byte, error) {
+func (s ContainerdConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerdConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CostManagementConfig: Configuration for fine-grained cost management
@@ -2048,9 +2055,9 @@ type CostManagementConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CostManagementConfig) MarshalJSON() ([]byte, error) {
+func (s CostManagementConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CostManagementConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateClusterRequest: CreateClusterRequest creates a cluster.
@@ -2083,9 +2090,9 @@ type CreateClusterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateClusterRequest) MarshalJSON() ([]byte, error) {
+func (s CreateClusterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateClusterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateNodePoolRequest: CreateNodePoolRequest creates a node pool for a
@@ -2122,9 +2129,9 @@ type CreateNodePoolRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateNodePoolRequest) MarshalJSON() ([]byte, error) {
+func (s CreateNodePoolRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateNodePoolRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DNSConfig: DNSConfig contains the desired set of options for configuring
@@ -2167,15 +2174,15 @@ type DNSConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DNSConfig) MarshalJSON() ([]byte, error) {
+func (s DNSConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DNSConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DailyMaintenanceWindow: Time window specified for daily maintenance
 // operations.
 type DailyMaintenanceWindow struct {
-	// Duration: [Output only] Duration of the time window, automatically chosen to
+	// Duration: Output only. Duration of the time window, automatically chosen to
 	// be smallest possible in the given scenario.
 	Duration string `json:"duration,omitempty"`
 	// StartTime: Time within the maintenance window to start the maintenance
@@ -2195,9 +2202,9 @@ type DailyMaintenanceWindow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DailyMaintenanceWindow) MarshalJSON() ([]byte, error) {
+func (s DailyMaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod DailyMaintenanceWindow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatabaseEncryption: Configuration of etcd encryption.
@@ -2250,9 +2257,9 @@ type DatabaseEncryption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatabaseEncryption) MarshalJSON() ([]byte, error) {
+func (s DatabaseEncryption) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseEncryption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a birthday. The
@@ -2288,9 +2295,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DefaultSnatStatus: DefaultSnatStatus contains the desired state of whether
@@ -2311,9 +2318,9 @@ type DefaultSnatStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DefaultSnatStatus) MarshalJSON() ([]byte, error) {
+func (s DefaultSnatStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod DefaultSnatStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DnsCacheConfig: Configuration for NodeLocal DNSCache
@@ -2333,9 +2340,9 @@ type DnsCacheConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DnsCacheConfig) MarshalJSON() ([]byte, error) {
+func (s DnsCacheConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DnsCacheConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -2349,8 +2356,8 @@ type Empty struct {
 
 // EnterpriseConfig: EnterpriseConfig is the cluster enterprise configuration.
 type EnterpriseConfig struct {
-	// ClusterTier: Output only. [Output only] cluster_tier specifies the premium
-	// tier of the cluster.
+	// ClusterTier: Output only. cluster_tier indicates the effective tier of the
+	// cluster.
 	//
 	// Possible values:
 	//   "CLUSTER_TIER_UNSPECIFIED" - CLUSTER_TIER_UNSPECIFIED is when cluster_tier
@@ -2371,9 +2378,9 @@ type EnterpriseConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnterpriseConfig) MarshalJSON() ([]byte, error) {
+func (s EnterpriseConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EnterpriseConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EphemeralStorageConfig: EphemeralStorageConfig contains configuration for
@@ -2407,9 +2414,9 @@ type EphemeralStorageConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EphemeralStorageConfig) MarshalJSON() ([]byte, error) {
+func (s EphemeralStorageConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EphemeralStorageConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EphemeralStorageLocalSsdConfig: EphemeralStorageLocalSsdConfig contains
@@ -2443,9 +2450,9 @@ type EphemeralStorageLocalSsdConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EphemeralStorageLocalSsdConfig) MarshalJSON() ([]byte, error) {
+func (s EphemeralStorageLocalSsdConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EphemeralStorageLocalSsdConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FastSocket: Configuration of Fast Socket feature.
@@ -2465,9 +2472,9 @@ type FastSocket struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FastSocket) MarshalJSON() ([]byte, error) {
+func (s FastSocket) MarshalJSON() ([]byte, error) {
 	type NoMethod FastSocket
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Filter: Allows filtering to one or more specific event types. If event types
@@ -2496,18 +2503,18 @@ type Filter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Filter) MarshalJSON() ([]byte, error) {
+func (s Filter) MarshalJSON() ([]byte, error) {
 	type NoMethod Filter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Fleet: Fleet is the fleet configuration for the cluster.
 type Fleet struct {
-	// Membership: [Output only] The full resource name of the registered fleet
+	// Membership: Output only. The full resource name of the registered fleet
 	// membership of the cluster, in the format
 	// `//gkehub.googleapis.com/projects/*/locations/*/memberships/*`.
 	Membership string `json:"membership,omitempty"`
-	// PreRegistered: [Output only] Whether the cluster has been registered through
+	// PreRegistered: Output only. Whether the cluster has been registered through
 	// the fleet API.
 	PreRegistered bool `json:"preRegistered,omitempty"`
 	// Project: The Fleet host project(project ID or project number) where this
@@ -2527,9 +2534,9 @@ type Fleet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Fleet) MarshalJSON() ([]byte, error) {
+func (s Fleet) MarshalJSON() ([]byte, error) {
 	type NoMethod Fleet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GCPSecretManagerCertificateConfig: GCPSecretManagerCertificateConfig
@@ -2553,9 +2560,9 @@ type GCPSecretManagerCertificateConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GCPSecretManagerCertificateConfig) MarshalJSON() ([]byte, error) {
+func (s GCPSecretManagerCertificateConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GCPSecretManagerCertificateConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GPUDriverInstallationConfig: GPUDriverInstallationConfig specifies the
@@ -2584,9 +2591,9 @@ type GPUDriverInstallationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GPUDriverInstallationConfig) MarshalJSON() ([]byte, error) {
+func (s GPUDriverInstallationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GPUDriverInstallationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GPUSharingConfig: GPUSharingConfig represents the GPU sharing configuration
@@ -2616,9 +2623,9 @@ type GPUSharingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GPUSharingConfig) MarshalJSON() ([]byte, error) {
+func (s GPUSharingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GPUSharingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GatewayAPIConfig: GatewayAPIConfig contains the desired config of Gateway
@@ -2629,8 +2636,8 @@ type GatewayAPIConfig struct {
 	// Possible values:
 	//   "CHANNEL_UNSPECIFIED" - Default value.
 	//   "CHANNEL_DISABLED" - Gateway API support is disabled
-	//   "CHANNEL_EXPERIMENTAL" - Gateway API support is enabled, experimental CRDs
-	// are installed
+	//   "CHANNEL_EXPERIMENTAL" - Deprecated: use CHANNEL_STANDARD instead. Gateway
+	// API support is enabled, experimental CRDs are installed
 	//   "CHANNEL_STANDARD" - Gateway API support is enabled, standard CRDs are
 	// installed
 	Channel string `json:"channel,omitempty"`
@@ -2647,9 +2654,9 @@ type GatewayAPIConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GatewayAPIConfig) MarshalJSON() ([]byte, error) {
+func (s GatewayAPIConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GatewayAPIConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcePersistentDiskCsiDriverConfig: Configuration for the Compute Engine PD
@@ -2671,9 +2678,9 @@ type GcePersistentDiskCsiDriverConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GcePersistentDiskCsiDriverConfig) MarshalJSON() ([]byte, error) {
+func (s GcePersistentDiskCsiDriverConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GcePersistentDiskCsiDriverConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcfsConfig: GcfsConfig contains configurations of Google Container File
@@ -2694,9 +2701,9 @@ type GcfsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GcfsConfig) MarshalJSON() ([]byte, error) {
+func (s GcfsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GcfsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcpFilestoreCsiDriverConfig: Configuration for the GCP Filestore CSI driver.
@@ -2716,9 +2723,9 @@ type GcpFilestoreCsiDriverConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GcpFilestoreCsiDriverConfig) MarshalJSON() ([]byte, error) {
+func (s GcpFilestoreCsiDriverConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GcpFilestoreCsiDriverConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcsFuseCsiDriverConfig: Configuration for the Cloud Storage Fuse CSI driver.
@@ -2739,9 +2746,9 @@ type GcsFuseCsiDriverConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GcsFuseCsiDriverConfig) MarshalJSON() ([]byte, error) {
+func (s GcsFuseCsiDriverConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GcsFuseCsiDriverConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetJSONWebKeysResponse: GetJSONWebKeysResponse is a valid JSON Web Key Set
@@ -2769,9 +2776,9 @@ type GetJSONWebKeysResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetJSONWebKeysResponse) MarshalJSON() ([]byte, error) {
+func (s GetJSONWebKeysResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetJSONWebKeysResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetOpenIDConfigResponse: GetOpenIDConfigResponse is an OIDC discovery
@@ -2811,9 +2818,9 @@ type GetOpenIDConfigResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetOpenIDConfigResponse) MarshalJSON() ([]byte, error) {
+func (s GetOpenIDConfigResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetOpenIDConfigResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GkeBackupAgentConfig: Configuration for the Backup for GKE Agent.
@@ -2833,9 +2840,9 @@ type GkeBackupAgentConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GkeBackupAgentConfig) MarshalJSON() ([]byte, error) {
+func (s GkeBackupAgentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GkeBackupAgentConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HorizontalPodAutoscaling: Configuration options for the horizontal pod
@@ -2860,9 +2867,9 @@ type HorizontalPodAutoscaling struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HorizontalPodAutoscaling) MarshalJSON() ([]byte, error) {
+func (s HorizontalPodAutoscaling) MarshalJSON() ([]byte, error) {
 	type NoMethod HorizontalPodAutoscaling
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HostMaintenancePolicy: HostMaintenancePolicy contains the maintenance policy
@@ -2900,9 +2907,9 @@ type HostMaintenancePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HostMaintenancePolicy) MarshalJSON() ([]byte, error) {
+func (s HostMaintenancePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod HostMaintenancePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpCacheControlResponseHeader: RFC-2616: cache control support
@@ -2926,9 +2933,9 @@ type HttpCacheControlResponseHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpCacheControlResponseHeader) MarshalJSON() ([]byte, error) {
+func (s HttpCacheControlResponseHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpCacheControlResponseHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpLoadBalancing: Configuration options for the HTTP (L7) load balancing
@@ -2952,9 +2959,9 @@ type HttpLoadBalancing struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpLoadBalancing) MarshalJSON() ([]byte, error) {
+func (s HttpLoadBalancing) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpLoadBalancing
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HugepagesConfig: Hugepages amount in both 2m and 1g size
@@ -2976,9 +2983,9 @@ type HugepagesConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HugepagesConfig) MarshalJSON() ([]byte, error) {
+func (s HugepagesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod HugepagesConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ILBSubsettingConfig: ILBSubsettingConfig contains the desired config of L4
@@ -2999,18 +3006,18 @@ type ILBSubsettingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ILBSubsettingConfig) MarshalJSON() ([]byte, error) {
+func (s ILBSubsettingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ILBSubsettingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IPAllocationPolicy: Configuration for controlling how IPs are allocated in
 // the cluster.
 type IPAllocationPolicy struct {
-	// AdditionalPodRangesConfig: Output only. [Output only] The additional pod
-	// ranges that are added to the cluster. These pod ranges can be used by new
-	// node pools to allocate pod IPs automatically. Once the range is removed it
-	// will not show up in IPAllocationPolicy.
+	// AdditionalPodRangesConfig: Output only. The additional pod ranges that are
+	// added to the cluster. These pod ranges can be used by new node pools to
+	// allocate pod IPs automatically. Once the range is removed it will not show
+	// up in IPAllocationPolicy.
 	AdditionalPodRangesConfig *AdditionalPodRangesConfig `json:"additionalPodRangesConfig,omitempty"`
 	// AllowRouteOverlap: If true, allow allocation of cluster CIDR ranges that
 	// overlap with certain kinds of network routes. By default we do not allow
@@ -3043,10 +3050,9 @@ type IPAllocationPolicy struct {
 	// CreateSubnetwork: Whether a new subnetwork will be created automatically for
 	// the cluster. This field is only applicable when `use_ip_aliases` is true.
 	CreateSubnetwork bool `json:"createSubnetwork,omitempty"`
-	// DefaultPodIpv4RangeUtilization: Output only. [Output only] The utilization
-	// of the cluster default IPv4 range for the pod. The ratio is Usage/[Total
-	// number of IPs in the secondary range],
-	// Usage=numNodes*numZones*podIPsPerNode.
+	// DefaultPodIpv4RangeUtilization: Output only. The utilization of the cluster
+	// default IPv4 range for the pod. The ratio is Usage/[Total number of IPs in
+	// the secondary range], Usage=numNodes*numZones*podIPsPerNode.
 	DefaultPodIpv4RangeUtilization float64 `json:"defaultPodIpv4RangeUtilization,omitempty"`
 	// Ipv6AccessType: The ipv6 access type (internal or external) when
 	// create_subnetwork is true
@@ -3087,8 +3093,8 @@ type IPAllocationPolicy struct {
 	// `10.96.0.0/14`) from the RFC-1918 private networks (e.g. `10.0.0.0/8`,
 	// `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range to use.
 	ServicesIpv4CidrBlock string `json:"servicesIpv4CidrBlock,omitempty"`
-	// ServicesIpv6CidrBlock: Output only. [Output only] The services IPv6 CIDR
-	// block for the cluster.
+	// ServicesIpv6CidrBlock: Output only. The services IPv6 CIDR block for the
+	// cluster.
 	ServicesIpv6CidrBlock string `json:"servicesIpv6CidrBlock,omitempty"`
 	// ServicesSecondaryRangeName: The name of the secondary range to be used as
 	// for the services CIDR block. The secondary range will be used for service
@@ -3103,8 +3109,8 @@ type IPAllocationPolicy struct {
 	//   "IPV4" - The value used if the cluster is a IPV4 only
 	//   "IPV4_IPV6" - The value used if the cluster is a dual stack cluster
 	StackType string `json:"stackType,omitempty"`
-	// SubnetIpv6CidrBlock: Output only. [Output only] The subnet's IPv6 CIDR block
-	// used by nodes and pods.
+	// SubnetIpv6CidrBlock: Output only. The subnet's IPv6 CIDR block used by nodes
+	// and pods.
 	SubnetIpv6CidrBlock string `json:"subnetIpv6CidrBlock,omitempty"`
 	// SubnetworkName: A custom subnetwork name to be used if `create_subnetwork`
 	// is true. If this field is empty, then an automatic name will be chosen for
@@ -3143,9 +3149,9 @@ type IPAllocationPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IPAllocationPolicy) MarshalJSON() ([]byte, error) {
+func (s IPAllocationPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod IPAllocationPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *IPAllocationPolicy) UnmarshalJSON(data []byte) error {
@@ -3181,9 +3187,9 @@ type IdentityServiceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdentityServiceConfig) MarshalJSON() ([]byte, error) {
+func (s IdentityServiceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentityServiceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IntraNodeVisibilityConfig: IntraNodeVisibilityConfig contains the desired
@@ -3204,9 +3210,9 @@ type IntraNodeVisibilityConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IntraNodeVisibilityConfig) MarshalJSON() ([]byte, error) {
+func (s IntraNodeVisibilityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod IntraNodeVisibilityConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IstioConfig: Configuration options for Istio addon.
@@ -3232,9 +3238,9 @@ type IstioConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IstioConfig) MarshalJSON() ([]byte, error) {
+func (s IstioConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod IstioConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Jwk: Jwk is a JSON Web Key as specified in RFC 7517
@@ -3270,9 +3276,9 @@ type Jwk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Jwk) MarshalJSON() ([]byte, error) {
+func (s Jwk) MarshalJSON() ([]byte, error) {
 	type NoMethod Jwk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // K8sBetaAPIConfig: Kubernetes open source beta apis enabled on the cluster.
@@ -3292,9 +3298,9 @@ type K8sBetaAPIConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *K8sBetaAPIConfig) MarshalJSON() ([]byte, error) {
+func (s K8sBetaAPIConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod K8sBetaAPIConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KalmConfig: Configuration options for the KALM addon.
@@ -3314,9 +3320,9 @@ type KalmConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KalmConfig) MarshalJSON() ([]byte, error) {
+func (s KalmConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod KalmConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KubernetesDashboard: Configuration for the Kubernetes Dashboard.
@@ -3336,9 +3342,9 @@ type KubernetesDashboard struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KubernetesDashboard) MarshalJSON() ([]byte, error) {
+func (s KubernetesDashboard) MarshalJSON() ([]byte, error) {
 	type NoMethod KubernetesDashboard
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LegacyAbac: Configuration for the legacy Attribute Based Access Control
@@ -3362,9 +3368,9 @@ type LegacyAbac struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LegacyAbac) MarshalJSON() ([]byte, error) {
+func (s LegacyAbac) MarshalJSON() ([]byte, error) {
 	type NoMethod LegacyAbac
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LinuxNodeConfig: Parameters that can be configured on Linux nodes.
@@ -3402,9 +3408,9 @@ type LinuxNodeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LinuxNodeConfig) MarshalJSON() ([]byte, error) {
+func (s LinuxNodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod LinuxNodeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListClustersResponse: ListClustersResponse is the result of
@@ -3432,9 +3438,9 @@ type ListClustersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListClustersResponse) MarshalJSON() ([]byte, error) {
+func (s ListClustersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListClustersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: ListLocationsResponse returns the list of all GKE
@@ -3464,9 +3470,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListNodePoolsResponse: ListNodePoolsResponse is the result of
@@ -3490,9 +3496,9 @@ type ListNodePoolsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListNodePoolsResponse) MarshalJSON() ([]byte, error) {
+func (s ListNodePoolsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListNodePoolsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: ListOperationsResponse is the result of
@@ -3519,9 +3525,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListUsableSubnetworksResponse: ListUsableSubnetworksResponse is the response
@@ -3550,9 +3556,9 @@ type ListUsableSubnetworksResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListUsableSubnetworksResponse) MarshalJSON() ([]byte, error) {
+func (s ListUsableSubnetworksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListUsableSubnetworksResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocalNvmeSsdBlockConfig: LocalNvmeSsdBlockConfig contains configuration for
@@ -3585,9 +3591,9 @@ type LocalNvmeSsdBlockConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocalNvmeSsdBlockConfig) MarshalJSON() ([]byte, error) {
+func (s LocalNvmeSsdBlockConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalNvmeSsdBlockConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: Location returns the location name, and if the location is
@@ -3619,9 +3625,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LoggingComponentConfig: LoggingComponentConfig is cluster logging component
@@ -3651,9 +3657,9 @@ type LoggingComponentConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoggingComponentConfig) MarshalJSON() ([]byte, error) {
+func (s LoggingComponentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod LoggingComponentConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LoggingConfig: LoggingConfig is cluster logging configuration.
@@ -3673,9 +3679,9 @@ type LoggingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoggingConfig) MarshalJSON() ([]byte, error) {
+func (s LoggingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod LoggingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LoggingVariantConfig: LoggingVariantConfig specifies the behaviour of the
@@ -3701,9 +3707,9 @@ type LoggingVariantConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LoggingVariantConfig) MarshalJSON() ([]byte, error) {
+func (s LoggingVariantConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod LoggingVariantConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenanceExclusionOptions: Represents the Maintenance exclusion option.
@@ -3734,9 +3740,9 @@ type MaintenanceExclusionOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenanceExclusionOptions) MarshalJSON() ([]byte, error) {
+func (s MaintenanceExclusionOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceExclusionOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenancePolicy: MaintenancePolicy defines the maintenance policy to be
@@ -3764,9 +3770,9 @@ type MaintenancePolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenancePolicy) MarshalJSON() ([]byte, error) {
+func (s MaintenancePolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenancePolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenanceWindow: MaintenanceWindow defines the maintenance window to be
@@ -3795,9 +3801,9 @@ type MaintenanceWindow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
+func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ManagedPrometheusConfig: ManagedPrometheusConfig defines the configuration
@@ -3818,9 +3824,9 @@ type ManagedPrometheusConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ManagedPrometheusConfig) MarshalJSON() ([]byte, error) {
+func (s ManagedPrometheusConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedPrometheusConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Master: Master is the configuration for components on master.
@@ -3831,16 +3837,19 @@ type Master struct {
 // endpoint. Authentication can be done using HTTP basic auth or using client
 // certificates.
 type MasterAuth struct {
-	// ClientCertificate: [Output only] Base64-encoded public certificate used by
-	// clients to authenticate to the cluster endpoint.
+	// ClientCertificate: Output only. Base64-encoded public certificate used by
+	// clients to authenticate to the cluster endpoint. Issued only if
+	// client_certificate_config is set.
 	ClientCertificate string `json:"clientCertificate,omitempty"`
 	// ClientCertificateConfig: Configuration for client certificate authentication
 	// on the cluster. For clusters before v1.12, if no configuration is specified,
 	// a client certificate is issued.
 	ClientCertificateConfig *ClientCertificateConfig `json:"clientCertificateConfig,omitempty"`
-	// ClientKey: [Output only] Base64-encoded private key used by clients to
+	// ClientKey: Output only. Base64-encoded private key used by clients to
 	// authenticate to the cluster endpoint.
-	ClientKey            string `json:"clientKey,omitempty"`
+	ClientKey string `json:"clientKey,omitempty"`
+	// ClusterCaCertificate: Output only. Base64-encoded public certificate that is
+	// the root of trust for the cluster.
 	ClusterCaCertificate string `json:"clusterCaCertificate,omitempty"`
 	// Password: The password to use for HTTP basic authentication to the master
 	// endpoint. Because the master endpoint is open to the Internet, you should
@@ -3871,9 +3880,9 @@ type MasterAuth struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MasterAuth) MarshalJSON() ([]byte, error) {
+func (s MasterAuth) MarshalJSON() ([]byte, error) {
 	type NoMethod MasterAuth
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MasterAuthorizedNetworksConfig: Configuration options for the master
@@ -3903,9 +3912,9 @@ type MasterAuthorizedNetworksConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MasterAuthorizedNetworksConfig) MarshalJSON() ([]byte, error) {
+func (s MasterAuthorizedNetworksConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MasterAuthorizedNetworksConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaxPodsConstraint: Constraints applied to pods.
@@ -3925,9 +3934,9 @@ type MaxPodsConstraint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaxPodsConstraint) MarshalJSON() ([]byte, error) {
+func (s MaxPodsConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod MaxPodsConstraint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MeshCertificates: Configuration for issuance of mTLS keys and certificates
@@ -3952,9 +3961,9 @@ type MeshCertificates struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MeshCertificates) MarshalJSON() ([]byte, error) {
+func (s MeshCertificates) MarshalJSON() ([]byte, error) {
 	type NoMethod MeshCertificates
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Metric: Progress metric is (string, int|float|string) pair.
@@ -3980,9 +3989,9 @@ type Metric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Metric) MarshalJSON() ([]byte, error) {
+func (s Metric) MarshalJSON() ([]byte, error) {
 	type NoMethod Metric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Metric) UnmarshalJSON(data []byte) error {
@@ -4020,6 +4029,7 @@ type MonitoringComponentConfig struct {
 	//   "STATEFULSET" - Statefulset
 	//   "CADVISOR" - CADVISOR
 	//   "KUBELET" - KUBELET
+	//   "DCGM" - NVIDIA Data Center GPU Manager (DCGM)
 	EnableComponents []string `json:"enableComponents,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableComponents") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4034,9 +4044,9 @@ type MonitoringComponentConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MonitoringComponentConfig) MarshalJSON() ([]byte, error) {
+func (s MonitoringComponentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MonitoringComponentConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MonitoringConfig: MonitoringConfig is cluster monitoring configuration.
@@ -4064,9 +4074,9 @@ type MonitoringConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MonitoringConfig) MarshalJSON() ([]byte, error) {
+func (s MonitoringConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MonitoringConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkConfig: NetworkConfig reports the relative names of network &
@@ -4156,9 +4166,9 @@ type NetworkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkConfig) MarshalJSON() ([]byte, error) {
+func (s NetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkPerformanceConfig: Configuration of all network bandwidth tiers
@@ -4190,9 +4200,9 @@ type NetworkPerformanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkPerformanceConfig) MarshalJSON() ([]byte, error) {
+func (s NetworkPerformanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkPerformanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkPolicy: Configuration options for the NetworkPolicy feature.
@@ -4219,9 +4229,9 @@ type NetworkPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkPolicy) MarshalJSON() ([]byte, error) {
+func (s NetworkPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkPolicyConfig: Configuration for NetworkPolicy. This only tracks
@@ -4243,9 +4253,9 @@ type NetworkPolicyConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkPolicyConfig) MarshalJSON() ([]byte, error) {
+func (s NetworkPolicyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkPolicyConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkTags: Collection of Compute Engine network tags that can be applied
@@ -4267,9 +4277,9 @@ type NetworkTags struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NetworkTags) MarshalJSON() ([]byte, error) {
+func (s NetworkTags) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkTags
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodeAffinity: Specifies the NodeAffinity key, values, and affinity operator
@@ -4300,9 +4310,9 @@ type NodeAffinity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodeAffinity) MarshalJSON() ([]byte, error) {
+func (s NodeAffinity) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeAffinity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodeConfig: Parameters that describe the nodes in a cluster. GKE Autopilot
@@ -4455,6 +4465,8 @@ type NodeConfig struct {
 	// Spot: Spot flag for enabling Spot VM, which is a rebrand of the existing
 	// preemptible flag.
 	Spot bool `json:"spot,omitempty"`
+	// StoragePools: List of Storage Pools where boot disks are provisioned.
+	StoragePools []string `json:"storagePools,omitempty"`
 	// Tags: The list of instance tags applied to all nodes. Tags are used to
 	// identify valid sources or targets for network firewalls and are specified by
 	// the client during cluster or node pool creation. Each tag within the list
@@ -4481,9 +4493,9 @@ type NodeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodeConfig) MarshalJSON() ([]byte, error) {
+func (s NodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodeConfigDefaults: Subset of NodeConfig message that has defaults.
@@ -4515,9 +4527,9 @@ type NodeConfigDefaults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodeConfigDefaults) MarshalJSON() ([]byte, error) {
+func (s NodeConfigDefaults) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeConfigDefaults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodeKubeletConfig: Node kubelet configs.
@@ -4563,9 +4575,9 @@ type NodeKubeletConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodeKubeletConfig) MarshalJSON() ([]byte, error) {
+func (s NodeKubeletConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeKubeletConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodeLabels: Collection of node-level Kubernetes labels
@@ -4586,9 +4598,9 @@ type NodeLabels struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodeLabels) MarshalJSON() ([]byte, error) {
+func (s NodeLabels) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeLabels
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodeManagement: NodeManagement defines the set of node management services
@@ -4613,9 +4625,9 @@ type NodeManagement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodeManagement) MarshalJSON() ([]byte, error) {
+func (s NodeManagement) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeManagement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodeNetworkConfig: Parameters for node pool-level network config.
@@ -4660,9 +4672,9 @@ type NodeNetworkConfig struct {
 	// `ip_allocation_policy.use_ip_aliases` is true. This field cannot be changed
 	// after the node pool has been created.
 	PodIpv4CidrBlock string `json:"podIpv4CidrBlock,omitempty"`
-	// PodIpv4RangeUtilization: Output only. [Output only] The utilization of the
-	// IPv4 range for the pod. The ratio is Usage/[Total number of IPs in the
-	// secondary range], Usage=numNodes*numZones*podIPsPerNode.
+	// PodIpv4RangeUtilization: Output only. The utilization of the IPv4 range for
+	// the pod. The ratio is Usage/[Total number of IPs in the secondary range],
+	// Usage=numNodes*numZones*podIPsPerNode.
 	PodIpv4RangeUtilization float64 `json:"podIpv4RangeUtilization,omitempty"`
 	// PodRange: The ID of the secondary range for pod IPs. If `create_pod_range`
 	// is true, this ID is used for the new range. If `create_pod_range` is false,
@@ -4683,9 +4695,9 @@ type NodeNetworkConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodeNetworkConfig) MarshalJSON() ([]byte, error) {
+func (s NodeNetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeNetworkConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *NodeNetworkConfig) UnmarshalJSON(data []byte) error {
@@ -4727,7 +4739,7 @@ type NodePool struct {
 	// is sufficient for this number of instances. You must also have available
 	// firewall and routes quota.
 	InitialNodeCount int64 `json:"initialNodeCount,omitempty"`
-	// InstanceGroupUrls: [Output only] The resource URLs of the managed instance
+	// InstanceGroupUrls: Output only. The resource URLs of the managed instance
 	// groups
 	// (https://cloud.google.com/compute/docs/instance-groups/creating-groups-of-managed-instances)
 	// associated with this node pool. During the node pool blue-green upgrade
@@ -4753,14 +4765,14 @@ type NodePool struct {
 	NetworkConfig *NodeNetworkConfig `json:"networkConfig,omitempty"`
 	// PlacementPolicy: Specifies the node placement policy.
 	PlacementPolicy *PlacementPolicy `json:"placementPolicy,omitempty"`
-	// PodIpv4CidrSize: [Output only] The pod CIDR block size per node in this node
+	// PodIpv4CidrSize: Output only. The pod CIDR block size per node in this node
 	// pool.
 	PodIpv4CidrSize int64 `json:"podIpv4CidrSize,omitempty"`
 	// QueuedProvisioning: Specifies the configuration of queued provisioning.
 	QueuedProvisioning *QueuedProvisioning `json:"queuedProvisioning,omitempty"`
-	// SelfLink: [Output only] Server-defined URL for the resource.
+	// SelfLink: Output only. Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
-	// Status: [Output only] The status of the nodes in this pool instance.
+	// Status: Output only. The status of the nodes in this pool instance.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Not set.
@@ -4779,12 +4791,12 @@ type NodePool struct {
 	//   "ERROR" - The ERROR state indicates the node pool may be unusable. Details
 	// can be found in the `statusMessage` field.
 	Status string `json:"status,omitempty"`
-	// StatusMessage: [Output only] Deprecated. Use conditions instead. Additional
+	// StatusMessage: Output only. Deprecated. Use conditions instead. Additional
 	// information about the current status of this node pool instance, if
 	// available.
 	StatusMessage string `json:"statusMessage,omitempty"`
-	// UpdateInfo: Output only. [Output only] Update info contains relevant
-	// information during a node pool update.
+	// UpdateInfo: Output only. Update info contains relevant information during a
+	// node pool update.
 	UpdateInfo *UpdateInfo `json:"updateInfo,omitempty"`
 	// UpgradeSettings: Upgrade settings control disruption and speed of the
 	// upgrade.
@@ -4809,9 +4821,9 @@ type NodePool struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodePool) MarshalJSON() ([]byte, error) {
+func (s NodePool) MarshalJSON() ([]byte, error) {
 	type NoMethod NodePool
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodePoolAutoConfig: node pool configs that apply to all auto-provisioned
@@ -4843,9 +4855,9 @@ type NodePoolAutoConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodePoolAutoConfig) MarshalJSON() ([]byte, error) {
+func (s NodePoolAutoConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NodePoolAutoConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodePoolAutoscaling: NodePoolAutoscaling contains information required by
@@ -4892,9 +4904,9 @@ type NodePoolAutoscaling struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodePoolAutoscaling) MarshalJSON() ([]byte, error) {
+func (s NodePoolAutoscaling) MarshalJSON() ([]byte, error) {
 	type NoMethod NodePoolAutoscaling
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodePoolDefaults: Subset of Nodepool message that has defaults.
@@ -4914,9 +4926,9 @@ type NodePoolDefaults struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodePoolDefaults) MarshalJSON() ([]byte, error) {
+func (s NodePoolDefaults) MarshalJSON() ([]byte, error) {
 	type NoMethod NodePoolDefaults
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodePoolLoggingConfig: NodePoolLoggingConfig specifies logging configuration
@@ -4937,9 +4949,9 @@ type NodePoolLoggingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodePoolLoggingConfig) MarshalJSON() ([]byte, error) {
+func (s NodePoolLoggingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NodePoolLoggingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodeTaint: Kubernetes taint is composed of three fields: key, value, and
@@ -4973,9 +4985,9 @@ type NodeTaint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodeTaint) MarshalJSON() ([]byte, error) {
+func (s NodeTaint) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeTaint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NodeTaints: Collection of Kubernetes node taints
@@ -4996,9 +5008,9 @@ type NodeTaints struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NodeTaints) MarshalJSON() ([]byte, error) {
+func (s NodeTaints) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeTaints
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NotificationConfig: NotificationConfig is the configuration of
@@ -5019,9 +5031,9 @@ type NotificationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NotificationConfig) MarshalJSON() ([]byte, error) {
+func (s NotificationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NotificationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This operation resource represents operations that may have
@@ -5030,25 +5042,25 @@ type Operation struct {
 	// ClusterConditions: Which conditions caused the current cluster state.
 	// Deprecated. Use field error instead.
 	ClusterConditions []*StatusCondition `json:"clusterConditions,omitempty"`
-	// Detail: Detailed operation progress, if available.
+	// Detail: Output only. Detailed operation progress, if available.
 	Detail string `json:"detail,omitempty"`
-	// EndTime: [Output only] The time the operation completed, in RFC3339
+	// EndTime: Output only. The time the operation completed, in RFC3339
 	// (https://www.ietf.org/rfc/rfc3339.txt) text format.
 	EndTime string `json:"endTime,omitempty"`
 	// Error: The error result of the operation in case of failure.
 	Error *Status `json:"error,omitempty"`
-	// Location: [Output only] The name of the Google Compute Engine zone
+	// Location: Output only. The name of the Google Compute Engine zone
 	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
 	// or region
 	// (https://cloud.google.com/compute/docs/regions-zones/regions-zones#available)
 	// in which the cluster resides.
 	Location string `json:"location,omitempty"`
-	// Name: The server-assigned ID for the operation.
+	// Name: Output only. The server-assigned ID for the operation.
 	Name string `json:"name,omitempty"`
 	// NodepoolConditions: Which conditions caused the current node pool state.
 	// Deprecated. Use field error instead.
 	NodepoolConditions []*StatusCondition `json:"nodepoolConditions,omitempty"`
-	// OperationType: The operation type.
+	// OperationType: Output only. The operation type.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Not set.
@@ -5129,16 +5141,16 @@ type Operation struct {
 	// upgraded. The cluster should be assumed to be blocked for other upgrades
 	// until the operation finishes.
 	OperationType string `json:"operationType,omitempty"`
-	// Progress: Output only. [Output only] Progress information for an operation.
+	// Progress: Output only. Progress information for an operation.
 	Progress *OperationProgress `json:"progress,omitempty"`
-	// SelfLink: Server-defined URI for the operation. Example:
+	// SelfLink: Output only. Server-defined URI for the operation. Example:
 	// `https://container.googleapis.com/v1alpha1/projects/123/locations/us-central1
 	// /operations/operation-123`.
 	SelfLink string `json:"selfLink,omitempty"`
-	// StartTime: [Output only] The time the operation started, in RFC3339
+	// StartTime: Output only. The time the operation started, in RFC3339
 	// (https://www.ietf.org/rfc/rfc3339.txt) text format.
 	StartTime string `json:"startTime,omitempty"`
-	// Status: The current status of the operation.
+	// Status: Output only. The current status of the operation.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Not set.
@@ -5150,10 +5162,10 @@ type Operation struct {
 	// StatusMessage: Output only. If an error has occurred, a textual description
 	// of the error. Deprecated. Use field error instead.
 	StatusMessage string `json:"statusMessage,omitempty"`
-	// TargetLink: Server-defined URI for the target of the operation. The format
-	// of this is a URI to the resource being modified (such as a cluster, node
-	// pool, or node). For node pool repairs, there may be multiple nodes being
-	// repaired, but only one will be the target. Examples: - ##
+	// TargetLink: Output only. Server-defined URI for the target of the operation.
+	// The format of this is a URI to the resource being modified (such as a
+	// cluster, node pool, or node). For node pool repairs, there may be multiple
+	// nodes being repaired, but only one will be the target. Examples: - ##
 	// `https://container.googleapis.com/v1/projects/123/locations/us-central1/clust
 	// ers/my-cluster` ##
 	// `https://container.googleapis.com/v1/projects/123/zones/us-central1-c/cluster
@@ -5161,7 +5173,7 @@ type Operation struct {
 	// `https://container.googleapis.com/v1/projects/123/zones/us-central1-c/cluster
 	// s/my-cluster/nodePools/my-np/node/my-node`
 	TargetLink string `json:"targetLink,omitempty"`
-	// Zone: The name of the Google Compute Engine zone
+	// Zone: Output only. The name of the Google Compute Engine zone
 	// (https://cloud.google.com/compute/docs/zones#available) in which the
 	// operation is taking place. This field is deprecated, use location instead.
 	Zone string `json:"zone,omitempty"`
@@ -5181,9 +5193,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationError: OperationError records errors seen from CloudKMS keys
@@ -5208,9 +5220,9 @@ type OperationError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationError) MarshalJSON() ([]byte, error) {
+func (s OperationError) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationProgress: Information about operation (or operation stage)
@@ -5248,9 +5260,9 @@ type OperationProgress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationProgress) MarshalJSON() ([]byte, error) {
+func (s OperationProgress) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationProgress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OpportunisticMaintenanceStrategy: Strategy that will trigger maintenance on
@@ -5283,9 +5295,9 @@ type OpportunisticMaintenanceStrategy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OpportunisticMaintenanceStrategy) MarshalJSON() ([]byte, error) {
+func (s OpportunisticMaintenanceStrategy) MarshalJSON() ([]byte, error) {
 	type NoMethod OpportunisticMaintenanceStrategy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ParentProductConfig: ParentProductConfig is the configuration of the parent
@@ -5309,9 +5321,9 @@ type ParentProductConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ParentProductConfig) MarshalJSON() ([]byte, error) {
+func (s ParentProductConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ParentProductConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PlacementPolicy: PlacementPolicy defines the placement policy used by the
@@ -5345,9 +5357,9 @@ type PlacementPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlacementPolicy) MarshalJSON() ([]byte, error) {
+func (s PlacementPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod PlacementPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PodCIDROverprovisionConfig: [PRIVATE FIELD] Config for pod CIDR size
@@ -5369,9 +5381,9 @@ type PodCIDROverprovisionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PodCIDROverprovisionConfig) MarshalJSON() ([]byte, error) {
+func (s PodCIDROverprovisionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PodCIDROverprovisionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PodSecurityPolicyConfig: Configuration for the PodSecurityPolicy feature.
@@ -5392,9 +5404,9 @@ type PodSecurityPolicyConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PodSecurityPolicyConfig) MarshalJSON() ([]byte, error) {
+func (s PodSecurityPolicyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PodSecurityPolicyConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PolicyBinding: Binauthz policy that applies to this cluster.
@@ -5416,9 +5428,9 @@ type PolicyBinding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PolicyBinding) MarshalJSON() ([]byte, error) {
+func (s PolicyBinding) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyBinding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PrivateClusterConfig: Configuration options for private clusters.
@@ -5463,9 +5475,9 @@ type PrivateClusterConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrivateClusterConfig) MarshalJSON() ([]byte, error) {
+func (s PrivateClusterConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivateClusterConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PrivateClusterMasterGlobalAccessConfig: Configuration for controlling master
@@ -5486,9 +5498,9 @@ type PrivateClusterMasterGlobalAccessConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrivateClusterMasterGlobalAccessConfig) MarshalJSON() ([]byte, error) {
+func (s PrivateClusterMasterGlobalAccessConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivateClusterMasterGlobalAccessConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PrivateRegistryAccessConfig: PrivateRegistryAccessConfig contains access
@@ -5513,9 +5525,9 @@ type PrivateRegistryAccessConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrivateRegistryAccessConfig) MarshalJSON() ([]byte, error) {
+func (s PrivateRegistryAccessConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivateRegistryAccessConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProtectConfig: ProtectConfig defines the flags needed to enable/disable
@@ -5547,9 +5559,9 @@ type ProtectConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProtectConfig) MarshalJSON() ([]byte, error) {
+func (s ProtectConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ProtectConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PubSub: Pub/Sub specific notification config.
@@ -5576,9 +5588,9 @@ type PubSub struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PubSub) MarshalJSON() ([]byte, error) {
+func (s PubSub) MarshalJSON() ([]byte, error) {
 	type NoMethod PubSub
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueuedProvisioning: QueuedProvisioning defines the queued provisioning used
@@ -5601,17 +5613,47 @@ type QueuedProvisioning struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *QueuedProvisioning) MarshalJSON() ([]byte, error) {
+func (s QueuedProvisioning) MarshalJSON() ([]byte, error) {
 	type NoMethod QueuedProvisioning
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RBACBindingConfig: RBACBindingConfig allows user to restrict
+// ClusterRoleBindings an RoleBindings that can be created.
+type RBACBindingConfig struct {
+	// EnableInsecureBindingSystemAuthenticated: Setting this to true will allow
+	// any ClusterRoleBinding and RoleBinding with subjects system:authenticated.
+	EnableInsecureBindingSystemAuthenticated bool `json:"enableInsecureBindingSystemAuthenticated,omitempty"`
+	// EnableInsecureBindingSystemUnauthenticated: Setting this to true will allow
+	// any ClusterRoleBinding and RoleBinding with subjets system:anonymous or
+	// system:unauthenticated.
+	EnableInsecureBindingSystemUnauthenticated bool `json:"enableInsecureBindingSystemUnauthenticated,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableInsecureBindingSystemAuthenticated") to unconditionally include in
+	// API requests. By default, fields with empty or default values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "EnableInsecureBindingSystemAuthenticated") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted from
+	// API requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields
+	// for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RBACBindingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RBACBindingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RangeInfo: RangeInfo contains the range name and the range utilization by
 // this cluster.
 type RangeInfo struct {
-	// RangeName: Output only. [Output only] Name of a range.
+	// RangeName: Output only. Name of a range.
 	RangeName string `json:"rangeName,omitempty"`
-	// Utilization: Output only. [Output only] The utilization of the range.
+	// Utilization: Output only. The utilization of the range.
 	Utilization float64 `json:"utilization,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RangeName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5626,9 +5668,9 @@ type RangeInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RangeInfo) MarshalJSON() ([]byte, error) {
+func (s RangeInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod RangeInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *RangeInfo) UnmarshalJSON(data []byte) error {
@@ -5643,6 +5685,79 @@ func (s *RangeInfo) UnmarshalJSON(data []byte) error {
 	}
 	s.Utilization = float64(s1.Utilization)
 	return nil
+}
+
+// RayClusterLoggingConfig: RayClusterLoggingConfig specifies logging
+// configuration for Ray clusters.
+type RayClusterLoggingConfig struct {
+	// Enabled: Enable log collection for Ray clusters.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RayClusterLoggingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RayClusterLoggingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RayClusterMonitoringConfig: RayClusterMonitoringConfig specifies monitoring
+// configuration for Ray clusters.
+type RayClusterMonitoringConfig struct {
+	// Enabled: Enable metrics collection for Ray clusters.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RayClusterMonitoringConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RayClusterMonitoringConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RayOperatorConfig: Configuration options for the Ray Operator add-on.
+type RayOperatorConfig struct {
+	// Enabled: Whether the Ray addon is enabled for this cluster.
+	Enabled bool `json:"enabled,omitempty"`
+	// RayClusterLoggingConfig: Optional. Logging configuration for Ray clusters.
+	RayClusterLoggingConfig *RayClusterLoggingConfig `json:"rayClusterLoggingConfig,omitempty"`
+	// RayClusterMonitoringConfig: Optional. Monitoring configuration for Ray
+	// clusters.
+	RayClusterMonitoringConfig *RayClusterMonitoringConfig `json:"rayClusterMonitoringConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RayOperatorConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RayOperatorConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RecurringTimeWindow: Represents an arbitrary window of time that recurs.
@@ -5679,9 +5794,9 @@ type RecurringTimeWindow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RecurringTimeWindow) MarshalJSON() ([]byte, error) {
+func (s RecurringTimeWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod RecurringTimeWindow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReleaseChannel: ReleaseChannel indicates which release channel a cluster is
@@ -5704,6 +5819,9 @@ type ReleaseChannel struct {
 	// take advantage of new features.
 	//   "STABLE" - Clusters subscribed to STABLE receive versions that are known
 	// to be stable and reliable in production.
+	//   "EXTENDED" - Clusters subscribed to EXTENDED receive extended support and
+	// availability for versions which are known to be stable and reliable in
+	// production.
 	Channel string `json:"channel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Channel") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5718,9 +5836,9 @@ type ReleaseChannel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReleaseChannel) MarshalJSON() ([]byte, error) {
+func (s ReleaseChannel) MarshalJSON() ([]byte, error) {
 	type NoMethod ReleaseChannel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReleaseChannelConfig: ReleaseChannelConfig exposes configuration for a
@@ -5742,6 +5860,9 @@ type ReleaseChannelConfig struct {
 	// take advantage of new features.
 	//   "STABLE" - Clusters subscribed to STABLE receive versions that are known
 	// to be stable and reliable in production.
+	//   "EXTENDED" - Clusters subscribed to EXTENDED receive extended support and
+	// availability for versions which are known to be stable and reliable in
+	// production.
 	Channel string `json:"channel,omitempty"`
 	// DefaultVersion: The default version for newly created clusters on the
 	// channel.
@@ -5761,9 +5882,9 @@ type ReleaseChannelConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReleaseChannelConfig) MarshalJSON() ([]byte, error) {
+func (s ReleaseChannelConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ReleaseChannelConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReservationAffinity: ReservationAffinity
@@ -5800,9 +5921,9 @@ type ReservationAffinity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReservationAffinity) MarshalJSON() ([]byte, error) {
+func (s ReservationAffinity) MarshalJSON() ([]byte, error) {
 	type NoMethod ReservationAffinity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceLabels: Collection of GCP labels
@@ -5823,9 +5944,9 @@ type ResourceLabels struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourceLabels) MarshalJSON() ([]byte, error) {
+func (s ResourceLabels) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceLabels
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceLimit: Contains information about amount of some resource in the
@@ -5850,9 +5971,9 @@ type ResourceLimit struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourceLimit) MarshalJSON() ([]byte, error) {
+func (s ResourceLimit) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceLimit
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceManagerTags: A map of resource manager tag keys and values to be
@@ -5880,9 +6001,9 @@ type ResourceManagerTags struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourceManagerTags) MarshalJSON() ([]byte, error) {
+func (s ResourceManagerTags) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceManagerTags
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceUsageExportConfig: Configuration for exporting cluster resource
@@ -5911,9 +6032,9 @@ type ResourceUsageExportConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourceUsageExportConfig) MarshalJSON() ([]byte, error) {
+func (s ResourceUsageExportConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceUsageExportConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RollbackNodePoolUpgradeRequest: RollbackNodePoolUpgradeRequest rollbacks the
@@ -5955,9 +6076,9 @@ type RollbackNodePoolUpgradeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RollbackNodePoolUpgradeRequest) MarshalJSON() ([]byte, error) {
+func (s RollbackNodePoolUpgradeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RollbackNodePoolUpgradeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SandboxConfig: SandboxConfig contains configurations of the sandbox to use
@@ -5984,9 +6105,9 @@ type SandboxConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SandboxConfig) MarshalJSON() ([]byte, error) {
+func (s SandboxConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SandboxConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SecondaryBootDisk: SecondaryBootDisk represents a persistent disk attached
@@ -6014,9 +6135,9 @@ type SecondaryBootDisk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecondaryBootDisk) MarshalJSON() ([]byte, error) {
+func (s SecondaryBootDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod SecondaryBootDisk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SecondaryBootDiskUpdateStrategy: SecondaryBootDiskUpdateStrategy is a
@@ -6028,8 +6149,7 @@ type SecondaryBootDiskUpdateStrategy struct {
 // SecretManagerConfig: SecretManagerConfig is config for secret manager
 // enablement.
 type SecretManagerConfig struct {
-	// Enabled: Whether the cluster is configured to use secret manager CSI
-	// component.
+	// Enabled: Enable/Disable Secret Manager Config.
 	Enabled bool `json:"enabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6044,9 +6164,9 @@ type SecretManagerConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecretManagerConfig) MarshalJSON() ([]byte, error) {
+func (s SecretManagerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SecretManagerConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SecurityBulletinEvent: SecurityBulletinEvent is a notification sent to
@@ -6097,9 +6217,9 @@ type SecurityBulletinEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecurityBulletinEvent) MarshalJSON() ([]byte, error) {
+func (s SecurityBulletinEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityBulletinEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SecurityPostureConfig: SecurityPostureConfig defines the flags needed to
@@ -6137,9 +6257,9 @@ type SecurityPostureConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SecurityPostureConfig) MarshalJSON() ([]byte, error) {
+func (s SecurityPostureConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityPostureConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServerConfig: Kubernetes Engine service configuration.
@@ -6176,9 +6296,9 @@ type ServerConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServerConfig) MarshalJSON() ([]byte, error) {
+func (s ServerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ServerConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceExternalIPsConfig: Config to block services with externalIPs field.
@@ -6198,9 +6318,9 @@ type ServiceExternalIPsConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceExternalIPsConfig) MarshalJSON() ([]byte, error) {
+func (s ServiceExternalIPsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceExternalIPsConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetAddonsConfigRequest: SetAddonsRequest sets the addons associated with the
@@ -6237,9 +6357,9 @@ type SetAddonsConfigRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetAddonsConfigRequest) MarshalJSON() ([]byte, error) {
+func (s SetAddonsConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetAddonsConfigRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetLabelsRequest: SetLabelsRequest sets the Google Cloud Platform labels on
@@ -6283,9 +6403,9 @@ type SetLabelsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetLabelsRequest) MarshalJSON() ([]byte, error) {
+func (s SetLabelsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetLabelsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetLegacyAbacRequest: SetLegacyAbacRequest enables or disables the ABAC
@@ -6322,9 +6442,9 @@ type SetLegacyAbacRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetLegacyAbacRequest) MarshalJSON() ([]byte, error) {
+func (s SetLegacyAbacRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetLegacyAbacRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetLocationsRequest: SetLocationsRequest sets the locations of the cluster.
@@ -6364,9 +6484,9 @@ type SetLocationsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetLocationsRequest) MarshalJSON() ([]byte, error) {
+func (s SetLocationsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetLocationsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetLoggingServiceRequest: SetLoggingServiceRequest sets the logging service
@@ -6409,9 +6529,9 @@ type SetLoggingServiceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetLoggingServiceRequest) MarshalJSON() ([]byte, error) {
+func (s SetLoggingServiceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetLoggingServiceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetMaintenancePolicyRequest: SetMaintenancePolicyRequest sets the
@@ -6447,9 +6567,9 @@ type SetMaintenancePolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetMaintenancePolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetMaintenancePolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetMaintenancePolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetMasterAuthRequest: SetMasterAuthRequest updates the admin password of a
@@ -6496,9 +6616,9 @@ type SetMasterAuthRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetMasterAuthRequest) MarshalJSON() ([]byte, error) {
+func (s SetMasterAuthRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetMasterAuthRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetMonitoringServiceRequest: SetMonitoringServiceRequest sets the monitoring
@@ -6541,9 +6661,9 @@ type SetMonitoringServiceRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetMonitoringServiceRequest) MarshalJSON() ([]byte, error) {
+func (s SetMonitoringServiceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetMonitoringServiceRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetNetworkPolicyRequest: SetNetworkPolicyRequest enables/disables network
@@ -6581,9 +6701,9 @@ type SetNetworkPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetNetworkPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetNetworkPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetNetworkPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetNodePoolAutoscalingRequest: SetNodePoolAutoscalingRequest sets the
@@ -6623,9 +6743,9 @@ type SetNodePoolAutoscalingRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetNodePoolAutoscalingRequest) MarshalJSON() ([]byte, error) {
+func (s SetNodePoolAutoscalingRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetNodePoolAutoscalingRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetNodePoolManagementRequest: SetNodePoolManagementRequest sets the node
@@ -6665,9 +6785,9 @@ type SetNodePoolManagementRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetNodePoolManagementRequest) MarshalJSON() ([]byte, error) {
+func (s SetNodePoolManagementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetNodePoolManagementRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetNodePoolSizeRequest: SetNodePoolSizeRequest sets the size of a node pool.
@@ -6706,9 +6826,9 @@ type SetNodePoolSizeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetNodePoolSizeRequest) MarshalJSON() ([]byte, error) {
+func (s SetNodePoolSizeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetNodePoolSizeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ShieldedInstanceConfig: A set of Shielded Instance options.
@@ -6737,9 +6857,9 @@ type ShieldedInstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
+func (s ShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ShieldedInstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ShieldedNodes: Configuration of Shielded Nodes feature.
@@ -6760,9 +6880,9 @@ type ShieldedNodes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ShieldedNodes) MarshalJSON() ([]byte, error) {
+func (s ShieldedNodes) MarshalJSON() ([]byte, error) {
 	type NoMethod ShieldedNodes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SoleTenantConfig: SoleTenantConfig contains the NodeAffinities to specify
@@ -6784,9 +6904,9 @@ type SoleTenantConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SoleTenantConfig) MarshalJSON() ([]byte, error) {
+func (s SoleTenantConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SoleTenantConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StandardRolloutPolicy: Standard rollout policy is the default policy for
@@ -6812,9 +6932,9 @@ type StandardRolloutPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StandardRolloutPolicy) MarshalJSON() ([]byte, error) {
+func (s StandardRolloutPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod StandardRolloutPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *StandardRolloutPolicy) UnmarshalJSON(data []byte) error {
@@ -6865,9 +6985,9 @@ type StartIPRotationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StartIPRotationRequest) MarshalJSON() ([]byte, error) {
+func (s StartIPRotationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod StartIPRotationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StatefulHAConfig: Configuration for the Stateful HA add-on.
@@ -6887,9 +7007,9 @@ type StatefulHAConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StatefulHAConfig) MarshalJSON() ([]byte, error) {
+func (s StatefulHAConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod StatefulHAConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -6921,9 +7041,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StatusCondition: StatusCondition describes why a cluster or a node pool has
@@ -7042,9 +7162,9 @@ type StatusCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StatusCondition) MarshalJSON() ([]byte, error) {
+func (s StatusCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod StatusCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeWindow: Represents an arbitrary window of time.
@@ -7070,9 +7190,9 @@ type TimeWindow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeWindow) MarshalJSON() ([]byte, error) {
+func (s TimeWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeWindow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TpuConfig: Configuration for Cloud TPU.
@@ -7097,9 +7217,9 @@ type TpuConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TpuConfig) MarshalJSON() ([]byte, error) {
+func (s TpuConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TpuConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateClusterRequest: UpdateClusterRequest updates the settings of a
@@ -7135,9 +7255,9 @@ type UpdateClusterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateClusterRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateClusterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateClusterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateInfo: UpdateInfo contains resource (instance groups, etc), status and
@@ -7158,9 +7278,9 @@ type UpdateInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateInfo) MarshalJSON() ([]byte, error) {
+func (s UpdateInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateMasterRequest: UpdateMasterRequest updates the master of the cluster.
@@ -7201,9 +7321,9 @@ type UpdateMasterRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateMasterRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateMasterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateMasterRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateNodePoolRequest: SetNodePoolVersionRequest updates the version of a
@@ -7295,6 +7415,9 @@ type UpdateNodePoolRequest struct {
 	// attached to the nodes for managing Compute Engine firewalls using Network
 	// Firewall Policies. Existing tags will be replaced with new values.
 	ResourceManagerTags *ResourceManagerTags `json:"resourceManagerTags,omitempty"`
+	// StoragePools: List of Storage Pools where boot disks are provisioned.
+	// Existing Storage Pools will be replaced with storage-pools.
+	StoragePools []string `json:"storagePools,omitempty"`
 	// Tags: The desired network tags to be applied to all nodes in the node pool.
 	// If this field is not present, the tags will not be changed. Otherwise, the
 	// existing network tags will be *replaced* with the provided tags.
@@ -7328,9 +7451,9 @@ type UpdateNodePoolRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateNodePoolRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateNodePoolRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateNodePoolRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeAvailableEvent: UpgradeAvailableEvent is a notification sent to
@@ -7367,9 +7490,9 @@ type UpgradeAvailableEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeAvailableEvent) MarshalJSON() ([]byte, error) {
+func (s UpgradeAvailableEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeAvailableEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeEvent: UpgradeEvent is a notification sent to customers by the
@@ -7407,9 +7530,9 @@ type UpgradeEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeEvent) MarshalJSON() ([]byte, error) {
+func (s UpgradeEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpgradeSettings: These upgrade settings control the level of parallelism and
@@ -7476,9 +7599,9 @@ type UpgradeSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpgradeSettings) MarshalJSON() ([]byte, error) {
+func (s UpgradeSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UsableSubnetwork: UsableSubnetwork resource returns the subnetwork name, its
@@ -7513,9 +7636,9 @@ type UsableSubnetwork struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UsableSubnetwork) MarshalJSON() ([]byte, error) {
+func (s UsableSubnetwork) MarshalJSON() ([]byte, error) {
 	type NoMethod UsableSubnetwork
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UsableSubnetworkSecondaryRange: Secondary IP range of a usable subnetwork.
@@ -7554,9 +7677,9 @@ type UsableSubnetworkSecondaryRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UsableSubnetworkSecondaryRange) MarshalJSON() ([]byte, error) {
+func (s UsableSubnetworkSecondaryRange) MarshalJSON() ([]byte, error) {
 	type NoMethod UsableSubnetworkSecondaryRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VerticalPodAutoscaling: VerticalPodAutoscaling contains global, per-cluster
@@ -7578,9 +7701,9 @@ type VerticalPodAutoscaling struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VerticalPodAutoscaling) MarshalJSON() ([]byte, error) {
+func (s VerticalPodAutoscaling) MarshalJSON() ([]byte, error) {
 	type NoMethod VerticalPodAutoscaling
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VirtualNIC: Configuration of gVNIC feature.
@@ -7600,9 +7723,9 @@ type VirtualNIC struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VirtualNIC) MarshalJSON() ([]byte, error) {
+func (s VirtualNIC) MarshalJSON() ([]byte, error) {
 	type NoMethod VirtualNIC
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WindowsNodeConfig: Parameters that can be configured on Windows nodes.
@@ -7632,9 +7755,9 @@ type WindowsNodeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WindowsNodeConfig) MarshalJSON() ([]byte, error) {
+func (s WindowsNodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod WindowsNodeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WindowsVersion: Windows server version.
@@ -7658,9 +7781,9 @@ type WindowsVersion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WindowsVersion) MarshalJSON() ([]byte, error) {
+func (s WindowsVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod WindowsVersion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WindowsVersions: Windows server versions.
@@ -7680,9 +7803,9 @@ type WindowsVersions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WindowsVersions) MarshalJSON() ([]byte, error) {
+func (s WindowsVersions) MarshalJSON() ([]byte, error) {
 	type NoMethod WindowsVersions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WorkloadALTSConfig: Configuration for direct-path (via ALTS) with workload
@@ -7705,9 +7828,9 @@ type WorkloadALTSConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WorkloadALTSConfig) MarshalJSON() ([]byte, error) {
+func (s WorkloadALTSConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadALTSConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WorkloadCertificates: Configuration for issuance of mTLS keys and
@@ -7732,9 +7855,9 @@ type WorkloadCertificates struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WorkloadCertificates) MarshalJSON() ([]byte, error) {
+func (s WorkloadCertificates) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadCertificates
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WorkloadConfig: WorkloadConfig defines the flags to enable or disable the
@@ -7768,9 +7891,9 @@ type WorkloadConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WorkloadConfig) MarshalJSON() ([]byte, error) {
+func (s WorkloadConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WorkloadIdentityConfig: Configuration for the use of Kubernetes Service
@@ -7797,9 +7920,9 @@ type WorkloadIdentityConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WorkloadIdentityConfig) MarshalJSON() ([]byte, error) {
+func (s WorkloadIdentityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadIdentityConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WorkloadMetadataConfig: WorkloadMetadataConfig defines the metadata
@@ -7848,9 +7971,9 @@ type WorkloadMetadataConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WorkloadMetadataConfig) MarshalJSON() ([]byte, error) {
+func (s WorkloadMetadataConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadMetadataConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WorkloadPolicyConfig: WorkloadPolicyConfig is the configuration of workload
@@ -7871,9 +7994,9 @@ type WorkloadPolicyConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WorkloadPolicyConfig) MarshalJSON() ([]byte, error) {
+func (s WorkloadPolicyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadPolicyConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsAggregatedUsableSubnetworksListCall struct {

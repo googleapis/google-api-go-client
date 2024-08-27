@@ -198,9 +198,9 @@ type GoogleCloudPolicytroubleshooterV1betaAccessTuple struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicytroubleshooterV1betaAccessTuple) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicytroubleshooterV1betaAccessTuple) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicytroubleshooterV1betaAccessTuple
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicytroubleshooterV1betaBindingExplanation: Details about how a
@@ -289,9 +289,9 @@ type GoogleCloudPolicytroubleshooterV1betaBindingExplanation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicytroubleshooterV1betaBindingExplanation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicytroubleshooterV1betaBindingExplanation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicytroubleshooterV1betaBindingExplanation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicytroubleshooterV1betaBindingExplanationAnnotatedMembership:
@@ -335,9 +335,9 @@ type GoogleCloudPolicytroubleshooterV1betaBindingExplanationAnnotatedMembership 
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicytroubleshooterV1betaBindingExplanationAnnotatedMembership) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicytroubleshooterV1betaBindingExplanationAnnotatedMembership) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicytroubleshooterV1betaBindingExplanationAnnotatedMembership
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicytroubleshooterV1betaExplainedPolicy: Details about how a
@@ -399,9 +399,9 @@ type GoogleCloudPolicytroubleshooterV1betaExplainedPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicytroubleshooterV1betaExplainedPolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicytroubleshooterV1betaExplainedPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicytroubleshooterV1betaExplainedPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicytroubleshooterV1betaTroubleshootIamPolicyRequest: Request
@@ -423,9 +423,9 @@ type GoogleCloudPolicytroubleshooterV1betaTroubleshootIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicytroubleshooterV1betaTroubleshootIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicytroubleshooterV1betaTroubleshootIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicytroubleshooterV1betaTroubleshootIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicytroubleshooterV1betaTroubleshootIamPolicyResponse: Response
@@ -467,9 +467,9 @@ type GoogleCloudPolicytroubleshooterV1betaTroubleshootIamPolicyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicytroubleshooterV1betaTroubleshootIamPolicyResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicytroubleshooterV1betaTroubleshootIamPolicyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicytroubleshooterV1betaTroubleshootIamPolicyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1AuditConfig: Specifies the audit configuration for a service. The
@@ -508,9 +508,9 @@ type GoogleIamV1AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1AuditConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1AuditLogConfig: Provides the configuration for logging a type of
@@ -543,9 +543,9 @@ type GoogleIamV1AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1Binding: Associates `members`, or principals, with a `role`.
@@ -642,9 +642,9 @@ type GoogleIamV1Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1Policy: An Identity and Access Management (IAM) policy, which
@@ -731,9 +731,9 @@ type GoogleIamV1Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeExpr: Represents a textual expression in the Common Expression
@@ -779,9 +779,9 @@ type GoogleTypeExpr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeExpr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type IamTroubleshootCall struct {

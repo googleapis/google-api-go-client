@@ -247,9 +247,9 @@ type Activities struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Activities) MarshalJSON() ([]byte, error) {
+func (s Activities) MarshalJSON() ([]byte, error) {
 	type NoMethod Activities
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Activity: JSON template for the activity resource.
@@ -287,9 +287,9 @@ type Activity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Activity) MarshalJSON() ([]byte, error) {
+func (s Activity) MarshalJSON() ([]byte, error) {
 	type NoMethod Activity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityActor: User doing the action.
@@ -320,9 +320,9 @@ type ActivityActor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityActor) MarshalJSON() ([]byte, error) {
+func (s ActivityActor) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityActor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ActivityEvents struct {
@@ -358,9 +358,9 @@ type ActivityEvents struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityEvents) MarshalJSON() ([]byte, error) {
+func (s ActivityEvents) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityEvents
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ActivityEventsParameters struct {
@@ -396,9 +396,9 @@ type ActivityEventsParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityEventsParameters) MarshalJSON() ([]byte, error) {
+func (s ActivityEventsParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityEventsParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityEventsParametersMessageValue: Nested parameter value pairs
@@ -421,9 +421,9 @@ type ActivityEventsParametersMessageValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityEventsParametersMessageValue) MarshalJSON() ([]byte, error) {
+func (s ActivityEventsParametersMessageValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityEventsParametersMessageValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ActivityEventsParametersMultiMessageValue struct {
@@ -442,9 +442,9 @@ type ActivityEventsParametersMultiMessageValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityEventsParametersMultiMessageValue) MarshalJSON() ([]byte, error) {
+func (s ActivityEventsParametersMultiMessageValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityEventsParametersMultiMessageValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityId: Unique identifier for each activity record.
@@ -472,9 +472,9 @@ type ActivityId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActivityId) MarshalJSON() ([]byte, error) {
+func (s ActivityId) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Channel: A notification channel used to watch for resource changes.
@@ -523,9 +523,9 @@ type Channel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Channel) MarshalJSON() ([]byte, error) {
+func (s Channel) MarshalJSON() ([]byte, error) {
 	type NoMethod Channel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NestedParameter: JSON template for a parameter used in various reports.
@@ -557,9 +557,9 @@ type NestedParameter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NestedParameter) MarshalJSON() ([]byte, error) {
+func (s NestedParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod NestedParameter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UsageReport: JSON template for a usage report.
@@ -591,9 +591,9 @@ type UsageReport struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UsageReport) MarshalJSON() ([]byte, error) {
+func (s UsageReport) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageReport
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UsageReportEntity: Output only. Information about the type of the item.
@@ -624,9 +624,9 @@ type UsageReportEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UsageReportEntity) MarshalJSON() ([]byte, error) {
+func (s UsageReportEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageReportEntity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UsageReportParameters struct {
@@ -657,9 +657,9 @@ type UsageReportParameters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UsageReportParameters) MarshalJSON() ([]byte, error) {
+func (s UsageReportParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageReportParameters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UsageReports struct {
@@ -693,9 +693,9 @@ type UsageReports struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UsageReports) MarshalJSON() ([]byte, error) {
+func (s UsageReports) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageReports
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UsageReportsWarnings struct {
@@ -723,9 +723,9 @@ type UsageReportsWarnings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UsageReportsWarnings) MarshalJSON() ([]byte, error) {
+func (s UsageReportsWarnings) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageReportsWarnings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UsageReportsWarningsData struct {
@@ -748,9 +748,9 @@ type UsageReportsWarningsData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UsageReportsWarningsData) MarshalJSON() ([]byte, error) {
+func (s UsageReportsWarningsData) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageReportsWarningsData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ActivitiesListCall struct {

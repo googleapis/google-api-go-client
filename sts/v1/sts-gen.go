@@ -245,9 +245,9 @@ type GoogleIamV1Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityStsV1AccessBoundary: An access boundary defines the upper
@@ -273,9 +273,9 @@ type GoogleIdentityStsV1AccessBoundary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityStsV1AccessBoundary) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityStsV1AccessBoundary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityStsV1AccessBoundary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityStsV1AccessBoundaryRule: An access boundary rule defines an
@@ -319,9 +319,9 @@ type GoogleIdentityStsV1AccessBoundaryRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityStsV1AccessBoundaryRule) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityStsV1AccessBoundaryRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityStsV1AccessBoundaryRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityStsV1ExchangeTokenRequest: Request message for ExchangeToken.
@@ -458,14 +458,20 @@ type GoogleIdentityStsV1ExchangeTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityStsV1ExchangeTokenRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityStsV1ExchangeTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityStsV1ExchangeTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityStsV1ExchangeTokenResponse: Response message for
 // ExchangeToken.
 type GoogleIdentityStsV1ExchangeTokenResponse struct {
+	// AccessBoundarySessionKey: The access boundary session key. This key is used
+	// along with the access boundary intermediate token to generate Credential
+	// Access Boundary tokens at client side. This field is absent when the
+	// `requested_token_type` from the request is not
+	// `urn:ietf:params:oauth:token-type:access_boundary_intermediate_token`.
+	AccessBoundarySessionKey string `json:"access_boundary_session_key,omitempty"`
 	// AccessToken: An OAuth 2.0 security token, issued by Google, in response to
 	// the token exchange request. Tokens can vary in size, depending in part on
 	// the size of mapped claims, up to a maximum of 12288 bytes (12 KB). Google
@@ -486,22 +492,22 @@ type GoogleIdentityStsV1ExchangeTokenResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AccessToken") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AccessBoundarySessionKey")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AccessToken") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AccessBoundarySessionKey") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityStsV1ExchangeTokenResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityStsV1ExchangeTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityStsV1ExchangeTokenResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityStsV1Options: An `Options` object configures features that the
@@ -533,9 +539,9 @@ type GoogleIdentityStsV1Options struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityStsV1Options) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityStsV1Options) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityStsV1Options
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityStsV1betaAccessBoundary: An access boundary defines the upper
@@ -561,9 +567,9 @@ type GoogleIdentityStsV1betaAccessBoundary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityStsV1betaAccessBoundary) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityStsV1betaAccessBoundary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityStsV1betaAccessBoundary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityStsV1betaAccessBoundaryRule: An access boundary rule defines
@@ -607,9 +613,9 @@ type GoogleIdentityStsV1betaAccessBoundaryRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityStsV1betaAccessBoundaryRule) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityStsV1betaAccessBoundaryRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityStsV1betaAccessBoundaryRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIdentityStsV1betaOptions: An `Options` object configures features that
@@ -641,9 +647,9 @@ type GoogleIdentityStsV1betaOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIdentityStsV1betaOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleIdentityStsV1betaOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIdentityStsV1betaOptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeExpr: Represents a textual expression in the Common Expression
@@ -689,9 +695,9 @@ type GoogleTypeExpr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeExpr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type V1TokenCall struct {

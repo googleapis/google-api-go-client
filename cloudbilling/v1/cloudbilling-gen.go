@@ -290,9 +290,9 @@ type AggregationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AggregationInfo) MarshalJSON() ([]byte, error) {
+func (s AggregationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AggregationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -331,9 +331,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -366,9 +366,9 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BillingAccount: A billing account in the Google Cloud Console
@@ -415,9 +415,9 @@ type BillingAccount struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BillingAccount) MarshalJSON() ([]byte, error) {
+func (s BillingAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod BillingAccount
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -514,9 +514,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Category: Represents the category hierarchy of a SKU.
@@ -545,9 +545,9 @@ type Category struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Category) MarshalJSON() ([]byte, error) {
+func (s Category) MarshalJSON() ([]byte, error) {
 	type NoMethod Category
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -593,9 +593,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeoTaxonomy: Encapsulates the geographic taxonomy data for a sku.
@@ -626,9 +626,9 @@ type GeoTaxonomy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeoTaxonomy) MarshalJSON() ([]byte, error) {
+func (s GeoTaxonomy) MarshalJSON() ([]byte, error) {
 	type NoMethod GeoTaxonomy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListBillingAccountsResponse: Response message for `ListBillingAccounts`.
@@ -655,9 +655,9 @@ type ListBillingAccountsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBillingAccountsResponse) MarshalJSON() ([]byte, error) {
+func (s ListBillingAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBillingAccountsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListProjectBillingInfoResponse: Request message for
@@ -687,9 +687,9 @@ type ListProjectBillingInfoResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListProjectBillingInfoResponse) MarshalJSON() ([]byte, error) {
+func (s ListProjectBillingInfoResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListProjectBillingInfoResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListServicesResponse: Response message for `ListServices`.
@@ -716,9 +716,9 @@ type ListServicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
+func (s ListServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListServicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSkusResponse: Response message for `ListSkus`.
@@ -745,9 +745,9 @@ type ListSkusResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSkusResponse) MarshalJSON() ([]byte, error) {
+func (s ListSkusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSkusResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Money: Represents an amount of money with its currency type.
@@ -776,9 +776,9 @@ type Money struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Money) MarshalJSON() ([]byte, error) {
+func (s Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MoveBillingAccountRequest: Request message for `MoveBillingAccount` RPC.
@@ -800,9 +800,9 @@ type MoveBillingAccountRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MoveBillingAccountRequest) MarshalJSON() ([]byte, error) {
+func (s MoveBillingAccountRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MoveBillingAccountRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -892,9 +892,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PricingExpression: Expresses a mathematical pricing formula. For Example:-
@@ -945,9 +945,9 @@ type PricingExpression struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PricingExpression) MarshalJSON() ([]byte, error) {
+func (s PricingExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod PricingExpression
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PricingExpression) UnmarshalJSON(data []byte) error {
@@ -1004,9 +1004,9 @@ type PricingInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PricingInfo) MarshalJSON() ([]byte, error) {
+func (s PricingInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PricingInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PricingInfo) UnmarshalJSON(data []byte) error {
@@ -1060,9 +1060,9 @@ type ProjectBillingInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProjectBillingInfo) MarshalJSON() ([]byte, error) {
+func (s ProjectBillingInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ProjectBillingInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Service: Encapsulates a single service in Google Cloud Platform.
@@ -1089,9 +1089,9 @@ type Service struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Service) MarshalJSON() ([]byte, error) {
+func (s Service) MarshalJSON() ([]byte, error) {
 	type NoMethod Service
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -1118,9 +1118,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Sku: Encapsulates a single SKU in Google Cloud
@@ -1160,9 +1160,9 @@ type Sku struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Sku) MarshalJSON() ([]byte, error) {
+func (s Sku) MarshalJSON() ([]byte, error) {
 	type NoMethod Sku
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -1185,9 +1185,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -1212,9 +1212,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TierRate: The price rate indicating starting usage and its corresponding
@@ -1240,9 +1240,9 @@ type TierRate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TierRate) MarshalJSON() ([]byte, error) {
+func (s TierRate) MarshalJSON() ([]byte, error) {
 	type NoMethod TierRate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *TierRate) UnmarshalJSON(data []byte) error {

@@ -40,12 +40,13 @@ const (
 )
 
 var (
-	apiToGenerate = flag.String("api", "*", "The API ID to generate, like 'tasks:v1'. A value of '*' means all.")
-	useCache      = flag.Bool("cache", true, "Use cache of discovered Google API discovery documents.")
-	genDir        = flag.String("gendir", defaultGenDir(), "Directory to use to write out generated Go files")
-	build         = flag.Bool("build", false, "Compile generated packages.")
-	install       = flag.Bool("install", false, "Install generated packages.")
-	apisURL       = flag.String("discoveryurl", googleDiscoveryURL, "URL to root discovery document")
+	apiToGenerate  = flag.String("api", "*", "The API ID to generate, like 'tasks:v1'. A value of '*' means all.")
+	useCache       = flag.Bool("cache", true, "Use cache of discovered Google API discovery documents.")
+	genDir         = flag.String("gendir", defaultGenDir(), "Directory to use to write out generated Go files")
+	build          = flag.Bool("build", false, "Compile generated packages.")
+	install        = flag.Bool("install", false, "Install generated packages.")
+	apisURL        = flag.String("discoveryurl", googleDiscoveryURL, "URL to root discovery document")
+	remoteCacheDir = flag.String("remote_cache_dir", os.Getenv("REMOTE_CACHE_DIR"), "Directory of remote cache index and schemas.")
 
 	publicOnly = flag.Bool("publiconly", true, "Only build public, released APIs. Only applicable for Google employees.")
 
@@ -78,15 +79,6 @@ var skipAPIGeneration = map[string]bool{
 	"integrations:v1":      true,
 	"sql:v1beta4":          true,
 	"datalineage:v1":       true,
-}
-
-// skipNewAuthLibrary is a set of APIs to not migrate to cloud.google.com/go/auth.
-var skipNewAuthLibrary = map[string]bool{
-	"bigquery:v2":   true,
-	"compute:alpha": true,
-	"compute:beta":  true,
-	"compute:v1":    true,
-	"storage:v1":    true,
 }
 
 var apisToSplit = map[string]bool{
@@ -159,7 +151,7 @@ func main() {
 	var (
 		apiIds  = []string{}
 		matches = []*API{}
-		errors  = []error{}
+		errs    = []error{}
 	)
 	for _, api := range getAPIs() {
 		apiIds = append(apiIds, api.ID)
@@ -172,8 +164,8 @@ func main() {
 		if err == errOldRevision {
 			log.Printf("Old revision found for %s, skipping generation", api.ID)
 			continue
-		} else if err != nil && err != errNoDoc {
-			errors = append(errors, &generateError{api, err})
+		} else if err != nil && !errors.Is(err, errNoDoc) {
+			errs = append(errs, &generateError{api, err})
 			continue
 		}
 		if *build && err == nil {
@@ -186,7 +178,7 @@ func main() {
 			args = append(args, api.Target())
 			out, err := exec.Command("go", args...).CombinedOutput()
 			if err != nil {
-				errors = append(errors, &compileError{api, string(out)})
+				errs = append(errs, &compileError{api, string(out)})
 			}
 		}
 	}
@@ -195,9 +187,9 @@ func main() {
 		log.Fatalf("No APIs matched %q; options are %v", *apiToGenerate, apiIds)
 	}
 
-	if len(errors) > 0 {
-		log.Printf("%d API(s) failed to generate or compile:", len(errors))
-		for _, ce := range errors {
+	if len(errs) > 0 {
+		log.Printf("%d API(s) failed to generate or compile:", len(errs))
+		for _, ce := range errs {
 			log.Println(ce.Error())
 		}
 		os.Exit(1)
@@ -241,6 +233,14 @@ func getAPIs() []*API {
 			log.Fatal(err)
 		}
 		source = apiListFile
+	} else if *remoteCacheDir != "" {
+		var err error
+		name := filepath.Join(*remoteCacheDir, "index.json")
+		bytes, err = os.ReadFile(name)
+		if err != nil {
+			log.Fatal(err)
+		}
+		source = name
 	} else {
 		bytes = slurpURL(*apisURL)
 		if *publicOnly {
@@ -590,34 +590,52 @@ func (a *API) needsDataWrapper() bool {
 	return false
 }
 
-func (a *API) jsonBytes() []byte {
+func (a *API) jsonBytes() ([]byte, error) {
 	if a.forceJSON == nil {
 		var slurp []byte
 		var err error
 		if *useCache {
 			slurp, err = os.ReadFile(a.JSONFile())
 			if err != nil {
-				log.Fatal(err)
+				return nil, err
+			}
+		} else if *remoteCacheDir != "" {
+			filename := fmt.Sprintf("%s.%s.json", a.Name, a.Version)
+			b, err := os.ReadFile(filepath.Join(*remoteCacheDir, filename))
+			if err != nil {
+				return nil, fmt.Errorf("%s: %w", err, errNoDoc)
+			}
+
+			// Make sure that keys are sorted by re-marshalling.
+			d := make(map[string]any)
+			json.Unmarshal(b, &d)
+			if err != nil {
+				return nil, err
+			}
+
+			slurp, err = json.MarshalIndent(d, "", "  ")
+			if err != nil {
+				return nil, err
 			}
 		} else {
 			slurp = slurpURL(a.DiscoveryURL())
 			if slurp != nil {
 				// Make sure that keys are sorted by re-marshalling.
-				d := make(map[string]interface{})
+				d := make(map[string]any)
 				json.Unmarshal(slurp, &d)
 				if err != nil {
-					log.Fatal(err)
+					return nil, err
 				}
 				var err error
 				slurp, err = json.MarshalIndent(d, "", "  ")
 				if err != nil {
-					log.Fatal(err)
+					return nil, err
 				}
 			}
 		}
 		a.forceJSON = slurp
 	}
-	return a.forceJSON
+	return a.forceJSON, nil
 }
 
 func (a *API) JSONFile() string {
@@ -629,7 +647,10 @@ func (a *API) JSONFile() string {
 // if the API spec file being pulled in is older than the local cache.
 func (a *API) WriteGeneratedCode() error {
 	genfilename := *output
-	jsonBytes := a.jsonBytes()
+	jsonBytes, err := a.jsonBytes()
+	if err != nil {
+		return err
+	}
 	// Skip generation if we don't have the discovery doc.
 	if jsonBytes == nil {
 		// No message here, because slurpURL printed one.
@@ -729,8 +750,10 @@ var docsLink string
 func (a *API) GenerateCode() ([]byte, error) {
 	pkg := a.Package()
 
-	jsonBytes := a.jsonBytes()
-	var err error
+	jsonBytes, err := a.jsonBytes()
+	if err != nil {
+		return nil, err
+	}
 	if a.doc == nil {
 		a.doc, err = disco.NewDocument(jsonBytes)
 		if err != nil {
@@ -826,6 +849,9 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = context.Canceled")
 	pn("var _ = internaloption.WithDefaultEndpoint")
 	pn("var _ = internal.Version")
+	if a.Name == "storage" {
+		pn("var _ = gax.Version")
+	}
 	pn("")
 	pn("const apiId = %q", a.doc.ID)
 	pn("const apiName = %q", a.doc.Name)
@@ -865,9 +891,8 @@ func (a *API) GenerateCode() ([]byte, error) {
 	if a.mtlsAPIBaseURL() != "" {
 		pn("opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))")
 	}
-	if !skipNewAuthLibrary[a.ID] {
-		pn("opts = append(opts, internaloption.EnableNewAuthLibrary())")
-	}
+	pn("opts = append(opts, internaloption.EnableNewAuthLibrary())")
+
 	pn("client, endpoint, err := htransport.NewClient(ctx, opts...)")
 	pn("if err != nil { return nil, err }")
 	pn("s, err := New(client)")
@@ -1562,6 +1587,14 @@ func (s *Schema) writeSchemaStruct(api *API) {
 			typ = "*" + typ
 		}
 
+		// HACK(chrisdsmith) Hardcodes HttpBody.Data to the Go type "any" only
+		// for monitoring:v1 in order to avoid errors with JSON objects in the responses.
+		// (json: cannot unmarshal object into Go struct field HttpBody.data of type string)
+		// See https://github.com/googleapis/google-api-go-client/issues/2304
+		if s.api.Name == "monitoring" && s.api.Version == "v1" && s.GoName() == "HttpBody" && pname == "Data" {
+			typ = "any"
+		}
+
 		s.api.pn(" %s %s `json:\"%s,omitempty%s\"`", pname, typ, p.p.Name, extraOpt)
 		if firstFieldName == "" {
 			firstFieldName = pname
@@ -1613,10 +1646,10 @@ func (s *Schema) writeSchemaStruct(api *API) {
 // by forceSendFieldName, and allows fields to be transmitted with the null value
 // by listing them in the field identified by nullFieldsName.
 func (s *Schema) writeSchemaMarshal(forceSendFieldName, nullFieldsName string) {
-	s.api.pn("func (s *%s) MarshalJSON() ([]byte, error) {", s.GoName())
+	s.api.pn("func (s %s) MarshalJSON() ([]byte, error) {", s.GoName())
 	s.api.pn("\ttype NoMethod %s", s.GoName())
 	// pass schema as methodless type to prevent subsequent calls to MarshalJSON from recursing indefinitely.
-	s.api.pn("\treturn gensupport.MarshalJSON(NoMethod(*s), s.%s, s.%s)", forceSendFieldName, nullFieldsName)
+	s.api.pn("\treturn gensupport.MarshalJSON(NoMethod(s), s.%s, s.%s)", forceSendFieldName, nullFieldsName)
 	s.api.pn("}")
 }
 
@@ -1971,6 +2004,8 @@ func (meth *Method) generateCode() {
 	retType := responseType(a, meth.m)
 	if meth.IsRawResponse() {
 		retType = "*http.Response"
+	} else if meth.IsProtoStructResponse() {
+		retType = "map[string]any"
 	}
 	retTypeComma := retType
 	if retTypeComma != "" {
@@ -2247,6 +2282,10 @@ func (meth *Method) generateCode() {
 	pn("var body io.Reader = nil")
 	if meth.IsRawRequest() {
 		pn("body = c.body_")
+	} else if meth.IsProtoStructRequest() {
+		pn("protoBytes, err := json.Marshal(c.req)")
+		pn("if err != nil { return nil, err }")
+		pn("body = bytes.NewReader(protoBytes)")
 	} else {
 		if ba := args.bodyArg(); ba != nil && httpMethod != "GET" {
 			if meth.m.ID == "ml.projects.predict" {
@@ -2386,7 +2425,9 @@ func (meth *Method) generateCode() {
 		if retTypeComma == "" {
 			pn("return nil")
 		} else {
-			if mapRetType {
+			if meth.IsProtoStructResponse() {
+				pn("var ret map[string]any")
+			} else if mapRetType {
 				pn("var ret %s", responseType(a, meth.m))
 			} else {
 				pn("ret := &%s{", responseTypeLiteral(a, meth.m))
@@ -2531,6 +2572,40 @@ func (meth *Method) IsRawRequest() bool {
 	return meth.m.Request.Ref == "HttpBody"
 }
 
+// IsProtoStructRequest determines if the method request type is a
+// [google.golang.org/protobuf/types/known/structpb.Struct].
+func (meth *Method) IsProtoStructRequest() bool {
+	if meth == nil || meth.m == nil {
+		return false
+	}
+
+	return isProtoStruct(meth.m.Request)
+}
+
+// IsProtoStructResponse determines if the method response type is a
+// [google.golang.org/protobuf/types/known/structpb.Struct].
+func (meth *Method) IsProtoStructResponse() bool {
+	if meth == nil || meth.m == nil {
+		return false
+	}
+
+	return isProtoStruct(meth.m.Response)
+}
+
+// isProtoStruct determines if the Schema represents a
+// [google.golang.org/protobuf/types/known/structpb.Struct].
+func isProtoStruct(s *disco.Schema) bool {
+	if s == nil {
+		return false
+	}
+
+	if s.Ref == "GoogleProtobufStruct" {
+		return true
+	}
+
+	return false
+}
+
 func (meth *Method) IsRawResponse() bool {
 	if meth.m.Response == nil {
 		return false
@@ -2568,6 +2643,11 @@ func (meth *Method) NewArguments() *arguments {
 			args.AddArg(&argument{
 				goname: "body_",
 				gotype: "io.Reader",
+			})
+		} else if meth.IsProtoStructRequest() {
+			args.AddArg(&argument{
+				goname: "req",
+				gotype: "map[string]any",
 			})
 		} else {
 			args.AddArg(meth.NewBodyArg(rs))

@@ -213,9 +213,9 @@ type GoogleFirebaseFcmDataV1beta1AndroidDeliveryData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseFcmDataV1beta1AndroidDeliveryData) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseFcmDataV1beta1AndroidDeliveryData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseFcmDataV1beta1AndroidDeliveryData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseFcmDataV1beta1Data: Data detailing messaging delivery
@@ -252,9 +252,9 @@ type GoogleFirebaseFcmDataV1beta1Data struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseFcmDataV1beta1Data) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseFcmDataV1beta1Data) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseFcmDataV1beta1Data
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseFcmDataV1beta1DeliveryPerformancePercents: Overview of
@@ -300,9 +300,9 @@ type GoogleFirebaseFcmDataV1beta1DeliveryPerformancePercents struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseFcmDataV1beta1DeliveryPerformancePercents) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseFcmDataV1beta1DeliveryPerformancePercents) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseFcmDataV1beta1DeliveryPerformancePercents
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleFirebaseFcmDataV1beta1DeliveryPerformancePercents) UnmarshalJSON(data []byte) error {
@@ -352,9 +352,9 @@ type GoogleFirebaseFcmDataV1beta1ListAndroidDeliveryDataResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseFcmDataV1beta1ListAndroidDeliveryDataResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseFcmDataV1beta1ListAndroidDeliveryDataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseFcmDataV1beta1ListAndroidDeliveryDataResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirebaseFcmDataV1beta1MessageInsightPercents: Additional information
@@ -378,9 +378,9 @@ type GoogleFirebaseFcmDataV1beta1MessageInsightPercents struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseFcmDataV1beta1MessageInsightPercents) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseFcmDataV1beta1MessageInsightPercents) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseFcmDataV1beta1MessageInsightPercents
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleFirebaseFcmDataV1beta1MessageInsightPercents) UnmarshalJSON(data []byte) error {
@@ -402,6 +402,10 @@ func (s *GoogleFirebaseFcmDataV1beta1MessageInsightPercents) UnmarshalJSON(data 
 // percentages are calculated with countMessagesAccepted as the denominator.
 // These categories may not account for all message outcomes.
 type GoogleFirebaseFcmDataV1beta1MessageOutcomePercents struct {
+	// Collapsed: The percentage of accepted messages that were collapsed
+	// (https://firebase.google.com/docs/cloud-messaging/concept-options#collapsible_and_non-collapsible_messages)
+	// by another message.
+	Collapsed float64 `json:"collapsed,omitempty"`
 	// Delivered: The percentage of all accepted messages that were successfully
 	// delivered to the device.
 	Delivered float64 `json:"delivered,omitempty"`
@@ -426,6 +430,11 @@ type GoogleFirebaseFcmDataV1beta1MessageOutcomePercents struct {
 	// (https://firebase.google.com/docs/cloud-messaging/android/receive#override-ondeletedmessages)
 	// in our SDK instead of delivering the messages.
 	DroppedTooManyPendingMessages float64 `json:"droppedTooManyPendingMessages,omitempty"`
+	// DroppedTtlExpired: The percentage of accepted messages that expired because
+	// Time To Live (TTL)
+	// (https://firebase.google.com/docs/cloud-messaging/concept-options#ttl)
+	// elapsed before the target device reconnected.
+	DroppedTtlExpired float64 `json:"droppedTtlExpired,omitempty"`
 	// Pending: The percentage of messages accepted on this day that were not
 	// dropped and not delivered, due to the device being disconnected (as of the
 	// end of the America/Los_Angeles day when the message was sent to FCM). A
@@ -433,31 +442,33 @@ type GoogleFirebaseFcmDataV1beta1MessageOutcomePercents struct {
 	// connects but others may be destined to devices that ultimately never
 	// reconnect.
 	Pending float64 `json:"pending,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Delivered") to
+	// ForceSendFields is a list of field names (e.g. "Collapsed") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Delivered") to include in API
+	// NullFields is a list of field names (e.g. "Collapsed") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseFcmDataV1beta1MessageOutcomePercents) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseFcmDataV1beta1MessageOutcomePercents) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseFcmDataV1beta1MessageOutcomePercents
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleFirebaseFcmDataV1beta1MessageOutcomePercents) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleFirebaseFcmDataV1beta1MessageOutcomePercents
 	var s1 struct {
+		Collapsed                     gensupport.JSONFloat64 `json:"collapsed"`
 		Delivered                     gensupport.JSONFloat64 `json:"delivered"`
 		DroppedAppForceStopped        gensupport.JSONFloat64 `json:"droppedAppForceStopped"`
 		DroppedDeviceInactive         gensupport.JSONFloat64 `json:"droppedDeviceInactive"`
 		DroppedTooManyPendingMessages gensupport.JSONFloat64 `json:"droppedTooManyPendingMessages"`
+		DroppedTtlExpired             gensupport.JSONFloat64 `json:"droppedTtlExpired"`
 		Pending                       gensupport.JSONFloat64 `json:"pending"`
 		*NoMethod
 	}
@@ -465,17 +476,21 @@ func (s *GoogleFirebaseFcmDataV1beta1MessageOutcomePercents) UnmarshalJSON(data 
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.Collapsed = float64(s1.Collapsed)
 	s.Delivered = float64(s1.Delivered)
 	s.DroppedAppForceStopped = float64(s1.DroppedAppForceStopped)
 	s.DroppedDeviceInactive = float64(s1.DroppedDeviceInactive)
 	s.DroppedTooManyPendingMessages = float64(s1.DroppedTooManyPendingMessages)
+	s.DroppedTtlExpired = float64(s1.DroppedTtlExpired)
 	s.Pending = float64(s1.Pending)
 	return nil
 }
 
 // GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents: Additional
-// information about proxy notification delivery. All percentages are
-// calculated with countNotificationsAccepted as the denominator.
+// information about proxy notification
+// (https://firebase.google.com/docs/cloud-messaging/android/message-priority#proxy)
+// delivery. All percentages are calculated with countNotificationsAccepted as
+// the denominator.
 type GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents struct {
 	// Failed: The percentage of accepted notifications that failed to be proxied.
 	// This is usually caused by exceptions that occurred while calling
@@ -512,9 +527,9 @@ type GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents) MarshalJSON() ([]byte, error) {
+func (s GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleFirebaseFcmDataV1beta1ProxyNotificationInsightPercents) UnmarshalJSON(data []byte) error {
@@ -574,9 +589,9 @@ type GoogleTypeDate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsAndroidAppsDeliveryDataListCall struct {

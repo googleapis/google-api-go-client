@@ -265,9 +265,9 @@ type Thing struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Thing) MarshalJSON() ([]byte, error) {
+func (s Thing) MarshalJSON() ([]byte, error) {
 	type NoMethod Thing
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Thing) UnmarshalJSON(data []byte) error {

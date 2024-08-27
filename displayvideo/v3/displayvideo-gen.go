@@ -841,9 +841,9 @@ type ActiveViewVideoViewabilityMetricConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ActiveViewVideoViewabilityMetricConfig) MarshalJSON() ([]byte, error) {
+func (s ActiveViewVideoViewabilityMetricConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ActiveViewVideoViewabilityMetricConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdGroup: A single ad group associated with a line item.
@@ -920,9 +920,9 @@ type AdGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdGroup) MarshalJSON() ([]byte, error) {
+func (s AdGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod AdGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdGroupAd: A single ad associated with an ad group.
@@ -1002,9 +1002,9 @@ type AdGroupAd struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdGroupAd) MarshalJSON() ([]byte, error) {
+func (s AdGroupAd) MarshalJSON() ([]byte, error) {
 	type NoMethod AdGroupAd
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdGroupAssignedTargetingOption: Wrapper object associating an
@@ -1028,9 +1028,9 @@ type AdGroupAssignedTargetingOption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdGroupAssignedTargetingOption) MarshalJSON() ([]byte, error) {
+func (s AdGroupAssignedTargetingOption) MarshalJSON() ([]byte, error) {
 	type NoMethod AdGroupAssignedTargetingOption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdUrl: Additional URLs related to the ad, including beacons.
@@ -1063,9 +1063,9 @@ type AdUrl struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdUrl) MarshalJSON() ([]byte, error) {
+func (s AdUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod AdUrl
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Adloox: Details of Adloox settings.
@@ -1097,9 +1097,9 @@ type Adloox struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Adloox) MarshalJSON() ([]byte, error) {
+func (s Adloox) MarshalJSON() ([]byte, error) {
 	type NoMethod Adloox
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Advertiser: A single advertiser in Display & Video 360 (DV360).
@@ -1180,9 +1180,9 @@ type Advertiser struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Advertiser) MarshalJSON() ([]byte, error) {
+func (s Advertiser) MarshalJSON() ([]byte, error) {
 	type NoMethod Advertiser
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdvertiserAdServerConfig: Ad server related settings of an advertiser.
@@ -1206,9 +1206,9 @@ type AdvertiserAdServerConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdvertiserAdServerConfig) MarshalJSON() ([]byte, error) {
+func (s AdvertiserAdServerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvertiserAdServerConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdvertiserBillingConfig: Billing related settings of an advertiser.
@@ -1229,9 +1229,9 @@ type AdvertiserBillingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdvertiserBillingConfig) MarshalJSON() ([]byte, error) {
+func (s AdvertiserBillingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvertiserBillingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdvertiserCreativeConfig: Creatives related settings of an advertiser.
@@ -1281,9 +1281,9 @@ type AdvertiserCreativeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdvertiserCreativeConfig) MarshalJSON() ([]byte, error) {
+func (s AdvertiserCreativeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvertiserCreativeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdvertiserDataAccessConfig: Settings that control how advertiser related
@@ -1305,9 +1305,9 @@ type AdvertiserDataAccessConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdvertiserDataAccessConfig) MarshalJSON() ([]byte, error) {
+func (s AdvertiserDataAccessConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvertiserDataAccessConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdvertiserGeneralConfig: General settings of an advertiser.
@@ -1353,9 +1353,9 @@ type AdvertiserGeneralConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdvertiserGeneralConfig) MarshalJSON() ([]byte, error) {
+func (s AdvertiserGeneralConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvertiserGeneralConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdvertiserSdfConfig: Structured Data Files (SDF) settings of an advertiser.
@@ -1383,9 +1383,9 @@ type AdvertiserSdfConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdvertiserSdfConfig) MarshalJSON() ([]byte, error) {
+func (s AdvertiserSdfConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvertiserSdfConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdvertiserTargetingConfig: Targeting settings related to ad serving of an
@@ -1410,9 +1410,9 @@ type AdvertiserTargetingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdvertiserTargetingConfig) MarshalJSON() ([]byte, error) {
+func (s AdvertiserTargetingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AdvertiserTargetingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgeRangeAssignedTargetingOptionDetails: Represents a targetable age range.
@@ -1470,9 +1470,9 @@ type AgeRangeAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgeRangeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s AgeRangeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AgeRangeAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgeRangeTargetingOptionDetails: Represents a targetable age range. This will
@@ -1526,9 +1526,9 @@ type AgeRangeTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AgeRangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s AgeRangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AgeRangeTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AlgorithmRules: Rule-based algorithm.
@@ -1548,9 +1548,9 @@ type AlgorithmRules struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AlgorithmRules) MarshalJSON() ([]byte, error) {
+func (s AlgorithmRules) MarshalJSON() ([]byte, error) {
 	type NoMethod AlgorithmRules
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AlgorithmRulesComparisonValue: A value to compare the signal to.
@@ -1682,6 +1682,7 @@ type AlgorithmRulesComparisonValue struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	ExchangeValue string `json:"exchangeValue,omitempty"`
 	// Int64Value: Integer value.
 	Int64Value int64 `json:"int64Value,omitempty,string"`
@@ -1710,9 +1711,9 @@ type AlgorithmRulesComparisonValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AlgorithmRulesComparisonValue) MarshalJSON() ([]byte, error) {
+func (s AlgorithmRulesComparisonValue) MarshalJSON() ([]byte, error) {
 	type NoMethod AlgorithmRulesComparisonValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *AlgorithmRulesComparisonValue) UnmarshalJSON(data []byte) error {
@@ -1752,9 +1753,9 @@ type AlgorithmRulesRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AlgorithmRulesRule) MarshalJSON() ([]byte, error) {
+func (s AlgorithmRulesRule) MarshalJSON() ([]byte, error) {
 	type NoMethod AlgorithmRulesRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AlgorithmRulesRuleCondition: Set of signal comparisons. Equivalent of an
@@ -1780,9 +1781,9 @@ type AlgorithmRulesRuleCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AlgorithmRulesRuleCondition) MarshalJSON() ([]byte, error) {
+func (s AlgorithmRulesRuleCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod AlgorithmRulesRuleCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AlgorithmRulesRuleset: A ruleset consisting of a list of rules and how to
@@ -1813,9 +1814,9 @@ type AlgorithmRulesRuleset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AlgorithmRulesRuleset) MarshalJSON() ([]byte, error) {
+func (s AlgorithmRulesRuleset) MarshalJSON() ([]byte, error) {
 	type NoMethod AlgorithmRulesRuleset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *AlgorithmRulesRuleset) UnmarshalJSON(data []byte) error {
@@ -1875,9 +1876,9 @@ type AlgorithmRulesSignal struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AlgorithmRulesSignal) MarshalJSON() ([]byte, error) {
+func (s AlgorithmRulesSignal) MarshalJSON() ([]byte, error) {
 	type NoMethod AlgorithmRulesSignal
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AlgorithmRulesSignalComparison: A single comparison. The comparison compares
@@ -1917,9 +1918,9 @@ type AlgorithmRulesSignalComparison struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AlgorithmRulesSignalComparison) MarshalJSON() ([]byte, error) {
+func (s AlgorithmRulesSignalComparison) MarshalJSON() ([]byte, error) {
 	type NoMethod AlgorithmRulesSignalComparison
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AlgorithmRulesSignalValue: Adjusted value of the signal used for rule
@@ -1940,9 +1941,9 @@ type AlgorithmRulesSignalValue struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AlgorithmRulesSignalValue) MarshalJSON() ([]byte, error) {
+func (s AlgorithmRulesSignalValue) MarshalJSON() ([]byte, error) {
 	type NoMethod AlgorithmRulesSignalValue
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *AlgorithmRulesSignalValue) UnmarshalJSON(data []byte) error {
@@ -2006,9 +2007,9 @@ type AppAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s AppAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AppAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppCategoryAssignedTargetingOptionDetails: Details for assigned app category
@@ -2036,9 +2037,9 @@ type AppCategoryAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppCategoryAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s AppCategoryAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AppCategoryAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AppCategoryTargetingOptionDetails: Represents a targetable collection of
@@ -2062,9 +2063,9 @@ type AppCategoryTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AppCategoryTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s AppCategoryTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AppCategoryTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Asset: A single asset.
@@ -2092,9 +2093,9 @@ type Asset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Asset) MarshalJSON() ([]byte, error) {
+func (s Asset) MarshalJSON() ([]byte, error) {
 	type NoMethod Asset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AssetAssociation: Asset association for the creative.
@@ -2186,9 +2187,9 @@ type AssetAssociation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AssetAssociation) MarshalJSON() ([]byte, error) {
+func (s AssetAssociation) MarshalJSON() ([]byte, error) {
 	type NoMethod AssetAssociation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AssignedInventorySource: An assignment between a targetable inventory source
@@ -2219,9 +2220,9 @@ type AssignedInventorySource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AssignedInventorySource) MarshalJSON() ([]byte, error) {
+func (s AssignedInventorySource) MarshalJSON() ([]byte, error) {
 	type NoMethod AssignedInventorySource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AssignedLocation: An assignment between a location list and a relevant
@@ -2252,9 +2253,9 @@ type AssignedLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AssignedLocation) MarshalJSON() ([]byte, error) {
+func (s AssignedLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod AssignedLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AssignedTargetingOption: A single assigned targeting option, which defines
@@ -2596,9 +2597,9 @@ type AssignedTargetingOption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AssignedTargetingOption) MarshalJSON() ([]byte, error) {
+func (s AssignedTargetingOption) MarshalJSON() ([]byte, error) {
 	type NoMethod AssignedTargetingOption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AssignedUserRole: A single assigned user role, which defines a user's
@@ -2666,9 +2667,9 @@ type AssignedUserRole struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AssignedUserRole) MarshalJSON() ([]byte, error) {
+func (s AssignedUserRole) MarshalJSON() ([]byte, error) {
 	type NoMethod AssignedUserRole
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AudienceGroupAssignedTargetingOptionDetails: Assigned audience group
@@ -2723,9 +2724,9 @@ type AudienceGroupAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AudienceGroupAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s AudienceGroupAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AudienceGroupAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AudioAd: Details for an audio ad.
@@ -2752,9 +2753,9 @@ type AudioAd struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AudioAd) MarshalJSON() ([]byte, error) {
+func (s AudioAd) MarshalJSON() ([]byte, error) {
 	type NoMethod AudioAd
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AudioContentTypeAssignedTargetingOptionDetails: Details for audio content
@@ -2788,9 +2789,9 @@ type AudioContentTypeAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AudioContentTypeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s AudioContentTypeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AudioContentTypeAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AudioContentTypeTargetingOptionDetails: Represents a targetable audio
@@ -2821,9 +2822,9 @@ type AudioContentTypeTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AudioContentTypeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s AudioContentTypeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AudioContentTypeTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AudioVideoOffset: The length an audio or a video has been played.
@@ -2845,9 +2846,9 @@ type AudioVideoOffset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AudioVideoOffset) MarshalJSON() ([]byte, error) {
+func (s AudioVideoOffset) MarshalJSON() ([]byte, error) {
 	type NoMethod AudioVideoOffset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditAdvertiserResponse: Response message for
@@ -2910,9 +2911,9 @@ type AuditAdvertiserResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditAdvertiserResponse) MarshalJSON() ([]byte, error) {
+func (s AuditAdvertiserResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditAdvertiserResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuthorizedSellerStatusAssignedTargetingOptionDetails: Represents an assigned
@@ -2955,9 +2956,9 @@ type AuthorizedSellerStatusAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuthorizedSellerStatusAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s AuthorizedSellerStatusAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthorizedSellerStatusAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuthorizedSellerStatusTargetingOptionDetails: Represents a targetable
@@ -2995,9 +2996,9 @@ type AuthorizedSellerStatusTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuthorizedSellerStatusTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s AuthorizedSellerStatusTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthorizedSellerStatusTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BiddingStrategy: Settings that control the bid strategy. Bid strategy
@@ -3041,9 +3042,9 @@ type BiddingStrategy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BiddingStrategy) MarshalJSON() ([]byte, error) {
+func (s BiddingStrategy) MarshalJSON() ([]byte, error) {
 	type NoMethod BiddingStrategy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BrowserAssignedTargetingOptionDetails: Details for assigned browser
@@ -3072,9 +3073,9 @@ type BrowserAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BrowserAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s BrowserAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod BrowserAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BrowserTargetingOptionDetails: Represents a targetable browser. This will be
@@ -3096,9 +3097,9 @@ type BrowserTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BrowserTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s BrowserTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod BrowserTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BudgetSummary: Summarized information of an individual campaign budget.
@@ -3136,9 +3137,9 @@ type BudgetSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BudgetSummary) MarshalJSON() ([]byte, error) {
+func (s BudgetSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod BudgetSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkEditAdvertiserAssignedTargetingOptionsRequest: Request message for
@@ -3169,9 +3170,9 @@ type BulkEditAdvertiserAssignedTargetingOptionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditAdvertiserAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
+func (s BulkEditAdvertiserAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditAdvertiserAssignedTargetingOptionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BulkEditAdvertiserAssignedTargetingOptionsResponse struct {
@@ -3195,9 +3196,9 @@ type BulkEditAdvertiserAssignedTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditAdvertiserAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s BulkEditAdvertiserAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditAdvertiserAssignedTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkEditAssignedInventorySourcesRequest: Request message for
@@ -3229,9 +3230,9 @@ type BulkEditAssignedInventorySourcesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditAssignedInventorySourcesRequest) MarshalJSON() ([]byte, error) {
+func (s BulkEditAssignedInventorySourcesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditAssignedInventorySourcesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkEditAssignedInventorySourcesResponse: Response message for
@@ -3256,9 +3257,9 @@ type BulkEditAssignedInventorySourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditAssignedInventorySourcesResponse) MarshalJSON() ([]byte, error) {
+func (s BulkEditAssignedInventorySourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditAssignedInventorySourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkEditAssignedLocationsRequest: Request message for
@@ -3283,9 +3284,9 @@ type BulkEditAssignedLocationsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditAssignedLocationsRequest) MarshalJSON() ([]byte, error) {
+func (s BulkEditAssignedLocationsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditAssignedLocationsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BulkEditAssignedLocationsResponse struct {
@@ -3308,9 +3309,9 @@ type BulkEditAssignedLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditAssignedLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s BulkEditAssignedLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditAssignedLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkEditAssignedTargetingOptionsRequest: Request message for
@@ -3390,9 +3391,9 @@ type BulkEditAssignedTargetingOptionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
+func (s BulkEditAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditAssignedTargetingOptionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BulkEditAssignedTargetingOptionsResponse struct {
@@ -3419,9 +3420,9 @@ type BulkEditAssignedTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s BulkEditAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditAssignedTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkEditAssignedUserRolesRequest: Request message for
@@ -3447,9 +3448,9 @@ type BulkEditAssignedUserRolesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditAssignedUserRolesRequest) MarshalJSON() ([]byte, error) {
+func (s BulkEditAssignedUserRolesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditAssignedUserRolesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BulkEditAssignedUserRolesResponse struct {
@@ -3472,9 +3473,9 @@ type BulkEditAssignedUserRolesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditAssignedUserRolesResponse) MarshalJSON() ([]byte, error) {
+func (s BulkEditAssignedUserRolesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditAssignedUserRolesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkEditNegativeKeywordsRequest: Request message for
@@ -3499,9 +3500,9 @@ type BulkEditNegativeKeywordsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditNegativeKeywordsRequest) MarshalJSON() ([]byte, error) {
+func (s BulkEditNegativeKeywordsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditNegativeKeywordsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkEditNegativeKeywordsResponse: Response message for
@@ -3526,9 +3527,9 @@ type BulkEditNegativeKeywordsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditNegativeKeywordsResponse) MarshalJSON() ([]byte, error) {
+func (s BulkEditNegativeKeywordsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditNegativeKeywordsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkEditPartnerAssignedTargetingOptionsRequest: Request message for
@@ -3555,9 +3556,9 @@ type BulkEditPartnerAssignedTargetingOptionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditPartnerAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
+func (s BulkEditPartnerAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditPartnerAssignedTargetingOptionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BulkEditPartnerAssignedTargetingOptionsResponse struct {
@@ -3581,9 +3582,9 @@ type BulkEditPartnerAssignedTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditPartnerAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s BulkEditPartnerAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditPartnerAssignedTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkEditSitesRequest: Request message for SiteService.BulkEditSites.
@@ -3610,9 +3611,9 @@ type BulkEditSitesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditSitesRequest) MarshalJSON() ([]byte, error) {
+func (s BulkEditSitesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditSitesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkEditSitesResponse: Response message for SiteService.BulkEditSites.
@@ -3636,9 +3637,9 @@ type BulkEditSitesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkEditSitesResponse) MarshalJSON() ([]byte, error) {
+func (s BulkEditSitesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkEditSitesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BulkListAdGroupAssignedTargetingOptionsResponse struct {
@@ -3669,9 +3670,9 @@ type BulkListAdGroupAssignedTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkListAdGroupAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s BulkListAdGroupAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkListAdGroupAssignedTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BulkListAdvertiserAssignedTargetingOptionsResponse struct {
@@ -3700,9 +3701,9 @@ type BulkListAdvertiserAssignedTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkListAdvertiserAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s BulkListAdvertiserAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkListAdvertiserAssignedTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BulkListAssignedTargetingOptionsResponse struct {
@@ -3734,9 +3735,9 @@ type BulkListAssignedTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkListAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s BulkListAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkListAssignedTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BulkListCampaignAssignedTargetingOptionsResponse struct {
@@ -3765,9 +3766,9 @@ type BulkListCampaignAssignedTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkListCampaignAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s BulkListCampaignAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkListCampaignAssignedTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type BulkListInsertionOrderAssignedTargetingOptionsResponse struct {
@@ -3796,9 +3797,9 @@ type BulkListInsertionOrderAssignedTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkListInsertionOrderAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s BulkListInsertionOrderAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkListInsertionOrderAssignedTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkUpdateLineItemsRequest: Request message for
@@ -3826,9 +3827,9 @@ type BulkUpdateLineItemsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkUpdateLineItemsRequest) MarshalJSON() ([]byte, error) {
+func (s BulkUpdateLineItemsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkUpdateLineItemsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkUpdateLineItemsResponse: Response message for
@@ -3861,9 +3862,9 @@ type BulkUpdateLineItemsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkUpdateLineItemsResponse) MarshalJSON() ([]byte, error) {
+func (s BulkUpdateLineItemsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkUpdateLineItemsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BumperAd: Details for a bumper ad.
@@ -3883,9 +3884,9 @@ type BumperAd struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BumperAd) MarshalJSON() ([]byte, error) {
+func (s BumperAd) MarshalJSON() ([]byte, error) {
 	type NoMethod BumperAd
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BusinessChainAssignedTargetingOptionDetails: Details for assigned Business
@@ -3929,9 +3930,9 @@ type BusinessChainAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BusinessChainAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s BusinessChainAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod BusinessChainAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *BusinessChainAssignedTargetingOptionDetails) UnmarshalJSON(data []byte) error {
@@ -3970,9 +3971,9 @@ type BusinessChainSearchTerms struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BusinessChainSearchTerms) MarshalJSON() ([]byte, error) {
+func (s BusinessChainSearchTerms) MarshalJSON() ([]byte, error) {
 	type NoMethod BusinessChainSearchTerms
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BusinessChainTargetingOptionDetails: Represents a targetable business chain
@@ -4038,9 +4039,9 @@ type BusinessChainTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BusinessChainTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s BusinessChainTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod BusinessChainTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Campaign: A single campaign.
@@ -4104,9 +4105,9 @@ type Campaign struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Campaign) MarshalJSON() ([]byte, error) {
+func (s Campaign) MarshalJSON() ([]byte, error) {
 	type NoMethod Campaign
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CampaignBudget: Settings that control how the campaign budget is allocated.
@@ -4173,9 +4174,9 @@ type CampaignBudget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CampaignBudget) MarshalJSON() ([]byte, error) {
+func (s CampaignBudget) MarshalJSON() ([]byte, error) {
 	type NoMethod CampaignBudget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CampaignFlight: Settings that track the planned spend and duration of a
@@ -4209,9 +4210,9 @@ type CampaignFlight struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CampaignFlight) MarshalJSON() ([]byte, error) {
+func (s CampaignFlight) MarshalJSON() ([]byte, error) {
 	type NoMethod CampaignFlight
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CampaignGoal: Settings that control the goal of a campaign.
@@ -4246,9 +4247,9 @@ type CampaignGoal struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CampaignGoal) MarshalJSON() ([]byte, error) {
+func (s CampaignGoal) MarshalJSON() ([]byte, error) {
 	type NoMethod CampaignGoal
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CarrierAndIspAssignedTargetingOptionDetails: Details for assigned carrier
@@ -4278,9 +4279,9 @@ type CarrierAndIspAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CarrierAndIspAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s CarrierAndIspAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod CarrierAndIspAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CarrierAndIspTargetingOptionDetails: Represents a targetable carrier or ISP.
@@ -4312,9 +4313,9 @@ type CarrierAndIspTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CarrierAndIspTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s CarrierAndIspTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod CarrierAndIspTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CategoryAssignedTargetingOptionDetails: Assigned category targeting option
@@ -4341,9 +4342,9 @@ type CategoryAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CategoryAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s CategoryAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod CategoryAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CategoryTargetingOptionDetails: Represents a targetable category. This will
@@ -4365,9 +4366,9 @@ type CategoryTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CategoryTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s CategoryTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod CategoryTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Channel: A single channel. Channels are custom groups of related websites
@@ -4407,9 +4408,9 @@ type Channel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Channel) MarshalJSON() ([]byte, error) {
+func (s Channel) MarshalJSON() ([]byte, error) {
 	type NoMethod Channel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChannelAssignedTargetingOptionDetails: Details for assigned channel
@@ -4437,9 +4438,9 @@ type ChannelAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ChannelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CmHybridConfig: Settings for advertisers that use both Campaign Manager 360
@@ -4483,9 +4484,9 @@ type CmHybridConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CmHybridConfig) MarshalJSON() ([]byte, error) {
+func (s CmHybridConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CmHybridConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CmTrackingAd: A Campaign Manager 360 tracking ad.
@@ -4509,9 +4510,9 @@ type CmTrackingAd struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CmTrackingAd) MarshalJSON() ([]byte, error) {
+func (s CmTrackingAd) MarshalJSON() ([]byte, error) {
 	type NoMethod CmTrackingAd
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CombinedAudience: Describes a combined audience resource.
@@ -4539,9 +4540,9 @@ type CombinedAudience struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CombinedAudience) MarshalJSON() ([]byte, error) {
+func (s CombinedAudience) MarshalJSON() ([]byte, error) {
 	type NoMethod CombinedAudience
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CombinedAudienceGroup: Details of combined audience group. All combined
@@ -4565,9 +4566,9 @@ type CombinedAudienceGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CombinedAudienceGroup) MarshalJSON() ([]byte, error) {
+func (s CombinedAudienceGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod CombinedAudienceGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CombinedAudienceTargetingSetting: Details of combined audience targeting
@@ -4589,9 +4590,9 @@ type CombinedAudienceTargetingSetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CombinedAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
+func (s CombinedAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod CombinedAudienceTargetingSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommonInStreamAttribute: Common attributes for in-stream, non-skippable and
@@ -4625,9 +4626,9 @@ type CommonInStreamAttribute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CommonInStreamAttribute) MarshalJSON() ([]byte, error) {
+func (s CommonInStreamAttribute) MarshalJSON() ([]byte, error) {
 	type NoMethod CommonInStreamAttribute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Consent: User consent status.
@@ -4661,9 +4662,9 @@ type Consent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Consent) MarshalJSON() ([]byte, error) {
+func (s Consent) MarshalJSON() ([]byte, error) {
 	type NoMethod Consent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContactInfo: Contact information defining a Customer Match audience member.
@@ -4704,9 +4705,9 @@ type ContactInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContactInfo) MarshalJSON() ([]byte, error) {
+func (s ContactInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ContactInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContactInfoList: Wrapper message for a list of contact information defining
@@ -4734,9 +4735,9 @@ type ContactInfoList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContactInfoList) MarshalJSON() ([]byte, error) {
+func (s ContactInfoList) MarshalJSON() ([]byte, error) {
 	type NoMethod ContactInfoList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentDurationAssignedTargetingOptionDetails: Details for content duration
@@ -4776,9 +4777,9 @@ type ContentDurationAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentDurationAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ContentDurationAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentDurationAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentDurationTargetingOptionDetails: Represents a targetable content
@@ -4812,9 +4813,9 @@ type ContentDurationTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentDurationTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ContentDurationTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentDurationTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentGenreAssignedTargetingOptionDetails: Details for content genre
@@ -4844,9 +4845,9 @@ type ContentGenreAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentGenreAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ContentGenreAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentGenreAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentGenreTargetingOptionDetails: Represents a targetable content genre.
@@ -4868,9 +4869,9 @@ type ContentGenreTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentGenreTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ContentGenreTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentGenreTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentInstreamPositionAssignedTargetingOptionDetails: Assigned content
@@ -4923,9 +4924,9 @@ type ContentInstreamPositionAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentInstreamPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ContentInstreamPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentInstreamPositionAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentInstreamPositionTargetingOptionDetails: Represents a targetable
@@ -4960,9 +4961,9 @@ type ContentInstreamPositionTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentInstreamPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ContentInstreamPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentInstreamPositionTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentOutstreamPositionAssignedTargetingOptionDetails: Assigned content
@@ -5018,9 +5019,9 @@ type ContentOutstreamPositionAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentOutstreamPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ContentOutstreamPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentOutstreamPositionAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentOutstreamPositionTargetingOptionDetails: Represents a targetable
@@ -5059,9 +5060,9 @@ type ContentOutstreamPositionTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentOutstreamPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ContentOutstreamPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentOutstreamPositionTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentStreamTypeAssignedTargetingOptionDetails: Details for content stream
@@ -5096,9 +5097,9 @@ type ContentStreamTypeAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentStreamTypeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ContentStreamTypeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentStreamTypeAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ContentStreamTypeTargetingOptionDetails: Represents a targetable content
@@ -5127,9 +5128,9 @@ type ContentStreamTypeTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ContentStreamTypeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ContentStreamTypeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ContentStreamTypeTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConversionCountingConfig: Settings that control how conversions are counted.
@@ -5159,9 +5160,9 @@ type ConversionCountingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConversionCountingConfig) MarshalJSON() ([]byte, error) {
+func (s ConversionCountingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ConversionCountingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CounterEvent: Counter event of the creative.
@@ -5184,9 +5185,9 @@ type CounterEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CounterEvent) MarshalJSON() ([]byte, error) {
+func (s CounterEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod CounterEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateAssetRequest: A request message for CreateAsset.
@@ -5207,9 +5208,9 @@ type CreateAssetRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateAssetRequest) MarshalJSON() ([]byte, error) {
+func (s CreateAssetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateAssetRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateAssetResponse: A response message for CreateAsset.
@@ -5232,9 +5233,9 @@ type CreateAssetResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateAssetResponse) MarshalJSON() ([]byte, error) {
+func (s CreateAssetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateAssetResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateAssignedTargetingOptionsRequest: A request listing which assigned
@@ -5367,9 +5368,9 @@ type CreateAssignedTargetingOptionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
+func (s CreateAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateAssignedTargetingOptionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateSdfDownloadTaskRequest: Request message for
@@ -5409,6 +5410,9 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
+	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
+	// migrating to this version.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5423,9 +5427,9 @@ type CreateSdfDownloadTaskRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateSdfDownloadTaskRequest) MarshalJSON() ([]byte, error) {
+func (s CreateSdfDownloadTaskRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateSdfDownloadTaskRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Creative: A single Creative.
@@ -5779,9 +5783,9 @@ type Creative struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Creative) MarshalJSON() ([]byte, error) {
+func (s Creative) MarshalJSON() ([]byte, error) {
 	type NoMethod Creative
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreativeConfig: Creative requirements configuration for the inventory
@@ -5853,9 +5857,9 @@ type CreativeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CreativeConfig) MarshalJSON() ([]byte, error) {
+func (s CreativeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CreativeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomBiddingAlgorithm: A single custom bidding algorithm.
@@ -5941,9 +5945,9 @@ type CustomBiddingAlgorithm struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomBiddingAlgorithm) MarshalJSON() ([]byte, error) {
+func (s CustomBiddingAlgorithm) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomBiddingAlgorithm
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomBiddingAlgorithmRules: A single custom bidding algorithm rules.
@@ -5992,9 +5996,9 @@ type CustomBiddingAlgorithmRules struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomBiddingAlgorithmRules) MarshalJSON() ([]byte, error) {
+func (s CustomBiddingAlgorithmRules) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomBiddingAlgorithmRules
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomBiddingAlgorithmRulesError: An error message for a
@@ -6023,9 +6027,9 @@ type CustomBiddingAlgorithmRulesError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomBiddingAlgorithmRulesError) MarshalJSON() ([]byte, error) {
+func (s CustomBiddingAlgorithmRulesError) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomBiddingAlgorithmRulesError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomBiddingAlgorithmRulesRef: The reference to the uploaded AlgorithmRules
@@ -6053,9 +6057,9 @@ type CustomBiddingAlgorithmRulesRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomBiddingAlgorithmRulesRef) MarshalJSON() ([]byte, error) {
+func (s CustomBiddingAlgorithmRulesRef) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomBiddingAlgorithmRulesRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomBiddingModelDetails: The details of a custom bidding algorithm model
@@ -6109,9 +6113,9 @@ type CustomBiddingModelDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomBiddingModelDetails) MarshalJSON() ([]byte, error) {
+func (s CustomBiddingModelDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomBiddingModelDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomBiddingScript: A single custom bidding script.
@@ -6160,9 +6164,9 @@ type CustomBiddingScript struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomBiddingScript) MarshalJSON() ([]byte, error) {
+func (s CustomBiddingScript) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomBiddingScript
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomBiddingScriptRef: The reference to the uploaded custom bidding script
@@ -6189,9 +6193,9 @@ type CustomBiddingScriptRef struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomBiddingScriptRef) MarshalJSON() ([]byte, error) {
+func (s CustomBiddingScriptRef) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomBiddingScriptRef
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomLabel: The key and value of a custom label.
@@ -6221,9 +6225,9 @@ type CustomLabel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomLabel) MarshalJSON() ([]byte, error) {
+func (s CustomLabel) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomLabel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomList: Describes a custom list entity, such as a custom affinity or
@@ -6252,9 +6256,9 @@ type CustomList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomList) MarshalJSON() ([]byte, error) {
+func (s CustomList) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomListGroup: Details of custom list group. All custom list targeting
@@ -6276,9 +6280,9 @@ type CustomListGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomListGroup) MarshalJSON() ([]byte, error) {
+func (s CustomListGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomListGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomListTargetingSetting: Details of custom list targeting setting.
@@ -6299,9 +6303,9 @@ type CustomListTargetingSetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomListTargetingSetting) MarshalJSON() ([]byte, error) {
+func (s CustomListTargetingSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomListTargetingSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a birthday. The
@@ -6337,9 +6341,9 @@ type Date struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DateRange: A date range.
@@ -6363,9 +6367,9 @@ type DateRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DateRange) MarshalJSON() ([]byte, error) {
+func (s DateRange) MarshalJSON() ([]byte, error) {
 	type NoMethod DateRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DayAndTime: Representation of time defined by day of the week and hour of
@@ -6409,9 +6413,9 @@ type DayAndTime struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DayAndTime) MarshalJSON() ([]byte, error) {
+func (s DayAndTime) MarshalJSON() ([]byte, error) {
 	type NoMethod DayAndTime
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DayAndTimeAssignedTargetingOptionDetails: Representation of a segment of
@@ -6462,9 +6466,9 @@ type DayAndTimeAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DayAndTimeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s DayAndTimeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod DayAndTimeAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeleteAssignedTargetingOptionsRequest: A request listing which assigned
@@ -6597,9 +6601,9 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeleteAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
+func (s DeleteAssignedTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteAssignedTargetingOptionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceMakeModelAssignedTargetingOptionDetails: Assigned device make and
@@ -6627,9 +6631,9 @@ type DeviceMakeModelAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceMakeModelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s DeviceMakeModelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceMakeModelAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceMakeModelTargetingOptionDetails: Represents a targetable device make
@@ -6651,9 +6655,9 @@ type DeviceMakeModelTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceMakeModelTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s DeviceMakeModelTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceMakeModelTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceTypeAssignedTargetingOptionDetails: Targeting details for device type.
@@ -6692,9 +6696,9 @@ type DeviceTypeAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceTypeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s DeviceTypeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceTypeAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DeviceTypeAssignedTargetingOptionDetails) UnmarshalJSON(data []byte) error {
@@ -6739,9 +6743,9 @@ type DeviceTypeTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DeviceTypeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s DeviceTypeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceTypeTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DigitalContentLabelAssignedTargetingOptionDetails: Targeting details for
@@ -6780,9 +6784,9 @@ type DigitalContentLabelAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DigitalContentLabelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s DigitalContentLabelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod DigitalContentLabelAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DigitalContentLabelTargetingOptionDetails: Represents a targetable digital
@@ -6821,9 +6825,9 @@ type DigitalContentLabelTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DigitalContentLabelTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s DigitalContentLabelTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod DigitalContentLabelTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Dimensions: Dimensions.
@@ -6845,9 +6849,9 @@ type Dimensions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Dimensions) MarshalJSON() ([]byte, error) {
+func (s Dimensions) MarshalJSON() ([]byte, error) {
 	type NoMethod Dimensions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DisplayVideoSourceAd: The ad sourced from a DV360 creative.
@@ -6867,9 +6871,9 @@ type DisplayVideoSourceAd struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DisplayVideoSourceAd) MarshalJSON() ([]byte, error) {
+func (s DisplayVideoSourceAd) MarshalJSON() ([]byte, error) {
 	type NoMethod DisplayVideoSourceAd
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DoubleVerify: Details of DoubleVerify settings.
@@ -6916,9 +6920,9 @@ type DoubleVerify struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DoubleVerify) MarshalJSON() ([]byte, error) {
+func (s DoubleVerify) MarshalJSON() ([]byte, error) {
 	type NoMethod DoubleVerify
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DoubleVerifyAppStarRating: Details of DoubleVerify star ratings settings.
@@ -6952,9 +6956,9 @@ type DoubleVerifyAppStarRating struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DoubleVerifyAppStarRating) MarshalJSON() ([]byte, error) {
+func (s DoubleVerifyAppStarRating) MarshalJSON() ([]byte, error) {
 	type NoMethod DoubleVerifyAppStarRating
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DoubleVerifyBrandSafetyCategories: Settings for brand safety controls.
@@ -7018,9 +7022,9 @@ type DoubleVerifyBrandSafetyCategories struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DoubleVerifyBrandSafetyCategories) MarshalJSON() ([]byte, error) {
+func (s DoubleVerifyBrandSafetyCategories) MarshalJSON() ([]byte, error) {
 	type NoMethod DoubleVerifyBrandSafetyCategories
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DoubleVerifyDisplayViewability: Details of DoubleVerify display viewability
@@ -7076,9 +7080,9 @@ type DoubleVerifyDisplayViewability struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DoubleVerifyDisplayViewability) MarshalJSON() ([]byte, error) {
+func (s DoubleVerifyDisplayViewability) MarshalJSON() ([]byte, error) {
 	type NoMethod DoubleVerifyDisplayViewability
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DoubleVerifyFraudInvalidTraffic: DoubleVerify Fraud & Invalid Traffic
@@ -7113,9 +7117,9 @@ type DoubleVerifyFraudInvalidTraffic struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DoubleVerifyFraudInvalidTraffic) MarshalJSON() ([]byte, error) {
+func (s DoubleVerifyFraudInvalidTraffic) MarshalJSON() ([]byte, error) {
 	type NoMethod DoubleVerifyFraudInvalidTraffic
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DoubleVerifyVideoViewability: Details of DoubleVerify video viewability
@@ -7187,9 +7191,9 @@ type DoubleVerifyVideoViewability struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DoubleVerifyVideoViewability) MarshalJSON() ([]byte, error) {
+func (s DoubleVerifyVideoViewability) MarshalJSON() ([]byte, error) {
 	type NoMethod DoubleVerifyVideoViewability
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DuplicateLineItemRequest: Request message for
@@ -7211,9 +7215,9 @@ type DuplicateLineItemRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DuplicateLineItemRequest) MarshalJSON() ([]byte, error) {
+func (s DuplicateLineItemRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DuplicateLineItemRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DuplicateLineItemResponse struct {
@@ -7235,9 +7239,9 @@ type DuplicateLineItemResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DuplicateLineItemResponse) MarshalJSON() ([]byte, error) {
+func (s DuplicateLineItemResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DuplicateLineItemResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EditCustomerMatchMembersRequest: Request message for
@@ -7271,9 +7275,9 @@ type EditCustomerMatchMembersRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EditCustomerMatchMembersRequest) MarshalJSON() ([]byte, error) {
+func (s EditCustomerMatchMembersRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EditCustomerMatchMembersRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EditCustomerMatchMembersResponse: The response of
@@ -7298,9 +7302,9 @@ type EditCustomerMatchMembersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EditCustomerMatchMembersResponse) MarshalJSON() ([]byte, error) {
+func (s EditCustomerMatchMembersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EditCustomerMatchMembersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EditGuaranteedOrderReadAccessorsRequest: Request message for
@@ -7331,9 +7335,9 @@ type EditGuaranteedOrderReadAccessorsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EditGuaranteedOrderReadAccessorsRequest) MarshalJSON() ([]byte, error) {
+func (s EditGuaranteedOrderReadAccessorsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EditGuaranteedOrderReadAccessorsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EditGuaranteedOrderReadAccessorsResponse struct {
@@ -7359,9 +7363,9 @@ type EditGuaranteedOrderReadAccessorsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EditGuaranteedOrderReadAccessorsResponse) MarshalJSON() ([]byte, error) {
+func (s EditGuaranteedOrderReadAccessorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EditGuaranteedOrderReadAccessorsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EditInventorySourceReadWriteAccessorsRequest: Request message for
@@ -7391,9 +7395,9 @@ type EditInventorySourceReadWriteAccessorsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EditInventorySourceReadWriteAccessorsRequest) MarshalJSON() ([]byte, error) {
+func (s EditInventorySourceReadWriteAccessorsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EditInventorySourceReadWriteAccessorsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EditInventorySourceReadWriteAccessorsRequestAdvertisersUpdate: Update to the
@@ -7416,9 +7420,9 @@ type EditInventorySourceReadWriteAccessorsRequestAdvertisersUpdate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EditInventorySourceReadWriteAccessorsRequestAdvertisersUpdate) MarshalJSON() ([]byte, error) {
+func (s EditInventorySourceReadWriteAccessorsRequestAdvertisersUpdate) MarshalJSON() ([]byte, error) {
 	type NoMethod EditInventorySourceReadWriteAccessorsRequestAdvertisersUpdate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -7465,9 +7469,9 @@ type EnvironmentAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnvironmentAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s EnvironmentAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvironmentAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnvironmentTargetingOptionDetails: Represents a targetable environment. This
@@ -7505,9 +7509,9 @@ type EnvironmentTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EnvironmentTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s EnvironmentTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvironmentTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExchangeAssignedTargetingOptionDetails: Details for assigned exchange
@@ -7601,6 +7605,7 @@ type ExchangeAssignedTargetingOptionDetails struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7615,9 +7620,9 @@ type ExchangeAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExchangeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ExchangeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ExchangeAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExchangeConfig: Settings that control which exchanges are enabled for a
@@ -7639,9 +7644,9 @@ type ExchangeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExchangeConfig) MarshalJSON() ([]byte, error) {
+func (s ExchangeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ExchangeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExchangeConfigEnabledExchange: An enabled exchange in the partner.
@@ -7733,6 +7738,7 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager. The
 	// field is only relevant when Google Ad Manager is the enabled exchange.
@@ -7755,9 +7761,9 @@ type ExchangeConfigEnabledExchange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExchangeConfigEnabledExchange) MarshalJSON() ([]byte, error) {
+func (s ExchangeConfigEnabledExchange) MarshalJSON() ([]byte, error) {
 	type NoMethod ExchangeConfigEnabledExchange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExchangeReviewStatus: Exchange review status for the creative.
@@ -7849,6 +7855,7 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// Status: Status of the exchange review.
 	//
@@ -7872,9 +7879,9 @@ type ExchangeReviewStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExchangeReviewStatus) MarshalJSON() ([]byte, error) {
+func (s ExchangeReviewStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ExchangeReviewStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExchangeTargetingOptionDetails: Represents a targetable exchange. This will
@@ -7968,6 +7975,7 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7982,9 +7990,9 @@ type ExchangeTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExchangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ExchangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ExchangeTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExitEvent: Exit event of the creative.
@@ -8021,9 +8029,9 @@ type ExitEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExitEvent) MarshalJSON() ([]byte, error) {
+func (s ExitEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod ExitEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FirstAndThirdPartyAudience: Describes a first or third party audience list
@@ -8159,9 +8167,9 @@ type FirstAndThirdPartyAudience struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FirstAndThirdPartyAudience) MarshalJSON() ([]byte, error) {
+func (s FirstAndThirdPartyAudience) MarshalJSON() ([]byte, error) {
 	type NoMethod FirstAndThirdPartyAudience
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FirstAndThirdPartyAudienceGroup: Details of first and third party audience
@@ -8185,9 +8193,9 @@ type FirstAndThirdPartyAudienceGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FirstAndThirdPartyAudienceGroup) MarshalJSON() ([]byte, error) {
+func (s FirstAndThirdPartyAudienceGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod FirstAndThirdPartyAudienceGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FirstAndThirdPartyAudienceTargetingSetting: Details of first and third party
@@ -8248,9 +8256,9 @@ type FirstAndThirdPartyAudienceTargetingSetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FirstAndThirdPartyAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
+func (s FirstAndThirdPartyAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod FirstAndThirdPartyAudienceTargetingSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FixedBidStrategy: A strategy that uses a fixed bidding price.
@@ -8275,9 +8283,9 @@ type FixedBidStrategy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FixedBidStrategy) MarshalJSON() ([]byte, error) {
+func (s FixedBidStrategy) MarshalJSON() ([]byte, error) {
 	type NoMethod FixedBidStrategy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FloodlightActivity: A single Floodlight activity.
@@ -8328,9 +8336,9 @@ type FloodlightActivity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FloodlightActivity) MarshalJSON() ([]byte, error) {
+func (s FloodlightActivity) MarshalJSON() ([]byte, error) {
 	type NoMethod FloodlightActivity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FloodlightGroup: A single Floodlight group.
@@ -8389,9 +8397,9 @@ type FloodlightGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FloodlightGroup) MarshalJSON() ([]byte, error) {
+func (s FloodlightGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod FloodlightGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FrequencyCap: Settings that control the number of times a user may be shown
@@ -8448,9 +8456,9 @@ type FrequencyCap struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FrequencyCap) MarshalJSON() ([]byte, error) {
+func (s FrequencyCap) MarshalJSON() ([]byte, error) {
 	type NoMethod FrequencyCap
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenderAssignedTargetingOptionDetails: Details for assigned gender targeting
@@ -8480,9 +8488,9 @@ type GenderAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenderAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s GenderAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GenderAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenderTargetingOptionDetails: Represents a targetable gender. This will be
@@ -8512,9 +8520,9 @@ type GenderTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenderTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s GenderTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GenderTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenerateDefaultLineItemRequest: Request message for
@@ -8614,9 +8622,9 @@ type GenerateDefaultLineItemRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenerateDefaultLineItemRequest) MarshalJSON() ([]byte, error) {
+func (s GenerateDefaultLineItemRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateDefaultLineItemRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeoRegionAssignedTargetingOptionDetails: Details for assigned geographic
@@ -8684,9 +8692,9 @@ type GeoRegionAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeoRegionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s GeoRegionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GeoRegionAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeoRegionSearchTerms: Search terms for geo region targeting options.
@@ -8707,9 +8715,9 @@ type GeoRegionSearchTerms struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeoRegionSearchTerms) MarshalJSON() ([]byte, error) {
+func (s GeoRegionSearchTerms) MarshalJSON() ([]byte, error) {
 	type NoMethod GeoRegionSearchTerms
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GeoRegionTargetingOptionDetails: Represents a targetable geographic region.
@@ -8772,9 +8780,9 @@ type GeoRegionTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GeoRegionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s GeoRegionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GeoRegionTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAudience: Describes a Google audience resource. Includes Google
@@ -8818,9 +8826,9 @@ type GoogleAudience struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAudience) MarshalJSON() ([]byte, error) {
+func (s GoogleAudience) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAudience
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAudienceGroup: Details of Google audience group. All Google audience
@@ -8842,9 +8850,9 @@ type GoogleAudienceGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAudienceGroup) MarshalJSON() ([]byte, error) {
+func (s GoogleAudienceGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAudienceGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAudienceTargetingSetting: Details of Google audience targeting
@@ -8866,9 +8874,9 @@ type GoogleAudienceTargetingSetting struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
+func (s GoogleAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAudienceTargetingSetting
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleBytestreamMedia: Media resource.
@@ -8891,9 +8899,9 @@ type GoogleBytestreamMedia struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleBytestreamMedia) MarshalJSON() ([]byte, error) {
+func (s GoogleBytestreamMedia) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleBytestreamMedia
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GuaranteedOrder: A guaranteed order. Guaranteed orders are parent entity of
@@ -9000,6 +9008,7 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Output only. The unique identifier of the guaranteed
 	// order. The guaranteed order IDs have the format
@@ -9053,9 +9062,9 @@ type GuaranteedOrder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GuaranteedOrder) MarshalJSON() ([]byte, error) {
+func (s GuaranteedOrder) MarshalJSON() ([]byte, error) {
 	type NoMethod GuaranteedOrder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GuaranteedOrderStatus: The status settings of the guaranteed order.
@@ -9108,9 +9117,9 @@ type GuaranteedOrderStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GuaranteedOrderStatus) MarshalJSON() ([]byte, error) {
+func (s GuaranteedOrderStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GuaranteedOrderStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HouseholdIncomeAssignedTargetingOptionDetails: Details for assigned
@@ -9152,9 +9161,9 @@ type HouseholdIncomeAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HouseholdIncomeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s HouseholdIncomeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod HouseholdIncomeAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HouseholdIncomeTargetingOptionDetails: Represents a targetable household
@@ -9195,9 +9204,9 @@ type HouseholdIncomeTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HouseholdIncomeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s HouseholdIncomeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod HouseholdIncomeTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IdFilter: A filtering option that filters entities by their entity IDs.
@@ -9208,6 +9217,10 @@ type IdFilter struct {
 	// AdGroupIds: YouTube Ad Groups to download by ID. All IDs must belong to the
 	// same Advertiser or Partner specified in CreateSdfDownloadTaskRequest.
 	AdGroupIds googleapi.Int64s `json:"adGroupIds,omitempty"`
+	// AdGroupQaIds: Optional. YouTube Ad Groups, by ID, to download in QA format.
+	// All IDs must belong to the same Advertiser or Partner specified in
+	// CreateSdfDownloadTaskRequest.
+	AdGroupQaIds googleapi.Int64s `json:"adGroupQaIds,omitempty"`
 	// CampaignIds: Campaigns to download by ID. All IDs must belong to the same
 	// Advertiser or Partner specified in CreateSdfDownloadTaskRequest.
 	CampaignIds googleapi.Int64s `json:"campaignIds,omitempty"`
@@ -9217,6 +9230,10 @@ type IdFilter struct {
 	// LineItemIds: Line Items to download by ID. All IDs must belong to the same
 	// Advertiser or Partner specified in CreateSdfDownloadTaskRequest.
 	LineItemIds googleapi.Int64s `json:"lineItemIds,omitempty"`
+	// LineItemQaIds: Optional. Line Items, by ID, to download in QA format. All
+	// IDs must belong to the same Advertiser or Partner specified in
+	// CreateSdfDownloadTaskRequest.
+	LineItemQaIds googleapi.Int64s `json:"lineItemQaIds,omitempty"`
 	// MediaProductIds: Media Products to download by ID. All IDs must belong to
 	// the same Advertiser or Partner specified in CreateSdfDownloadTaskRequest.
 	MediaProductIds googleapi.Int64s `json:"mediaProductIds,omitempty"`
@@ -9233,9 +9250,9 @@ type IdFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IdFilter) MarshalJSON() ([]byte, error) {
+func (s IdFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod IdFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImageAsset: Meta data of an image asset.
@@ -9259,9 +9276,9 @@ type ImageAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImageAsset) MarshalJSON() ([]byte, error) {
+func (s ImageAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod ImageAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InStreamAd: Details for an in-stream ad.
@@ -9284,9 +9301,9 @@ type InStreamAd struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InStreamAd) MarshalJSON() ([]byte, error) {
+func (s InStreamAd) MarshalJSON() ([]byte, error) {
 	type NoMethod InStreamAd
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InsertionOrder: A single insertion order.
@@ -9351,6 +9368,22 @@ type InsertionOrder struct {
 	Kpi *Kpi `json:"kpi,omitempty"`
 	// Name: Output only. The resource name of the insertion order.
 	Name string `json:"name,omitempty"`
+	// OptimizationObjective: Optional. The optimization objective of the insertion
+	// order. **This field is only available to allowlisted customers.** If a
+	// customer is not allowlisted, this field will be null and attempts to set it
+	// will return an error.
+	//
+	// Possible values:
+	//   "OPTIMIZATION_OBJECTIVE_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "CONVERSION" - Prioritize impressions that increase sales and conversions.
+	//   "CLICK" - Prioritize impressions that increase website traffic, apps, app
+	// stores.
+	//   "BRAND_AWARENESS" - Prioritize impressions of specific quality.
+	//   "CUSTOM" - Objective is defined by the assigned custom bidding algorithm.
+	//   "NO_OBJECTIVE" - Objective is not defined. Any KPI or bidding strategy can
+	// be used.
+	OptimizationObjective string `json:"optimizationObjective,omitempty"`
 	// Pacing: Required. The budget spending speed setting of the insertion order.
 	Pacing *Pacing `json:"pacing,omitempty"`
 	// PartnerCosts: The partner costs associated with the insertion order. If
@@ -9392,9 +9425,9 @@ type InsertionOrder struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InsertionOrder) MarshalJSON() ([]byte, error) {
+func (s InsertionOrder) MarshalJSON() ([]byte, error) {
 	type NoMethod InsertionOrder
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InsertionOrderBudget: Settings that control how insertion order budget is
@@ -9443,9 +9476,9 @@ type InsertionOrderBudget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InsertionOrderBudget) MarshalJSON() ([]byte, error) {
+func (s InsertionOrderBudget) MarshalJSON() ([]byte, error) {
 	type NoMethod InsertionOrderBudget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InsertionOrderBudgetSegment: Settings that control the budget of a single
@@ -9483,9 +9516,9 @@ type InsertionOrderBudgetSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InsertionOrderBudgetSegment) MarshalJSON() ([]byte, error) {
+func (s InsertionOrderBudgetSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod InsertionOrderBudgetSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IntegralAdScience: Details of Integral Ad Science settings.
@@ -9618,9 +9651,9 @@ type IntegralAdScience struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IntegralAdScience) MarshalJSON() ([]byte, error) {
+func (s IntegralAdScience) MarshalJSON() ([]byte, error) {
 	type NoMethod IntegralAdScience
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // IntegrationDetails: Integration details of an entry.
@@ -9646,9 +9679,9 @@ type IntegrationDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IntegrationDetails) MarshalJSON() ([]byte, error) {
+func (s IntegrationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod IntegrationDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventorySource: An inventory source.
@@ -9774,6 +9807,7 @@ type InventorySource struct {
 	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
 	//   "EXCHANGE_ADMOST_GBID" - AdMost.
 	//   "EXCHANGE_TOPON_GBID" - TopOn.
+	//   "EXCHANGE_NETFLIX" - Netflix.
 	Exchange string `json:"exchange,omitempty"`
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that this
 	// inventory source belongs to. Only applicable when commitment is
@@ -9867,9 +9901,9 @@ type InventorySource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventorySource) MarshalJSON() ([]byte, error) {
+func (s InventorySource) MarshalJSON() ([]byte, error) {
 	type NoMethod InventorySource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventorySourceAccessors: The partner or advertisers with access to the
@@ -9896,9 +9930,9 @@ type InventorySourceAccessors struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventorySourceAccessors) MarshalJSON() ([]byte, error) {
+func (s InventorySourceAccessors) MarshalJSON() ([]byte, error) {
 	type NoMethod InventorySourceAccessors
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventorySourceAccessorsAdvertiserAccessors: The advertisers with access to
@@ -9919,9 +9953,9 @@ type InventorySourceAccessorsAdvertiserAccessors struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventorySourceAccessorsAdvertiserAccessors) MarshalJSON() ([]byte, error) {
+func (s InventorySourceAccessorsAdvertiserAccessors) MarshalJSON() ([]byte, error) {
 	type NoMethod InventorySourceAccessorsAdvertiserAccessors
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventorySourceAccessorsPartnerAccessor: The partner with access to the
@@ -9942,9 +9976,9 @@ type InventorySourceAccessorsPartnerAccessor struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventorySourceAccessorsPartnerAccessor) MarshalJSON() ([]byte, error) {
+func (s InventorySourceAccessorsPartnerAccessor) MarshalJSON() ([]byte, error) {
 	type NoMethod InventorySourceAccessorsPartnerAccessor
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventorySourceAssignedTargetingOptionDetails: Targeting details for
@@ -9968,9 +10002,9 @@ type InventorySourceAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventorySourceAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s InventorySourceAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod InventorySourceAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventorySourceDisplayCreativeConfig: The configuration for display
@@ -9992,9 +10026,9 @@ type InventorySourceDisplayCreativeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventorySourceDisplayCreativeConfig) MarshalJSON() ([]byte, error) {
+func (s InventorySourceDisplayCreativeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod InventorySourceDisplayCreativeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventorySourceFilter: A filtering option for filtering on Inventory Source
@@ -10018,9 +10052,9 @@ type InventorySourceFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventorySourceFilter) MarshalJSON() ([]byte, error) {
+func (s InventorySourceFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod InventorySourceFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventorySourceGroup: A collection of targetable inventory sources.
@@ -10049,9 +10083,9 @@ type InventorySourceGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventorySourceGroup) MarshalJSON() ([]byte, error) {
+func (s InventorySourceGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod InventorySourceGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventorySourceGroupAssignedTargetingOptionDetails: Targeting details for
@@ -10076,9 +10110,9 @@ type InventorySourceGroupAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventorySourceGroupAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s InventorySourceGroupAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod InventorySourceGroupAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventorySourceStatus: The status related settings of the inventory source.
@@ -10157,9 +10191,9 @@ type InventorySourceStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventorySourceStatus) MarshalJSON() ([]byte, error) {
+func (s InventorySourceStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod InventorySourceStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InventorySourceVideoCreativeConfig: The configuration for video creatives.
@@ -10180,9 +10214,9 @@ type InventorySourceVideoCreativeConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InventorySourceVideoCreativeConfig) MarshalJSON() ([]byte, error) {
+func (s InventorySourceVideoCreativeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod InventorySourceVideoCreativeConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Invoice: A single invoice.
@@ -10274,9 +10308,9 @@ type Invoice struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Invoice) MarshalJSON() ([]byte, error) {
+func (s Invoice) MarshalJSON() ([]byte, error) {
 	type NoMethod Invoice
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // KeywordAssignedTargetingOptionDetails: Details for assigned keyword
@@ -10303,9 +10337,9 @@ type KeywordAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *KeywordAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s KeywordAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod KeywordAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Kpi: Settings that control the key performance indicator, or KPI, of an
@@ -10381,9 +10415,9 @@ type Kpi struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Kpi) MarshalJSON() ([]byte, error) {
+func (s Kpi) MarshalJSON() ([]byte, error) {
 	type NoMethod Kpi
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LanguageAssignedTargetingOptionDetails: Details for assigned language
@@ -10412,9 +10446,9 @@ type LanguageAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LanguageAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s LanguageAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LanguageTargetingOptionDetails: Represents a targetable language. This will
@@ -10436,9 +10470,9 @@ type LanguageTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LanguageTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s LanguageTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LineItem: A single line item.
@@ -10657,9 +10691,9 @@ type LineItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LineItem) MarshalJSON() ([]byte, error) {
+func (s LineItem) MarshalJSON() ([]byte, error) {
 	type NoMethod LineItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LineItemAssignedTargetingOption: Wrapper object associating an
@@ -10683,9 +10717,9 @@ type LineItemAssignedTargetingOption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LineItemAssignedTargetingOption) MarshalJSON() ([]byte, error) {
+func (s LineItemAssignedTargetingOption) MarshalJSON() ([]byte, error) {
 	type NoMethod LineItemAssignedTargetingOption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LineItemBudget: Settings that control how budget is allocated.
@@ -10738,9 +10772,9 @@ type LineItemBudget struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LineItemBudget) MarshalJSON() ([]byte, error) {
+func (s LineItemBudget) MarshalJSON() ([]byte, error) {
 	type NoMethod LineItemBudget
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LineItemFlight: Settings that control the active duration of a line item.
@@ -10776,9 +10810,9 @@ type LineItemFlight struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LineItemFlight) MarshalJSON() ([]byte, error) {
+func (s LineItemFlight) MarshalJSON() ([]byte, error) {
 	type NoMethod LineItemFlight
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListAdGroupAdsResponse struct {
@@ -10804,9 +10838,9 @@ type ListAdGroupAdsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAdGroupAdsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAdGroupAdsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdGroupAdsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAdGroupAssignedTargetingOptionsResponse: Response message for
@@ -10837,9 +10871,9 @@ type ListAdGroupAssignedTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAdGroupAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAdGroupAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdGroupAssignedTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListAdGroupsResponse struct {
@@ -10865,9 +10899,9 @@ type ListAdGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAdGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAdGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAdvertiserAssignedTargetingOptionsResponse: Response message for
@@ -10898,9 +10932,9 @@ type ListAdvertiserAssignedTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAdvertiserAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAdvertiserAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdvertiserAssignedTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListAdvertisersResponse struct {
@@ -10926,9 +10960,9 @@ type ListAdvertisersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAdvertisersResponse) MarshalJSON() ([]byte, error) {
+func (s ListAdvertisersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdvertisersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAssignedInventorySourcesResponse: Response message for
@@ -10957,9 +10991,9 @@ type ListAssignedInventorySourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAssignedInventorySourcesResponse) MarshalJSON() ([]byte, error) {
+func (s ListAssignedInventorySourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAssignedInventorySourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAssignedLocationsResponse: Response message for
@@ -10988,9 +11022,9 @@ type ListAssignedLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAssignedLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAssignedLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAssignedLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCampaignAssignedTargetingOptionsResponse: Response message for
@@ -11021,9 +11055,9 @@ type ListCampaignAssignedTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCampaignAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCampaignAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCampaignAssignedTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListCampaignsResponse struct {
@@ -11049,9 +11083,9 @@ type ListCampaignsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCampaignsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCampaignsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCampaignsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListChannelsResponse struct {
@@ -11077,9 +11111,9 @@ type ListChannelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListChannelsResponse) MarshalJSON() ([]byte, error) {
+func (s ListChannelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListChannelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListCombinedAudiencesResponse struct {
@@ -11106,9 +11140,9 @@ type ListCombinedAudiencesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCombinedAudiencesResponse) MarshalJSON() ([]byte, error) {
+func (s ListCombinedAudiencesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCombinedAudiencesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListCreativesResponse struct {
@@ -11135,9 +11169,9 @@ type ListCreativesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCreativesResponse) MarshalJSON() ([]byte, error) {
+func (s ListCreativesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCreativesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListCustomBiddingAlgorithmRulesResponse struct {
@@ -11165,9 +11199,9 @@ type ListCustomBiddingAlgorithmRulesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCustomBiddingAlgorithmRulesResponse) MarshalJSON() ([]byte, error) {
+func (s ListCustomBiddingAlgorithmRulesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCustomBiddingAlgorithmRulesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListCustomBiddingAlgorithmsResponse struct {
@@ -11195,9 +11229,9 @@ type ListCustomBiddingAlgorithmsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCustomBiddingAlgorithmsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCustomBiddingAlgorithmsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCustomBiddingAlgorithmsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListCustomBiddingScriptsResponse struct {
@@ -11225,9 +11259,9 @@ type ListCustomBiddingScriptsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCustomBiddingScriptsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCustomBiddingScriptsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCustomBiddingScriptsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListCustomListsResponse struct {
@@ -11253,9 +11287,9 @@ type ListCustomListsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCustomListsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCustomListsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCustomListsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListFirstAndThirdPartyAudiencesResponse struct {
@@ -11284,9 +11318,9 @@ type ListFirstAndThirdPartyAudiencesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListFirstAndThirdPartyAudiencesResponse) MarshalJSON() ([]byte, error) {
+func (s ListFirstAndThirdPartyAudiencesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFirstAndThirdPartyAudiencesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListFloodlightActivitiesResponse struct {
@@ -11313,9 +11347,9 @@ type ListFloodlightActivitiesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListFloodlightActivitiesResponse) MarshalJSON() ([]byte, error) {
+func (s ListFloodlightActivitiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFloodlightActivitiesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListGoogleAudiencesResponse struct {
@@ -11342,9 +11376,9 @@ type ListGoogleAudiencesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGoogleAudiencesResponse) MarshalJSON() ([]byte, error) {
+func (s ListGoogleAudiencesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGoogleAudiencesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListGuaranteedOrdersResponse struct {
@@ -11371,9 +11405,9 @@ type ListGuaranteedOrdersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGuaranteedOrdersResponse) MarshalJSON() ([]byte, error) {
+func (s ListGuaranteedOrdersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGuaranteedOrdersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListInsertionOrderAssignedTargetingOptionsResponse struct {
@@ -11402,9 +11436,9 @@ type ListInsertionOrderAssignedTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInsertionOrderAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListInsertionOrderAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInsertionOrderAssignedTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListInsertionOrdersResponse struct {
@@ -11431,9 +11465,9 @@ type ListInsertionOrdersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInsertionOrdersResponse) MarshalJSON() ([]byte, error) {
+func (s ListInsertionOrdersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInsertionOrdersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInventorySourceGroupsResponse: Response message for
@@ -11462,9 +11496,9 @@ type ListInventorySourceGroupsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInventorySourceGroupsResponse) MarshalJSON() ([]byte, error) {
+func (s ListInventorySourceGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInventorySourceGroupsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListInventorySourcesResponse struct {
@@ -11491,9 +11525,9 @@ type ListInventorySourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInventorySourcesResponse) MarshalJSON() ([]byte, error) {
+func (s ListInventorySourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInventorySourcesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListInvoicesResponse struct {
@@ -11520,9 +11554,9 @@ type ListInvoicesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInvoicesResponse) MarshalJSON() ([]byte, error) {
+func (s ListInvoicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInvoicesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLineItemAssignedTargetingOptionsResponse: Response message for
@@ -11553,9 +11587,9 @@ type ListLineItemAssignedTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLineItemAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLineItemAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLineItemAssignedTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListLineItemsResponse struct {
@@ -11581,9 +11615,9 @@ type ListLineItemsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLineItemsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLineItemsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLineItemsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListLocationListsResponse struct {
@@ -11610,9 +11644,9 @@ type ListLocationListsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationListsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationListsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationListsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListNegativeKeywordListsResponse: Response message for
@@ -11641,9 +11675,9 @@ type ListNegativeKeywordListsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListNegativeKeywordListsResponse) MarshalJSON() ([]byte, error) {
+func (s ListNegativeKeywordListsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListNegativeKeywordListsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListNegativeKeywordsResponse: Response message for
@@ -11672,9 +11706,9 @@ type ListNegativeKeywordsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListNegativeKeywordsResponse) MarshalJSON() ([]byte, error) {
+func (s ListNegativeKeywordsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListNegativeKeywordsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListPartnerAssignedTargetingOptionsResponse struct {
@@ -11703,9 +11737,9 @@ type ListPartnerAssignedTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPartnerAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListPartnerAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPartnerAssignedTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListPartnersResponse struct {
@@ -11731,9 +11765,9 @@ type ListPartnersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListPartnersResponse) MarshalJSON() ([]byte, error) {
+func (s ListPartnersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPartnersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSitesResponse: Response message for SiteService.ListSites.
@@ -11760,9 +11794,9 @@ type ListSitesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListSitesResponse) MarshalJSON() ([]byte, error) {
+func (s ListSitesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSitesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTargetingOptionsResponse: Response message for ListTargetingOptions.
@@ -11790,9 +11824,9 @@ type ListTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListUsersResponse struct {
@@ -11819,9 +11853,9 @@ type ListUsersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListUsersResponse) MarshalJSON() ([]byte, error) {
+func (s ListUsersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListUsersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LocationList: A list of locations used for targeting.
@@ -11862,9 +11896,9 @@ type LocationList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LocationList) MarshalJSON() ([]byte, error) {
+func (s LocationList) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LookbackWindow: Specifies how many days into the past to look when
@@ -11889,9 +11923,9 @@ type LookbackWindow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookbackWindow) MarshalJSON() ([]byte, error) {
+func (s LookbackWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod LookbackWindow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LookupInvoiceCurrencyResponse struct {
@@ -11913,9 +11947,9 @@ type LookupInvoiceCurrencyResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LookupInvoiceCurrencyResponse) MarshalJSON() ([]byte, error) {
+func (s LookupInvoiceCurrencyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupInvoiceCurrencyResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MastheadAd: Details for a Masthead Ad.
@@ -11966,9 +12000,9 @@ type MastheadAd struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MastheadAd) MarshalJSON() ([]byte, error) {
+func (s MastheadAd) MarshalJSON() ([]byte, error) {
 	type NoMethod MastheadAd
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MaximizeSpendBidStrategy: A strategy that automatically adjusts the bid to
@@ -12017,9 +12051,9 @@ type MaximizeSpendBidStrategy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MaximizeSpendBidStrategy) MarshalJSON() ([]byte, error) {
+func (s MaximizeSpendBidStrategy) MarshalJSON() ([]byte, error) {
 	type NoMethod MaximizeSpendBidStrategy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MeasurementConfig: Measurement settings of a partner.
@@ -12042,9 +12076,9 @@ type MeasurementConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MeasurementConfig) MarshalJSON() ([]byte, error) {
+func (s MeasurementConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MeasurementConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MobileApp: A mobile app promoted by a mobile app install line item.
@@ -12078,9 +12112,9 @@ type MobileApp struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MobileApp) MarshalJSON() ([]byte, error) {
+func (s MobileApp) MarshalJSON() ([]byte, error) {
 	type NoMethod MobileApp
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MobileDeviceIdList: Wrapper message for a list of mobile device IDs defining
@@ -12108,9 +12142,9 @@ type MobileDeviceIdList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MobileDeviceIdList) MarshalJSON() ([]byte, error) {
+func (s MobileDeviceIdList) MarshalJSON() ([]byte, error) {
 	type NoMethod MobileDeviceIdList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Money: Represents an amount of money with its currency type.
@@ -12139,9 +12173,9 @@ type Money struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Money) MarshalJSON() ([]byte, error) {
+func (s Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NativeContentPositionAssignedTargetingOptionDetails: Details for native
@@ -12184,9 +12218,9 @@ type NativeContentPositionAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NativeContentPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s NativeContentPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod NativeContentPositionAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NativeContentPositionTargetingOptionDetails: Represents a targetable native
@@ -12227,9 +12261,9 @@ type NativeContentPositionTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NativeContentPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s NativeContentPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod NativeContentPositionTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NegativeKeyword: A negatively targeted keyword that belongs to a negative
@@ -12260,9 +12294,9 @@ type NegativeKeyword struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NegativeKeyword) MarshalJSON() ([]byte, error) {
+func (s NegativeKeyword) MarshalJSON() ([]byte, error) {
 	type NoMethod NegativeKeyword
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NegativeKeywordList: A list of negative keywords used for targeting.
@@ -12297,9 +12331,9 @@ type NegativeKeywordList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NegativeKeywordList) MarshalJSON() ([]byte, error) {
+func (s NegativeKeywordList) MarshalJSON() ([]byte, error) {
 	type NoMethod NegativeKeywordList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NegativeKeywordListAssignedTargetingOptionDetails: Targeting details for
@@ -12324,9 +12358,9 @@ type NegativeKeywordListAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NegativeKeywordListAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s NegativeKeywordListAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod NegativeKeywordListAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NonSkippableAd: Details for a non-skippable ad.
@@ -12349,9 +12383,9 @@ type NonSkippableAd struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *NonSkippableAd) MarshalJSON() ([]byte, error) {
+func (s NonSkippableAd) MarshalJSON() ([]byte, error) {
 	type NoMethod NonSkippableAd
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ObaIcon: OBA Icon for a Creative
@@ -12398,9 +12432,9 @@ type ObaIcon struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ObaIcon) MarshalJSON() ([]byte, error) {
+func (s ObaIcon) MarshalJSON() ([]byte, error) {
 	type NoMethod ObaIcon
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OmidAssignedTargetingOptionDetails: Represents a targetable Open Measurement
@@ -12428,9 +12462,9 @@ type OmidAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OmidAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s OmidAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod OmidAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OmidTargetingOptionDetails: Represents a targetable Open Measurement enabled
@@ -12458,9 +12492,9 @@ type OmidTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OmidTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s OmidTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod OmidTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OnScreenPositionAssignedTargetingOptionDetails: On screen position targeting
@@ -12510,9 +12544,9 @@ type OnScreenPositionAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OnScreenPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s OnScreenPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod OnScreenPositionAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OnScreenPositionTargetingOptionDetails: Represents a targetable on screen
@@ -12543,9 +12577,9 @@ type OnScreenPositionTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OnScreenPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s OnScreenPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod OnScreenPositionTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperatingSystemAssignedTargetingOptionDetails: Assigned operating system
@@ -12574,9 +12608,9 @@ type OperatingSystemAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperatingSystemAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s OperatingSystemAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod OperatingSystemAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperatingSystemTargetingOptionDetails: Represents a targetable operating
@@ -12598,9 +12632,9 @@ type OperatingSystemTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperatingSystemTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s OperatingSystemTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod OperatingSystemTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -12645,9 +12679,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Pacing: Settings that control the rate at which a budget is spent.
@@ -12705,9 +12739,9 @@ type Pacing struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Pacing) MarshalJSON() ([]byte, error) {
+func (s Pacing) MarshalJSON() ([]byte, error) {
 	type NoMethod Pacing
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ParentEntityFilter: A filtering option that filters on selected file types
@@ -12724,6 +12758,8 @@ type ParentEntityFilter struct {
 	//   "FILE_TYPE_LINE_ITEM" - Line Item.
 	//   "FILE_TYPE_AD_GROUP" - YouTube Ad Group.
 	//   "FILE_TYPE_AD" - YouTube Ad.
+	//   "FILE_TYPE_LINE_ITEM_QA" - Line Item - QA format.
+	//   "FILE_TYPE_AD_GROUP_QA" - YouTube Ad Group - QA format.
 	FileType []string `json:"fileType,omitempty"`
 	// FilterIds: The IDs of the specified filter type. This is used to filter
 	// entities to fetch. If filter type is not `FILTER_TYPE_NONE`, at least one ID
@@ -12751,11 +12787,13 @@ type ParentEntityFilter struct {
 	// filter IDs must be Insertion Order IDs that belong to the Advertiser or
 	// Partner specified in CreateSdfDownloadTaskRequest. Can only be used for
 	// downloading `FILE_TYPE_INSERTION_ORDER`, `FILE_TYPE_LINE_ITEM`,
-	// `FILE_TYPE_AD_GROUP`, and `FILE_TYPE_AD`.
+	// `FILE_TYPE_LINE_ITEM_QA`, `FILE_TYPE_AD_GROUP`, `FILE_TYPE_AD_GROUP_QA`, and
+	// `FILE_TYPE_AD`.
 	//   "FILTER_TYPE_LINE_ITEM_ID" - Line Item ID. If selected, all filter IDs
 	// must be Line Item IDs that belong to the Advertiser or Partner specified in
 	// CreateSdfDownloadTaskRequest. Can only be used for downloading
-	// `FILE_TYPE_LINE_ITEM`, `FILE_TYPE_AD_GROUP`, and `FILE_TYPE_AD`.
+	// `FILE_TYPE_LINE_ITEM`, `FILE_TYPE_LINE_ITEM_QA`,`FILE_TYPE_AD_GROUP`,
+	// `FILE_TYPE_AD_GROUP_QA`, and `FILE_TYPE_AD`.
 	FilterType string `json:"filterType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FileType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12770,9 +12808,9 @@ type ParentEntityFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ParentEntityFilter) MarshalJSON() ([]byte, error) {
+func (s ParentEntityFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod ParentEntityFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ParentalStatusAssignedTargetingOptionDetails: Details for assigned parental
@@ -12804,9 +12842,9 @@ type ParentalStatusAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ParentalStatusAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ParentalStatusAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ParentalStatusAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ParentalStatusTargetingOptionDetails: Represents a targetable parental
@@ -12837,9 +12875,9 @@ type ParentalStatusTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ParentalStatusTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ParentalStatusTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ParentalStatusTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Partner: A single partner in Display & Video 360 (DV360).
@@ -12898,9 +12936,9 @@ type Partner struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Partner) MarshalJSON() ([]byte, error) {
+func (s Partner) MarshalJSON() ([]byte, error) {
 	type NoMethod Partner
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartnerAdServerConfig: Ad server related settings of a partner.
@@ -12920,9 +12958,9 @@ type PartnerAdServerConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartnerAdServerConfig) MarshalJSON() ([]byte, error) {
+func (s PartnerAdServerConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PartnerAdServerConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartnerBillingConfig: Billing related settings of a partner.
@@ -12942,9 +12980,9 @@ type PartnerBillingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartnerBillingConfig) MarshalJSON() ([]byte, error) {
+func (s PartnerBillingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PartnerBillingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartnerCost: Settings that control a partner cost. A partner cost is any
@@ -13071,9 +13109,9 @@ type PartnerCost struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartnerCost) MarshalJSON() ([]byte, error) {
+func (s PartnerCost) MarshalJSON() ([]byte, error) {
 	type NoMethod PartnerCost
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartnerDataAccessConfig: Settings that control how partner related data may
@@ -13095,9 +13133,9 @@ type PartnerDataAccessConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartnerDataAccessConfig) MarshalJSON() ([]byte, error) {
+func (s PartnerDataAccessConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PartnerDataAccessConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartnerGeneralConfig: General settings of a partner.
@@ -13121,9 +13159,9 @@ type PartnerGeneralConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartnerGeneralConfig) MarshalJSON() ([]byte, error) {
+func (s PartnerGeneralConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PartnerGeneralConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PartnerRevenueModel: Settings that control how partner revenue is
@@ -13167,9 +13205,9 @@ type PartnerRevenueModel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PartnerRevenueModel) MarshalJSON() ([]byte, error) {
+func (s PartnerRevenueModel) MarshalJSON() ([]byte, error) {
 	type NoMethod PartnerRevenueModel
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PerformanceGoal: Settings that control the performance goal of a campaign.
@@ -13242,9 +13280,9 @@ type PerformanceGoal struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PerformanceGoal) MarshalJSON() ([]byte, error) {
+func (s PerformanceGoal) MarshalJSON() ([]byte, error) {
 	type NoMethod PerformanceGoal
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PerformanceGoalBidStrategy: A strategy that automatically adjusts the bid to
@@ -13315,9 +13353,9 @@ type PerformanceGoalBidStrategy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PerformanceGoalBidStrategy) MarshalJSON() ([]byte, error) {
+func (s PerformanceGoalBidStrategy) MarshalJSON() ([]byte, error) {
 	type NoMethod PerformanceGoalBidStrategy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PoiAssignedTargetingOptionDetails: Details for assigned POI targeting
@@ -13370,9 +13408,9 @@ type PoiAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PoiAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s PoiAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod PoiAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PoiAssignedTargetingOptionDetails) UnmarshalJSON(data []byte) error {
@@ -13412,9 +13450,9 @@ type PoiSearchTerms struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PoiSearchTerms) MarshalJSON() ([]byte, error) {
+func (s PoiSearchTerms) MarshalJSON() ([]byte, error) {
 	type NoMethod PoiSearchTerms
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PoiTargetingOptionDetails: Represents a targetable point of interest(POI).
@@ -13441,9 +13479,9 @@ type PoiTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PoiTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s PoiTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod PoiTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PoiTargetingOptionDetails) UnmarshalJSON(data []byte) error {
@@ -13494,9 +13532,9 @@ type PrismaConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrismaConfig) MarshalJSON() ([]byte, error) {
+func (s PrismaConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PrismaConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PrismaCpeCode: Google Payments Center supports searching and filtering on
@@ -13521,9 +13559,9 @@ type PrismaCpeCode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrismaCpeCode) MarshalJSON() ([]byte, error) {
+func (s PrismaCpeCode) MarshalJSON() ([]byte, error) {
 	type NoMethod PrismaCpeCode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductFeedData: The details of product feed.
@@ -13553,9 +13591,9 @@ type ProductFeedData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductFeedData) MarshalJSON() ([]byte, error) {
+func (s ProductFeedData) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductFeedData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductMatchDimension: A dimension used to match products.
@@ -13578,9 +13616,9 @@ type ProductMatchDimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductMatchDimension) MarshalJSON() ([]byte, error) {
+func (s ProductMatchDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductMatchDimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProximityLocationListAssignedTargetingOptionDetails: Targeting details for
@@ -13619,9 +13657,9 @@ type ProximityLocationListAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProximityLocationListAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ProximityLocationListAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ProximityLocationListAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ProximityLocationListAssignedTargetingOptionDetails) UnmarshalJSON(data []byte) error {
@@ -13664,9 +13702,9 @@ type PublisherReviewStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PublisherReviewStatus) MarshalJSON() ([]byte, error) {
+func (s PublisherReviewStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod PublisherReviewStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RateDetails: The rate related settings of the inventory source.
@@ -13706,9 +13744,9 @@ type RateDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RateDetails) MarshalJSON() ([]byte, error) {
+func (s RateDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod RateDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegionalLocationListAssignedTargetingOptionDetails: Targeting details for
@@ -13735,9 +13773,9 @@ type RegionalLocationListAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RegionalLocationListAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s RegionalLocationListAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalLocationListAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RemarketingConfig: Settings that control the whether remarketing is enabled
@@ -13761,9 +13799,9 @@ type RemarketingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RemarketingConfig) MarshalJSON() ([]byte, error) {
+func (s RemarketingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RemarketingConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplaceNegativeKeywordsRequest: Request message for
@@ -13786,9 +13824,9 @@ type ReplaceNegativeKeywordsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplaceNegativeKeywordsRequest) MarshalJSON() ([]byte, error) {
+func (s ReplaceNegativeKeywordsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplaceNegativeKeywordsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplaceNegativeKeywordsResponse: Response message for
@@ -13813,9 +13851,9 @@ type ReplaceNegativeKeywordsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplaceNegativeKeywordsResponse) MarshalJSON() ([]byte, error) {
+func (s ReplaceNegativeKeywordsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplaceNegativeKeywordsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplaceSitesRequest: Request message for SiteService.ReplaceSites.
@@ -13840,9 +13878,9 @@ type ReplaceSitesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplaceSitesRequest) MarshalJSON() ([]byte, error) {
+func (s ReplaceSitesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplaceSitesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReplaceSitesResponse: Response message for SiteService.ReplaceSites.
@@ -13865,9 +13903,9 @@ type ReplaceSitesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReplaceSitesResponse) MarshalJSON() ([]byte, error) {
+func (s ReplaceSitesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplaceSitesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReviewStatusInfo: Review statuses for the creative.
@@ -13926,9 +13964,9 @@ type ReviewStatusInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReviewStatusInfo) MarshalJSON() ([]byte, error) {
+func (s ReviewStatusInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ReviewStatusInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ScriptError: An error message for a custom bidding script.
@@ -13962,9 +14000,9 @@ type ScriptError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScriptError) MarshalJSON() ([]byte, error) {
+func (s ScriptError) MarshalJSON() ([]byte, error) {
 	type NoMethod ScriptError
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SdfConfig: Structured Data File (SDF) related settings.
@@ -13991,6 +14029,9 @@ type SdfConfig struct {
 	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
+	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
+	// migrating to this version.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14005,9 +14046,9 @@ type SdfConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SdfConfig) MarshalJSON() ([]byte, error) {
+func (s SdfConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SdfConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SdfDownloadTask: Type for the response returned by
@@ -14032,9 +14073,9 @@ type SdfDownloadTask struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SdfDownloadTask) MarshalJSON() ([]byte, error) {
+func (s SdfDownloadTask) MarshalJSON() ([]byte, error) {
 	type NoMethod SdfDownloadTask
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SdfDownloadTaskMetadata: Type for the metadata returned by
@@ -14063,6 +14104,9 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
+	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
+	// migrating to this version.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14077,9 +14121,9 @@ type SdfDownloadTaskMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SdfDownloadTaskMetadata) MarshalJSON() ([]byte, error) {
+func (s SdfDownloadTaskMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod SdfDownloadTaskMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchTargetingOptionsRequest: Request message for SearchTargetingOptions.
@@ -14118,9 +14162,9 @@ type SearchTargetingOptionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
+func (s SearchTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchTargetingOptionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchTargetingOptionsResponse: Response message for SearchTargetingOptions.
@@ -14148,9 +14192,9 @@ type SearchTargetingOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s SearchTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchTargetingOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SensitiveCategoryAssignedTargetingOptionDetails: Targeting details for
@@ -14228,9 +14272,9 @@ type SensitiveCategoryAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SensitiveCategoryAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s SensitiveCategoryAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod SensitiveCategoryAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SensitiveCategoryTargetingOptionDetails: Represents a targetable sensitive
@@ -14308,9 +14352,9 @@ type SensitiveCategoryTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SensitiveCategoryTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s SensitiveCategoryTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod SensitiveCategoryTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SessionPositionAssignedTargetingOptionDetails: Details for session position
@@ -14338,9 +14382,9 @@ type SessionPositionAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SessionPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s SessionPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod SessionPositionAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Site: A single site. Sites are apps or websites belonging to a channel.
@@ -14366,9 +14410,9 @@ type Site struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Site) MarshalJSON() ([]byte, error) {
+func (s Site) MarshalJSON() ([]byte, error) {
 	type NoMethod Site
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -14400,9 +14444,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubExchangeAssignedTargetingOptionDetails: Details for assigned sub-exchange
@@ -14426,9 +14470,9 @@ type SubExchangeAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubExchangeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s SubExchangeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod SubExchangeAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubExchangeTargetingOptionDetails: Represents a targetable sub-exchange.
@@ -14450,9 +14494,9 @@ type SubExchangeTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubExchangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s SubExchangeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod SubExchangeTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TargetFrequency: Setting that controls the average number of times the ads
@@ -14497,9 +14541,9 @@ type TargetFrequency struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TargetFrequency) MarshalJSON() ([]byte, error) {
+func (s TargetFrequency) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetFrequency
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TargetingExpansionConfig: Settings that control the optimized targeting
@@ -14538,9 +14582,9 @@ type TargetingExpansionConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TargetingExpansionConfig) MarshalJSON() ([]byte, error) {
+func (s TargetingExpansionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetingExpansionConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TargetingOption: Represents a single targeting option, which is a targetable
@@ -14743,9 +14787,9 @@ type TargetingOption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TargetingOption) MarshalJSON() ([]byte, error) {
+func (s TargetingOption) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetingOption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ThirdPartyMeasurementConfigs: Settings that control what third-party vendors
@@ -14783,9 +14827,9 @@ type ThirdPartyMeasurementConfigs struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ThirdPartyMeasurementConfigs) MarshalJSON() ([]byte, error) {
+func (s ThirdPartyMeasurementConfigs) MarshalJSON() ([]byte, error) {
 	type NoMethod ThirdPartyMeasurementConfigs
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ThirdPartyOnlyConfig: Settings for advertisers that use third-party ad
@@ -14807,9 +14851,9 @@ type ThirdPartyOnlyConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ThirdPartyOnlyConfig) MarshalJSON() ([]byte, error) {
+func (s ThirdPartyOnlyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ThirdPartyOnlyConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ThirdPartyUrl: Tracking URLs from third parties to track interactions with
@@ -14869,9 +14913,9 @@ type ThirdPartyUrl struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ThirdPartyUrl) MarshalJSON() ([]byte, error) {
+func (s ThirdPartyUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod ThirdPartyUrl
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ThirdPartyVendorConfig: Settings that control how third-party measurement
@@ -14908,9 +14952,9 @@ type ThirdPartyVendorConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ThirdPartyVendorConfig) MarshalJSON() ([]byte, error) {
+func (s ThirdPartyVendorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ThirdPartyVendorConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ThirdPartyVerifierAssignedTargetingOptionDetails: Assigned third party
@@ -14937,9 +14981,9 @@ type ThirdPartyVerifierAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ThirdPartyVerifierAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ThirdPartyVerifierAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ThirdPartyVerifierAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimeRange: A time range.
@@ -14961,9 +15005,9 @@ type TimeRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimeRange) MarshalJSON() ([]byte, error) {
+func (s TimeRange) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TimerEvent: Timer event of the creative.
@@ -14986,9 +15030,9 @@ type TimerEvent struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TimerEvent) MarshalJSON() ([]byte, error) {
+func (s TimerEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod TimerEvent
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TrackingFloodlightActivityConfig: Settings that control the behavior of a
@@ -15017,9 +15061,9 @@ type TrackingFloodlightActivityConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TrackingFloodlightActivityConfig) MarshalJSON() ([]byte, error) {
+func (s TrackingFloodlightActivityConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TrackingFloodlightActivityConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Transcode: Represents information about the transcoded audio or video file.
@@ -15058,9 +15102,9 @@ type Transcode struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Transcode) MarshalJSON() ([]byte, error) {
+func (s Transcode) MarshalJSON() ([]byte, error) {
 	type NoMethod Transcode
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Transcode) UnmarshalJSON(data []byte) error {
@@ -15110,9 +15154,9 @@ type UniversalAdId struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UniversalAdId) MarshalJSON() ([]byte, error) {
+func (s UniversalAdId) MarshalJSON() ([]byte, error) {
 	type NoMethod UniversalAdId
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UrlAssignedTargetingOptionDetails: Details for assigned URL targeting
@@ -15139,9 +15183,9 @@ type UrlAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UrlAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s UrlAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod UrlAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // User: A single user in Display & Video 360.
@@ -15177,9 +15221,9 @@ type User struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *User) MarshalJSON() ([]byte, error) {
+func (s User) MarshalJSON() ([]byte, error) {
 	type NoMethod User
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserRewardedContentAssignedTargetingOptionDetails: User rewarded content
@@ -15214,9 +15258,9 @@ type UserRewardedContentAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserRewardedContentAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s UserRewardedContentAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod UserRewardedContentAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserRewardedContentTargetingOptionDetails: Represents a targetable user
@@ -15248,9 +15292,9 @@ type UserRewardedContentTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserRewardedContentTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s UserRewardedContentTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod UserRewardedContentTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoAdSequenceSettings: Settings related to VideoAdSequence.
@@ -15278,9 +15322,9 @@ type VideoAdSequenceSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoAdSequenceSettings) MarshalJSON() ([]byte, error) {
+func (s VideoAdSequenceSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoAdSequenceSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoAdSequenceStep: The detail of a single step in a VideoAdSequence.
@@ -15317,9 +15361,9 @@ type VideoAdSequenceStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoAdSequenceStep) MarshalJSON() ([]byte, error) {
+func (s VideoAdSequenceStep) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoAdSequenceStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoDiscoveryAd: Details for a video discovery ad.
@@ -15355,9 +15399,9 @@ type VideoDiscoveryAd struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoDiscoveryAd) MarshalJSON() ([]byte, error) {
+func (s VideoDiscoveryAd) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoDiscoveryAd
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoPerformanceAd: Details for a video performance ad.
@@ -15403,9 +15447,9 @@ type VideoPerformanceAd struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoPerformanceAd) MarshalJSON() ([]byte, error) {
+func (s VideoPerformanceAd) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoPerformanceAd
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoPlayerSizeAssignedTargetingOptionDetails: Video player size targeting
@@ -15443,9 +15487,9 @@ type VideoPlayerSizeAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoPlayerSizeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s VideoPlayerSizeAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoPlayerSizeAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VideoPlayerSizeTargetingOptionDetails: Represents a targetable video player
@@ -15481,9 +15525,9 @@ type VideoPlayerSizeTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VideoPlayerSizeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s VideoPlayerSizeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoPlayerSizeTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ViewabilityAssignedTargetingOptionDetails: Assigned viewability targeting
@@ -15529,9 +15573,9 @@ type ViewabilityAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ViewabilityAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ViewabilityAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ViewabilityAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ViewabilityTargetingOptionDetails: Represents a targetable viewability. This
@@ -15576,9 +15620,9 @@ type ViewabilityTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ViewabilityTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s ViewabilityTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ViewabilityTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // YoutubeAndPartnersBiddingStrategy: Settings that control the bid strategy
@@ -15655,9 +15699,9 @@ type YoutubeAndPartnersBiddingStrategy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *YoutubeAndPartnersBiddingStrategy) MarshalJSON() ([]byte, error) {
+func (s YoutubeAndPartnersBiddingStrategy) MarshalJSON() ([]byte, error) {
 	type NoMethod YoutubeAndPartnersBiddingStrategy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // YoutubeAndPartnersInventorySourceConfig: Settings that control what YouTube
@@ -15686,9 +15730,9 @@ type YoutubeAndPartnersInventorySourceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *YoutubeAndPartnersInventorySourceConfig) MarshalJSON() ([]byte, error) {
+func (s YoutubeAndPartnersInventorySourceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod YoutubeAndPartnersInventorySourceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // YoutubeAndPartnersSettings: Settings for YouTube and Partners line items.
@@ -15765,9 +15809,9 @@ type YoutubeAndPartnersSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *YoutubeAndPartnersSettings) MarshalJSON() ([]byte, error) {
+func (s YoutubeAndPartnersSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod YoutubeAndPartnersSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // YoutubeChannelAssignedTargetingOptionDetails: Details for YouTube channel
@@ -15793,9 +15837,9 @@ type YoutubeChannelAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *YoutubeChannelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s YoutubeChannelAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod YoutubeChannelAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // YoutubeVideoAssignedTargetingOptionDetails: Details for YouTube video
@@ -15820,9 +15864,9 @@ type YoutubeVideoAssignedTargetingOptionDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *YoutubeVideoAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+func (s YoutubeVideoAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod YoutubeVideoAssignedTargetingOptionDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // YoutubeVideoDetails: Details of a YouTube video.
@@ -15849,9 +15893,9 @@ type YoutubeVideoDetails struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *YoutubeVideoDetails) MarshalJSON() ([]byte, error) {
+func (s YoutubeVideoDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod YoutubeVideoDetails
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AdvertisersAuditCall struct {
@@ -27042,7 +27086,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsGetCall struct {
 //     Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
 //     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
-//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`.
+//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
+//     `TARGETING_TYPE_KEYWORD`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -27160,7 +27205,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsListCall struct {
 //     Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
 //     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
-//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`.
+//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
+//     `TARGETING_TYPE_KEYWORD`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, targetingType string) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId

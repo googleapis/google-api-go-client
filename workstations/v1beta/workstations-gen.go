@@ -243,9 +243,9 @@ type Accelerator struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Accelerator) MarshalJSON() ([]byte, error) {
+func (s Accelerator) MarshalJSON() ([]byte, error) {
 	type NoMethod Accelerator
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -284,9 +284,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -319,9 +319,9 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -418,9 +418,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BoostConfig: A configuration that workstations can boost to.
@@ -433,10 +433,11 @@ type BoostConfig struct {
 	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
 	// EnableNestedVirtualization: Optional. Whether to enable nested
 	// virtualization on boosted Cloud Workstations VMs running using this boost
-	// configuration. Nested virtualization lets you run virtual machine (VM)
-	// instances inside your workstation. Before enabling nested virtualization,
-	// consider the following important considerations. Cloud Workstations
-	// instances are subject to the same restrictions as Compute Engine instances
+	// configuration. Defaults to false. Nested virtualization lets you run virtual
+	// machine (VM) instances inside your workstation. Before enabling nested
+	// virtualization, consider the following important considerations. Cloud
+	// Workstations instances are subject to the same restrictions as Compute
+	// Engine instances
 	// (https://cloud.google.com/compute/docs/instances/nested-virtualization/overview#restrictions):
 	// * **Organization policy**: projects, folders, or organizations may be
 	// restricted from creating nested VMs if the **Disable VM nested
@@ -448,14 +449,7 @@ type BoostConfig struct {
 	// performance for workloads that are CPU-bound and possibly greater than a 10%
 	// decrease for workloads that are input/output bound. * **Machine Type**:
 	// nested virtualization can only be enabled on boost configurations that
-	// specify a machine_type in the N1 or N2 machine series. * **GPUs**: nested
-	// virtualization may not be enabled on boost configurations with accelerators.
-	// * **Operating System**: Because Container-Optimized OS
-	// (https://cloud.google.com/compute/docs/images/os-details#container-optimized_os_cos)
-	// does not support nested virtualization, when nested virtualization is
-	// enabled, the underlying Compute Engine VM instances boot from an Ubuntu LTS
-	// (https://cloud.google.com/compute/docs/images/os-details#ubuntu_lts) image.
-	// Defaults to false.
+	// specify a machine_type in the N1 or N2 machine series.
 	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
 	// Id: Optional. Required. The id to be used for the boost config.
 	Id string `json:"id,omitempty"`
@@ -481,9 +475,9 @@ type BoostConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BoostConfig) MarshalJSON() ([]byte, error) {
+func (s BoostConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BoostConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -530,9 +524,9 @@ type Container struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Container) MarshalJSON() ([]byte, error) {
+func (s Container) MarshalJSON() ([]byte, error) {
 	type NoMethod Container
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomerEncryptionKey: A customer-managed encryption key (CMEK) for the
@@ -567,9 +561,9 @@ type CustomerEncryptionKey struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomerEncryptionKey) MarshalJSON() ([]byte, error) {
+func (s CustomerEncryptionKey) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomerEncryptionKey
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DomainConfig: Configuration options for a custom domain.
@@ -589,9 +583,9 @@ type DomainConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DomainConfig) MarshalJSON() ([]byte, error) {
+func (s DomainConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DomainConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EphemeralDirectory: An ephemeral directory which won't persist across
@@ -615,9 +609,9 @@ type EphemeralDirectory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EphemeralDirectory) MarshalJSON() ([]byte, error) {
+func (s EphemeralDirectory) MarshalJSON() ([]byte, error) {
 	type NoMethod EphemeralDirectory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -663,9 +657,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GceConfidentialInstanceConfig: A set of Compute Engine Confidential VM
@@ -687,9 +681,9 @@ type GceConfidentialInstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GceConfidentialInstanceConfig) MarshalJSON() ([]byte, error) {
+func (s GceConfidentialInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GceConfidentialInstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GceInstance: A runtime using a Compute Engine instance.
@@ -718,10 +712,11 @@ type GceInstance struct {
 	DisableSsh bool `json:"disableSsh,omitempty"`
 	// EnableNestedVirtualization: Optional. Whether to enable nested
 	// virtualization on Cloud Workstations VMs created using this workstation
-	// configuration. Nested virtualization lets you run virtual machine (VM)
-	// instances inside your workstation. Before enabling nested virtualization,
-	// consider the following important considerations. Cloud Workstations
-	// instances are subject to the same restrictions as Compute Engine instances
+	// configuration. Defaults to false. Nested virtualization lets you run virtual
+	// machine (VM) instances inside your workstation. Before enabling nested
+	// virtualization, consider the following important considerations. Cloud
+	// Workstations instances are subject to the same restrictions as Compute
+	// Engine instances
 	// (https://cloud.google.com/compute/docs/instances/nested-virtualization/overview#restrictions):
 	// * **Organization policy**: projects, folders, or organizations may be
 	// restricted from creating nested VMs if the **Disable VM nested
@@ -733,13 +728,7 @@ type GceInstance struct {
 	// performance for workloads that are CPU-bound and possibly greater than a 10%
 	// decrease for workloads that are input/output bound. * **Machine Type**:
 	// nested virtualization can only be enabled on workstation configurations that
-	// specify a machine_type in the N1 or N2 machine series. * **GPUs**: nested
-	// virtualization may not be enabled on workstation configurations with
-	// accelerators. * **Operating System**: Because Container-Optimized OS
-	// (https://cloud.google.com/compute/docs/images/os-details#container-optimized_os_cos)
-	// does not support nested virtualization, when nested virtualization is
-	// enabled, the underlying Compute Engine VM instances boot from an Ubuntu LTS
-	// (https://cloud.google.com/compute/docs/images/os-details#ubuntu_lts) image.
+	// specify a machine_type in the N1 or N2 machine series.
 	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
 	// MachineType: Optional. The type of machine to use for VM instances—for
 	// example, "e2-standard-4". For more information about machine types that
@@ -782,9 +771,9 @@ type GceInstance struct {
 	// rules (https://cloud.google.com/workstations/docs/configure-firewall-rules).
 	Tags []string `json:"tags,omitempty"`
 	// VmTags: Optional. Resource manager tags to be bound to this instance. Tag
-	// keys and values have the same definition as
-	// https://cloud.google.com/resource-manager/docs/tags/tags-overview Keys must
-	// be in the format `tagKeys/{tag_key_id}`, and values are in the format
+	// keys and values have the same definition as resource manager tags
+	// (https://cloud.google.com/resource-manager/docs/tags/tags-overview). Keys
+	// must be in the format `tagKeys/{tag_key_id}`, and values are in the format
 	// `tagValues/456`.
 	VmTags map[string]string `json:"vmTags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Accelerators") to
@@ -800,9 +789,9 @@ type GceInstance struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GceInstance) MarshalJSON() ([]byte, error) {
+func (s GceInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GceInstance
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcePersistentDisk: An EphemeralDirectory is backed by a Compute Engine
@@ -836,9 +825,9 @@ type GcePersistentDisk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GcePersistentDisk) MarshalJSON() ([]byte, error) {
+func (s GcePersistentDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod GcePersistentDisk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GceRegionalPersistentDisk: A Persistent Directory backed by a Compute Engine
@@ -889,9 +878,9 @@ type GceRegionalPersistentDisk struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GceRegionalPersistentDisk) MarshalJSON() ([]byte, error) {
+func (s GceRegionalPersistentDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod GceRegionalPersistentDisk
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GceShieldedInstanceConfig: A set of Compute Engine Shielded instance
@@ -917,9 +906,9 @@ type GceShieldedInstanceConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GceShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
+func (s GceShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GceShieldedInstanceConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenerateAccessTokenRequest: Request message for GenerateAccessToken.
@@ -929,10 +918,10 @@ type GenerateAccessTokenRequest struct {
 	// expiration time will be set to a default value of 1 hour in the future.
 	ExpireTime string `json:"expireTime,omitempty"`
 	// Port: Optional. Port for which the access token should be generated. If
-	// specified, the generated access token will grant access only to the
-	// specified port of the workstation. If specified, values must be within the
-	// range [1 - 65535]. If not specified, the generated access token will grant
-	// access to all ports of the workstation.
+	// specified, the generated access token grants access only to the specified
+	// port of the workstation. If specified, values must be within the range [1 -
+	// 65535]. If not specified, the generated access token grants access to all
+	// ports of the workstation.
 	Port int64 `json:"port,omitempty"`
 	// Ttl: Desired lifetime duration of the access token. This value must be at
 	// most 24 hours. If a value is not specified, the token's lifetime will be set
@@ -951,9 +940,9 @@ type GenerateAccessTokenRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenerateAccessTokenRequest) MarshalJSON() ([]byte, error) {
+func (s GenerateAccessTokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateAccessTokenRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenerateAccessTokenResponse: Response message for GenerateAccessToken.
@@ -980,9 +969,9 @@ type GenerateAccessTokenResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GenerateAccessTokenResponse) MarshalJSON() ([]byte, error) {
+func (s GenerateAccessTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateAccessTokenResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -1012,9 +1001,40 @@ type Host struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Host) MarshalJSON() ([]byte, error) {
+func (s Host) MarshalJSON() ([]byte, error) {
 	type NoMethod Host
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HttpOptions: HTTP options for the running workstations.
+type HttpOptions struct {
+	// AllowedUnauthenticatedCorsPreflightRequests: Optional. By default, the
+	// workstations service makes sure that all requests to the workstation are
+	// authenticated. CORS preflight requests do not include cookies or custom
+	// headers, and so are considered unauthenticated and blocked by the
+	// workstations service. Enabling this option allows these unauthenticated CORS
+	// preflight requests through to the workstation, where it becomes the
+	// responsibility of the destination server in the workstation to validate the
+	// request.
+	AllowedUnauthenticatedCorsPreflightRequests bool `json:"allowedUnauthenticatedCorsPreflightRequests,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedUnauthenticatedCorsPreflightRequests") to unconditionally include in
+	// API requests. By default, fields with empty or default values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "AllowedUnauthenticatedCorsPreflightRequests") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HttpOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -1040,9 +1060,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListUsableWorkstationConfigsResponse: Response message for
@@ -1071,9 +1091,9 @@ type ListUsableWorkstationConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListUsableWorkstationConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s ListUsableWorkstationConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListUsableWorkstationConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListUsableWorkstationsResponse: Response message for ListUsableWorkstations.
@@ -1101,9 +1121,9 @@ type ListUsableWorkstationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListUsableWorkstationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListUsableWorkstationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListUsableWorkstationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListWorkstationClustersResponse: Response message for
@@ -1132,9 +1152,9 @@ type ListWorkstationClustersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListWorkstationClustersResponse) MarshalJSON() ([]byte, error) {
+func (s ListWorkstationClustersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListWorkstationClustersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListWorkstationConfigsResponse: Response message for ListWorkstationConfigs.
@@ -1162,9 +1182,9 @@ type ListWorkstationConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListWorkstationConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s ListWorkstationConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListWorkstationConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListWorkstationsResponse: Response message for ListWorkstations.
@@ -1192,9 +1212,9 @@ type ListWorkstationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListWorkstationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListWorkstationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListWorkstationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -1239,9 +1259,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Metadata for long-running operations.
@@ -1275,9 +1295,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PersistentDirectory: A directory to persist across workstation sessions.
@@ -1299,9 +1319,9 @@ type PersistentDirectory struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PersistentDirectory) MarshalJSON() ([]byte, error) {
+func (s PersistentDirectory) MarshalJSON() ([]byte, error) {
 	type NoMethod PersistentDirectory
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -1391,17 +1411,19 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PortRange: A PortsConfig defines a range of ports. Both first and last are
-// inclusive. To specify a single port, both first and last should be same.
+// PortRange: A PortRange defines a range of ports. Both first and last are
+// inclusive. To specify a single port, both first and last should be the same.
 type PortRange struct {
-	// First: Required. Starting port number for the current range of ports.
+	// First: Required. Starting port number for the current range of ports. Valid
+	// ports are 22, 80, and ports within the range 1024-65535.
 	First int64 `json:"first,omitempty"`
-	// Last: Required. Ending port number for the current range of ports.
+	// Last: Required. Ending port number for the current range of ports. Valid
+	// ports are 22, 80, and ports within the range 1024-65535.
 	Last int64 `json:"last,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "First") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1416,9 +1438,9 @@ type PortRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PortRange) MarshalJSON() ([]byte, error) {
+func (s PortRange) MarshalJSON() ([]byte, error) {
 	type NoMethod PortRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PrivateClusterConfig: Configuration options for private workstation
@@ -1455,9 +1477,9 @@ type PrivateClusterConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrivateClusterConfig) MarshalJSON() ([]byte, error) {
+func (s PrivateClusterConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivateClusterConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReadinessCheck: A readiness check to be performed on a workstation.
@@ -1479,9 +1501,9 @@ type ReadinessCheck struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReadinessCheck) MarshalJSON() ([]byte, error) {
+func (s ReadinessCheck) MarshalJSON() ([]byte, error) {
 	type NoMethod ReadinessCheck
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -1508,9 +1530,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StartWorkstationRequest: Request message for StartWorkstation.
@@ -1537,9 +1559,9 @@ type StartWorkstationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StartWorkstationRequest) MarshalJSON() ([]byte, error) {
+func (s StartWorkstationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod StartWorkstationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -1571,9 +1593,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StopWorkstationRequest: Request message for StopWorkstation.
@@ -1597,9 +1619,9 @@ type StopWorkstationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StopWorkstationRequest) MarshalJSON() ([]byte, error) {
+func (s StopWorkstationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod StopWorkstationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -1622,9 +1644,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -1649,9 +1671,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Workstation: A single instance of a developer workstation with its own
@@ -1659,6 +1681,9 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 type Workstation struct {
 	// Annotations: Optional. Client-specified annotations.
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// BoostConfigs: Output only. List of available boost configuration ids that
+	// this workstation can be boosted up to
+	BoostConfigs []*WorkstationBoostConfig `json:"boostConfigs,omitempty"`
 	// CreateTime: Output only. Time when this workstation was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DeleteTime: Output only. Time when this workstation was soft-deleted.
@@ -1692,6 +1717,13 @@ type Workstation struct {
 	// Reconciling: Output only. Indicates whether this workstation is currently
 	// being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+	// SourceWorkstation: Optional. The source workstation from which this
+	// workstation's persistent directories were cloned on creation.
+	SourceWorkstation string `json:"sourceWorkstation,omitempty"`
 	// StartTime: Output only. Time when this workstation was most recently
 	// successfully started, regardless of the workstation's initial state.
 	StartTime string `json:"startTime,omitempty"`
@@ -1727,9 +1759,32 @@ type Workstation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Workstation) MarshalJSON() ([]byte, error) {
+func (s Workstation) MarshalJSON() ([]byte, error) {
 	type NoMethod Workstation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkstationBoostConfig: Boost config for this workstation. This object is
+// populated from the parent workstation config.
+type WorkstationBoostConfig struct {
+	// Id: Output only. Boost config id.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkstationBoostConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkstationBoostConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WorkstationCluster: A workstation cluster resource in the Cloud Workstations
@@ -1779,6 +1834,10 @@ type WorkstationCluster struct {
 	// Reconciling: Output only. Indicates whether this workstation cluster is
 	// currently being updated to match its intended state.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Subnetwork: Immutable. Name of the Compute Engine subnetwork in which
 	// instances associated with this workstation cluster will be created. Must be
 	// part of the subnetwork specified for this workstation cluster.
@@ -1805,9 +1864,9 @@ type WorkstationCluster struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WorkstationCluster) MarshalJSON() ([]byte, error) {
+func (s WorkstationCluster) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkstationCluster
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WorkstationConfig: A workstation configuration resource in the Cloud
@@ -1819,9 +1878,10 @@ func (s *WorkstationCluster) MarshalJSON() ([]byte, error) {
 // Management (IAM) (https://cloud.google.com/iam/docs/overview) rules to grant
 // access to teams or to individual developers.
 type WorkstationConfig struct {
-	// AllowedPorts: Optional. Single or Range of ports externally accessible in
-	// the workstation. If not specified defaults to ports 22, 80 and ports
-	// 1024-65535.
+	// AllowedPorts: Optional. A list of PortRanges specifying single ports or
+	// ranges of ports that are externally accessible in the workstation. Allowed
+	// ports must be one of 22, 80, or within range 1024-65535. If not specified
+	// defaults to ports 22, 80, and ports 1024-65535.
 	AllowedPorts []*PortRange `json:"allowedPorts,omitempty"`
 	// Annotations: Optional. Client-specified annotations.
 	Annotations map[string]string `json:"annotations,omitempty"`
@@ -1851,10 +1911,15 @@ type WorkstationConfig struct {
 	// configuration.
 	DisplayName string `json:"displayName,omitempty"`
 	// EnableAuditAgent: Optional. Whether to enable Linux `auditd` logging on the
-	// workstation. When enabled, a service account must also be specified that has
-	// `logging.buckets.write` permission on the project. Operating system audit
-	// logging is distinct from Cloud Audit Logs
-	// (https://cloud.google.com/workstations/docs/audit-logging).
+	// workstation. When enabled, a service_account must also be specified that has
+	// `roles/logging.logWriter` and `roles/monitoring.metricWriter` on the
+	// project. Operating system audit logging is distinct from Cloud Audit Logs
+	// (https://cloud.google.com/workstations/docs/audit-logging) and Container
+	// output logging
+	// (http://cloud/workstations/docs/container-output-logging#overview).
+	// Operating system audit logs are available in the Cloud Logging
+	// (https://cloud.google.com/logging/docs) console by querying:
+	// resource.type="gce_instance" log_name:"/logs/linux-auditd"
 	EnableAuditAgent bool `json:"enableAuditAgent,omitempty"`
 	// EncryptionKey: Immutable. Encrypts resources of this workstation
 	// configuration using a customer-managed encryption key (CMEK). If specified,
@@ -1876,8 +1941,17 @@ type WorkstationConfig struct {
 	// delete requests to make sure that the client has an up-to-date value before
 	// proceeding.
 	Etag string `json:"etag,omitempty"`
+	// GrantWorkstationAdminRoleOnCreate: Optional. Grant creator of a workstation
+	// `roles/workstations.policyAdmin` role along with `roles/workstations.user`
+	// role on the workstation created by them. This allows workstation users to
+	// share access to either their entire workstation, or individual ports.
+	// Defaults to false.
+	GrantWorkstationAdminRoleOnCreate bool `json:"grantWorkstationAdminRoleOnCreate,omitempty"`
 	// Host: Optional. Runtime host for the workstation.
 	Host *Host `json:"host,omitempty"`
+	// HttpOptions: Optional. HTTP options that customize the behavior of the
+	// workstation service's HTTP proxy.
+	HttpOptions *HttpOptions `json:"httpOptions,omitempty"`
 	// IdleTimeout: Optional. Number of seconds to wait before automatically
 	// stopping a workstation after it last received user traffic. A value of
 	// "0s" indicates that Cloud Workstations VMs created with this configuration
@@ -1891,6 +1965,15 @@ type WorkstationConfig struct {
 	// applied to the workstation configuration and that are also propagated to the
 	// underlying Compute Engine resources.
 	Labels map[string]string `json:"labels,omitempty"`
+	// MaxUsableWorkstations: Optional. Maximum number of workstations under this
+	// config a user can have `workstations.workstation.use` permission on. Only
+	// enforced on CreateWorkstation API calls on the user issuing the API request.
+	// Can be overridden by: - granting a user
+	// workstations.workstationConfigs.exemptMaxUsableWorkstationLimit permission,
+	// or - having a user with that permission create a workstation and granting
+	// another user `workstations.workstation.use` permission on that workstation.
+	// If not specified defaults to 0 which indicates unlimited.
+	MaxUsableWorkstations int64 `json:"maxUsableWorkstations,omitempty"`
 	// Name: Identifier. Full name of this workstation configuration.
 	Name string `json:"name,omitempty"`
 	// PersistentDirectories: Optional. Directories to persist across workstation
@@ -1925,6 +2008,10 @@ type WorkstationConfig struct {
 	// time. This is strongly discouraged because you incur costs and will not pick
 	// up security updates.
 	RunningTimeout string `json:"runningTimeout,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Uid: Output only. A system-assigned unique identifier for this workstation
 	// configuration.
 	Uid string `json:"uid,omitempty"`
@@ -1947,9 +2034,9 @@ type WorkstationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WorkstationConfig) MarshalJSON() ([]byte, error) {
+func (s WorkstationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkstationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsOperationsCancelCall struct {

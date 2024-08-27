@@ -235,9 +235,9 @@ type Address struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Address) MarshalJSON() ([]byte, error) {
+func (s Address) MarshalJSON() ([]byte, error) {
 	type NoMethod Address
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ChangePlanRequest: JSON template for the ChangePlan rpc request.
@@ -283,9 +283,9 @@ type ChangePlanRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ChangePlanRequest) MarshalJSON() ([]byte, error) {
+func (s ChangePlanRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ChangePlanRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Customer: When a Google customer's account is registered with a reseller,
@@ -355,9 +355,9 @@ type Customer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Customer) MarshalJSON() ([]byte, error) {
+func (s Customer) MarshalJSON() ([]byte, error) {
 	type NoMethod Customer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PrimaryAdmin: JSON template for primary admin in case of TEAM customers
@@ -381,9 +381,9 @@ type PrimaryAdmin struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PrimaryAdmin) MarshalJSON() ([]byte, error) {
+func (s PrimaryAdmin) MarshalJSON() ([]byte, error) {
 	type NoMethod PrimaryAdmin
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RenewalSettings: JSON template for a subscription renewal settings.
@@ -408,9 +408,9 @@ type RenewalSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RenewalSettings) MarshalJSON() ([]byte, error) {
+func (s RenewalSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod RenewalSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResellernotifyGetwatchdetailsResponse: JSON template for resellernotify
@@ -436,9 +436,9 @@ type ResellernotifyGetwatchdetailsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResellernotifyGetwatchdetailsResponse) MarshalJSON() ([]byte, error) {
+func (s ResellernotifyGetwatchdetailsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ResellernotifyGetwatchdetailsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResellernotifyResource: JSON template for resellernotify response.
@@ -461,9 +461,9 @@ type ResellernotifyResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResellernotifyResource) MarshalJSON() ([]byte, error) {
+func (s ResellernotifyResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ResellernotifyResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Seats: JSON template for subscription seats.
@@ -506,9 +506,9 @@ type Seats struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Seats) MarshalJSON() ([]byte, error) {
+func (s Seats) MarshalJSON() ([]byte, error) {
 	type NoMethod Seats
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Subscription: JSON template for a subscription.
@@ -607,9 +607,9 @@ type Subscription struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Subscription) MarshalJSON() ([]byte, error) {
+func (s Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod Subscription
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionPlan: The `plan` property is required. In this version of the
@@ -654,9 +654,9 @@ type SubscriptionPlan struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionPlan) MarshalJSON() ([]byte, error) {
+func (s SubscriptionPlan) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionPlan
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionPlanCommitmentInterval: In this version of the API, annual
@@ -683,9 +683,9 @@ type SubscriptionPlanCommitmentInterval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionPlanCommitmentInterval) MarshalJSON() ([]byte, error) {
+func (s SubscriptionPlanCommitmentInterval) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionPlanCommitmentInterval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionTransferInfo: Read-only transfer related information for the
@@ -718,9 +718,9 @@ type SubscriptionTransferInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionTransferInfo) MarshalJSON() ([]byte, error) {
+func (s SubscriptionTransferInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionTransferInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionTrialSettings: The G Suite annual commitment and flexible
@@ -747,9 +747,9 @@ type SubscriptionTrialSettings struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SubscriptionTrialSettings) MarshalJSON() ([]byte, error) {
+func (s SubscriptionTrialSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionTrialSettings
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Subscriptions: A subscription manages the relationship of a Google
@@ -782,9 +782,9 @@ type Subscriptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Subscriptions) MarshalJSON() ([]byte, error) {
+func (s Subscriptions) MarshalJSON() ([]byte, error) {
 	type NoMethod Subscriptions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CustomersGetCall struct {

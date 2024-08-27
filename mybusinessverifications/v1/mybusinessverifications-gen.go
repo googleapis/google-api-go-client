@@ -185,9 +185,9 @@ type AddressVerificationData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AddressVerificationData) MarshalJSON() ([]byte, error) {
+func (s AddressVerificationData) MarshalJSON() ([]byte, error) {
 	type NoMethod AddressVerificationData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompleteVerificationRequest: Request message for
@@ -209,9 +209,9 @@ type CompleteVerificationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompleteVerificationRequest) MarshalJSON() ([]byte, error) {
+func (s CompleteVerificationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CompleteVerificationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CompleteVerificationResponse: Response message for
@@ -235,9 +235,9 @@ type CompleteVerificationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CompleteVerificationResponse) MarshalJSON() ([]byte, error) {
+func (s CompleteVerificationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CompleteVerificationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ComplyWithGuidelines: Indicates that the location fails to comply with our
@@ -268,9 +268,9 @@ type ComplyWithGuidelines struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ComplyWithGuidelines) MarshalJSON() ([]byte, error) {
+func (s ComplyWithGuidelines) MarshalJSON() ([]byte, error) {
 	type NoMethod ComplyWithGuidelines
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EmailVerificationData: Display data for verifications through email.
@@ -295,9 +295,9 @@ type EmailVerificationData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EmailVerificationData) MarshalJSON() ([]byte, error) {
+func (s EmailVerificationData) MarshalJSON() ([]byte, error) {
 	type NoMethod EmailVerificationData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FetchVerificationOptionsRequest: Request message for
@@ -326,9 +326,9 @@ type FetchVerificationOptionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FetchVerificationOptionsRequest) MarshalJSON() ([]byte, error) {
+func (s FetchVerificationOptionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchVerificationOptionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FetchVerificationOptionsResponse: Response message for
@@ -352,9 +352,9 @@ type FetchVerificationOptionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FetchVerificationOptionsResponse) MarshalJSON() ([]byte, error) {
+func (s FetchVerificationOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchVerificationOptionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVerificationsResponse: Response message for
@@ -383,9 +383,9 @@ type ListVerificationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListVerificationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListVerificationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVerificationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PostalAddress: Represents a postal address, e.g. for postal delivery or
@@ -482,9 +482,9 @@ type PostalAddress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostalAddress) MarshalJSON() ([]byte, error) {
+func (s PostalAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod PostalAddress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResolveOwnershipConflict: Indicates that the location duplicates another
@@ -510,9 +510,9 @@ type ServiceBusinessContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceBusinessContext) MarshalJSON() ([]byte, error) {
+func (s ServiceBusinessContext) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceBusinessContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Verification: A verification represents a verification attempt on a
@@ -562,9 +562,9 @@ type Verification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Verification) MarshalJSON() ([]byte, error) {
+func (s Verification) MarshalJSON() ([]byte, error) {
 	type NoMethod Verification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VerificationOption: The verification option represents how to verify the
@@ -609,9 +609,9 @@ type VerificationOption struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VerificationOption) MarshalJSON() ([]byte, error) {
+func (s VerificationOption) MarshalJSON() ([]byte, error) {
 	type NoMethod VerificationOption
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VerificationToken: Token generated by a vetted partner
@@ -632,9 +632,9 @@ type VerificationToken struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VerificationToken) MarshalJSON() ([]byte, error) {
+func (s VerificationToken) MarshalJSON() ([]byte, error) {
 	type NoMethod VerificationToken
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Verify: Indicates that the location requires verification. Contains
@@ -657,9 +657,9 @@ type Verify struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Verify) MarshalJSON() ([]byte, error) {
+func (s Verify) MarshalJSON() ([]byte, error) {
 	type NoMethod Verify
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VerifyLocationRequest: Request message for Verifications.VerifyLocation.
@@ -721,9 +721,9 @@ type VerifyLocationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VerifyLocationRequest) MarshalJSON() ([]byte, error) {
+func (s VerifyLocationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyLocationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VerifyLocationResponse: Response message for Verifications.VerifyLocation.
@@ -746,9 +746,9 @@ type VerifyLocationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VerifyLocationResponse) MarshalJSON() ([]byte, error) {
+func (s VerifyLocationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyLocationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VoiceOfMerchantState: Response message for
@@ -795,9 +795,9 @@ type VoiceOfMerchantState struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *VoiceOfMerchantState) MarshalJSON() ([]byte, error) {
+func (s VoiceOfMerchantState) MarshalJSON() ([]byte, error) {
 	type NoMethod VoiceOfMerchantState
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WaitForVoiceOfMerchant: Indicates that the location will gain voice of

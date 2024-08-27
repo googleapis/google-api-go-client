@@ -391,9 +391,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -426,9 +426,9 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -525,9 +525,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -562,9 +562,9 @@ type EndpointMatcher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EndpointMatcher) MarshalJSON() ([]byte, error) {
+func (s EndpointMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod EndpointMatcher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EndpointMatcherMetadataLabelMatcher: The matcher that is based on node
@@ -609,9 +609,9 @@ type EndpointMatcherMetadataLabelMatcher struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EndpointMatcherMetadataLabelMatcher) MarshalJSON() ([]byte, error) {
+func (s EndpointMatcherMetadataLabelMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod EndpointMatcherMetadataLabelMatcher
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EndpointMatcherMetadataLabelMatcherMetadataLabels: Defines a name-pair value
@@ -635,9 +635,9 @@ type EndpointMatcherMetadataLabelMatcherMetadataLabels struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EndpointMatcherMetadataLabelMatcherMetadataLabels) MarshalJSON() ([]byte, error) {
+func (s EndpointMatcherMetadataLabelMatcherMetadataLabels) MarshalJSON() ([]byte, error) {
 	type NoMethod EndpointMatcherMetadataLabelMatcherMetadataLabels
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EndpointPolicy: EndpointPolicy is a resource that helps apply desired
@@ -671,7 +671,7 @@ type EndpointPolicy struct {
 	// Labels: Optional. Set of label tags associated with the EndpointPolicy
 	// resource.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Required. Name of the EndpointPolicy resource. It matches pattern
+	// Name: Identifier. Name of the EndpointPolicy resource. It matches pattern
 	// `projects/{project}/locations/global/endpointPolicies/{endpoint_policy}`.
 	Name string `json:"name,omitempty"`
 	// ServerTlsPolicy: Optional. A URL referring to ServerTlsPolicy resource.
@@ -708,9 +708,9 @@ type EndpointPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EndpointPolicy) MarshalJSON() ([]byte, error) {
+func (s EndpointPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod EndpointPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression Language
@@ -756,9 +756,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExtensionChain: A single extension chain wrapper that contains the match
@@ -791,9 +791,9 @@ type ExtensionChain struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExtensionChain) MarshalJSON() ([]byte, error) {
+func (s ExtensionChain) MarshalJSON() ([]byte, error) {
 	type NoMethod ExtensionChain
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExtensionChainExtension: A single extension in the chain to execute for the
@@ -871,9 +871,9 @@ type ExtensionChainExtension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExtensionChainExtension) MarshalJSON() ([]byte, error) {
+func (s ExtensionChainExtension) MarshalJSON() ([]byte, error) {
 	type NoMethod ExtensionChainExtension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExtensionChainMatchCondition: Conditions under which this chain is invoked
@@ -897,9 +897,9 @@ type ExtensionChainMatchCondition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExtensionChainMatchCondition) MarshalJSON() ([]byte, error) {
+func (s ExtensionChainMatchCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod ExtensionChainMatchCondition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Gateway: Gateway represents the configuration for a proxy, typically a load
@@ -953,7 +953,7 @@ type Gateway struct {
 	IpVersion string `json:"ipVersion,omitempty"`
 	// Labels: Optional. Set of label tags associated with the Gateway resource.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Required. Name of the Gateway resource. It matches pattern
+	// Name: Identifier. Name of the Gateway resource. It matches pattern
 	// `projects/*/locations/*/gateways/`.
 	Name string `json:"name,omitempty"`
 	// Network: Optional. The relative resource name identifying the VPC network
@@ -967,6 +967,19 @@ type Gateway struct {
 	// 'OPEN_MESH' listen on 0.0.0.0 for IPv4 and :: for IPv6 and support multiple
 	// ports.
 	Ports []int64 `json:"ports,omitempty"`
+	// RoutingMode: Optional. The routing mode of the Gateway. This field is
+	// configurable only for gateways of type SECURE_WEB_GATEWAY. This field is
+	// required for gateways of type SECURE_WEB_GATEWAY.
+	//
+	// Possible values:
+	//   "EXPLICIT_ROUTING_MODE" - The routing mode is explicit; clients are
+	// configured to send traffic through the gateway. This is the default routing
+	// mode.
+	//   "NEXT_HOP_ROUTING_MODE" - The routing mode is next-hop. Clients are
+	// unaware of the gateway, and a route (advanced route or other route type) can
+	// be configured to direct traffic from client to gateway. The gateway then
+	// acts as a next-hop to the destination.
+	RoutingMode string `json:"routingMode,omitempty"`
 	// Scope: Optional. Scope determines how configuration across multiple Gateway
 	// instances are merged. The configuration for multiple Gateway instances with
 	// the same scope will be merged as presented as a single coniguration to the
@@ -1013,9 +1026,9 @@ type Gateway struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Gateway) MarshalJSON() ([]byte, error) {
+func (s Gateway) MarshalJSON() ([]byte, error) {
 	type NoMethod Gateway
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrpcRoute: GrpcRoute is the resource defining how gRPC traffic routed by a
@@ -1058,7 +1071,7 @@ type GrpcRoute struct {
 	// Each mesh reference should match the pattern:
 	// `projects/*/locations/global/meshes/`
 	Meshes []string `json:"meshes,omitempty"`
-	// Name: Required. Name of the GrpcRoute resource. It matches pattern
+	// Name: Identifier. Name of the GrpcRoute resource. It matches pattern
 	// `projects/*/locations/global/grpcRoutes/`
 	Name string `json:"name,omitempty"`
 	// Rules: Required. A list of detailed rules defining how to route traffic.
@@ -1086,9 +1099,9 @@ type GrpcRoute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrpcRoute) MarshalJSON() ([]byte, error) {
+func (s GrpcRoute) MarshalJSON() ([]byte, error) {
 	type NoMethod GrpcRoute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrpcRouteDestination: The destination to which traffic will be routed.
@@ -1119,9 +1132,9 @@ type GrpcRouteDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrpcRouteDestination) MarshalJSON() ([]byte, error) {
+func (s GrpcRouteDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GrpcRouteDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrpcRouteFaultInjectionPolicy: The specification for fault injection
@@ -1148,9 +1161,9 @@ type GrpcRouteFaultInjectionPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrpcRouteFaultInjectionPolicy) MarshalJSON() ([]byte, error) {
+func (s GrpcRouteFaultInjectionPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GrpcRouteFaultInjectionPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrpcRouteFaultInjectionPolicyAbort: Specification of how client requests are
@@ -1175,9 +1188,9 @@ type GrpcRouteFaultInjectionPolicyAbort struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrpcRouteFaultInjectionPolicyAbort) MarshalJSON() ([]byte, error) {
+func (s GrpcRouteFaultInjectionPolicyAbort) MarshalJSON() ([]byte, error) {
 	type NoMethod GrpcRouteFaultInjectionPolicyAbort
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrpcRouteFaultInjectionPolicyDelay: Specification of how client requests are
@@ -1201,9 +1214,9 @@ type GrpcRouteFaultInjectionPolicyDelay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrpcRouteFaultInjectionPolicyDelay) MarshalJSON() ([]byte, error) {
+func (s GrpcRouteFaultInjectionPolicyDelay) MarshalJSON() ([]byte, error) {
 	type NoMethod GrpcRouteFaultInjectionPolicyDelay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrpcRouteHeaderMatch: A match against a collection of headers.
@@ -1234,9 +1247,9 @@ type GrpcRouteHeaderMatch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrpcRouteHeaderMatch) MarshalJSON() ([]byte, error) {
+func (s GrpcRouteHeaderMatch) MarshalJSON() ([]byte, error) {
 	type NoMethod GrpcRouteHeaderMatch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrpcRouteMethodMatch: Specifies a match against a method.
@@ -1273,12 +1286,13 @@ type GrpcRouteMethodMatch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrpcRouteMethodMatch) MarshalJSON() ([]byte, error) {
+func (s GrpcRouteMethodMatch) MarshalJSON() ([]byte, error) {
 	type NoMethod GrpcRouteMethodMatch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GrpcRouteRetryPolicy: The specifications for retries.
+// GrpcRouteRetryPolicy: The specifications for retries. Specifies one or more
+// conditions for which this retry rule applies. Valid values are:
 type GrpcRouteRetryPolicy struct {
 	// NumRetries: Specifies the allowed number of retries. This number must be >
 	// 0. If not specified, default to 1.
@@ -1307,9 +1321,9 @@ type GrpcRouteRetryPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrpcRouteRetryPolicy) MarshalJSON() ([]byte, error) {
+func (s GrpcRouteRetryPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GrpcRouteRetryPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrpcRouteRouteAction: Specifies how to route matched traffic.
@@ -1357,9 +1371,9 @@ type GrpcRouteRouteAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrpcRouteRouteAction) MarshalJSON() ([]byte, error) {
+func (s GrpcRouteRouteAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GrpcRouteRouteAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrpcRouteRouteMatch: Criteria for matching traffic. A RouteMatch will be
@@ -1383,9 +1397,9 @@ type GrpcRouteRouteMatch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrpcRouteRouteMatch) MarshalJSON() ([]byte, error) {
+func (s GrpcRouteRouteMatch) MarshalJSON() ([]byte, error) {
 	type NoMethod GrpcRouteRouteMatch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrpcRouteRouteRule: Describes how to route traffic.
@@ -1411,9 +1425,9 @@ type GrpcRouteRouteRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrpcRouteRouteRule) MarshalJSON() ([]byte, error) {
+func (s GrpcRouteRouteRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GrpcRouteRouteRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GrpcRouteStatefulSessionAffinityPolicy: The specification for cookie-based
@@ -1442,9 +1456,9 @@ type GrpcRouteStatefulSessionAffinityPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GrpcRouteStatefulSessionAffinityPolicy) MarshalJSON() ([]byte, error) {
+func (s GrpcRouteStatefulSessionAffinityPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GrpcRouteStatefulSessionAffinityPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRoute: HttpRoute is the resource defining how HTTP traffic should be
@@ -1486,7 +1500,7 @@ type HttpRoute struct {
 	// `projects/*/locations/global/meshes/` The attached Mesh should be of a type
 	// SIDECAR
 	Meshes []string `json:"meshes,omitempty"`
-	// Name: Required. Name of the HttpRoute resource. It matches pattern
+	// Name: Identifier. Name of the HttpRoute resource. It matches pattern
 	// `projects/*/locations/global/httpRoutes/http_route_name>`.
 	Name string `json:"name,omitempty"`
 	// Rules: Required. Rules that define how traffic is routed and handled. Rules
@@ -1512,9 +1526,9 @@ type HttpRoute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRoute) MarshalJSON() ([]byte, error) {
+func (s HttpRoute) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRoute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteCorsPolicy: The Specification for allowing client side cross-origin
@@ -1559,9 +1573,9 @@ type HttpRouteCorsPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteCorsPolicy) MarshalJSON() ([]byte, error) {
+func (s HttpRouteCorsPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteCorsPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteDestination: Specifications of a destination to which the request
@@ -1604,9 +1618,9 @@ type HttpRouteDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteDestination) MarshalJSON() ([]byte, error) {
+func (s HttpRouteDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteFaultInjectionPolicy: The specification for fault injection
@@ -1633,9 +1647,9 @@ type HttpRouteFaultInjectionPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteFaultInjectionPolicy) MarshalJSON() ([]byte, error) {
+func (s HttpRouteFaultInjectionPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteFaultInjectionPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteFaultInjectionPolicyAbort: Specification of how client requests are
@@ -1660,9 +1674,9 @@ type HttpRouteFaultInjectionPolicyAbort struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteFaultInjectionPolicyAbort) MarshalJSON() ([]byte, error) {
+func (s HttpRouteFaultInjectionPolicyAbort) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteFaultInjectionPolicyAbort
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteFaultInjectionPolicyDelay: Specification of how client requests are
@@ -1686,9 +1700,9 @@ type HttpRouteFaultInjectionPolicyDelay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteFaultInjectionPolicyDelay) MarshalJSON() ([]byte, error) {
+func (s HttpRouteFaultInjectionPolicyDelay) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteFaultInjectionPolicyDelay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteHeaderMatch: Specifies how to select a route rule based on HTTP
@@ -1731,9 +1745,9 @@ type HttpRouteHeaderMatch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteHeaderMatch) MarshalJSON() ([]byte, error) {
+func (s HttpRouteHeaderMatch) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteHeaderMatch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteHeaderMatchIntegerRange: Represents an integer value range.
@@ -1755,9 +1769,9 @@ type HttpRouteHeaderMatchIntegerRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteHeaderMatchIntegerRange) MarshalJSON() ([]byte, error) {
+func (s HttpRouteHeaderMatchIntegerRange) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteHeaderMatchIntegerRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteHeaderModifier: The specification for modifying HTTP header in HTTP
@@ -1784,9 +1798,9 @@ type HttpRouteHeaderModifier struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteHeaderModifier) MarshalJSON() ([]byte, error) {
+func (s HttpRouteHeaderModifier) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteHeaderModifier
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteHttpDirectResponse: Static HTTP response object to be returned.
@@ -1812,9 +1826,9 @@ type HttpRouteHttpDirectResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteHttpDirectResponse) MarshalJSON() ([]byte, error) {
+func (s HttpRouteHttpDirectResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteHttpDirectResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteQueryParameterMatch: Specifications to match a query parameter in
@@ -1848,9 +1862,9 @@ type HttpRouteQueryParameterMatch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteQueryParameterMatch) MarshalJSON() ([]byte, error) {
+func (s HttpRouteQueryParameterMatch) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteQueryParameterMatch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteRedirect: The specification for redirecting traffic.
@@ -1903,9 +1917,9 @@ type HttpRouteRedirect struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteRedirect) MarshalJSON() ([]byte, error) {
+func (s HttpRouteRedirect) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteRedirect
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteRequestMirrorPolicy: Specifies the policy on how requests are
@@ -1932,9 +1946,9 @@ type HttpRouteRequestMirrorPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteRequestMirrorPolicy) MarshalJSON() ([]byte, error) {
+func (s HttpRouteRequestMirrorPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteRequestMirrorPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *HttpRouteRequestMirrorPolicy) UnmarshalJSON(data []byte) error {
@@ -1985,9 +1999,9 @@ type HttpRouteRetryPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteRetryPolicy) MarshalJSON() ([]byte, error) {
+func (s HttpRouteRetryPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteRetryPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteRouteAction: The specifications for routing traffic and applying
@@ -2059,9 +2073,9 @@ type HttpRouteRouteAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteRouteAction) MarshalJSON() ([]byte, error) {
+func (s HttpRouteRouteAction) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteRouteAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteRouteMatch: RouteMatch defines specifications used to match
@@ -2103,9 +2117,9 @@ type HttpRouteRouteMatch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteRouteMatch) MarshalJSON() ([]byte, error) {
+func (s HttpRouteRouteMatch) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteRouteMatch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteRouteRule: Specifies how to match traffic and how to route traffic
@@ -2133,9 +2147,9 @@ type HttpRouteRouteRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteRouteRule) MarshalJSON() ([]byte, error) {
+func (s HttpRouteRouteRule) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteRouteRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteStatefulSessionAffinityPolicy: The specification for cookie-based
@@ -2164,9 +2178,9 @@ type HttpRouteStatefulSessionAffinityPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteStatefulSessionAffinityPolicy) MarshalJSON() ([]byte, error) {
+func (s HttpRouteStatefulSessionAffinityPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteStatefulSessionAffinityPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HttpRouteURLRewrite: The specification for modifying the URL of the request,
@@ -2192,9 +2206,9 @@ type HttpRouteURLRewrite struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpRouteURLRewrite) MarshalJSON() ([]byte, error) {
+func (s HttpRouteURLRewrite) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteURLRewrite
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LbRouteExtension: `LbRouteExtension` is a resource that lets you control
@@ -2234,10 +2248,10 @@ type LbRouteExtension struct {
 	//   "EXTERNAL_MANAGED" - Signifies that this is used for External Managed
 	// HTTP(S) Load Balancing.
 	LoadBalancingScheme string `json:"loadBalancingScheme,omitempty"`
-	// Metadata: Optional. The metadata provided here will be included as part of
-	// the `metadata_context` (of type `google.protobuf.Struct`) in the
-	// `ProcessingRequest` message sent to the extension server. The metadata will
-	// be available under the namespace `com.google.lb_route_extension.`. The
+	// Metadata: Optional. The metadata provided here is included as part of the
+	// `metadata_context` (of type `google.protobuf.Struct`) in the
+	// `ProcessingRequest` message sent to the extension server. The metadata is
+	// available under the namespace `com.google.lb_route_extension.`. The
 	// following variables are supported in the metadata Struct:
 	// `{forwarding_rule_id}` - substituted with the forwarding rule's fully
 	// qualified resource name.
@@ -2265,9 +2279,9 @@ type LbRouteExtension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LbRouteExtension) MarshalJSON() ([]byte, error) {
+func (s LbRouteExtension) MarshalJSON() ([]byte, error) {
 	type NoMethod LbRouteExtension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LbTrafficExtension: `LbTrafficExtension` is a resource that lets the
@@ -2309,10 +2323,10 @@ type LbTrafficExtension struct {
 	//   "EXTERNAL_MANAGED" - Signifies that this is used for External Managed
 	// HTTP(S) Load Balancing.
 	LoadBalancingScheme string `json:"loadBalancingScheme,omitempty"`
-	// Metadata: Optional. The metadata provided here will be included in the
+	// Metadata: Optional. The metadata provided here is included in the
 	// `ProcessingRequest.metadata_context.filter_metadata` map field. The metadata
-	// will be available under the key `com.google.lb_traffic_extension.`. The
-	// following variables are supported in the metadata: `{forwarding_rule_id}` -
+	// is available under the key `com.google.lb_traffic_extension.`. The following
+	// variables are supported in the metadata: `{forwarding_rule_id}` -
 	// substituted with the forwarding rule's fully qualified resource name.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Name: Required. Identifier. Name of the `LbTrafficExtension` resource in the
@@ -2338,9 +2352,9 @@ type LbTrafficExtension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LbTrafficExtension) MarshalJSON() ([]byte, error) {
+func (s LbTrafficExtension) MarshalJSON() ([]byte, error) {
 	type NoMethod LbTrafficExtension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEndpointPoliciesResponse: Response returned by the ListEndpointPolicies
@@ -2369,9 +2383,9 @@ type ListEndpointPoliciesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListEndpointPoliciesResponse) MarshalJSON() ([]byte, error) {
+func (s ListEndpointPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEndpointPoliciesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGatewaysResponse: Response returned by the ListGateways method.
@@ -2401,9 +2415,9 @@ type ListGatewaysResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGatewaysResponse) MarshalJSON() ([]byte, error) {
+func (s ListGatewaysResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGatewaysResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGrpcRoutesResponse: Response returned by the ListGrpcRoutes method.
@@ -2431,9 +2445,9 @@ type ListGrpcRoutesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGrpcRoutesResponse) MarshalJSON() ([]byte, error) {
+func (s ListGrpcRoutesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGrpcRoutesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListHttpRoutesResponse: Response returned by the ListHttpRoutes method.
@@ -2461,9 +2475,9 @@ type ListHttpRoutesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListHttpRoutesResponse) MarshalJSON() ([]byte, error) {
+func (s ListHttpRoutesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListHttpRoutesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLbRouteExtensionsResponse: Message for response to listing
@@ -2492,9 +2506,9 @@ type ListLbRouteExtensionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLbRouteExtensionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLbRouteExtensionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLbRouteExtensionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLbTrafficExtensionsResponse: Message for response to listing
@@ -2523,9 +2537,9 @@ type ListLbTrafficExtensionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLbTrafficExtensionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLbTrafficExtensionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLbTrafficExtensionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -2551,9 +2565,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMeshesResponse: Response returned by the ListMeshes method.
@@ -2581,9 +2595,9 @@ type ListMeshesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMeshesResponse) MarshalJSON() ([]byte, error) {
+func (s ListMeshesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMeshesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -2609,9 +2623,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListServiceBindingsResponse: Response returned by the ListServiceBindings
@@ -2640,9 +2654,9 @@ type ListServiceBindingsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListServiceBindingsResponse) MarshalJSON() ([]byte, error) {
+func (s ListServiceBindingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListServiceBindingsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListServiceLbPoliciesResponse: Response returned by the
@@ -2671,9 +2685,9 @@ type ListServiceLbPoliciesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListServiceLbPoliciesResponse) MarshalJSON() ([]byte, error) {
+func (s ListServiceLbPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListServiceLbPoliciesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTcpRoutesResponse: Response returned by the ListTcpRoutes method.
@@ -2701,9 +2715,9 @@ type ListTcpRoutesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTcpRoutesResponse) MarshalJSON() ([]byte, error) {
+func (s ListTcpRoutesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTcpRoutesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTlsRoutesResponse: Response returned by the ListTlsRoutes method.
@@ -2731,9 +2745,9 @@ type ListTlsRoutesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListTlsRoutesResponse) MarshalJSON() ([]byte, error) {
+func (s ListTlsRoutesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTlsRoutesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -2769,9 +2783,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Mesh: Mesh represents a logical configuration grouping for workload to
@@ -2804,7 +2818,7 @@ type Mesh struct {
 	InterceptionPort int64 `json:"interceptionPort,omitempty"`
 	// Labels: Optional. Set of label tags associated with the Mesh resource.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Required. Name of the Mesh resource. It matches pattern
+	// Name: Identifier. Name of the Mesh resource. It matches pattern
 	// `projects/*/locations/global/meshes/`.
 	Name string `json:"name,omitempty"`
 	// SelfLink: Output only. Server-defined URL of this resource
@@ -2827,9 +2841,9 @@ type Mesh struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Mesh) MarshalJSON() ([]byte, error) {
+func (s Mesh) MarshalJSON() ([]byte, error) {
 	type NoMethod Mesh
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -2874,9 +2888,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -2912,9 +2926,9 @@ type OperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -3004,9 +3018,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceBinding: ServiceBinding is the resource that defines a Service
@@ -3020,7 +3034,7 @@ type ServiceBinding struct {
 	// Labels: Optional. Set of label tags associated with the ServiceBinding
 	// resource.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Required. Name of the ServiceBinding resource. It matches pattern
+	// Name: Identifier. Name of the ServiceBinding resource. It matches pattern
 	// `projects/*/locations/global/serviceBindings/service_binding_name`.
 	Name string `json:"name,omitempty"`
 	// Service: Required. The full Service Directory Service name of the format
@@ -3049,9 +3063,9 @@ type ServiceBinding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceBinding) MarshalJSON() ([]byte, error) {
+func (s ServiceBinding) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceBinding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceLbPolicy: ServiceLbPolicy holds global load balancing and traffic
@@ -3110,9 +3124,9 @@ type ServiceLbPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceLbPolicy) MarshalJSON() ([]byte, error) {
+func (s ServiceLbPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceLbPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceLbPolicyAutoCapacityDrain: Option to specify if an unhealthy IG/NEG
@@ -3137,9 +3151,9 @@ type ServiceLbPolicyAutoCapacityDrain struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceLbPolicyAutoCapacityDrain) MarshalJSON() ([]byte, error) {
+func (s ServiceLbPolicyAutoCapacityDrain) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceLbPolicyAutoCapacityDrain
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ServiceLbPolicyFailoverConfig: Option to specify health based failover
@@ -3165,9 +3179,9 @@ type ServiceLbPolicyFailoverConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ServiceLbPolicyFailoverConfig) MarshalJSON() ([]byte, error) {
+func (s ServiceLbPolicyFailoverConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceLbPolicyFailoverConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -3194,9 +3208,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -3228,9 +3242,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TcpRoute: TcpRoute is the resource defining how TCP traffic should be routed
@@ -3254,7 +3268,7 @@ type TcpRoute struct {
 	// `projects/*/locations/global/meshes/` The attached Mesh should be of a type
 	// SIDECAR
 	Meshes []string `json:"meshes,omitempty"`
-	// Name: Required. Name of the TcpRoute resource. It matches pattern
+	// Name: Identifier. Name of the TcpRoute resource. It matches pattern
 	// `projects/*/locations/global/tcpRoutes/tcp_route_name>`.
 	Name string `json:"name,omitempty"`
 	// Rules: Required. Rules that define how traffic is routed and handled. At
@@ -3281,9 +3295,9 @@ type TcpRoute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TcpRoute) MarshalJSON() ([]byte, error) {
+func (s TcpRoute) MarshalJSON() ([]byte, error) {
 	type NoMethod TcpRoute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TcpRouteRouteAction: The specifications for routing traffic and applying
@@ -3317,9 +3331,9 @@ type TcpRouteRouteAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TcpRouteRouteAction) MarshalJSON() ([]byte, error) {
+func (s TcpRouteRouteAction) MarshalJSON() ([]byte, error) {
 	type NoMethod TcpRouteRouteAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TcpRouteRouteDestination: Describe the destination for traffic to be routed
@@ -3350,9 +3364,9 @@ type TcpRouteRouteDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TcpRouteRouteDestination) MarshalJSON() ([]byte, error) {
+func (s TcpRouteRouteDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod TcpRouteRouteDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TcpRouteRouteMatch: RouteMatch defines the predicate used to match requests
@@ -3382,9 +3396,9 @@ type TcpRouteRouteMatch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TcpRouteRouteMatch) MarshalJSON() ([]byte, error) {
+func (s TcpRouteRouteMatch) MarshalJSON() ([]byte, error) {
 	type NoMethod TcpRouteRouteMatch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TcpRouteRouteRule: Specifies how to match traffic and how to route traffic
@@ -3409,9 +3423,9 @@ type TcpRouteRouteRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TcpRouteRouteRule) MarshalJSON() ([]byte, error) {
+func (s TcpRouteRouteRule) MarshalJSON() ([]byte, error) {
 	type NoMethod TcpRouteRouteRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
@@ -3434,9 +3448,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -3461,9 +3475,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TlsRoute: TlsRoute defines how traffic should be routed based on SNI and
@@ -3487,7 +3501,7 @@ type TlsRoute struct {
 	// `projects/*/locations/global/meshes/` The attached Mesh should be of a type
 	// SIDECAR
 	Meshes []string `json:"meshes,omitempty"`
-	// Name: Required. Name of the TlsRoute resource. It matches pattern
+	// Name: Identifier. Name of the TlsRoute resource. It matches pattern
 	// `projects/*/locations/global/tlsRoutes/tls_route_name>`.
 	Name string `json:"name,omitempty"`
 	// Rules: Required. Rules that define how traffic is routed and handled. At
@@ -3514,9 +3528,9 @@ type TlsRoute struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TlsRoute) MarshalJSON() ([]byte, error) {
+func (s TlsRoute) MarshalJSON() ([]byte, error) {
 	type NoMethod TlsRoute
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TlsRouteRouteAction: The specifications for routing traffic and applying
@@ -3543,9 +3557,9 @@ type TlsRouteRouteAction struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TlsRouteRouteAction) MarshalJSON() ([]byte, error) {
+func (s TlsRouteRouteAction) MarshalJSON() ([]byte, error) {
 	type NoMethod TlsRouteRouteAction
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TlsRouteRouteDestination: Describe the destination for traffic to be routed
@@ -3571,9 +3585,9 @@ type TlsRouteRouteDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TlsRouteRouteDestination) MarshalJSON() ([]byte, error) {
+func (s TlsRouteRouteDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod TlsRouteRouteDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TlsRouteRouteMatch: RouteMatch defines the predicate used to match requests
@@ -3604,9 +3618,9 @@ type TlsRouteRouteMatch struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TlsRouteRouteMatch) MarshalJSON() ([]byte, error) {
+func (s TlsRouteRouteMatch) MarshalJSON() ([]byte, error) {
 	type NoMethod TlsRouteRouteMatch
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TlsRouteRouteRule: Specifies how to match traffic and how to route traffic
@@ -3630,9 +3644,9 @@ type TlsRouteRouteRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TlsRouteRouteRule) MarshalJSON() ([]byte, error) {
+func (s TlsRouteRouteRule) MarshalJSON() ([]byte, error) {
 	type NoMethod TlsRouteRouteRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TrafficPortSelector: Specification of a port-based selector.
@@ -3655,9 +3669,9 @@ type TrafficPortSelector struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TrafficPortSelector) MarshalJSON() ([]byte, error) {
+func (s TrafficPortSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod TrafficPortSelector
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsLocationsGetCall struct {
@@ -5256,133 +5270,6 @@ func (c *ProjectsLocationsEndpointPoliciesGetCall) Do(opts ...googleapi.CallOpti
 	return ret, nil
 }
 
-type ProjectsLocationsEndpointPoliciesGetIamPolicyCall struct {
-	s            *Service
-	resource     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetIamPolicy: Gets the access control policy for a resource. Returns an
-// empty policy if the resource exists and does not have a policy set.
-//
-//   - resource: REQUIRED: The resource for which the policy is being requested.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
-func (r *ProjectsLocationsEndpointPoliciesService) GetIamPolicy(resource string) *ProjectsLocationsEndpointPoliciesGetIamPolicyCall {
-	c := &ProjectsLocationsEndpointPoliciesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	return c
-}
-
-// OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The maximum policy version that will be
-// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
-// an invalid value will be rejected. Requests for policies with any
-// conditional role bindings must specify version 3. Policies with no
-// conditional role bindings may specify any valid value or leave the field
-// unset. The policy in the response might use the policy version that you
-// specified, or it might use a lower policy version. For example, if you
-// specify version 3, but the policy has no conditional role bindings, the
-// response uses version 1. To learn which resources support conditions in
-// their IAM policies, see the IAM documentation
-// (https://cloud.google.com/iam/help/conditions/resource-policies).
-func (c *ProjectsLocationsEndpointPoliciesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsEndpointPoliciesGetIamPolicyCall {
-	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsEndpointPoliciesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsEndpointPoliciesGetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsEndpointPoliciesGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsEndpointPoliciesGetIamPolicyCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsEndpointPoliciesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsEndpointPoliciesGetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsEndpointPoliciesGetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsEndpointPoliciesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkservices.projects.locations.endpointPolicies.getIamPolicy" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsEndpointPoliciesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
 type ProjectsLocationsEndpointPoliciesListCall struct {
 	s            *Service
 	parent       string
@@ -5540,7 +5427,7 @@ type ProjectsLocationsEndpointPoliciesPatchCall struct {
 
 // Patch: Updates the parameters of a single EndpointPolicy.
 //
-//   - name: Name of the EndpointPolicy resource. It matches pattern
+//   - name: Identifier. Name of the EndpointPolicy resource. It matches pattern
 //     `projects/{project}/locations/global/endpointPolicies/{endpoint_policy}`.
 func (r *ProjectsLocationsEndpointPoliciesService) Patch(name string, endpointpolicy *EndpointPolicy) *ProjectsLocationsEndpointPoliciesPatchCall {
 	c := &ProjectsLocationsEndpointPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5630,220 +5517,6 @@ func (c *ProjectsLocationsEndpointPoliciesPatchCall) Do(opts ...googleapi.CallOp
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type ProjectsLocationsEndpointPoliciesSetIamPolicyCall struct {
-	s                   *Service
-	resource            string
-	setiampolicyrequest *SetIamPolicyRequest
-	urlParams_          gensupport.URLParams
-	ctx_                context.Context
-	header_             http.Header
-}
-
-// SetIamPolicy: Sets the access control policy on the specified resource.
-// Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`,
-// and `PERMISSION_DENIED` errors.
-//
-//   - resource: REQUIRED: The resource for which the policy is being specified.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
-func (r *ProjectsLocationsEndpointPoliciesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsEndpointPoliciesSetIamPolicyCall {
-	c := &ProjectsLocationsEndpointPoliciesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.setiampolicyrequest = setiampolicyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsEndpointPoliciesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsEndpointPoliciesSetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsEndpointPoliciesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsEndpointPoliciesSetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsEndpointPoliciesSetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsEndpointPoliciesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkservices.projects.locations.endpointPolicies.setIamPolicy" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsEndpointPoliciesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type ProjectsLocationsEndpointPoliciesTestIamPermissionsCall struct {
-	s                         *Service
-	resource                  string
-	testiampermissionsrequest *TestIamPermissionsRequest
-	urlParams_                gensupport.URLParams
-	ctx_                      context.Context
-	header_                   http.Header
-}
-
-// TestIamPermissions: Returns permissions that a caller has on the specified
-// resource. If the resource does not exist, this will return an empty set of
-// permissions, not a `NOT_FOUND` error. Note: This operation is designed to be
-// used for building permission-aware UIs and command-line tools, not for
-// authorization checking. This operation may "fail open" without warning.
-//
-//   - resource: REQUIRED: The resource for which the policy detail is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
-//     value for this field.
-func (r *ProjectsLocationsEndpointPoliciesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsEndpointPoliciesTestIamPermissionsCall {
-	c := &ProjectsLocationsEndpointPoliciesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.testiampermissionsrequest = testiampermissionsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsEndpointPoliciesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsEndpointPoliciesTestIamPermissionsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsEndpointPoliciesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsEndpointPoliciesTestIamPermissionsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsEndpointPoliciesTestIamPermissionsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsEndpointPoliciesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkservices.projects.locations.endpointPolicies.testIamPermissions" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsEndpointPoliciesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -6169,133 +5842,6 @@ func (c *ProjectsLocationsGatewaysGetCall) Do(opts ...googleapi.CallOption) (*Ga
 	return ret, nil
 }
 
-type ProjectsLocationsGatewaysGetIamPolicyCall struct {
-	s            *Service
-	resource     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetIamPolicy: Gets the access control policy for a resource. Returns an
-// empty policy if the resource exists and does not have a policy set.
-//
-//   - resource: REQUIRED: The resource for which the policy is being requested.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
-func (r *ProjectsLocationsGatewaysService) GetIamPolicy(resource string) *ProjectsLocationsGatewaysGetIamPolicyCall {
-	c := &ProjectsLocationsGatewaysGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	return c
-}
-
-// OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The maximum policy version that will be
-// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
-// an invalid value will be rejected. Requests for policies with any
-// conditional role bindings must specify version 3. Policies with no
-// conditional role bindings may specify any valid value or leave the field
-// unset. The policy in the response might use the policy version that you
-// specified, or it might use a lower policy version. For example, if you
-// specify version 3, but the policy has no conditional role bindings, the
-// response uses version 1. To learn which resources support conditions in
-// their IAM policies, see the IAM documentation
-// (https://cloud.google.com/iam/help/conditions/resource-policies).
-func (c *ProjectsLocationsGatewaysGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsGatewaysGetIamPolicyCall {
-	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsGatewaysGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsGatewaysGetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsGatewaysGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsGatewaysGetIamPolicyCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsGatewaysGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsGatewaysGetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsGatewaysGetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGatewaysGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkservices.projects.locations.gateways.getIamPolicy" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsGatewaysGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
 type ProjectsLocationsGatewaysListCall struct {
 	s            *Service
 	parent       string
@@ -6453,7 +5999,7 @@ type ProjectsLocationsGatewaysPatchCall struct {
 
 // Patch: Updates the parameters of a single Gateway.
 //
-//   - name: Name of the Gateway resource. It matches pattern
+//   - name: Identifier. Name of the Gateway resource. It matches pattern
 //     `projects/*/locations/*/gateways/`.
 func (r *ProjectsLocationsGatewaysService) Patch(name string, gateway *Gateway) *ProjectsLocationsGatewaysPatchCall {
 	c := &ProjectsLocationsGatewaysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6542,220 +6088,6 @@ func (c *ProjectsLocationsGatewaysPatchCall) Do(opts ...googleapi.CallOption) (*
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type ProjectsLocationsGatewaysSetIamPolicyCall struct {
-	s                   *Service
-	resource            string
-	setiampolicyrequest *SetIamPolicyRequest
-	urlParams_          gensupport.URLParams
-	ctx_                context.Context
-	header_             http.Header
-}
-
-// SetIamPolicy: Sets the access control policy on the specified resource.
-// Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`,
-// and `PERMISSION_DENIED` errors.
-//
-//   - resource: REQUIRED: The resource for which the policy is being specified.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
-func (r *ProjectsLocationsGatewaysService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsGatewaysSetIamPolicyCall {
-	c := &ProjectsLocationsGatewaysSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.setiampolicyrequest = setiampolicyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsGatewaysSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsGatewaysSetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsGatewaysSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsGatewaysSetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsGatewaysSetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGatewaysSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkservices.projects.locations.gateways.setIamPolicy" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsGatewaysSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type ProjectsLocationsGatewaysTestIamPermissionsCall struct {
-	s                         *Service
-	resource                  string
-	testiampermissionsrequest *TestIamPermissionsRequest
-	urlParams_                gensupport.URLParams
-	ctx_                      context.Context
-	header_                   http.Header
-}
-
-// TestIamPermissions: Returns permissions that a caller has on the specified
-// resource. If the resource does not exist, this will return an empty set of
-// permissions, not a `NOT_FOUND` error. Note: This operation is designed to be
-// used for building permission-aware UIs and command-line tools, not for
-// authorization checking. This operation may "fail open" without warning.
-//
-//   - resource: REQUIRED: The resource for which the policy detail is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
-//     value for this field.
-func (r *ProjectsLocationsGatewaysService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsGatewaysTestIamPermissionsCall {
-	c := &ProjectsLocationsGatewaysTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.testiampermissionsrequest = testiampermissionsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsGatewaysTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsGatewaysTestIamPermissionsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsGatewaysTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsGatewaysTestIamPermissionsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsGatewaysTestIamPermissionsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsGatewaysTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkservices.projects.locations.gateways.testIamPermissions" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsGatewaysTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -7238,7 +6570,7 @@ type ProjectsLocationsGrpcRoutesPatchCall struct {
 
 // Patch: Updates the parameters of a single GrpcRoute.
 //
-//   - name: Name of the GrpcRoute resource. It matches pattern
+//   - name: Identifier. Name of the GrpcRoute resource. It matches pattern
 //     `projects/*/locations/global/grpcRoutes/`.
 func (r *ProjectsLocationsGrpcRoutesService) Patch(name string, grpcroute *GrpcRoute) *ProjectsLocationsGrpcRoutesPatchCall {
 	c := &ProjectsLocationsGrpcRoutesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7810,7 +7142,7 @@ type ProjectsLocationsHttpRoutesPatchCall struct {
 
 // Patch: Updates the parameters of a single HttpRoute.
 //
-//   - name: Name of the HttpRoute resource. It matches pattern
+//   - name: Identifier. Name of the HttpRoute resource. It matches pattern
 //     `projects/*/locations/global/httpRoutes/http_route_name>`.
 func (r *ProjectsLocationsHttpRoutesService) Patch(name string, httproute *HttpRoute) *ProjectsLocationsHttpRoutesPatchCall {
 	c := &ProjectsLocationsHttpRoutesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9507,133 +8839,6 @@ func (c *ProjectsLocationsMeshesGetCall) Do(opts ...googleapi.CallOption) (*Mesh
 	return ret, nil
 }
 
-type ProjectsLocationsMeshesGetIamPolicyCall struct {
-	s            *Service
-	resource     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetIamPolicy: Gets the access control policy for a resource. Returns an
-// empty policy if the resource exists and does not have a policy set.
-//
-//   - resource: REQUIRED: The resource for which the policy is being requested.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
-func (r *ProjectsLocationsMeshesService) GetIamPolicy(resource string) *ProjectsLocationsMeshesGetIamPolicyCall {
-	c := &ProjectsLocationsMeshesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	return c
-}
-
-// OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The maximum policy version that will be
-// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
-// an invalid value will be rejected. Requests for policies with any
-// conditional role bindings must specify version 3. Policies with no
-// conditional role bindings may specify any valid value or leave the field
-// unset. The policy in the response might use the policy version that you
-// specified, or it might use a lower policy version. For example, if you
-// specify version 3, but the policy has no conditional role bindings, the
-// response uses version 1. To learn which resources support conditions in
-// their IAM policies, see the IAM documentation
-// (https://cloud.google.com/iam/help/conditions/resource-policies).
-func (c *ProjectsLocationsMeshesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsMeshesGetIamPolicyCall {
-	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsMeshesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsMeshesGetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsMeshesGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsMeshesGetIamPolicyCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsMeshesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsMeshesGetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsMeshesGetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsMeshesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkservices.projects.locations.meshes.getIamPolicy" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsMeshesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
 type ProjectsLocationsMeshesListCall struct {
 	s            *Service
 	parent       string
@@ -9790,7 +8995,7 @@ type ProjectsLocationsMeshesPatchCall struct {
 
 // Patch: Updates the parameters of a single Mesh.
 //
-//   - name: Name of the Mesh resource. It matches pattern
+//   - name: Identifier. Name of the Mesh resource. It matches pattern
 //     `projects/*/locations/global/meshes/`.
 func (r *ProjectsLocationsMeshesService) Patch(name string, mesh *Mesh) *ProjectsLocationsMeshesPatchCall {
 	c := &ProjectsLocationsMeshesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9879,220 +9084,6 @@ func (c *ProjectsLocationsMeshesPatchCall) Do(opts ...googleapi.CallOption) (*Op
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type ProjectsLocationsMeshesSetIamPolicyCall struct {
-	s                   *Service
-	resource            string
-	setiampolicyrequest *SetIamPolicyRequest
-	urlParams_          gensupport.URLParams
-	ctx_                context.Context
-	header_             http.Header
-}
-
-// SetIamPolicy: Sets the access control policy on the specified resource.
-// Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`,
-// and `PERMISSION_DENIED` errors.
-//
-//   - resource: REQUIRED: The resource for which the policy is being specified.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
-func (r *ProjectsLocationsMeshesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsMeshesSetIamPolicyCall {
-	c := &ProjectsLocationsMeshesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.setiampolicyrequest = setiampolicyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsMeshesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsMeshesSetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsMeshesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsMeshesSetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsMeshesSetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsMeshesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkservices.projects.locations.meshes.setIamPolicy" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsMeshesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type ProjectsLocationsMeshesTestIamPermissionsCall struct {
-	s                         *Service
-	resource                  string
-	testiampermissionsrequest *TestIamPermissionsRequest
-	urlParams_                gensupport.URLParams
-	ctx_                      context.Context
-	header_                   http.Header
-}
-
-// TestIamPermissions: Returns permissions that a caller has on the specified
-// resource. If the resource does not exist, this will return an empty set of
-// permissions, not a `NOT_FOUND` error. Note: This operation is designed to be
-// used for building permission-aware UIs and command-line tools, not for
-// authorization checking. This operation may "fail open" without warning.
-//
-//   - resource: REQUIRED: The resource for which the policy detail is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
-//     value for this field.
-func (r *ProjectsLocationsMeshesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsMeshesTestIamPermissionsCall {
-	c := &ProjectsLocationsMeshesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.testiampermissionsrequest = testiampermissionsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsMeshesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsMeshesTestIamPermissionsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsMeshesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsMeshesTestIamPermissionsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsMeshesTestIamPermissionsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsMeshesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkservices.projects.locations.meshes.testIamPermissions" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsMeshesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -10884,133 +9875,6 @@ func (c *ProjectsLocationsServiceBindingsGetCall) Do(opts ...googleapi.CallOptio
 	return ret, nil
 }
 
-type ProjectsLocationsServiceBindingsGetIamPolicyCall struct {
-	s            *Service
-	resource     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetIamPolicy: Gets the access control policy for a resource. Returns an
-// empty policy if the resource exists and does not have a policy set.
-//
-//   - resource: REQUIRED: The resource for which the policy is being requested.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
-func (r *ProjectsLocationsServiceBindingsService) GetIamPolicy(resource string) *ProjectsLocationsServiceBindingsGetIamPolicyCall {
-	c := &ProjectsLocationsServiceBindingsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	return c
-}
-
-// OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The maximum policy version that will be
-// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
-// an invalid value will be rejected. Requests for policies with any
-// conditional role bindings must specify version 3. Policies with no
-// conditional role bindings may specify any valid value or leave the field
-// unset. The policy in the response might use the policy version that you
-// specified, or it might use a lower policy version. For example, if you
-// specify version 3, but the policy has no conditional role bindings, the
-// response uses version 1. To learn which resources support conditions in
-// their IAM policies, see the IAM documentation
-// (https://cloud.google.com/iam/help/conditions/resource-policies).
-func (c *ProjectsLocationsServiceBindingsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsServiceBindingsGetIamPolicyCall {
-	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsServiceBindingsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceBindingsGetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsServiceBindingsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsServiceBindingsGetIamPolicyCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsServiceBindingsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServiceBindingsGetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsServiceBindingsGetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsServiceBindingsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkservices.projects.locations.serviceBindings.getIamPolicy" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsServiceBindingsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
 type ProjectsLocationsServiceBindingsListCall struct {
 	s            *Service
 	parent       string
@@ -11155,220 +10019,6 @@ func (c *ProjectsLocationsServiceBindingsListCall) Pages(ctx context.Context, f 
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-type ProjectsLocationsServiceBindingsSetIamPolicyCall struct {
-	s                   *Service
-	resource            string
-	setiampolicyrequest *SetIamPolicyRequest
-	urlParams_          gensupport.URLParams
-	ctx_                context.Context
-	header_             http.Header
-}
-
-// SetIamPolicy: Sets the access control policy on the specified resource.
-// Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`,
-// and `PERMISSION_DENIED` errors.
-//
-//   - resource: REQUIRED: The resource for which the policy is being specified.
-//     See Resource names (https://cloud.google.com/apis/design/resource_names)
-//     for the appropriate value for this field.
-func (r *ProjectsLocationsServiceBindingsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServiceBindingsSetIamPolicyCall {
-	c := &ProjectsLocationsServiceBindingsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.setiampolicyrequest = setiampolicyrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsServiceBindingsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceBindingsSetIamPolicyCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsServiceBindingsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServiceBindingsSetIamPolicyCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsServiceBindingsSetIamPolicyCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsServiceBindingsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkservices.projects.locations.serviceBindings.setIamPolicy" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsServiceBindingsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type ProjectsLocationsServiceBindingsTestIamPermissionsCall struct {
-	s                         *Service
-	resource                  string
-	testiampermissionsrequest *TestIamPermissionsRequest
-	urlParams_                gensupport.URLParams
-	ctx_                      context.Context
-	header_                   http.Header
-}
-
-// TestIamPermissions: Returns permissions that a caller has on the specified
-// resource. If the resource does not exist, this will return an empty set of
-// permissions, not a `NOT_FOUND` error. Note: This operation is designed to be
-// used for building permission-aware UIs and command-line tools, not for
-// authorization checking. This operation may "fail open" without warning.
-//
-//   - resource: REQUIRED: The resource for which the policy detail is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
-//     value for this field.
-func (r *ProjectsLocationsServiceBindingsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServiceBindingsTestIamPermissionsCall {
-	c := &ProjectsLocationsServiceBindingsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.resource = resource
-	c.testiampermissionsrequest = testiampermissionsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsServiceBindingsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsServiceBindingsTestIamPermissionsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsServiceBindingsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsServiceBindingsTestIamPermissionsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsServiceBindingsTestIamPermissionsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsServiceBindingsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"resource": c.resource,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "networkservices.projects.locations.serviceBindings.testIamPermissions" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsServiceBindingsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &TestIamPermissionsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
 }
 
 type ProjectsLocationsServiceLbPoliciesCreateCall struct {
@@ -12760,7 +11410,7 @@ type ProjectsLocationsTcpRoutesPatchCall struct {
 
 // Patch: Updates the parameters of a single TcpRoute.
 //
-//   - name: Name of the TcpRoute resource. It matches pattern
+//   - name: Identifier. Name of the TcpRoute resource. It matches pattern
 //     `projects/*/locations/global/tcpRoutes/tcp_route_name>`.
 func (r *ProjectsLocationsTcpRoutesService) Patch(name string, tcproute *TcpRoute) *ProjectsLocationsTcpRoutesPatchCall {
 	c := &ProjectsLocationsTcpRoutesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13331,7 +11981,7 @@ type ProjectsLocationsTlsRoutesPatchCall struct {
 
 // Patch: Updates the parameters of a single TlsRoute.
 //
-//   - name: Name of the TlsRoute resource. It matches pattern
+//   - name: Identifier. Name of the TlsRoute resource. It matches pattern
 //     `projects/*/locations/global/tlsRoutes/tls_route_name>`.
 func (r *ProjectsLocationsTlsRoutesService) Patch(name string, tlsroute *TlsRoute) *ProjectsLocationsTlsRoutesPatchCall {
 	c := &ProjectsLocationsTlsRoutesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

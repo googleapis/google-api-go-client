@@ -342,9 +342,9 @@ type AdaptiveMtDataset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdaptiveMtDataset) MarshalJSON() ([]byte, error) {
+func (s AdaptiveMtDataset) MarshalJSON() ([]byte, error) {
 	type NoMethod AdaptiveMtDataset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdaptiveMtFile: An AdaptiveMtFile.
@@ -377,9 +377,9 @@ type AdaptiveMtFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdaptiveMtFile) MarshalJSON() ([]byte, error) {
+func (s AdaptiveMtFile) MarshalJSON() ([]byte, error) {
 	type NoMethod AdaptiveMtFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdaptiveMtSentence: An AdaptiveMt sentence entry.
@@ -409,20 +409,26 @@ type AdaptiveMtSentence struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdaptiveMtSentence) MarshalJSON() ([]byte, error) {
+func (s AdaptiveMtSentence) MarshalJSON() ([]byte, error) {
 	type NoMethod AdaptiveMtSentence
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdaptiveMtTranslateRequest: The request for sending an AdaptiveMt
 // translation query.
 type AdaptiveMtTranslateRequest struct {
-	// Content: Required. The content of the input in string format. For now only
-	// one sentence per request is supported.
+	// Content: Required. The content of the input in string format.
 	Content []string `json:"content,omitempty"`
 	// Dataset: Required. The resource name for the dataset to use for adaptive MT.
 	// `projects/{project}/locations/{location-id}/adaptiveMtDatasets/{dataset}`
 	Dataset string `json:"dataset,omitempty"`
+	// GlossaryConfig: Optional. Glossary to be applied. The glossary must be
+	// within the same region (have the same location-id) as the model, otherwise
+	// an INVALID_ARGUMENT (400) error is returned.
+	GlossaryConfig *GlossaryConfig `json:"glossaryConfig,omitempty"`
+	// ReferenceSentenceConfig: Configuration for caller provided reference
+	// sentences.
+	ReferenceSentenceConfig *ReferenceSentenceConfig `json:"referenceSentenceConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -436,13 +442,17 @@ type AdaptiveMtTranslateRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdaptiveMtTranslateRequest) MarshalJSON() ([]byte, error) {
+func (s AdaptiveMtTranslateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AdaptiveMtTranslateRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdaptiveMtTranslateResponse: An AdaptiveMtTranslate response.
 type AdaptiveMtTranslateResponse struct {
+	// GlossaryTranslations: Text translation response if a glossary is provided in
+	// the request. This could be the same as 'translation' above if no terms
+	// apply.
+	GlossaryTranslations []*AdaptiveMtTranslation `json:"glossaryTranslations,omitempty"`
 	// LanguageCode: Output only. The translation's language code.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// Translations: Output only. The translation.
@@ -450,22 +460,22 @@ type AdaptiveMtTranslateResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// ForceSendFields is a list of field names (e.g. "GlossaryTranslations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LanguageCode") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "GlossaryTranslations") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *AdaptiveMtTranslateResponse) MarshalJSON() ([]byte, error) {
+func (s AdaptiveMtTranslateResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AdaptiveMtTranslateResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AdaptiveMtTranslation: An AdaptiveMt translation.
@@ -485,9 +495,9 @@ type AdaptiveMtTranslation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AdaptiveMtTranslation) MarshalJSON() ([]byte, error) {
+func (s AdaptiveMtTranslation) MarshalJSON() ([]byte, error) {
 	type NoMethod AdaptiveMtTranslation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchDocumentInputConfig: Input configuration for BatchTranslateDocument
@@ -519,9 +529,9 @@ type BatchDocumentInputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchDocumentInputConfig) MarshalJSON() ([]byte, error) {
+func (s BatchDocumentInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchDocumentInputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchDocumentOutputConfig: Output configuration for BatchTranslateDocument
@@ -576,9 +586,9 @@ type BatchDocumentOutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchDocumentOutputConfig) MarshalJSON() ([]byte, error) {
+func (s BatchDocumentOutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchDocumentOutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchTranslateDocumentRequest: The BatchTranslateDocument request.
@@ -646,9 +656,9 @@ type BatchTranslateDocumentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchTranslateDocumentRequest) MarshalJSON() ([]byte, error) {
+func (s BatchTranslateDocumentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchTranslateDocumentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchTranslateTextRequest: The batch translation request.
@@ -699,9 +709,9 @@ type BatchTranslateTextRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BatchTranslateTextRequest) MarshalJSON() ([]byte, error) {
+func (s BatchTranslateTextRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchTranslateTextRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
@@ -753,9 +763,9 @@ type Dataset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Dataset) MarshalJSON() ([]byte, error) {
+func (s Dataset) MarshalJSON() ([]byte, error) {
 	type NoMethod Dataset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatasetInputConfig: Input configuration for datasets.
@@ -776,9 +786,9 @@ type DatasetInputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatasetInputConfig) MarshalJSON() ([]byte, error) {
+func (s DatasetInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DatasetInputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DatasetOutputConfig: Output configuration for datasets.
@@ -798,9 +808,9 @@ type DatasetOutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DatasetOutputConfig) MarshalJSON() ([]byte, error) {
+func (s DatasetOutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DatasetOutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DetectLanguageRequest: The request message for language detection.
@@ -837,9 +847,9 @@ type DetectLanguageRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DetectLanguageRequest) MarshalJSON() ([]byte, error) {
+func (s DetectLanguageRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DetectLanguageRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DetectLanguageResponse: The response message for language detection.
@@ -863,9 +873,9 @@ type DetectLanguageResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DetectLanguageResponse) MarshalJSON() ([]byte, error) {
+func (s DetectLanguageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DetectLanguageResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DetectedLanguage: The response message for language detection.
@@ -888,9 +898,9 @@ type DetectedLanguage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DetectedLanguage) MarshalJSON() ([]byte, error) {
+func (s DetectedLanguage) MarshalJSON() ([]byte, error) {
 	type NoMethod DetectedLanguage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DetectedLanguage) UnmarshalJSON(data []byte) error {
@@ -935,9 +945,9 @@ type DocumentInputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DocumentInputConfig) MarshalJSON() ([]byte, error) {
+func (s DocumentInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentInputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DocumentOutputConfig: A document translation request output config.
@@ -992,9 +1002,9 @@ type DocumentOutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DocumentOutputConfig) MarshalJSON() ([]byte, error) {
+func (s DocumentOutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentOutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DocumentTranslation: A translated document message.
@@ -1024,9 +1034,9 @@ type DocumentTranslation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DocumentTranslation) MarshalJSON() ([]byte, error) {
+func (s DocumentTranslation) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentTranslation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1042,7 +1052,7 @@ type Empty struct {
 type Example struct {
 	// Name: Output only. The resource name of the example, in form of
 	// `projects/{project-number-or-id}/locations/{location_id}/datasets/{dataset_id
-	// }/examples/{example_id}'
+	// }/examples/{example_id}`
 	Name string `json:"name,omitempty"`
 	// SourceText: Sentence in source language.
 	SourceText string `json:"sourceText,omitempty"`
@@ -1064,9 +1074,9 @@ type Example struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Example) MarshalJSON() ([]byte, error) {
+func (s Example) MarshalJSON() ([]byte, error) {
 	type NoMethod Example
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExportDataRequest: Request message for ExportData.
@@ -1086,9 +1096,9 @@ type ExportDataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportDataRequest) MarshalJSON() ([]byte, error) {
+func (s ExportDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportDataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FileInputSource: An inlined file.
@@ -1112,9 +1122,9 @@ type FileInputSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *FileInputSource) MarshalJSON() ([]byte, error) {
+func (s FileInputSource) MarshalJSON() ([]byte, error) {
 	type NoMethod FileInputSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcsDestination: The Google Cloud Storage location for the output content.
@@ -1138,9 +1148,9 @@ type GcsDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GcsDestination) MarshalJSON() ([]byte, error) {
+func (s GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GcsDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcsInputSource: The Google Cloud Storage location for the input content.
@@ -1161,9 +1171,9 @@ type GcsInputSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GcsInputSource) MarshalJSON() ([]byte, error) {
+func (s GcsInputSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GcsInputSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcsOutputDestination: The Google Cloud Storage location for the output
@@ -1186,9 +1196,9 @@ type GcsOutputDestination struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GcsOutputDestination) MarshalJSON() ([]byte, error) {
+func (s GcsOutputDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GcsOutputDestination
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GcsSource: The Google Cloud Storage location for the input content.
@@ -1209,9 +1219,9 @@ type GcsSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GcsSource) MarshalJSON() ([]byte, error) {
+func (s GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GcsSource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Glossary: Represents a glossary built from user-provided data.
@@ -1252,17 +1262,46 @@ type Glossary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Glossary) MarshalJSON() ([]byte, error) {
+func (s Glossary) MarshalJSON() ([]byte, error) {
 	type NoMethod Glossary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GlossaryConfig: Configures which glossary is used for a specific target
+// language and defines options for applying that glossary.
+type GlossaryConfig struct {
+	// Glossary: Required. The `glossary` to be applied for this translation. The
+	// format depends on the glossary: - User-provided custom glossary:
+	// `projects/{project-number-or-id}/locations/{location-id}/glossaries/{glossary
+	// -id}`
+	Glossary string `json:"glossary,omitempty"`
+	// IgnoreCase: Optional. Indicates match is case insensitive. The default value
+	// is `false` if missing.
+	IgnoreCase bool `json:"ignoreCase,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Glossary") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Glossary") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GlossaryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GlossaryConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GlossaryEntry: Represents a single entry in a glossary.
 type GlossaryEntry struct {
 	// Description: Describes the glossary entry.
 	Description string `json:"description,omitempty"`
-	// Name: Required. The resource name of the entry. Format:
-	// "projects/*/locations/*/glossaries/*/glossaryEntries/*"
+	// Name: Identifier. The resource name of the entry. Format:
+	// `projects/*/locations/*/glossaries/*/glossaryEntries/*`
 	Name string `json:"name,omitempty"`
 	// TermsPair: Used for an unidirectional glossary.
 	TermsPair *GlossaryTermsPair `json:"termsPair,omitempty"`
@@ -1284,9 +1323,9 @@ type GlossaryEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GlossaryEntry) MarshalJSON() ([]byte, error) {
+func (s GlossaryEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GlossaryEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GlossaryInputConfig: Input configuration for glossaries.
@@ -1317,9 +1356,9 @@ type GlossaryInputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GlossaryInputConfig) MarshalJSON() ([]byte, error) {
+func (s GlossaryInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GlossaryInputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GlossaryTerm: Represents a single glossary term
@@ -1341,9 +1380,9 @@ type GlossaryTerm struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GlossaryTerm) MarshalJSON() ([]byte, error) {
+func (s GlossaryTerm) MarshalJSON() ([]byte, error) {
 	type NoMethod GlossaryTerm
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GlossaryTermsPair: Represents a single entry for an unidirectional glossary.
@@ -1365,9 +1404,9 @@ type GlossaryTermsPair struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GlossaryTermsPair) MarshalJSON() ([]byte, error) {
+func (s GlossaryTermsPair) MarshalJSON() ([]byte, error) {
 	type NoMethod GlossaryTermsPair
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GlossaryTermsSet: Represents a single entry for an equivalent term set
@@ -1390,9 +1429,9 @@ type GlossaryTermsSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GlossaryTermsSet) MarshalJSON() ([]byte, error) {
+func (s GlossaryTermsSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GlossaryTermsSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportAdaptiveMtFileRequest: The request for importing an AdaptiveMt file
@@ -1415,9 +1454,9 @@ type ImportAdaptiveMtFileRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportAdaptiveMtFileRequest) MarshalJSON() ([]byte, error) {
+func (s ImportAdaptiveMtFileRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportAdaptiveMtFileRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportAdaptiveMtFileResponse: The response for importing an AdaptiveMtFile
@@ -1440,9 +1479,9 @@ type ImportAdaptiveMtFileResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportAdaptiveMtFileResponse) MarshalJSON() ([]byte, error) {
+func (s ImportAdaptiveMtFileResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportAdaptiveMtFileResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportDataRequest: Request message for ImportData.
@@ -1462,9 +1501,9 @@ type ImportDataRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ImportDataRequest) MarshalJSON() ([]byte, error) {
+func (s ImportDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportDataRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InputConfig: Input configuration for BatchTranslateText request.
@@ -1500,9 +1539,9 @@ type InputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InputConfig) MarshalJSON() ([]byte, error) {
+func (s InputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod InputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InputFile: An input file.
@@ -1525,9 +1564,9 @@ type InputFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *InputFile) MarshalJSON() ([]byte, error) {
+func (s InputFile) MarshalJSON() ([]byte, error) {
 	type NoMethod InputFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LanguageCodePair: Used with unidirectional glossaries.
@@ -1553,9 +1592,9 @@ type LanguageCodePair struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LanguageCodePair) MarshalJSON() ([]byte, error) {
+func (s LanguageCodePair) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageCodePair
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LanguageCodesSet: Used with equivalent term set glossaries.
@@ -1577,9 +1616,9 @@ type LanguageCodesSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LanguageCodesSet) MarshalJSON() ([]byte, error) {
+func (s LanguageCodesSet) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageCodesSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAdaptiveMtDatasetsResponse: A list of AdaptiveMtDatasets.
@@ -1607,9 +1646,9 @@ type ListAdaptiveMtDatasetsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAdaptiveMtDatasetsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAdaptiveMtDatasetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdaptiveMtDatasetsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAdaptiveMtFilesResponse: The response for listing all AdaptiveMt files
@@ -1637,9 +1676,9 @@ type ListAdaptiveMtFilesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAdaptiveMtFilesResponse) MarshalJSON() ([]byte, error) {
+func (s ListAdaptiveMtFilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdaptiveMtFilesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAdaptiveMtSentencesResponse: List AdaptiveMt sentences response.
@@ -1664,9 +1703,9 @@ type ListAdaptiveMtSentencesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAdaptiveMtSentencesResponse) MarshalJSON() ([]byte, error) {
+func (s ListAdaptiveMtSentencesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdaptiveMtSentencesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDatasetsResponse: Response message for ListDatasets.
@@ -1693,9 +1732,9 @@ type ListDatasetsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDatasetsResponse) MarshalJSON() ([]byte, error) {
+func (s ListDatasetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDatasetsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListExamplesResponse: Response message for ListExamples.
@@ -1722,9 +1761,9 @@ type ListExamplesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListExamplesResponse) MarshalJSON() ([]byte, error) {
+func (s ListExamplesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListExamplesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGlossariesResponse: Response message for ListGlossaries.
@@ -1751,9 +1790,9 @@ type ListGlossariesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGlossariesResponse) MarshalJSON() ([]byte, error) {
+func (s ListGlossariesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGlossariesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGlossaryEntriesResponse: Response message for ListGlossaryEntries
@@ -1780,9 +1819,9 @@ type ListGlossaryEntriesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListGlossaryEntriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListGlossaryEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGlossaryEntriesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for Locations.ListLocations.
@@ -1808,9 +1847,9 @@ type ListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListModelsResponse: Response message for ListModels.
@@ -1837,9 +1876,9 @@ type ListModelsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListModelsResponse) MarshalJSON() ([]byte, error) {
+func (s ListModelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListModelsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -1865,9 +1904,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
@@ -1903,9 +1942,9 @@ type Location struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Location) MarshalJSON() ([]byte, error) {
+func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Model: A trained translation model.
@@ -1957,9 +1996,9 @@ type Model struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Model) MarshalJSON() ([]byte, error) {
+func (s Model) MarshalJSON() ([]byte, error) {
 	type NoMethod Model
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -2004,9 +2043,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OutputConfig: Output configuration for BatchTranslateText request.
@@ -2072,9 +2111,85 @@ type OutputConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OutputConfig) MarshalJSON() ([]byte, error) {
+func (s OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod OutputConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReferenceSentenceConfig: Message of caller-provided reference configuration.
+type ReferenceSentenceConfig struct {
+	// ReferenceSentencePairLists: Reference sentences pair lists. Each list will
+	// be used as the references to translate the sentence under "content" field at
+	// the corresponding index. Length of the list is required to be equal to the
+	// length of "content" field.
+	ReferenceSentencePairLists []*ReferenceSentencePairList `json:"referenceSentencePairLists,omitempty"`
+	// SourceLanguageCode: Source language code.
+	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
+	// TargetLanguageCode: Target language code.
+	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReferenceSentencePairLists")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReferenceSentencePairLists") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReferenceSentenceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ReferenceSentenceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReferenceSentencePair: A pair of sentences used as reference in source and
+// target languages.
+type ReferenceSentencePair struct {
+	// SourceSentence: Source sentence in the sentence pair.
+	SourceSentence string `json:"sourceSentence,omitempty"`
+	// TargetSentence: Target sentence in the sentence pair.
+	TargetSentence string `json:"targetSentence,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceSentence") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceSentence") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReferenceSentencePair) MarshalJSON() ([]byte, error) {
+	type NoMethod ReferenceSentencePair
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReferenceSentencePairList: A list of reference sentence pairs.
+type ReferenceSentencePairList struct {
+	// ReferenceSentencePairs: Reference sentence pairs.
+	ReferenceSentencePairs []*ReferenceSentencePair `json:"referenceSentencePairs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReferenceSentencePairs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReferenceSentencePairs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReferenceSentencePairList) MarshalJSON() ([]byte, error) {
+	type NoMethod ReferenceSentencePairList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Romanization: A single romanization response.
@@ -2100,9 +2215,9 @@ type Romanization struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Romanization) MarshalJSON() ([]byte, error) {
+func (s Romanization) MarshalJSON() ([]byte, error) {
 	type NoMethod Romanization
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RomanizeTextRequest: The request message for synchronous romanization.
@@ -2127,9 +2242,9 @@ type RomanizeTextRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RomanizeTextRequest) MarshalJSON() ([]byte, error) {
+func (s RomanizeTextRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RomanizeTextRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RomanizeTextResponse: The response message for synchronous romanization.
@@ -2153,9 +2268,9 @@ type RomanizeTextResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RomanizeTextResponse) MarshalJSON() ([]byte, error) {
+func (s RomanizeTextResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RomanizeTextResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -2187,9 +2302,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SupportedLanguage: A single supported language response corresponds to
@@ -2220,9 +2335,9 @@ type SupportedLanguage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SupportedLanguage) MarshalJSON() ([]byte, error) {
+func (s SupportedLanguage) MarshalJSON() ([]byte, error) {
 	type NoMethod SupportedLanguage
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SupportedLanguages: The response message for discovering supported
@@ -2247,9 +2362,9 @@ type SupportedLanguages struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SupportedLanguages) MarshalJSON() ([]byte, error) {
+func (s SupportedLanguages) MarshalJSON() ([]byte, error) {
 	type NoMethod SupportedLanguages
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TranslateDocumentRequest: A document translation request.
@@ -2323,9 +2438,9 @@ type TranslateDocumentRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TranslateDocumentRequest) MarshalJSON() ([]byte, error) {
+func (s TranslateDocumentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TranslateDocumentRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TranslateDocumentResponse: A translated document response message.
@@ -2361,9 +2476,9 @@ type TranslateDocumentResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TranslateDocumentResponse) MarshalJSON() ([]byte, error) {
+func (s TranslateDocumentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TranslateDocumentResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TranslateTextGlossaryConfig: Configures which glossary is used for a
@@ -2390,9 +2505,9 @@ type TranslateTextGlossaryConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TranslateTextGlossaryConfig) MarshalJSON() ([]byte, error) {
+func (s TranslateTextGlossaryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TranslateTextGlossaryConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TranslateTextRequest: The request message for synchronous translation.
@@ -2421,8 +2536,10 @@ type TranslateTextRequest struct {
 	// `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`
 	// - General (built-in) models:
 	// `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,
-	//  For global (non-regionalized) requests, use `location-id` `global`. For
-	// example,
+	//  - Translation LLM models:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/general/trans
+	// lation-llm`, For global (non-regionalized) requests, use `location-id`
+	// `global`. For example,
 	// `projects/{project-number-or-id}/locations/global/models/general/nmt`. If
 	// not provided, the default Google model (NMT) will be used
 	Model string `json:"model,omitempty"`
@@ -2451,9 +2568,9 @@ type TranslateTextRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TranslateTextRequest) MarshalJSON() ([]byte, error) {
+func (s TranslateTextRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TranslateTextRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TranslateTextResponse struct {
@@ -2480,9 +2597,9 @@ type TranslateTextResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TranslateTextResponse) MarshalJSON() ([]byte, error) {
+func (s TranslateTextResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TranslateTextResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Translation: A single translation response.
@@ -2517,9 +2634,9 @@ type Translation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Translation) MarshalJSON() ([]byte, error) {
+func (s Translation) MarshalJSON() ([]byte, error) {
 	type NoMethod Translation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransliterationConfig: Configures transliteration feature on top of
@@ -2541,9 +2658,9 @@ type TransliterationConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransliterationConfig) MarshalJSON() ([]byte, error) {
+func (s TransliterationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TransliterationConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WaitOperationRequest: The request message for Operations.WaitOperation.
@@ -2565,9 +2682,9 @@ type WaitOperationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WaitOperationRequest) MarshalJSON() ([]byte, error) {
+func (s WaitOperationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod WaitOperationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsDetectLanguageCall struct {
@@ -7260,8 +7377,8 @@ type ProjectsLocationsGlossariesGlossaryEntriesPatchCall struct {
 
 // Patch: Updates a glossary entry.
 //
-//   - name: The resource name of the entry. Format:
-//     "projects/*/locations/*/glossaries/*/glossaryEntries/*".
+//   - name: Identifier. The resource name of the entry. Format:
+//     `projects/*/locations/*/glossaries/*/glossaryEntries/*`.
 func (r *ProjectsLocationsGlossariesGlossaryEntriesService) Patch(name string, glossaryentry *GlossaryEntry) *ProjectsLocationsGlossariesGlossaryEntriesPatchCall {
 	c := &ProjectsLocationsGlossariesGlossaryEntriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

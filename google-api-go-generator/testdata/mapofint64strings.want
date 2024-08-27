@@ -152,7 +152,7 @@ type TestResultSummaryToolGroupTestSuite struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestResultSummaryToolGroupTestSuite) MarshalJSON() ([]byte, error) {
+func (s TestResultSummaryToolGroupTestSuite) MarshalJSON() ([]byte, error) {
 	type NoMethod TestResultSummaryToolGroupTestSuite
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }

@@ -210,9 +210,9 @@ type Answer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Answer) MarshalJSON() ([]byte, error) {
+func (s Answer) MarshalJSON() ([]byte, error) {
 	type NoMethod Answer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Author: Represents the author of a question or answer
@@ -242,9 +242,9 @@ type Author struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Author) MarshalJSON() ([]byte, error) {
+func (s Author) MarshalJSON() ([]byte, error) {
 	type NoMethod Author
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -284,9 +284,9 @@ type ListAnswersResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAnswersResponse) MarshalJSON() ([]byte, error) {
+func (s ListAnswersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAnswersResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListQuestionsResponse: Response message for
@@ -318,9 +318,9 @@ type ListQuestionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListQuestionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListQuestionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListQuestionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Question: Represents a single question and some of its answers.
@@ -364,9 +364,9 @@ type Question struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Question) MarshalJSON() ([]byte, error) {
+func (s Question) MarshalJSON() ([]byte, error) {
 	type NoMethod Question
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpsertAnswerRequest: Request message for QuestionsAndAnswers.UpsertAnswer
@@ -386,9 +386,9 @@ type UpsertAnswerRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpsertAnswerRequest) MarshalJSON() ([]byte, error) {
+func (s UpsertAnswerRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpsertAnswerRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LocationsQuestionsCreateCall struct {

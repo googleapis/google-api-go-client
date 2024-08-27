@@ -271,9 +271,9 @@ type GoogleCloudWebriskV1ComputeThreatListDiffResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudWebriskV1ComputeThreatListDiffResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudWebriskV1ComputeThreatListDiffResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1ComputeThreatListDiffResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudWebriskV1ComputeThreatListDiffResponseChecksum: The expected
@@ -295,9 +295,9 @@ type GoogleCloudWebriskV1ComputeThreatListDiffResponseChecksum struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudWebriskV1ComputeThreatListDiffResponseChecksum) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudWebriskV1ComputeThreatListDiffResponseChecksum) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1ComputeThreatListDiffResponseChecksum
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudWebriskV1RawHashes: The uncompressed threat entries in hash
@@ -328,9 +328,9 @@ type GoogleCloudWebriskV1RawHashes struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudWebriskV1RawHashes) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudWebriskV1RawHashes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1RawHashes
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudWebriskV1RawIndices: A set of raw indices to remove from a local
@@ -351,9 +351,9 @@ type GoogleCloudWebriskV1RawIndices struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudWebriskV1RawIndices) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudWebriskV1RawIndices) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1RawIndices
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudWebriskV1RiceDeltaEncoding: The Rice-Golomb encoded data. Used
@@ -386,9 +386,9 @@ type GoogleCloudWebriskV1RiceDeltaEncoding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudWebriskV1RiceDeltaEncoding) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudWebriskV1RiceDeltaEncoding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1RiceDeltaEncoding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudWebriskV1SearchHashesResponse struct {
@@ -414,9 +414,9 @@ type GoogleCloudWebriskV1SearchHashesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudWebriskV1SearchHashesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudWebriskV1SearchHashesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1SearchHashesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudWebriskV1SearchHashesResponseThreatHash: Contains threat
@@ -453,9 +453,9 @@ type GoogleCloudWebriskV1SearchHashesResponseThreatHash struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudWebriskV1SearchHashesResponseThreatHash) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudWebriskV1SearchHashesResponseThreatHash) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1SearchHashesResponseThreatHash
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudWebriskV1SearchUrisResponse struct {
@@ -478,9 +478,9 @@ type GoogleCloudWebriskV1SearchUrisResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudWebriskV1SearchUrisResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudWebriskV1SearchUrisResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1SearchUrisResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudWebriskV1SearchUrisResponseThreatUri: Contains threat information
@@ -513,9 +513,9 @@ type GoogleCloudWebriskV1SearchUrisResponseThreatUri struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudWebriskV1SearchUrisResponseThreatUri) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudWebriskV1SearchUrisResponseThreatUri) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1SearchUrisResponseThreatUri
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudWebriskV1Submission: Wraps a URI that might be displaying
@@ -540,9 +540,9 @@ type GoogleCloudWebriskV1Submission struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudWebriskV1Submission) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudWebriskV1Submission) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1Submission
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudWebriskV1ThreatEntryAdditions: Contains the set of entries to add
@@ -569,9 +569,9 @@ type GoogleCloudWebriskV1ThreatEntryAdditions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudWebriskV1ThreatEntryAdditions) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudWebriskV1ThreatEntryAdditions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1ThreatEntryAdditions
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudWebriskV1ThreatEntryRemovals: Contains the set of entries to
@@ -597,9 +597,9 @@ type GoogleCloudWebriskV1ThreatEntryRemovals struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudWebriskV1ThreatEntryRemovals) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudWebriskV1ThreatEntryRemovals) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1ThreatEntryRemovals
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningCancelOperationRequest: The request message for
@@ -631,9 +631,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -673,9 +673,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -717,9 +717,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type HashesSearchCall struct {

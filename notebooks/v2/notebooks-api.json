@@ -550,6 +550,34 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "restore": {
+                  "description": "RestoreInstance restores an Instance from a BackupSource.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:restore",
+                  "httpMethod": "POST",
+                  "id": "notebooks.projects.locations.instances.restore",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Format: `projects/{project_id}/locations/{location}/instances/{instance_id}`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}:restore",
+                  "request": {
+                    "$ref": "RestoreInstanceRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "rollback": {
                   "description": "Rollbacks a notebook instance to the previous version.",
                   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:rollback",
@@ -876,7 +904,7 @@
       }
     }
   },
-  "revision": "20240118",
+  "revision": "20240820",
   "rootUrl": "https://notebooks.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -916,6 +944,17 @@
             "Accelerator type is NVIDIA Tesla P100 Virtual Workstations.",
             "Accelerator type is NVIDIA Tesla P4 Virtual Workstations."
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AccessConfig": {
+      "description": "An access configuration attached to an instance's network interface.",
+      "id": "AccessConfig",
+      "properties": {
+        "externalIp": {
+          "description": "An external IP address associated with this instance. Specify an unused static external IP address available to the project or leave this field undefined to use an IP from a shared ephemeral IP address pool. If you specify a static external IP address, it must live in the same region as the zone of the instance.",
           "type": "string"
         }
       },
@@ -1295,6 +1334,10 @@
           "description": "Optional. Custom metadata to apply to this instance.",
           "type": "object"
         },
+        "minCpuPlatform": {
+          "description": "Optional. The minimum CPU platform to use for this instance. The list of valid values can be found in https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform#availablezones",
+          "type": "string"
+        },
         "networkInterfaces": {
           "description": "Optional. The network interfaces for the VM. Supports only one interface.",
           "items": {
@@ -1422,6 +1465,16 @@
           "description": "Output only. The proxy endpoint that is used to access the Jupyter notebook.",
           "readOnly": true,
           "type": "string"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Reserved for future use for Zone Isolation.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Reserved for future use for Zone Separation.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "state": {
           "description": "Output only. The state of this instance.",
@@ -1575,6 +1628,13 @@
       "description": "The definition of a network interface resource attached to a VM.",
       "id": "NetworkInterface",
       "properties": {
+        "accessConfigs": {
+          "description": "Optional. An array of configurations for this interface. Currently, only one access config, ONE_TO_ONE_NAT, is supported. If no accessConfigs specified, the instance will have an external internet access through an ephemeral external IP address.",
+          "items": {
+            "$ref": "AccessConfig"
+          },
+          "type": "array"
+        },
         "network": {
           "description": "Optional. The name of the VPC that this VM instance is in. Format: `projects/{project_id}/global/networks/{network_id}`",
           "type": "string"
@@ -1736,6 +1796,17 @@
       },
       "type": "object"
     },
+    "RestoreInstanceRequest": {
+      "description": "Request for restoring the notebook instance from a BackupSource.",
+      "id": "RestoreInstanceRequest",
+      "properties": {
+        "snapshot": {
+          "$ref": "Snapshot",
+          "description": "Snapshot to be used for restore."
+        }
+      },
+      "type": "object"
+    },
     "RollbackInstanceRequest": {
       "description": "Request for rollbacking a notebook instance",
       "id": "RollbackInstanceRequest",
@@ -1797,6 +1868,21 @@
         "enableVtpm": {
           "description": "Optional. Defines whether the VM instance has the vTPM enabled. Enabled by default.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "Snapshot": {
+      "description": "Snapshot represents the snapshot of the data disk used to restore the Workbench Instance from. Refers to: compute/v1/projects/{project_id}/global/snapshots/{snapshot_id}",
+      "id": "Snapshot",
+      "properties": {
+        "projectId": {
+          "description": "Required. The project ID of the snapshot.",
+          "type": "string"
+        },
+        "snapshotId": {
+          "description": "Required. The ID of the snapshot.",
+          "type": "string"
         }
       },
       "type": "object"

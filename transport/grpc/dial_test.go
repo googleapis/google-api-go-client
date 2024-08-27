@@ -11,6 +11,7 @@ import (
 	"strings"
 	"testing"
 
+	"cloud.google.com/go/auth/grpctransport"
 	"cloud.google.com/go/compute/metadata"
 	"github.com/google/go-cmp/cmp"
 	"golang.org/x/oauth2/google"
@@ -33,6 +34,73 @@ func TestDial(t *testing.T) {
 
 	var o internal.DialSettings
 	dial(context.Background(), false, &o)
+}
+
+func TestDialPoolNewAuthDialOptions(t *testing.T) {
+	oldDialContextNewAuth := dialContextNewAuth
+	var wantNumOpts int
+	// Replace package var in order to assert DialContext args.
+	dialContextNewAuth = func(ctx context.Context, secure bool, opts *grpctransport.Options) (grpctransport.GRPCClientConnPool, error) {
+		if len(opts.GRPCDialOpts) != wantNumOpts {
+			t.Fatalf("got: %d, want: %d", len(opts.GRPCDialOpts), wantNumOpts)
+		}
+		return nil, nil
+	}
+	defer func() {
+		dialContextNewAuth = oldDialContextNewAuth
+	}()
+
+	for _, testcase := range []struct {
+		name        string
+		ds          *internal.DialSettings
+		wantNumOpts int
+	}{
+		{
+			name:        "no dial options",
+			ds:          &internal.DialSettings{},
+			wantNumOpts: 0,
+		},
+		{
+			name: "with user agent",
+			ds: &internal.DialSettings{
+				UserAgent: "test",
+			},
+			wantNumOpts: 1,
+		},
+	} {
+		t.Run(testcase.name, func(t *testing.T) {
+			wantNumOpts = testcase.wantNumOpts
+			dialPoolNewAuth(context.Background(), false, 1, testcase.ds)
+		})
+	}
+}
+
+func TestPrepareDialOptsNewAuth(t *testing.T) {
+	for _, testcase := range []struct {
+		name        string
+		ds          *internal.DialSettings
+		wantNumOpts int
+	}{
+		{
+			name:        "empty",
+			ds:          &internal.DialSettings{},
+			wantNumOpts: 0,
+		},
+		{
+			name: "user agent",
+			ds: &internal.DialSettings{
+				UserAgent: "test",
+			},
+			wantNumOpts: 1,
+		},
+	} {
+		t.Run(testcase.name, func(t *testing.T) {
+			got := prepareDialOptsNewAuth(testcase.ds)
+			if len(got) != testcase.wantNumOpts {
+				t.Fatalf("got %d options, want %d options", len(got), testcase.wantNumOpts)
+			}
+		})
+	}
 }
 
 func TestCheckDirectPathEndPoint(t *testing.T) {

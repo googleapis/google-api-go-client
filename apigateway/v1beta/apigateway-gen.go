@@ -269,9 +269,9 @@ type ApigatewayApi struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayApi) MarshalJSON() ([]byte, error) {
+func (s ApigatewayApi) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayApi
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayApiConfig: An API Configuration is a combination of settings for
@@ -347,9 +347,9 @@ type ApigatewayApiConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayApiConfig) MarshalJSON() ([]byte, error) {
+func (s ApigatewayApiConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayApiConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayApiConfigFile: A lightweight description of a file.
@@ -372,9 +372,9 @@ type ApigatewayApiConfigFile struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayApiConfigFile) MarshalJSON() ([]byte, error) {
+func (s ApigatewayApiConfigFile) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayApiConfigFile
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayApiConfigGrpcServiceDefinition: A gRPC service definition.
@@ -403,9 +403,9 @@ type ApigatewayApiConfigGrpcServiceDefinition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayApiConfigGrpcServiceDefinition) MarshalJSON() ([]byte, error) {
+func (s ApigatewayApiConfigGrpcServiceDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayApiConfigGrpcServiceDefinition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayApiConfigOpenApiDocument: An OpenAPI Specification Document
@@ -426,9 +426,9 @@ type ApigatewayApiConfigOpenApiDocument struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayApiConfigOpenApiDocument) MarshalJSON() ([]byte, error) {
+func (s ApigatewayApiConfigOpenApiDocument) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayApiConfigOpenApiDocument
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayAuditConfig: Specifies the audit configuration for a service. The
@@ -467,9 +467,9 @@ type ApigatewayAuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayAuditConfig) MarshalJSON() ([]byte, error) {
+func (s ApigatewayAuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayAuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayAuditLogConfig: Provides the configuration for logging a type of
@@ -502,9 +502,9 @@ type ApigatewayAuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayAuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s ApigatewayAuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayAuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayBackendConfig: Configuration for all backends.
@@ -534,9 +534,9 @@ type ApigatewayBackendConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayBackendConfig) MarshalJSON() ([]byte, error) {
+func (s ApigatewayBackendConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayBackendConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayBinding: Associates `members`, or principals, with a `role`.
@@ -633,9 +633,9 @@ type ApigatewayBinding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayBinding) MarshalJSON() ([]byte, error) {
+func (s ApigatewayBinding) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayBinding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayCancelOperationRequest: The request message for
@@ -686,9 +686,9 @@ type ApigatewayExpr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayExpr) MarshalJSON() ([]byte, error) {
+func (s ApigatewayExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayExpr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayGateway: A Gateway is an API-aware HTTP proxy. It performs
@@ -740,9 +740,9 @@ type ApigatewayGateway struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayGateway) MarshalJSON() ([]byte, error) {
+func (s ApigatewayGateway) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayGateway
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayGatewayConfig: Configuration settings for Gateways.
@@ -763,9 +763,9 @@ type ApigatewayGatewayConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayGatewayConfig) MarshalJSON() ([]byte, error) {
+func (s ApigatewayGatewayConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayGatewayConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayListApiConfigsResponse: Response message for
@@ -793,9 +793,9 @@ type ApigatewayListApiConfigsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayListApiConfigsResponse) MarshalJSON() ([]byte, error) {
+func (s ApigatewayListApiConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayListApiConfigsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayListApisResponse: Response message for ApiGatewayService.ListApis
@@ -822,9 +822,9 @@ type ApigatewayListApisResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayListApisResponse) MarshalJSON() ([]byte, error) {
+func (s ApigatewayListApisResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayListApisResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayListGatewaysResponse: Response message for
@@ -852,9 +852,9 @@ type ApigatewayListGatewaysResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayListGatewaysResponse) MarshalJSON() ([]byte, error) {
+func (s ApigatewayListGatewaysResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayListGatewaysResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayListLocationsResponse: The response message for
@@ -881,9 +881,9 @@ type ApigatewayListLocationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayListLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s ApigatewayListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayListLocationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayListOperationsResponse: The response message for
@@ -910,9 +910,9 @@ type ApigatewayListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ApigatewayListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayLocation: A resource that represents a Google Cloud location.
@@ -948,9 +948,9 @@ type ApigatewayLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayLocation) MarshalJSON() ([]byte, error) {
+func (s ApigatewayLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayOperation: This resource represents a long-running operation that
@@ -995,9 +995,9 @@ type ApigatewayOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayOperation) MarshalJSON() ([]byte, error) {
+func (s ApigatewayOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayOperationMetadata: Represents the metadata of the long-running
@@ -1037,9 +1037,9 @@ type ApigatewayOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s ApigatewayOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayOperationMetadataDiagnostic: Diagnostic information from
@@ -1062,9 +1062,9 @@ type ApigatewayOperationMetadataDiagnostic struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayOperationMetadataDiagnostic) MarshalJSON() ([]byte, error) {
+func (s ApigatewayOperationMetadataDiagnostic) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayOperationMetadataDiagnostic
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayPolicy: An Identity and Access Management (IAM) policy, which
@@ -1154,9 +1154,9 @@ type ApigatewayPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayPolicy) MarshalJSON() ([]byte, error) {
+func (s ApigatewayPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewaySetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -1183,9 +1183,9 @@ type ApigatewaySetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewaySetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s ApigatewaySetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewaySetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayStatus: The `Status` type defines a logical error model that is
@@ -1217,9 +1217,9 @@ type ApigatewayStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayStatus) MarshalJSON() ([]byte, error) {
+func (s ApigatewayStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayTestIamPermissionsRequest: Request message for
@@ -1243,9 +1243,9 @@ type ApigatewayTestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayTestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s ApigatewayTestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayTestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApigatewayTestIamPermissionsResponse: Response message for
@@ -1270,9 +1270,9 @@ type ApigatewayTestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApigatewayTestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s ApigatewayTestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ApigatewayTestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining

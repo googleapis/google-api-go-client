@@ -449,9 +449,9 @@ type GoogleCloudOrgpolicyV2AlternatePolicySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2AlternatePolicySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2AlternatePolicySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2AlternatePolicySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2CustomConstraint: A custom constraint defined by
@@ -517,9 +517,9 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2CustomConstraint) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2CustomConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2CustomConstraint
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2Policy: Defines an organization policy which is used
@@ -562,9 +562,9 @@ type GoogleCloudOrgpolicyV2Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2Policy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2PolicySpec: Defines a Google Cloud policy
@@ -615,9 +615,9 @@ type GoogleCloudOrgpolicyV2PolicySpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2PolicySpec) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2PolicySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2PolicySpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2PolicySpecPolicyRule: A rule used to express this
@@ -660,9 +660,9 @@ type GoogleCloudOrgpolicyV2PolicySpecPolicyRule struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2PolicySpecPolicyRule) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2PolicySpecPolicyRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2PolicySpecPolicyRule
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues: A message that holds
@@ -696,9 +696,9 @@ type GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1Replay: A resource describing a `Replay`, or
@@ -739,9 +739,9 @@ type GoogleCloudPolicysimulatorV1Replay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1Replay) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1Replay) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1Replay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1ReplayConfig: The configuration used for a
@@ -779,9 +779,9 @@ type GoogleCloudPolicysimulatorV1ReplayConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1ReplayConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1ReplayConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1ReplayConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1ReplayOperationMetadata: Metadata about a Replay
@@ -802,9 +802,9 @@ type GoogleCloudPolicysimulatorV1ReplayOperationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1ReplayOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1ReplayOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1ReplayOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1ReplayResultsSummary: Summary statistics about
@@ -837,9 +837,9 @@ type GoogleCloudPolicysimulatorV1ReplayResultsSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1ReplayResultsSummary) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1ReplayResultsSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1ReplayResultsSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1alphaCreateOrgPolicyViolationsPreviewOperationMet
@@ -884,9 +884,9 @@ type GoogleCloudPolicysimulatorV1alphaCreateOrgPolicyViolationsPreviewOperationM
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1alphaCreateOrgPolicyViolationsPreviewOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1alphaCreateOrgPolicyViolationsPreviewOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1alphaCreateOrgPolicyViolationsPreviewOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1alphaGenerateOrgPolicyViolationsPreviewOperationM
@@ -931,9 +931,9 @@ type GoogleCloudPolicysimulatorV1alphaGenerateOrgPolicyViolationsPreviewOperatio
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1alphaGenerateOrgPolicyViolationsPreviewOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1alphaGenerateOrgPolicyViolationsPreviewOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1alphaGenerateOrgPolicyViolationsPreviewOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlay: The proposed changes to
@@ -965,9 +965,9 @@ type GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlay) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlay) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayCustomConstraintOverlay: A
@@ -991,9 +991,9 @@ type GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayCustomConstraintOverlay st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayCustomConstraintOverlay) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayCustomConstraintOverlay) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayCustomConstraintOverlay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayPolicyOverlay: A change to
@@ -1017,9 +1017,9 @@ type GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayPolicyOverlay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayPolicyOverlay) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayPolicyOverlay) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1alphaOrgPolicyOverlayPolicyOverlay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreview:
@@ -1086,9 +1086,9 @@ type GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreview struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreview) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreview) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreview
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreviewResourceCounts: A
@@ -1122,9 +1122,9 @@ type GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreviewResourceCounts s
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreviewResourceCounts) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreviewResourceCounts) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1alphaOrgPolicyViolationsPreviewResourceCounts
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaAccessStateDiff: A summary and comparison of
@@ -1181,9 +1181,9 @@ type GoogleCloudPolicysimulatorV1betaAccessStateDiff struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaAccessStateDiff) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaAccessStateDiff) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaAccessStateDiff
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaAccessTuple: Information about the
@@ -1221,9 +1221,9 @@ type GoogleCloudPolicysimulatorV1betaAccessTuple struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaAccessTuple) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaAccessTuple) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaAccessTuple
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaBindingExplanation: Details about how a
@@ -1312,9 +1312,9 @@ type GoogleCloudPolicysimulatorV1betaBindingExplanation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaBindingExplanation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaBindingExplanation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaBindingExplanation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaBindingExplanationAnnotatedMembership:
@@ -1358,9 +1358,9 @@ type GoogleCloudPolicysimulatorV1betaBindingExplanationAnnotatedMembership struc
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaBindingExplanationAnnotatedMembership) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaBindingExplanationAnnotatedMembership) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaBindingExplanationAnnotatedMembership
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaCreateOrgPolicyViolationsPreviewOperationMeta
@@ -1405,9 +1405,9 @@ type GoogleCloudPolicysimulatorV1betaCreateOrgPolicyViolationsPreviewOperationMe
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaCreateOrgPolicyViolationsPreviewOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaCreateOrgPolicyViolationsPreviewOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaCreateOrgPolicyViolationsPreviewOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaExplainedAccess: Details about how a set of
@@ -1447,9 +1447,9 @@ type GoogleCloudPolicysimulatorV1betaExplainedAccess struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaExplainedAccess) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaExplainedAccess) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaExplainedAccess
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaExplainedPolicy: Details about how a
@@ -1511,9 +1511,9 @@ type GoogleCloudPolicysimulatorV1betaExplainedPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaExplainedPolicy) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaExplainedPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaExplainedPolicy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaGenerateOrgPolicyViolationsPreviewOperationMe
@@ -1558,9 +1558,9 @@ type GoogleCloudPolicysimulatorV1betaGenerateOrgPolicyViolationsPreviewOperation
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaGenerateOrgPolicyViolationsPreviewOperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaGenerateOrgPolicyViolationsPreviewOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaGenerateOrgPolicyViolationsPreviewOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaListOrgPolicyViolationsPreviewsResponse:
@@ -1588,9 +1588,9 @@ type GoogleCloudPolicysimulatorV1betaListOrgPolicyViolationsPreviewsResponse str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaListOrgPolicyViolationsPreviewsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaListOrgPolicyViolationsPreviewsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaListOrgPolicyViolationsPreviewsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaListOrgPolicyViolationsResponse:
@@ -1618,9 +1618,9 @@ type GoogleCloudPolicysimulatorV1betaListOrgPolicyViolationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaListOrgPolicyViolationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaListOrgPolicyViolationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaListOrgPolicyViolationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaListReplayResultsResponse: Response message
@@ -1648,9 +1648,9 @@ type GoogleCloudPolicysimulatorV1betaListReplayResultsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaListReplayResultsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaListReplayResultsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaListReplayResultsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaListReplaysResponse: Response message for
@@ -1677,9 +1677,9 @@ type GoogleCloudPolicysimulatorV1betaListReplaysResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaListReplaysResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaListReplaysResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaListReplaysResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay: The proposed changes to
@@ -1711,9 +1711,9 @@ type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyOverlay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay: A
@@ -1737,9 +1737,9 @@ type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay str
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayCustomConstraintOverlay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay: A change to
@@ -1763,9 +1763,9 @@ type GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyOverlayPolicyOverlay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaOrgPolicyViolation: OrgPolicyViolation is a
@@ -1795,9 +1795,9 @@ type GoogleCloudPolicysimulatorV1betaOrgPolicyViolation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaOrgPolicyViolation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyViolation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyViolation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview:
@@ -1867,9 +1867,9 @@ type GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreview
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts: A
@@ -1903,9 +1903,9 @@ type GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts st
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaOrgPolicyViolationsPreviewResourceCounts
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaReplay: A resource describing a `Replay`, or
@@ -1949,9 +1949,9 @@ type GoogleCloudPolicysimulatorV1betaReplay struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaReplay) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaReplay) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaReplay
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaReplayConfig: The configuration used for a
@@ -1989,9 +1989,9 @@ type GoogleCloudPolicysimulatorV1betaReplayConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaReplayConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaReplayConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaReplayConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaReplayDiff: The difference between the
@@ -2017,9 +2017,9 @@ type GoogleCloudPolicysimulatorV1betaReplayDiff struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaReplayDiff) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaReplayDiff) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaReplayDiff
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaReplayResult: The result of replaying a
@@ -2062,9 +2062,9 @@ type GoogleCloudPolicysimulatorV1betaReplayResult struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaReplayResult) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaReplayResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaReplayResult
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaReplayResultsSummary: Summary statistics
@@ -2097,9 +2097,9 @@ type GoogleCloudPolicysimulatorV1betaReplayResultsSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaReplayResultsSummary) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaReplayResultsSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaReplayResultsSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPolicysimulatorV1betaResourceContext: ResourceContext provides
@@ -2140,9 +2140,9 @@ type GoogleCloudPolicysimulatorV1betaResourceContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPolicysimulatorV1betaResourceContext) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPolicysimulatorV1betaResourceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPolicysimulatorV1betaResourceContext
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1AuditConfig: Specifies the audit configuration for a service. The
@@ -2181,9 +2181,9 @@ type GoogleIamV1AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1AuditConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1AuditLogConfig: Provides the configuration for logging a type of
@@ -2216,9 +2216,9 @@ type GoogleIamV1AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1Binding: Associates `members`, or principals, with a `role`.
@@ -2315,9 +2315,9 @@ type GoogleIamV1Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1Policy: An Identity and Access Management (IAM) policy, which
@@ -2404,9 +2404,9 @@ type GoogleIamV1Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningListOperationsResponse: The response message for
@@ -2433,9 +2433,9 @@ type GoogleLongrunningListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
@@ -2480,9 +2480,9 @@ type GoogleLongrunningOperation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that is
@@ -2514,9 +2514,9 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeDate: Represents a whole or partial calendar date, such as a
@@ -2552,9 +2552,9 @@ type GoogleTypeDate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeExpr: Represents a textual expression in the Common Expression
@@ -2600,9 +2600,9 @@ type GoogleTypeExpr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeExpr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type FoldersLocationsOrgPolicyViolationsPreviewsOperationsGetCall struct {

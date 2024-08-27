@@ -249,9 +249,9 @@ type CertVerification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertVerification) MarshalJSON() ([]byte, error) {
+func (s CertVerification) MarshalJSON() ([]byte, error) {
 	type NoMethod CertVerification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomDomainMetadata: Metadata associated with a`CustomDomain` operation.
@@ -365,9 +365,9 @@ type CustomDomainMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomDomainMetadata) MarshalJSON() ([]byte, error) {
+func (s CustomDomainMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomDomainMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DnsRecord: DNS records are resource records that define how systems and
@@ -440,9 +440,9 @@ type DnsRecord struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DnsRecord) MarshalJSON() ([]byte, error) {
+func (s DnsRecord) MarshalJSON() ([]byte, error) {
 	type NoMethod DnsRecord
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DnsRecordSet: A set of DNS records relevant to the setup and maintenance of
@@ -469,9 +469,9 @@ type DnsRecordSet struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DnsRecordSet) MarshalJSON() ([]byte, error) {
+func (s DnsRecordSet) MarshalJSON() ([]byte, error) {
 	type NoMethod DnsRecordSet
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DnsUpdates: A set of DNS record updates that you should make to allow
@@ -501,9 +501,9 @@ type DnsUpdates struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DnsUpdates) MarshalJSON() ([]byte, error) {
+func (s DnsUpdates) MarshalJSON() ([]byte, error) {
 	type NoMethod DnsUpdates
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -545,9 +545,9 @@ type HttpUpdate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *HttpUpdate) MarshalJSON() ([]byte, error) {
+func (s HttpUpdate) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpUpdate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -573,9 +573,9 @@ type ListOperationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LiveMigrationStep: A set of updates including ACME challenges and DNS
@@ -632,9 +632,9 @@ type LiveMigrationStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LiveMigrationStep) MarshalJSON() ([]byte, error) {
+func (s LiveMigrationStep) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveMigrationStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -676,9 +676,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -710,9 +710,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type OperationsCancelCall struct {

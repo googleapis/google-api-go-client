@@ -275,9 +275,9 @@ type Activity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Activity) MarshalJSON() ([]byte, error) {
+func (s Activity) MarshalJSON() ([]byte, error) {
 	type NoMethod Activity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Cohort: Defines a cohort. A cohort is a group of users who share a common
@@ -319,9 +319,9 @@ type Cohort struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Cohort) MarshalJSON() ([]byte, error) {
+func (s Cohort) MarshalJSON() ([]byte, error) {
 	type NoMethod Cohort
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CohortGroup: Defines a cohort group. For example: "cohortGroup": {
@@ -365,9 +365,9 @@ type CohortGroup struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CohortGroup) MarshalJSON() ([]byte, error) {
+func (s CohortGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod CohortGroup
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ColumnHeader: Column headers.
@@ -389,9 +389,9 @@ type ColumnHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ColumnHeader) MarshalJSON() ([]byte, error) {
+func (s ColumnHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod ColumnHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomDimension: Custom dimension.
@@ -414,9 +414,9 @@ type CustomDimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomDimension) MarshalJSON() ([]byte, error) {
+func (s CustomDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomDimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DateRange: A contiguous set of days: startDate, startDate + 1 day, ...,
@@ -440,9 +440,9 @@ type DateRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DateRange) MarshalJSON() ([]byte, error) {
+func (s DateRange) MarshalJSON() ([]byte, error) {
 	type NoMethod DateRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DateRangeValues: Used to return a list of metrics for a single DateRange /
@@ -465,9 +465,9 @@ type DateRangeValues struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DateRangeValues) MarshalJSON() ([]byte, error) {
+func (s DateRangeValues) MarshalJSON() ([]byte, error) {
 	type NoMethod DateRangeValues
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Dimension: Dimensions (https://support.google.com/analytics/answer/1033861)
@@ -511,9 +511,9 @@ type Dimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Dimension) MarshalJSON() ([]byte, error) {
+func (s Dimension) MarshalJSON() ([]byte, error) {
 	type NoMethod Dimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DimensionFilter: Dimension filter specifies the filtering options on a
@@ -578,9 +578,9 @@ type DimensionFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DimensionFilter) MarshalJSON() ([]byte, error) {
+func (s DimensionFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod DimensionFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DimensionFilterClause: A group of dimension filters. Set the operator value
@@ -610,9 +610,9 @@ type DimensionFilterClause struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DimensionFilterClause) MarshalJSON() ([]byte, error) {
+func (s DimensionFilterClause) MarshalJSON() ([]byte, error) {
 	type NoMethod DimensionFilterClause
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DynamicSegment: Dynamic segment definition for defining the segment within
@@ -638,9 +638,9 @@ type DynamicSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DynamicSegment) MarshalJSON() ([]byte, error) {
+func (s DynamicSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EcommerceData: E-commerce details associated with the user activity.
@@ -684,9 +684,9 @@ type EcommerceData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EcommerceData) MarshalJSON() ([]byte, error) {
+func (s EcommerceData) MarshalJSON() ([]byte, error) {
 	type NoMethod EcommerceData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EventData: Represents all the details pertaining to an event.
@@ -714,9 +714,9 @@ type EventData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EventData) MarshalJSON() ([]byte, error) {
+func (s EventData) MarshalJSON() ([]byte, error) {
 	type NoMethod EventData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetReportsRequest: The batch request containing multiple report request.
@@ -747,9 +747,9 @@ type GetReportsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetReportsRequest) MarshalJSON() ([]byte, error) {
+func (s GetReportsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetReportsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetReportsResponse: The main response class which holds the reports from the
@@ -779,9 +779,9 @@ type GetReportsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetReportsResponse) MarshalJSON() ([]byte, error) {
+func (s GetReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetReportsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoalData: Represents all the details pertaining to a goal.
@@ -815,9 +815,9 @@ type GoalData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoalData) MarshalJSON() ([]byte, error) {
+func (s GoalData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoalData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoalData) UnmarshalJSON(data []byte) error {
@@ -851,9 +851,9 @@ type GoalSetData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoalSetData) MarshalJSON() ([]byte, error) {
+func (s GoalSetData) MarshalJSON() ([]byte, error) {
 	type NoMethod GoalSetData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Metric: Metrics (https://support.google.com/analytics/answer/1033861) are
@@ -899,9 +899,9 @@ type Metric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Metric) MarshalJSON() ([]byte, error) {
+func (s Metric) MarshalJSON() ([]byte, error) {
 	type NoMethod Metric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricFilter: MetricFilter specifies the filter on a metric.
@@ -944,9 +944,9 @@ type MetricFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetricFilter) MarshalJSON() ([]byte, error) {
+func (s MetricFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricFilterClause: Represents a group of metric filters. Set the operator
@@ -976,9 +976,9 @@ type MetricFilterClause struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetricFilterClause) MarshalJSON() ([]byte, error) {
+func (s MetricFilterClause) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricFilterClause
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricHeader: The headers for the metrics.
@@ -1000,9 +1000,9 @@ type MetricHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetricHeader) MarshalJSON() ([]byte, error) {
+func (s MetricHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MetricHeaderEntry: Header for the metrics.
@@ -1032,9 +1032,9 @@ type MetricHeaderEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MetricHeaderEntry) MarshalJSON() ([]byte, error) {
+func (s MetricHeaderEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod MetricHeaderEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OrFiltersForSegment: A list of segment filters in the `OR` group are
@@ -1056,9 +1056,9 @@ type OrFiltersForSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OrFiltersForSegment) MarshalJSON() ([]byte, error) {
+func (s OrFiltersForSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod OrFiltersForSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OrderBy: Specifies the sorting options.
@@ -1109,9 +1109,9 @@ type OrderBy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OrderBy) MarshalJSON() ([]byte, error) {
+func (s OrderBy) MarshalJSON() ([]byte, error) {
 	type NoMethod OrderBy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PageviewData: Represents details collected when the visitor views a page.
@@ -1133,9 +1133,9 @@ type PageviewData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PageviewData) MarshalJSON() ([]byte, error) {
+func (s PageviewData) MarshalJSON() ([]byte, error) {
 	type NoMethod PageviewData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Pivot: The Pivot describes the pivot section in the request. The Pivot helps
@@ -1186,9 +1186,9 @@ type Pivot struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Pivot) MarshalJSON() ([]byte, error) {
+func (s Pivot) MarshalJSON() ([]byte, error) {
 	type NoMethod Pivot
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PivotHeader: The headers for each of the pivot sections defined in the
@@ -1211,9 +1211,9 @@ type PivotHeader struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PivotHeader) MarshalJSON() ([]byte, error) {
+func (s PivotHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotHeader
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PivotHeaderEntry: The headers for the each of the metric column
@@ -1239,9 +1239,9 @@ type PivotHeaderEntry struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PivotHeaderEntry) MarshalJSON() ([]byte, error) {
+func (s PivotHeaderEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotHeaderEntry
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PivotValueRegion: The metric values in the pivot region.
@@ -1261,9 +1261,9 @@ type PivotValueRegion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PivotValueRegion) MarshalJSON() ([]byte, error) {
+func (s PivotValueRegion) MarshalJSON() ([]byte, error) {
 	type NoMethod PivotValueRegion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductData: Details of the products in an e-commerce transaction.
@@ -1290,9 +1290,9 @@ type ProductData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProductData) MarshalJSON() ([]byte, error) {
+func (s ProductData) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ProductData) UnmarshalJSON(data []byte) error {
@@ -1330,9 +1330,9 @@ type Report struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Report) MarshalJSON() ([]byte, error) {
+func (s Report) MarshalJSON() ([]byte, error) {
 	type NoMethod Report
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportData: The data part of the report.
@@ -1392,9 +1392,9 @@ type ReportData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportData) MarshalJSON() ([]byte, error) {
+func (s ReportData) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportRequest: The main request class which specifies the Reporting API
@@ -1511,9 +1511,9 @@ type ReportRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportRequest) MarshalJSON() ([]byte, error) {
+func (s ReportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportRow: A row in the report.
@@ -1535,9 +1535,9 @@ type ReportRow struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportRow) MarshalJSON() ([]byte, error) {
+func (s ReportRow) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportRow
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceQuotasRemaining: The resource quota tokens remaining for the
@@ -1560,9 +1560,9 @@ type ResourceQuotasRemaining struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ResourceQuotasRemaining) MarshalJSON() ([]byte, error) {
+func (s ResourceQuotasRemaining) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceQuotasRemaining
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ScreenviewData struct {
@@ -1588,9 +1588,9 @@ type ScreenviewData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ScreenviewData) MarshalJSON() ([]byte, error) {
+func (s ScreenviewData) MarshalJSON() ([]byte, error) {
 	type NoMethod ScreenviewData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchUserActivityRequest: The request to fetch User Report from Reporting
@@ -1646,9 +1646,9 @@ type SearchUserActivityRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchUserActivityRequest) MarshalJSON() ([]byte, error) {
+func (s SearchUserActivityRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchUserActivityRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchUserActivityResponse: The response from `userActivity:get` call.
@@ -1681,9 +1681,9 @@ type SearchUserActivityResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SearchUserActivityResponse) MarshalJSON() ([]byte, error) {
+func (s SearchUserActivityResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchUserActivityResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *SearchUserActivityResponse) UnmarshalJSON(data []byte) error {
@@ -1722,9 +1722,9 @@ type Segment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Segment) MarshalJSON() ([]byte, error) {
+func (s Segment) MarshalJSON() ([]byte, error) {
 	type NoMethod Segment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SegmentDefinition: SegmentDefinition defines the segment to be a set of
@@ -1746,9 +1746,9 @@ type SegmentDefinition struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SegmentDefinition) MarshalJSON() ([]byte, error) {
+func (s SegmentDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod SegmentDefinition
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SegmentDimensionFilter: Dimension filter specifies the filtering options on
@@ -1809,9 +1809,9 @@ type SegmentDimensionFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SegmentDimensionFilter) MarshalJSON() ([]byte, error) {
+func (s SegmentDimensionFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod SegmentDimensionFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SegmentFilter: SegmentFilter defines the segment to be either a simple or a
@@ -1846,9 +1846,9 @@ type SegmentFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SegmentFilter) MarshalJSON() ([]byte, error) {
+func (s SegmentFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod SegmentFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SegmentFilterClause: Filter Clause to be used in a segment definition, can
@@ -1873,9 +1873,9 @@ type SegmentFilterClause struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SegmentFilterClause) MarshalJSON() ([]byte, error) {
+func (s SegmentFilterClause) MarshalJSON() ([]byte, error) {
 	type NoMethod SegmentFilterClause
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SegmentMetricFilter: Metric filter to be used in a segment filter clause.
@@ -1929,9 +1929,9 @@ type SegmentMetricFilter struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SegmentMetricFilter) MarshalJSON() ([]byte, error) {
+func (s SegmentMetricFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod SegmentMetricFilter
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SegmentSequenceStep: A segment sequence definition.
@@ -1962,9 +1962,9 @@ type SegmentSequenceStep struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SegmentSequenceStep) MarshalJSON() ([]byte, error) {
+func (s SegmentSequenceStep) MarshalJSON() ([]byte, error) {
 	type NoMethod SegmentSequenceStep
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SequenceSegment: Sequence conditions consist of one or more steps, where
@@ -1989,9 +1989,9 @@ type SequenceSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SequenceSegment) MarshalJSON() ([]byte, error) {
+func (s SequenceSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod SequenceSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SimpleSegment: A Simple segment conditions consist of one or more
@@ -2013,9 +2013,9 @@ type SimpleSegment struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SimpleSegment) MarshalJSON() ([]byte, error) {
+func (s SimpleSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod SimpleSegment
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransactionData: Represents details collected when the visitor performs a
@@ -2044,9 +2044,9 @@ type TransactionData struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransactionData) MarshalJSON() ([]byte, error) {
+func (s TransactionData) MarshalJSON() ([]byte, error) {
 	type NoMethod TransactionData
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *TransactionData) UnmarshalJSON(data []byte) error {
@@ -2094,9 +2094,9 @@ type User struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *User) MarshalJSON() ([]byte, error) {
+func (s User) MarshalJSON() ([]byte, error) {
 	type NoMethod User
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UserActivitySession: This represents a user session performed on a specific
@@ -2131,9 +2131,9 @@ type UserActivitySession struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UserActivitySession) MarshalJSON() ([]byte, error) {
+func (s UserActivitySession) MarshalJSON() ([]byte, error) {
 	type NoMethod UserActivitySession
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ReportsBatchGetCall struct {

@@ -296,9 +296,9 @@ type Account struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Account) MarshalJSON() ([]byte, error) {
+func (s Account) MarshalJSON() ([]byte, error) {
 	type NoMethod Account
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Admin: An administrator of an Account or a location.
@@ -352,9 +352,9 @@ type Admin struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Admin) MarshalJSON() ([]byte, error) {
+func (s Admin) MarshalJSON() ([]byte, error) {
 	type NoMethod Admin
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeclineInvitationRequest: Request message for
@@ -413,9 +413,9 @@ type Invitation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Invitation) MarshalJSON() ([]byte, error) {
+func (s Invitation) MarshalJSON() ([]byte, error) {
 	type NoMethod Invitation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccountAdminsResponse: Response message for
@@ -439,9 +439,9 @@ type ListAccountAdminsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAccountAdminsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAccountAdminsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccountAdminsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccountsResponse: Response message for Accounts.ListAccounts.
@@ -471,9 +471,9 @@ type ListAccountsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAccountsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccountsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListInvitationsResponse: Response message for AccessControl.ListInvitations.
@@ -497,9 +497,9 @@ type ListInvitationsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListInvitationsResponse) MarshalJSON() ([]byte, error) {
+func (s ListInvitationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInvitationsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationAdminsResponse: Response message for
@@ -523,9 +523,9 @@ type ListLocationAdminsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListLocationAdminsResponse) MarshalJSON() ([]byte, error) {
+func (s ListLocationAdminsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationAdminsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OrganizationInfo: Additional information stored for an organization.
@@ -549,9 +549,9 @@ type OrganizationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *OrganizationInfo) MarshalJSON() ([]byte, error) {
+func (s OrganizationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod OrganizationInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PostalAddress: Represents a postal address, e.g. for postal delivery or
@@ -648,9 +648,9 @@ type PostalAddress struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PostalAddress) MarshalJSON() ([]byte, error) {
+func (s PostalAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod PostalAddress
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TargetLocation: Represents a target location for a pending invitation.
@@ -672,9 +672,9 @@ type TargetLocation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TargetLocation) MarshalJSON() ([]byte, error) {
+func (s TargetLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetLocation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TransferLocationRequest: Request message for AccessControl.TransferLocation.
@@ -695,9 +695,9 @@ type TransferLocationRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TransferLocationRequest) MarshalJSON() ([]byte, error) {
+func (s TransferLocationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TransferLocationRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AccountsCreateCall struct {

@@ -183,9 +183,9 @@ type PublishUrlNotificationResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PublishUrlNotificationResponse) MarshalJSON() ([]byte, error) {
+func (s PublishUrlNotificationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishUrlNotificationResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UrlNotification: `UrlNotification` is the resource used in all Indexing API
@@ -218,9 +218,9 @@ type UrlNotification struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UrlNotification) MarshalJSON() ([]byte, error) {
+func (s UrlNotification) MarshalJSON() ([]byte, error) {
 	type NoMethod UrlNotification
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UrlNotificationMetadata: Summary of the most recent Indexing API
@@ -248,9 +248,9 @@ type UrlNotificationMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UrlNotificationMetadata) MarshalJSON() ([]byte, error) {
+func (s UrlNotificationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod UrlNotificationMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type UrlNotificationsGetMetadataCall struct {

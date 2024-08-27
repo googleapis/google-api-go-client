@@ -214,9 +214,9 @@ type DetectLanguageRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DetectLanguageRequest) MarshalJSON() ([]byte, error) {
+func (s DetectLanguageRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DetectLanguageRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DetectionsListResponse struct {
@@ -238,9 +238,9 @@ type DetectionsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DetectionsListResponse) MarshalJSON() ([]byte, error) {
+func (s DetectionsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DetectionsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DetectionsResourceItem struct {
@@ -263,9 +263,9 @@ type DetectionsResourceItem struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *DetectionsResourceItem) MarshalJSON() ([]byte, error) {
+func (s DetectionsResourceItem) MarshalJSON() ([]byte, error) {
 	type NoMethod DetectionsResourceItem
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DetectionsResourceItem) UnmarshalJSON(data []byte) error {
@@ -302,9 +302,9 @@ type GetSupportedLanguagesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GetSupportedLanguagesRequest) MarshalJSON() ([]byte, error) {
+func (s GetSupportedLanguagesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetSupportedLanguagesRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LanguagesListResponse struct {
@@ -330,9 +330,9 @@ type LanguagesListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LanguagesListResponse) MarshalJSON() ([]byte, error) {
+func (s LanguagesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguagesListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type LanguagesResource struct {
@@ -357,9 +357,9 @@ type LanguagesResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *LanguagesResource) MarshalJSON() ([]byte, error) {
+func (s LanguagesResource) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguagesResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TranslateTextRequest: The main translation request message for the Cloud
@@ -402,9 +402,9 @@ type TranslateTextRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TranslateTextRequest) MarshalJSON() ([]byte, error) {
+func (s TranslateTextRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TranslateTextRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TranslationsListResponse: The main language translation response message.
@@ -428,9 +428,9 @@ type TranslationsListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TranslationsListResponse) MarshalJSON() ([]byte, error) {
+func (s TranslationsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TranslationsListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type TranslationsResource struct {
@@ -460,9 +460,9 @@ type TranslationsResource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TranslationsResource) MarshalJSON() ([]byte, error) {
+func (s TranslationsResource) MarshalJSON() ([]byte, error) {
 	type NoMethod TranslationsResource
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type DetectionsDetectCall struct {

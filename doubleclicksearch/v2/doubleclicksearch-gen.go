@@ -221,9 +221,9 @@ type Availability struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Availability) MarshalJSON() ([]byte, error) {
+func (s Availability) MarshalJSON() ([]byte, error) {
 	type NoMethod Availability
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Conversion: A conversion containing data relevant to DoubleClick Search.
@@ -347,9 +347,9 @@ type Conversion struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Conversion) MarshalJSON() ([]byte, error) {
+func (s Conversion) MarshalJSON() ([]byte, error) {
 	type NoMethod Conversion
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConversionList: A list of conversions.
@@ -375,9 +375,9 @@ type ConversionList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ConversionList) MarshalJSON() ([]byte, error) {
+func (s ConversionList) MarshalJSON() ([]byte, error) {
 	type NoMethod ConversionList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomDimension: A message containing the custom dimension.
@@ -399,9 +399,9 @@ type CustomDimension struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomDimension) MarshalJSON() ([]byte, error) {
+func (s CustomDimension) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomDimension
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomMetric: A message containing the custom metric.
@@ -423,9 +423,9 @@ type CustomMetric struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomMetric) MarshalJSON() ([]byte, error) {
+func (s CustomMetric) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomMetric
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CustomMetric) UnmarshalJSON(data []byte) error {
@@ -497,9 +497,9 @@ type Report struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Report) MarshalJSON() ([]byte, error) {
+func (s Report) MarshalJSON() ([]byte, error) {
 	type NoMethod Report
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ReportFiles struct {
@@ -520,9 +520,9 @@ type ReportFiles struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportFiles) MarshalJSON() ([]byte, error) {
+func (s ReportFiles) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportFiles
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportApiColumnSpec: A request object used to create a DoubleClick Search
@@ -584,9 +584,9 @@ type ReportApiColumnSpec struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportApiColumnSpec) MarshalJSON() ([]byte, error) {
+func (s ReportApiColumnSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportApiColumnSpec
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportRequest: A request object used to create a DoubleClick Search report.
@@ -661,9 +661,9 @@ type ReportRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportRequest) MarshalJSON() ([]byte, error) {
+func (s ReportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ReportRequestFilters struct {
@@ -689,9 +689,9 @@ type ReportRequestFilters struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportRequestFilters) MarshalJSON() ([]byte, error) {
+func (s ReportRequestFilters) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportRequestFilters
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ReportRequestOrderBy struct {
@@ -713,9 +713,9 @@ type ReportRequestOrderBy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportRequestOrderBy) MarshalJSON() ([]byte, error) {
+func (s ReportRequestOrderBy) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportRequestOrderBy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportRequestReportScope: The reportScope is a set of IDs that are used to
@@ -750,9 +750,9 @@ type ReportRequestReportScope struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportRequestReportScope) MarshalJSON() ([]byte, error) {
+func (s ReportRequestReportScope) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportRequestReportScope
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportRequestTimeRange: If metrics are requested in a report, this argument
@@ -784,9 +784,9 @@ type ReportRequestTimeRange struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportRequestTimeRange) MarshalJSON() ([]byte, error) {
+func (s ReportRequestTimeRange) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportRequestTimeRange
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SavedColumn: A saved column
@@ -811,9 +811,9 @@ type SavedColumn struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SavedColumn) MarshalJSON() ([]byte, error) {
+func (s SavedColumn) MarshalJSON() ([]byte, error) {
 	type NoMethod SavedColumn
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SavedColumnList: A list of saved columns. Advertisers create saved columns
@@ -842,9 +842,9 @@ type SavedColumnList struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SavedColumnList) MarshalJSON() ([]byte, error) {
+func (s SavedColumnList) MarshalJSON() ([]byte, error) {
 	type NoMethod SavedColumnList
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateAvailabilityRequest: The request to update availability.
@@ -864,9 +864,9 @@ type UpdateAvailabilityRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateAvailabilityRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateAvailabilityRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateAvailabilityRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateAvailabilityResponse: The response to a update availability request.
@@ -889,9 +889,9 @@ type UpdateAvailabilityResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateAvailabilityResponse) MarshalJSON() ([]byte, error) {
+func (s UpdateAvailabilityResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateAvailabilityResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ConversionGetCall struct {

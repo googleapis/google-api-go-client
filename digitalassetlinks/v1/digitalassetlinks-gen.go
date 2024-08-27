@@ -194,9 +194,9 @@ type AndroidAppAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AndroidAppAsset) MarshalJSON() ([]byte, error) {
+func (s AndroidAppAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod AndroidAppAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Asset: Uniquely identifies an asset. A digital asset is an identifiable and
@@ -221,9 +221,9 @@ type Asset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Asset) MarshalJSON() ([]byte, error) {
+func (s Asset) MarshalJSON() ([]byte, error) {
 	type NoMethod Asset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkCheckRequest: Message used to check for the existence of multiple
@@ -263,9 +263,9 @@ type BulkCheckRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkCheckRequest) MarshalJSON() ([]byte, error) {
+func (s BulkCheckRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkCheckRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BulkCheckResponse: Response for BulkCheck call. Results are sent in a list
@@ -311,9 +311,9 @@ type BulkCheckResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *BulkCheckResponse) MarshalJSON() ([]byte, error) {
+func (s BulkCheckResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkCheckResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CertificateInfo: Describes an X509 certificate.
@@ -346,9 +346,9 @@ type CertificateInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CertificateInfo) MarshalJSON() ([]byte, error) {
+func (s CertificateInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateInfo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CheckResponse: Response message for the CheckAssetLinks call.
@@ -400,9 +400,9 @@ type CheckResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *CheckResponse) MarshalJSON() ([]byte, error) {
+func (s CheckResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CheckResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListResponse: Response message for the List call.
@@ -453,9 +453,9 @@ type ListResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListResponse) MarshalJSON() ([]byte, error) {
+func (s ListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Statement: Describes a reliable statement that has been made about the
@@ -492,9 +492,9 @@ type Statement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Statement) MarshalJSON() ([]byte, error) {
+func (s Statement) MarshalJSON() ([]byte, error) {
 	type NoMethod Statement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StatementTemplate: A single statement to check in a bulk call using
@@ -523,9 +523,9 @@ type StatementTemplate struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *StatementTemplate) MarshalJSON() ([]byte, error) {
+func (s StatementTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod StatementTemplate
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WebAsset: Describes a web asset.
@@ -559,9 +559,9 @@ type WebAsset struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *WebAsset) MarshalJSON() ([]byte, error) {
+func (s WebAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod WebAsset
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type AssetlinksBulkCheckCall struct {

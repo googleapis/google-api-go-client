@@ -151,9 +151,9 @@ type Entity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Entity) MarshalJSON() ([]byte, error) {
+func (s Entity) MarshalJSON() ([]byte, error) {
 	type NoMethod Entity
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type EntityProperties struct {
@@ -174,7 +174,7 @@ type EntityProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *EntityProperties) MarshalJSON() ([]byte, error) {
+func (s EntityProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod EntityProperties
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }

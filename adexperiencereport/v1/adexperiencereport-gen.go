@@ -221,9 +221,9 @@ type PlatformSummary struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PlatformSummary) MarshalJSON() ([]byte, error) {
+func (s PlatformSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod PlatformSummary
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SiteSummaryResponse: Response message for GetSiteSummary.
@@ -250,9 +250,9 @@ type SiteSummaryResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SiteSummaryResponse) MarshalJSON() ([]byte, error) {
+func (s SiteSummaryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SiteSummaryResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ViolatingSitesResponse: Response message for ListViolatingSites.
@@ -275,9 +275,9 @@ type ViolatingSitesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ViolatingSitesResponse) MarshalJSON() ([]byte, error) {
+func (s ViolatingSitesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ViolatingSitesResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type SitesGetCall struct {

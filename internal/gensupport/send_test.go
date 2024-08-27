@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strings"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -19,9 +20,15 @@ func TestSendRequest(t *testing.T) {
 	// Setting Accept-Encoding should give an error immediately.
 	req, _ := http.NewRequest("GET", "url", nil)
 	req.Header.Set("Accept-Encoding", "")
-	_, err := SendRequest(context.Background(), nil, req)
+	_, err := SendRequest(context.Background(), nil, req, false)
 	if err == nil {
 		t.Error("got nil, want error")
+	}
+
+	// Setting Accept-Encoding should not return an error if zipped responses allowed.
+	_, err = SendRequest(context.Background(), nil, req, true)
+	if strings.Contains(err.Error(), "custom Accept-Encoding headers not allowed") {
+		t.Errorf("Accept-Encoding should be allowed, got err: %v", err)
 	}
 }
 
@@ -29,9 +36,14 @@ func TestSendRequestWithRetry(t *testing.T) {
 	// Setting Accept-Encoding should give an error immediately.
 	req, _ := http.NewRequest("GET", "url", nil)
 	req.Header.Set("Accept-Encoding", "")
-	_, err := SendRequestWithRetry(context.Background(), nil, req, nil)
+	_, err := SendRequestWithRetry(context.Background(), nil, req, nil, false)
 	if err == nil {
 		t.Error("got nil, want error")
+	}
+	// Setting Accept-Encoding should not return an error if zipped responses allowed.
+	_, err = SendRequest(context.Background(), nil, req, true)
+	if strings.Contains(err.Error(), "custom Accept-Encoding headers not allowed") {
+		t.Errorf("Accept-Encoding should be allowed, got err: %v", err)
 	}
 }
 
@@ -59,11 +71,11 @@ func TestSendRequestHeader(t *testing.T) {
 		},
 	}
 	req, _ := http.NewRequest("GET", "url", nil)
-	if _, err := SendRequest(ctx, &client, req); err != nil {
+	if _, err := SendRequest(ctx, &client, req, false); err != nil {
 		t.Errorf("SendRequest: %v", err)
 	}
 	req2, _ := http.NewRequest("GET", "url", nil)
-	if _, err := SendRequestWithRetry(ctx, &client, req2, nil); err != nil {
+	if _, err := SendRequestWithRetry(ctx, &client, req2, nil, false); err != nil {
 		t.Errorf("SendRequest: %v", err)
 	}
 }
@@ -82,7 +94,7 @@ func TestCanceledContextDoesNotPerformRequest(t *testing.T) {
 		req, _ := http.NewRequest("GET", "url", nil)
 		ctx, cancel := context.WithCancel(context.Background())
 		cancel()
-		_, err := SendRequestWithRetry(ctx, &client, req, nil)
+		_, err := SendRequestWithRetry(ctx, &client, req, nil, false)
 		if !errors.Is(err, context.Canceled) {
 			t.Fatalf("got %v, want %v", err, context.Canceled)
 		}

@@ -2300,11 +2300,13 @@ func (meth *Method) generateCode() {
 	}
 	if meth.supportsMediaUpload() && meth.api.Name == "storage" {
 		pn("if c.retry != nil {")
-		pn("	return gensupport.SendRequestWithRetry(c.ctx_, c.s.client, req, c.retry)")
+		pn("	return gensupport.SendRequestWithRetry(c.ctx_, c.s.client, req, c.retry, false)")
 		pn("}")
-		pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")
+		pn("return gensupport.SendRequest(c.ctx_, c.s.client, req, false)")
+	} else if meth.supportsMediaDownload() && meth.api.Name == "storage" {
+		pn("return gensupport.SendRequest(c.ctx_, c.s.client, req, true)")
 	} else {
-		pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")
+		pn("return gensupport.SendRequest(c.ctx_, c.s.client, req, false)")
 	}
 	pn("}")
 

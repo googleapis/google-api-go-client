@@ -43,7 +43,7 @@ func (e wrappedCallErr) Is(target error) bool {
 // If ctx is non-nil, it calls all hooks, then sends the request with
 // req.WithContext, then calls any functions returned by the hooks in
 // reverse order.
-func SendRequest(ctx context.Context, client *http.Client, req *http.Request) (*http.Response, error) {
+func SendRequest(ctx context.Context, client *http.Client, req *http.Request, allowZipped bool) (*http.Response, error) {
 	// Add headers set in context metadata.
 	if ctx != nil {
 		headers := callctx.HeadersFromContext(ctx)
@@ -56,8 +56,10 @@ func SendRequest(ctx context.Context, client *http.Client, req *http.Request) (*
 
 	// Disallow Accept-Encoding because it interferes with the automatic gzip handling
 	// done by the default http.Transport. See https://github.com/google/google-api-go-client/issues/219.
-	if _, ok := req.Header["Accept-Encoding"]; ok {
-		return nil, errors.New("google api: custom Accept-Encoding headers not allowed")
+	if !allowZipped {
+		if _, ok := req.Header["Accept-Encoding"]; ok {
+			return nil, errors.New("google api: custom Accept-Encoding headers not allowed")
+		}
 	}
 	if ctx == nil {
 		return client.Do(req)
@@ -87,7 +89,7 @@ func send(ctx context.Context, client *http.Client, req *http.Request) (*http.Re
 // If ctx is non-nil, it calls all hooks, then sends the request with
 // req.WithContext, then calls any functions returned by the hooks in
 // reverse order.
-func SendRequestWithRetry(ctx context.Context, client *http.Client, req *http.Request, retry *RetryConfig) (*http.Response, error) {
+func SendRequestWithRetry(ctx context.Context, client *http.Client, req *http.Request, retry *RetryConfig, allowZipped bool) (*http.Response, error) {
 	// Add headers set in context metadata.
 	if ctx != nil {
 		headers := callctx.HeadersFromContext(ctx)
@@ -100,8 +102,10 @@ func SendRequestWithRetry(ctx context.Context, client *http.Client, req *http.Re
 
 	// Disallow Accept-Encoding because it interferes with the automatic gzip handling
 	// done by the default http.Transport. See https://github.com/google/google-api-go-client/issues/219.
-	if _, ok := req.Header["Accept-Encoding"]; ok {
-		return nil, errors.New("google api: custom Accept-Encoding headers not allowed")
+	if !allowZipped {
+		if _, ok := req.Header["Accept-Encoding"]; ok {
+			return nil, errors.New("google api: custom Accept-Encoding headers not allowed")
+		}
 	}
 	if ctx == nil {
 		return client.Do(req)

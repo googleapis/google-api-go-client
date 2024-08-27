@@ -603,6 +603,16 @@ type AutokeyConfig struct {
 	// Name: Identifier. Name of the AutokeyConfig resource, e.g.
 	// `folders/{FOLDER_NUMBER}/autokeyConfig`.
 	Name string `json:"name,omitempty"`
+	// State: Output only. The state for the AutokeyConfig.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state of the AutokeyConfig is unspecified.
+	//   "ACTIVE" - The AutokeyConfig is currently active.
+	//   "KEY_PROJECT_DELETED" - A previously configured key project has been
+	// deleted and the current AutokeyConfig is unusable.
+	//   "UNINITIALIZED" - The AutokeyConfig is not yet initialized or has been
+	// reset to its default uninitialized state.
+	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1380,9 +1390,9 @@ type EkmConnection struct {
 	// Name: Output only. The resource name for the EkmConnection in the format
 	// `projects/*/locations/*/ekmConnections/*`.
 	Name string `json:"name,omitempty"`
-	// ServiceResolvers: A list of ServiceResolvers where the EKM can be reached.
-	// There should be one ServiceResolver per EKM replica. Currently, only a
-	// single ServiceResolver is supported.
+	// ServiceResolvers: Optional. A list of ServiceResolvers where the EKM can be
+	// reached. There should be one ServiceResolver per EKM replica. Currently,
+	// only a single ServiceResolver is supported.
 	ServiceResolvers []*ServiceResolver `json:"serviceResolvers,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2232,6 +2242,9 @@ func (s ListImportJobsResponse) MarshalJSON() ([]byte, error) {
 type ListKeyHandlesResponse struct {
 	// KeyHandles: Resulting KeyHandles.
 	KeyHandles []*KeyHandle `json:"keyHandles,omitempty"`
+	// NextPageToken: A token to retrieve next page of results. Pass this value in
+	// ListKeyHandlesRequest.page_token to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -5849,6 +5862,23 @@ func (c *ProjectsLocationsKeyHandlesListCall) Filter(filter string) *ProjectsLoc
 	return c
 }
 
+// PageSize sets the optional parameter "pageSize": Optional limit on the
+// number of KeyHandles to include in the response. The service may return
+// fewer than this value. Further KeyHandles can subsequently be obtained by
+// including the ListKeyHandlesResponse.next_page_token in a subsequent
+// request. If unspecified, at most KeyHandles 100 will be returned.
+func (c *ProjectsLocationsKeyHandlesListCall) PageSize(pageSize int64) *ProjectsLocationsKeyHandlesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Optional pagination
+// token, returned earlier via ListKeyHandlesResponse.next_page_token.
+func (c *ProjectsLocationsKeyHandlesListCall) PageToken(pageToken string) *ProjectsLocationsKeyHandlesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -5937,6 +5967,27 @@ func (c *ProjectsLocationsKeyHandlesListCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsKeyHandlesListCall) Pages(ctx context.Context, f func(*ListKeyHandlesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsKeyRingsCreateCall struct {

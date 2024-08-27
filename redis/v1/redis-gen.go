@@ -223,8 +223,8 @@ type AOFConfig struct {
 	// this configuration, but it's up to the kernel's exact tuning.
 	//   "EVERYSEC" - fsync every second. Fast enough, and you may lose 1 second of
 	// data if there is a disaster
-	//   "ALWAYS" - fsync every time new commands are appended to the AOF. It has
-	// the best data loss protection at the cost of performance
+	//   "ALWAYS" - fsync every time new write commands are appended to the AOF. It
+	// has the best data loss protection at the cost of performance
 	AppendFsync string `json:"appendFsync,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppendFsync") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -247,6 +247,10 @@ func (s AOFConfig) MarshalJSON() ([]byte, error) {
 // AvailabilityConfiguration: Configuration for availability of database
 // instance
 type AvailabilityConfiguration struct {
+	// AutomaticFailoverRoutingConfigured: Checks for existence of (multi-cluster)
+	// routing configuration that allows automatic failover to a different
+	// zone/region in case of an outage. Applicable to Bigtable resources.
+	AutomaticFailoverRoutingConfigured bool `json:"automaticFailoverRoutingConfigured,omitempty"`
 	// AvailabilityType: Availability type. Potential values: * `ZONAL`: The
 	// instance serves data from only one zone. Outages in that zone affect data
 	// accessibility. * `REGIONAL`: The instance can serve data from more than one
@@ -264,16 +268,18 @@ type AvailabilityConfiguration struct {
 	CrossRegionReplicaConfigured bool `json:"crossRegionReplicaConfigured,omitempty"`
 	ExternalReplicaConfigured    bool `json:"externalReplicaConfigured,omitempty"`
 	PromotableReplicaConfigured  bool `json:"promotableReplicaConfigured,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AvailabilityType") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AutomaticFailoverRoutingConfigured") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AvailabilityType") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AutomaticFailoverRoutingConfigured") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
@@ -418,6 +424,12 @@ type Cluster struct {
 	// for Redis clients to connect to the cluster. Currently only one discovery
 	// endpoint is supported.
 	DiscoveryEndpoints []*DiscoveryEndpoint `json:"discoveryEndpoints,omitempty"`
+	// MaintenancePolicy: Optional. ClusterMaintenancePolicy determines when to
+	// allow or deny updates.
+	MaintenancePolicy *ClusterMaintenancePolicy `json:"maintenancePolicy,omitempty"`
+	// MaintenanceSchedule: Output only. ClusterMaintenanceSchedule Output only
+	// Published maintenance schedule.
+	MaintenanceSchedule *ClusterMaintenanceSchedule `json:"maintenanceSchedule,omitempty"`
 	// Name: Required. Identifier. Unique name of the resource in this scope
 	// including project and location using the form:
 	// `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`
@@ -516,6 +528,65 @@ func (s *Cluster) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ClusterMaintenancePolicy: Maintenance policy per cluster.
+type ClusterMaintenancePolicy struct {
+	// CreateTime: Output only. The time when the policy was created i.e.
+	// Maintenance Window or Deny Period was assigned.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Output only. The time when the policy was updated i.e.
+	// Maintenance Window or Deny Period was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// WeeklyMaintenanceWindow: Optional. Maintenance window that is applied to
+	// resources covered by this policy. Minimum 1. For the current version, the
+	// maximum number of weekly_maintenance_window is expected to be one.
+	WeeklyMaintenanceWindow []*ClusterWeeklyMaintenanceWindow `json:"weeklyMaintenanceWindow,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClusterMaintenancePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterMaintenancePolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ClusterMaintenanceSchedule: Upcoming maitenance schedule.
+type ClusterMaintenanceSchedule struct {
+	// EndTime: Output only. The end time of any upcoming scheduled maintenance for
+	// this instance.
+	EndTime string `json:"endTime,omitempty"`
+	// ScheduleDeadlineTime: Output only. The deadline that the maintenance
+	// schedule start time can not go beyond, including reschedule.
+	ScheduleDeadlineTime string `json:"scheduleDeadlineTime,omitempty"`
+	// StartTime: Output only. The start time of any upcoming scheduled maintenance
+	// for this instance.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClusterMaintenanceSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterMaintenanceSchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ClusterPersistenceConfig: Configuration of the persistence functionality.
 type ClusterPersistenceConfig struct {
 	// AofConfig: Optional. AOF configuration. This field will be ignored if mode
@@ -547,6 +618,42 @@ type ClusterPersistenceConfig struct {
 
 func (s ClusterPersistenceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ClusterPersistenceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ClusterWeeklyMaintenanceWindow: Time window specified for weekly operations.
+type ClusterWeeklyMaintenanceWindow struct {
+	// Day: Allows to define schedule that runs specified day of the week.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	Day string `json:"day,omitempty"`
+	// Duration: Duration of the time window.
+	Duration string `json:"duration,omitempty"`
+	// StartTime: Start time of the window in UTC.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClusterWeeklyMaintenanceWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterWeeklyMaintenanceWindow
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2758,6 +2865,40 @@ func (s RemoteCluster) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RescheduleClusterMaintenanceRequest: Request for rescheduling a cluster
+// maintenance.
+type RescheduleClusterMaintenanceRequest struct {
+	// RescheduleType: Required. If reschedule type is SPECIFIC_TIME, must set up
+	// schedule_time as well.
+	//
+	// Possible values:
+	//   "RESCHEDULE_TYPE_UNSPECIFIED" - Not set.
+	//   "IMMEDIATE" - If the user wants to schedule the maintenance to happen now.
+	//   "SPECIFIC_TIME" - If the user wants to reschedule the maintenance to a
+	// specific time.
+	RescheduleType string `json:"rescheduleType,omitempty"`
+	// ScheduleTime: Optional. Timestamp when the maintenance shall be rescheduled
+	// to if reschedule_type=SPECIFIC_TIME, in RFC 3339 format, for example
+	// `2012-11-15T16:19:00.094Z`.
+	ScheduleTime string `json:"scheduleTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RescheduleType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RescheduleType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RescheduleClusterMaintenanceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RescheduleClusterMaintenanceRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RescheduleMaintenanceRequest: Request for RescheduleMaintenance.
 type RescheduleMaintenanceRequest struct {
 	// RescheduleType: Required. If reschedule type is SPECIFIC_TIME, must set up
@@ -4086,6 +4227,109 @@ func (c *ProjectsLocationsClustersPatchCall) doRequest(alt string) (*http.Respon
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsClustersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsClustersRescheduleClusterMaintenanceCall struct {
+	s                                   *Service
+	name                                string
+	rescheduleclustermaintenancerequest *RescheduleClusterMaintenanceRequest
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// RescheduleClusterMaintenance: Reschedules upcoming maintenance event.
+//
+//   - name: Redis Cluster instance resource name using the form:
+//     `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`
+//     where `location_id` refers to a GCP region.
+func (r *ProjectsLocationsClustersService) RescheduleClusterMaintenance(name string, rescheduleclustermaintenancerequest *RescheduleClusterMaintenanceRequest) *ProjectsLocationsClustersRescheduleClusterMaintenanceCall {
+	c := &ProjectsLocationsClustersRescheduleClusterMaintenanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rescheduleclustermaintenancerequest = rescheduleclustermaintenancerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersRescheduleClusterMaintenanceCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersRescheduleClusterMaintenanceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersRescheduleClusterMaintenanceCall) Context(ctx context.Context) *ProjectsLocationsClustersRescheduleClusterMaintenanceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersRescheduleClusterMaintenanceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersRescheduleClusterMaintenanceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rescheduleclustermaintenancerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:rescheduleClusterMaintenance")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.clusters.rescheduleClusterMaintenance" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersRescheduleClusterMaintenanceCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {

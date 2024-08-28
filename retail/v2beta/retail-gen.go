@@ -3451,7 +3451,7 @@ func (s GoogleCloudRetailV2betaCompleteQueryResponse) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudRetailV2betaCompleteQueryResponseAttributeResult: Resource that
-// represents attribute results.
+// represents attribute results. The list of suggestions for the attribute.
 type GoogleCloudRetailV2betaCompleteQueryResponseAttributeResult struct {
 	Suggestions []string `json:"suggestions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Suggestions") to
@@ -5617,8 +5617,13 @@ type GoogleCloudRetailV2betaProduct struct {
 	// veterans, car owners, musicians, etc.) of the product.
 	Audience *GoogleCloudRetailV2betaAudience `json:"audience,omitempty"`
 	// Availability: The online availability of the Product. Default to
-	// Availability.IN_STOCK. Corresponding properties: Google Merchant Center
-	// property availability (https://support.google.com/merchants/answer/6324448).
+	// Availability.IN_STOCK. For primary products with variants set the
+	// availability of the primary as Availability.OUT_OF_STOCK and set the true
+	// availability at the variant level. This way the primary product will be
+	// considered "in stock" as long as it has at least one variant in stock. For
+	// primary products with no variants set the true availability at the primary
+	// level. Corresponding properties: Google Merchant Center property
+	// availability (https://support.google.com/merchants/answer/6324448).
 	// Schema.org property Offer.availability (https://schema.org/availability).
 	//
 	// Possible values:

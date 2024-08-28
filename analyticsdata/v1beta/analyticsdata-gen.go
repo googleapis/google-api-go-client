@@ -2095,7 +2095,7 @@ type RunPivotReportRequest struct {
 	// KeepEmptyRows: If false or unspecified, each row with all metrics equal to 0
 	// will not be returned. If true, these rows will be returned if they are not
 	// separately removed by a filter. Regardless of this `keep_empty_rows`
-	// setting, only data recorded by the Google Analytics (GA4) property can be
+	// setting, only data recorded by the Google Analytics property can be
 	// displayed in a report. For example if a property never logs a `purchase`
 	// event, then a query for the `eventName` dimension and `eventCount` metric
 	// will not have a row eventName: "purchase" and eventCount: 0.
@@ -2113,15 +2113,15 @@ type RunPivotReportRequest struct {
 	// subset of dimension names defined in Dimensions. No two pivots can share a
 	// dimension. A dimension is only visible if it appears in a pivot.
 	Pivots []*Pivot `json:"pivots,omitempty"`
-	// Property: A Google Analytics GA4 property identifier whose events are
-	// tracked. Specified in the URL path and not the body. To learn more, see
-	// where to find your Property ID
+	// Property: A Google Analytics property identifier whose events are tracked.
+	// Specified in the URL path and not the body. To learn more, see where to find
+	// your Property ID
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 	// Within a batch request, this property should either be unspecified or
 	// consistent with the batch-level property. Example: properties/1234
 	Property string `json:"property,omitempty"`
 	// ReturnPropertyQuota: Toggles whether to return the current state of this
-	// Analytics Property's quota. Quota is returned in PropertyQuota
+	// Google Analytics property's quota. Quota is returned in PropertyQuota
 	// (#PropertyQuota).
 	ReturnPropertyQuota bool `json:"returnPropertyQuota,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CohortSpec") to
@@ -2173,7 +2173,8 @@ type RunPivotReportResponse struct {
 	// "dimensionValues": [{ "value": "session_start" }] }, { "dimensionValues": [{
 	// "value": "scroll" }] }] }]
 	PivotHeaders []*PivotHeader `json:"pivotHeaders,omitempty"`
-	// PropertyQuota: This Analytics Property's quota state including this request.
+	// PropertyQuota: This Google Analytics property's quota state including this
+	// request.
 	PropertyQuota *PropertyQuota `json:"propertyQuota,omitempty"`
 	// Rows: Rows of dimension value combinations and metric values in the report.
 	Rows []*Row `json:"rows,omitempty"`
@@ -2239,8 +2240,8 @@ type RunRealtimeReportRequest struct {
 	// OrderBys: Specifies how rows are ordered in the response.
 	OrderBys []*OrderBy `json:"orderBys,omitempty"`
 	// ReturnPropertyQuota: Toggles whether to return the current state of this
-	// Analytics Property's Realtime quota. Quota is returned in PropertyQuota
-	// (#PropertyQuota).
+	// Google Analytics property's Realtime quota. Quota is returned in
+	// PropertyQuota (#PropertyQuota).
 	ReturnPropertyQuota bool `json:"returnPropertyQuota,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DimensionFilter") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2278,8 +2279,8 @@ type RunRealtimeReportResponse struct {
 	MetricHeaders []*MetricHeader `json:"metricHeaders,omitempty"`
 	// Minimums: If requested, the minimum values of metrics.
 	Minimums []*Row `json:"minimums,omitempty"`
-	// PropertyQuota: This Analytics Property's Realtime quota state including this
-	// request.
+	// PropertyQuota: This Google Analytics property's Realtime quota state
+	// including this request.
 	PropertyQuota *PropertyQuota `json:"propertyQuota,omitempty"`
 	// RowCount: The total number of rows in the query result. `rowCount` is
 	// independent of the number of rows returned in the response and the `limit`
@@ -2341,7 +2342,7 @@ type RunReportRequest struct {
 	// KeepEmptyRows: If false or unspecified, each row with all metrics equal to 0
 	// will not be returned. If true, these rows will be returned if they are not
 	// separately removed by a filter. Regardless of this `keep_empty_rows`
-	// setting, only data recorded by the Google Analytics (GA4) property can be
+	// setting, only data recorded by the Google Analytics property can be
 	// displayed in a report. For example if a property never logs a `purchase`
 	// event, then a query for the `eventName` dimension and `eventCount` metric
 	// will not have a row eventName: "purchase" and eventCount: 0.
@@ -2386,15 +2387,15 @@ type RunReportRequest struct {
 	// both comparisons and multiple date ranges will have order bys applied on the
 	// comparisons.
 	OrderBys []*OrderBy `json:"orderBys,omitempty"`
-	// Property: A Google Analytics GA4 property identifier whose events are
-	// tracked. Specified in the URL path and not the body. To learn more, see
-	// where to find your Property ID
+	// Property: A Google Analytics property identifier whose events are tracked.
+	// Specified in the URL path and not the body. To learn more, see where to find
+	// your Property ID
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 	// Within a batch request, this property should either be unspecified or
 	// consistent with the batch-level property. Example: properties/1234
 	Property string `json:"property,omitempty"`
 	// ReturnPropertyQuota: Toggles whether to return the current state of this
-	// Analytics Property's quota. Quota is returned in PropertyQuota
+	// Google Analytics property's quota. Quota is returned in PropertyQuota
 	// (#PropertyQuota).
 	ReturnPropertyQuota bool `json:"returnPropertyQuota,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CohortSpec") to
@@ -2434,7 +2435,8 @@ type RunReportResponse struct {
 	MetricHeaders []*MetricHeader `json:"metricHeaders,omitempty"`
 	// Minimums: If requested, the minimum values of metrics.
 	Minimums []*Row `json:"minimums,omitempty"`
-	// PropertyQuota: This Analytics Property's quota state including this request.
+	// PropertyQuota: This Google Analytics property's quota state including this
+	// request.
 	PropertyQuota *PropertyQuota `json:"propertyQuota,omitempty"`
 	// RowCount: The total number of rows in the query result. `rowCount` is
 	// independent of the number of rows returned in the response, the `limit`
@@ -2684,11 +2686,11 @@ type PropertiesBatchRunPivotReportsCall struct {
 }
 
 // BatchRunPivotReports: Returns multiple pivot reports in a batch. All reports
-// must be for the same GA4 Property.
+// must be for the same Google Analytics property.
 //
-//   - property: A Google Analytics GA4 property identifier whose events are
-//     tracked. Specified in the URL path and not the body. To learn more, see
-//     where to find your Property ID
+//   - property: A Google Analytics property identifier whose events are tracked.
+//     Specified in the URL path and not the body. To learn more, see where to
+//     find your Property ID
 //     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 //     This property must be specified for the batch. The property within
 //     RunPivotReportRequest may either be unspecified or consistent with this
@@ -2793,11 +2795,11 @@ type PropertiesBatchRunReportsCall struct {
 }
 
 // BatchRunReports: Returns multiple reports in a batch. All reports must be
-// for the same GA4 Property.
+// for the same Google Analytics property.
 //
-//   - property: A Google Analytics GA4 property identifier whose events are
-//     tracked. Specified in the URL path and not the body. To learn more, see
-//     where to find your Property ID
+//   - property: A Google Analytics property identifier whose events are tracked.
+//     Specified in the URL path and not the body. To learn more, see where to
+//     find your Property ID
 //     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 //     This property must be specified for the batch. The property within
 //     RunReportRequest may either be unspecified or consistent with this
@@ -2910,8 +2912,8 @@ type PropertiesCheckCompatibilityCall struct {
 // Realtime and Core reports have different compatibility rules. This method
 // checks compatibility for Core reports.
 //
-//   - property: A Google Analytics GA4 property identifier whose events are
-//     tracked. To learn more, see where to find your Property ID
+//   - property: A Google Analytics property identifier whose events are tracked.
+//     To learn more, see where to find your Property ID
 //     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 //     `property` should be the same value as in your `runReport` request.
 //     Example: properties/1234.
@@ -3016,17 +3018,16 @@ type PropertiesGetMetadataCall struct {
 
 // GetMetadata: Returns metadata for dimensions and metrics available in
 // reporting methods. Used to explore the dimensions and metrics. In this
-// method, a Google Analytics GA4 Property Identifier is specified in the
-// request, and the metadata response includes Custom dimensions and metrics as
-// well as Universal metadata. For example if a custom metric with parameter
-// name `levels_unlocked` is registered to a property, the Metadata response
-// will contain `customEvent:levels_unlocked`. Universal metadata are
-// dimensions and metrics applicable to any property such as `country` and
-// `totalUsers`.
+// method, a Google Analytics property identifier is specified in the request,
+// and the metadata response includes Custom dimensions and metrics as well as
+// Universal metadata. For example if a custom metric with parameter name
+// `levels_unlocked` is registered to a property, the Metadata response will
+// contain `customEvent:levels_unlocked`. Universal metadata are dimensions and
+// metrics applicable to any property such as `country` and `totalUsers`.
 //
 //   - name: The resource name of the metadata to retrieve. This name field is
 //     specified in the URL path and not URL parameters. Property is a numeric
-//     Google Analytics GA4 Property identifier. To learn more, see where to find
+//     Google Analytics property identifier. To learn more, see where to find
 //     your Property ID
 //     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 //     Example: properties/1234/metadata Set the Property ID to 0 for dimensions
@@ -3142,9 +3143,9 @@ type PropertiesRunPivotReportCall struct {
 // included in a pivot. Multiple pivots can be specified to further dissect
 // your data.
 //
-//   - property: A Google Analytics GA4 property identifier whose events are
-//     tracked. Specified in the URL path and not the body. To learn more, see
-//     where to find your Property ID
+//   - property: A Google Analytics property identifier whose events are tracked.
+//     Specified in the URL path and not the body. To learn more, see where to
+//     find your Property ID
 //     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 //     Within a batch request, this property should either be unspecified or
 //     consistent with the batch-level property. Example: properties/1234.
@@ -3256,9 +3257,9 @@ type PropertiesRunRealtimeReportCall struct {
 // Realtime Report
 // (https://developers.google.com/analytics/devguides/reporting/data/v1/realtime-basics).
 //
-//   - property: A Google Analytics GA4 property identifier whose events are
-//     tracked. Specified in the URL path and not the body. To learn more, see
-//     where to find your Property ID
+//   - property: A Google Analytics property identifier whose events are tracked.
+//     Specified in the URL path and not the body. To learn more, see where to
+//     find your Property ID
 //     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 //     Example: properties/1234.
 func (r *PropertiesService) RunRealtimeReport(propertyid string, runrealtimereportrequest *RunRealtimeReportRequest) *PropertiesRunRealtimeReportCall {
@@ -3370,9 +3371,9 @@ type PropertiesRunReportCall struct {
 // understanding responses, see Creating a Report
 // (https://developers.google.com/analytics/devguides/reporting/data/v1/basics).
 //
-//   - property: A Google Analytics GA4 property identifier whose events are
-//     tracked. Specified in the URL path and not the body. To learn more, see
-//     where to find your Property ID
+//   - property: A Google Analytics property identifier whose events are tracked.
+//     Specified in the URL path and not the body. To learn more, see where to
+//     find your Property ID
 //     (https://developers.google.com/analytics/devguides/reporting/data/v1/property-id).
 //     Within a batch request, this property should either be unspecified or
 //     consistent with the batch-level property. Example: properties/1234.

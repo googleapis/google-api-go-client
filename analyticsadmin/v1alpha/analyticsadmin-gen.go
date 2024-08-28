@@ -1144,7 +1144,7 @@ func (s GoogleAnalyticsAdminV1alphaAccount) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAnalyticsAdminV1alphaAccountSummary: A virtual resource representing
-// an overview of an account and all its child GA4 properties.
+// an overview of an account and all its child Google Analytics properties.
 type GoogleAnalyticsAdminV1alphaAccountSummary struct {
 	// Account: Resource name of account referred to by this account summary
 	// Format: accounts/{account_id} Example: "accounts/1000"
@@ -1210,11 +1210,11 @@ type GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleAnalyticsAdminV1alphaAdSenseLink: A link between a GA4 Property and an
-// AdSense for Content ad client.
+// GoogleAnalyticsAdminV1alphaAdSenseLink: A link between a Google Analytics
+// property and an AdSense for Content ad client.
 type GoogleAnalyticsAdminV1alphaAdSenseLink struct {
-	// AdClientCode: Immutable. The AdSense ad client code that the GA4 property is
-	// linked to. Example format: "ca-pub-1234567890"
+	// AdClientCode: Immutable. The AdSense ad client code that the Google
+	// Analytics property is linked to. Example format: "ca-pub-1234567890"
 	AdClientCode string `json:"adClientCode,omitempty"`
 	// Name: Output only. The resource name for this AdSense Link resource. Format:
 	// properties/{propertyId}/adSenseLinks/{linkId} Example:
@@ -1378,7 +1378,7 @@ func (s GoogleAnalyticsAdminV1alphaAttributionSettings) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1alphaAudience: A resource message representing a GA4
+// GoogleAnalyticsAdminV1alphaAudience: A resource message representing an
 // Audience.
 type GoogleAnalyticsAdminV1alphaAudience struct {
 	// AdsPersonalizationEnabled: Output only. It is automatically set by GA to
@@ -2085,8 +2085,8 @@ func (s GoogleAnalyticsAdminV1alphaBatchUpdateAccessBindingsResponse) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1alphaBigQueryLink: A link between a GA4 Property and
-// BigQuery project.
+// GoogleAnalyticsAdminV1alphaBigQueryLink: A link between a Google Analytics
+// property and BigQuery project.
 type GoogleAnalyticsAdminV1alphaBigQueryLink struct {
 	// CreateTime: Output only. Time when the link was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3318,7 +3318,7 @@ func (s GoogleAnalyticsAdminV1alphaDeleteConnectedSiteTagRequest) MarshalJSON() 
 }
 
 // GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLink: A link between a
-// GA4 property and a Display & Video 360 advertiser.
+// Google Analytics property and a Display & Video 360 advertiser.
 type GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLink struct {
 	// AdsPersonalizationEnabled: Enables personalized advertising features with
 	// this integration. If this field is not set on create/update, it will be
@@ -3330,15 +3330,15 @@ type GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLink struct {
 	// AdvertiserId: Immutable. The Display & Video 360 Advertiser's advertiser ID.
 	AdvertiserId string `json:"advertiserId,omitempty"`
 	// CampaignDataSharingEnabled: Immutable. Enables the import of campaign data
-	// from Display & Video 360 into the GA4 property. After link creation, this
-	// can only be updated from the Display & Video 360 product. If this field is
-	// not set on create, it will be defaulted to true.
+	// from Display & Video 360 into the Google Analytics property. After link
+	// creation, this can only be updated from the Display & Video 360 product. If
+	// this field is not set on create, it will be defaulted to true.
 	CampaignDataSharingEnabled bool `json:"campaignDataSharingEnabled,omitempty"`
 	// CostDataSharingEnabled: Immutable. Enables the import of cost data from
-	// Display & Video 360 into the GA4 property. This can only be enabled if
-	// campaign_data_sharing_enabled is enabled. After link creation, this can only
-	// be updated from the Display & Video 360 product. If this field is not set on
-	// create, it will be defaulted to true.
+	// Display & Video 360 into the Google Analytics property. This can only be
+	// enabled if `campaign_data_sharing_enabled` is true. After link creation,
+	// this can only be updated from the Display & Video 360 product. If this field
+	// is not set on create, it will be defaulted to true.
 	CostDataSharingEnabled bool `json:"costDataSharingEnabled,omitempty"`
 	// Name: Output only. The resource name for this DisplayVideo360AdvertiserLink
 	// resource. Format:
@@ -3367,10 +3367,10 @@ func (s GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLink) MarshalJSON() 
 }
 
 // GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal: A proposal
-// for a link between a GA4 property and a Display & Video 360 advertiser. A
-// proposal is converted to a DisplayVideo360AdvertiserLink once approved.
-// Google Analytics admins approve inbound proposals while Display & Video 360
-// admins approve outbound proposals.
+// for a link between a Google Analytics property and a Display & Video 360
+// advertiser. A proposal is converted to a DisplayVideo360AdvertiserLink once
+// approved. Google Analytics admins approve inbound proposals while Display &
+// Video 360 admins approve outbound proposals.
 type GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal struct {
 	// AdsPersonalizationEnabled: Immutable. Enables personalized advertising
 	// features with this integration. If this field is not set on create, it will
@@ -3592,8 +3592,8 @@ func (s GoogleAnalyticsAdminV1alphaEventEditRule) MarshalJSON() ([]byte, error) 
 // GoogleAnalyticsAdminV1alphaEventMapping: Event setting conditions to match
 // an event.
 type GoogleAnalyticsAdminV1alphaEventMapping struct {
-	// EventName: Required. Name of the GA4 event. It must always be set. The max
-	// allowed display name length is 40 UTF-16 code units.
+	// EventName: Required. Name of the Google Analytics event. It must always be
+	// set. The max allowed display name length is 40 UTF-16 code units.
 	EventName string `json:"eventName,omitempty"`
 	// MaxEventCount: The maximum number of times the event occurred. If not set,
 	// maximum event count won't be checked.
@@ -3646,7 +3646,7 @@ func (s *GoogleAnalyticsAdminV1alphaEventMapping) UnmarshalJSON(data []byte) err
 }
 
 // GoogleAnalyticsAdminV1alphaExpandedDataSet: A resource message representing
-// a GA4 ExpandedDataSet.
+// an `ExpandedDataSet`.
 type GoogleAnalyticsAdminV1alphaExpandedDataSet struct {
 	// DataCollectionStartTime: Output only. Time when expanded data set began (or
 	// will begin) collecing data.
@@ -3922,8 +3922,8 @@ func (s GoogleAnalyticsAdminV1alphaFetchConnectedGa4PropertyResponse) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1alphaFirebaseLink: A link between a GA4 property and a
-// Firebase project.
+// GoogleAnalyticsAdminV1alphaFirebaseLink: A link between a Google Analytics
+// property and a Firebase project.
 type GoogleAnalyticsAdminV1alphaFirebaseLink struct {
 	// CreateTime: Output only. Time when this FirebaseLink was originally created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3988,8 +3988,8 @@ func (s GoogleAnalyticsAdminV1alphaGlobalSiteTag) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1alphaGoogleAdsLink: A link between a GA4 property and
-// a Google Ads account.
+// GoogleAnalyticsAdminV1alphaGoogleAdsLink: A link between a Google Analytics
+// property and a Google Ads account.
 type GoogleAnalyticsAdminV1alphaGoogleAdsLink struct {
 	// AdsPersonalizationEnabled: Enable personalized advertising features with
 	// this integration. Automatically publish my Google Analytics audience lists
@@ -5278,7 +5278,7 @@ func (s GoogleAnalyticsAdminV1alphaPostbackWindow) MarshalJSON() ([]byte, error)
 }
 
 // GoogleAnalyticsAdminV1alphaProperty: A resource message representing a
-// Google Analytics GA4 property.
+// Google Analytics property.
 type GoogleAnalyticsAdminV1alphaProperty struct {
 	// Account: Immutable. The resource name of the parent account Format:
 	// accounts/{account_id} Example: "accounts/123"
@@ -5344,9 +5344,9 @@ type GoogleAnalyticsAdminV1alphaProperty struct {
 	//
 	// Possible values:
 	//   "PROPERTY_TYPE_UNSPECIFIED" - Unknown or unspecified property type
-	//   "PROPERTY_TYPE_ORDINARY" - Ordinary GA4 property
-	//   "PROPERTY_TYPE_SUBPROPERTY" - GA4 subproperty
-	//   "PROPERTY_TYPE_ROLLUP" - GA4 rollup property
+	//   "PROPERTY_TYPE_ORDINARY" - Ordinary Google Analytics property
+	//   "PROPERTY_TYPE_SUBPROPERTY" - Google Analytics subproperty
+	//   "PROPERTY_TYPE_ROLLUP" - Google Analytics rollup property
 	PropertyType string `json:"propertyType,omitempty"`
 	// ServiceLevel: Output only. The Google Analytics service level that applies
 	// to this property.
@@ -5386,7 +5386,7 @@ func (s GoogleAnalyticsAdminV1alphaProperty) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAnalyticsAdminV1alphaPropertySummary: A virtual resource representing
-// metadata for a GA4 property.
+// metadata for a Google Analytics property.
 type GoogleAnalyticsAdminV1alphaPropertySummary struct {
 	// DisplayName: Display name for the property referred to in this property
 	// summary.
@@ -5403,9 +5403,9 @@ type GoogleAnalyticsAdminV1alphaPropertySummary struct {
 	//
 	// Possible values:
 	//   "PROPERTY_TYPE_UNSPECIFIED" - Unknown or unspecified property type
-	//   "PROPERTY_TYPE_ORDINARY" - Ordinary GA4 property
-	//   "PROPERTY_TYPE_SUBPROPERTY" - GA4 subproperty
-	//   "PROPERTY_TYPE_ROLLUP" - GA4 rollup property
+	//   "PROPERTY_TYPE_ORDINARY" - Ordinary Google Analytics property
+	//   "PROPERTY_TYPE_SUBPROPERTY" - Google Analytics subproperty
+	//   "PROPERTY_TYPE_ROLLUP" - Google Analytics rollup property
 	PropertyType string `json:"propertyType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5771,8 +5771,8 @@ func (s GoogleAnalyticsAdminV1alphaSKAdNetworkConversionValueSchema) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1alphaSearchAds360Link: A link between a GA4 property
-// and a Search Ads 360 entity.
+// GoogleAnalyticsAdminV1alphaSearchAds360Link: A link between a Google
+// Analytics property and a Search Ads 360 entity.
 type GoogleAnalyticsAdminV1alphaSearchAds360Link struct {
 	// AdsPersonalizationEnabled: Enables personalized advertising features with
 	// this integration. If this field is not set on create, it will be defaulted
@@ -5785,12 +5785,12 @@ type GoogleAnalyticsAdminV1alphaSearchAds360Link struct {
 	// Search Ads 360 Advertiser. that has been linked.
 	AdvertiserId string `json:"advertiserId,omitempty"`
 	// CampaignDataSharingEnabled: Immutable. Enables the import of campaign data
-	// from Search Ads 360 into the GA4 property. After link creation, this can
-	// only be updated from the Search Ads 360 product. If this field is not set on
-	// create, it will be defaulted to true.
+	// from Search Ads 360 into the Google Analytics property. After link creation,
+	// this can only be updated from the Search Ads 360 product. If this field is
+	// not set on create, it will be defaulted to true.
 	CampaignDataSharingEnabled bool `json:"campaignDataSharingEnabled,omitempty"`
 	// CostDataSharingEnabled: Immutable. Enables the import of cost data from
-	// Search Ads 360 to the GA4 property. This can only be enabled if
+	// Search Ads 360 to the Google Analytics property. This can only be enabled if
 	// campaign_data_sharing_enabled is enabled. After link creation, this can only
 	// be updated from the Search Ads 360 product. If this field is not set on
 	// create, it will be defaulted to true.
@@ -5978,7 +5978,7 @@ type GoogleAnalyticsAdminV1alphaSetAutomatedGa4ConfigurationOptOutResponse struc
 }
 
 // GoogleAnalyticsAdminV1alphaSubpropertyEventFilter: A resource message
-// representing a GA4 Subproperty event filter.
+// representing a Google Analytics subproperty event filter.
 type GoogleAnalyticsAdminV1alphaSubpropertyEventFilter struct {
 	// ApplyToProperty: Immutable. Resource name of the Subproperty that uses this
 	// filter.
@@ -6675,7 +6675,7 @@ type AccountsListCall struct {
 }
 
 // List: Returns all accounts accessible by the caller. Note that these
-// accounts might not currently have GA4 properties. Soft-deleted (ie:
+// accounts might not currently have GA properties. Soft-deleted (ie:
 // "trashed") accounts are excluded by default. Returns an empty list if no
 // relevant accounts are found.
 func (r *AccountsService) List() *AccountsListCall {
@@ -7040,7 +7040,7 @@ type AccountsRunAccessReportCall struct {
 // be requested for a property. Reports may be requested for any property, but
 // dimensions that aren't related to quota can only be requested on Google
 // Analytics 360 properties. This method is only available to Administrators.
-// These data access records include GA4 UI Reporting, GA4 UI Explorations, GA4
+// These data access records include GA UI Reporting, GA UI Explorations, GA
 // Data API, and other products like Firebase & Admob that can retrieve data
 // from Google Analytics through a linkage. These records don't include
 // property configuration changes like adding a stream or changing a property's
@@ -7051,8 +7051,9 @@ type AccountsRunAccessReportCall struct {
 //     or account level. If requested at the account level, Data Access Reports
 //     include all access for all properties under that account. To request at
 //     the property level, entity should be for example 'properties/123' if "123"
-//     is your GA4 property ID. To request at the account level, entity should be
-//     for example 'accounts/1234' if "1234" is your GA4 Account ID.
+//     is your Google Analytics property ID. To request at the account level,
+//     entity should be for example 'accounts/1234' if "1234" is your Google
+//     Analytics Account ID.
 func (r *AccountsService) RunAccessReport(entity string, googleanalyticsadminv1alpharunaccessreportrequest *GoogleAnalyticsAdminV1alphaRunAccessReportRequest) *AccountsRunAccessReportCall {
 	c := &AccountsRunAccessReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entity = entity
@@ -8379,7 +8380,7 @@ type PropertiesCreateCall struct {
 	header_                             http.Header
 }
 
-// Create: Creates an "GA4" property with the specified location and
+// Create: Creates a Google Analytics property with the specified location and
 // attributes.
 func (r *PropertiesService) Create(googleanalyticsadminv1alphaproperty *GoogleAnalyticsAdminV1alphaProperty) *PropertiesCreateCall {
 	c := &PropertiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8674,7 +8675,7 @@ type PropertiesDeleteCall struct {
 // not restored before the expiration time, the Property and all child
 // resources (eg: GoogleAdsLinks, Streams, AccessBindings) will be permanently
 // purged. https://support.google.com/analytics/answer/6154772 Returns an error
-// if the target is not found, or is not a GA4 Property.
+// if the target is not found.
 //
 //   - name: The name of the Property to soft-delete. Format:
 //     properties/{property_id} Example: "properties/1000".
@@ -9076,7 +9077,7 @@ type PropertiesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Lookup for a single "GA4" Property.
+// Get: Lookup for a single GA Property.
 //
 //   - name: The name of the property to lookup. Format: properties/{property_id}
 //     Example: "properties/1000".
@@ -9513,10 +9514,10 @@ type PropertiesListCall struct {
 	header_      http.Header
 }
 
-// List: Returns child Properties under the specified parent Account. Only
-// "GA4" properties will be returned. Properties will be excluded if the caller
-// does not have access. Soft-deleted (ie: "trashed") properties are excluded
-// by default. Returns an empty list if no relevant properties are found.
+// List: Returns child Properties under the specified parent Account.
+// Properties will be excluded if the caller does not have access. Soft-deleted
+// (ie: "trashed") properties are excluded by default. Returns an empty list if
+// no relevant properties are found.
 func (r *PropertiesService) List() *PropertiesListCall {
 	c := &PropertiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -9994,7 +9995,7 @@ type PropertiesRunAccessReportCall struct {
 // be requested for a property. Reports may be requested for any property, but
 // dimensions that aren't related to quota can only be requested on Google
 // Analytics 360 properties. This method is only available to Administrators.
-// These data access records include GA4 UI Reporting, GA4 UI Explorations, GA4
+// These data access records include GA UI Reporting, GA UI Explorations, GA
 // Data API, and other products like Firebase & Admob that can retrieve data
 // from Google Analytics through a linkage. These records don't include
 // property configuration changes like adding a stream or changing a property's
@@ -10005,8 +10006,9 @@ type PropertiesRunAccessReportCall struct {
 //     or account level. If requested at the account level, Data Access Reports
 //     include all access for all properties under that account. To request at
 //     the property level, entity should be for example 'properties/123' if "123"
-//     is your GA4 property ID. To request at the account level, entity should be
-//     for example 'accounts/1234' if "1234" is your GA4 Account ID.
+//     is your Google Analytics property ID. To request at the account level,
+//     entity should be for example 'accounts/1234' if "1234" is your Google
+//     Analytics Account ID.
 func (r *PropertiesService) RunAccessReport(entity string, googleanalyticsadminv1alpharunaccessreportrequest *GoogleAnalyticsAdminV1alphaRunAccessReportRequest) *PropertiesRunAccessReportCall {
 	c := &PropertiesRunAccessReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entity = entity
@@ -18579,7 +18581,7 @@ type PropertiesDataStreamsMeasurementProtocolSecretsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Lookup for a single "GA4" MeasurementProtocolSecret.
+// Get: Lookup for a single MeasurementProtocolSecret.
 //
 //   - name: The name of the measurement protocol secret to lookup. Format:
 //     properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{

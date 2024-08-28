@@ -2263,8 +2263,8 @@ type GoogleMapsPlacesV1SearchTextResponse struct {
 	// contents that are relevant to the `text_query` in the request are preferred.
 	// If the contextual content is not available for one of the places, it will
 	// return non-contextual content. It will be empty only when the content is
-	// unavailable for this place. This list should have as many entries as the
-	// list of places if requested.
+	// unavailable for this place. This list will have as many entries as the list
+	// of places if requested.
 	ContextualContents []*GoogleMapsPlacesV1ContextualContent `json:"contextualContents,omitempty"`
 	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
 	// page. If this field is omitted or empty, there are no subsequent pages.

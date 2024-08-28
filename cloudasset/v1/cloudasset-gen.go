@@ -1834,6 +1834,8 @@ type GoogleCloudAssetV1CustomConstraint struct {
 	//   "CREATE" - Constraint applied when creating the resource.
 	//   "UPDATE" - Constraint applied when updating the resource.
 	//   "DELETE" - Constraint applied when deleting the resource.
+	//   "REMOVE_GRANT" - Constraint applied when removing an IAM grant.
+	//   "GOVERN_TAGS" - Constraint applied when enforcing forced tagging.
 	MethodTypes []string `json:"methodTypes,omitempty"`
 	// Name: Name of the constraint. This is unique within the organization. Format
 	// of the name should be *
@@ -5059,7 +5061,15 @@ type ResourceSearchResult struct {
 	// `effectiveTagValues="123456789/env/prod" -
 	// `effectiveTagValueIds="tagValues/456"
 	EffectiveTags []*EffectiveTagDetails `json:"effectiveTags,omitempty"`
-	// Enrichments: Enrichments of the asset.
+	// Enrichments: Enrichments of the asset. Currently supported enrichment types
+	// with SearchAllResources API: * RESOURCE_OWNERS The corresponding read masks
+	// in order to get the enrichment: * enrichments.resource_owners The
+	// corresponding required permissions: *
+	// cloudasset.assets.searchEnrichmentResourceOwners Example query to get
+	// resource owner enrichment: scope: "projects/my-project" query: "name:
+	// my-project" assetTypes: "cloudresourcemanager.googleapis.com/Project"
+	// readMask: { paths: "asset_type" paths: "name" paths:
+	// "enrichments.resource_owners" }
 	Enrichments []*AssetEnrichment `json:"enrichments,omitempty"`
 	// Folders: The folder(s) that this resource belongs to, in the form of
 	// folders/{FOLDER_NUMBER}. This field is available when the resource belongs

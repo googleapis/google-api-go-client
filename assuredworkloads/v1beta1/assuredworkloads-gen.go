@@ -349,6 +349,10 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - Assured Workloads
 	// Sovereign Controls KSA
 	//   "REGIONAL_CONTROLS" - Assured Workloads for Regional Controls
+	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS" - Healthcare and Life Science
+	// Controls
+	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT" - Healthcare and Life
+	// Science Controls with US Support
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// CreateTime: Optional. Time when the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -868,6 +872,10 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - Assured Workloads
 	// Sovereign Controls KSA
 	//   "REGIONAL_CONTROLS" - Assured Workloads for Regional Controls
+	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS" - Healthcare and Life Science
+	// Controls
+	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT" - Healthcare and Life
+	// Science Controls with US Support
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// ComplianceStatus: Output only. Count of active Violations in the Workload.
 	ComplianceStatus *GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus `json:"complianceStatus,omitempty"`
@@ -945,7 +953,7 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	PartnerPermissions *GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions `json:"partnerPermissions,omitempty"`
 	// PartnerServicesBillingAccount: Optional. Billing account necessary for
 	// purchasing services from Sovereign Partners. This field is required for
-	// creating SIA/PSN partner workloads. The caller should have
+	// creating SIA/PSN/CNTXT partner workloads. The caller should have
 	// 'billing.resourceAssociations.create' IAM permission on this
 	// billing-account. The format of this string is
 	// billingAccounts/AAAAAA-BBBBBB-CCCCCC

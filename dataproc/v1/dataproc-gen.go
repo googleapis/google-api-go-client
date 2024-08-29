@@ -4563,6 +4563,8 @@ type Session struct {
 	// id]The template must be in the same project and Dataproc region as the
 	// session.
 	SessionTemplate string `json:"sessionTemplate,omitempty"`
+	// SparkConnectSession: Optional. Spark connect session config.
+	SparkConnectSession *SparkConnectConfig `json:"sparkConnectSession,omitempty"`
 	// State: Output only. A state of the session.
 	//
 	// Possible values:
@@ -4710,6 +4712,8 @@ type SessionTemplate struct {
 	Name string `json:"name,omitempty"`
 	// RuntimeConfig: Optional. Runtime configuration for session execution.
 	RuntimeConfig *RuntimeConfig `json:"runtimeConfig,omitempty"`
+	// SparkConnectSession: Optional. Spark connect session config.
+	SparkConnectSession *SparkConnectConfig `json:"sparkConnectSession,omitempty"`
 	// UpdateTime: Output only. The time the template was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// Uuid: Output only. A session template UUID (Unique Universal Identifier).
@@ -4796,7 +4800,7 @@ func (s ShieldedInstanceConfig) MarshalJSON() ([]byte, error) {
 type SoftwareConfig struct {
 	// ImageVersion: Optional. The version of software inside the cluster. It must
 	// be one of the supported Dataproc Versions
-	// (https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-versions#supported_dataproc_versions),
+	// (https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-versions#supported-dataproc-image-versions),
 	// such as "1.2" (including a subminor version, such as "1.2.29"), or the
 	// "preview" version
 	// (https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-versions#other_versions).
@@ -4808,9 +4812,11 @@ type SoftwareConfig struct {
 	// Possible values:
 	//   "COMPONENT_UNSPECIFIED" - Unspecified component. Specifying this will
 	// cause Cluster creation to fail.
-	//   "ANACONDA" - The Anaconda python distribution. The Anaconda component is
-	// not supported in the Dataproc 2.0 image. The 2.0 image is pre-installed with
-	// Miniconda.
+	//   "ANACONDA" - The Anaconda component is no longer supported or applicable
+	// to supported Dataproc on Compute Engine image versions
+	// (https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-version-clusters#supported-dataproc-image-versions).
+	// It cannot be activated on clusters created with supported Dataproc on
+	// Compute Engine image versions.
 	//   "DOCKER" - Docker
 	//   "DRUID" - The Druid query engine. (alpha)
 	//   "FLINK" - Flink
@@ -4892,6 +4898,10 @@ type SparkBatch struct {
 func (s SparkBatch) MarshalJSON() ([]byte, error) {
 	type NoMethod SparkBatch
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SparkConnectConfig: Spark connect configuration for an interactive session.
+type SparkConnectConfig struct {
 }
 
 // SparkHistoryServerConfig: Spark History Server configuration for the

@@ -781,6 +781,8 @@ type AzureMetadata struct {
 	ResourceGroup *AzureResourceGroup `json:"resourceGroup,omitempty"`
 	// Subscription: The Azure subscription associated with the resource.
 	Subscription *AzureSubscription `json:"subscription,omitempty"`
+	// Tenant: The Azure Entra tenant associated with the resource.
+	Tenant *AzureTenant `json:"tenant,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ManagementGroups") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -843,6 +845,29 @@ type AzureSubscription struct {
 
 func (s AzureSubscription) MarshalJSON() ([]byte, error) {
 	type NoMethod AzureSubscription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AzureTenant: Represents a Microsoft Entra tenant.
+type AzureTenant struct {
+	// Id: The ID of the Microsoft Entra tenant, for example,
+	// "a11aaa11-aa11-1aa1-11aa-1aaa11a".
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AzureTenant) MarshalJSON() ([]byte, error) {
+	type NoMethod AzureTenant
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1374,6 +1399,8 @@ type Cve struct {
 	// for exploitation.
 	//   "NO_KNOWN" - No known exploitation activity.
 	ExploitationActivity string `json:"exploitationActivity,omitempty"`
+	// FirstExploitationDate: Date of the earliest known exploitation.
+	FirstExploitationDate string `json:"firstExploitationDate,omitempty"`
 	// Id: The unique identifier for the vulnerability. e.g. CVE-2021-34527
 	Id string `json:"id,omitempty"`
 	// Impact: The potential impact of the vulnerability if it was to be exploited.
@@ -1553,6 +1580,84 @@ func (s *Cvssv3) UnmarshalJSON(data []byte) error {
 	}
 	s.BaseScore = float64(s1.BaseScore)
 	return nil
+}
+
+// DataAccessEvent: Details about a data access attempt made by a principal not
+// authorized under applicable data security policy.
+type DataAccessEvent struct {
+	// EventId: Unique identifier for data access event.
+	EventId string `json:"eventId,omitempty"`
+	// EventTime: Timestamp of data access event.
+	EventTime string `json:"eventTime,omitempty"`
+	// Operation: The operation performed by the principal to access the data.
+	//
+	// Possible values:
+	//   "OPERATION_UNSPECIFIED" - The operation is unspecified.
+	//   "READ" - Represents a read operation.
+	//   "MOVE" - Represents a move operation.
+	//   "COPY" - Represents a copy operation.
+	Operation string `json:"operation,omitempty"`
+	// PrincipalEmail: The email address of the principal that accessed the data.
+	// The principal could be a user account, service account, Google group, or
+	// other.
+	PrincipalEmail string `json:"principalEmail,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataAccessEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod DataAccessEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DataFlowEvent: Details about a data flow event, in which either the data is
+// moved to or is accessed from a non-compliant geo-location, as defined in the
+// applicable data security policy.
+type DataFlowEvent struct {
+	// EventId: Unique identifier for data flow event.
+	EventId string `json:"eventId,omitempty"`
+	// EventTime: Timestamp of data flow event.
+	EventTime string `json:"eventTime,omitempty"`
+	// Operation: The operation performed by the principal for the data flow event.
+	//
+	// Possible values:
+	//   "OPERATION_UNSPECIFIED" - The operation is unspecified.
+	//   "READ" - Represents a read operation.
+	//   "MOVE" - Represents a move operation.
+	//   "COPY" - Represents a copy operation.
+	Operation string `json:"operation,omitempty"`
+	// PrincipalEmail: The email address of the principal that initiated the data
+	// flow event. The principal could be a user account, service account, Google
+	// group, or other.
+	PrincipalEmail string `json:"principalEmail,omitempty"`
+	// ViolatedLocation: Non-compliant location of the principal or the data
+	// destination.
+	ViolatedLocation string `json:"violatedLocation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataFlowEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod DataFlowEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Database: Represents database access information, such as queries. A
@@ -1934,6 +2039,10 @@ type Finding struct {
 	// CreateTime: The time at which the finding was created in Security Command
 	// Center.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataAccessEvents: Data access events associated with the finding.
+	DataAccessEvents []*DataAccessEvent `json:"dataAccessEvents,omitempty"`
+	// DataFlowEvents: Data flow events associated with the finding.
+	DataFlowEvents []*DataFlowEvent `json:"dataFlowEvents,omitempty"`
 	// Database: Database associated with the finding.
 	Database *Database `json:"database,omitempty"`
 	// Description: Contains more details about the finding.
@@ -1974,6 +2083,8 @@ type Finding struct {
 	//   "TOXIC_COMBINATION" - Describes a group of security issues that, when the
 	// issues occur together, represent a greater risk than when the issues occur
 	// independently. A group of such issues is referred to as a toxic combination.
+	//   "SENSITIVE_DATA_RISK" - Describes a potential security risk to data assets
+	// that contain sensitive data.
 	FindingClass string `json:"findingClass,omitempty"`
 	// GroupMemberships: Contains details about groups of which this finding is a
 	// member. A group is a collection of findings that are related in some way.
@@ -3840,6 +3951,8 @@ type GoogleCloudSecuritycenterV2AzureMetadata struct {
 	ResourceGroup *GoogleCloudSecuritycenterV2AzureResourceGroup `json:"resourceGroup,omitempty"`
 	// Subscription: The Azure subscription associated with the resource.
 	Subscription *GoogleCloudSecuritycenterV2AzureSubscription `json:"subscription,omitempty"`
+	// Tenant: The Azure Entra tenant associated with the resource.
+	Tenant *GoogleCloudSecuritycenterV2AzureTenant `json:"tenant,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ManagementGroups") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3904,6 +4017,29 @@ type GoogleCloudSecuritycenterV2AzureSubscription struct {
 
 func (s GoogleCloudSecuritycenterV2AzureSubscription) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2AzureSubscription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2AzureTenant: Represents a Microsoft Entra tenant.
+type GoogleCloudSecuritycenterV2AzureTenant struct {
+	// Id: The ID of the Microsoft Entra tenant, for example,
+	// "a11aaa11-aa11-1aa1-11aa-1aaa11a".
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2AzureTenant) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2AzureTenant
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4391,6 +4527,8 @@ type GoogleCloudSecuritycenterV2Cve struct {
 	// for exploitation.
 	//   "NO_KNOWN" - No known exploitation activity.
 	ExploitationActivity string `json:"exploitationActivity,omitempty"`
+	// FirstExploitationDate: Date of the earliest known exploitation.
+	FirstExploitationDate string `json:"firstExploitationDate,omitempty"`
 	// Id: The unique identifier for the vulnerability. e.g. CVE-2021-34527
 	Id string `json:"id,omitempty"`
 	// Impact: The potential impact of the vulnerability if it was to be exploited.
@@ -4571,6 +4709,85 @@ func (s *GoogleCloudSecuritycenterV2Cvssv3) UnmarshalJSON(data []byte) error {
 	}
 	s.BaseScore = float64(s1.BaseScore)
 	return nil
+}
+
+// GoogleCloudSecuritycenterV2DataAccessEvent: Details about a data access
+// attempt made by a principal not authorized under applicable data security
+// policy.
+type GoogleCloudSecuritycenterV2DataAccessEvent struct {
+	// EventId: Unique identifier for data access event.
+	EventId string `json:"eventId,omitempty"`
+	// EventTime: Timestamp of data access event.
+	EventTime string `json:"eventTime,omitempty"`
+	// Operation: The operation performed by the principal to access the data.
+	//
+	// Possible values:
+	//   "OPERATION_UNSPECIFIED" - The operation is unspecified.
+	//   "READ" - Represents a read operation.
+	//   "MOVE" - Represents a move operation.
+	//   "COPY" - Represents a copy operation.
+	Operation string `json:"operation,omitempty"`
+	// PrincipalEmail: The email address of the principal that accessed the data.
+	// The principal could be a user account, service account, Google group, or
+	// other.
+	PrincipalEmail string `json:"principalEmail,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2DataAccessEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2DataAccessEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV2DataFlowEvent: Details about a data flow event,
+// in which either the data is moved to or is accessed from a non-compliant
+// geo-location, as defined in the applicable data security policy.
+type GoogleCloudSecuritycenterV2DataFlowEvent struct {
+	// EventId: Unique identifier for data flow event.
+	EventId string `json:"eventId,omitempty"`
+	// EventTime: Timestamp of data flow event.
+	EventTime string `json:"eventTime,omitempty"`
+	// Operation: The operation performed by the principal for the data flow event.
+	//
+	// Possible values:
+	//   "OPERATION_UNSPECIFIED" - The operation is unspecified.
+	//   "READ" - Represents a read operation.
+	//   "MOVE" - Represents a move operation.
+	//   "COPY" - Represents a copy operation.
+	Operation string `json:"operation,omitempty"`
+	// PrincipalEmail: The email address of the principal that initiated the data
+	// flow event. The principal could be a user account, service account, Google
+	// group, or other.
+	PrincipalEmail string `json:"principalEmail,omitempty"`
+	// ViolatedLocation: Non-compliant location of the principal or the data
+	// destination.
+	ViolatedLocation string `json:"violatedLocation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2DataFlowEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2DataFlowEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudSecuritycenterV2Database: Represents database access information,
@@ -4966,6 +5183,10 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// CreateTime: Output only. The time at which the finding was created in
 	// Security Command Center.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataAccessEvents: Data access events associated with the finding.
+	DataAccessEvents []*GoogleCloudSecuritycenterV2DataAccessEvent `json:"dataAccessEvents,omitempty"`
+	// DataFlowEvents: Data flow events associated with the finding.
+	DataFlowEvents []*GoogleCloudSecuritycenterV2DataFlowEvent `json:"dataFlowEvents,omitempty"`
 	// Database: Database associated with the finding.
 	Database *GoogleCloudSecuritycenterV2Database `json:"database,omitempty"`
 	// Description: Contains more details about the finding.
@@ -5005,6 +5226,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	// in the security posture.
 	//   "TOXIC_COMBINATION" - Describes a combination of security issues that
 	// represent a more severe security problem when taken together.
+	//   "SENSITIVE_DATA_RISK" - Describes a potential security risk to data assets
+	// that contain sensitive data.
 	FindingClass string `json:"findingClass,omitempty"`
 	// GroupMemberships: Contains details about groups of which this finding is a
 	// member. A group is a collection of findings that are related in some way.

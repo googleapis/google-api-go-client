@@ -6657,7 +6657,7 @@ func (s RollbackFhirResourcesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RollbackHL7MessagesFilteringFields: Filtering fields for an HL7 rollback.
+// RollbackHL7MessagesFilteringFields: Filtering fields for an HL7v2 rollback.
 // Currently only supports a list of operation ids to roll back.
 type RollbackHL7MessagesFilteringFields struct {
 	// OperationIds: Optional. A list of operation IDs to roll back.
@@ -6727,7 +6727,7 @@ func (s RollbackHl7V2MessagesRequest) MarshalJSON() ([]byte, error) {
 // RollbackHl7V2MessagesResponse: Final response of rollback FHIR resources
 // request.
 type RollbackHl7V2MessagesResponse struct {
-	// Hl7v2Store: The name of the HL7 store to rollback, in the format of
+	// Hl7v2Store: The name of the HL7v2 store to rollback, in the format of
 	// "projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
 	// /hl7v2Stores/{fhir_store_id}".
 	Hl7v2Store string `json:"hl7v2Store,omitempty"`
@@ -25373,8 +25373,8 @@ type ProjectsLocationsDatasetsHl7V2StoresRollbackCall struct {
 	header_                      http.Header
 }
 
-// Rollback: Rolls back messages from the HL7 store to the specified time. This
-// method returns an Operation that can be used to track the status of the
+// Rollback: Rolls back messages from the HL7v2 store to the specified time.
+// This method returns an Operation that can be used to track the status of the
 // rollback by calling GetOperation. Immediate fatal errors appear in the error
 // field, errors are also logged to Cloud Logging (see Viewing error logs in
 // Cloud Logging (https://cloud.google.com/healthcare/docs/how-tos/logging)).

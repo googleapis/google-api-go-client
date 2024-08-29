@@ -7931,7 +7931,8 @@ type SpreadsheetProperties struct {
 	DefaultFormat *CellFormat `json:"defaultFormat,omitempty"`
 	// ImportFunctionsExternalUrlAccessAllowed: Whether to allow external URL
 	// access for image and import functions. Read only when true. When false, you
-	// can set to true.
+	// can set to true. This value will be bypassed and always return true if the
+	// admin has enabled the allowlisting feature.
 	ImportFunctionsExternalUrlAccessAllowed bool `json:"importFunctionsExternalUrlAccessAllowed,omitempty"`
 	// IterativeCalculationSettings: Determines whether and how circular references
 	// are resolved with iterative calculation. Absence of this field means that

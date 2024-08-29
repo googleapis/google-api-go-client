@@ -5327,12 +5327,9 @@ type GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseClaim struct {
 	// GroundingCheckRequired: Indicates that this claim required grounding check.
 	// When the system decided this claim doesn't require attribution/grounding
 	// check, this field will be set to false. In that case, no grounding check was
-	// done for the claim and therefore citation_indices, and anti_citation_indices
-	// should not be returned.
+	// done for the claim and therefore citation_indices, anti_citation_indices,
+	// and score should not be returned.
 	GroundingCheckRequired bool `json:"groundingCheckRequired,omitempty"`
-	// Score: Confidence score for the claim in the answer candidate, in the range
-	// of [0, 1].
-	Score float64 `json:"score,omitempty"`
 	// StartPos: Position indicating the start of the claim in the answer
 	// candidate, measured in bytes.
 	StartPos int64 `json:"startPos,omitempty"`
@@ -5352,20 +5349,6 @@ type GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseClaim struct {
 func (s GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseClaim) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseClaim
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseClaim) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseClaim
-	var s1 struct {
-		Score gensupport.JSONFloat64 `json:"score"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Score = float64(s1.Score)
-	return nil
 }
 
 // GoogleCloudDiscoveryengineV1alphaCheckGroundingSpec: Specification for the

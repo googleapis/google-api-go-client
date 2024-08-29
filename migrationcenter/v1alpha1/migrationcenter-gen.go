@@ -3413,8 +3413,6 @@ type ImportRowError struct {
 	CsvError *ImportRowErrorCsvErrorDetails `json:"csvError,omitempty"`
 	// Errors: The list of errors detected in the row.
 	Errors []*ImportError `json:"errors,omitempty"`
-	// JsonError: Error details for a JSON file.
-	JsonError *ImportRowErrorJsonErrorDetails `json:"jsonError,omitempty"`
 	// RowNumber: The row number where the error was detected.
 	RowNumber int64 `json:"rowNumber,omitempty"`
 	// VmName: The name of the VM in the row.
@@ -3485,10 +3483,6 @@ type ImportRowErrorCsvErrorDetails struct {
 func (s ImportRowErrorCsvErrorDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportRowErrorCsvErrorDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ImportRowErrorJsonErrorDetails: Error details for a JSON file.
-type ImportRowErrorJsonErrorDetails struct {
 }
 
 // ImportRowErrorXlsxErrorDetails: Error details for an XLSX file.

@@ -1935,6 +1935,13 @@ func (r *ProjectsLocationsRepositoriesService) List(parent string) *ProjectsLoca
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": The field to order the
+// results by.
+func (c *ProjectsLocationsRepositoriesListCall) OrderBy(orderBy string) *ProjectsLocationsRepositoriesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // repositories to return. Maximum page size is 1,000.
 func (c *ProjectsLocationsRepositoriesListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesListCall {
@@ -2886,6 +2893,13 @@ type ProjectsLocationsRepositoriesPackagesListCall struct {
 func (r *ProjectsLocationsRepositoriesPackagesService) List(parent string) *ProjectsLocationsRepositoriesPackagesListCall {
 	c := &ProjectsLocationsRepositoriesPackagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The field to order the
+// results by.
+func (c *ProjectsLocationsRepositoriesPackagesListCall) OrderBy(orderBy string) *ProjectsLocationsRepositoriesPackagesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 

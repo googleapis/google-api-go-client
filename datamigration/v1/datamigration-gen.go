@@ -1021,7 +1021,7 @@ type ConnectionProfile struct {
 	//
 	// Possible values:
 	//   "DATABASE_PROVIDER_UNSPECIFIED" - Use this value for on-premise source
-	// database instances.
+	// database instances and ORACLE.
 	//   "CLOUDSQL" - Cloud SQL is the source instance provider.
 	//   "RDS" - Amazon RDS is the source instance provider.
 	//   "AURORA" - Amazon Aurora is the source instance provider.
@@ -1456,7 +1456,7 @@ type DatabaseType struct {
 	//
 	// Possible values:
 	//   "DATABASE_PROVIDER_UNSPECIFIED" - Use this value for on-premise source
-	// database instances.
+	// database instances and ORACLE.
 	//   "CLOUDSQL" - Cloud SQL is the source instance provider.
 	//   "RDS" - Amazon RDS is the source instance provider.
 	//   "AURORA" - Amazon Aurora is the source instance provider.

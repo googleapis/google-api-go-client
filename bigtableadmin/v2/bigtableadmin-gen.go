@@ -591,18 +591,6 @@ func (s AutoscalingTargets) MarshalJSON() ([]byte, error) {
 
 // Backup: A backup of a Cloud Bigtable table.
 type Backup struct {
-	// BackupType: Indicates the backup type of the backup.
-	//
-	// Possible values:
-	//   "BACKUP_TYPE_UNSPECIFIED" - Not specified.
-	//   "STANDARD" - The default type for Cloud Bigtable managed backups.
-	// Supported for backups created in both HDD and SSD instances. Requires
-	// optimization when restored to a table in an SSD instance.
-	//   "HOT" - A backup type with faster restore to SSD performance. Only
-	// supported for backups created in SSD instances. A new SSD table restored
-	// from a hot backup reaches production performance more quickly than a
-	// standard backup.
-	BackupType string `json:"backupType,omitempty"`
 	// EncryptionInfo: Output only. The encryption information for the backup.
 	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
 	// EndTime: Output only. `end_time` is the time that the backup was finished.
@@ -613,13 +601,6 @@ type Backup struct {
 	// backup creation time by: - At least 6 hours - At most 90 days Once the
 	// `expire_time` has passed, Cloud Bigtable will delete the backup.
 	ExpireTime string `json:"expireTime,omitempty"`
-	// HotToStandardTime: The time at which the hot backup will be converted to a
-	// standard backup. Once the `hot_to_standard_time` has passed, Cloud Bigtable
-	// will convert the hot backup to a standard backup. This value must be greater
-	// than the backup creation time by: - At least 24 hours This field only
-	// applies for hot backups. When creating or updating a standard backup,
-	// attempting to set this field will fail the request.
-	HotToStandardTime string `json:"hotToStandardTime,omitempty"`
 	// Name: A globally unique identifier for the backup which cannot be changed.
 	// Values are of the form
 	// `projects/{project}/instances/{instance}/clusters/{cluster}/
@@ -653,15 +634,15 @@ type Backup struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "BackupType") to
+	// ForceSendFields is a list of field names (e.g. "EncryptionInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackupType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EncryptionInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

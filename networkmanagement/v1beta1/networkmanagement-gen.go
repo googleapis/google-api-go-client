@@ -920,6 +920,8 @@ type DropInfo struct {
 	// not in running state.
 	//   "CLOUD_SQL_INSTANCE_NOT_RUNNING" - Packet sent from or to a Cloud SQL
 	// instance that is not in running state.
+	//   "REDIS_INSTANCE_NOT_RUNNING" - Packet sent from or to a Redis Instance
+	// that is not in running state.
 	//   "TRAFFIC_TYPE_BLOCKED" - The type of traffic is blocked and the user
 	// cannot configure a firewall rule to enable it. See [Always blocked
 	// traffic](https://cloud.google.com/vpc/docs/firewalls#blockedtraffic) for
@@ -2360,6 +2362,40 @@ func (s ReachabilityDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RedisInstanceInfo: For display only. Metadata associated with a Cloud Redis
+// Instance.
+type RedisInstanceInfo struct {
+	// DisplayName: Name of a Cloud Redis Instance.
+	DisplayName string `json:"displayName,omitempty"`
+	// NetworkUri: URI of a Cloud Redis Instance network.
+	NetworkUri string `json:"networkUri,omitempty"`
+	// PrimaryEndpointIp: Primary endpoint IP address of a Cloud Redis Instance.
+	PrimaryEndpointIp string `json:"primaryEndpointIp,omitempty"`
+	// ReadEndpointIp: Read endpoint IP address of a Cloud Redis Instance (if
+	// applicable).
+	ReadEndpointIp string `json:"readEndpointIp,omitempty"`
+	// Region: Region in which the Cloud Redis Instance is defined.
+	Region string `json:"region,omitempty"`
+	// Uri: URI of a Cloud Redis Instance.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RedisInstanceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod RedisInstanceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RerunConnectivityTestRequest: Request for the `RerunConnectivityTest`
 // method.
 type RerunConnectivityTestRequest struct {
@@ -2600,6 +2636,8 @@ type Step struct {
 	ProjectId string `json:"projectId,omitempty"`
 	// ProxyConnection: Display information of a ProxyConnection.
 	ProxyConnection *ProxyConnectionInfo `json:"proxyConnection,omitempty"`
+	// RedisInstance: Display information of a Redis Instance.
+	RedisInstance *RedisInstanceInfo `json:"redisInstance,omitempty"`
 	// Route: Display information of a Compute Engine route.
 	Route *RouteInfo `json:"route,omitempty"`
 	// ServerlessNeg: Display information of a Serverless network endpoint group
@@ -2626,6 +2664,9 @@ type Step struct {
 	//   "START_FROM_CLOUD_SQL_INSTANCE" - Initial state: packet originating from a
 	// Cloud SQL instance. A CloudSQLInstanceInfo is populated with starting
 	// instance information.
+	//   "START_FROM_REDIS_INSTANCE" - Initial state: packet originating from a
+	// Redis instance. A RedisInstanceInfo is populated with starting instance
+	// information.
 	//   "START_FROM_CLOUD_FUNCTION" - Initial state: packet originating from a
 	// Cloud Function. A CloudFunctionInfo is populated with starting function
 	// information.

@@ -2255,6 +2255,8 @@ func (s ImportJob) MarshalJSON() ([]byte, error) {
 
 // ImportRowError: A resource that reports the import job errors at row level.
 type ImportRowError struct {
+	// CsvError: Error details for a CSV file.
+	CsvError *ImportRowErrorCsvErrorDetails `json:"csvError,omitempty"`
 	// Errors: The list of errors detected in the row.
 	Errors []*ImportError `json:"errors,omitempty"`
 	// RowNumber: The row number where the error was detected.
@@ -2263,13 +2265,15 @@ type ImportRowError struct {
 	VmName string `json:"vmName,omitempty"`
 	// VmUuid: The VM UUID.
 	VmUuid string `json:"vmUuid,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Errors") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// XlsxError: Error details for an XLSX file.
+	XlsxError *ImportRowErrorXlsxErrorDetails `json:"xlsxError,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CsvError") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// NullFields is a list of field names (e.g. "CsvError") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2278,6 +2282,52 @@ type ImportRowError struct {
 
 func (s ImportRowError) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportRowError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ImportRowErrorCsvErrorDetails: Error details for a CSV file.
+type ImportRowErrorCsvErrorDetails struct {
+	// RowNumber: The row number where the error was detected.
+	RowNumber int64 `json:"rowNumber,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RowNumber") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RowNumber") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ImportRowErrorCsvErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportRowErrorCsvErrorDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ImportRowErrorXlsxErrorDetails: Error details for an XLSX file.
+type ImportRowErrorXlsxErrorDetails struct {
+	// RowNumber: The row number where the error was detected.
+	RowNumber int64 `json:"rowNumber,omitempty"`
+	// Sheet: The name of the sheet where the error was detected.
+	Sheet string `json:"sheet,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RowNumber") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RowNumber") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ImportRowErrorXlsxErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportRowErrorXlsxErrorDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

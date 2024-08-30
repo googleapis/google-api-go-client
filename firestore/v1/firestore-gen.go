@@ -1375,6 +1375,17 @@ type FindNearest struct {
 	// learn more. The resulting distance increases the more similar two vectors
 	// are.
 	DistanceMeasure string `json:"distanceMeasure,omitempty"`
+	// DistanceResultField: Optional. Optional name of the field to output the
+	// result of the vector distance calculation. Must conform to document field
+	// name limitations.
+	DistanceResultField string `json:"distanceResultField,omitempty"`
+	// DistanceThreshold: Optional. Option to specify a threshold for which no less
+	// similar documents will be returned. The behavior of the specified
+	// `distance_measure` will affect the meaning of the distance threshold. Since
+	// DOT_PRODUCT distances increase when the vectors are more similar, the
+	// comparison is inverted. For EUCLIDEAN, COSINE: WHERE distance <=
+	// distance_threshold For DOT_PRODUCT: WHERE distance >= distance_threshold
+	DistanceThreshold float64 `json:"distanceThreshold,omitempty"`
 	// Limit: Required. The number of nearest neighbors to return. Must be a
 	// positive integer of no more than 1000.
 	Limit int64 `json:"limit,omitempty"`
@@ -1401,6 +1412,20 @@ type FindNearest struct {
 func (s FindNearest) MarshalJSON() ([]byte, error) {
 	type NoMethod FindNearest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *FindNearest) UnmarshalJSON(data []byte) error {
+	type NoMethod FindNearest
+	var s1 struct {
+		DistanceThreshold gensupport.JSONFloat64 `json:"distanceThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DistanceThreshold = float64(s1.DistanceThreshold)
+	return nil
 }
 
 // GoogleFirestoreAdminV1Backup: A Backup of a Cloud Firestore Database. The
@@ -1505,12 +1530,12 @@ func (s GoogleFirestoreAdminV1BackupSchedule) MarshalJSON() ([]byte, error) {
 // google.longrunning.Operation results from
 // FirestoreAdmin.BulkDeleteDocuments.
 type GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata struct {
-	// CollectionIds: The ids of the collection groups that are being deleted.
+	// CollectionIds: The IDs of the collection groups that are being deleted.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 	// EndTime: The time this operation completed. Will be unset if operation still
 	// in progress.
 	EndTime string `json:"endTime,omitempty"`
-	// NamespaceIds: Which namespace ids are being deleted.
+	// NamespaceIds: Which namespace IDs are being deleted.
 	NamespaceIds []string `json:"namespaceIds,omitempty"`
 	// OperationState: The state of the operation.
 	//
@@ -1725,8 +1750,8 @@ type GoogleFirestoreAdminV1Database struct {
 	// has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 	// KeyPrefix: Output only. The key_prefix for this database. This key_prefix is
-	// used, in combination with the project id ("~") to construct the application
-	// id that is returned from the Cloud Datastore APIs in Google App Engine first
+	// used, in combination with the project ID ("~") to construct the application
+	// ID that is returned from the Cloud Datastore APIs in Google App Engine first
 	// generation runtimes. This value may be empty in which case the appid to use
 	// for URL-encoded keys is the project_id (eg: foo instead of v~foo).
 	KeyPrefix string `json:"keyPrefix,omitempty"`
@@ -1800,8 +1825,7 @@ type GoogleFirestoreAdminV1DeleteDatabaseMetadata struct {
 }
 
 // GoogleFirestoreAdminV1EncryptionConfig: Encryption configuration for a new
-// database being created from another source. The source could be a Backup or
-// a DatabaseSnapshot.
+// database being created from another source. The source could be a Backup .
 type GoogleFirestoreAdminV1EncryptionConfig struct {
 	// CustomerManagedEncryption: Use Customer Managed Encryption Keys (CMEK) for
 	// encryption.
@@ -1832,12 +1856,12 @@ func (s GoogleFirestoreAdminV1EncryptionConfig) MarshalJSON() ([]byte, error) {
 // GoogleFirestoreAdminV1ExportDocumentsMetadata: Metadata for
 // google.longrunning.Operation results from FirestoreAdmin.ExportDocuments.
 type GoogleFirestoreAdminV1ExportDocumentsMetadata struct {
-	// CollectionIds: Which collection ids are being exported.
+	// CollectionIds: Which collection IDs are being exported.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 	// EndTime: The time this operation completed. Will be unset if operation still
 	// in progress.
 	EndTime string `json:"endTime,omitempty"`
-	// NamespaceIds: Which namespace ids are being exported.
+	// NamespaceIds: Which namespace IDs are being exported.
 	NamespaceIds []string `json:"namespaceIds,omitempty"`
 	// OperationState: The state of the export operation.
 	//
@@ -1887,8 +1911,8 @@ func (s GoogleFirestoreAdminV1ExportDocumentsMetadata) MarshalJSON() ([]byte, er
 // GoogleFirestoreAdminV1ExportDocumentsRequest: The request for
 // FirestoreAdmin.ExportDocuments.
 type GoogleFirestoreAdminV1ExportDocumentsRequest struct {
-	// CollectionIds: Which collection ids to export. Unspecified means all
-	// collections. Each collection id in this list must be unique.
+	// CollectionIds: Which collection IDs to export. Unspecified means all
+	// collections. Each collection ID in this list must be unique.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 	// NamespaceIds: An empty list represents all namespaces. This is the preferred
 	// usage for databases that don't use namespaces. An empty string element
@@ -1957,7 +1981,7 @@ func (s GoogleFirestoreAdminV1ExportDocumentsResponse) MarshalJSON() ([]byte, er
 
 // GoogleFirestoreAdminV1Field: Represents a single field in the database.
 // Fields are grouped by their "Collection Group", which represent all
-// collections in the database with the same id.
+// collections in the database with the same ID.
 type GoogleFirestoreAdminV1Field struct {
 	// IndexConfig: The index configuration for this field. If unset, field
 	// indexing will revert to the configuration defined by the `ancestor_field`.
@@ -2073,14 +2097,14 @@ type GoogleFirestoreAdminV1GoogleDefaultEncryptionOptions struct {
 // GoogleFirestoreAdminV1ImportDocumentsMetadata: Metadata for
 // google.longrunning.Operation results from FirestoreAdmin.ImportDocuments.
 type GoogleFirestoreAdminV1ImportDocumentsMetadata struct {
-	// CollectionIds: Which collection ids are being imported.
+	// CollectionIds: Which collection IDs are being imported.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 	// EndTime: The time this operation completed. Will be unset if operation still
 	// in progress.
 	EndTime string `json:"endTime,omitempty"`
 	// InputUriPrefix: The location of the documents being imported.
 	InputUriPrefix string `json:"inputUriPrefix,omitempty"`
-	// NamespaceIds: Which namespace ids are being imported.
+	// NamespaceIds: Which namespace IDs are being imported.
 	NamespaceIds []string `json:"namespaceIds,omitempty"`
 	// OperationState: The state of the import operation.
 	//
@@ -2124,8 +2148,8 @@ func (s GoogleFirestoreAdminV1ImportDocumentsMetadata) MarshalJSON() ([]byte, er
 // GoogleFirestoreAdminV1ImportDocumentsRequest: The request for
 // FirestoreAdmin.ImportDocuments.
 type GoogleFirestoreAdminV1ImportDocumentsRequest struct {
-	// CollectionIds: Which collection ids to import. Unspecified means all
-	// collections included in the import. Each collection id in this list must be
+	// CollectionIds: Which collection IDs to import. Unspecified means all
+	// collections included in the import. Each collection ID in this list must be
 	// unique.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 	// InputUriPrefix: Location of the exported files. This must match the
@@ -2186,20 +2210,20 @@ type GoogleFirestoreAdminV1Index struct {
 	Name string `json:"name,omitempty"`
 	// QueryScope: Indexes with a collection query scope specified allow queries
 	// against a collection that is the child of a specific document, specified at
-	// query time, and that has the same collection id. Indexes with a collection
+	// query time, and that has the same collection ID. Indexes with a collection
 	// group query scope specified allow queries against all collections descended
 	// from a specific document, specified at query time, and that have the same
-	// collection id as this index.
+	// collection ID as this index.
 	//
 	// Possible values:
 	//   "QUERY_SCOPE_UNSPECIFIED" - The query scope is unspecified. Not a valid
 	// option.
 	//   "COLLECTION" - Indexes with a collection query scope specified allow
 	// queries against a collection that is the child of a specific document,
-	// specified at query time, and that has the collection id specified by the
+	// specified at query time, and that has the collection ID specified by the
 	// index.
 	//   "COLLECTION_GROUP" - Indexes with a collection group query scope specified
-	// allow queries against all collections that has the collection id specified
+	// allow queries against all collections that has the collection ID specified
 	// by the index.
 	//   "COLLECTION_RECURSIVE" - Include all the collections's ancestor in the
 	// index. Only available for Datastore Mode databases.
@@ -2635,17 +2659,17 @@ func (s GoogleFirestoreAdminV1RestoreDatabaseMetadata) MarshalJSON() ([]byte, er
 // GoogleFirestoreAdminV1RestoreDatabaseRequest: The request message for
 // FirestoreAdmin.RestoreDatabase.
 type GoogleFirestoreAdminV1RestoreDatabaseRequest struct {
-	// Backup: Backup to restore from. Must be from the same project as the parent.
-	// The restored database will be created in the same location as the source
-	// backup. Format is:
+	// Backup: Required. Backup to restore from. Must be from the same project as
+	// the parent. The restored database will be created in the same location as
+	// the source backup. Format is:
 	// `projects/{project_id}/locations/{location}/backups/{backup}`
 	Backup string `json:"backup,omitempty"`
 	// DatabaseId: Required. The ID to use for the database, which will become the
-	// final component of the database's resource name. This database id must not
+	// final component of the database's resource name. This database ID must not
 	// be associated with an existing database. This value should be 4-63
 	// characters. Valid characters are /a-z-/ with first character a letter and
 	// the last a letter or a number. Must not be UUID-like
-	// /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. "(default)" database id is also
+	// /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. "(default)" database ID is also
 	// valid.
 	DatabaseId string `json:"databaseId,omitempty"`
 	// EncryptionConfig: Optional. Encryption configuration for the restored
@@ -4341,7 +4365,7 @@ func (r *ProjectsDatabasesService) Create(parent string, googlefirestoreadminv1d
 // resource name. This value should be 4-63 characters. Valid characters are
 // /a-z-/ with first character a letter and the last a letter or a number. Must
 // not be UUID-like /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/. "(default)"
-// database id is also valid.
+// database ID is also valid.
 func (c *ProjectsDatabasesCreateCall) DatabaseId(databaseId string) *ProjectsDatabasesCreateCall {
 	c.urlParams_.Set("databaseId", databaseId)
 	return c

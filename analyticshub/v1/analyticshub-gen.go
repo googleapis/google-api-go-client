@@ -1967,7 +1967,7 @@ type RevokeSubscriptionRequest struct {
 }
 
 // RevokeSubscriptionResponse: Message for response when you revoke a
-// subscription.
+// subscription. Empty for now.
 type RevokeSubscriptionResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

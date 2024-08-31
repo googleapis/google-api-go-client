@@ -419,11 +419,11 @@ type Subscription struct {
 	// of other fields, and might be sent on update requests to ensure the client
 	// has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-	// EventTypes: Required. Immutable. Unordered list. Input for creating a
-	// subscription. Otherwise, output only. One or more types of events to receive
-	// about the target resource. Formatted according to the CloudEvents
-	// specification. The supported event types depend on the target resource of
-	// your subscription. For details, see Supported Google Workspace events
+	// EventTypes: Required. Unordered list. Input for creating a subscription.
+	// Otherwise, output only. One or more types of events to receive about the
+	// target resource. Formatted according to the CloudEvents specification. The
+	// supported event types depend on the target resource of your subscription.
+	// For details, see Supported Google Workspace events
 	// (https://developers.google.com/workspace/events/guides#supported-events). By
 	// default, you also receive events about the lifecycle of your subscription
 	// (https://developers.google.com/workspace/events/guides/events-lifecycle).

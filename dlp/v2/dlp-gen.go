@@ -2949,7 +2949,8 @@ func (s GooglePrivacyDlpV2DataRiskLevel) MarshalJSON() ([]byte, error) {
 // resource being profiled.
 type GooglePrivacyDlpV2DataSourceType struct {
 	// DataSource: Output only. An identifying string to the type of resource being
-	// profiled. Current values: google/bigquery/table, google/project
+	// profiled. Current values: * google/bigquery/table * google/project *
+	// google/sql/table * google/gcs/bucket
 	DataSource string `json:"dataSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataSource") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7729,7 +7730,7 @@ type GooglePrivacyDlpV2ProjectDataProfile struct {
 	// ProfileStatus: Success or error status of the last attempt to profile the
 	// project.
 	ProfileStatus *GooglePrivacyDlpV2ProfileStatus `json:"profileStatus,omitempty"`
-	// ProjectId: Project ID that was profiled.
+	// ProjectId: Project ID or account that was profiled.
 	ProjectId string `json:"projectId,omitempty"`
 	// SensitivityScore: The sensitivity score of this project.
 	SensitivityScore *GooglePrivacyDlpV2SensitivityScore `json:"sensitivityScore,omitempty"`

@@ -841,6 +841,7 @@ type ConnectSettings struct {
 	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "POSTGRES_15" - The database version is PostgreSQL 15.
 	//   "POSTGRES_16" - The database version is PostgreSQL 16.
+	//   "POSTGRES_17" - The database version is PostgreSQL 17.
 	//   "MYSQL_8_0" - The database version is MySQL 8.
 	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the minor
 	// version is 18.
@@ -1086,6 +1087,7 @@ type DatabaseInstance struct {
 	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "POSTGRES_15" - The database version is PostgreSQL 15.
 	//   "POSTGRES_16" - The database version is PostgreSQL 16.
+	//   "POSTGRES_17" - The database version is PostgreSQL 17.
 	//   "MYSQL_8_0" - The database version is MySQL 8.
 	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the minor
 	// version is 18.
@@ -1653,6 +1655,19 @@ type ExportContextBakExportOptions struct {
 	// DifferentialBase: Whether or not the backup can be used as a differential
 	// base copy_only backup can not be served as differential base
 	DifferentialBase bool `json:"differentialBase,omitempty"`
+	// ExportLogEndTime: Optional. The end timestamp when transaction log will be
+	// included in the export operation. RFC 3339
+	// (https://tools.ietf.org/html/rfc3339) format (for example,
+	// `2023-10-01T16:19:00.094`) in UTC. When omitted, all available logs until
+	// current time will be included. Only applied to Cloud SQL for SQL Server.
+	ExportLogEndTime string `json:"exportLogEndTime,omitempty"`
+	// ExportLogStartTime: Optional. The begin timestamp when transaction log will
+	// be included in the export operation. RFC 3339
+	// (https://tools.ietf.org/html/rfc3339) format (for example,
+	// `2023-10-01T16:19:00.094`) in UTC. When omitted, all available logs from the
+	// beginning of retention period will be included. Only applied to Cloud SQL
+	// for SQL Server.
+	ExportLogStartTime string `json:"exportLogStartTime,omitempty"`
 	// StripeCount: Option for specifying how many stripes to use for the export.
 	// If blank, and the value of the striped field is true, the number of stripes
 	// is automatically chosen.
@@ -1866,6 +1881,7 @@ type Flag struct {
 	//   "POSTGRES_14" - The database version is PostgreSQL 14.
 	//   "POSTGRES_15" - The database version is PostgreSQL 15.
 	//   "POSTGRES_16" - The database version is PostgreSQL 16.
+	//   "POSTGRES_17" - The database version is PostgreSQL 17.
 	//   "MYSQL_8_0" - The database version is MySQL 8.
 	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the minor
 	// version is 18.
@@ -3896,6 +3912,12 @@ type SqlExternalSyncSettingError struct {
 	// enable the PGAudit extension on the instance.
 	//   "UNSUPPORTED_COLUMNS" - The source database has generated columns that
 	// can't be migrated. Please change them to regular columns before migration.
+	//   "USERS_NOT_CREATED_IN_REPLICA" - The source database has users that aren't
+	// created in the replica. First, create all users, which are in the
+	// pg_user_mappings table of the source database, in the destination instance.
+	// Then, perform the migration.
+	//   "UNSUPPORTED_SYSTEM_OBJECTS" - The selected objects include system objects
+	// that aren't supported for migration.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Detail") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

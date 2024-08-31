@@ -756,6 +756,9 @@ type GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest struct {
 	// Domain: Required. Domain to fetch for Cloud Identity account customers,
 	// including domained and domainless.
 	Domain string `json:"domain,omitempty"`
+	// PrimaryAdminEmail: Optional. Primary admin email to fetch for Cloud Identity
+	// account domainless customer.
+	PrimaryAdminEmail string `json:"primaryAdminEmail,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -805,6 +808,9 @@ func (s GoogleCloudChannelV1CheckCloudIdentityAccountsExistResponse) MarshalJSON
 // Cloud Identity account that may be associated with a Channel Services API
 // partner.
 type GoogleCloudChannelV1CloudIdentityCustomerAccount struct {
+	// ChannelPartnerCloudIdentityId: If existing = true, and is 2-tier customer,
+	// the channel partner of the customer.
+	ChannelPartnerCloudIdentityId string `json:"channelPartnerCloudIdentityId,omitempty"`
 	// CustomerCloudIdentityId: If existing = true, the Cloud Identity ID of the
 	// customer.
 	CustomerCloudIdentityId string `json:"customerCloudIdentityId,omitempty"`
@@ -812,20 +818,28 @@ type GoogleCloudChannelV1CloudIdentityCustomerAccount struct {
 	// Identity account. Customer_name uses the format:
 	// accounts/{account_id}/customers/{customer_id}
 	CustomerName string `json:"customerName,omitempty"`
+	// CustomerType: If existing = true, the type of the customer.
+	//
+	// Possible values:
+	//   "CUSTOMER_TYPE_UNSPECIFIED" - Not used.
+	//   "DOMAIN" - Domain-owning customer which needs domain verification to use
+	// services.
+	//   "TEAM" - Team customer which needs email verification to use services.
+	CustomerType string `json:"customerType,omitempty"`
 	// Existing: Returns true if a Cloud Identity account exists for a specific
 	// domain.
 	Existing bool `json:"existing,omitempty"`
 	// Owned: Returns true if the Cloud Identity account is associated with a
 	// customer of the Channel Services partner.
 	Owned bool `json:"owned,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CustomerCloudIdentityId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "ChannelPartnerCloudIdentityId") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CustomerCloudIdentityId") to
-	// include in API requests with the JSON null value. By default, fields with
+	// NullFields is a list of field names (e.g. "ChannelPartnerCloudIdentityId")
+	// to include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
@@ -1668,6 +1682,8 @@ type GoogleCloudChannelV1ImportCustomerRequest struct {
 	// found. This must be set to true if there is an existing customer with a
 	// conflicting region code or domain.
 	OverwriteIfExists bool `json:"overwriteIfExists,omitempty"`
+	// PrimaryAdminEmail: Optional. Customer's primary admin email.
+	PrimaryAdminEmail string `json:"primaryAdminEmail,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthToken") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -2360,10 +2360,12 @@ func (s GoogleCloudRunV2Service) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunV2ServiceMesh: Service mesh configuration.
+// GoogleCloudRunV2ServiceMesh: Settings for Cloud Service Mesh. For more
+// information see https://cloud.google.com/service-mesh/docs/overview.
 type GoogleCloudRunV2ServiceMesh struct {
-	// Mesh: The service mesh resource name. Format:
-	// projects/{project_number}/locations/global/meshes/{mesh}.
+	// Mesh: The Mesh resource name. Format:
+	// projects/{project}/locations/global/meshes/{mesh}, where {project} can be
+	// project id or number.
 	Mesh string `json:"mesh,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Mesh") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

@@ -5563,11 +5563,11 @@ func (s RBACRoleBindingLifecycleState) MarshalJSON() ([]byte, error) {
 // ResourceManifest: ResourceManifest represents a single Kubernetes resource
 // to be applied to the cluster.
 type ResourceManifest struct {
-	// ClusterScoped: Whether the resource provided in the manifest is
+	// ClusterScoped: Output only. Whether the resource provided in the manifest is
 	// `cluster_scoped`. If unset, the manifest is assumed to be namespace scoped.
 	// This field is used for REST mapping when applying the resource in a cluster.
 	ClusterScoped bool `json:"clusterScoped,omitempty"`
-	// Manifest: YAML manifest of the resource.
+	// Manifest: Output only. YAML manifest of the resource.
 	Manifest string `json:"manifest,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterScoped") to
 	// unconditionally include in API requests. By default, fields with empty or

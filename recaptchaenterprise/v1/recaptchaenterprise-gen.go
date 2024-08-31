@@ -683,8 +683,7 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// platforms already integrated with recaptcha enterprise.
 	ExpectedAction string `json:"expectedAction,omitempty"`
 	// Express: Optional. Flag for a reCAPTCHA express request for an assessment
-	// without a token. If enabled, `site_key` must reference a SCORE key with WAF
-	// feature set to EXPRESS.
+	// without a token. If enabled, `site_key` must reference an Express site key.
 	Express bool `json:"express,omitempty"`
 	// FirewallPolicyEvaluation: Optional. Flag for enabling firewall policy config
 	// assessment. If this flag is enabled, the firewall policy will be evaluated
@@ -755,6 +754,11 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 func (s GoogleCloudRecaptchaenterpriseV1Event) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1Event
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1ExpressKeySettings: Settings specific to
+// keys that can be used for reCAPTCHA Express.
+type GoogleCloudRecaptchaenterpriseV1ExpressKeySettings struct {
 }
 
 // GoogleCloudRecaptchaenterpriseV1FirewallAction: An individual action. Each
@@ -1298,6 +1302,8 @@ type GoogleCloudRecaptchaenterpriseV1Key struct {
 	// DisplayName: Required. Human-readable display name of this key. Modifiable
 	// by user.
 	DisplayName string `json:"displayName,omitempty"`
+	// ExpressSettings: Settings for keys that can be used by reCAPTCHA Express.
+	ExpressSettings *GoogleCloudRecaptchaenterpriseV1ExpressKeySettings `json:"expressSettings,omitempty"`
 	// IosSettings: Settings for keys that can be used by iOS apps.
 	IosSettings *GoogleCloudRecaptchaenterpriseV1IOSKeySettings `json:"iosSettings,omitempty"`
 	// Labels: Optional. See [Creating and managing labels]

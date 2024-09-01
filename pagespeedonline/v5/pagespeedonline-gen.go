@@ -458,6 +458,8 @@ type LighthouseAuditResultV5 struct {
 	Explanation string `json:"explanation,omitempty"`
 	// Id: The audit's id.
 	Id string `json:"id,omitempty"`
+	// MetricSavings: The metric savings of the audit.
+	MetricSavings *MetricSavings `json:"metricSavings,omitempty"`
 	// NumericUnit: The unit of the numeric_value field. Used to format the numeric
 	// value for display.
 	NumericUnit string `json:"numericUnit,omitempty"`
@@ -598,6 +600,63 @@ type LighthouseResultV5 struct {
 func (s LighthouseResultV5) MarshalJSON() ([]byte, error) {
 	type NoMethod LighthouseResultV5
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MetricSavings: The metric savings of the audit.
+type MetricSavings struct {
+	// CLS: Optional. Optional numeric value representing the audit's savings for
+	// the CLS metric.
+	CLS float64 `json:"CLS,omitempty"`
+	// FCP: Optional. Optional numeric value representing the audit's savings for
+	// the FCP metric.
+	FCP float64 `json:"FCP,omitempty"`
+	// INP: Optional. Optional numeric value representing the audit's savings for
+	// the INP metric.
+	INP float64 `json:"INP,omitempty"`
+	// LCP: Optional. Optional numeric value representing the audit's savings for
+	// the LCP metric.
+	LCP float64 `json:"LCP,omitempty"`
+	// TBT: Optional. Optional numeric value representing the audit's savings for
+	// the TBT metric.
+	TBT float64 `json:"TBT,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CLS") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CLS") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MetricSavings) MarshalJSON() ([]byte, error) {
+	type NoMethod MetricSavings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *MetricSavings) UnmarshalJSON(data []byte) error {
+	type NoMethod MetricSavings
+	var s1 struct {
+		CLS gensupport.JSONFloat64 `json:"CLS"`
+		FCP gensupport.JSONFloat64 `json:"FCP"`
+		INP gensupport.JSONFloat64 `json:"INP"`
+		LCP gensupport.JSONFloat64 `json:"LCP"`
+		TBT gensupport.JSONFloat64 `json:"TBT"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CLS = float64(s1.CLS)
+	s.FCP = float64(s1.FCP)
+	s.INP = float64(s1.INP)
+	s.LCP = float64(s1.LCP)
+	s.TBT = float64(s1.TBT)
+	return nil
 }
 
 // PagespeedApiLoadingExperienceV5: The CrUX loading experience object that

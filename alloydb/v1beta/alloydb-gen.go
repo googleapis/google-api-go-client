@@ -2471,6 +2471,10 @@ func (s Status) MarshalJSON() ([]byte, error) {
 // StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration:
 // Configuration for availability of database instance
 type StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration struct {
+	// AutomaticFailoverRoutingConfigured: Checks for existence of (multi-cluster)
+	// routing configuration that allows automatic failover to a different
+	// zone/region in case of an outage. Applicable to Bigtable resources.
+	AutomaticFailoverRoutingConfigured bool `json:"automaticFailoverRoutingConfigured,omitempty"`
 	// AvailabilityType: Availability type. Potential values: * `ZONAL`: The
 	// instance serves data from only one zone. Outages in that zone affect data
 	// accessibility. * `REGIONAL`: The instance can serve data from more than one
@@ -2488,16 +2492,18 @@ type StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration struct {
 	CrossRegionReplicaConfigured bool `json:"crossRegionReplicaConfigured,omitempty"`
 	ExternalReplicaConfigured    bool `json:"externalReplicaConfigured,omitempty"`
 	PromotableReplicaConfigured  bool `json:"promotableReplicaConfigured,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AvailabilityType") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AutomaticFailoverRoutingConfigured") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AvailabilityType") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AutomaticFailoverRoutingConfigured") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
@@ -3957,6 +3963,9 @@ type User struct {
 	// DatabaseRoles: Optional. List of database roles this user has. The database
 	// role strings are subject to the PostgreSQL naming conventions.
 	DatabaseRoles []string `json:"databaseRoles,omitempty"`
+	// KeepExtraRoles: Input only. If the user already exists and it has additional
+	// roles, keep them granted.
+	KeepExtraRoles bool `json:"keepExtraRoles,omitempty"`
 	// Name: Output only. Name of the resource in the form of
 	// projects/{project}/locations/{location}/cluster/{cluster}/users/{user}.
 	Name string `json:"name,omitempty"`

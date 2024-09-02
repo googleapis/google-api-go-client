@@ -121,6 +121,7 @@ func newClientNewAuth(ctx context.Context, base http.RoundTripper, ds *internal.
 			Audience:        aud,
 			CredentialsFile: ds.CredentialsFile,
 			CredentialsJSON: ds.CredentialsJSON,
+			QuotaProjectID:  ds.QuotaProject,
 		},
 		InternalOptions: &httptransport.InternalOptions{
 			EnableJWTWithScope:      ds.EnableJwtWithScope,

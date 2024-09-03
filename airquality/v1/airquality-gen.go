@@ -399,7 +399,7 @@ type Concentration struct {
 	//   "MICROGRAMS_PER_CUBIC_METER" - The "µg/m^3" (micrograms per cubic meter)
 	// concentration unit.
 	Units string `json:"units,omitempty"`
-	// Value: Value of pollutant concentration.
+	// Value: Value of the pollutant concentration.
 	Value float64 `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Units") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1111,8 +1111,8 @@ func (s LookupHistoryResponse) MarshalJSON() ([]byte, error) {
 type Pollutant struct {
 	// AdditionalInfo: Additional information about the pollutant.
 	AdditionalInfo *AdditionalInfo `json:"additionalInfo,omitempty"`
-	// Code: The pollutant's code name. For example: "so2". A list of all available
-	// codes could be found here
+	// Code: The pollutant's code name (for example, "so2"). For a list of
+	// supported pollutant codes, see Reported pollutants
 	// (/maps/documentation/air-quality/pollutants#reported_pollutants).
 	Code string `json:"code,omitempty"`
 	// Concentration: The pollutant's concentration level measured by one of the
@@ -1122,7 +1122,7 @@ type Pollutant struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// FullName: The pollutant's full name. For chemical compounds, this is the
 	// IUPAC name. Example: "Sulfur Dioxide". For more information about the IUPAC
-	// names table, see https://iupac.org/what-we-do/periodic-table-of-elements/
+	// names table, see https://iupac.org/what-we-do/periodic-table-of-elements/.
 	FullName string `json:"fullName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalInfo") to
 	// unconditionally include in API requests. By default, fields with empty or

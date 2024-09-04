@@ -2403,7 +2403,7 @@ func (s Service) MarshalJSON() ([]byte, error) {
 }
 
 // ShippingSettings: The merchant account's shipping setting
-// ((https://support.google.com/merchants/answer/6069284).
+// (https://support.google.com/merchants/answer/6069284).
 type ShippingSettings struct {
 	// Etag: Required. This field is used for avoid async issue. Make sure shipping
 	// setting data didn't change between get call and insert call. The user should

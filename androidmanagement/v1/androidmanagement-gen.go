@@ -4724,6 +4724,21 @@ type Policy struct {
 	AppAutoUpdatePolicy string `json:"appAutoUpdatePolicy,omitempty"`
 	// Applications: Policy applied to apps. This can have at most 3,000 elements.
 	Applications []*ApplicationPolicy `json:"applications,omitempty"`
+	// AssistContentPolicy: Optional. Controls whether AssistContent
+	// (https://developer.android.com/reference/android/app/assist/AssistContent)
+	// is allowed to be sent to a privileged app such as an assistant app.
+	// AssistContent includes screenshots and information about an app, such as
+	// package name. This is supported on Android 15 and above.
+	//
+	// Possible values:
+	//   "ASSIST_CONTENT_POLICY_UNSPECIFIED" - Unspecified. Defaults to
+	// ASSIST_CONTENT_ALLOWED.
+	//   "ASSIST_CONTENT_DISALLOWED" - Assist content is blocked from being sent to
+	// a privileged app.Supported on Android 15 and above. A nonComplianceDetail
+	// with API_LEVEL is reported if the Android version is less than 15.
+	//   "ASSIST_CONTENT_ALLOWED" - Assist content is allowed to be sent to a
+	// privileged app.Supported on Android 15 and above.
+	AssistContentPolicy string `json:"assistContentPolicy,omitempty"`
 	// AutoDateAndTimeZone: Whether auto date, time, and time zone are enabled on a
 	// company-owned device. If this is set, then autoTimeRequired is ignored.
 	//
@@ -5186,7 +5201,7 @@ type Policy struct {
 	// disabled then network escape hatch will be shown in order to refresh the
 	// device policy (see networkEscapeHatchEnabled).
 	WifiConfigDisabled bool `json:"wifiConfigDisabled,omitempty"`
-	// WifiConfigsLockdownEnabled: DEPRECATED - Use wifi_config_disabled.
+	// WifiConfigsLockdownEnabled: This is deprecated.
 	WifiConfigsLockdownEnabled bool `json:"wifiConfigsLockdownEnabled,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

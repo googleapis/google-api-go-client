@@ -502,7 +502,7 @@
                       "type": "string"
                     },
                     "updateMask": {
-                      "description": "Required. Mask of fields to update. At least one path must be supplied in this field. The elements of the repeated paths field may only include these fields: * \"description\" * \"directory_services\" * \"file_shares\" * \"labels\"",
+                      "description": "Required. Mask of fields to update. At least one path must be supplied in this field. The elements of the repeated paths field may only include these fields: * \"description\" * \"directory_services\" * \"file_shares\" * \"labels\" * \"performance_config\" * \"deletion_protection_enabled\" * \"deletion_protection_reason\"",
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
@@ -520,7 +520,7 @@
                   ]
                 },
                 "promoteReplica": {
-                  "description": "Promote an standby instance (replica).",
+                  "description": "Promote the standby instance (replica).",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:promoteReplica",
                   "httpMethod": "POST",
                   "id": "file.projects.locations.instances.promoteReplica",
@@ -1069,7 +1069,7 @@
       }
     }
   },
-  "revision": "20240716",
+  "revision": "20240821",
   "rootUrl": "https://file.googleapis.com/",
   "schemas": {
     "Backup": {
@@ -1205,7 +1205,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: \"123/environment\": \"production\", \"123/costCenter\": \"marketing\"",
+          "description": "Optional. Input only. Immutable. Tag key-value pairs are bound to this resource. For example: \"123/environment\": \"production\", \"123/costCenter\": \"marketing\"",
           "type": "object"
         }
       },
@@ -1614,6 +1614,14 @@
           "readOnly": true,
           "type": "string"
         },
+        "deletionProtectionEnabled": {
+          "description": "Optional. Indicates whether the instance is protected against deletion.",
+          "type": "boolean"
+        },
+        "deletionProtectionReason": {
+          "description": "Optional. The reason for enabling deletion protection.",
+          "type": "string"
+        },
         "description": {
           "description": "The description of the instance (2048 characters or less).",
           "type": "string"
@@ -1687,7 +1695,7 @@
         },
         "replication": {
           "$ref": "Replication",
-          "description": "Optional. Replicaition configuration."
+          "description": "Optional. Replication configuration."
         },
         "satisfiesPzi": {
           "description": "Output only. Reserved for future use.",
@@ -1757,7 +1765,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: \"123/environment\": \"production\", \"123/costCenter\": \"marketing\"",
+          "description": "Optional. Input only. Immutable. Tag key-value pairs are bound to this resource. For example: \"123/environment\": \"production\", \"123/costCenter\": \"marketing\"",
           "type": "object"
         },
         "tier": {
@@ -2018,11 +2026,11 @@
       "type": "object"
     },
     "ManagedActiveDirectoryConfig": {
-      "description": "ManagedActiveDirectoryConfig contains all the parameters for connecting to Managed Active Directory.",
+      "description": "ManagedActiveDirectoryConfig contains all the parameters for connecting to Managed Service for Microsoft Active Directory (Managed Microsoft AD).",
       "id": "ManagedActiveDirectoryConfig",
       "properties": {
         "computer": {
-          "description": "Required. The computer name is used as a prefix to the mount remote target. Example: if the computer is `my-computer`, the mount command will look like: `$mount -o vers=4.1,sec=krb5 my-computer.filestore.: `.",
+          "description": "Required. The computer name is used as a prefix in the command to mount the remote target. For example: if the computer is `my-computer`, the mount command will look like: `$mount -o vers=4.1,sec=krb5 my-computer.filestore.: `.",
           "type": "string"
         },
         "domain": {
@@ -2296,7 +2304,7 @@
       "id": "Replication",
       "properties": {
         "replicas": {
-          "description": "Replicas configuration on the instance. For now, only a single replica config is supported.",
+          "description": "Replication configuration for the replica instance associated with this instance. Only a single replica is supported.",
           "items": {
             "$ref": "ReplicaConfig"
           },
@@ -2311,8 +2319,8 @@
           ],
           "enumDescriptions": [
             "Role not set.",
-            "The instance is a Active replication member, functions as the replication source instance.",
-            "The instance is a Standby replication member, functions as the replication destination instance."
+            "The instance is the `ACTIVE` replication member, functions as the replication source instance.",
+            "The instance is the `STANDBY` replication member, functions as the replication destination instance."
           ],
           "type": "string"
         }
@@ -2509,7 +2517,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: \"123/environment\": \"production\", \"123/costCenter\": \"marketing\"",
+          "description": "Optional. Input only. Immutable. Tag key-value pairs are bound to this resource. For example: \"123/environment\": \"production\", \"123/costCenter\": \"marketing\"",
           "type": "object"
         }
       },

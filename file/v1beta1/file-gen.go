@@ -315,9 +315,9 @@ type Backup struct {
 	// backups share storage, this number is expected to change with backup
 	// creation/deletion.
 	StorageBytes int64 `json:"storageBytes,omitempty,string"`
-	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
-	// this resource. For example: "123/environment": "production",
-	// "123/costCenter": "marketing"
+	// Tags: Optional. Input only. Immutable. Tag key-value pairs are bound to this
+	// resource. For example: "123/environment": "production", "123/costCenter":
+	// "marketing"
 	Tags map[string]string `json:"tags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -897,6 +897,12 @@ type Instance struct {
 	CapacityStepSizeGb int64 `json:"capacityStepSizeGb,omitempty,string"`
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DeletionProtectionEnabled: Optional. Indicates whether the instance is
+	// protected against deletion.
+	DeletionProtectionEnabled bool `json:"deletionProtectionEnabled,omitempty"`
+	// DeletionProtectionReason: Optional. The reason for enabling deletion
+	// protection.
+	DeletionProtectionReason string `json:"deletionProtectionReason,omitempty"`
 	// Description: The description of the instance (2048 characters or less).
 	Description string `json:"description,omitempty"`
 	// DirectoryServices: Optional. Directory Services configuration for
@@ -937,7 +943,7 @@ type Instance struct {
 	//   "NFS_V3" - NFS 3.0.
 	//   "NFS_V4_1" - NFS 4.1.
 	Protocol string `json:"protocol,omitempty"`
-	// Replication: Optional. Replicaition configuration.
+	// Replication: Optional. Replication configuration.
 	Replication *Replication `json:"replication,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
@@ -975,9 +981,9 @@ type Instance struct {
 	//   "KMS_KEY_ISSUE" - The KMS key used by the instance is either revoked or
 	// denied access to.
 	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
-	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
-	// this resource. For example: "123/environment": "production",
-	// "123/costCenter": "marketing"
+	// Tags: Optional. Input only. Immutable. Tag key-value pairs are bound to this
+	// resource. For example: "123/environment": "production", "123/costCenter":
+	// "marketing"
 	Tags map[string]string `json:"tags,omitempty"`
 	// Tier: The service tier of the instance.
 	//
@@ -1317,11 +1323,13 @@ func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 }
 
 // ManagedActiveDirectoryConfig: ManagedActiveDirectoryConfig contains all the
-// parameters for connecting to Managed Active Directory.
+// parameters for connecting to Managed Service for Microsoft Active Directory
+// (Managed Microsoft AD).
 type ManagedActiveDirectoryConfig struct {
-	// Computer: Required. The computer name is used as a prefix to the mount
-	// remote target. Example: if the computer is `my-computer`, the mount command
-	// will look like: `$mount -o vers=4.1,sec=krb5 my-computer.filestore.: `.
+	// Computer: Required. The computer name is used as a prefix in the command to
+	// mount the remote target. For example: if the computer is `my-computer`, the
+	// mount command will look like: `$mount -o vers=4.1,sec=krb5
+	// my-computer.filestore.: `.
 	Computer string `json:"computer,omitempty"`
 	// Domain: Required. The domain resource name, in the format
 	// `projects/{project_id}/locations/global/domains/{domain}`.
@@ -1607,17 +1615,17 @@ func (s ReplicaConfig) MarshalJSON() ([]byte, error) {
 
 // Replication: Replication specifications.
 type Replication struct {
-	// Replicas: Replicas configuration on the instance. For now, only a single
-	// replica config is supported.
+	// Replicas: Replication configuration for the replica instance associated with
+	// this instance. Only a single replica is supported.
 	Replicas []*ReplicaConfig `json:"replicas,omitempty"`
 	// Role: Output only. The replication role.
 	//
 	// Possible values:
 	//   "ROLE_UNSPECIFIED" - Role not set.
-	//   "ACTIVE" - The instance is a Active replication member, functions as the
-	// replication source instance.
-	//   "STANDBY" - The instance is a Standby replication member, functions as the
-	// replication destination instance.
+	//   "ACTIVE" - The instance is the `ACTIVE` replication member, functions as
+	// the replication source instance.
+	//   "STANDBY" - The instance is the `STANDBY` replication member, functions as
+	// the replication destination instance.
 	Role string `json:"role,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Replicas") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1810,9 +1818,9 @@ type Snapshot struct {
 	//   "READY" - Snapshot is available for use.
 	//   "DELETING" - Snapshot is being deleted.
 	State string `json:"state,omitempty"`
-	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
-	// this resource. For example: "123/environment": "production",
-	// "123/costCenter": "marketing"
+	// Tags: Optional. Input only. Immutable. Tag key-value pairs are bound to this
+	// resource. For example: "123/environment": "production", "123/costCenter":
+	// "marketing"
 	Tags map[string]string `json:"tags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3336,7 +3344,9 @@ func (r *ProjectsLocationsInstancesService) Patch(name string, instance *Instanc
 // UpdateMask sets the optional parameter "updateMask": Required. Mask of
 // fields to update. At least one path must be supplied in this field. The
 // elements of the repeated paths field may only include these fields: *
-// "description" * "directory_services" * "file_shares" * "labels"
+// "description" * "directory_services" * "file_shares" * "labels" *
+// "performance_config" * "deletion_protection_enabled" *
+// "deletion_protection_reason"
 func (c *ProjectsLocationsInstancesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsInstancesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3433,7 +3443,7 @@ type ProjectsLocationsInstancesPromoteReplicaCall struct {
 	header_               http.Header
 }
 
-// PromoteReplica: Promote an standby instance (replica).
+// PromoteReplica: Promote the standby instance (replica).
 //
 //   - name: The resource name of the instance, in the format
 //     `projects/{project_id}/locations/{location_id}/instances/{instance_id}`.

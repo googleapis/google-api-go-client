@@ -3535,16 +3535,14 @@ type GoogleCloudDiscoveryengineV1WorkspaceConfig struct {
 	// Type: The Google Workspace data source.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value.
-	//   "GOOGLE_DRIVE" - The data store is used to store content from Google
-	// Drive.
-	//   "GOOGLE_MAIL" - The data store is used to store content from Gmail.
-	//   "GOOGLE_SITES" - The data store is used to store content from Google
-	// Sites.
-	//   "GOOGLE_CALENDAR" - The data store is used to store content from Google
-	// Calendar.
-	//   "GOOGLE_GROUPS" - The data store is used to store content from Google
-	// Groups.
+	//   "TYPE_UNSPECIFIED" - Defaults to an unspecified Workspace type.
+	//   "GOOGLE_DRIVE" - Workspace Data Store contains Drive data
+	//   "GOOGLE_MAIL" - Workspace Data Store contains Mail data
+	//   "GOOGLE_SITES" - Workspace Data Store contains Sites data
+	//   "GOOGLE_CALENDAR" - Workspace Data Store contains Calendar data
+	//   "GOOGLE_CHAT" - Workspace Data Store contains Chat data
+	//   "GOOGLE_GROUPS" - Workspace Data Store contains Groups data
+	//   "GOOGLE_KEEP" - Workspace Data Store contains Keep data
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DasherCustomerId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3646,7 +3644,7 @@ type GoogleCloudDiscoveryengineV1alphaAnswer struct {
 	// reason is not specified.
 	//   "ADVERSARIAL_QUERY_IGNORED" - The adversarial query ignored case.
 	//   "NON_ANSWER_SEEKING_QUERY_IGNORED" - The non-answer seeking query ignored
-	// case.
+	// case Google skips the answer if the query is chit chat.
 	//   "OUT_OF_DOMAIN_QUERY_IGNORED" - The out-of-domain query ignored case.
 	// Google skips the answer if there are no high-relevance search results.
 	//   "POTENTIAL_POLICY_VIOLATION" - The potential policy violation case. Google
@@ -3660,6 +3658,9 @@ type GoogleCloudDiscoveryengineV1alphaAnswer struct {
 	//   "CUSTOMER_POLICY_VIOLATION" - The customer policy violation case. Google
 	// skips the summary if there is a customer policy violation detected. The
 	// policy is defined by the customer.
+	//   "NON_ANSWER_SEEKING_QUERY_IGNORED_V2" - The non-answer seeking query
+	// ignored case. Google skips the answer if the query doesn't have clear
+	// intent.
 	AnswerSkippedReasons []string `json:"answerSkippedReasons,omitempty"`
 	// AnswerText: The textual answer.
 	AnswerText string `json:"answerText,omitempty"`
@@ -3958,8 +3959,11 @@ type GoogleCloudDiscoveryengineV1alphaAnswerQueryRequestQueryUnderstandingSpecQu
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified query classification type.
 	//   "ADVERSARIAL_QUERY" - Adversarial query classification type.
-	//   "NON_ANSWER_SEEKING_QUERY" - Non-answer-seeking query classification type.
+	//   "NON_ANSWER_SEEKING_QUERY" - Non-answer-seeking query classification type,
+	// for chit chat.
 	//   "JAIL_BREAKING_QUERY" - Jail-breaking query classification type.
+	//   "NON_ANSWER_SEEKING_QUERY_V2" - Non-answer-seeking query classification
+	// type, for no clear intent.
 	Types []string `json:"types,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Types") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4393,8 +4397,11 @@ type GoogleCloudDiscoveryengineV1alphaAnswerQueryUnderstandingInfoQueryClassific
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified query classification type.
 	//   "ADVERSARIAL_QUERY" - Adversarial query classification type.
-	//   "NON_ANSWER_SEEKING_QUERY" - Non-answer-seeking query classification type.
+	//   "NON_ANSWER_SEEKING_QUERY" - Non-answer-seeking query classification type,
+	// for chit chat.
 	//   "JAIL_BREAKING_QUERY" - Jail-breaking query classification type.
+	//   "NON_ANSWER_SEEKING_QUERY_V2" - Non-answer-seeking query classification
+	// type, for no clear intent.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Positive") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6846,6 +6853,11 @@ type GoogleCloudDiscoveryengineV1alphaDocument struct {
 	// (https://tools.ietf.org/html/rfc1034) standard with a length limit of 63
 	// characters.
 	Id string `json:"id,omitempty"`
+	// IndexStatus: Output only. The index status of the document. * If document is
+	// indexed successfully, the index_time field is populated. * Otherwise, if
+	// document is not indexed due to errors, the error_samples field is populated.
+	// * Otherwise, index_status is unset.
+	IndexStatus *GoogleCloudDiscoveryengineV1alphaDocumentIndexStatus `json:"indexStatus,omitempty"`
 	// IndexTime: Output only. The last time the document was indexed. If this
 	// field is set, the document could be returned in search results. This field
 	// is OUTPUT_ONLY. If this field is not populated, it means the document has
@@ -6984,6 +6996,33 @@ type GoogleCloudDiscoveryengineV1alphaDocumentContent struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDocumentContent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDocumentContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDocumentIndexStatus: Index status of the
+// document.
+type GoogleCloudDiscoveryengineV1alphaDocumentIndexStatus struct {
+	// ErrorSamples: A sample of errors encountered while indexing the document. If
+	// this field is populated, the document is not indexed due to errors.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+	// IndexTime: The time when the document was indexed. If this field is
+	// populated, it means the document has been indexed.
+	IndexTime string `json:"indexTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDocumentIndexStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDocumentIndexStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13068,8 +13107,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchResponseSummary struct {
 	//   "ADVERSARIAL_QUERY_IGNORED" - The adversarial query ignored case. Only
 	// used when SummarySpec.ignore_adversarial_query is set to `true`.
 	//   "NON_SUMMARY_SEEKING_QUERY_IGNORED" - The non-summary seeking query
-	// ignored case. Only used when SummarySpec.ignore_non_summary_seeking_query is
-	// set to `true`.
+	// ignored case. Google skips the summary if the query is chit chat. Only used
+	// when SummarySpec.ignore_non_summary_seeking_query is set to `true`.
 	//   "OUT_OF_DOMAIN_QUERY_IGNORED" - The out-of-domain query ignored case.
 	// Google skips the summary if there are no high-relevance search results. For
 	// example, the data store contains facts about company A but the user query is
@@ -13088,6 +13127,11 @@ type GoogleCloudDiscoveryengineV1alphaSearchResponseSummary struct {
 	//   "CUSTOMER_POLICY_VIOLATION" - The customer policy violation case. Google
 	// skips the summary if there is a customer policy violation detected. The
 	// policy is defined by the customer.
+	//   "NON_SUMMARY_SEEKING_QUERY_IGNORED_V2" - The non-answer seeking query
+	// ignored case. Google skips the summary if the query doesn't have clear
+	// intent. Only used when
+	// [SearchRequest.ContentSearchSpec.SummarySpec.ignore_non_answer_seeking_query]
+	//  is set to `true`.
 	SummarySkippedReasons []string `json:"summarySkippedReasons,omitempty"`
 	// SummaryText: The summary content.
 	SummaryText string `json:"summaryText,omitempty"`
@@ -14439,16 +14483,14 @@ type GoogleCloudDiscoveryengineV1alphaWorkspaceConfig struct {
 	// Type: The Google Workspace data source.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value.
-	//   "GOOGLE_DRIVE" - The data store is used to store content from Google
-	// Drive.
-	//   "GOOGLE_MAIL" - The data store is used to store content from Gmail.
-	//   "GOOGLE_SITES" - The data store is used to store content from Google
-	// Sites.
-	//   "GOOGLE_CALENDAR" - The data store is used to store content from Google
-	// Calendar.
-	//   "GOOGLE_GROUPS" - The data store is used to store content from Google
-	// Groups.
+	//   "TYPE_UNSPECIFIED" - Defaults to an unspecified Workspace type.
+	//   "GOOGLE_DRIVE" - Workspace Data Store contains Drive data
+	//   "GOOGLE_MAIL" - Workspace Data Store contains Mail data
+	//   "GOOGLE_SITES" - Workspace Data Store contains Sites data
+	//   "GOOGLE_CALENDAR" - Workspace Data Store contains Calendar data
+	//   "GOOGLE_CHAT" - Workspace Data Store contains Chat data
+	//   "GOOGLE_GROUPS" - Workspace Data Store contains Groups data
+	//   "GOOGLE_KEEP" - Workspace Data Store contains Keep data
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DasherCustomerId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -17959,16 +18001,14 @@ type GoogleCloudDiscoveryengineV1betaWorkspaceConfig struct {
 	// Type: The Google Workspace data source.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value.
-	//   "GOOGLE_DRIVE" - The data store is used to store content from Google
-	// Drive.
-	//   "GOOGLE_MAIL" - The data store is used to store content from Gmail.
-	//   "GOOGLE_SITES" - The data store is used to store content from Google
-	// Sites.
-	//   "GOOGLE_CALENDAR" - The data store is used to store content from Google
-	// Calendar.
-	//   "GOOGLE_GROUPS" - The data store is used to store content from Google
-	// Groups.
+	//   "TYPE_UNSPECIFIED" - Defaults to an unspecified Workspace type.
+	//   "GOOGLE_DRIVE" - Workspace Data Store contains Drive data
+	//   "GOOGLE_MAIL" - Workspace Data Store contains Mail data
+	//   "GOOGLE_SITES" - Workspace Data Store contains Sites data
+	//   "GOOGLE_CALENDAR" - Workspace Data Store contains Calendar data
+	//   "GOOGLE_CHAT" - Workspace Data Store contains Chat data
+	//   "GOOGLE_GROUPS" - Workspace Data Store contains Groups data
+	//   "GOOGLE_KEEP" - Workspace Data Store contains Keep data
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DasherCustomerId") to
 	// unconditionally include in API requests. By default, fields with empty or

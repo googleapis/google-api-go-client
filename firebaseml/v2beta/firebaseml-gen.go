@@ -1302,6 +1302,7 @@ type GoogleCloudAiplatformV1beta1SafetySetting struct {
 	//   "BLOCK_MEDIUM_AND_ABOVE" - Block medium threshold and above.
 	//   "BLOCK_ONLY_HIGH" - Block only high threshold (i.e. block less).
 	//   "BLOCK_NONE" - Block none.
+	//   "OFF" - Turn off the safety filter.
 	Threshold string `json:"threshold,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with empty or

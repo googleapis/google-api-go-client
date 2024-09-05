@@ -2240,7 +2240,9 @@ func (s *GoogleCloudVisionV1p1beta1FaceAnnotation) UnmarshalJSON(data []byte) er
 }
 
 // GoogleCloudVisionV1p1beta1FaceAnnotationLandmark: A face-specific landmark
-// (for example, a face feature).
+// (for example, a face feature). Landmark positions may fall outside the
+// bounds of the image if the face is near one or more edges of the image.
+// Therefore it is NOT guaranteed that `0 <= x < width` or `0 <= y < height`.
 type GoogleCloudVisionV1p1beta1FaceAnnotationLandmark struct {
 	// Position: Face landmark position.
 	Position *GoogleCloudVisionV1p1beta1Position `json:"position,omitempty"`
@@ -4118,7 +4120,9 @@ func (s *GoogleCloudVisionV1p2beta1FaceAnnotation) UnmarshalJSON(data []byte) er
 }
 
 // GoogleCloudVisionV1p2beta1FaceAnnotationLandmark: A face-specific landmark
-// (for example, a face feature).
+// (for example, a face feature). Landmark positions may fall outside the
+// bounds of the image if the face is near one or more edges of the image.
+// Therefore it is NOT guaranteed that `0 <= x < width` or `0 <= y < height`.
 type GoogleCloudVisionV1p2beta1FaceAnnotationLandmark struct {
 	// Position: Face landmark position.
 	Position *GoogleCloudVisionV1p2beta1Position `json:"position,omitempty"`
@@ -6038,7 +6042,9 @@ func (s *GoogleCloudVisionV1p3beta1FaceAnnotation) UnmarshalJSON(data []byte) er
 }
 
 // GoogleCloudVisionV1p3beta1FaceAnnotationLandmark: A face-specific landmark
-// (for example, a face feature).
+// (for example, a face feature). Landmark positions may fall outside the
+// bounds of the image if the face is near one or more edges of the image.
+// Therefore it is NOT guaranteed that `0 <= x < width` or `0 <= y < height`.
 type GoogleCloudVisionV1p3beta1FaceAnnotationLandmark struct {
 	// Position: Face landmark position.
 	Position *GoogleCloudVisionV1p3beta1Position `json:"position,omitempty"`
@@ -8105,7 +8111,9 @@ func (s *GoogleCloudVisionV1p4beta1FaceAnnotation) UnmarshalJSON(data []byte) er
 }
 
 // GoogleCloudVisionV1p4beta1FaceAnnotationLandmark: A face-specific landmark
-// (for example, a face feature).
+// (for example, a face feature). Landmark positions may fall outside the
+// bounds of the image if the face is near one or more edges of the image.
+// Therefore it is NOT guaranteed that `0 <= x < width` or `0 <= y < height`.
 type GoogleCloudVisionV1p4beta1FaceAnnotationLandmark struct {
 	// Position: Face landmark position.
 	Position *GoogleCloudVisionV1p4beta1Position `json:"position,omitempty"`
@@ -9887,7 +9895,10 @@ func (s KeyValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Landmark: A face-specific landmark (for example, a face feature).
+// Landmark: A face-specific landmark (for example, a face feature). Landmark
+// positions may fall outside the bounds of the image if the face is near one
+// or more edges of the image. Therefore it is NOT guaranteed that `0 <= x <
+// width` or `0 <= y < height`.
 type Landmark struct {
 	// Position: Face landmark position.
 	Position *Position `json:"position,omitempty"`

@@ -721,7 +721,7 @@ type InventoryItem struct {
 	// Type: The specific type of inventory, correlating to its specific details.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Invalid. An type must be specified.
+	//   "TYPE_UNSPECIFIED" - Invalid. A type must be specified.
 	//   "INSTALLED_PACKAGE" - This represents a package that is installed on the
 	// VM.
 	//   "AVAILABLE_PACKAGE" - This represents an update that is available for a

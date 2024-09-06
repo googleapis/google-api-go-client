@@ -721,6 +721,8 @@ type ClusterUpgradeDetails struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "NOT_STARTED" - Not started.
+	//   "IN_PROGRESS" - In progress.
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
@@ -1214,6 +1216,9 @@ type Instance struct {
 	// Nodes: Output only. List of available read-only VMs in this instance,
 	// including the standby for a PRIMARY instance.
 	Nodes []*Node `json:"nodes,omitempty"`
+	// OutboundPublicIpAddresses: Output only. All outbound public IP addresses
+	// configured for the instance.
+	OutboundPublicIpAddresses []string `json:"outboundPublicIpAddresses,omitempty"`
 	// PscInstanceConfig: Optional. The configuration for Private Service Connect
 	// (PSC) for the instance.
 	PscInstanceConfig *PscInstanceConfig `json:"pscInstanceConfig,omitempty"`
@@ -1290,6 +1295,9 @@ type InstanceNetworkConfig struct {
 	// AuthorizedExternalNetworks: Optional. A list of external network authorized
 	// to access this instance.
 	AuthorizedExternalNetworks []*AuthorizedNetwork `json:"authorizedExternalNetworks,omitempty"`
+	// EnableOutboundPublicIp: Optional. Enabling an outbound public IP address to
+	// support a database server sending requests out into the internet.
+	EnableOutboundPublicIp bool `json:"enableOutboundPublicIp,omitempty"`
 	// EnablePublicIp: Optional. Enabling public ip for the instance.
 	EnablePublicIp bool `json:"enablePublicIp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthorizedExternalNetworks")
@@ -1332,6 +1340,8 @@ type InstanceUpgradeDetails struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "NOT_STARTED" - Not started.
+	//   "IN_PROGRESS" - In progress.
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
@@ -2245,17 +2255,20 @@ type StageInfo struct {
 	//
 	// Possible values:
 	//   "STAGE_UNSPECIFIED" - Unspecified stage.
-	//   "ALLOYDB_PRECHECK" - This stage is for the custom checks done before
-	// upgrade.
-	//   "PG_UPGRADE_CHECK" - This stage is for `pg_upgrade --check` run before
-	// upgrade.
-	//   "PRIMARY_INSTANCE_UPGRADE" - This stage is primary upgrade.
-	//   "READ_POOL_UPGRADE" - This stage is read pool upgrade.
+	//   "ALLOYDB_PRECHECK" - Pre-upgrade custom checks, not covered by pg_upgrade.
+	//   "PG_UPGRADE_CHECK" - Pre-upgrade pg_upgrade checks.
+	//   "PREPARE_FOR_UPGRADE" - Clone the original cluster.
+	//   "PRIMARY_INSTANCE_UPGRADE" - Upgrade the primary instance(downtime).
+	//   "READ_POOL_INSTANCES_UPGRADE" - This stage is read pool upgrade.
+	//   "ROLLBACK" - Rollback in case of critical failures.
+	//   "CLEANUP" - Cleanup.
 	Stage string `json:"stage,omitempty"`
 	// Status: Status of the stage.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "NOT_STARTED" - Not started.
+	//   "IN_PROGRESS" - In progress.
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
@@ -3738,6 +3751,54 @@ func (s TrialMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// UpgradeClusterRequest: Upgrades a cluster.
+type UpgradeClusterRequest struct {
+	// Etag: Optional. The current etag of the Cluster. If an etag is provided and
+	// does not match the current etag of the Cluster, upgrade will be blocked and
+	// an ABORTED error will be returned.
+	Etag string `json:"etag,omitempty"`
+	// RequestId: Optional. An optional request ID to identify requests. Specify a
+	// unique request ID so that if you must retry your request, the server will
+	// know to ignore the request if it has already been completed. The server will
+	// guarantee that for at least 60 minutes after the first request. For example,
+	// consider a situation where you make an initial request and the request times
+	// out. If you make the request again with the same request ID, the server can
+	// check if original operation with the same request ID was received, and if
+	// so, will ignore the second request. This prevents clients from accidentally
+	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// exception that zero UUID is not supported
+	// (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+	// ValidateOnly: Optional. If set, performs request validation (e.g. permission
+	// checks and any other type of validation), but does not actually execute the
+	// upgrade.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// Version: Required. The version the cluster is going to be upgraded to.
+	//
+	// Possible values:
+	//   "DATABASE_VERSION_UNSPECIFIED" - This is an unknown database version.
+	//   "POSTGRES_13" - DEPRECATED - The database version is Postgres 13.
+	//   "POSTGRES_14" - The database version is Postgres 14.
+	//   "POSTGRES_15" - The database version is Postgres 15.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpgradeClusterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeClusterRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UpgradeClusterResponse: UpgradeClusterResponse contains the response for
 // upgrade cluster operation.
 type UpgradeClusterResponse struct {
@@ -3751,6 +3812,8 @@ type UpgradeClusterResponse struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "NOT_STARTED" - Not started.
+	//   "IN_PROGRESS" - In progress.
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
@@ -5938,6 +6001,107 @@ func (c *ProjectsLocationsClustersSwitchoverCall) doRequest(alt string) (*http.R
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsClustersSwitchoverCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsClustersUpgradeCall struct {
+	s                     *Service
+	name                  string
+	upgradeclusterrequest *UpgradeClusterRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Upgrade: Upgrades a single Cluster. Imperative only.
+//
+// - name: The resource name of the cluster.
+func (r *ProjectsLocationsClustersService) Upgrade(name string, upgradeclusterrequest *UpgradeClusterRequest) *ProjectsLocationsClustersUpgradeCall {
+	c := &ProjectsLocationsClustersUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.upgradeclusterrequest = upgradeclusterrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersUpgradeCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersUpgradeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersUpgradeCall) Context(ctx context.Context) *ProjectsLocationsClustersUpgradeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersUpgradeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersUpgradeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.upgradeclusterrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:upgrade")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alloydb.projects.locations.clusters.upgrade" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersUpgradeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {

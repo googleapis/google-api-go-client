@@ -761,6 +761,8 @@ type ClusterUpgradeDetails struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "NOT_STARTED" - Not started.
+	//   "IN_PROGRESS" - In progress.
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
@@ -1448,6 +1450,8 @@ type InstanceUpgradeDetails struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "NOT_STARTED" - Not started.
+	//   "IN_PROGRESS" - In progress.
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
@@ -2411,17 +2415,20 @@ type StageInfo struct {
 	//
 	// Possible values:
 	//   "STAGE_UNSPECIFIED" - Unspecified stage.
-	//   "ALLOYDB_PRECHECK" - This stage is for the custom checks done before
-	// upgrade.
-	//   "PG_UPGRADE_CHECK" - This stage is for `pg_upgrade --check` run before
-	// upgrade.
-	//   "PRIMARY_INSTANCE_UPGRADE" - This stage is primary upgrade.
-	//   "READ_POOL_UPGRADE" - This stage is read pool upgrade.
+	//   "ALLOYDB_PRECHECK" - Pre-upgrade custom checks, not covered by pg_upgrade.
+	//   "PG_UPGRADE_CHECK" - Pre-upgrade pg_upgrade checks.
+	//   "PREPARE_FOR_UPGRADE" - Clone the original cluster.
+	//   "PRIMARY_INSTANCE_UPGRADE" - Upgrade the primary instance(downtime).
+	//   "READ_POOL_INSTANCES_UPGRADE" - This stage is read pool upgrade.
+	//   "ROLLBACK" - Rollback in case of critical failures.
+	//   "CLEANUP" - Cleanup.
 	Stage string `json:"stage,omitempty"`
 	// Status: Status of the stage.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "NOT_STARTED" - Not started.
+	//   "IN_PROGRESS" - In progress.
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
@@ -3995,6 +4002,8 @@ type UpgradeClusterResponse struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "NOT_STARTED" - Not started.
+	//   "IN_PROGRESS" - In progress.
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.

@@ -832,6 +832,7 @@ type FirewallEndpointAssociation struct {
 	//   "ACTIVE" - Active and ready for traffic.
 	//   "DELETING" - Being deleted.
 	//   "INACTIVE" - Down or in an error state.
+	//   "ORPHAN" - The GCP project that housed the association has been deleted.
 	State string `json:"state,omitempty"`
 	// TlsInspectionPolicy: Optional. The URL of the TlsInspectionPolicy that is
 	// being associated.

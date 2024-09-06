@@ -3185,6 +3185,33 @@ func (s IdentityServiceAzureADConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// IdentityServiceDiagnosticInterface: Configuration options for the AIS
+// diagnostic interface.
+type IdentityServiceDiagnosticInterface struct {
+	// Enabled: Determines whether to enable the diagnostic interface.
+	Enabled bool `json:"enabled,omitempty"`
+	// ExpirationTime: Determines the expiration time of the diagnostic interface
+	// enablement. When reached, requests to the interface would be automatically
+	// rejected.
+	ExpirationTime string `json:"expirationTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceDiagnosticInterface) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceDiagnosticInterface
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // IdentityServiceGoogleConfig: Configuration for the Google Plugin Auth flow.
 type IdentityServiceGoogleConfig struct {
 	// Disable: Disable automatic configuration of Google Plugin on supported
@@ -3245,18 +3272,20 @@ func (s IdentityServiceGroupConfig) MarshalJSON() ([]byte, error) {
 // IdentityServiceIdentityServiceOptions: Holds non-protocol-related
 // configuration options.
 type IdentityServiceIdentityServiceOptions struct {
-	// SessionDuration: Optional. Determines the lifespan of STS tokens issued by
-	// Anthos Identity Service.
+	// DiagnosticInterface: Configuration options for the AIS diagnostic interface.
+	DiagnosticInterface *IdentityServiceDiagnosticInterface `json:"diagnosticInterface,omitempty"`
+	// SessionDuration: Determines the lifespan of STS tokens issued by Anthos
+	// Identity Service.
 	SessionDuration string `json:"sessionDuration,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SessionDuration") to
+	// ForceSendFields is a list of field names (e.g. "DiagnosticInterface") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SessionDuration") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DiagnosticInterface") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5901,6 +5930,7 @@ type ServiceMeshCondition struct {
 	// identity federation required error code
 	//   "CNI_INSTALLATION_FAILED" - CNI installation failed error code
 	//   "CNI_POD_UNSCHEDULABLE" - CNI pod unschedulable error code
+	//   "CLUSTER_HAS_ZERO_NODES" - Cluster has zero node code
 	//   "UNSUPPORTED_MULTIPLE_CONTROL_PLANES" - Multiple control planes
 	// unsupported error code
 	//   "VPCSC_GA_SUPPORTED" - VPC-SC GA is supported for this control plane.

@@ -9132,6 +9132,13 @@ func (s GoogleCloudApigeeV1ScoreComponentRecommendationActionActionContext) Mars
 type GoogleCloudApigeeV1SecurityAction struct {
 	// Allow: Allow a request through if it matches this SecurityAction.
 	Allow *GoogleCloudApigeeV1SecurityActionAllow `json:"allow,omitempty"`
+	// ApiProxies: Optional. If unset, this would apply to all proxies in the
+	// environment. If set, this action is enforced only if at least one proxy in
+	// the repeated list is deployed at the time of enforcement. If set, several
+	// restrictions are enforced on SecurityActions. There can be at most 100
+	// enabled actions with proxies set in an env. Several other restrictions apply
+	// on conditions and are detailed later.
+	ApiProxies []string `json:"apiProxies,omitempty"`
 	// ConditionConfig: Required. A valid SecurityAction must contain at least one
 	// condition.
 	ConditionConfig *GoogleCloudApigeeV1SecurityActionConditionConfig `json:"conditionConfig,omitempty"`

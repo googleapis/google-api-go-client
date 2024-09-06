@@ -258,6 +258,10 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.ClientTlsPolicies = NewProjectsLocationsClientTlsPoliciesService(s)
 	rs.FirewallEndpointAssociations = NewProjectsLocationsFirewallEndpointAssociationsService(s)
 	rs.GatewaySecurityPolicies = NewProjectsLocationsGatewaySecurityPoliciesService(s)
+	rs.MirroringDeploymentGroups = NewProjectsLocationsMirroringDeploymentGroupsService(s)
+	rs.MirroringDeployments = NewProjectsLocationsMirroringDeploymentsService(s)
+	rs.MirroringEndpointGroupAssociations = NewProjectsLocationsMirroringEndpointGroupAssociationsService(s)
+	rs.MirroringEndpointGroups = NewProjectsLocationsMirroringEndpointGroupsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.ServerTlsPolicies = NewProjectsLocationsServerTlsPoliciesService(s)
 	rs.TlsInspectionPolicies = NewProjectsLocationsTlsInspectionPoliciesService(s)
@@ -279,6 +283,14 @@ type ProjectsLocationsService struct {
 	FirewallEndpointAssociations *ProjectsLocationsFirewallEndpointAssociationsService
 
 	GatewaySecurityPolicies *ProjectsLocationsGatewaySecurityPoliciesService
+
+	MirroringDeploymentGroups *ProjectsLocationsMirroringDeploymentGroupsService
+
+	MirroringDeployments *ProjectsLocationsMirroringDeploymentsService
+
+	MirroringEndpointGroupAssociations *ProjectsLocationsMirroringEndpointGroupAssociationsService
+
+	MirroringEndpointGroups *ProjectsLocationsMirroringEndpointGroupsService
 
 	Operations *ProjectsLocationsOperationsService
 
@@ -352,6 +364,42 @@ func NewProjectsLocationsGatewaySecurityPoliciesRulesService(s *Service) *Projec
 }
 
 type ProjectsLocationsGatewaySecurityPoliciesRulesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsMirroringDeploymentGroupsService(s *Service) *ProjectsLocationsMirroringDeploymentGroupsService {
+	rs := &ProjectsLocationsMirroringDeploymentGroupsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsMirroringDeploymentGroupsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsMirroringDeploymentsService(s *Service) *ProjectsLocationsMirroringDeploymentsService {
+	rs := &ProjectsLocationsMirroringDeploymentsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsMirroringDeploymentsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsMirroringEndpointGroupAssociationsService(s *Service) *ProjectsLocationsMirroringEndpointGroupAssociationsService {
+	rs := &ProjectsLocationsMirroringEndpointGroupAssociationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsMirroringEndpointGroupAssociationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsMirroringEndpointGroupsService(s *Service) *ProjectsLocationsMirroringEndpointGroupsService {
+	rs := &ProjectsLocationsMirroringEndpointGroupsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsMirroringEndpointGroupsService struct {
 	s *Service
 }
 
@@ -1316,6 +1364,7 @@ type FirewallEndpointAssociation struct {
 	//   "ACTIVE" - Active and ready for traffic.
 	//   "DELETING" - Being deleted.
 	//   "INACTIVE" - Down or in an error state.
+	//   "ORPHAN" - The GCP project that housed the association has been deleted.
 	State string `json:"state,omitempty"`
 	// TlsInspectionPolicy: Optional. The URL of the TlsInspectionPolicy that is
 	// being associated.
@@ -2243,6 +2292,127 @@ func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListMirroringDeploymentGroupsResponse: Message for response to listing
+// MirroringDeploymentGroups
+type ListMirroringDeploymentGroupsResponse struct {
+	// MirroringDeploymentGroups: The list of MirroringDeploymentGroup
+	MirroringDeploymentGroups []*MirroringDeploymentGroup `json:"mirroringDeploymentGroups,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "MirroringDeploymentGroups")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MirroringDeploymentGroups") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListMirroringDeploymentGroupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMirroringDeploymentGroupsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListMirroringDeploymentsResponse: Message for response to listing
+// MirroringDeployments
+type ListMirroringDeploymentsResponse struct {
+	// MirroringDeployments: The list of MirroringDeployment
+	MirroringDeployments []*MirroringDeployment `json:"mirroringDeployments,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "MirroringDeployments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MirroringDeployments") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListMirroringDeploymentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMirroringDeploymentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListMirroringEndpointGroupAssociationsResponse: Message for response to
+// listing MirroringEndpointGroupAssociations
+type ListMirroringEndpointGroupAssociationsResponse struct {
+	// MirroringEndpointGroupAssociations: The list of
+	// MirroringEndpointGroupAssociation
+	MirroringEndpointGroupAssociations []*MirroringEndpointGroupAssociation `json:"mirroringEndpointGroupAssociations,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "MirroringEndpointGroupAssociations") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "MirroringEndpointGroupAssociations") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListMirroringEndpointGroupAssociationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMirroringEndpointGroupAssociationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListMirroringEndpointGroupsResponse: Message for response to listing
+// MirroringEndpointGroups
+type ListMirroringEndpointGroupsResponse struct {
+	// MirroringEndpointGroups: The list of MirroringEndpointGroup
+	MirroringEndpointGroups []*MirroringEndpointGroup `json:"mirroringEndpointGroups,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "MirroringEndpointGroups") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MirroringEndpointGroups") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListMirroringEndpointGroupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMirroringEndpointGroupsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListOperationsResponse: The response message for Operations.ListOperations.
 type ListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
@@ -2514,6 +2684,285 @@ type MTLSPolicy struct {
 
 func (s MTLSPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod MTLSPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MirroringDeployment: Message describing MirroringDeployment object
+type MirroringDeployment struct {
+	// CreateTime: Output only. [Output only] Create time stamp
+	CreateTime string `json:"createTime,omitempty"`
+	// ForwardingRule: Required. Immutable. The regional load balancer which the
+	// mirrored traffic should be forwarded to. Format is:
+	// projects/{project}/regions/{region}/forwardingRules/{forwardingRule}
+	ForwardingRule string `json:"forwardingRule,omitempty"`
+	// Labels: Optional. Labels as key value pairs
+	Labels map[string]string `json:"labels,omitempty"`
+	// MirroringDeploymentGroup: Required. Immutable. The Mirroring Deployment
+	// Group that this resource is part of. Format is:
+	// `projects/{project}/locations/global/mirroringDeploymentGroups/{mirroringDepl
+	// oymentGroup}`
+	MirroringDeploymentGroup string `json:"mirroringDeploymentGroup,omitempty"`
+	// Name: Immutable. Identifier. The name of the MirroringDeployment.
+	Name string `json:"name,omitempty"`
+	// Reconciling: Output only. Whether reconciling is in progress, recommended
+	// per https://google.aip.dev/128.
+	Reconciling bool `json:"reconciling,omitempty"`
+	// State: Output only. Current state of the deployment.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not set.
+	//   "ACTIVE" - Ready.
+	//   "CREATING" - Being created.
+	//   "DELETING" - Being deleted.
+	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the
+	// deployment. The deployment is not expected to be usable. This state can
+	// result in undefined behavior.
+	//   "DELETE_FAILED" - An attempt to delete the deployment has failed. This is
+	// a terminal state and the deployment is not expected to be usable as some of
+	// its resources have been deleted. The only permitted operation is to retry
+	// deleting the deployment.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. [Output only] Update time stamp
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MirroringDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod MirroringDeployment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MirroringDeploymentGroup: Message describing MirroringDeploymentGroup object
+type MirroringDeploymentGroup struct {
+	// ConnectedEndpointGroups: Output only. The list of Mirroring Endpoint Groups
+	// that are connected to this resource.
+	ConnectedEndpointGroups []*MirroringDeploymentGroupConnectedEndpointGroup `json:"connectedEndpointGroups,omitempty"`
+	// CreateTime: Output only. [Output only] Create time stamp
+	CreateTime string `json:"createTime,omitempty"`
+	// Labels: Optional. Labels as key value pairs
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Immutable. Identifier. Then name of the MirroringDeploymentGroup.
+	Name string `json:"name,omitempty"`
+	// Network: Required. Immutable. The network that is being used for the
+	// deployment. Format is: projects/{project}/global/networks/{network}.
+	Network string `json:"network,omitempty"`
+	// Reconciling: Output only. Whether reconciling is in progress, recommended
+	// per https://google.aip.dev/128.
+	Reconciling bool `json:"reconciling,omitempty"`
+	// State: Output only. Current state of the deployment group.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not set.
+	//   "ACTIVE" - Ready.
+	//   "CREATING" - Being created.
+	//   "DELETING" - Being deleted.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. [Output only] Update time stamp
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ConnectedEndpointGroups") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectedEndpointGroups") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MirroringDeploymentGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod MirroringDeploymentGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MirroringDeploymentGroupConnectedEndpointGroup: An endpoint group connected
+// to this deployment group.
+type MirroringDeploymentGroupConnectedEndpointGroup struct {
+	// Name: Output only. A connected mirroring endpoint group.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MirroringDeploymentGroupConnectedEndpointGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod MirroringDeploymentGroupConnectedEndpointGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MirroringEndpointGroup: Message describing MirroringEndpointGroup object
+type MirroringEndpointGroup struct {
+	// CreateTime: Output only. [Output only] Create time stamp
+	CreateTime string `json:"createTime,omitempty"`
+	// Labels: Optional. Labels as key value pairs
+	Labels map[string]string `json:"labels,omitempty"`
+	// MirroringDeploymentGroup: Required. Immutable. The Mirroring Deployment
+	// Group that this resource is connected to. Format is:
+	// `projects/{project}/locations/global/mirroringDeploymentGroups/{mirroringDepl
+	// oymentGroup}`
+	MirroringDeploymentGroup string `json:"mirroringDeploymentGroup,omitempty"`
+	// Name: Immutable. Identifier. The name of the MirroringEndpointGroup.
+	Name string `json:"name,omitempty"`
+	// Reconciling: Output only. Whether reconciling is in progress, recommended
+	// per https://google.aip.dev/128.
+	Reconciling bool `json:"reconciling,omitempty"`
+	// State: Output only. Current state of the endpoint group.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not set.
+	//   "ACTIVE" - Ready.
+	//   "CLOSED" - The deployment group has been deleted and mirroring is
+	// disabled.
+	//   "CREATING" - Being created.
+	//   "DELETING" - Being deleted.
+	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the endpoint
+	// group. Some associations might not be usable.
+	//   "DELETE_FAILED" - An attempt to delete the endpoint group has failed. This
+	// is a terminal state and the endpoint group is not expected to be usable as
+	// some of its resources have been deleted. The only permitted operation is to
+	// retry deleting the endpoint group.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. [Output only] Update time stamp
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MirroringEndpointGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod MirroringEndpointGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MirroringEndpointGroupAssociation: Message describing
+// MirroringEndpointGroupAssociation object
+type MirroringEndpointGroupAssociation struct {
+	// CreateTime: Output only. [Output only] Create time stamp
+	CreateTime string `json:"createTime,omitempty"`
+	// Labels: Optional. Labels as key value pairs
+	Labels map[string]string `json:"labels,omitempty"`
+	// LocationsDetails: Output only. The list of locations that this association
+	// is in and its details.
+	LocationsDetails []*MirroringEndpointGroupAssociationLocationDetails `json:"locationsDetails,omitempty"`
+	// MirroringEndpointGroup: Required. Immutable. The Mirroring Endpoint Group
+	// that this resource is connected to. Format is:
+	// `projects/{project}/locations/global/mirroringEndpointGroups/{mirroringEndpoi
+	// ntGroup}`
+	MirroringEndpointGroup string `json:"mirroringEndpointGroup,omitempty"`
+	// Name: Immutable. Identifier. The name of the
+	// MirroringEndpointGroupAssociation.
+	Name string `json:"name,omitempty"`
+	// Network: Required. Immutable. The VPC network associated. Format:
+	// projects/{project}/global/networks/{network}.
+	Network string `json:"network,omitempty"`
+	// Reconciling: Output only. Whether reconciling is in progress, recommended
+	// per https://google.aip.dev/128.
+	Reconciling bool `json:"reconciling,omitempty"`
+	// State: Output only. Current state of the endpoint group association.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not set.
+	//   "ACTIVE" - Ready.
+	//   "CREATING" - Being created.
+	//   "DELETING" - Being deleted.
+	//   "CLOSED" - Mirroring is disabled due to an operation on another resource.
+	//   "OUT_OF_SYNC" - The underlying data plane is out of sync with the
+	// association. The association is not expected to be usable. This state can
+	// result in undefined behavior. See the `locations_details` field for more
+	// details.
+	//   "DELETE_FAILED" - An attempt to delete the association has failed. This is
+	// a terminal state and the association is not expected to be usable as some of
+	// its resources have been deleted. The only permitted operation is to retry
+	// deleting the association.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. [Output only] Update time stamp
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MirroringEndpointGroupAssociation) MarshalJSON() ([]byte, error) {
+	type NoMethod MirroringEndpointGroupAssociation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MirroringEndpointGroupAssociationLocationDetails: Details about the
+// association status in a specific cloud location.
+type MirroringEndpointGroupAssociationLocationDetails struct {
+	// Location: Output only. The cloud location.
+	Location string `json:"location,omitempty"`
+	// State: Output only. The association state in this location.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not set.
+	//   "ACTIVE" - Ready.
+	//   "OUT_OF_SYNC" - The data plane is out of sync with the association in this
+	// location.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Location") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MirroringEndpointGroupAssociationLocationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod MirroringEndpointGroupAssociationLocationDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12794,6 +13243,2532 @@ func (c *ProjectsLocationsGatewaySecurityPoliciesRulesPatchCall) doRequest(alt s
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsGatewaySecurityPoliciesRulesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringDeploymentGroupsCreateCall struct {
+	s                        *Service
+	parent                   string
+	mirroringdeploymentgroup *MirroringDeploymentGroup
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Create: Creates a new MirroringDeploymentGroup in a given project and
+// location.
+//
+// - parent: Value for parent.
+func (r *ProjectsLocationsMirroringDeploymentGroupsService) Create(parent string, mirroringdeploymentgroup *MirroringDeploymentGroup) *ProjectsLocationsMirroringDeploymentGroupsCreateCall {
+	c := &ProjectsLocationsMirroringDeploymentGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.mirroringdeploymentgroup = mirroringdeploymentgroup
+	return c
+}
+
+// MirroringDeploymentGroupId sets the optional parameter
+// "mirroringDeploymentGroupId": Required. Id of the requesting object If
+// auto-generating Id server-side, remove this field and
+// mirroring_deployment_group_id from the method_signature of Create RPC
+func (c *ProjectsLocationsMirroringDeploymentGroupsCreateCall) MirroringDeploymentGroupId(mirroringDeploymentGroupId string) *ProjectsLocationsMirroringDeploymentGroupsCreateCall {
+	c.urlParams_.Set("mirroringDeploymentGroupId", mirroringDeploymentGroupId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMirroringDeploymentGroupsCreateCall) RequestId(requestId string) *ProjectsLocationsMirroringDeploymentGroupsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringDeploymentGroupsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringDeploymentGroupsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringDeploymentGroupsCreateCall) Context(ctx context.Context) *ProjectsLocationsMirroringDeploymentGroupsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringDeploymentGroupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringDeploymentGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringdeploymentgroup)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/mirroringDeploymentGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringDeploymentGroups.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringDeploymentGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringDeploymentGroupsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single MirroringDeploymentGroup.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsMirroringDeploymentGroupsService) Delete(name string) *ProjectsLocationsMirroringDeploymentGroupsDeleteCall {
+	c := &ProjectsLocationsMirroringDeploymentGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMirroringDeploymentGroupsDeleteCall) RequestId(requestId string) *ProjectsLocationsMirroringDeploymentGroupsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringDeploymentGroupsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringDeploymentGroupsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringDeploymentGroupsDeleteCall) Context(ctx context.Context) *ProjectsLocationsMirroringDeploymentGroupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringDeploymentGroupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringDeploymentGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringDeploymentGroups.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringDeploymentGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringDeploymentGroupsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single MirroringDeploymentGroup.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsMirroringDeploymentGroupsService) Get(name string) *ProjectsLocationsMirroringDeploymentGroupsGetCall {
+	c := &ProjectsLocationsMirroringDeploymentGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringDeploymentGroupsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringDeploymentGroupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMirroringDeploymentGroupsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsMirroringDeploymentGroupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringDeploymentGroupsGetCall) Context(ctx context.Context) *ProjectsLocationsMirroringDeploymentGroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringDeploymentGroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringDeploymentGroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringDeploymentGroups.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *MirroringDeploymentGroup.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringDeploymentGroupsGetCall) Do(opts ...googleapi.CallOption) (*MirroringDeploymentGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &MirroringDeploymentGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringDeploymentGroupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists MirroringDeploymentGroups in a given project and location.
+//
+// - parent: Parent value for ListMirroringDeploymentGroupsRequest.
+func (r *ProjectsLocationsMirroringDeploymentGroupsService) List(parent string) *ProjectsLocationsMirroringDeploymentGroupsListCall {
+	c := &ProjectsLocationsMirroringDeploymentGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results
+func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) Filter(filter string) *ProjectsLocationsMirroringDeploymentGroupsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results
+func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) OrderBy(orderBy string) *ProjectsLocationsMirroringDeploymentGroupsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) PageSize(pageSize int64) *ProjectsLocationsMirroringDeploymentGroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) PageToken(pageToken string) *ProjectsLocationsMirroringDeploymentGroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringDeploymentGroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsMirroringDeploymentGroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) Context(ctx context.Context) *ProjectsLocationsMirroringDeploymentGroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/mirroringDeploymentGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringDeploymentGroups.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMirroringDeploymentGroupsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) Do(opts ...googleapi.CallOption) (*ListMirroringDeploymentGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMirroringDeploymentGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsMirroringDeploymentGroupsListCall) Pages(ctx context.Context, f func(*ListMirroringDeploymentGroupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsMirroringDeploymentGroupsPatchCall struct {
+	s                        *Service
+	name                     string
+	mirroringdeploymentgroup *MirroringDeploymentGroup
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Patch: Updates a single MirroringDeploymentGroup.
+//
+// - name: Immutable. Identifier. Then name of the MirroringDeploymentGroup.
+func (r *ProjectsLocationsMirroringDeploymentGroupsService) Patch(name string, mirroringdeploymentgroup *MirroringDeploymentGroup) *ProjectsLocationsMirroringDeploymentGroupsPatchCall {
+	c := &ProjectsLocationsMirroringDeploymentGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.mirroringdeploymentgroup = mirroringdeploymentgroup
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMirroringDeploymentGroupsPatchCall) RequestId(requestId string) *ProjectsLocationsMirroringDeploymentGroupsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
+// used to specify the fields to be overwritten in the MirroringDeploymentGroup
+// resource by the update. The fields specified in the update_mask are relative
+// to the resource, not the full request. A field will be overwritten if it is
+// in the mask. If the user does not provide a mask then all fields will be
+// overwritten.
+func (c *ProjectsLocationsMirroringDeploymentGroupsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMirroringDeploymentGroupsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringDeploymentGroupsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringDeploymentGroupsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringDeploymentGroupsPatchCall) Context(ctx context.Context) *ProjectsLocationsMirroringDeploymentGroupsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringDeploymentGroupsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringDeploymentGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringdeploymentgroup)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringDeploymentGroups.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringDeploymentGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringDeploymentsCreateCall struct {
+	s                   *Service
+	parent              string
+	mirroringdeployment *MirroringDeployment
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Create: Creates a new MirroringDeployment in a given project and location.
+//
+// - parent: Value for parent.
+func (r *ProjectsLocationsMirroringDeploymentsService) Create(parent string, mirroringdeployment *MirroringDeployment) *ProjectsLocationsMirroringDeploymentsCreateCall {
+	c := &ProjectsLocationsMirroringDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.mirroringdeployment = mirroringdeployment
+	return c
+}
+
+// MirroringDeploymentId sets the optional parameter "mirroringDeploymentId":
+// Required. Id of the requesting object If auto-generating Id server-side,
+// remove this field and mirroring_deployment_id from the method_signature of
+// Create RPC
+func (c *ProjectsLocationsMirroringDeploymentsCreateCall) MirroringDeploymentId(mirroringDeploymentId string) *ProjectsLocationsMirroringDeploymentsCreateCall {
+	c.urlParams_.Set("mirroringDeploymentId", mirroringDeploymentId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMirroringDeploymentsCreateCall) RequestId(requestId string) *ProjectsLocationsMirroringDeploymentsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringDeploymentsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringDeploymentsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringDeploymentsCreateCall) Context(ctx context.Context) *ProjectsLocationsMirroringDeploymentsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringDeploymentsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringdeployment)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/mirroringDeployments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringDeployments.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringDeploymentsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringDeploymentsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single MirroringDeployment.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsMirroringDeploymentsService) Delete(name string) *ProjectsLocationsMirroringDeploymentsDeleteCall {
+	c := &ProjectsLocationsMirroringDeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMirroringDeploymentsDeleteCall) RequestId(requestId string) *ProjectsLocationsMirroringDeploymentsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringDeploymentsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringDeploymentsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringDeploymentsDeleteCall) Context(ctx context.Context) *ProjectsLocationsMirroringDeploymentsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringDeploymentsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringDeployments.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringDeploymentsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringDeploymentsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single MirroringDeployment.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsMirroringDeploymentsService) Get(name string) *ProjectsLocationsMirroringDeploymentsGetCall {
+	c := &ProjectsLocationsMirroringDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringDeploymentsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringDeploymentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMirroringDeploymentsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsMirroringDeploymentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringDeploymentsGetCall) Context(ctx context.Context) *ProjectsLocationsMirroringDeploymentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringDeploymentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringDeployments.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *MirroringDeployment.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsMirroringDeploymentsGetCall) Do(opts ...googleapi.CallOption) (*MirroringDeployment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &MirroringDeployment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringDeploymentsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists MirroringDeployments in a given project and location.
+//
+// - parent: Parent value for ListMirroringDeploymentsRequest.
+func (r *ProjectsLocationsMirroringDeploymentsService) List(parent string) *ProjectsLocationsMirroringDeploymentsListCall {
+	c := &ProjectsLocationsMirroringDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results
+func (c *ProjectsLocationsMirroringDeploymentsListCall) Filter(filter string) *ProjectsLocationsMirroringDeploymentsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results
+func (c *ProjectsLocationsMirroringDeploymentsListCall) OrderBy(orderBy string) *ProjectsLocationsMirroringDeploymentsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsMirroringDeploymentsListCall) PageSize(pageSize int64) *ProjectsLocationsMirroringDeploymentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsMirroringDeploymentsListCall) PageToken(pageToken string) *ProjectsLocationsMirroringDeploymentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringDeploymentsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringDeploymentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMirroringDeploymentsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsMirroringDeploymentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringDeploymentsListCall) Context(ctx context.Context) *ProjectsLocationsMirroringDeploymentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringDeploymentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/mirroringDeployments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringDeployments.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMirroringDeploymentsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringDeploymentsListCall) Do(opts ...googleapi.CallOption) (*ListMirroringDeploymentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMirroringDeploymentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsMirroringDeploymentsListCall) Pages(ctx context.Context, f func(*ListMirroringDeploymentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsMirroringDeploymentsPatchCall struct {
+	s                   *Service
+	name                string
+	mirroringdeployment *MirroringDeployment
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Patch: Updates a single MirroringDeployment.
+//
+// - name: Immutable. Identifier. The name of the MirroringDeployment.
+func (r *ProjectsLocationsMirroringDeploymentsService) Patch(name string, mirroringdeployment *MirroringDeployment) *ProjectsLocationsMirroringDeploymentsPatchCall {
+	c := &ProjectsLocationsMirroringDeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.mirroringdeployment = mirroringdeployment
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMirroringDeploymentsPatchCall) RequestId(requestId string) *ProjectsLocationsMirroringDeploymentsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
+// used to specify the fields to be overwritten in the MirroringDeployment
+// resource by the update. The fields specified in the update_mask are relative
+// to the resource, not the full request. A field will be overwritten if it is
+// in the mask. If the user does not provide a mask then all fields will be
+// overwritten.
+func (c *ProjectsLocationsMirroringDeploymentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMirroringDeploymentsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringDeploymentsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringDeploymentsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringDeploymentsPatchCall) Context(ctx context.Context) *ProjectsLocationsMirroringDeploymentsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringDeploymentsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringDeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringdeployment)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringDeployments.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringDeploymentsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall struct {
+	s                                 *Service
+	parent                            string
+	mirroringendpointgroupassociation *MirroringEndpointGroupAssociation
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Create: Creates a new MirroringEndpointGroupAssociation in a given project
+// and location.
+//
+// - parent: Value for parent.
+func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Create(parent string, mirroringendpointgroupassociation *MirroringEndpointGroupAssociation) *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall {
+	c := &ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.mirroringendpointgroupassociation = mirroringendpointgroupassociation
+	return c
+}
+
+// MirroringEndpointGroupAssociationId sets the optional parameter
+// "mirroringEndpointGroupAssociationId": Id of the requesting object If
+// auto-generating Id server-side, remove this field and
+// mirroring_endpoint_group_association_id from the method_signature of Create
+// RPC
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall) MirroringEndpointGroupAssociationId(mirroringEndpointGroupAssociationId string) *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall {
+	c.urlParams_.Set("mirroringEndpointGroupAssociationId", mirroringEndpointGroupAssociationId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall) RequestId(requestId string) *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall) Context(ctx context.Context) *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringendpointgroupassociation)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/mirroringEndpointGroupAssociations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringEndpointGroupAssociations.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single MirroringEndpointGroupAssociation.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Delete(name string) *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall {
+	c := &ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall) RequestId(requestId string) *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringEndpointGroupAssociations.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringEndpointGroupAssociationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single MirroringEndpointGroupAssociation.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Get(name string) *ProjectsLocationsMirroringEndpointGroupAssociationsGetCall {
+	c := &ProjectsLocationsMirroringEndpointGroupAssociationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringEndpointGroupAssociationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsMirroringEndpointGroupAssociationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsGetCall) Context(ctx context.Context) *ProjectsLocationsMirroringEndpointGroupAssociationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringEndpointGroupAssociations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *MirroringEndpointGroupAssociation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsGetCall) Do(opts ...googleapi.CallOption) (*MirroringEndpointGroupAssociation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &MirroringEndpointGroupAssociation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringEndpointGroupAssociationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists MirroringEndpointGroupAssociations in a given project and
+// location.
+//
+// - parent: Parent value for ListMirroringEndpointGroupAssociationsRequest.
+func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) List(parent string) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
+	c := &ProjectsLocationsMirroringEndpointGroupAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) Filter(filter string) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) OrderBy(orderBy string) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) PageSize(pageSize int64) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) PageToken(pageToken string) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) Context(ctx context.Context) *ProjectsLocationsMirroringEndpointGroupAssociationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/mirroringEndpointGroupAssociations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringEndpointGroupAssociations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMirroringEndpointGroupAssociationsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) Do(opts ...googleapi.CallOption) (*ListMirroringEndpointGroupAssociationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMirroringEndpointGroupAssociationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsListCall) Pages(ctx context.Context, f func(*ListMirroringEndpointGroupAssociationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall struct {
+	s                                 *Service
+	name                              string
+	mirroringendpointgroupassociation *MirroringEndpointGroupAssociation
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Patch: Updates a single MirroringEndpointGroupAssociation.
+//
+//   - name: Immutable. Identifier. The name of the
+//     MirroringEndpointGroupAssociation.
+func (r *ProjectsLocationsMirroringEndpointGroupAssociationsService) Patch(name string, mirroringendpointgroupassociation *MirroringEndpointGroupAssociation) *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall {
+	c := &ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.mirroringendpointgroupassociation = mirroringendpointgroupassociation
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall) RequestId(requestId string) *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
+// used to specify the fields to be overwritten in the
+// MirroringEndpointGroupAssociation resource by the update. The fields
+// specified in the update_mask are relative to the resource, not the full
+// request. A field will be overwritten if it is in the mask. If the user does
+// not provide a mask then all fields will be overwritten.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall) Context(ctx context.Context) *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringendpointgroupassociation)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringEndpointGroupAssociations.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringEndpointGroupAssociationsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringEndpointGroupsCreateCall struct {
+	s                      *Service
+	parent                 string
+	mirroringendpointgroup *MirroringEndpointGroup
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Create: Creates a new MirroringEndpointGroup in a given project and
+// location.
+//
+// - parent: Value for parent.
+func (r *ProjectsLocationsMirroringEndpointGroupsService) Create(parent string, mirroringendpointgroup *MirroringEndpointGroup) *ProjectsLocationsMirroringEndpointGroupsCreateCall {
+	c := &ProjectsLocationsMirroringEndpointGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.mirroringendpointgroup = mirroringendpointgroup
+	return c
+}
+
+// MirroringEndpointGroupId sets the optional parameter
+// "mirroringEndpointGroupId": Required. Id of the requesting object If
+// auto-generating Id server-side, remove this field and
+// mirroring_endpoint_group_id from the method_signature of Create RPC
+func (c *ProjectsLocationsMirroringEndpointGroupsCreateCall) MirroringEndpointGroupId(mirroringEndpointGroupId string) *ProjectsLocationsMirroringEndpointGroupsCreateCall {
+	c.urlParams_.Set("mirroringEndpointGroupId", mirroringEndpointGroupId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMirroringEndpointGroupsCreateCall) RequestId(requestId string) *ProjectsLocationsMirroringEndpointGroupsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringEndpointGroupsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringEndpointGroupsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringEndpointGroupsCreateCall) Context(ctx context.Context) *ProjectsLocationsMirroringEndpointGroupsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringEndpointGroupsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringEndpointGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringendpointgroup)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/mirroringEndpointGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringEndpointGroups.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringEndpointGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringEndpointGroupsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single MirroringEndpointGroup.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsMirroringEndpointGroupsService) Delete(name string) *ProjectsLocationsMirroringEndpointGroupsDeleteCall {
+	c := &ProjectsLocationsMirroringEndpointGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMirroringEndpointGroupsDeleteCall) RequestId(requestId string) *ProjectsLocationsMirroringEndpointGroupsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringEndpointGroupsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringEndpointGroupsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringEndpointGroupsDeleteCall) Context(ctx context.Context) *ProjectsLocationsMirroringEndpointGroupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringEndpointGroupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringEndpointGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringEndpointGroups.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringEndpointGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringEndpointGroupsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single MirroringEndpointGroup.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsMirroringEndpointGroupsService) Get(name string) *ProjectsLocationsMirroringEndpointGroupsGetCall {
+	c := &ProjectsLocationsMirroringEndpointGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringEndpointGroupsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringEndpointGroupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMirroringEndpointGroupsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsMirroringEndpointGroupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringEndpointGroupsGetCall) Context(ctx context.Context) *ProjectsLocationsMirroringEndpointGroupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringEndpointGroupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringEndpointGroupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringEndpointGroups.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *MirroringEndpointGroup.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsMirroringEndpointGroupsGetCall) Do(opts ...googleapi.CallOption) (*MirroringEndpointGroup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &MirroringEndpointGroup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMirroringEndpointGroupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists MirroringEndpointGroups in a given project and location.
+//
+// - parent: Parent value for ListMirroringEndpointGroupsRequest.
+func (r *ProjectsLocationsMirroringEndpointGroupsService) List(parent string) *ProjectsLocationsMirroringEndpointGroupsListCall {
+	c := &ProjectsLocationsMirroringEndpointGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results
+func (c *ProjectsLocationsMirroringEndpointGroupsListCall) Filter(filter string) *ProjectsLocationsMirroringEndpointGroupsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results
+func (c *ProjectsLocationsMirroringEndpointGroupsListCall) OrderBy(orderBy string) *ProjectsLocationsMirroringEndpointGroupsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsMirroringEndpointGroupsListCall) PageSize(pageSize int64) *ProjectsLocationsMirroringEndpointGroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsMirroringEndpointGroupsListCall) PageToken(pageToken string) *ProjectsLocationsMirroringEndpointGroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringEndpointGroupsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringEndpointGroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMirroringEndpointGroupsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsMirroringEndpointGroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringEndpointGroupsListCall) Context(ctx context.Context) *ProjectsLocationsMirroringEndpointGroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringEndpointGroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringEndpointGroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/mirroringEndpointGroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringEndpointGroups.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMirroringEndpointGroupsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringEndpointGroupsListCall) Do(opts ...googleapi.CallOption) (*ListMirroringEndpointGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMirroringEndpointGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsMirroringEndpointGroupsListCall) Pages(ctx context.Context, f func(*ListMirroringEndpointGroupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsMirroringEndpointGroupsPatchCall struct {
+	s                      *Service
+	name                   string
+	mirroringendpointgroup *MirroringEndpointGroup
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Patch: Updates a single MirroringEndpointGroup.
+//
+// - name: Immutable. Identifier. The name of the MirroringEndpointGroup.
+func (r *ProjectsLocationsMirroringEndpointGroupsService) Patch(name string, mirroringendpointgroup *MirroringEndpointGroup) *ProjectsLocationsMirroringEndpointGroupsPatchCall {
+	c := &ProjectsLocationsMirroringEndpointGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.mirroringendpointgroup = mirroringendpointgroup
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMirroringEndpointGroupsPatchCall) RequestId(requestId string) *ProjectsLocationsMirroringEndpointGroupsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
+// used to specify the fields to be overwritten in the MirroringEndpointGroup
+// resource by the update. The fields specified in the update_mask are relative
+// to the resource, not the full request. A field will be overwritten if it is
+// in the mask. If the user does not provide a mask then all fields will be
+// overwritten.
+func (c *ProjectsLocationsMirroringEndpointGroupsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMirroringEndpointGroupsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMirroringEndpointGroupsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsMirroringEndpointGroupsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMirroringEndpointGroupsPatchCall) Context(ctx context.Context) *ProjectsLocationsMirroringEndpointGroupsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMirroringEndpointGroupsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMirroringEndpointGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mirroringendpointgroup)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.mirroringEndpointGroups.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMirroringEndpointGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {

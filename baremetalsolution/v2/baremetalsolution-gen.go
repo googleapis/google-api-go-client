@@ -1411,11 +1411,16 @@ type NetworkConfig struct {
 	// information for the BMS Ops team .
 	UserNote string `json:"userNote,omitempty"`
 	// VlanAttachments: List of VLAN attachments. As of now there are always 2
-	// attachments, but it is going to change in the future (multi vlan).
+	// attachments, but it is going to change in the future (multi vlan). Use only
+	// one of vlan_attachments or vrf
 	VlanAttachments []*IntakeVlanAttachment `json:"vlanAttachments,omitempty"`
 	// VlanSameProject: Whether the VLAN attachment pair is located in the same
 	// project.
 	VlanSameProject bool `json:"vlanSameProject,omitempty"`
+	// Vrf: Optional. The name of a pre-existing Vrf that the network should be
+	// attached to. Format is `vrfs/{vrf}`. If vrf is specified, vlan_attachments
+	// must be empty.
+	Vrf string `json:"vrf,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Bandwidth") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -296,6 +296,7 @@ type AlloyDbSettings struct {
 	//   "DATABASE_VERSION_UNSPECIFIED" - This is an unknown database version.
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
+	//   "POSTGRES_16" - The database version is Postgres 16.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// EncryptionConfig: Optional. The encryption config can be specified to
 	// encrypt the data disks and other persistent data resources of a cluster with

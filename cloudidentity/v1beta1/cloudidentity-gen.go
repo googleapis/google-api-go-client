@@ -3126,6 +3126,7 @@ type Membership struct {
 	//   "SERVICE_ACCOUNT" - Represents service account type.
 	//   "GROUP" - Represents group type.
 	//   "SHARED_DRIVE" - Represents Shared drive.
+	//   "CBCM_BROWSER" - Represents a CBCM-managed Chrome Browser type.
 	//   "OTHER" - Represents other type.
 	Type string `json:"type,omitempty"`
 	// UpdateTime: Output only. The time when the `Membership` was last updated.

@@ -331,6 +331,23 @@ type AdvancedSecurityOverrides struct {
 	//   "COMMON_CRITERIA_MODE_DISABLED" - Default. Disables Common Criteria Mode.
 	//   "COMMON_CRITERIA_MODE_ENABLED" - Enables Common Criteria Mode.
 	CommonCriteriaMode string `json:"commonCriteriaMode,omitempty"`
+	// ContentProtectionPolicy: Optional. Controls whether content protection,
+	// which scans for deceptive apps, is enabled. This is supported on Android 15
+	// and above.
+	//
+	// Possible values:
+	//   "CONTENT_PROTECTION_POLICY_UNSPECIFIED" - Unspecified. Defaults to
+	// CONTENT_PROTECTION_DISABLED.
+	//   "CONTENT_PROTECTION_DISABLED" - Content protection is disabled and the
+	// user cannot change this.
+	//   "CONTENT_PROTECTION_ENFORCED" - Content protection is enabled and the user
+	// cannot change this.Supported on Android 15 and above. A nonComplianceDetail
+	// with API_LEVEL is reported if the Android version is less than 15.
+	//   "CONTENT_PROTECTION_USER_CHOICE" - Content protection is not controlled by
+	// the policy. The user is allowed to choose the behavior of content
+	// protection.Supported on Android 15 and above. A nonComplianceDetail with
+	// API_LEVEL is reported if the Android version is less than 15.
+	ContentProtectionPolicy string `json:"contentProtectionPolicy,omitempty"`
 	// DeveloperSettings: Controls access to developer settings: developer options
 	// and safe boot. Replaces safeBootDisabled (deprecated) and
 	// debuggingFeaturesAllowed (deprecated).

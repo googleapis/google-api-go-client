@@ -2691,6 +2691,13 @@ type GooglePrivacyDlpV2DataProfileAction struct {
 	ExportData *GooglePrivacyDlpV2Export `json:"exportData,omitempty"`
 	// PubSubNotification: Publish a message into the Pub/Sub topic.
 	PubSubNotification *GooglePrivacyDlpV2PubSubNotification `json:"pubSubNotification,omitempty"`
+	// PublishToChronicle: Publishes generated data profiles to Google Security
+	// Operations. For more information, see Use Sensitive Data Protection data in
+	// context-aware analytics
+	// (https://cloud.google.com/chronicle/docs/detection/usecase-dlp-high-risk-user-download).
+	PublishToChronicle *GooglePrivacyDlpV2PublishToChronicle `json:"publishToChronicle,omitempty"`
+	// PublishToScc: Publishes findings to SCC for each data profile.
+	PublishToScc *GooglePrivacyDlpV2PublishToSecurityCommandCenter `json:"publishToScc,omitempty"`
 	// TagResources: Tags the profiled resources with the specified tag values.
 	TagResources *GooglePrivacyDlpV2TagResources `json:"tagResources,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportData") to
@@ -7932,6 +7939,11 @@ type GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog struct {
 type GooglePrivacyDlpV2PublishSummaryToCscc struct {
 }
 
+// GooglePrivacyDlpV2PublishToChronicle: Message expressing intention to
+// publish to Google Security Operations.
+type GooglePrivacyDlpV2PublishToChronicle struct {
+}
+
 // GooglePrivacyDlpV2PublishToPubSub: Publish a message into a given Pub/Sub
 // topic when DlpJob has completed. The message contains a single field,
 // `DlpJobName`, which is equal to the finished job's `DlpJob.name`
@@ -7959,6 +7971,11 @@ type GooglePrivacyDlpV2PublishToPubSub struct {
 func (s GooglePrivacyDlpV2PublishToPubSub) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2PublishToPubSub
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2PublishToSecurityCommandCenter: If set, a summary finding
+// will be created/updated in SCC for each profile.
+type GooglePrivacyDlpV2PublishToSecurityCommandCenter struct {
 }
 
 // GooglePrivacyDlpV2PublishToStackdriver: Enable Stackdriver metric

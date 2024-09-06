@@ -968,6 +968,35 @@ func (s ChatClientDataSourceMarkup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ChatSpaceLinkData: Data for Chat space links. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type ChatSpaceLinkData struct {
+	// Message: The message of the linked Chat space resource. Format:
+	// `spaces/{space}/messages/{message}`
+	Message string `json:"message,omitempty"`
+	// Space: The space of the linked Chat space resource. Format: `spaces/{space}`
+	Space string `json:"space,omitempty"`
+	// Thread: The thread of the linked Chat space resource. Format:
+	// `spaces/{space}/threads/{thread}`
+	Thread string `json:"thread,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ChatSpaceLinkData) MarshalJSON() ([]byte, error) {
+	type NoMethod ChatSpaceLinkData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Color: Represents a color in the RGBA color space. This representation is
 // designed for simplicity of conversion to and from color representations in
 // various languages over compactness. For example, the fields of this
@@ -1096,7 +1125,7 @@ type CommonEventObject struct {
 	//   "SHEETS" - The add-on launches from Google Sheets.
 	//   "SLIDES" - The add-on launches from Google Slides.
 	//   "DRAWINGS" - The add-on launches from Google Drawings.
-	//   "CHAT" - A Google Chat app.
+	//   "CHAT" - A Google Chat app. Not used for Google Workspace Add-ons.
 	HostApp string `json:"hostApp,omitempty"`
 	// InvokedFunction: Name of the invoked function associated with the widget.
 	// Only set for Chat apps.
@@ -4438,6 +4467,9 @@ func (s ReactionDeletedEventData) MarshalJSON() ([]byte, error) {
 
 // RichLinkMetadata: A rich link to a resource.
 type RichLinkMetadata struct {
+	// ChatSpaceLinkData: Data for a chat space link. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	ChatSpaceLinkData *ChatSpaceLinkData `json:"chatSpaceLinkData,omitempty"`
 	// DriveLinkData: Data for a drive link.
 	DriveLinkData *DriveLinkData `json:"driveLinkData,omitempty"`
 	// RichLinkType: The rich link type.
@@ -4445,18 +4477,20 @@ type RichLinkMetadata struct {
 	// Possible values:
 	//   "RICH_LINK_TYPE_UNSPECIFIED" - Default value for the enum. Don't use.
 	//   "DRIVE_FILE" - A Google Drive rich link type.
+	//   "CHAT_SPACE" - A Chat space rich link type. For example, a space smart
+	// chip. [Developer Preview](https://developers.google.com/workspace/preview).
 	RichLinkType string `json:"richLinkType,omitempty"`
 	// Uri: The URI of this link.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DriveLinkData") to
+	// ForceSendFields is a list of field names (e.g. "ChatSpaceLinkData") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DriveLinkData") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ChatSpaceLinkData") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

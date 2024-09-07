@@ -1406,6 +1406,8 @@ type ComputeInstanceBackupProperties struct {
 	//   "NONE" - Indicates user chose no operation.
 	//   "STOP" - Indicates user chose to opt for VM shutdown on key revocation.
 	KeyRevocationActionType string `json:"keyRevocationActionType,omitempty"`
+	// Labels: Labels to apply to instances that are created from these properties.
+	Labels map[string]string `json:"labels,omitempty"`
 	// MachineType: The machine type to use for instances that are created from
 	// these properties.
 	MachineType string `json:"machineType,omitempty"`

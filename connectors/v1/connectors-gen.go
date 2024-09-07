@@ -473,9 +473,13 @@ type AuthConfig struct {
 	//   "SSH_PUBLIC_KEY" - SSH Public Key Authentication
 	//   "OAUTH2_AUTH_CODE_FLOW" - Oauth 2.0 Authorization Code Flow
 	//   "GOOGLE_AUTHENTICATION" - Google authentication
+	//   "OAUTH2_AUTH_CODE_FLOW_GOOGLE_MANAGED" - Oauth 2.0 Authorization Code Flow
+	// with Google Provided OAuth Client
 	AuthType string `json:"authType,omitempty"`
 	// Oauth2AuthCodeFlow: Oauth2AuthCodeFlow.
 	Oauth2AuthCodeFlow *Oauth2AuthCodeFlow `json:"oauth2AuthCodeFlow,omitempty"`
+	// Oauth2AuthCodeFlowGoogleManaged: Oauth2AuthCodeFlowGoogleManaged.
+	Oauth2AuthCodeFlowGoogleManaged *Oauth2AuthCodeFlowGoogleManaged `json:"oauth2AuthCodeFlowGoogleManaged,omitempty"`
 	// Oauth2ClientCredentials: Oauth2ClientCredentials.
 	Oauth2ClientCredentials *Oauth2ClientCredentials `json:"oauth2ClientCredentials,omitempty"`
 	// Oauth2JwtBearer: Oauth2JwtBearer.
@@ -519,6 +523,8 @@ type AuthConfigTemplate struct {
 	//   "SSH_PUBLIC_KEY" - SSH Public Key Authentication
 	//   "OAUTH2_AUTH_CODE_FLOW" - Oauth 2.0 Authorization Code Flow
 	//   "GOOGLE_AUTHENTICATION" - Google authentication
+	//   "OAUTH2_AUTH_CODE_FLOW_GOOGLE_MANAGED" - Oauth 2.0 Authorization Code Flow
+	// with Google Provided OAuth Client
 	AuthType string `json:"authType,omitempty"`
 	// ConfigVariableTemplates: Config variables to describe an `AuthConfig` for a
 	// `Connection`.
@@ -544,6 +550,135 @@ type AuthConfigTemplate struct {
 
 func (s AuthConfigTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthConfigTemplate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthField: AuthField defines a field in an authentication type.
+type AuthField struct {
+	// DataType: Data type of the field.
+	DataType string `json:"dataType,omitempty"`
+	// Description: Description of the field.
+	Description string `json:"description,omitempty"`
+	// Key: Key of the field.
+	Key string `json:"key,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthField) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthObject: AuthObject defines a JSON schema of an authentication type.
+type AuthObject struct {
+	// AdditionalProperties: Whether the object has additional properties.
+	AdditionalProperties bool `json:"additionalProperties,omitempty"`
+	// AuthKey: Auth key of the object.
+	AuthKey string `json:"authKey,omitempty"`
+	// AuthType: Auth type of the object.
+	AuthType string `json:"authType,omitempty"`
+	// Description: Description of the object.
+	Description string `json:"description,omitempty"`
+	// IsDefault: Whether the object is the default one.
+	IsDefault bool `json:"isDefault,omitempty"`
+	// Properties: Properties of the object.
+	Properties map[string]AuthProperty `json:"properties,omitempty"`
+	// Type: Type of the object.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalProperties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalProperties") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthObject) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthObject
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthProperty: AuthProperty defines a property of an authentication type.
+type AuthProperty struct {
+	// Description: Description of the property.
+	Description string `json:"description,omitempty"`
+	// Type: Type of the property.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthProperty) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthProperty
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthSchema: AuthSchema defines the schema of an authentication type.
+type AuthSchema struct {
+	// AuthFields: List of AuthFields.
+	AuthFields []*AuthField `json:"authFields,omitempty"`
+	// AuthKey: Auth key of the schema.
+	AuthKey string `json:"authKey,omitempty"`
+	// AuthType: Auth type of the schema.
+	//
+	// Possible values:
+	//   "AUTH_TYPE_UNSPECIFIED" - Authentication type not specified.
+	//   "USER_PASSWORD" - Username and Password Authentication.
+	//   "OAUTH2_JWT_BEARER" - JSON Web Token (JWT) Profile for Oauth 2.0
+	// Authorization Grant based authentication
+	//   "OAUTH2_CLIENT_CREDENTIALS" - Oauth 2.0 Client Credentials Grant
+	// Authentication
+	//   "SSH_PUBLIC_KEY" - SSH Public Key Authentication
+	//   "OAUTH2_AUTH_CODE_FLOW" - Oauth 2.0 Authorization Code Flow
+	//   "GOOGLE_AUTHENTICATION" - Google authentication
+	//   "OAUTH2_AUTH_CODE_FLOW_GOOGLE_MANAGED" - Oauth 2.0 Authorization Code Flow
+	// with Google Provided OAuth Client
+	AuthType string `json:"authType,omitempty"`
+	// Description: Description of the schema.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Display name of the schema.
+	DisplayName string `json:"displayName,omitempty"`
+	// IsDefault: Whether the auth schema is the default one.
+	IsDefault bool `json:"isDefault,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthFields") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthFields") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthSchema
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -839,6 +974,10 @@ type Connection struct {
 	// AuthConfig: Optional. Configuration for establishing the connection's
 	// authentication with an external system.
 	AuthConfig *AuthConfig `json:"authConfig,omitempty"`
+	// AuthOverrideEnabled: Optional. Auth override enabled for the connection. If
+	// Auth Override is enabled, Connection allows the backend service auth to be
+	// overridden in the entities/actions API.
+	AuthOverrideEnabled bool `json:"authOverrideEnabled,omitempty"`
 	// BillingConfig: Output only. Billing config for the connection.
 	BillingConfig *BillingConfig `json:"billingConfig,omitempty"`
 	// ConfigVariables: Optional. Configuration for configuring the connection with
@@ -1146,6 +1285,8 @@ type ConnectorInfraConfig struct {
 	// MigrateDeploymentModel: Indicate whether connector is being migrated to
 	// cloud run deployment model.
 	MigrateDeploymentModel bool `json:"migrateDeploymentModel,omitempty"`
+	// MigrateTls: Indicate whether connector is being migrated to TLS.
+	MigrateTls bool `json:"migrateTls,omitempty"`
 	// RatelimitThreshold: Max QPS supported by the connector version before
 	// throttling of requests.
 	RatelimitThreshold int64 `json:"ratelimitThreshold,omitempty,string"`
@@ -1320,6 +1461,13 @@ type ConnectorVersionInfraConfig struct {
 	ResourceRequests *ResourceRequests `json:"resourceRequests,omitempty"`
 	// SharedDeployment: Output only. The name of shared connector deployment.
 	SharedDeployment string `json:"sharedDeployment,omitempty"`
+	// TlsMigrationState: Output only. Status of the TLS migration.
+	//
+	// Possible values:
+	//   "TLS_MIGRATION_STATE_UNSPECIFIED" - TLS migration state is not specified.
+	//   "TLS_MIGRATION_NOT_STARTED" - TLS migration is in progress.
+	//   "TLS_MIGRATION_COMPLETED" - TLS migration is completed.
+	TlsMigrationState string `json:"tlsMigrationState,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "ConnectionRatelimitWindowSeconds") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -2389,6 +2537,34 @@ func (s ExtractionRules) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FetchAuthSchemaResponse: Response message for Connectors.GetAuthSchema.
+type FetchAuthSchemaResponse struct {
+	// AuthSchemas: List of AuthSchemas.
+	AuthSchemas []*AuthSchema `json:"authSchemas,omitempty"`
+	// JsonSchema: JSON schema of the AuthSchemas. This is only populated if the
+	// view is JSON_SCHEMA. The schema is in draft-07 format.
+	JsonSchema *JsonAuthSchema `json:"jsonSchema,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AuthSchemas") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthSchemas") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchAuthSchemaResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchAuthSchemaResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Field: Metadata of an entity field.
 type Field struct {
 	// AdditionalDetails: The following map contains fields that are not explicitly
@@ -2793,6 +2969,31 @@ type JMS struct {
 
 func (s JMS) MarshalJSON() ([]byte, error) {
 	type NoMethod JMS
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// JsonAuthSchema: JsonAuthSchema defines the JSON schema of all authentication
+// types.
+type JsonAuthSchema struct {
+	// Schema: JSON schema of the AuthSchemas.
+	Schema string `json:"$schema,omitempty"`
+	// OneOf: List of AuthObjects.
+	OneOf []*AuthObject `json:"oneOf,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Schema") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Schema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s JsonAuthSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod JsonAuthSchema
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3886,6 +4087,37 @@ type Oauth2AuthCodeFlow struct {
 
 func (s Oauth2AuthCodeFlow) MarshalJSON() ([]byte, error) {
 	type NoMethod Oauth2AuthCodeFlow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Oauth2AuthCodeFlowGoogleManaged: Parameters to support Oauth 2.0 Auth Code
+// Grant Authentication using Google Provided OAuth Client. See
+// https://tools.ietf.org/html/rfc6749#section-1.3.1 for more details.
+type Oauth2AuthCodeFlowGoogleManaged struct {
+	// AuthCode: Optional. Authorization code to be exchanged for access and
+	// refresh tokens.
+	AuthCode string `json:"authCode,omitempty"`
+	// RedirectUri: Optional. Redirect URI to be provided during the auth code
+	// exchange.
+	RedirectUri string `json:"redirectUri,omitempty"`
+	// Scopes: Required. Scopes the connection will request when the user performs
+	// the auth code flow.
+	Scopes []string `json:"scopes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Oauth2AuthCodeFlowGoogleManaged) MarshalJSON() ([]byte, error) {
+	type NoMethod Oauth2AuthCodeFlowGoogleManaged
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13058,6 +13290,129 @@ func (c *ProjectsLocationsProvidersConnectorsListCall) Pages(ctx context.Context
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchAuthSchema: fetch and return the list of auth config variables required
+// to override the connection backend auth.
+//
+//   - name: Parent resource of the Connector Version, of the form:
+//     `projects/*/locations/*/providers/*/connectors/*/versions/*`.
+func (r *ProjectsLocationsProvidersConnectorsVersionsService) FetchAuthSchema(name string) *ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall {
+	c := &ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": View of the AuthSchema. The default
+// value is BASIC.
+//
+// Possible values:
+//
+//	"AUTH_SCHEMA_VIEW_UNSPECIFIED" - Default value.
+//	"BASIC" - Basic view of the AuthSchema.
+//	"JSON_SCHEMA" - JSON schema view of the AuthSchema.
+func (c *ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall) View(view string) *ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall) Fields(s ...googleapi.Field) *ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall) IfNoneMatch(entityTag string) *ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall) Context(ctx context.Context) *ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetchAuthSchema")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.providers.connectors.versions.fetchAuthSchema" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchAuthSchemaResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsProvidersConnectorsVersionsFetchAuthSchemaCall) Do(opts ...googleapi.CallOption) (*FetchAuthSchemaResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchAuthSchemaResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsProvidersConnectorsVersionsGetCall struct {

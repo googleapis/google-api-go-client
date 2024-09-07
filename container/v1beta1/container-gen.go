@@ -6,7 +6,7 @@
 
 // Package container provides access to the Kubernetes Engine API.
 //
-// For product documentation, see: https://cloud.google.com/container-engine/
+// For product documentation, see: https://cloud.google.com/kubernetes-engine/docs/
 //
 // # Library status
 //
@@ -1601,6 +1601,9 @@ type ClusterUpdate struct {
 	DesiredClusterAutoscaling *ClusterAutoscaling `json:"desiredClusterAutoscaling,omitempty"`
 	// DesiredClusterTelemetry: The desired telemetry integration for the cluster.
 	DesiredClusterTelemetry *ClusterTelemetry `json:"desiredClusterTelemetry,omitempty"`
+	// DesiredCompliancePostureConfig: Enable/Disable Compliance Posture features
+	// for the cluster.
+	DesiredCompliancePostureConfig *CompliancePostureConfig `json:"desiredCompliancePostureConfig,omitempty"`
 	// DesiredContainerdConfig: The desired containerd config for the cluster.
 	DesiredContainerdConfig *ContainerdConfig `json:"desiredContainerdConfig,omitempty"`
 	// DesiredCostManagementConfig: The desired configuration for the fine-grained

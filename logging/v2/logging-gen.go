@@ -3548,6 +3548,16 @@ type MetricDescriptorMetadata struct {
 	// interval, excluding data loss due to errors. Metrics with a higher
 	// granularity have a smaller sampling period.
 	SamplePeriod string `json:"samplePeriod,omitempty"`
+	// TimeSeriesResourceHierarchyLevel: The scope of the timeseries data of the
+	// metric.
+	//
+	// Possible values:
+	//   "TIME_SERIES_RESOURCE_HIERARCHY_LEVEL_UNSPECIFIED" - Do not use this
+	// default value.
+	//   "PROJECT" - Scopes a metric to a project.
+	//   "ORGANIZATION" - Scopes a metric to an organization.
+	//   "FOLDER" - Scopes a metric to a folder.
+	TimeSeriesResourceHierarchyLevel []string `json:"timeSeriesResourceHierarchyLevel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IngestDelay") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

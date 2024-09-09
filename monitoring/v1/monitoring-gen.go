@@ -801,17 +801,33 @@ func (s ColumnLayout) MarshalJSON() ([]byte, error) {
 
 // ColumnSettings: The persistent settings for a table's columns.
 type ColumnSettings struct {
+	// Alignment: Optional. Whether the column should be left / middle / right
+	// aligned
+	//
+	// Possible values:
+	//   "CELL_ALIGNMENT_UNSPECIFIED" - No horizontal alignment specified; fall
+	// back to the default behavior. Label values are left aligned. Numeric values
+	// are right aligned.
+	//   "LEFT" - Left-align
+	//   "CENTER" - Center-align
+	//   "RIGHT" - Right-align
+	Alignment string `json:"alignment,omitempty"`
 	// Column: Required. The id of the column.
 	Column string `json:"column,omitempty"`
+	// DisplayName: Optional. Display name of the column
+	DisplayName string `json:"displayName,omitempty"`
+	// Thresholds: Optional. The thresholds used to determine how the table cell
+	// should be rendered given the time series' current value.
+	Thresholds []*Threshold `json:"thresholds,omitempty"`
 	// Visible: Required. Whether the column should be visible on page load.
 	Visible bool `json:"visible,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Alignment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Column") to include in API
+	// NullFields is a list of field names (e.g. "Alignment") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

@@ -3387,6 +3387,16 @@ type MetricDescriptorMetadata struct {
 	// interval, excluding data loss due to errors. Metrics with a higher
 	// granularity have a smaller sampling period.
 	SamplePeriod string `json:"samplePeriod,omitempty"`
+	// TimeSeriesResourceHierarchyLevel: The scope of the timeseries data of the
+	// metric.
+	//
+	// Possible values:
+	//   "TIME_SERIES_RESOURCE_HIERARCHY_LEVEL_UNSPECIFIED" - Do not use this
+	// default value.
+	//   "PROJECT" - Scopes a metric to a project.
+	//   "ORGANIZATION" - Scopes a metric to an organization.
+	//   "FOLDER" - Scopes a metric to a folder.
+	TimeSeriesResourceHierarchyLevel []string `json:"timeSeriesResourceHierarchyLevel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IngestDelay") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4329,7 +4339,9 @@ func (s PrometheusQueryLanguageCondition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// QueryTimeSeriesRequest: The QueryTimeSeries request.
+// QueryTimeSeriesRequest: The QueryTimeSeries request. For information about
+// the status of Monitoring Query Language (MQL), see the MQL deprecation
+// notice (https://cloud.google.com/stackdriver/docs/deprecations/mql).
 type QueryTimeSeriesRequest struct {
 	// PageSize: A positive number that is the maximum number of time_series_data
 	// to return.
@@ -4360,7 +4372,9 @@ func (s QueryTimeSeriesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// QueryTimeSeriesResponse: The QueryTimeSeries response.
+// QueryTimeSeriesResponse: The QueryTimeSeries response. For information about
+// the status of Monitoring Query Language (MQL), see the MQL deprecation
+// notice (https://cloud.google.com/stackdriver/docs/deprecations/mql).
 type QueryTimeSeriesResponse struct {
 	// NextPageToken: If there are more results than have been returned, then this
 	// field is set to a non-empty value. To see the additional results, use that
@@ -12108,7 +12122,10 @@ type ProjectsTimeSeriesQueryCall struct {
 	header_                http.Header
 }
 
-// Query: Queries time series using Monitoring Query Language.
+// Query: Queries time series by using Monitoring Query Language (MQL). We
+// recommend using PromQL instead of MQL. For more information about the status
+// of MQL, see the MQL deprecation notice
+// (https://cloud.google.com/stackdriver/docs/deprecations/mql).
 //
 //   - name: The project
 //     (https://cloud.google.com/monitoring/api/v3#project_name) on which to

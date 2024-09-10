@@ -1,5 +1,23 @@
 # Changes
 
+## [0.197.0](https://github.com/googleapis/google-api-go-client/compare/v0.196.0...v0.197.0) (2024-09-10)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2770](https://github.com/googleapis/google-api-go-client/issues/2770)) ([07782e2](https://github.com/googleapis/google-api-go-client/commit/07782e2db0dc8432b659fb6b1392837a9a33d784))
+* **all:** Auto-regenerate discovery clients ([#2772](https://github.com/googleapis/google-api-go-client/issues/2772)) ([0c7c227](https://github.com/googleapis/google-api-go-client/commit/0c7c227b6d00a2f22de990156f2f75a3862f77a7))
+* **all:** Auto-regenerate discovery clients ([#2774](https://github.com/googleapis/google-api-go-client/issues/2774)) ([6476ddd](https://github.com/googleapis/google-api-go-client/commit/6476dddd4810be9b17e5692f6950f3d24d52abe7))
+* **all:** Auto-regenerate discovery clients ([#2775](https://github.com/googleapis/google-api-go-client/issues/2775)) ([11e2ff6](https://github.com/googleapis/google-api-go-client/commit/11e2ff6ea82ce403f464ea42cf23ec702b6ef883))
+* **all:** Auto-regenerate discovery clients ([#2776](https://github.com/googleapis/google-api-go-client/issues/2776)) ([cc62887](https://github.com/googleapis/google-api-go-client/commit/cc6288771612f80e5d2338dcf5897b7acd0952dd))
+* **all:** Auto-regenerate discovery clients ([#2778](https://github.com/googleapis/google-api-go-client/issues/2778)) ([72cc5c4](https://github.com/googleapis/google-api-go-client/commit/72cc5c4f6ef206c857f222653dff96907b320788))
+* **all:** Auto-regenerate discovery clients ([#2779](https://github.com/googleapis/google-api-go-client/issues/2779)) ([cedc5b0](https://github.com/googleapis/google-api-go-client/commit/cedc5b01c4999c17c97f4f6336fb2f2cae318453))
+
+
+### Bug Fixes
+
+* **transport:** Set UniverseDomain in http.NewClient for new auth ([#2773](https://github.com/googleapis/google-api-go-client/issues/2773)) ([140d0a5](https://github.com/googleapis/google-api-go-client/commit/140d0a5e70ebd3f12a6ec11ec48880e6d86cf2bc))
+
 ## [0.196.0](https://github.com/googleapis/google-api-go-client/compare/v0.195.0...v0.196.0) (2024-09-03)
 
 

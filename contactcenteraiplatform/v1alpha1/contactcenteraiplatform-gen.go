@@ -375,8 +375,8 @@ func (s ContactCenterQuota) MarshalJSON() ([]byte, error) {
 }
 
 // Critical: Instances in this Channel will receive updates after all instances
-// in `Critical` were updated + 2 days. They also will only be updated outside
-// of their peak hours.
+// in `Normal` were updated. They also will only be updated outside of their
+// peak hours.
 type Critical struct {
 	// PeakHours: Required. Hours during which the instance should not be updated.
 	PeakHours []*WeeklySchedule `json:"peakHours,omitempty"`
@@ -741,6 +741,8 @@ type PscSetting struct {
 	// traffic to the service attachment. This field should be filled only for the
 	// ingress components.
 	AllowedConsumerProjectIds []string `json:"allowedConsumerProjectIds,omitempty"`
+	// ProducerProjectIds: Output only. The CCAIP tenant project ids.
+	ProducerProjectIds []string `json:"producerProjectIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedConsumerProjectIds")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

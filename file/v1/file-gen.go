@@ -474,6 +474,28 @@ func (s FileShareConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FixedIOPS: Fixed IOPS (input/output operations per second) parameters.
+type FixedIOPS struct {
+	// MaxReadIops: Required. Maximum raw read IOPS.
+	MaxReadIops int64 `json:"maxReadIops,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "MaxReadIops") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxReadIops") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FixedIOPS) MarshalJSON() ([]byte, error) {
+	type NoMethod FixedIOPS
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSaasacceleratorManagementProvidersV1Instance: Instance represents
 // the interface for SLM services to actuate the state of control plane
 // resources. Example Instance in JSON, where consumer-project-number=123456,
@@ -852,8 +874,34 @@ func (s GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// IOPSPerTB: IOPS per TB. Filestore defines TB as 1024^4 bytes (TiB).
+type IOPSPerTB struct {
+	// MaxReadIopsPerTb: Required. Maximum read IOPS per TiB.
+	MaxReadIopsPerTb int64 `json:"maxReadIopsPerTb,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "MaxReadIopsPerTb") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxReadIopsPerTb") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IOPSPerTB) MarshalJSON() ([]byte, error) {
+	type NoMethod IOPSPerTB
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Instance: A Filestore instance.
 type Instance struct {
+	// ConfigurablePerformanceEnabled: Output only. Indicates whether this
+	// instance's performance is configurable. If enabled, adjust it using the
+	// 'performance_config' field.
+	ConfigurablePerformanceEnabled bool `json:"configurablePerformanceEnabled,omitempty"`
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DeletionProtectionEnabled: Optional. Indicates whether the instance is
@@ -880,6 +928,10 @@ type Instance struct {
 	// Networks: VPC networks to which the instance is connected. For this version,
 	// only a single network is supported.
 	Networks []*NetworkConfig `json:"networks,omitempty"`
+	// PerformanceConfig: Optional. Used to configure performance.
+	PerformanceConfig *PerformanceConfig `json:"performanceConfig,omitempty"`
+	// PerformanceLimits: Output only. Used for getting performance limits.
+	PerformanceLimits *PerformanceLimits `json:"performanceLimits,omitempty"`
 	// Protocol: Immutable. The protocol indicates the access protocol for all
 	// shares in the instance. This field is immutable and it cannot be changed
 	// after the instance has been created. Default value: `NFS_V3`.
@@ -956,15 +1008,16 @@ type Instance struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "ConfigurablePerformanceEnabled") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ConfigurablePerformanceEnabled")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1436,6 +1489,81 @@ type OperationMetadata struct {
 
 func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PerformanceConfig: Used for setting the performance configuration. If the
+// user doesn't specify PerformanceConfig, automatically provision the default
+// performance settings as described in
+// https://cloud.google.com/filestore/docs/performance. Larger instances will
+// be linearly set to more IOPS. If the instance's capacity is increased or
+// decreased, its performance will be automatically adjusted upwards or
+// downwards accordingly (respectively).
+type PerformanceConfig struct {
+	// FixedIops: Choose a fixed provisioned IOPS value for the instance, which
+	// will remain constant regardless of instance capacity. Value must be a
+	// multiple of 1000. If the chosen value is outside the supported range for the
+	// instance's capacity during instance creation, instance creation will fail
+	// with an `InvalidArgument` error. Similarly, if an instance capacity update
+	// would result in a value outside the supported range, the update will fail
+	// with an `InvalidArgument` error.
+	FixedIops *FixedIOPS `json:"fixedIops,omitempty"`
+	// IopsPerTb: Provision IOPS dynamically based on the capacity of the instance.
+	// Provisioned read IOPS will be calculated by multiplying the capacity of the
+	// instance in TiB by the `iops_per_tb` value. For example, for a 2 TiB
+	// instance with an `iops_per_tb` value of 17000 the provisioned read IOPS will
+	// be 34000. If the calculated value is outside the supported range for the
+	// instance's capacity during instance creation, instance creation will fail
+	// with an `InvalidArgument` error. Similarly, if an instance capacity update
+	// would result in a value outside the supported range, the update will fail
+	// with an `InvalidArgument` error.
+	IopsPerTb *IOPSPerTB `json:"iopsPerTb,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FixedIops") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FixedIops") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PerformanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PerformanceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PerformanceLimits: The enforced performance limits, calculated from the
+// instance's performance configuration.
+type PerformanceLimits struct {
+	// MaxReadIops: Output only. The max read IOPS.
+	MaxReadIops int64 `json:"maxReadIops,omitempty,string"`
+	// MaxReadThroughputBps: Output only. The max read throughput in bytes per
+	// second.
+	MaxReadThroughputBps int64 `json:"maxReadThroughputBps,omitempty,string"`
+	// MaxWriteIops: Output only. The max write IOPS.
+	MaxWriteIops int64 `json:"maxWriteIops,omitempty,string"`
+	// MaxWriteThroughputBps: Output only. The max write throughput in bytes per
+	// second.
+	MaxWriteThroughputBps int64 `json:"maxWriteThroughputBps,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "MaxReadIops") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxReadIops") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PerformanceLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod PerformanceLimits
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

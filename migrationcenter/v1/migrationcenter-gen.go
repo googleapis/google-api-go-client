@@ -1035,17 +1035,17 @@ func (s ComputeEnginePreferences) MarshalJSON() ([]byte, error) {
 
 // ComputeEngineShapeDescriptor: Compute Engine target shape descriptor.
 type ComputeEngineShapeDescriptor struct {
-	// LogicalCoreCount: Number of logical cores.
+	// LogicalCoreCount: Output only. Number of logical cores.
 	LogicalCoreCount int64 `json:"logicalCoreCount,omitempty"`
-	// MachineType: Compute Engine machine type.
+	// MachineType: Output only. Compute Engine machine type.
 	MachineType string `json:"machineType,omitempty"`
 	// MemoryMb: Memory in mebibytes.
 	MemoryMb int64 `json:"memoryMb,omitempty"`
 	// PhysicalCoreCount: Number of physical cores.
 	PhysicalCoreCount int64 `json:"physicalCoreCount,omitempty"`
-	// Series: Compute Engine machine series.
+	// Series: Output only. Compute Engine machine series.
 	Series string `json:"series,omitempty"`
-	// Storage: Compute Engine storage. Never empty.
+	// Storage: Output only. Compute Engine storage. Never empty.
 	Storage []*ComputeStorageDescriptor `json:"storage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LogicalCoreCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1067,9 +1067,9 @@ func (s ComputeEngineShapeDescriptor) MarshalJSON() ([]byte, error) {
 
 // ComputeStorageDescriptor: Compute Engine storage option descriptor.
 type ComputeStorageDescriptor struct {
-	// SizeGb: Disk size in GiB.
+	// SizeGb: Output only. Disk size in GiB.
 	SizeGb int64 `json:"sizeGb,omitempty"`
-	// Type: Disk type backing the storage.
+	// Type: Output only. Disk type backing the storage.
 	//
 	// Possible values:
 	//   "PERSISTENT_DISK_TYPE_UNSPECIFIED" - Unspecified (default value).
@@ -1680,7 +1680,7 @@ func (s FileValidationReport) MarshalJSON() ([]byte, error) {
 // FitDescriptor: Describes the fit level of an asset for migration to a
 // specific target.
 type FitDescriptor struct {
-	// FitLevel: Fit level.
+	// FitLevel: Output only. Fit level.
 	//
 	// Possible values:
 	//   "FIT_LEVEL_UNSPECIFIED" - Not enough information.

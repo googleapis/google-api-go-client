@@ -600,6 +600,33 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GceTag: For use only by GCE. GceTag is a wrapper around the GCE
+// administrative tag with parent info.
+type GceTag struct {
+	// Parent: The parents(s) of the tag. Eg. projects/123, folders/456 It usually
+	// contains only one parent. But, in some corner cases, it can contain multiple
+	// parents. Currently, organizations are not supported.
+	Parent []string `json:"parent,omitempty"`
+	// Tag: The administrative_tag name.
+	Tag string `json:"tag,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Parent") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GceTag) MarshalJSON() ([]byte, error) {
+	type NoMethod GceTag
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppengineV1betaLocationMetadata: Metadata for the given
 // google.cloud.location.Location.
 type GoogleAppengineV1betaLocationMetadata struct {
@@ -1126,6 +1153,9 @@ type ProjectsMetadata struct {
 	// completely removed. This is often due to a data governance purge request and
 	// therefore resources should be deleted when this state is reached.
 	ConsumerProjectState string `json:"consumerProjectState,omitempty"`
+	// GceTag: The GCE tags associated with the consumer project and those
+	// inherited due to their ancestry, if any. Not supported by CCFE.
+	GceTag []*GceTag `json:"gceTag,omitempty"`
 	// P4ServiceAccount: The service account authorized to operate on the consumer
 	// project. Note: CCFE only propagates P4SA with default tag to CLH.
 	P4ServiceAccount string `json:"p4ServiceAccount,omitempty"`

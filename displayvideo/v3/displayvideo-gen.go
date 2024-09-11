@@ -9385,6 +9385,10 @@ type InsertionOrder struct {
 	// be used.
 	OptimizationObjective string `json:"optimizationObjective,omitempty"`
 	// Pacing: Required. The budget spending speed setting of the insertion order.
+	// *Warning*: Starting on **November 5, 2024**, pacing_type `PACING_TYPE_ASAP`
+	// will no longer be compatible with pacing_period `PACING_PERIOD_FLIGHT`. Read
+	// more about this announced change
+	// (/display-video/api/deprecations#features.io_asap).
 	Pacing *Pacing `json:"pacing,omitempty"`
 	// PartnerCosts: The partner costs associated with the insertion order. If
 	// absent or empty in CreateInsertionOrder method, the newly created insertion
@@ -12713,7 +12717,10 @@ type Pacing struct {
 	// flight duration.
 	PacingPeriod string `json:"pacingPeriod,omitempty"`
 	// PacingType: Required. The type of pacing that defines how the budget amount
-	// will be spent across the pacing_period.
+	// will be spent across the pacing_period. *Warning*: Starting on **November 5,
+	// 2024**, `PACING_TYPE_ASAP` will no longer be compatible with pacing_period
+	// `PACING_PERIOD_FLIGHT` for insertion orders. Read more about this announced
+	// change (/display-video/api/deprecations#features.io_asap).
 	//
 	// Possible values:
 	//   "PACING_TYPE_UNSPECIFIED" - Pacing mode value is not specified or is
@@ -14256,8 +14263,14 @@ type SensitiveCategoryAssignedTargetingOptionDetails struct {
 	// or disturbing, such as violent news stories, stunts, or toilet humor.
 	//   "SENSITIVE_CATEGORY_EMBEDDED_VIDEO" - YouTube videos embedded on websites
 	// outside of YouTube.com. Only applicable to YouTube and Partners line items.
+	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
+	// about this announced
+	// change](/display-video/api/deprecations#features.yt_li_categories).
 	//   "SENSITIVE_CATEGORY_LIVE_STREAMING_VIDEO" - Video of live events streamed
 	// over the internet. Only applicable to YouTube and Partners line items.
+	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
+	// about this announced
+	// change](/display-video/api/deprecations#features.yt_li_categories).
 	ExcludedSensitiveCategory string `json:"excludedSensitiveCategory,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludedSensitiveCategory")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -14336,8 +14349,14 @@ type SensitiveCategoryTargetingOptionDetails struct {
 	// or disturbing, such as violent news stories, stunts, or toilet humor.
 	//   "SENSITIVE_CATEGORY_EMBEDDED_VIDEO" - YouTube videos embedded on websites
 	// outside of YouTube.com. Only applicable to YouTube and Partners line items.
+	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
+	// about this announced
+	// change](/display-video/api/deprecations#features.yt_li_categories).
 	//   "SENSITIVE_CATEGORY_LIVE_STREAMING_VIDEO" - Video of live events streamed
 	// over the internet. Only applicable to YouTube and Partners line items.
+	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
+	// about this announced
+	// change](/display-video/api/deprecations#features.yt_li_categories).
 	SensitiveCategory string `json:"sensitiveCategory,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SensitiveCategory") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14567,7 +14586,10 @@ type TargetingExpansionConfig struct {
 	// item and ad group resources.
 	AudienceExpansionSeedListExcluded bool `json:"audienceExpansionSeedListExcluded,omitempty"`
 	// EnableOptimizedTargeting: Required. Whether to enable Optimized Targeting
-	// for the line item.
+	// for the line item. *Warning*: Starting on **September 30, 2024**, optimized
+	// targeting will no longer be compatible with a subset of bid strategies. Read
+	// more about this announced change
+	// (/display-video/api/deprecations#features.ot_bid_strategies).
 	EnableOptimizedTargeting bool `json:"enableOptimizedTargeting,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudienceExpansionLevel") to
 	// unconditionally include in API requests. By default, fields with empty or

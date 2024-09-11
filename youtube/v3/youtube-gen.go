@@ -8287,7 +8287,7 @@ func (s VideoStatistics) MarshalJSON() ([]byte, error) {
 }
 
 // VideoStatus: Basic details about a video category, such as its localized
-// title. Next Id: 18
+// title. Next Id: 19
 type VideoStatus struct {
 	// Embeddable: This value indicates if the video can be embedded on another
 	// website. @mutable youtube.videos.insert youtube.videos.update

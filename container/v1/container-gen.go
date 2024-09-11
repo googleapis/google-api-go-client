@@ -6,7 +6,7 @@
 
 // Package container provides access to the Kubernetes Engine API.
 //
-// For product documentation, see: https://cloud.google.com/container-engine/
+// For product documentation, see: https://cloud.google.com/kubernetes-engine/docs/
 //
 // # Library status
 //
@@ -1072,6 +1072,9 @@ type Cluster struct {
 	// notation (e.g. `10.96.0.0/14`). Leave blank to have one automatically chosen
 	// or specify a `/14` block in `10.0.0.0/8`.
 	ClusterIpv4Cidr string `json:"clusterIpv4Cidr,omitempty"`
+	// CompliancePostureConfig: Enable/Disable Compliance Posture features for the
+	// cluster.
+	CompliancePostureConfig *CompliancePostureConfig `json:"compliancePostureConfig,omitempty"`
 	// Conditions: Which conditions caused the current cluster state.
 	Conditions []*StatusCondition `json:"conditions,omitempty"`
 	// ConfidentialNodes: Configuration of Confidential Nodes. All the nodes in the
@@ -1446,6 +1449,9 @@ type ClusterUpdate struct {
 	DesiredBinaryAuthorization *BinaryAuthorization `json:"desiredBinaryAuthorization,omitempty"`
 	// DesiredClusterAutoscaling: Cluster-level autoscaling configuration.
 	DesiredClusterAutoscaling *ClusterAutoscaling `json:"desiredClusterAutoscaling,omitempty"`
+	// DesiredCompliancePostureConfig: Enable/Disable Compliance Posture features
+	// for the cluster.
+	DesiredCompliancePostureConfig *CompliancePostureConfig `json:"desiredCompliancePostureConfig,omitempty"`
 	// DesiredContainerdConfig: The desired containerd config for the cluster.
 	DesiredContainerdConfig *ContainerdConfig `json:"desiredContainerdConfig,omitempty"`
 	// DesiredCostManagementConfig: The desired configuration for the fine-grained
@@ -1711,6 +1717,58 @@ func (s CompleteIPRotationRequest) MarshalJSON() ([]byte, error) {
 // CompleteNodePoolUpgradeRequest: CompleteNodePoolUpgradeRequest sets the name
 // of target node pool to complete upgrade.
 type CompleteNodePoolUpgradeRequest struct {
+}
+
+// CompliancePostureConfig: CompliancePostureConfig defines the settings needed
+// to enable/disable features for the Compliance Posture.
+type CompliancePostureConfig struct {
+	// ComplianceStandards: List of enabled compliance standards.
+	ComplianceStandards []*ComplianceStandard `json:"complianceStandards,omitempty"`
+	// Mode: Defines the enablement mode for Compliance Posture.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default value not specified.
+	//   "DISABLED" - Disables Compliance Posture features on the cluster.
+	//   "ENABLED" - Enables Compliance Posture features on the cluster.
+	Mode string `json:"mode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ComplianceStandards") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComplianceStandards") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CompliancePostureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CompliancePostureConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ComplianceStandard: Defines the details of a compliance standard.
+type ComplianceStandard struct {
+	// Standard: Name of the compliance standard.
+	Standard string `json:"standard,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Standard") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Standard") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComplianceStandard) MarshalJSON() ([]byte, error) {
+	type NoMethod ComplianceStandard
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConfidentialNodes: ConfidentialNodes is configuration for the confidential

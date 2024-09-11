@@ -944,7 +944,7 @@ func (s BackupLock) MarshalJSON() ([]byte, error) {
 }
 
 // BackupPlan: A `BackupPlan` specifies some common fields, such as
-// `display_name` as well as one or more `BackupRule` messages. Each
+// `description` as well as one or more `BackupRule` messages. Each
 // `BackupRule` has a retention policy and defines a schedule by which the
 // system is to perform backup workloads.
 type BackupPlan struct {

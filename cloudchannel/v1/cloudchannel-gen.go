@@ -754,10 +754,11 @@ func (s GoogleCloudChannelV1ChannelPartnerRepricingConfig) MarshalJSON() ([]byte
 // for CloudChannelService.CheckCloudIdentityAccountsExist.
 type GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest struct {
 	// Domain: Required. Domain to fetch for Cloud Identity account customers,
-	// including domained and domainless.
+	// including domain and team customers. For team customers, please use the
+	// domain for their emails.
 	Domain string `json:"domain,omitempty"`
 	// PrimaryAdminEmail: Optional. Primary admin email to fetch for Cloud Identity
-	// account domainless customer.
+	// account team customer.
 	PrimaryAdminEmail string `json:"primaryAdminEmail,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1682,7 +1683,7 @@ type GoogleCloudChannelV1ImportCustomerRequest struct {
 	// found. This must be set to true if there is an existing customer with a
 	// conflicting region code or domain.
 	OverwriteIfExists bool `json:"overwriteIfExists,omitempty"`
-	// PrimaryAdminEmail: Optional. Customer's primary admin email.
+	// PrimaryAdminEmail: Required. Customer's primary admin email.
 	PrimaryAdminEmail string `json:"primaryAdminEmail,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthToken") to
 	// unconditionally include in API requests. By default, fields with empty or

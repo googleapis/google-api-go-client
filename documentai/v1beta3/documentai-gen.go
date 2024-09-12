@@ -8872,6 +8872,9 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityType struct {
 	// BaseTypes: The entity type that this type is derived from. For now, one and
 	// only one should be set.
 	BaseTypes []string `json:"baseTypes,omitempty"`
+	// Description: The description of the entity type. Could be used to provide
+	// more information about the entity type for model calls.
+	Description string `json:"description,omitempty"`
 	// DisplayName: User defined name for the type.
 	DisplayName string `json:"displayName,omitempty"`
 	// EntityTypeMetadata: Metadata for the entity type.
@@ -8936,6 +8939,9 @@ func (s GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeEnumValues) MarshalJ
 // GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty: Defines
 // properties that can be part of the entity type.
 type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty struct {
+	// Description: The description of the property. Could be used to provide more
+	// information about the property for model calls.
+	Description string `json:"description,omitempty"`
 	// DisplayName: User defined name for the property.
 	DisplayName string `json:"displayName,omitempty"`
 	// Name: The name of the property. Follows the same guidelines as the
@@ -8959,13 +8965,13 @@ type GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty struct {
 	// ValueType: A reference to the value type of the property. This type is
 	// subject to the same conventions as the `Entity.base_types` field.
 	ValueType string `json:"valueType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// NullFields is a list of field names (e.g. "Description") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

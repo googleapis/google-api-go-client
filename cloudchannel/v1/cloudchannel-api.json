@@ -2303,7 +2303,7 @@
       }
     }
   },
-  "revision": "20240828",
+  "revision": "20240908",
   "rootUrl": "https://cloudchannel.googleapis.com/",
   "schemas": {
     "GoogleCloudChannelV1ActivateEntitlementRequest": {
@@ -2579,11 +2579,11 @@
       "id": "GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest",
       "properties": {
         "domain": {
-          "description": "Required. Domain to fetch for Cloud Identity account customers, including domained and domainless.",
+          "description": "Required. Domain to fetch for Cloud Identity account customers, including domain and team customers. For team customers, please use the domain for their emails.",
           "type": "string"
         },
         "primaryAdminEmail": {
-          "description": "Optional. Primary admin email to fetch for Cloud Identity account domainless customer.",
+          "description": "Optional. Primary admin email to fetch for Cloud Identity account team customer.",
           "type": "string"
         }
       },
@@ -3450,7 +3450,7 @@
           "type": "boolean"
         },
         "primaryAdminEmail": {
-          "description": "Optional. Customer's primary admin email.",
+          "description": "Required. Customer's primary admin email.",
           "type": "string"
         }
       },

@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20240902",
+  "revision": "20240906",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -406,6 +406,10 @@
           },
           "type": "array"
         },
+        "generationConfig": {
+          "$ref": "GoogleCloudAiplatformV1beta1GenerationConfig",
+          "description": "Optional. Generation config that the model will use to generate the response."
+        },
         "instances": {
           "description": "Optional. The instances that are the input to token counting call. Schema is identical to the prediction schema of the underlying model.",
           "items": {
@@ -572,6 +576,13 @@
         "generationConfig": {
           "$ref": "GoogleCloudAiplatformV1beta1GenerationConfig",
           "description": "Optional. Generation config."
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. The labels with user-defined metadata for the request. It is used for billing and reporting only. Label keys and values can be no longer than 63 characters (Unicode codepoints) and can only contain lowercase letters, numeric characters, underscores, and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter.",
+          "type": "object"
         },
         "safetySettings": {
           "description": "Optional. Per request settings for blocking unsafe content. Enforced on GenerateContentResponse.candidates.",
@@ -988,14 +999,16 @@
             "HARM_CATEGORY_HATE_SPEECH",
             "HARM_CATEGORY_DANGEROUS_CONTENT",
             "HARM_CATEGORY_HARASSMENT",
-            "HARM_CATEGORY_SEXUALLY_EXPLICIT"
+            "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "HARM_CATEGORY_CIVIC_INTEGRITY"
           ],
           "enumDescriptions": [
             "The harm category is unspecified.",
             "The harm category is hate speech.",
             "The harm category is dangerous content.",
             "The harm category is harassment.",
-            "The harm category is sexually explicit content."
+            "The harm category is sexually explicit content.",
+            "The harm category is civic integrity."
           ],
           "readOnly": true,
           "type": "string"
@@ -1064,14 +1077,16 @@
             "HARM_CATEGORY_HATE_SPEECH",
             "HARM_CATEGORY_DANGEROUS_CONTENT",
             "HARM_CATEGORY_HARASSMENT",
-            "HARM_CATEGORY_SEXUALLY_EXPLICIT"
+            "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "HARM_CATEGORY_CIVIC_INTEGRITY"
           ],
           "enumDescriptions": [
             "The harm category is unspecified.",
             "The harm category is hate speech.",
             "The harm category is dangerous content.",
             "The harm category is harassment.",
-            "The harm category is sexually explicit content."
+            "The harm category is sexually explicit content.",
+            "The harm category is civic integrity."
           ],
           "type": "string"
         },
@@ -1197,6 +1212,13 @@
           },
           "description": "Optional. SCHEMA FIELDS FOR TYPE OBJECT Properties of Type.OBJECT.",
           "type": "object"
+        },
+        "propertyOrdering": {
+          "description": "Optional. The order of the properties. Not a standard field in open api spec. Only used to support the order of the properties.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "required": {
           "description": "Optional. Required properties of Type.OBJECT.",

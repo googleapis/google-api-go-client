@@ -428,6 +428,9 @@ func (s GoogleCloudAiplatformV1beta1Content) MarshalJSON() ([]byte, error) {
 type GoogleCloudAiplatformV1beta1CountTokensRequest struct {
 	// Contents: Optional. Input content.
 	Contents []*GoogleCloudAiplatformV1beta1Content `json:"contents,omitempty"`
+	// GenerationConfig: Optional. Generation config that the model will use to
+	// generate the response.
+	GenerationConfig *GoogleCloudAiplatformV1beta1GenerationConfig `json:"generationConfig,omitempty"`
 	// Instances: Optional. The instances that are the input to token counting
 	// call. Schema is identical to the prediction schema of the underlying model.
 	Instances []interface{} `json:"instances,omitempty"`
@@ -678,6 +681,13 @@ type GoogleCloudAiplatformV1beta1GenerateContentRequest struct {
 	Contents []*GoogleCloudAiplatformV1beta1Content `json:"contents,omitempty"`
 	// GenerationConfig: Optional. Generation config.
 	GenerationConfig *GoogleCloudAiplatformV1beta1GenerationConfig `json:"generationConfig,omitempty"`
+	// Labels: Optional. The labels with user-defined metadata for the request. It
+	// is used for billing and reporting only. Label keys and values can be no
+	// longer than 63 characters (Unicode codepoints) and can only contain
+	// lowercase letters, numeric characters, underscores, and dashes.
+	// International characters are allowed. Label values are optional. Label keys
+	// must start with a letter.
+	Labels map[string]string `json:"labels,omitempty"`
 	// SafetySettings: Optional. Per request settings for blocking unsafe content.
 	// Enforced on GenerateContentResponse.candidates.
 	SafetySettings []*GoogleCloudAiplatformV1beta1SafetySetting `json:"safetySettings,omitempty"`
@@ -1214,6 +1224,7 @@ type GoogleCloudAiplatformV1beta1SafetyRating struct {
 	//   "HARM_CATEGORY_HARASSMENT" - The harm category is harassment.
 	//   "HARM_CATEGORY_SEXUALLY_EXPLICIT" - The harm category is sexually explicit
 	// content.
+	//   "HARM_CATEGORY_CIVIC_INTEGRITY" - The harm category is civic integrity.
 	Category string `json:"category,omitempty"`
 	// Probability: Output only. Harm probability levels in the content.
 	//
@@ -1283,6 +1294,7 @@ type GoogleCloudAiplatformV1beta1SafetySetting struct {
 	//   "HARM_CATEGORY_HARASSMENT" - The harm category is harassment.
 	//   "HARM_CATEGORY_SEXUALLY_EXPLICIT" - The harm category is sexually explicit
 	// content.
+	//   "HARM_CATEGORY_CIVIC_INTEGRITY" - The harm category is civic integrity.
 	Category string `json:"category,omitempty"`
 	// Method: Optional. Specify if the threshold is used for probability or
 	// severity score. If not specified, the threshold is used for probability
@@ -1371,6 +1383,9 @@ type GoogleCloudAiplatformV1beta1Schema struct {
 	// Properties: Optional. SCHEMA FIELDS FOR TYPE OBJECT Properties of
 	// Type.OBJECT.
 	Properties map[string]GoogleCloudAiplatformV1beta1Schema `json:"properties,omitempty"`
+	// PropertyOrdering: Optional. The order of the properties. Not a standard
+	// field in open api spec. Only used to support the order of the properties.
+	PropertyOrdering []string `json:"propertyOrdering,omitempty"`
 	// Required: Optional. Required properties of Type.OBJECT.
 	Required []string `json:"required,omitempty"`
 	// Title: Optional. The title of the Schema.

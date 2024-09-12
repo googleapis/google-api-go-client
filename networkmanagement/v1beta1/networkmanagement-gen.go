@@ -292,6 +292,10 @@ type AbortInfo struct {
 	// endpoints satisfy test input).
 	//   "SOURCE_PSC_CLOUD_SQL_UNSUPPORTED" - Aborted because tests with a
 	// PSC-based Cloud SQL instance as a source are not supported.
+	//   "SOURCE_REDIS_CLUSTER_UNSUPPORTED" - Aborted because tests with a Redis
+	// Cluster as a source are not supported.
+	//   "SOURCE_REDIS_INSTANCE_UNSUPPORTED" - Aborted because tests with a Redis
+	// Instance as a source are not supported.
 	//   "SOURCE_FORWARDING_RULE_UNSUPPORTED" - Aborted because tests with a
 	// forwarding rule as a source are not supported.
 	//   "NON_ROUTABLE_IP_ADDRESS" - Aborted because one of the endpoints is a
@@ -828,6 +832,8 @@ type DeliverInfo struct {
 	// return traces.
 	//   "GOOGLE_MANAGED_SERVICE" - Target is a Google-managed service. Used only
 	// for return traces.
+	//   "REDIS_INSTANCE" - Target is a Redis Instance.
+	//   "REDIS_CLUSTER" - Target is a Redis Cluster.
 	Target string `json:"target,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IpAddress") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -922,6 +928,8 @@ type DropInfo struct {
 	// instance that is not in running state.
 	//   "REDIS_INSTANCE_NOT_RUNNING" - Packet sent from or to a Redis Instance
 	// that is not in running state.
+	//   "REDIS_CLUSTER_NOT_RUNNING" - Packet sent from or to a Redis Cluster that
+	// is not in running state.
 	//   "TRAFFIC_TYPE_BLOCKED" - The type of traffic is blocked and the user
 	// cannot configure a firewall rule to enable it. See [Always blocked
 	// traffic](https://cloud.google.com/vpc/docs/firewalls#blockedtraffic) for
@@ -1024,6 +1032,24 @@ type DropInfo struct {
 	// backend service named port not being defined on the instance group level.
 	//   "DESTINATION_IS_PRIVATE_NAT_IP_RANGE" - Packet is dropped due to a
 	// destination IP range being part of a Private NAT IP range.
+	//   "DROPPED_INSIDE_REDIS_INSTANCE_SERVICE" - Generic drop cause for a packet
+	// being dropped inside a Redis Instance service project.
+	//   "REDIS_INSTANCE_UNSUPPORTED_PORT" - Packet is dropped due to an
+	// unsupported port being used to connect to a Redis Instance. Port 6379 should
+	// be used to connect to a Redis Instance.
+	//   "REDIS_INSTANCE_CONNECTING_FROM_PUPI_ADDRESS" - Packet is dropped due to
+	// connecting from PUPI address to a PSA based Redis Instance.
+	//   "REDIS_INSTANCE_NO_ROUTE_TO_DESTINATION_NETWORK" - Packet is dropped due
+	// to no route to the destination network.
+	//   "REDIS_INSTANCE_NO_EXTERNAL_IP" - Redis Instance does not have an external
+	// IP address.
+	//   "DROPPED_INSIDE_REDIS_CLUSTER_SERVICE" - Generic drop cause for a packet
+	// being dropped inside a Redis Cluster service project.
+	//   "REDIS_CLUSTER_UNSUPPORTED_PORT" - Packet is dropped due to an unsupported
+	// port being used to connect to a Redis Cluster. Ports 6379 and 11000 to 13047
+	// should be used to connect to a Redis Cluster.
+	//   "REDIS_CLUSTER_NO_EXTERNAL_IP" - Redis Cluster does not have an external
+	// IP address.
 	Cause string `json:"cause,omitempty"`
 	// DestinationIp: Destination IP address of the dropped packet (if relevant).
 	DestinationIp string `json:"destinationIp,omitempty"`
@@ -2362,6 +2388,44 @@ func (s ReachabilityDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RedisClusterInfo: For display only. Metadata associated with a Redis
+// Cluster.
+type RedisClusterInfo struct {
+	// DiscoveryEndpointIpAddress: Discovery endpoint IP address of a Redis
+	// Cluster.
+	DiscoveryEndpointIpAddress string `json:"discoveryEndpointIpAddress,omitempty"`
+	// DisplayName: Name of a Redis Cluster.
+	DisplayName string `json:"displayName,omitempty"`
+	// Location: Name of the region in which the Redis Cluster is defined. For
+	// example, "us-central1".
+	Location string `json:"location,omitempty"`
+	// NetworkUri: URI of a Redis Cluster network in format
+	// "projects/{project_id}/global/networks/{network_id}".
+	NetworkUri string `json:"networkUri,omitempty"`
+	// SecondaryEndpointIpAddress: Secondary endpoint IP address of a Redis
+	// Cluster.
+	SecondaryEndpointIpAddress string `json:"secondaryEndpointIpAddress,omitempty"`
+	// Uri: URI of a Redis Cluster in format
+	// "projects/{project_id}/locations/{location}/clusters/{cluster_id}"
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DiscoveryEndpointIpAddress")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiscoveryEndpointIpAddress") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RedisClusterInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod RedisClusterInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RedisInstanceInfo: For display only. Metadata associated with a Cloud Redis
 // Instance.
 type RedisInstanceInfo struct {
@@ -2636,6 +2700,8 @@ type Step struct {
 	ProjectId string `json:"projectId,omitempty"`
 	// ProxyConnection: Display information of a ProxyConnection.
 	ProxyConnection *ProxyConnectionInfo `json:"proxyConnection,omitempty"`
+	// RedisCluster: Display information of a Redis Cluster.
+	RedisCluster *RedisClusterInfo `json:"redisCluster,omitempty"`
 	// RedisInstance: Display information of a Redis Instance.
 	RedisInstance *RedisInstanceInfo `json:"redisInstance,omitempty"`
 	// Route: Display information of a Compute Engine route.
@@ -2666,6 +2732,9 @@ type Step struct {
 	// instance information.
 	//   "START_FROM_REDIS_INSTANCE" - Initial state: packet originating from a
 	// Redis instance. A RedisInstanceInfo is populated with starting instance
+	// information.
+	//   "START_FROM_REDIS_CLUSTER" - Initial state: packet originating from a
+	// Redis Cluster. A RedisClusterInfo is populated with starting Cluster
 	// information.
 	//   "START_FROM_CLOUD_FUNCTION" - Initial state: packet originating from a
 	// Cloud Function. A CloudFunctionInfo is populated with starting function

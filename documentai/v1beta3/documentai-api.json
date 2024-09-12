@@ -1284,7 +1284,7 @@
       }
     }
   },
-  "revision": "20240813",
+  "revision": "20240906",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadata": {
@@ -7945,6 +7945,10 @@
           },
           "type": "array"
         },
+        "description": {
+          "description": "The description of the entity type. Could be used to provide more information about the entity type for model calls.",
+          "type": "string"
+        },
         "displayName": {
           "description": "User defined name for the type.",
           "type": "string"
@@ -7989,6 +7993,10 @@
       "description": "Defines properties that can be part of the entity type.",
       "id": "GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty",
       "properties": {
+        "description": {
+          "description": "The description of the property. Could be used to provide more information about the property for model calls.",
+          "type": "string"
+        },
         "displayName": {
           "description": "User defined name for the property.",
           "type": "string"

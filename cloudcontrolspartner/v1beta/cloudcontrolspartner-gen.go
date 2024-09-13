@@ -360,7 +360,7 @@ type Customer struct {
 	// CustomerOnboardingState: Output only. Container for customer onboarding
 	// steps
 	CustomerOnboardingState *CustomerOnboardingState `json:"customerOnboardingState,omitempty"`
-	// DisplayName: The customer organization's display name. E.g. "Google".
+	// DisplayName: Required. Display name for the customer
 	DisplayName string `json:"displayName,omitempty"`
 	// IsOnboarded: Output only. Indicates whether a customer is fully onboarded
 	IsOnboarded bool `json:"isOnboarded,omitempty"`

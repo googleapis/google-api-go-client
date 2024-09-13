@@ -451,7 +451,7 @@ type BoostConfig struct {
 	// nested virtualization can only be enabled on boost configurations that
 	// specify a machine_type in the N1 or N2 machine series.
 	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
-	// Id: Optional. Required. The id to be used for the boost config.
+	// Id: Optional. Required. The id to be used for the boost configuration.
 	Id string `json:"id,omitempty"`
 	// MachineType: Optional. The type of machine that boosted VM instances will
 	// use—for example, `e2-standard-4`. For more information about machine types
@@ -1681,8 +1681,8 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 type Workstation struct {
 	// Annotations: Optional. Client-specified annotations.
 	Annotations map[string]string `json:"annotations,omitempty"`
-	// BoostConfigs: Output only. List of available boost configuration ids that
-	// this workstation can be boosted up to
+	// BoostConfigs: Output only. List of available boost configuration IDs that
+	// this workstation can be boosted up to.
 	BoostConfigs []*WorkstationBoostConfig `json:"boostConfigs,omitempty"`
 	// CreateTime: Output only. Time when this workstation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1764,10 +1764,10 @@ func (s Workstation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// WorkstationBoostConfig: Boost config for this workstation. This object is
-// populated from the parent workstation config.
+// WorkstationBoostConfig: Boost configuration for this workstation. This
+// object is populated from the parent workstation configuration.
 type WorkstationBoostConfig struct {
-	// Id: Output only. Boost config id.
+	// Id: Output only. Boost configuration ID.
 	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1916,7 +1916,7 @@ type WorkstationConfig struct {
 	// project. Operating system audit logging is distinct from Cloud Audit Logs
 	// (https://cloud.google.com/workstations/docs/audit-logging) and Container
 	// output logging
-	// (http://cloud/workstations/docs/container-output-logging#overview).
+	// (https://cloud.google.com/workstations/docs/container-output-logging#overview).
 	// Operating system audit logs are available in the Cloud Logging
 	// (https://cloud.google.com/logging/docs) console by querying:
 	// resource.type="gce_instance" log_name:"/logs/linux-auditd"
@@ -1966,13 +1966,13 @@ type WorkstationConfig struct {
 	// underlying Compute Engine resources.
 	Labels map[string]string `json:"labels,omitempty"`
 	// MaxUsableWorkstations: Optional. Maximum number of workstations under this
-	// config a user can have `workstations.workstation.use` permission on. Only
-	// enforced on CreateWorkstation API calls on the user issuing the API request.
-	// Can be overridden by: - granting a user
+	// configuration a user can have `workstations.workstation.use` permission on.
+	// Only enforced on CreateWorkstation API calls on the user issuing the API
+	// request. Can be overridden by: - granting a user
 	// workstations.workstationConfigs.exemptMaxUsableWorkstationLimit permission,
 	// or - having a user with that permission create a workstation and granting
 	// another user `workstations.workstation.use` permission on that workstation.
-	// If not specified defaults to 0 which indicates unlimited.
+	// If not specified, defaults to `0`, which indicates unlimited.
 	MaxUsableWorkstations int64 `json:"maxUsableWorkstations,omitempty"`
 	// Name: Identifier. Full name of this workstation configuration.
 	Name string `json:"name,omitempty"`

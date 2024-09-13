@@ -12633,7 +12633,7 @@ func (c *IntegratorsListSubscribersCall) Pages(ctx context.Context, f func(*Goog
 	}
 }
 
-type IntegratorsRegisterCall struct {
+type IntegratorsRegisterSubscriberCall struct {
 	s          *Service
 	integrator string
 	urlParams_ gensupport.URLParams
@@ -12641,33 +12641,34 @@ type IntegratorsRegisterCall struct {
 	header_    http.Header
 }
 
-// Register: Registers a service account with subscriber privileges on the
-// Cloud Pub/Sub topic for this Channel Services account. After you create a
-// subscriber, you get the events through SubscriberEvent Possible error codes:
-// * PERMISSION_DENIED: The reseller account making the request and the
-// provided reseller account are different, or the impersonated user is not a
-// super admin. * INVALID_ARGUMENT: Required request parameters are missing or
-// invalid. * INTERNAL: Any non-user error related to a technical issue in the
-// backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error
-// related to a technical issue in the backend. Contact Cloud Channel support.
-// Return value: The topic name with the registered service email address.
+// RegisterSubscriber: Registers a service account with subscriber privileges
+// on the Cloud Pub/Sub topic for this Channel Services account. After you
+// create a subscriber, you get the events through SubscriberEvent Possible
+// error codes: * PERMISSION_DENIED: The reseller account making the request
+// and the provided reseller account are different, or the impersonated user is
+// not a super admin. * INVALID_ARGUMENT: Required request parameters are
+// missing or invalid. * INTERNAL: Any non-user error related to a technical
+// issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user
+// error related to a technical issue in the backend. Contact Cloud Channel
+// support. Return value: The topic name with the registered service email
+// address.
 //
 // - integrator: Optional. Resource name of the integrator.
-func (r *IntegratorsService) Register(integrator string) *IntegratorsRegisterCall {
-	c := &IntegratorsRegisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *IntegratorsService) RegisterSubscriber(integrator string) *IntegratorsRegisterSubscriberCall {
+	c := &IntegratorsRegisterSubscriberCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.integrator = integrator
 	return c
 }
 
 // Account sets the optional parameter "account": Resource name of the account.
-func (c *IntegratorsRegisterCall) Account(account string) *IntegratorsRegisterCall {
+func (c *IntegratorsRegisterSubscriberCall) Account(account string) *IntegratorsRegisterSubscriberCall {
 	c.urlParams_.Set("account", account)
 	return c
 }
 
 // ServiceAccount sets the optional parameter "serviceAccount": Required.
 // Service account that provides subscriber access to the registered topic.
-func (c *IntegratorsRegisterCall) ServiceAccount(serviceAccount string) *IntegratorsRegisterCall {
+func (c *IntegratorsRegisterSubscriberCall) ServiceAccount(serviceAccount string) *IntegratorsRegisterSubscriberCall {
 	c.urlParams_.Set("serviceAccount", serviceAccount)
 	return c
 }
@@ -12675,32 +12676,32 @@ func (c *IntegratorsRegisterCall) ServiceAccount(serviceAccount string) *Integra
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *IntegratorsRegisterCall) Fields(s ...googleapi.Field) *IntegratorsRegisterCall {
+func (c *IntegratorsRegisterSubscriberCall) Fields(s ...googleapi.Field) *IntegratorsRegisterSubscriberCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *IntegratorsRegisterCall) Context(ctx context.Context) *IntegratorsRegisterCall {
+func (c *IntegratorsRegisterSubscriberCall) Context(ctx context.Context) *IntegratorsRegisterSubscriberCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *IntegratorsRegisterCall) Header() http.Header {
+func (c *IntegratorsRegisterSubscriberCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *IntegratorsRegisterCall) doRequest(alt string) (*http.Response, error) {
+func (c *IntegratorsRegisterSubscriberCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+integrator}:register")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+integrator}:registerSubscriber")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -12713,13 +12714,13 @@ func (c *IntegratorsRegisterCall) doRequest(alt string) (*http.Response, error) 
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "cloudchannel.integrators.register" call.
+// Do executes the "cloudchannel.integrators.registerSubscriber" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *GoogleCloudChannelV1RegisterSubscriberResponse.ServerResponse.Header or (if
 // a response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *IntegratorsRegisterCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1RegisterSubscriberResponse, error) {
+func (c *IntegratorsRegisterSubscriberCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1RegisterSubscriberResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -12751,7 +12752,7 @@ func (c *IntegratorsRegisterCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 	return ret, nil
 }
 
-type IntegratorsUnregisterCall struct {
+type IntegratorsUnregisterSubscriberCall struct {
 	s          *Service
 	integrator string
 	urlParams_ gensupport.URLParams
@@ -12759,36 +12760,37 @@ type IntegratorsUnregisterCall struct {
 	header_    http.Header
 }
 
-// Unregister: Unregisters a service account with subscriber privileges on the
-// Cloud Pub/Sub topic created for this Channel Services account. If there are
-// no service accounts left with subscriber privileges, this deletes the topic.
-// You can call ListSubscribers to check for these accounts. Possible error
-// codes: * PERMISSION_DENIED: The reseller account making the request and the
-// provided reseller account are different, or the impersonated user is not a
-// super admin. * INVALID_ARGUMENT: Required request parameters are missing or
-// invalid. * NOT_FOUND: The topic resource doesn't exist. * INTERNAL: Any
-// non-user error related to a technical issue in the backend. Contact Cloud
-// Channel support. * UNKNOWN: Any non-user error related to a technical issue
-// in the backend. Contact Cloud Channel support. Return value: The topic name
-// that unregistered the service email address. Returns a success response if
-// the service email address wasn't registered with the topic.
+// UnregisterSubscriber: Unregisters a service account with subscriber
+// privileges on the Cloud Pub/Sub topic created for this Channel Services
+// account. If there are no service accounts left with subscriber privileges,
+// this deletes the topic. You can call ListSubscribers to check for these
+// accounts. Possible error codes: * PERMISSION_DENIED: The reseller account
+// making the request and the provided reseller account are different, or the
+// impersonated user is not a super admin. * INVALID_ARGUMENT: Required request
+// parameters are missing or invalid. * NOT_FOUND: The topic resource doesn't
+// exist. * INTERNAL: Any non-user error related to a technical issue in the
+// backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error
+// related to a technical issue in the backend. Contact Cloud Channel support.
+// Return value: The topic name that unregistered the service email address.
+// Returns a success response if the service email address wasn't registered
+// with the topic.
 //
 // - integrator: Optional. Resource name of the integrator.
-func (r *IntegratorsService) Unregister(integrator string) *IntegratorsUnregisterCall {
-	c := &IntegratorsUnregisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *IntegratorsService) UnregisterSubscriber(integrator string) *IntegratorsUnregisterSubscriberCall {
+	c := &IntegratorsUnregisterSubscriberCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.integrator = integrator
 	return c
 }
 
 // Account sets the optional parameter "account": Resource name of the account.
-func (c *IntegratorsUnregisterCall) Account(account string) *IntegratorsUnregisterCall {
+func (c *IntegratorsUnregisterSubscriberCall) Account(account string) *IntegratorsUnregisterSubscriberCall {
 	c.urlParams_.Set("account", account)
 	return c
 }
 
 // ServiceAccount sets the optional parameter "serviceAccount": Required.
 // Service account to unregister from subscriber access to the topic.
-func (c *IntegratorsUnregisterCall) ServiceAccount(serviceAccount string) *IntegratorsUnregisterCall {
+func (c *IntegratorsUnregisterSubscriberCall) ServiceAccount(serviceAccount string) *IntegratorsUnregisterSubscriberCall {
 	c.urlParams_.Set("serviceAccount", serviceAccount)
 	return c
 }
@@ -12796,32 +12798,32 @@ func (c *IntegratorsUnregisterCall) ServiceAccount(serviceAccount string) *Integ
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *IntegratorsUnregisterCall) Fields(s ...googleapi.Field) *IntegratorsUnregisterCall {
+func (c *IntegratorsUnregisterSubscriberCall) Fields(s ...googleapi.Field) *IntegratorsUnregisterSubscriberCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *IntegratorsUnregisterCall) Context(ctx context.Context) *IntegratorsUnregisterCall {
+func (c *IntegratorsUnregisterSubscriberCall) Context(ctx context.Context) *IntegratorsUnregisterSubscriberCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *IntegratorsUnregisterCall) Header() http.Header {
+func (c *IntegratorsUnregisterSubscriberCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *IntegratorsUnregisterCall) doRequest(alt string) (*http.Response, error) {
+func (c *IntegratorsUnregisterSubscriberCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+integrator}:unregister")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+integrator}:unregisterSubscriber")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -12834,13 +12836,13 @@ func (c *IntegratorsUnregisterCall) doRequest(alt string) (*http.Response, error
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "cloudchannel.integrators.unregister" call.
+// Do executes the "cloudchannel.integrators.unregisterSubscriber" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *GoogleCloudChannelV1UnregisterSubscriberResponse.ServerResponse.Header or
 // (if a response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *IntegratorsUnregisterCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1UnregisterSubscriberResponse, error) {
+func (c *IntegratorsUnregisterSubscriberCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1UnregisterSubscriberResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {

@@ -2014,11 +2014,11 @@
             "https://www.googleapis.com/auth/apps.order"
           ]
         },
-        "register": {
+        "registerSubscriber": {
           "description": "Registers a service account with subscriber privileges on the Cloud Pub/Sub topic for this Channel Services account. After you create a subscriber, you get the events through SubscriberEvent Possible error codes: * PERMISSION_DENIED: The reseller account making the request and the provided reseller account are different, or the impersonated user is not a super admin. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The topic name with the registered service email address.",
-          "flatPath": "v1/integrators/{integratorsId}:register",
+          "flatPath": "v1/integrators/{integratorsId}:registerSubscriber",
           "httpMethod": "POST",
-          "id": "cloudchannel.integrators.register",
+          "id": "cloudchannel.integrators.registerSubscriber",
           "parameterOrder": [
             "integrator"
           ],
@@ -2041,7 +2041,7 @@
               "type": "string"
             }
           },
-          "path": "v1/{+integrator}:register",
+          "path": "v1/{+integrator}:registerSubscriber",
           "response": {
             "$ref": "GoogleCloudChannelV1RegisterSubscriberResponse"
           },
@@ -2049,11 +2049,11 @@
             "https://www.googleapis.com/auth/apps.order"
           ]
         },
-        "unregister": {
+        "unregisterSubscriber": {
           "description": "Unregisters a service account with subscriber privileges on the Cloud Pub/Sub topic created for this Channel Services account. If there are no service accounts left with subscriber privileges, this deletes the topic. You can call ListSubscribers to check for these accounts. Possible error codes: * PERMISSION_DENIED: The reseller account making the request and the provided reseller account are different, or the impersonated user is not a super admin. * INVALID_ARGUMENT: Required request parameters are missing or invalid. * NOT_FOUND: The topic resource doesn't exist. * INTERNAL: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a technical issue in the backend. Contact Cloud Channel support. Return value: The topic name that unregistered the service email address. Returns a success response if the service email address wasn't registered with the topic.",
-          "flatPath": "v1/integrators/{integratorsId}:unregister",
+          "flatPath": "v1/integrators/{integratorsId}:unregisterSubscriber",
           "httpMethod": "POST",
-          "id": "cloudchannel.integrators.unregister",
+          "id": "cloudchannel.integrators.unregisterSubscriber",
           "parameterOrder": [
             "integrator"
           ],
@@ -2076,7 +2076,7 @@
               "type": "string"
             }
           },
-          "path": "v1/{+integrator}:unregister",
+          "path": "v1/{+integrator}:unregisterSubscriber",
           "response": {
             "$ref": "GoogleCloudChannelV1UnregisterSubscriberResponse"
           },
@@ -2303,7 +2303,7 @@
       }
     }
   },
-  "revision": "20240908",
+  "revision": "20240909",
   "rootUrl": "https://cloudchannel.googleapis.com/",
   "schemas": {
     "GoogleCloudChannelV1ActivateEntitlementRequest": {

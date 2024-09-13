@@ -99,7 +99,7 @@
       "methods": {
         "queryDivisionByAddress": {
           "description": "Lookup OCDIDs and names for divisions related to an address.",
-          "flatPath": "civicinfo/v2/divisions",
+          "flatPath": "civicinfo/v2/divisionsByAddress",
           "httpMethod": "GET",
           "id": "civicinfo.divisions.queryDivisionByAddress",
           "parameterOrder": [],
@@ -109,7 +109,7 @@
               "type": "string"
             }
           },
-          "path": "civicinfo/v2/divisions",
+          "path": "civicinfo/v2/divisionsByAddress",
           "response": {
             "$ref": "DivisionByAddressResponse"
           }
@@ -379,7 +379,7 @@
       }
     }
   },
-  "revision": "20240909",
+  "revision": "20240910",
   "rootUrl": "https://civicinfo.googleapis.com/",
   "schemas": {
     "AdministrationRegion": {

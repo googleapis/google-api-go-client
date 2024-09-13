@@ -119,6 +119,22 @@ const (
 	// conversations owned by your organization
 	ChatAdminSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.admin.spaces.readonly"
 
+	// On their own behalf, apps in Google Chat can delete conversations and spaces
+	// and remove access to associated files
+	ChatAppDeleteScope = "https://www.googleapis.com/auth/chat.app.delete"
+
+	// On their own behalf, apps in Google Chat can see, add, update, and remove
+	// members from conversations and spaces
+	ChatAppMembershipsScope = "https://www.googleapis.com/auth/chat.app.memberships"
+
+	// On their own behalf, apps in Google Chat can create conversations and spaces
+	// and see or update their metadata (including history settings and access
+	// settings)
+	ChatAppSpacesScope = "https://www.googleapis.com/auth/chat.app.spaces"
+
+	// On their own behalf, apps in Google Chat can create conversations and spaces
+	ChatAppSpacesCreateScope = "https://www.googleapis.com/auth/chat.app.spaces.create"
+
 	// Private Service: https://www.googleapis.com/auth/chat.bot
 	ChatBotScope = "https://www.googleapis.com/auth/chat.bot"
 
@@ -183,6 +199,10 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/chat.admin.memberships.readonly",
 		"https://www.googleapis.com/auth/chat.admin.spaces",
 		"https://www.googleapis.com/auth/chat.admin.spaces.readonly",
+		"https://www.googleapis.com/auth/chat.app.delete",
+		"https://www.googleapis.com/auth/chat.app.memberships",
+		"https://www.googleapis.com/auth/chat.app.spaces",
+		"https://www.googleapis.com/auth/chat.app.spaces.create",
 		"https://www.googleapis.com/auth/chat.bot",
 		"https://www.googleapis.com/auth/chat.delete",
 		"https://www.googleapis.com/auth/chat.import",
@@ -968,8 +988,7 @@ func (s ChatClientDataSourceMarkup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ChatSpaceLinkData: Data for Chat space links. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// ChatSpaceLinkData: Data for Chat space links.
 type ChatSpaceLinkData struct {
 	// Message: The message of the linked Chat space resource. Format:
 	// `spaces/{space}/messages/{message}`
@@ -4066,11 +4085,14 @@ type Message struct {
 	Name string `json:"name,omitempty"`
 	// PrivateMessageViewer: Immutable. Input for creating a message, otherwise
 	// output only. The user that can view the message. When set, the message is
-	// private and only visible to the specified user and the Chat app. Link
-	// previews and attachments aren't supported for private messages. Only Chat
-	// apps can send private messages. If your Chat app authenticates as a user
-	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-	// to send a message, the message can't be private and must omit this field.
+	// private and only visible to the specified user and the Chat app. To include
+	// this field in your request, you must call the Chat API using app
+	// authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+	// and omit the following: * Attachments
+	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages.attachments)
+	// * Accessory widgets
+	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages#Message.AccessoryWidget)
 	// For details, see Send a message privately
 	// (https://developers.google.com/workspace/chat/create-messages#private).
 	PrivateMessageViewer *User `json:"privateMessageViewer,omitempty"`
@@ -4467,8 +4489,7 @@ func (s ReactionDeletedEventData) MarshalJSON() ([]byte, error) {
 
 // RichLinkMetadata: A rich link to a resource.
 type RichLinkMetadata struct {
-	// ChatSpaceLinkData: Data for a chat space link. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// ChatSpaceLinkData: Data for a chat space link.
 	ChatSpaceLinkData *ChatSpaceLinkData `json:"chatSpaceLinkData,omitempty"`
 	// DriveLinkData: Data for a drive link.
 	DriveLinkData *DriveLinkData `json:"driveLinkData,omitempty"`
@@ -4478,7 +4499,7 @@ type RichLinkMetadata struct {
 	//   "RICH_LINK_TYPE_UNSPECIFIED" - Default value for the enum. Don't use.
 	//   "DRIVE_FILE" - A Google Drive rich link type.
 	//   "CHAT_SPACE" - A Chat space rich link type. For example, a space smart
-	// chip. [Developer Preview](https://developers.google.com/workspace/preview).
+	// chip.
 	RichLinkType string `json:"richLinkType,omitempty"`
 	// Uri: The URI of this link.
 	Uri string `json:"uri,omitempty"`

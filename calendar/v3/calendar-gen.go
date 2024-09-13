@@ -1117,11 +1117,13 @@ type Event struct {
 	Etag string `json:"etag,omitempty"`
 	// EventType: Specific type of the event. This cannot be modified after the
 	// event is created. Possible values are:
+	// - "birthday" - A special all-day event with an annual recurrence.
 	// - "default" - A regular event or not further specified.
-	// - "outOfOffice" - An out-of-office event.
 	// - "focusTime" - A focus-time event.
-	// - "workingLocation" - A working location event.
 	// - "fromGmail" - An event from Gmail. This type of event cannot be created.
+	//
+	// - "outOfOffice" - An out-of-office event.
+	// - "workingLocation" - A working location event.
 	EventType string `json:"eventType,omitempty"`
 	// ExtendedProperties: Extended properties of the event.
 	ExtendedProperties *EventExtendedProperties `json:"extendedProperties,omitempty"`
@@ -5287,6 +5289,7 @@ func (c *EventsListCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsList
 //
 // Possible values:
 //
+//	"birthday" - Special all-day events with an annual recurrence.
 //	"default" - Regular events.
 //	"focusTime" - Focus time events.
 //	"fromGmail" - Events from Gmail.
@@ -5606,8 +5609,8 @@ type EventsMoveCall struct {
 }
 
 // Move: Moves an event to another calendar, i.e. changes an event's organizer.
-// Note that only default events can be moved; outOfOffice, focusTime,
-// workingLocation and fromGmail events cannot be moved.
+// Note that only default events can be moved; birthday, focusTime, fromGmail,
+// outOfOffice and workingLocation events cannot be moved.
 //
 //   - calendarId: Calendar identifier of the source calendar where the event
 //     currently is on.
@@ -6238,6 +6241,7 @@ func (c *EventsWatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsWat
 //
 // Possible values:
 //
+//	"birthday" - Special all-day events with an annual recurrence.
 //	"default" - Regular events.
 //	"focusTime" - Focus time events.
 //	"fromGmail" - Events from Gmail.

@@ -1526,6 +1526,31 @@ func (s GoogleFirestoreAdminV1BackupSchedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1BackupSource: Information about a backup that was used
+// to restore a database.
+type GoogleFirestoreAdminV1BackupSource struct {
+	// Backup: The resource name of the backup that was used to restore this
+	// database. Format:
+	// `projects/{project}/locations/{location}/backups/{backup}`.
+	Backup string `json:"backup,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1BackupSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1BackupSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata: Metadata for
 // google.longrunning.Operation results from
 // FirestoreAdmin.BulkDeleteDocuments.
@@ -1777,6 +1802,8 @@ type GoogleFirestoreAdminV1Database struct {
 	// PreviousId: Output only. The database resource's prior database ID. This
 	// field is only populated for deleted databases.
 	PreviousId string `json:"previousId,omitempty"`
+	// SourceInfo: Output only. Information about the provenance of this database.
+	SourceInfo *GoogleFirestoreAdminV1SourceInfo `json:"sourceInfo,omitempty"`
 	// Type: The type of the database. See
 	// https://cloud.google.com/datastore/docs/firestore-or-datastore for
 	// information about how to choose.
@@ -2697,6 +2724,34 @@ func (s GoogleFirestoreAdminV1RestoreDatabaseRequest) MarshalJSON() ([]byte, err
 // GoogleFirestoreAdminV1SourceEncryptionOptions: The configuration options for
 // using the same encryption method as the source.
 type GoogleFirestoreAdminV1SourceEncryptionOptions struct {
+}
+
+// GoogleFirestoreAdminV1SourceInfo: Information about the provenance of this
+// database.
+type GoogleFirestoreAdminV1SourceInfo struct {
+	// Backup: If set, this database was restored from the specified backup (or a
+	// snapshot thereof).
+	Backup *GoogleFirestoreAdminV1BackupSource `json:"backup,omitempty"`
+	// Operation: The associated long-running operation. This field may not be set
+	// after the operation has completed. Format:
+	// `projects/{project}/databases/{database}/operations/{operation}`.
+	Operation string `json:"operation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1SourceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1SourceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1Stats: Backup specific statistics.
@@ -9680,6 +9735,18 @@ type ProjectsLocationsBackupsListCall struct {
 func (r *ProjectsLocationsBackupsService) List(parent string) *ProjectsLocationsBackupsListCall {
 	c := &ProjectsLocationsBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression that filters the
+// list of returned backups. A filter expression consists of a field name, a
+// comparison operator, and a value for filtering. The value must be a string,
+// a number, or a boolean. The comparison operator must be one of: `<`, `>`,
+// `<=`, `>=`, `!=`, `=`, or `:`. Colon `:` is the contains operator. Filter
+// rules are not case sensitive. The following fields in the Backup are
+// eligible for filtering: * `database_uid` (supports `=` only)
+func (c *ProjectsLocationsBackupsListCall) Filter(filter string) *ProjectsLocationsBackupsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 

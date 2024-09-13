@@ -205,8 +205,8 @@ type Connector struct {
 	ConnectedProjects []string `json:"connectedProjects,omitempty"`
 	// CreateTime: Output only. The creation time of the connector.
 	CreateTime string `json:"createTime,omitempty"`
-	// IpCidrRange: The range of internal addresses that follows RFC 4632 notation.
-	// Example: `10.132.0.0/28`.
+	// IpCidrRange: Optional. The range of internal addresses that follows RFC 4632
+	// notation. Example: `10.132.0.0/28`.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 	// LastRestartTime: Output only. The last restart time of the connector.
 	LastRestartTime string `json:"lastRestartTime,omitempty"`
@@ -235,7 +235,7 @@ type Connector struct {
 	MinThroughput int64 `json:"minThroughput,omitempty"`
 	// Name: The resource name in the format `projects/*/locations/*/connectors/*`.
 	Name string `json:"name,omitempty"`
-	// Network: Name of a VPC network.
+	// Network: Optional. Name of a VPC network.
 	Network string `json:"network,omitempty"`
 	// State: Output only. State of the VPC access connector.
 	//
@@ -247,7 +247,7 @@ type Connector struct {
 	//   "ERROR" - Connector is in a bad state, manual deletion recommended.
 	//   "UPDATING" - The connector is being updated.
 	State string `json:"state,omitempty"`
-	// Subnet: The subnet in which to house the VPC Access Connector.
+	// Subnet: Optional. The subnet in which to house the VPC Access Connector.
 	Subnet *Subnet `json:"subnet,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -562,13 +562,14 @@ func (s Status) MarshalJSON() ([]byte, error) {
 
 // Subnet: The subnet in which to house the connector
 type Subnet struct {
-	// Name: Subnet name (relative, not fully qualified). E.g. if the full subnet
-	// selfLink is
+	// Name: Optional. Subnet name (relative, not fully qualified). E.g. if the
+	// full subnet selfLink is
 	// https://compute.googleapis.com/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetName}
 	// the correct input for this field would be {subnetName}
 	Name string `json:"name,omitempty"`
-	// ProjectId: Project in which the subnet exists. If not set, this project is
-	// assumed to be the project for which the connector create request was issued.
+	// ProjectId: Optional. Project in which the subnet exists. If not set, this
+	// project is assumed to be the project for which the connector create request
+	// was issued.
 	ProjectId string `json:"projectId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

@@ -346,6 +346,58 @@ func (s AccessPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AccessScope: Access scope represents the client scope, etc. to which the
+// settings will be applied to.
+type AccessScope struct {
+	// ClientScope: Optional. Client scope for this access scope.
+	ClientScope *ClientScope `json:"clientScope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientScope") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientScope") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AccessScope) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessScope
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AccessSettings: Access settings represent the set of conditions that must be
+// met for access to be granted. At least one of the fields must be set.
+type AccessSettings struct {
+	// AccessLevels: Optional. Access level that a user must have to be granted
+	// access. Only one access level is supported, not multiple. This repeated
+	// field must have exactly one element. Example:
+	// "accessPolicies/9522/accessLevels/device_trusted"
+	AccessLevels []string `json:"accessLevels,omitempty"`
+	// ReauthSettings: Optional. Reauth settings applied to user access on a given
+	// AccessScope.
+	ReauthSettings *ReauthSettings `json:"reauthSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccessLevels") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessLevels") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AccessSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ApiOperation: Identification for an API Operation.
 type ApiOperation struct {
 	// MethodSelectors: API methods or permissions to allow. Method or permission
@@ -680,6 +732,30 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// ClientScope: Client scope represents the application, etc. subject to this
+// binding's restrictions.
+type ClientScope struct {
+	// RestrictedClientApplication: Optional. The application that is subject to
+	// this binding's scope.
+	RestrictedClientApplication *Application `json:"restrictedClientApplication,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "RestrictedClientApplication") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RestrictedClientApplication") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClientScope) MarshalJSON() ([]byte, error) {
+	type NoMethod ClientScope
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CommitServicePerimetersRequest: A request to commit dry-run specs in all
@@ -1139,10 +1215,16 @@ type GcpUserAccessBinding struct {
 	// Should not be specified by the client during creation. Example:
 	// "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N"
 	Name string `json:"name,omitempty"`
+	// ReauthSettings: Optional. GCSL policy for the group key.
+	ReauthSettings *ReauthSettings `json:"reauthSettings,omitempty"`
 	// RestrictedClientApplications: Optional. A list of applications that are
 	// subject to this binding's restrictions. If the list is empty, the binding
 	// restrictions will universally apply to all applications.
 	RestrictedClientApplications []*Application `json:"restrictedClientApplications,omitempty"`
+	// ScopedAccessSettings: Optional. A list of scoped access settings that set
+	// this binding's restrictions on a subset of applications. This field cannot
+	// be set if restricted_client_applications is set.
+	ScopedAccessSettings []*ScopedAccessSettings `json:"scopedAccessSettings,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1783,6 +1865,58 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ReauthSettings: Stores settings related to Google Cloud Session Length
+// including session duration, the type of challenge (i.e. method) they should
+// face when their session expires, and other related settings.
+type ReauthSettings struct {
+	// MaxInactivity: Optional. How long a user is allowed to take between actions
+	// before a new access token must be issued. Presently only set for Cloud Apps.
+	MaxInactivity string `json:"maxInactivity,omitempty"`
+	// ReauthMethod: Optional. Reauth method when users GCP session is up.
+	//
+	// Possible values:
+	//   "REAUTH_METHOD_UNSPECIFIED" - If method undefined in API, we will use
+	// LOGIN by default.
+	//   "LOGIN" - The user will prompted to perform regular login. Users who are
+	// enrolled for two-step verification and haven't chosen to "Remember this
+	// computer" will be prompted for their second factor.
+	//   "SECURITY_KEY" - The user will be prompted to autheticate using their
+	// security key. If no security key has been configured, then we will fallback
+	// to LOGIN.
+	//   "PASSWORD" - The user will be prompted for their password.
+	ReauthMethod string `json:"reauthMethod,omitempty"`
+	// SessionLength: Optional. The session length. Setting this field to zero is
+	// equal to disabling. Reauth. Also can set infinite session by flipping the
+	// enabled bit to false below. If use_oidc_max_age is true, for OIDC apps, the
+	// session length will be the minimum of this field and OIDC max_age param.
+	SessionLength string `json:"sessionLength,omitempty"`
+	// SessionLengthEnabled: Optional. Big red button to turn off GCSL. When false,
+	// all fields set above will be disregarded and the session length is basically
+	// infinite.
+	SessionLengthEnabled bool `json:"sessionLengthEnabled,omitempty"`
+	// UseOidcMaxAge: Optional. Only useful for OIDC apps. When false, the OIDC
+	// max_age param, if passed in the authentication request will be ignored. When
+	// true, the re-auth period will be the minimum of the session_length field and
+	// the max_age OIDC param.
+	UseOidcMaxAge bool `json:"useOidcMaxAge,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxInactivity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxInactivity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReauthSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ReauthSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ReplaceAccessLevelsRequest: A request to replace all existing Access Levels
 // in an Access Policy with the Access Levels provided. This is done
 // atomically.
@@ -1891,6 +2025,36 @@ type ReplaceServicePerimetersResponse struct {
 
 func (s ReplaceServicePerimetersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ReplaceServicePerimetersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ScopedAccessSettings: A relationship between access settings and its scope.
+type ScopedAccessSettings struct {
+	// ActiveSettings: Optional. Access settings for this scoped access settings.
+	// This field may be empty if dry_run_settings is set.
+	ActiveSettings *AccessSettings `json:"activeSettings,omitempty"`
+	// DryRunSettings: Optional. Dry-run access settings for this scoped access
+	// settings. This field may be empty if active_settings is set.
+	DryRunSettings *AccessSettings `json:"dryRunSettings,omitempty"`
+	// Scope: Optional. Application, etc. to which the access settings will be
+	// applied to. Implicitly, this is the scoped access settings key; as such, it
+	// must be unique and non-empty.
+	Scope *AccessScope `json:"scope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActiveSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActiveSettings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ScopedAccessSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ScopedAccessSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

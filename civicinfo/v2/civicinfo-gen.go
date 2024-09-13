@@ -1197,7 +1197,7 @@ func (c *DivisionsQueryDivisionByAddressCall) doRequest(alt string) (*http.Respo
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "civicinfo/v2/divisions")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "civicinfo/v2/divisionsByAddress")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {

@@ -359,6 +359,9 @@ type Attributes struct {
 	Gtin string `json:"gtin,omitempty"`
 	// HeadlineOfferCondition: Condition of the headline offer.
 	HeadlineOfferCondition string `json:"headlineOfferCondition,omitempty"`
+	// HeadlineOfferInstallment: Number and amount of installments to pay for an
+	// item.
+	HeadlineOfferInstallment *HeadlineOfferInstallment `json:"headlineOfferInstallment,omitempty"`
 	// HeadlineOfferLink: Link to the headline offer.
 	HeadlineOfferLink string `json:"headlineOfferLink,omitempty"`
 	// HeadlineOfferMobileLink: Mobile Link to the headline offer.
@@ -367,6 +370,10 @@ type Attributes struct {
 	HeadlineOfferPrice *Price `json:"headlineOfferPrice,omitempty"`
 	// HeadlineOfferShippingPrice: Headline Price of the aggregate offer.
 	HeadlineOfferShippingPrice *Price `json:"headlineOfferShippingPrice,omitempty"`
+	// HeadlineOfferSubscriptionCost: Number of periods (months or years) and
+	// amount of payment per period for an item with an associated subscription
+	// contract.
+	HeadlineOfferSubscriptionCost *HeadlineOfferSubscriptionCost `json:"headlineOfferSubscriptionCost,omitempty"`
 	// HighPrice: High Price of the aggregate offer.
 	HighPrice *Price `json:"highPrice,omitempty"`
 	// ImageLink: URL of an image of the item.
@@ -692,6 +699,65 @@ func (s DestinationStatus) MarshalJSON() ([]byte, error) {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// HeadlineOfferInstallment: A message that represents installment.
+type HeadlineOfferInstallment struct {
+	// Amount: The amount the buyer has to pay per month.
+	Amount *Price `json:"amount,omitempty"`
+	// Downpayment: The up-front down payment amount the buyer has to pay.
+	Downpayment *Price `json:"downpayment,omitempty"`
+	// Months: The number of installments the buyer has to pay.
+	Months int64 `json:"months,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Amount") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Amount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HeadlineOfferInstallment) MarshalJSON() ([]byte, error) {
+	type NoMethod HeadlineOfferInstallment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HeadlineOfferSubscriptionCost: The SubscriptionCost of the product.
+type HeadlineOfferSubscriptionCost struct {
+	// Amount: The amount the buyer has to pay per subscription period.
+	Amount *Price `json:"amount,omitempty"`
+	// Period: The type of subscription period. Supported values are: * "month" *
+	// "year"
+	//
+	// Possible values:
+	//   "SUBSCRIPTION_PERIOD_UNSPECIFIED" - Indicates that the subscription period
+	// is unspecified.
+	//   "MONTH" - Indicates that the subscription period is month.
+	//   "YEAR" - Indicates that the subscription period is year.
+	Period string `json:"period,omitempty"`
+	// PeriodLength: The number of subscription periods the buyer has to pay.
+	PeriodLength int64 `json:"periodLength,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Amount") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Amount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HeadlineOfferSubscriptionCost) MarshalJSON() ([]byte, error) {
+	type NoMethod HeadlineOfferSubscriptionCost
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ItemLevelIssue: The ItemLevelIssue of the product status.

@@ -1245,8 +1245,9 @@ type AutoRenewingBasePlanType struct {
 	// range P0D (zero days) to P30D (30 days). If not specified, the default value
 	// is P30D (30 days).
 	AccountHoldDuration string `json:"accountHoldDuration,omitempty"`
-	// BillingPeriodDuration: Required. Subscription period, specified in ISO 8601
-	// format. For a list of acceptable billing periods, refer to the help center.
+	// BillingPeriodDuration: Required. Immutable. Subscription period, specified
+	// in ISO 8601 format. For a list of acceptable billing periods, refer to the
+	// help center. The duration is immutable after the base plan is created.
 	BillingPeriodDuration string `json:"billingPeriodDuration,omitempty"`
 	// GracePeriodDuration: Grace period of the subscription, specified in ISO 8601
 	// format. Acceptable values are P0D (zero days), P3D (3 days), P7D (7 days),
@@ -3652,11 +3653,12 @@ type InstallmentsBasePlanType struct {
 	// P0D (zero days) to P30D (30days). If not specified, the default value is
 	// P30D (30 days).
 	AccountHoldDuration string `json:"accountHoldDuration,omitempty"`
-	// BillingPeriodDuration: Required. Subscription period, specified in ISO 8601
-	// format. For a list of acceptable billing periods, refer to the help center.
+	// BillingPeriodDuration: Required. Immutable. Subscription period, specified
+	// in ISO 8601 format. For a list of acceptable billing periods, refer to the
+	// help center. The duration is immutable after the base plan is created.
 	BillingPeriodDuration string `json:"billingPeriodDuration,omitempty"`
-	// CommittedPaymentsCount: Required. The number of payments the user is
-	// committed to.
+	// CommittedPaymentsCount: Required. Immutable. The number of payments the user
+	// is committed to. It is immutable after the base plan is created.
 	CommittedPaymentsCount int64 `json:"committedPaymentsCount,omitempty"`
 	// GracePeriodDuration: Grace period of the subscription, specified in ISO 8601
 	// format. Acceptable values are P0D (zero days), P3D (3 days), P7D (7 days),
@@ -3676,8 +3678,9 @@ type InstallmentsBasePlanType struct {
 	// period of their existing subscription will be used to extend the duration of
 	// the new billing plan.
 	ProrationMode string `json:"prorationMode,omitempty"`
-	// RenewalType: Required. Installments base plan renewal type. Determines the
-	// behavior at the end of the initial commitment.
+	// RenewalType: Required. Immutable. Installments base plan renewal type.
+	// Determines the behavior at the end of the initial commitment. The renewal
+	// type is immutable after the base plan is created.
 	//
 	// Possible values:
 	//   "RENEWAL_TYPE_UNSPECIFIED" - Unspecified state.
@@ -4598,8 +4601,9 @@ type PendingCancellation struct {
 // PrepaidBasePlanType: Represents a base plan that does not automatically
 // renew at the end of the base plan, and must be manually renewed by the user.
 type PrepaidBasePlanType struct {
-	// BillingPeriodDuration: Required. Subscription period, specified in ISO 8601
-	// format. For a list of acceptable billing periods, refer to the help center.
+	// BillingPeriodDuration: Required. Immutable. Subscription period, specified
+	// in ISO 8601 format. For a list of acceptable billing periods, refer to the
+	// help center. The duration is immutable after the base plan is created.
 	BillingPeriodDuration string `json:"billingPeriodDuration,omitempty"`
 	// TimeExtension: Whether users should be able to extend this prepaid base plan
 	// in Google Play surfaces. Defaults to TIME_EXTENSION_ACTIVE if not specified.

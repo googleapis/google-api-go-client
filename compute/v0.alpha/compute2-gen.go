@@ -5843,8 +5843,8 @@ type BackendServicesListUsableCall struct {
 	header_      http.Header
 }
 
-// ListUsable: Retrieves an aggregated list of all usable backend services in
-// the specified project.
+// ListUsable: Retrieves a list of all usable backend services in the specified
+// project.
 //
 // - project: Project ID for this request.
 func (r *BackendServicesService) ListUsable(project string) *BackendServicesListUsableCall {
@@ -40893,6 +40893,129 @@ func (c *InstantSnapshotGroupsGetCall) Do(opts ...googleapi.CallOption) (*Instan
 	return ret, nil
 }
 
+type InstantSnapshotGroupsGetIamPolicyCall struct {
+	s            *Service
+	project      string
+	zone         string
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. May be empty if
+// no such policy or resource exists.
+//
+// - project: Project ID for this request.
+// - resource: Name or id of the resource for this request.
+// - zone: The name of the zone for this request.
+func (r *InstantSnapshotGroupsService) GetIamPolicy(project string, zone string, resource string) *InstantSnapshotGroupsGetIamPolicyCall {
+	c := &InstantSnapshotGroupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "optionsRequestedPolicyVersion": Requested IAM Policy version.
+func (c *InstantSnapshotGroupsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *InstantSnapshotGroupsGetIamPolicyCall {
+	c.urlParams_.Set("optionsRequestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InstantSnapshotGroupsGetIamPolicyCall) Fields(s ...googleapi.Field) *InstantSnapshotGroupsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InstantSnapshotGroupsGetIamPolicyCall) IfNoneMatch(entityTag string) *InstantSnapshotGroupsGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InstantSnapshotGroupsGetIamPolicyCall) Context(ctx context.Context) *InstantSnapshotGroupsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InstantSnapshotGroupsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstantSnapshotGroupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/instantSnapshotGroups/{resource}/getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"zone":     c.zone,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.instantSnapshotGroups.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *InstantSnapshotGroupsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type InstantSnapshotGroupsInsertCall struct {
 	s                    *Service
 	project              string
@@ -41230,6 +41353,227 @@ func (c *InstantSnapshotGroupsListCall) Pages(ctx context.Context, f func(*ListI
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type InstantSnapshotGroupsSetIamPolicyCall struct {
+	s                    *Service
+	project              string
+	zone                 string
+	resource             string
+	zonesetpolicyrequest *ZoneSetPolicyRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified resource.
+// Replaces any existing policy.
+//
+// - project: Project ID for this request.
+// - resource: Name or id of the resource for this request.
+// - zone: The name of the zone for this request.
+func (r *InstantSnapshotGroupsService) SetIamPolicy(project string, zone string, resource string, zonesetpolicyrequest *ZoneSetPolicyRequest) *InstantSnapshotGroupsSetIamPolicyCall {
+	c := &InstantSnapshotGroupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.resource = resource
+	c.zonesetpolicyrequest = zonesetpolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InstantSnapshotGroupsSetIamPolicyCall) Fields(s ...googleapi.Field) *InstantSnapshotGroupsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InstantSnapshotGroupsSetIamPolicyCall) Context(ctx context.Context) *InstantSnapshotGroupsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InstantSnapshotGroupsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstantSnapshotGroupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.zonesetpolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/instantSnapshotGroups/{resource}/setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"zone":     c.zone,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.instantSnapshotGroups.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *InstantSnapshotGroupsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type InstantSnapshotGroupsTestIamPermissionsCall struct {
+	s                      *Service
+	project                string
+	zone                   string
+	resource               string
+	testpermissionsrequest *TestPermissionsRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource.
+//
+// - project: Project ID for this request.
+// - resource: Name or id of the resource for this request.
+// - zone: The name of the zone for this request.
+func (r *InstantSnapshotGroupsService) TestIamPermissions(project string, zone string, resource string, testpermissionsrequest *TestPermissionsRequest) *InstantSnapshotGroupsTestIamPermissionsCall {
+	c := &InstantSnapshotGroupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.resource = resource
+	c.testpermissionsrequest = testpermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InstantSnapshotGroupsTestIamPermissionsCall) Fields(s ...googleapi.Field) *InstantSnapshotGroupsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InstantSnapshotGroupsTestIamPermissionsCall) Context(ctx context.Context) *InstantSnapshotGroupsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InstantSnapshotGroupsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstantSnapshotGroupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testpermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/instantSnapshotGroups/{resource}/testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"zone":     c.zone,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.instantSnapshotGroups.testIamPermissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstantSnapshotGroupsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TestPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type InstantSnapshotsAggregatedListCall struct {
@@ -69801,8 +70145,8 @@ type RegionBackendServicesListUsableCall struct {
 	header_      http.Header
 }
 
-// ListUsable: Retrieves an aggregated list of all usable backend services in
-// the specified project in the given region.
+// ListUsable: Retrieves a list of all usable backend services in the specified
+// project in the given region.
 //
 //   - project: Project ID for this request.
 //   - region: Name of the region scoping this request. It must be a string that

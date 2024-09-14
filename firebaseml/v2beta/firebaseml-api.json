@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20240906",
+  "revision": "20240911",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -311,6 +311,11 @@
           "format": "int32",
           "readOnly": true,
           "type": "integer"
+        },
+        "logprobsResult": {
+          "$ref": "GoogleCloudAiplatformV1beta1LogprobsResult",
+          "description": "Output only. Log-likelihood scores for the response tokens and top tokens",
+          "readOnly": true
         },
         "safetyRatings": {
           "description": "Output only. List of ratings for the safety of a response candidate. There is at most one rating per category.",
@@ -621,6 +626,11 @@
           "readOnly": true,
           "type": "array"
         },
+        "modelVersion": {
+          "description": "Output only. The model version used to generate the response.",
+          "readOnly": true,
+          "type": "string"
+        },
         "promptFeedback": {
           "$ref": "GoogleCloudAiplatformV1beta1GenerateContentResponsePromptFeedback",
           "description": "Output only. Content filter results for a prompt sent in the request. Note: Sent only in the first stream chunk. Only happens when no candidates were generated due to content violations.",
@@ -714,6 +724,11 @@
           "format": "float",
           "type": "number"
         },
+        "logprobs": {
+          "description": "Optional. Logit probabilities.",
+          "format": "int32",
+          "type": "integer"
+        },
         "maxOutputTokens": {
           "description": "Optional. The maximum number of output tokens to generate per message.",
           "format": "int32",
@@ -723,6 +738,10 @@
           "description": "Optional. Positive penalties.",
           "format": "float",
           "type": "number"
+        },
+        "responseLogprobs": {
+          "description": "Optional. If true, export the logprobs results in response.",
+          "type": "boolean"
         },
         "responseMimeType": {
           "description": "Optional. Output response mimetype of the generated candidate text. Supported mimetype: - `text/plain`: (default) Text output. - `application/json`: JSON response in the candidates. The model needs to be prompted to output the appropriate response type, otherwise the behavior is undefined. This is a preview feature.",
@@ -928,6 +947,62 @@
         "segment": {
           "$ref": "GoogleCloudAiplatformV1beta1Segment",
           "description": "Segment of the content this support belongs to."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1LogprobsResult": {
+      "description": "Logprobs Result",
+      "id": "GoogleCloudAiplatformV1beta1LogprobsResult",
+      "properties": {
+        "chosenCandidates": {
+          "description": "Length = total number of decoding steps. The chosen candidates may or may not be in top_candidates.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1LogprobsResultCandidate"
+          },
+          "type": "array"
+        },
+        "topCandidates": {
+          "description": "Length = total number of decoding steps.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1LogprobsResultTopCandidates"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1LogprobsResultCandidate": {
+      "description": "Candidate for the logprobs token and score.",
+      "id": "GoogleCloudAiplatformV1beta1LogprobsResultCandidate",
+      "properties": {
+        "logProbability": {
+          "description": "The candidate's log probability.",
+          "format": "float",
+          "type": "number"
+        },
+        "token": {
+          "description": "The candidate’s token string value.",
+          "type": "string"
+        },
+        "tokenId": {
+          "description": "The candidate’s token id value.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1LogprobsResultTopCandidates": {
+      "description": "Candidates with top log probabilities at each decoding step.",
+      "id": "GoogleCloudAiplatformV1beta1LogprobsResultTopCandidates",
+      "properties": {
+        "candidates": {
+          "description": "Sorted by log probability in descending order.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1LogprobsResultCandidate"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1307,7 +1382,7 @@
       "id": "GoogleCloudAiplatformV1beta1Tool",
       "properties": {
         "functionDeclarations": {
-          "description": "Optional. Function tool type. One or more function declarations to be passed to the model along with the current user query. Model may decide to call a subset of these functions by populating FunctionCall in the response. User should provide a FunctionResponse for each function call in the next turn. Based on the function responses, Model will generate the final response back to the user. Maximum 64 function declarations can be provided.",
+          "description": "Optional. Function tool type. One or more function declarations to be passed to the model along with the current user query. Model may decide to call a subset of these functions by populating FunctionCall in the response. User should provide a FunctionResponse for each function call in the next turn. Based on the function responses, Model will generate the final response back to the user. Maximum 128 function declarations can be provided.",
           "items": {
             "$ref": "GoogleCloudAiplatformV1beta1FunctionDeclaration"
           },

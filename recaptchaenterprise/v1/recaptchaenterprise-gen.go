@@ -395,9 +395,9 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// example when a stable account identifier is not yet known in the initial
 	// request.
 	AccountId string `json:"accountId,omitempty"`
-	// Annotation: Optional. The annotation that will be assigned to the Event.
-	// This field can be left empty to provide reasons that apply to an event
-	// without concluding whether the event is legitimate or fraudulent.
+	// Annotation: Optional. The annotation that is assigned to the Event. This
+	// field can be left empty to provide reasons that apply to an event without
+	// concluding whether the event is legitimate or fraudulent.
 	//
 	// Possible values:
 	//   "ANNOTATION_UNSPECIFIED" - Default unspecified type.
@@ -686,8 +686,8 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// without a token. If enabled, `site_key` must reference an Express site key.
 	Express bool `json:"express,omitempty"`
 	// FirewallPolicyEvaluation: Optional. Flag for enabling firewall policy config
-	// assessment. If this flag is enabled, the firewall policy will be evaluated
-	// and a suggested firewall action will be returned in the response.
+	// assessment. If this flag is enabled, the firewall policy is evaluated and a
+	// suggested firewall action is returned in the response.
 	FirewallPolicyEvaluation bool `json:"firewallPolicyEvaluation,omitempty"`
 	// FraudPrevention: Optional. The Fraud Prevention setting for this assessment.
 	//
@@ -767,19 +767,19 @@ type GoogleCloudRecaptchaenterpriseV1FirewallAction struct {
 	// Allow: The user request did not match any policy and should be allowed
 	// access to the requested resource.
 	Allow *GoogleCloudRecaptchaenterpriseV1FirewallActionAllowAction `json:"allow,omitempty"`
-	// Block: This action will deny access to a given page. The user will get an
-	// HTTP error code.
+	// Block: This action denies access to a given page. The user gets an HTTP
+	// error code.
 	Block *GoogleCloudRecaptchaenterpriseV1FirewallActionBlockAction `json:"block,omitempty"`
-	// IncludeRecaptchaScript: This action will inject reCAPTCHA JavaScript code
-	// into the HTML page returned by the site backend.
+	// IncludeRecaptchaScript: This action injects reCAPTCHA JavaScript code into
+	// the HTML page returned by the site backend.
 	IncludeRecaptchaScript *GoogleCloudRecaptchaenterpriseV1FirewallActionIncludeRecaptchaScriptAction `json:"includeRecaptchaScript,omitempty"`
-	// Redirect: This action will redirect the request to a ReCaptcha interstitial
-	// to attach a token.
+	// Redirect: This action redirects the request to a reCAPTCHA interstitial to
+	// attach a token.
 	Redirect *GoogleCloudRecaptchaenterpriseV1FirewallActionRedirectAction `json:"redirect,omitempty"`
-	// SetHeader: This action will set a custom header but allow the request to
+	// SetHeader: This action sets a custom header but allow the request to
 	// continue to the customer backend.
 	SetHeader *GoogleCloudRecaptchaenterpriseV1FirewallActionSetHeaderAction `json:"setHeader,omitempty"`
-	// Substitute: This action will transparently serve a different page to an
+	// Substitute: This action transparently serves a different page to an
 	// offending user.
 	Substitute *GoogleCloudRecaptchaenterpriseV1FirewallActionSubstituteAction `json:"substitute,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Allow") to unconditionally
@@ -821,7 +821,7 @@ type GoogleCloudRecaptchaenterpriseV1FirewallActionIncludeRecaptchaScriptAction 
 
 // GoogleCloudRecaptchaenterpriseV1FirewallActionRedirectAction: A redirect
 // action returns a 307 (temporary redirect) response, pointing the user to a
-// ReCaptcha interstitial page to attach a token.
+// reCAPTCHA interstitial page to attach a token.
 type GoogleCloudRecaptchaenterpriseV1FirewallActionRedirectAction struct {
 }
 
@@ -931,12 +931,12 @@ func (s GoogleCloudRecaptchaenterpriseV1FirewallPolicy) MarshalJSON() ([]byte, e
 // GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment: Policy config
 // assessment.
 type GoogleCloudRecaptchaenterpriseV1FirewallPolicyAssessment struct {
-	// Error: Output only. If the processing of a policy config fails, an error
-	// will be populated and the firewall_policy will be left empty.
+	// Error: Output only. If the processing of a policy config fails, an error is
+	// populated and the firewall_policy is left empty.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
 	// FirewallPolicy: Output only. The policy that matched the request. If more
 	// than one policy may match, this is the first match. If no policy matches the
-	// incoming request, the policy field will be left empty.
+	// incoming request, the policy field is left empty.
 	FirewallPolicy *GoogleCloudRecaptchaenterpriseV1FirewallPolicy `json:"firewallPolicy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1233,10 +1233,10 @@ type GoogleCloudRecaptchaenterpriseV1IOSKeySettings struct {
 	// Example: 'com.companyname.productname.appname'
 	AllowedBundleIds []string `json:"allowedBundleIds,omitempty"`
 	// AppleDeveloperId: Optional. Apple Developer account details for the app that
-	// is protected by the reCAPTCHA Key. reCAPTCHA Enterprise leverages
-	// platform-specific checks like Apple App Attest and Apple DeviceCheck to
-	// protect your app from abuse. Providing these fields allows reCAPTCHA
-	// Enterprise to get a better assessment of the integrity of your app.
+	// is protected by the reCAPTCHA Key. reCAPTCHA leverages platform-specific
+	// checks like Apple App Attest and Apple DeviceCheck to protect your app from
+	// abuse. Providing these fields allows reCAPTCHA to get a better assessment of
+	// the integrity of your app.
 	AppleDeveloperId *GoogleCloudRecaptchaenterpriseV1AppleDeveloperId `json:"appleDeveloperId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowAllBundleIds") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1486,14 +1486,14 @@ func (s GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse) Marsha
 
 // GoogleCloudRecaptchaenterpriseV1Metrics: Metrics for a single Key.
 type GoogleCloudRecaptchaenterpriseV1Metrics struct {
-	// ChallengeMetrics: Metrics will be continuous and in order by dates, and in
-	// the granularity of day. Only challenge-based keys (CHECKBOX, INVISIBLE),
-	// will have challenge-based data.
+	// ChallengeMetrics: Metrics are continuous and in order by dates, and in the
+	// granularity of day. Only challenge-based keys (CHECKBOX, INVISIBLE) have
+	// challenge-based data.
 	ChallengeMetrics []*GoogleCloudRecaptchaenterpriseV1ChallengeMetrics `json:"challengeMetrics,omitempty"`
 	// Name: Output only. Identifier. The name of the metrics, in the format
 	// `projects/{project}/keys/{key}/metrics`.
 	Name string `json:"name,omitempty"`
-	// ScoreMetrics: Metrics will be continuous and in order by dates, and in the
+	// ScoreMetrics: Metrics are continuous and in order by dates, and in the
 	// granularity of day. All Key types should have score-based data.
 	ScoreMetrics []*GoogleCloudRecaptchaenterpriseV1ScoreMetrics `json:"scoreMetrics,omitempty"`
 	// StartTime: Inclusive start time aligned to a day (UTC).
@@ -1992,7 +1992,7 @@ func (s *GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict) UnmarshalJSON(data
 // testing.
 type GoogleCloudRecaptchaenterpriseV1TestingOptions struct {
 	// TestingChallenge: Optional. For challenge-based keys only (CHECKBOX,
-	// INVISIBLE), all challenge requests for this site will return nocaptcha if
+	// INVISIBLE), all challenge requests for this site return nocaptcha if
 	// NOCAPTCHA, or an unsolvable challenge if CHALLENGE.
 	//
 	// Possible values:
@@ -2003,9 +2003,8 @@ type GoogleCloudRecaptchaenterpriseV1TestingOptions struct {
 	//   "UNSOLVABLE_CHALLENGE" - Challenge requests for this key always return an
 	// unsolvable challenge.
 	TestingChallenge string `json:"testingChallenge,omitempty"`
-	// TestingScore: Optional. All assessments for this Key will return this score.
-	// Must be between 0 (likely not legitimate) and 1 (likely legitimate)
-	// inclusive.
+	// TestingScore: Optional. All assessments for this Key return this score. Must
+	// be between 0 (likely not legitimate) and 1 (likely legitimate) inclusive.
 	TestingScore float64 `json:"testingScore,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TestingChallenge") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2516,6 +2515,7 @@ type GoogleCloudRecaptchaenterpriseV1WafSettings struct {
 	//   "CA" - Cloud Armor
 	//   "FASTLY" - Fastly
 	//   "CLOUDFLARE" - Cloudflare
+	//   "AKAMAI" - Akamai
 	WafService string `json:"wafService,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "WafFeature") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2538,8 +2538,8 @@ func (s GoogleCloudRecaptchaenterpriseV1WafSettings) MarshalJSON() ([]byte, erro
 // GoogleCloudRecaptchaenterpriseV1WebKeySettings: Settings specific to keys
 // that can be used by websites.
 type GoogleCloudRecaptchaenterpriseV1WebKeySettings struct {
-	// AllowAllDomains: Optional. If set to true, it means allowed_domains will not
-	// be enforced.
+	// AllowAllDomains: Optional. If set to true, it means allowed_domains are not
+	// enforced.
 	AllowAllDomains bool `json:"allowAllDomains,omitempty"`
 	// AllowAmpTraffic: Optional. If set to true, the key can be used on AMP
 	// (Accelerated Mobile Pages) websites. This is supported only for the SCORE
@@ -2552,7 +2552,8 @@ type GoogleCloudRecaptchaenterpriseV1WebKeySettings struct {
 	AllowedDomains []string `json:"allowedDomains,omitempty"`
 	// ChallengeSecurityPreference: Optional. Settings for the frequency and
 	// difficulty at which this key triggers captcha challenges. This should only
-	// be specified for IntegrationTypes CHECKBOX and INVISIBLE.
+	// be specified for IntegrationTypes CHECKBOX and INVISIBLE and
+	// SCORE_AND_CHALLENGE.
 	//
 	// Possible values:
 	//   "CHALLENGE_SECURITY_PREFERENCE_UNSPECIFIED" - Default type that indicates
@@ -2753,8 +2754,8 @@ type ProjectsAssessmentsCreateCall struct {
 
 // Create: Creates an Assessment of the likelihood an event is legitimate.
 //
-//   - parent: The name of the project in which the assessment will be created,
-//     in the format `projects/{project}`.
+//   - parent: The name of the project in which the assessment is created, in the
+//     format `projects/{project}`.
 func (r *ProjectsAssessmentsService) Create(parent string, googlecloudrecaptchaenterprisev1assessment *GoogleCloudRecaptchaenterpriseV1Assessment) *ProjectsAssessmentsCreateCall {
 	c := &ProjectsAssessmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2858,7 +2859,7 @@ type ProjectsFirewallpoliciesCreateCall struct {
 // reCAPTCHA Enterprise actions can be executed. A project may have a maximum
 // of 1000 policies.
 //
-//   - parent: The name of the project this policy will apply to, in the format
+//   - parent: The name of the project this policy applies to, in the format
 //     `projects/{project}`.
 func (r *ProjectsFirewallpoliciesService) Create(parent string, googlecloudrecaptchaenterprisev1firewallpolicy *GoogleCloudRecaptchaenterpriseV1FirewallPolicy) *ProjectsFirewallpoliciesCreateCall {
 	c := &ProjectsFirewallpoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3322,7 +3323,7 @@ func (r *ProjectsFirewallpoliciesService) Patch(name string, googlecloudrecaptch
 
 // UpdateMask sets the optional parameter "updateMask": The mask to control
 // which fields of the policy get updated. If the mask is not present, all
-// fields will be updated.
+// fields are updated.
 func (c *ProjectsFirewallpoliciesPatchCall) UpdateMask(updateMask string) *ProjectsFirewallpoliciesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3526,7 +3527,7 @@ type ProjectsKeysAddIpOverrideCall struct {
 // AddIpOverride: Adds an IP override to a key. The following restrictions
 // hold: * The maximum number of IP overrides per key is 100. * For any
 // conflict (such as IP already exists or IP part of an existing IP range), an
-// error will be returned.
+// error is returned.
 //
 //   - name: The name of the key to which the IP override is added, in the format
 //     `projects/{project}/keys/{key}`.
@@ -3631,8 +3632,8 @@ type ProjectsKeysCreateCall struct {
 
 // Create: Creates a new reCAPTCHA Enterprise key.
 //
-//   - parent: The name of the project in which the key will be created, in the
-//     format `projects/{project}`.
+//   - parent: The name of the project in which the key is created, in the format
+//     `projects/{project}`.
 func (r *ProjectsKeysService) Create(parent string, googlecloudrecaptchaenterprisev1key *GoogleCloudRecaptchaenterpriseV1Key) *ProjectsKeysCreateCall {
 	c := &ProjectsKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4050,8 +4051,8 @@ type ProjectsKeysListCall struct {
 
 // List: Returns the list of all keys that belong to a project.
 //
-//   - parent: The name of the project that contains the keys that will be
-//     listed, in the format `projects/{project}`.
+//   - parent: The name of the project that contains the keys that is listed, in
+//     the format `projects/{project}`.
 func (r *ProjectsKeysService) List(parent string) *ProjectsKeysListCall {
 	c := &ProjectsKeysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4458,7 +4459,7 @@ func (r *ProjectsKeysService) Patch(name string, googlecloudrecaptchaenterprisev
 
 // UpdateMask sets the optional parameter "updateMask": The mask to control
 // which fields of the key get updated. If the mask is not present, all fields
-// will be updated.
+// are updated.
 func (c *ProjectsKeysPatchCall) UpdateMask(updateMask string) *ProjectsKeysPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4558,8 +4559,8 @@ type ProjectsKeysRemoveIpOverrideCall struct {
 
 // RemoveIpOverride: Removes an IP override from a key. The following
 // restrictions hold: * If the IP isn't found in an existing IP override, a
-// `NOT_FOUND` error will be returned. * If the IP is found in an existing IP
-// override, but the override type does not match, a `NOT_FOUND` error will be
+// `NOT_FOUND` error is returned. * If the IP is found in an existing IP
+// override, but the override type does not match, a `NOT_FOUND` error is
 // returned.
 //
 //   - name: The name of the key from which the IP override is removed, in the

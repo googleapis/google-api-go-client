@@ -514,8 +514,8 @@ type AddOnAttachment struct {
 	// Id: Immutable. Classroom-assigned identifier for this attachment, unique per
 	// post.
 	Id string `json:"id,omitempty"`
-	// ItemId: Immutable. Identifier of the announcement, courseWork, or
-	// courseWorkMaterial under which the attachment is attached. Unique per
+	// ItemId: Immutable. Identifier of the `Announcement`, `CourseWork`, or
+	// `CourseWorkMaterial` under which the attachment is attached. Unique per
 	// course.
 	ItemId string `json:"itemId,omitempty"`
 	// MaxPoints: Maximum grade for this attachment. Can only be set if
@@ -524,22 +524,24 @@ type AddOnAttachment struct {
 	// integer value. When set to zero, the attachment will not support grade
 	// passback.
 	MaxPoints float64 `json:"maxPoints,omitempty"`
-	// PostId: Immutable. Deprecated, use item_id instead.
+	// PostId: Immutable. Deprecated, use `item_id` instead.
 	PostId string `json:"postId,omitempty"`
 	// StudentViewUri: Required. URI to show the student view of the attachment.
-	// The URI will be opened in an iframe with the `courseId`, `postId`, and
-	// `attachmentId` query parameters set.
+	// The URI will be opened in an iframe with the `courseId`, `itemId`,
+	// `itemType`, and `attachmentId` query parameters set.
 	StudentViewUri *EmbedUri `json:"studentViewUri,omitempty"`
 	// StudentWorkReviewUri: URI for the teacher to see student work on the
 	// attachment, if applicable. The URI will be opened in an iframe with the
-	// `courseId`, `postId`, `attachmentId`, and `submissionId` query parameters
-	// set. This is the same `submissionId` returned by
-	// google.classroom.AddOns.GetAddOnContext when a student views the attachment.
-	// If the URI is omitted or removed, `max_points` will also be discarded.
+	// `courseId`, `itemId`, `itemType`, `attachmentId`, and `submissionId` query
+	// parameters set. This is the same `submissionId` returned in the
+	// `AddOnContext.studentContext`
+	// (//devsite.google.com/classroom/reference/rest/v1/AddOnContext#StudentContext
+	// ) field when a student views the attachment. If the URI is omitted or
+	// removed, `max_points` will also be discarded.
 	StudentWorkReviewUri *EmbedUri `json:"studentWorkReviewUri,omitempty"`
 	// TeacherViewUri: Required. URI to show the teacher view of the attachment.
-	// The URI will be opened in an iframe with the `courseId`, `postId`, and
-	// `attachmentId` query parameters set.
+	// The URI will be opened in an iframe with the `courseId`, `itemId`,
+	// `itemType`, and `attachmentId` query parameters set.
 	TeacherViewUri *EmbedUri `json:"teacherViewUri,omitempty"`
 	// Title: Required. Title of this attachment. The title must be between 1 and
 	// 1000 characters.
@@ -636,10 +638,10 @@ func (s *AddOnAttachmentStudentSubmission) UnmarshalJSON(data []byte) error {
 type AddOnContext struct {
 	// CourseId: Immutable. Identifier of the course.
 	CourseId string `json:"courseId,omitempty"`
-	// ItemId: Immutable. Identifier of the announcement, courseWork, or
-	// courseWorkMaterial under which the attachment is attached.
+	// ItemId: Immutable. Identifier of the `Announcement`, `CourseWork`, or
+	// `CourseWorkMaterial` under which the attachment is attached.
 	ItemId string `json:"itemId,omitempty"`
-	// PostId: Immutable. Deprecated, use item_id instead.
+	// PostId: Immutable. Deprecated, use `item_id` instead.
 	PostId string `json:"postId,omitempty"`
 	// StudentContext: Add-on context corresponding to the requesting user's role
 	// as a student. Its presence implies that the requesting user is a student in
@@ -860,10 +862,10 @@ type CopyHistory struct {
 	AttachmentId string `json:"attachmentId,omitempty"`
 	// CourseId: Immutable. Identifier of the course.
 	CourseId string `json:"courseId,omitempty"`
-	// ItemId: Immutable. Identifier of the announcement, courseWork, or
-	// courseWorkMaterial under which the attachment is attached.
+	// ItemId: Immutable. Identifier of the `Announcement`, `CourseWork`, or
+	// `CourseWorkMaterial` under which the attachment is attached.
 	ItemId string `json:"itemId,omitempty"`
-	// PostId: Immutable. Deprecated, use item_id instead.
+	// PostId: Immutable. Deprecated, use `item_id` instead.
 	PostId string `json:"postId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttachmentId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4456,9 +4458,9 @@ type CoursesAnnouncementsGetAddOnContextCall struct {
 // `NOT_FOUND` if one of the identified resources does not exist.
 //
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     under which the attachment is attached. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` under which the attachment is attached. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 func (r *CoursesAnnouncementsService) GetAddOnContext(courseId string, itemId string) *CoursesAnnouncementsGetAddOnContextCall {
 	c := &CoursesAnnouncementsGetAddOnContextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4486,7 +4488,7 @@ func (c *CoursesAnnouncementsGetAddOnContextCall) AttachmentId(attachmentId stri
 	return c
 }
 
-// PostId sets the optional parameter "postId": Deprecated, use item_id
+// PostId sets the optional parameter "postId": Deprecated, use `item_id`
 // instead.
 func (c *CoursesAnnouncementsGetAddOnContextCall) PostId(postId string) *CoursesAnnouncementsGetAddOnContextCall {
 	c.urlParams_.Set("postId", postId)
@@ -5026,9 +5028,9 @@ type CoursesAnnouncementsAddOnAttachmentsCreateCall struct {
 // identified resources does not exist.
 //
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     under which to create the attachment. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` under which to create the attachment. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 func (r *CoursesAnnouncementsAddOnAttachmentsService) Create(courseId string, itemId string, addonattachment *AddOnAttachment) *CoursesAnnouncementsAddOnAttachmentsCreateCall {
 	c := &CoursesAnnouncementsAddOnAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5049,7 +5051,7 @@ func (c *CoursesAnnouncementsAddOnAttachmentsCreateCall) AddOnToken(addOnToken s
 	return c
 }
 
-// PostId sets the optional parameter "postId": Deprecated, use item_id
+// PostId sets the optional parameter "postId": Deprecated, use `item_id`
 // instead.
 func (c *CoursesAnnouncementsAddOnAttachmentsCreateCall) PostId(postId string) *CoursesAnnouncementsAddOnAttachmentsCreateCall {
 	c.urlParams_.Set("postId", postId)
@@ -5158,9 +5160,9 @@ type CoursesAnnouncementsAddOnAttachmentsDeleteCall struct {
 //
 //   - attachmentId: Identifier of the attachment.
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     under which the attachment is attached. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` under which the attachment is attached. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 func (r *CoursesAnnouncementsAddOnAttachmentsService) Delete(courseId string, itemId string, attachmentId string) *CoursesAnnouncementsAddOnAttachmentsDeleteCall {
 	c := &CoursesAnnouncementsAddOnAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5169,7 +5171,7 @@ func (r *CoursesAnnouncementsAddOnAttachmentsService) Delete(courseId string, it
 	return c
 }
 
-// PostId sets the optional parameter "postId": Deprecated, use item_id
+// PostId sets the optional parameter "postId": Deprecated, use `item_id`
 // instead.
 func (c *CoursesAnnouncementsAddOnAttachmentsDeleteCall) PostId(postId string) *CoursesAnnouncementsAddOnAttachmentsDeleteCall {
 	c.urlParams_.Set("postId", postId)
@@ -5275,9 +5277,9 @@ type CoursesAnnouncementsAddOnAttachmentsGetCall struct {
 //
 //   - attachmentId: Identifier of the attachment.
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     under which the attachment is attached. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` under which the attachment is attached. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 func (r *CoursesAnnouncementsAddOnAttachmentsService) Get(courseId string, itemId string, attachmentId string) *CoursesAnnouncementsAddOnAttachmentsGetCall {
 	c := &CoursesAnnouncementsAddOnAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5286,7 +5288,7 @@ func (r *CoursesAnnouncementsAddOnAttachmentsService) Get(courseId string, itemI
 	return c
 }
 
-// PostId sets the optional parameter "postId": Deprecated, use item_id
+// PostId sets the optional parameter "postId": Deprecated, use `item_id`
 // instead.
 func (c *CoursesAnnouncementsAddOnAttachmentsGetCall) PostId(postId string) *CoursesAnnouncementsAddOnAttachmentsGetCall {
 	c.urlParams_.Set("postId", postId)
@@ -5403,9 +5405,9 @@ type CoursesAnnouncementsAddOnAttachmentsListCall struct {
 // not exist.
 //
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     whose attachments should be enumerated. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` whose attachments should be enumerated. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 func (r *CoursesAnnouncementsAddOnAttachmentsService) List(courseId string, itemId string) *CoursesAnnouncementsAddOnAttachmentsListCall {
 	c := &CoursesAnnouncementsAddOnAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5432,7 +5434,8 @@ func (c *CoursesAnnouncementsAddOnAttachmentsListCall) PageToken(pageToken strin
 }
 
 // PostId sets the optional parameter "postId": Identifier of the post under
-// the course whose attachments to enumerate. Deprecated, use item_id instead.
+// the course whose attachments to enumerate. Deprecated, use `item_id`
+// instead.
 func (c *CoursesAnnouncementsAddOnAttachmentsListCall) PostId(postId string) *CoursesAnnouncementsAddOnAttachmentsListCall {
 	c.urlParams_.Set("postId", postId)
 	return c
@@ -6043,9 +6046,9 @@ type CoursesCourseWorkGetAddOnContextCall struct {
 // `NOT_FOUND` if one of the identified resources does not exist.
 //
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     under which the attachment is attached. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` under which the attachment is attached. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 func (r *CoursesCourseWorkService) GetAddOnContext(courseId string, itemId string) *CoursesCourseWorkGetAddOnContextCall {
 	c := &CoursesCourseWorkGetAddOnContextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -6073,7 +6076,7 @@ func (c *CoursesCourseWorkGetAddOnContextCall) AttachmentId(attachmentId string)
 	return c
 }
 
-// PostId sets the optional parameter "postId": Deprecated, use item_id
+// PostId sets the optional parameter "postId": Deprecated, use `item_id`
 // instead.
 func (c *CoursesCourseWorkGetAddOnContextCall) PostId(postId string) *CoursesCourseWorkGetAddOnContextCall {
 	c.urlParams_.Set("postId", postId)
@@ -6623,9 +6626,9 @@ type CoursesCourseWorkAddOnAttachmentsCreateCall struct {
 // identified resources does not exist.
 //
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     under which to create the attachment. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` under which to create the attachment. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 func (r *CoursesCourseWorkAddOnAttachmentsService) Create(courseId string, itemId string, addonattachment *AddOnAttachment) *CoursesCourseWorkAddOnAttachmentsCreateCall {
 	c := &CoursesCourseWorkAddOnAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -6646,7 +6649,7 @@ func (c *CoursesCourseWorkAddOnAttachmentsCreateCall) AddOnToken(addOnToken stri
 	return c
 }
 
-// PostId sets the optional parameter "postId": Deprecated, use item_id
+// PostId sets the optional parameter "postId": Deprecated, use `item_id`
 // instead.
 func (c *CoursesCourseWorkAddOnAttachmentsCreateCall) PostId(postId string) *CoursesCourseWorkAddOnAttachmentsCreateCall {
 	c.urlParams_.Set("postId", postId)
@@ -6755,9 +6758,9 @@ type CoursesCourseWorkAddOnAttachmentsDeleteCall struct {
 //
 //   - attachmentId: Identifier of the attachment.
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     under which the attachment is attached. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` under which the attachment is attached. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 func (r *CoursesCourseWorkAddOnAttachmentsService) Delete(courseId string, itemId string, attachmentId string) *CoursesCourseWorkAddOnAttachmentsDeleteCall {
 	c := &CoursesCourseWorkAddOnAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -6766,7 +6769,7 @@ func (r *CoursesCourseWorkAddOnAttachmentsService) Delete(courseId string, itemI
 	return c
 }
 
-// PostId sets the optional parameter "postId": Deprecated, use item_id
+// PostId sets the optional parameter "postId": Deprecated, use `item_id`
 // instead.
 func (c *CoursesCourseWorkAddOnAttachmentsDeleteCall) PostId(postId string) *CoursesCourseWorkAddOnAttachmentsDeleteCall {
 	c.urlParams_.Set("postId", postId)
@@ -6872,9 +6875,9 @@ type CoursesCourseWorkAddOnAttachmentsGetCall struct {
 //
 //   - attachmentId: Identifier of the attachment.
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     under which the attachment is attached. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` under which the attachment is attached. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 func (r *CoursesCourseWorkAddOnAttachmentsService) Get(courseId string, itemId string, attachmentId string) *CoursesCourseWorkAddOnAttachmentsGetCall {
 	c := &CoursesCourseWorkAddOnAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -6883,7 +6886,7 @@ func (r *CoursesCourseWorkAddOnAttachmentsService) Get(courseId string, itemId s
 	return c
 }
 
-// PostId sets the optional parameter "postId": Deprecated, use item_id
+// PostId sets the optional parameter "postId": Deprecated, use `item_id`
 // instead.
 func (c *CoursesCourseWorkAddOnAttachmentsGetCall) PostId(postId string) *CoursesCourseWorkAddOnAttachmentsGetCall {
 	c.urlParams_.Set("postId", postId)
@@ -7000,9 +7003,9 @@ type CoursesCourseWorkAddOnAttachmentsListCall struct {
 // not exist.
 //
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     whose attachments should be enumerated. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` whose attachments should be enumerated. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 func (r *CoursesCourseWorkAddOnAttachmentsService) List(courseId string, itemId string) *CoursesCourseWorkAddOnAttachmentsListCall {
 	c := &CoursesCourseWorkAddOnAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -7029,7 +7032,8 @@ func (c *CoursesCourseWorkAddOnAttachmentsListCall) PageToken(pageToken string) 
 }
 
 // PostId sets the optional parameter "postId": Identifier of the post under
-// the course whose attachments to enumerate. Deprecated, use item_id instead.
+// the course whose attachments to enumerate. Deprecated, use `item_id`
+// instead.
 func (c *CoursesCourseWorkAddOnAttachmentsListCall) PostId(postId string) *CoursesCourseWorkAddOnAttachmentsListCall {
 	c.urlParams_.Set("postId", postId)
 	return c
@@ -7301,9 +7305,9 @@ type CoursesCourseWorkAddOnAttachmentsStudentSubmissionsGetCall struct {
 //
 //   - attachmentId: Identifier of the attachment.
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     under which the attachment is attached. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` under which the attachment is attached. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 //   - submissionId: Identifier of the student’s submission.
 func (r *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsService) Get(courseId string, itemId string, attachmentId string, submissionId string) *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsGetCall {
 	c := &CoursesCourseWorkAddOnAttachmentsStudentSubmissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7314,7 +7318,7 @@ func (r *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsService) Get(courseI
 	return c
 }
 
-// PostId sets the optional parameter "postId": Deprecated, use item_id
+// PostId sets the optional parameter "postId": Deprecated, use `item_id`
 // instead.
 func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsGetCall) PostId(postId string) *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsGetCall {
 	c.urlParams_.Set("postId", postId)
@@ -7435,9 +7439,9 @@ type CoursesCourseWorkAddOnAttachmentsStudentSubmissionsPatchCall struct {
 //
 //   - attachmentId: Identifier of the attachment.
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     under which the attachment is attached. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` under which the attachment is attached. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 //   - submissionId: Identifier of the student's submission.
 func (r *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsService) Patch(courseId string, itemId string, attachmentId string, submissionId string, addonattachmentstudentsubmission *AddOnAttachmentStudentSubmission) *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsPatchCall {
 	c := &CoursesCourseWorkAddOnAttachmentsStudentSubmissionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7449,7 +7453,7 @@ func (r *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsService) Patch(cours
 	return c
 }
 
-// PostId sets the optional parameter "postId": Deprecated, use item_id
+// PostId sets the optional parameter "postId": Deprecated, use `item_id`
 // instead.
 func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsPatchCall) PostId(postId string) *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsPatchCall {
 	c.urlParams_.Set("postId", postId)
@@ -8858,9 +8862,9 @@ type CoursesCourseWorkMaterialsGetAddOnContextCall struct {
 // `NOT_FOUND` if one of the identified resources does not exist.
 //
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     under which the attachment is attached. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` under which the attachment is attached. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 func (r *CoursesCourseWorkMaterialsService) GetAddOnContext(courseId string, itemId string) *CoursesCourseWorkMaterialsGetAddOnContextCall {
 	c := &CoursesCourseWorkMaterialsGetAddOnContextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8888,7 +8892,7 @@ func (c *CoursesCourseWorkMaterialsGetAddOnContextCall) AttachmentId(attachmentI
 	return c
 }
 
-// PostId sets the optional parameter "postId": Deprecated, use item_id
+// PostId sets the optional parameter "postId": Deprecated, use `item_id`
 // instead.
 func (c *CoursesCourseWorkMaterialsGetAddOnContextCall) PostId(postId string) *CoursesCourseWorkMaterialsGetAddOnContextCall {
 	c.urlParams_.Set("postId", postId)
@@ -9338,9 +9342,9 @@ type CoursesCourseWorkMaterialsAddOnAttachmentsCreateCall struct {
 // identified resources does not exist.
 //
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     under which to create the attachment. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` under which to create the attachment. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 func (r *CoursesCourseWorkMaterialsAddOnAttachmentsService) Create(courseId string, itemId string, addonattachment *AddOnAttachment) *CoursesCourseWorkMaterialsAddOnAttachmentsCreateCall {
 	c := &CoursesCourseWorkMaterialsAddOnAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9361,7 +9365,7 @@ func (c *CoursesCourseWorkMaterialsAddOnAttachmentsCreateCall) AddOnToken(addOnT
 	return c
 }
 
-// PostId sets the optional parameter "postId": Deprecated, use item_id
+// PostId sets the optional parameter "postId": Deprecated, use `item_id`
 // instead.
 func (c *CoursesCourseWorkMaterialsAddOnAttachmentsCreateCall) PostId(postId string) *CoursesCourseWorkMaterialsAddOnAttachmentsCreateCall {
 	c.urlParams_.Set("postId", postId)
@@ -9470,9 +9474,9 @@ type CoursesCourseWorkMaterialsAddOnAttachmentsDeleteCall struct {
 //
 //   - attachmentId: Identifier of the attachment.
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     under which the attachment is attached. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` under which the attachment is attached. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 func (r *CoursesCourseWorkMaterialsAddOnAttachmentsService) Delete(courseId string, itemId string, attachmentId string) *CoursesCourseWorkMaterialsAddOnAttachmentsDeleteCall {
 	c := &CoursesCourseWorkMaterialsAddOnAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9481,7 +9485,7 @@ func (r *CoursesCourseWorkMaterialsAddOnAttachmentsService) Delete(courseId stri
 	return c
 }
 
-// PostId sets the optional parameter "postId": Deprecated, use item_id
+// PostId sets the optional parameter "postId": Deprecated, use `item_id`
 // instead.
 func (c *CoursesCourseWorkMaterialsAddOnAttachmentsDeleteCall) PostId(postId string) *CoursesCourseWorkMaterialsAddOnAttachmentsDeleteCall {
 	c.urlParams_.Set("postId", postId)
@@ -9587,9 +9591,9 @@ type CoursesCourseWorkMaterialsAddOnAttachmentsGetCall struct {
 //
 //   - attachmentId: Identifier of the attachment.
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     under which the attachment is attached. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` under which the attachment is attached. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 func (r *CoursesCourseWorkMaterialsAddOnAttachmentsService) Get(courseId string, itemId string, attachmentId string) *CoursesCourseWorkMaterialsAddOnAttachmentsGetCall {
 	c := &CoursesCourseWorkMaterialsAddOnAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9598,7 +9602,7 @@ func (r *CoursesCourseWorkMaterialsAddOnAttachmentsService) Get(courseId string,
 	return c
 }
 
-// PostId sets the optional parameter "postId": Deprecated, use item_id
+// PostId sets the optional parameter "postId": Deprecated, use `item_id`
 // instead.
 func (c *CoursesCourseWorkMaterialsAddOnAttachmentsGetCall) PostId(postId string) *CoursesCourseWorkMaterialsAddOnAttachmentsGetCall {
 	c.urlParams_.Set("postId", postId)
@@ -9715,9 +9719,9 @@ type CoursesCourseWorkMaterialsAddOnAttachmentsListCall struct {
 // not exist.
 //
 //   - courseId: Identifier of the course.
-//   - itemId: Identifier of the announcement, courseWork, or courseWorkMaterial
-//     whose attachments should be enumerated. This field is required, but is not
-//     marked as such while we are migrating from post_id.
+//   - itemId: Identifier of the `Announcement`, `CourseWork`, or
+//     `CourseWorkMaterial` whose attachments should be enumerated. This field is
+//     required, but is not marked as such while we are migrating from post_id.
 func (r *CoursesCourseWorkMaterialsAddOnAttachmentsService) List(courseId string, itemId string) *CoursesCourseWorkMaterialsAddOnAttachmentsListCall {
 	c := &CoursesCourseWorkMaterialsAddOnAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9744,7 +9748,8 @@ func (c *CoursesCourseWorkMaterialsAddOnAttachmentsListCall) PageToken(pageToken
 }
 
 // PostId sets the optional parameter "postId": Identifier of the post under
-// the course whose attachments to enumerate. Deprecated, use item_id instead.
+// the course whose attachments to enumerate. Deprecated, use `item_id`
+// instead.
 func (c *CoursesCourseWorkMaterialsAddOnAttachmentsListCall) PostId(postId string) *CoursesCourseWorkMaterialsAddOnAttachmentsListCall {
 	c.urlParams_.Set("postId", postId)
 	return c
@@ -10017,7 +10022,7 @@ type CoursesPostsGetAddOnContextCall struct {
 // `NOT_FOUND` if one of the identified resources does not exist.
 //
 // - courseId: Identifier of the course.
-// - postId: Optional. Deprecated, use item_id instead.
+// - postId: Optional. Deprecated, use `item_id` instead.
 func (r *CoursesPostsService) GetAddOnContext(courseId string, postId string) *CoursesPostsGetAddOnContextCall {
 	c := &CoursesPostsGetAddOnContextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10045,10 +10050,10 @@ func (c *CoursesPostsGetAddOnContextCall) AttachmentId(attachmentId string) *Cou
 	return c
 }
 
-// ItemId sets the optional parameter "itemId": Identifier of the announcement,
-// courseWork, or courseWorkMaterial under which the attachment is attached.
-// This field is required, but is not marked as such while we are migrating
-// from post_id.
+// ItemId sets the optional parameter "itemId": Identifier of the
+// `Announcement`, `CourseWork`, or `CourseWorkMaterial` under which the
+// attachment is attached. This field is required, but is not marked as such
+// while we are migrating from post_id.
 func (c *CoursesPostsGetAddOnContextCall) ItemId(itemId string) *CoursesPostsGetAddOnContextCall {
 	c.urlParams_.Set("itemId", itemId)
 	return c
@@ -10161,7 +10166,7 @@ type CoursesPostsAddOnAttachmentsCreateCall struct {
 // identified resources does not exist.
 //
 // - courseId: Identifier of the course.
-// - postId: Optional. Deprecated, use item_id instead.
+// - postId: Optional. Deprecated, use `item_id` instead.
 func (r *CoursesPostsAddOnAttachmentsService) Create(courseId string, postId string, addonattachment *AddOnAttachment) *CoursesPostsAddOnAttachmentsCreateCall {
 	c := &CoursesPostsAddOnAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10182,10 +10187,10 @@ func (c *CoursesPostsAddOnAttachmentsCreateCall) AddOnToken(addOnToken string) *
 	return c
 }
 
-// ItemId sets the optional parameter "itemId": Identifier of the announcement,
-// courseWork, or courseWorkMaterial under which to create the attachment. This
-// field is required, but is not marked as such while we are migrating from
-// post_id.
+// ItemId sets the optional parameter "itemId": Identifier of the
+// `Announcement`, `CourseWork`, or `CourseWorkMaterial` under which to create
+// the attachment. This field is required, but is not marked as such while we
+// are migrating from post_id.
 func (c *CoursesPostsAddOnAttachmentsCreateCall) ItemId(itemId string) *CoursesPostsAddOnAttachmentsCreateCall {
 	c.urlParams_.Set("itemId", itemId)
 	return c
@@ -10293,7 +10298,7 @@ type CoursesPostsAddOnAttachmentsDeleteCall struct {
 //
 // - attachmentId: Identifier of the attachment.
 // - courseId: Identifier of the course.
-// - postId: Optional. Deprecated, use item_id instead.
+// - postId: Optional. Deprecated, use `item_id` instead.
 func (r *CoursesPostsAddOnAttachmentsService) Delete(courseId string, postId string, attachmentId string) *CoursesPostsAddOnAttachmentsDeleteCall {
 	c := &CoursesPostsAddOnAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10302,10 +10307,10 @@ func (r *CoursesPostsAddOnAttachmentsService) Delete(courseId string, postId str
 	return c
 }
 
-// ItemId sets the optional parameter "itemId": Identifier of the announcement,
-// courseWork, or courseWorkMaterial under which the attachment is attached.
-// This field is required, but is not marked as such while we are migrating
-// from post_id.
+// ItemId sets the optional parameter "itemId": Identifier of the
+// `Announcement`, `CourseWork`, or `CourseWorkMaterial` under which the
+// attachment is attached. This field is required, but is not marked as such
+// while we are migrating from post_id.
 func (c *CoursesPostsAddOnAttachmentsDeleteCall) ItemId(itemId string) *CoursesPostsAddOnAttachmentsDeleteCall {
 	c.urlParams_.Set("itemId", itemId)
 	return c
@@ -10410,7 +10415,7 @@ type CoursesPostsAddOnAttachmentsGetCall struct {
 //
 // - attachmentId: Identifier of the attachment.
 // - courseId: Identifier of the course.
-// - postId: Optional. Deprecated, use item_id instead.
+// - postId: Optional. Deprecated, use `item_id` instead.
 func (r *CoursesPostsAddOnAttachmentsService) Get(courseId string, postId string, attachmentId string) *CoursesPostsAddOnAttachmentsGetCall {
 	c := &CoursesPostsAddOnAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10419,10 +10424,10 @@ func (r *CoursesPostsAddOnAttachmentsService) Get(courseId string, postId string
 	return c
 }
 
-// ItemId sets the optional parameter "itemId": Identifier of the announcement,
-// courseWork, or courseWorkMaterial under which the attachment is attached.
-// This field is required, but is not marked as such while we are migrating
-// from post_id.
+// ItemId sets the optional parameter "itemId": Identifier of the
+// `Announcement`, `CourseWork`, or `CourseWorkMaterial` under which the
+// attachment is attached. This field is required, but is not marked as such
+// while we are migrating from post_id.
 func (c *CoursesPostsAddOnAttachmentsGetCall) ItemId(itemId string) *CoursesPostsAddOnAttachmentsGetCall {
 	c.urlParams_.Set("itemId", itemId)
 	return c
@@ -10539,7 +10544,7 @@ type CoursesPostsAddOnAttachmentsListCall struct {
 //
 //   - courseId: Identifier of the course.
 //   - postId: Optional. Identifier of the post under the course whose
-//     attachments to enumerate. Deprecated, use item_id instead.
+//     attachments to enumerate. Deprecated, use `item_id` instead.
 func (r *CoursesPostsAddOnAttachmentsService) List(courseId string, postId string) *CoursesPostsAddOnAttachmentsListCall {
 	c := &CoursesPostsAddOnAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10547,10 +10552,10 @@ func (r *CoursesPostsAddOnAttachmentsService) List(courseId string, postId strin
 	return c
 }
 
-// ItemId sets the optional parameter "itemId": Identifier of the announcement,
-// courseWork, or courseWorkMaterial whose attachments should be enumerated.
-// This field is required, but is not marked as such while we are migrating
-// from post_id.
+// ItemId sets the optional parameter "itemId": Identifier of the
+// `Announcement`, `CourseWork`, or `CourseWorkMaterial` whose attachments
+// should be enumerated. This field is required, but is not marked as such
+// while we are migrating from post_id.
 func (c *CoursesPostsAddOnAttachmentsListCall) ItemId(itemId string) *CoursesPostsAddOnAttachmentsListCall {
 	c.urlParams_.Set("itemId", itemId)
 	return c
@@ -10840,7 +10845,7 @@ type CoursesPostsAddOnAttachmentsStudentSubmissionsGetCall struct {
 //
 // - attachmentId: Identifier of the attachment.
 // - courseId: Identifier of the course.
-// - postId: Optional. Deprecated, use item_id instead.
+// - postId: Optional. Deprecated, use `item_id` instead.
 // - submissionId: Identifier of the student’s submission.
 func (r *CoursesPostsAddOnAttachmentsStudentSubmissionsService) Get(courseId string, postId string, attachmentId string, submissionId string) *CoursesPostsAddOnAttachmentsStudentSubmissionsGetCall {
 	c := &CoursesPostsAddOnAttachmentsStudentSubmissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10851,10 +10856,10 @@ func (r *CoursesPostsAddOnAttachmentsStudentSubmissionsService) Get(courseId str
 	return c
 }
 
-// ItemId sets the optional parameter "itemId": Identifier of the announcement,
-// courseWork, or courseWorkMaterial under which the attachment is attached.
-// This field is required, but is not marked as such while we are migrating
-// from post_id.
+// ItemId sets the optional parameter "itemId": Identifier of the
+// `Announcement`, `CourseWork`, or `CourseWorkMaterial` under which the
+// attachment is attached. This field is required, but is not marked as such
+// while we are migrating from post_id.
 func (c *CoursesPostsAddOnAttachmentsStudentSubmissionsGetCall) ItemId(itemId string) *CoursesPostsAddOnAttachmentsStudentSubmissionsGetCall {
 	c.urlParams_.Set("itemId", itemId)
 	return c
@@ -10974,7 +10979,7 @@ type CoursesPostsAddOnAttachmentsStudentSubmissionsPatchCall struct {
 //
 // - attachmentId: Identifier of the attachment.
 // - courseId: Identifier of the course.
-// - postId: Optional. Deprecated, use item_id instead.
+// - postId: Optional. Deprecated, use `item_id` instead.
 // - submissionId: Identifier of the student's submission.
 func (r *CoursesPostsAddOnAttachmentsStudentSubmissionsService) Patch(courseId string, postId string, attachmentId string, submissionId string, addonattachmentstudentsubmission *AddOnAttachmentStudentSubmission) *CoursesPostsAddOnAttachmentsStudentSubmissionsPatchCall {
 	c := &CoursesPostsAddOnAttachmentsStudentSubmissionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10986,10 +10991,10 @@ func (r *CoursesPostsAddOnAttachmentsStudentSubmissionsService) Patch(courseId s
 	return c
 }
 
-// ItemId sets the optional parameter "itemId": Identifier of the announcement,
-// courseWork, or courseWorkMaterial under which the attachment is attached.
-// This field is required, but is not marked as such while we are migrating
-// from post_id.
+// ItemId sets the optional parameter "itemId": Identifier of the
+// `Announcement`, `CourseWork`, or `CourseWorkMaterial` under which the
+// attachment is attached. This field is required, but is not marked as such
+// while we are migrating from post_id.
 func (c *CoursesPostsAddOnAttachmentsStudentSubmissionsPatchCall) ItemId(itemId string) *CoursesPostsAddOnAttachmentsStudentSubmissionsPatchCall {
 	c.urlParams_.Set("itemId", itemId)
 	return c

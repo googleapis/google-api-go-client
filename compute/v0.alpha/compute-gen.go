@@ -19368,6 +19368,8 @@ type InstanceGroupManager struct {
 	//   "PAGINATED" - Pagination is enabled for the group's listManagedInstances
 	// API method. maxResults and pageToken query parameters are respected.
 	ListManagedInstancesResults string `json:"listManagedInstancesResults,omitempty"`
+	// MultiMig: URL to the multi-MIG that this Managed Instance Group belongs to.
+	MultiMig string `json:"multiMig,omitempty"`
 	// Name: The name of the managed instance group. The name must be 1-63
 	// characters long, and comply with RFC1035.
 	Name string `json:"name,omitempty"`
@@ -29611,7 +29613,8 @@ type ManagedInstance struct {
 	// Applies only if autohealing policy has a health check specified 2. Waiting
 	// for addition verification steps performed as post-instance creation (subject
 	// to future extensions).
-	CurrentAction string `json:"currentAction,omitempty"`
+	CurrentAction        string                               `json:"currentAction,omitempty"`
+	CurrentActionDetails *ManagedInstanceCurrentActionDetails `json:"currentActionDetails,omitempty"`
 	// Id: [Output only] The unique identifier for this resource. This field is
 	// empty when instance does not exist.
 	Id uint64 `json:"id,omitempty,string"`
@@ -29732,6 +29735,64 @@ type ManagedInstanceAllInstancesConfig struct {
 
 func (s ManagedInstanceAllInstancesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedInstanceAllInstancesConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ManagedInstanceCurrentActionDetails struct {
+	MethodName string `json:"methodName,omitempty"`
+	// Trigger: [Output Only] Details of the current action that the managed
+	// instance group has scheduled for the instance. Contains trigger for the
+	// current action, and methodName in case it was triggered by API call.
+	// Possible values for trigger: - API Any API call. - PROACTIVE_UPDATE
+	// Proactive updater scheduled an update on this managed instance. -
+	// AUTOSCALING Instance being deleted/created after a decision from the
+	// Autoscaler. - REDISTRIBUTION The regional managed instance group is moving
+	// instances between zones to restore balance. - STANDBY_REFILL The managed
+	// instance group is refilling the Standby Pool (stopped/suspended virtual
+	// machines) after scale up. - MAINTENANCE Manual maintenance. -
+	// FAILED_CREATION The managed instance group is handling failed instance
+	// creation. - INSTANCE_FAILURE The managed instance group is handling instance
+	// failure, according to the Instance Lifecycle Policy. - FAILED_HEALTH_CHECK
+	// The managed instance group is handling failed health check, according to the
+	// Instance Lifecycle Policy. - TERMINATION_TIMESTAMP Instance reached
+	// termination time, thus managed instance group stops/deletes it.
+	//
+	// Possible values:
+	//   "API" - Any API call.
+	//   "AUTOSCALING" - Instance being deleted/created after a decision from the
+	// Autoscaler.
+	//   "FAILED_CREATION" - The managed instance group is handling failed instance
+	// creation.
+	//   "FAILED_HEALTH_CHECK" - The managed instance group is handling failed
+	// health check, according to the Instance Lifecycle Policy.
+	//   "INSTANCE_FAILURE" - The managed instance group is handling instance
+	// failure, according to the Instance Lifecycle Policy.
+	//   "MAINTENANCE" - Manual maintenance.
+	//   "NONE" - Default value, not visible externally.
+	//   "PROACTIVE_UPDATE" - Proactive updater scheduled an update on this managed
+	// instance.
+	//   "REDISTRIBUTION" - The regional managed instance group is moving instances
+	// between zones to restore balance.
+	//   "STANDBY_REFILL" - The managed instance group is refilling the Standby
+	// Pool (stopped/suspended virtual machines) after scale up.
+	//   "TERMINATION_TIMESTAMP" - Instance reached termination time, thus managed
+	// instance group stops/deletes it.
+	Trigger string `json:"trigger,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MethodName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MethodName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ManagedInstanceCurrentActionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ManagedInstanceCurrentActionDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -45749,6 +45810,8 @@ func (s RouteListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type RoutePolicy struct {
+	// Description: An optional description of route policy.
+	Description string `json:"description,omitempty"`
 	// Fingerprint: A fingerprint for the Route Policy being applied to this
 	// Router, which is essentially a hash of the Route Policy used for optimistic
 	// locking. The fingerprint is initially generated by Compute Engine and
@@ -45768,13 +45831,13 @@ type RoutePolicy struct {
 	//   "ROUTE_POLICY_TYPE_EXPORT" - The Route Policy is an Export Policy.
 	//   "ROUTE_POLICY_TYPE_IMPORT" - The Route Policy is an Import Policy.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Fingerprint") to
+	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Fingerprint") to include in API
+	// NullFields is a list of field names (e.g. "Description") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -55497,8 +55560,8 @@ type Subnetwork struct {
 	// Id: [Output Only] The unique identifier for the resource. This identifier is
 	// defined by the server.
 	Id uint64 `json:"id,omitempty,string"`
-	// InternalIpv6Prefix: [Output Only] The internal IPv6 address range that is
-	// assigned to this subnetwork.
+	// InternalIpv6Prefix: The internal IPv6 address range that is owned by this
+	// subnetwork.
 	InternalIpv6Prefix string `json:"internalIpv6Prefix,omitempty"`
 	// IpCidrRange: The range of internal addresses that are owned by this
 	// subnetwork. Provide this property when you create the subnetwork. For

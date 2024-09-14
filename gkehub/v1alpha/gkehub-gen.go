@@ -3022,6 +3022,36 @@ func (s GenerateConnectManifestResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GenerateExclusivityManifestResponse: The response of the exclusivity
+// artifacts manifests for the client to apply.
+type GenerateExclusivityManifestResponse struct {
+	// CrManifest: The YAML manifest of the membership CR to apply if a new version
+	// of the CR is available. Empty if no update needs to be applied.
+	CrManifest string `json:"crManifest,omitempty"`
+	// CrdManifest: The YAML manifest of the membership CRD to apply if a newer
+	// version of the CRD is available. Empty if no update needs to be applied.
+	CrdManifest string `json:"crdManifest,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CrManifest") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CrManifest") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateExclusivityManifestResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateExclusivityManifestResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GenerateMembershipRBACRoleBindingYAMLResponse: Response for
 // GenerateRBACRoleBindingYAML.
 type GenerateMembershipRBACRoleBindingYAMLResponse struct {
@@ -6450,6 +6480,35 @@ func (s ValidateCreateMembershipResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ValidateExclusivityResponse: The response of exclusivity artifacts
+// validation result status.
+type ValidateExclusivityResponse struct {
+	// Status: The validation result. * `OK` means that exclusivity is validated,
+	// assuming the manifest produced by GenerateExclusivityManifest is
+	// successfully applied. * `ALREADY_EXISTS` means that the Membership CRD is
+	// already owned by another Hub. See `status.message` for more information.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Status") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ValidateExclusivityResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ValidateExclusivityResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ValidationResult: ValidationResults are results set by each validator
 // running during ValidateCreateMembership.
 type ValidationResult struct {
@@ -8876,6 +8935,140 @@ func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Do(opts ...goo
 	return ret, nil
 }
 
+type ProjectsLocationsMembershipsGenerateExclusivityManifestCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GenerateExclusivityManifest: GenerateExclusivityManifest generates the
+// manifests to update the exclusivity artifacts in the cluster if needed.
+// Exclusivity artifacts include the Membership custom resource definition
+// (CRD) and the singleton Membership custom resource (CR). Combined with
+// ValidateExclusivity, exclusivity artifacts guarantee that a Kubernetes
+// cluster is only registered to a single GKE Hub. The Membership CRD is
+// versioned, and may require conversion when the GKE Hub API server begins
+// serving a newer version of the CRD and corresponding CR. The response will
+// be the converted CRD and CR if there are any differences between the
+// versions.
+//
+//   - name: The Membership resource name in the format
+//     `projects/*/locations/*/memberships/*`.
+func (r *ProjectsLocationsMembershipsService) GenerateExclusivityManifest(name string) *ProjectsLocationsMembershipsGenerateExclusivityManifestCall {
+	c := &ProjectsLocationsMembershipsGenerateExclusivityManifestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// CrManifest sets the optional parameter "crManifest": The YAML manifest of
+// the membership CR retrieved by `kubectl get memberships membership`. Leave
+// empty if the resource does not exist.
+func (c *ProjectsLocationsMembershipsGenerateExclusivityManifestCall) CrManifest(crManifest string) *ProjectsLocationsMembershipsGenerateExclusivityManifestCall {
+	c.urlParams_.Set("crManifest", crManifest)
+	return c
+}
+
+// CrdManifest sets the optional parameter "crdManifest": The YAML manifest of
+// the membership CRD retrieved by `kubectl get customresourcedefinitions
+// membership`. Leave empty if the resource does not exist.
+func (c *ProjectsLocationsMembershipsGenerateExclusivityManifestCall) CrdManifest(crdManifest string) *ProjectsLocationsMembershipsGenerateExclusivityManifestCall {
+	c.urlParams_.Set("crdManifest", crdManifest)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMembershipsGenerateExclusivityManifestCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsGenerateExclusivityManifestCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMembershipsGenerateExclusivityManifestCall) IfNoneMatch(entityTag string) *ProjectsLocationsMembershipsGenerateExclusivityManifestCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMembershipsGenerateExclusivityManifestCall) Context(ctx context.Context) *ProjectsLocationsMembershipsGenerateExclusivityManifestCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMembershipsGenerateExclusivityManifestCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsGenerateExclusivityManifestCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:generateExclusivityManifest")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.generateExclusivityManifest" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateExclusivityManifestResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsGenerateExclusivityManifestCall) Do(opts ...googleapi.CallOption) (*GenerateExclusivityManifestResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateExclusivityManifestResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsMembershipsGetCall struct {
 	s            *Service
 	name         string
@@ -9872,6 +10065,133 @@ func (c *ProjectsLocationsMembershipsValidateCreateCall) Do(opts ...googleapi.Ca
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &ValidateCreateMembershipResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMembershipsValidateExclusivityCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ValidateExclusivity: ValidateExclusivity validates the state of exclusivity
+// in the cluster. The validation does not depend on an existing Hub membership
+// resource.
+//
+//   - parent: The parent (project and location) where the Memberships will be
+//     created. Specified in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsMembershipsService) ValidateExclusivity(parent string) *ProjectsLocationsMembershipsValidateExclusivityCall {
+	c := &ProjectsLocationsMembershipsValidateExclusivityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// CrManifest sets the optional parameter "crManifest": The YAML of the
+// membership CR in the cluster. Empty if the membership CR does not exist.
+func (c *ProjectsLocationsMembershipsValidateExclusivityCall) CrManifest(crManifest string) *ProjectsLocationsMembershipsValidateExclusivityCall {
+	c.urlParams_.Set("crManifest", crManifest)
+	return c
+}
+
+// IntendedMembership sets the optional parameter "intendedMembership":
+// Required. The intended membership name under the `parent`. This method only
+// does validation in anticipation of a CreateMembership call with the same
+// name.
+func (c *ProjectsLocationsMembershipsValidateExclusivityCall) IntendedMembership(intendedMembership string) *ProjectsLocationsMembershipsValidateExclusivityCall {
+	c.urlParams_.Set("intendedMembership", intendedMembership)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMembershipsValidateExclusivityCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsValidateExclusivityCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMembershipsValidateExclusivityCall) IfNoneMatch(entityTag string) *ProjectsLocationsMembershipsValidateExclusivityCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMembershipsValidateExclusivityCall) Context(ctx context.Context) *ProjectsLocationsMembershipsValidateExclusivityCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMembershipsValidateExclusivityCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsValidateExclusivityCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/memberships:validateExclusivity")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.validateExclusivity" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ValidateExclusivityResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsValidateExclusivityCall) Do(opts ...googleapi.CallOption) (*ValidateExclusivityResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ValidateExclusivityResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

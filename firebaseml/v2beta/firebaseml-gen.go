@@ -303,6 +303,9 @@ type GoogleCloudAiplatformV1beta1Candidate struct {
 	GroundingMetadata *GoogleCloudAiplatformV1beta1GroundingMetadata `json:"groundingMetadata,omitempty"`
 	// Index: Output only. Index of the candidate.
 	Index int64 `json:"index,omitempty"`
+	// LogprobsResult: Output only. Log-likelihood scores for the response tokens
+	// and top tokens
+	LogprobsResult *GoogleCloudAiplatformV1beta1LogprobsResult `json:"logprobsResult,omitempty"`
 	// SafetyRatings: Output only. List of ratings for the safety of a response
 	// candidate. There is at most one rating per category.
 	SafetyRatings []*GoogleCloudAiplatformV1beta1SafetyRating `json:"safetyRatings,omitempty"`
@@ -726,6 +729,8 @@ func (s GoogleCloudAiplatformV1beta1GenerateContentRequest) MarshalJSON() ([]byt
 type GoogleCloudAiplatformV1beta1GenerateContentResponse struct {
 	// Candidates: Output only. Generated candidates.
 	Candidates []*GoogleCloudAiplatformV1beta1Candidate `json:"candidates,omitempty"`
+	// ModelVersion: Output only. The model version used to generate the response.
+	ModelVersion string `json:"modelVersion,omitempty"`
 	// PromptFeedback: Output only. Content filter results for a prompt sent in the
 	// request. Note: Sent only in the first stream chunk. Only happens when no
 	// candidates were generated due to content violations.
@@ -826,11 +831,16 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	CandidateCount int64 `json:"candidateCount,omitempty"`
 	// FrequencyPenalty: Optional. Frequency penalties.
 	FrequencyPenalty float64 `json:"frequencyPenalty,omitempty"`
+	// Logprobs: Optional. Logit probabilities.
+	Logprobs int64 `json:"logprobs,omitempty"`
 	// MaxOutputTokens: Optional. The maximum number of output tokens to generate
 	// per message.
 	MaxOutputTokens int64 `json:"maxOutputTokens,omitempty"`
 	// PresencePenalty: Optional. Positive penalties.
 	PresencePenalty float64 `json:"presencePenalty,omitempty"`
+	// ResponseLogprobs: Optional. If true, export the logprobs results in
+	// response.
+	ResponseLogprobs bool `json:"responseLogprobs,omitempty"`
 	// ResponseMimeType: Optional. Output response mimetype of the generated
 	// candidate text. Supported mimetype: - `text/plain`: (default) Text output. -
 	// `application/json`: JSON response in the candidates. The model needs to be
@@ -1134,6 +1144,95 @@ func (s *GoogleCloudAiplatformV1beta1GroundingSupport) UnmarshalJSON(data []byte
 		s.ConfidenceScores[i] = float64(s1.ConfidenceScores[i])
 	}
 	return nil
+}
+
+// GoogleCloudAiplatformV1beta1LogprobsResult: Logprobs Result
+type GoogleCloudAiplatformV1beta1LogprobsResult struct {
+	// ChosenCandidates: Length = total number of decoding steps. The chosen
+	// candidates may or may not be in top_candidates.
+	ChosenCandidates []*GoogleCloudAiplatformV1beta1LogprobsResultCandidate `json:"chosenCandidates,omitempty"`
+	// TopCandidates: Length = total number of decoding steps.
+	TopCandidates []*GoogleCloudAiplatformV1beta1LogprobsResultTopCandidates `json:"topCandidates,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChosenCandidates") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChosenCandidates") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1LogprobsResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1LogprobsResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1LogprobsResultCandidate: Candidate for the
+// logprobs token and score.
+type GoogleCloudAiplatformV1beta1LogprobsResultCandidate struct {
+	// LogProbability: The candidate's log probability.
+	LogProbability float64 `json:"logProbability,omitempty"`
+	// Token: The candidate’s token string value.
+	Token string `json:"token,omitempty"`
+	// TokenId: The candidate’s token id value.
+	TokenId int64 `json:"tokenId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LogProbability") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LogProbability") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1LogprobsResultCandidate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1LogprobsResultCandidate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1beta1LogprobsResultCandidate) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1beta1LogprobsResultCandidate
+	var s1 struct {
+		LogProbability gensupport.JSONFloat64 `json:"logProbability"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.LogProbability = float64(s1.LogProbability)
+	return nil
+}
+
+// GoogleCloudAiplatformV1beta1LogprobsResultTopCandidates: Candidates with top
+// log probabilities at each decoding step.
+type GoogleCloudAiplatformV1beta1LogprobsResultTopCandidates struct {
+	// Candidates: Sorted by log probability in descending order.
+	Candidates []*GoogleCloudAiplatformV1beta1LogprobsResultCandidate `json:"candidates,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Candidates") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Candidates") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1LogprobsResultTopCandidates) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1LogprobsResultTopCandidates
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1beta1Part: A datatype containing media that is part
@@ -1503,7 +1602,7 @@ type GoogleCloudAiplatformV1beta1Tool struct {
 	// Model may decide to call a subset of these functions by populating
 	// FunctionCall in the response. User should provide a FunctionResponse for
 	// each function call in the next turn. Based on the function responses, Model
-	// will generate the final response back to the user. Maximum 64 function
+	// will generate the final response back to the user. Maximum 128 function
 	// declarations can be provided.
 	FunctionDeclarations []*GoogleCloudAiplatformV1beta1FunctionDeclaration `json:"functionDeclarations,omitempty"`
 	// GoogleSearchRetrieval: Optional. GoogleSearchRetrieval tool type.

@@ -764,6 +764,11 @@ type Instance struct {
 	// EncryptionConfig: Encryption configuration (CMEK). Only set if CMEK has been
 	// enabled on the instance.
 	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
+	// FipsEnabled: Optional. Whether FIPS is enabled on the Looker instance.
+	FipsEnabled bool `json:"fipsEnabled,omitempty"`
+	// GeminiEnabled: Optional. Whether Gemini feature is enabled on the Looker
+	// instance or not.
+	GeminiEnabled bool `json:"geminiEnabled,omitempty"`
 	// IngressPrivateIp: Output only. Private Ingress IP (IPv4).
 	IngressPrivateIp string `json:"ingressPrivateIp,omitempty"`
 	// IngressPublicIp: Output only. Public Ingress IP (IPv4).

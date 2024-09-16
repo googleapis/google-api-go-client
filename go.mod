@@ -4,9 +4,9 @@ go 1.21
 
 require (
 	cloud.google.com/go v0.115.1
-	cloud.google.com/go/auth v0.9.3
+	cloud.google.com/go/auth v0.9.4
 	cloud.google.com/go/auth/oauth2adapt v0.2.4
-	cloud.google.com/go/compute/metadata v0.5.0
+	cloud.google.com/go/compute/metadata v0.5.1
 	github.com/google/go-cmp v0.6.0
 	github.com/google/s2a-go v0.1.8
 	github.com/google/uuid v1.6.0
@@ -22,7 +22,7 @@ require (
 	google.golang.org/genproto v0.0.0-20240903143218-8af14fe29dc1
 	google.golang.org/genproto/googleapis/bytestream v0.0.0-20240903143218-8af14fe29dc1
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1
-	google.golang.org/grpc v1.66.1
+	google.golang.org/grpc v1.66.2
 	google.golang.org/protobuf v1.34.2
 )
 

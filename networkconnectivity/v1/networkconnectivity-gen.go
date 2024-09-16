@@ -620,9 +620,12 @@ type ConsumerPscConfig struct {
 	// ConsumerPscConfig.project in the case of SharedVPC. Example:
 	// projects/{projectNumOrId}/global/networks/{networkId}.
 	Network string `json:"network,omitempty"`
-	// ProducerInstanceId: Immutable. An immutable identifier for the producer
-	// instance.
+	// ProducerInstanceId: Immutable. Deprecated. Use producer_instance_metadata
+	// instead. An immutable identifier for the producer instance.
 	ProducerInstanceId string `json:"producerInstanceId,omitempty"`
+	// ProducerInstanceMetadata: Immutable. An immutable map for the producer
+	// instance metadata.
+	ProducerInstanceMetadata map[string]string `json:"producerInstanceMetadata,omitempty"`
 	// Project: The consumer project where PSC connections are allowed to be
 	// created in.
 	Project string `json:"project,omitempty"`
@@ -695,9 +698,12 @@ type ConsumerPscConnection struct {
 	// service attachments in this service connection map. Note that the network
 	// could be on a different project (shared VPC).
 	Network string `json:"network,omitempty"`
-	// ProducerInstanceId: Immutable. An immutable identifier for the producer
-	// instance.
+	// ProducerInstanceId: Immutable. Deprecated. Use producer_instance_metadata
+	// instead. An immutable identifier for the producer instance.
 	ProducerInstanceId string `json:"producerInstanceId,omitempty"`
+	// ProducerInstanceMetadata: Immutable. An immutable map for the producer
+	// instance metadata.
+	ProducerInstanceMetadata map[string]string `json:"producerInstanceMetadata,omitempty"`
 	// Project: The consumer project whose PSC forwarding rule is connected to the
 	// service attachments in this service connection map.
 	Project string `json:"project,omitempty"`
@@ -714,7 +720,9 @@ type ConsumerPscConnection struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - An invalid state as the default case.
-	//   "ACTIVE" - The connection is fully established and ready to use.
+	//   "ACTIVE" - The connection has been created successfully. However, for the
+	// up-to-date connection status, please use the service attachment's
+	// "ConnectedEndpoint.status" as the source of truth.
 	//   "FAILED" - The connection is not functional since some resources on the
 	// connection fail to be created.
 	//   "CREATING" - The connection is being created.
@@ -1195,10 +1203,15 @@ type InternalRange struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: A description of this resource.
 	Description string `json:"description,omitempty"`
-	// IpCidrRange: The IP range that this internal range defines.
+	// IpCidrRange: The IP range that this internal range defines. NOTE: IPv6
+	// ranges are limited to usage=EXTERNAL_TO_VPC and peering=FOR_SELF. NOTE: For
+	// IPv6 Ranges this field is compulsory, i.e. the address range must be
+	// specified explicitly.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 	// Labels: User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
+	// Migration: Optional. Should be present if usage is set to FOR_MIGRATION.
+	Migration *Migration `json:"migration,omitempty"`
 	// Name: Immutable. The name of an internal range. Format:
 	// projects/{project}/locations/{location}/internalRanges/{internal_range} See:
 	// https://google.aip.dev/122#fields-representing-resource-names
@@ -1243,10 +1256,12 @@ type InternalRange struct {
 	// re-use this range as long as it is NOT_SHARED from the peer VPC, too.
 	Peering string `json:"peering,omitempty"`
 	// PrefixLength: An alternate to ip_cidr_range. Can be set when trying to
-	// create a reservation that automatically finds a free range of the given
-	// size. If both ip_cidr_range and prefix_length are set, there is an error if
-	// the range sizes do not match. Can also be used during updates to change the
-	// range size.
+	// create an IPv4 reservation that automatically finds a free range of the
+	// given size. If both ip_cidr_range and prefix_length are set, there is an
+	// error if the range sizes do not match. Can also be used during updates to
+	// change the range size. NOTE: For IPv6 this field only works if ip_cidr_range
+	// is set as well, and both fields must match. In other words, with IPv6 this
+	// field only works as a redundant parameter.
 	PrefixLength int64 `json:"prefixLength,omitempty"`
 	// TargetCidrRange: Optional. Can be set to narrow down or pick a different
 	// address space while searching for a free range. If not set, defaults to the
@@ -1269,6 +1284,10 @@ type InternalRange struct {
 	// associated with VPC resources and are meant to block out address ranges for
 	// various use cases, like for example, usage on-prem, with dynamic route
 	// announcements via interconnect.
+	//   "FOR_MIGRATION" - Ranges created FOR_MIGRATION can be used to lock a CIDR
+	// range between a source and target subnet. If usage is set to FOR_MIGRATION
+	// the peering value has to be set to FOR_SELF or default to FOR_SELF when
+	// unset.
 	Usage string `json:"usage,omitempty"`
 	// Users: Output only. The list of resources that refer to this internal range.
 	// Resources that use the internal range for their range allocation are
@@ -1943,6 +1962,37 @@ func (s LocationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Migration: Specification for migration with source and target resource
+// names.
+type Migration struct {
+	// Source: Immutable. Resource path as an URI of the source resource, for
+	// example a subnet. The project for the source resource should match the
+	// project for the InternalRange. An example:
+	// /projects/{project}/regions/{region}/subnetworks/{subnet}
+	Source string `json:"source,omitempty"`
+	// Target: Immutable. Resource path of the target resource. The target project
+	// can be different, as in the cases when migrating to peer networks. The
+	// resource For example:
+	// /projects/{project}/regions/{region}/subnetworks/{subnet}
+	Target string `json:"target,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Source") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Source") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Migration) MarshalJSON() ([]byte, error) {
+	type NoMethod Migration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // NextHopInterconnectAttachment: A route next hop that leads to an
 // interconnect attachment resource.
 type NextHopInterconnectAttachment struct {
@@ -2351,7 +2401,8 @@ type PscConnection struct {
 	ConsumerForwardingRule string `json:"consumerForwardingRule,omitempty"`
 	// ConsumerTargetProject: The project where the PSC connection is created.
 	ConsumerTargetProject string `json:"consumerTargetProject,omitempty"`
-	// Error: The most recent error during operating this connection.
+	// Error: The most recent error during operating this connection. Deprecated,
+	// please use error_info instead.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
 	// ErrorInfo: Output only. The error info for the latest error during operating
 	// this connection.
@@ -2368,19 +2419,28 @@ type PscConnection struct {
 	ErrorType string `json:"errorType,omitempty"`
 	// GceOperation: The last Compute Engine operation to setup PSC connection.
 	GceOperation string `json:"gceOperation,omitempty"`
-	// ProducerInstanceId: Immutable. An immutable identifier for the producer
-	// instance.
+	// ProducerInstanceId: Immutable. Deprecated. Use producer_instance_metadata
+	// instead. An immutable identifier for the producer instance.
 	ProducerInstanceId string `json:"producerInstanceId,omitempty"`
+	// ProducerInstanceMetadata: Immutable. An immutable map for the producer
+	// instance metadata.
+	ProducerInstanceMetadata map[string]string `json:"producerInstanceMetadata,omitempty"`
 	// PscConnectionId: The PSC connection id of the PSC forwarding rule.
 	PscConnectionId string `json:"pscConnectionId,omitempty"`
 	// SelectedSubnetwork: Output only. The URI of the subnetwork selected to
 	// allocate IP address for this connection.
 	SelectedSubnetwork string `json:"selectedSubnetwork,omitempty"`
+	// ServiceClass: Output only. [Output only] The service class associated with
+	// this PSC Connection. The value is derived from the SCPolicy and matches the
+	// service class name provided by the customer.
+	ServiceClass string `json:"serviceClass,omitempty"`
 	// State: State of the PSC Connection
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - An invalid state as the default case.
-	//   "ACTIVE" - The connection is fully established and ready to use.
+	//   "ACTIVE" - The connection has been created successfully. However, for the
+	// up-to-date connection status, please use the created forwarding rule's
+	// "PscConnectionStatus" as the source of truth.
 	//   "FAILED" - The connection is not functional since some resources on the
 	// connection fail to be created.
 	//   "CREATING" - The connection is being created.
@@ -2852,7 +2912,7 @@ func (s ServiceConnectionMap) MarshalJSON() ([]byte, error) {
 
 // ServiceConnectionPolicy: The ServiceConnectionPolicy resource. Next id: 12
 type ServiceConnectionPolicy struct {
-	// CreateTime: Output only. Time when the ServiceConnectionMap was created.
+	// CreateTime: Output only. Time when the ServiceConnectionPolicy was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: A description of this resource.
 	Description string `json:"description,omitempty"`
@@ -2891,7 +2951,7 @@ type ServiceConnectionPolicy struct {
 	// gcp-memorystore-redis or google-cloud-sql. 3rd party services do not. For
 	// example, test-service-a3dfcx.
 	ServiceClass string `json:"serviceClass,omitempty"`
-	// UpdateTime: Output only. Time when the ServiceConnectionMap was updated.
+	// UpdateTime: Output only. Time when the ServiceConnectionPolicy was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

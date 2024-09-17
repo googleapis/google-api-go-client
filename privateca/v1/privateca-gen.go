@@ -2969,7 +2969,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.get" call.
@@ -3100,7 +3100,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.list" call.
@@ -3247,7 +3247,7 @@ func (c *ProjectsLocationsCaPoolsCreateCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.create" call.
@@ -3369,7 +3369,7 @@ func (c *ProjectsLocationsCaPoolsDeleteCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.delete" call.
@@ -3473,7 +3473,7 @@ func (c *ProjectsLocationsCaPoolsFetchCaCertsCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"caPool": c.caPool,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.fetchCaCerts" call.
@@ -3581,7 +3581,7 @@ func (c *ProjectsLocationsCaPoolsGetCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.get" call.
@@ -3708,7 +3708,7 @@ func (c *ProjectsLocationsCaPoolsGetIamPolicyCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.getIamPolicy" call.
@@ -3847,7 +3847,7 @@ func (c *ProjectsLocationsCaPoolsListCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.list" call.
@@ -3994,7 +3994,7 @@ func (c *ProjectsLocationsCaPoolsPatchCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.patch" call.
@@ -4099,7 +4099,7 @@ func (c *ProjectsLocationsCaPoolsSetIamPolicyCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.setIamPolicy" call.
@@ -4207,7 +4207,7 @@ func (c *ProjectsLocationsCaPoolsTestIamPermissionsCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.testIamPermissions" call.
@@ -4314,7 +4314,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesActivateCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.activate" call.
@@ -4440,7 +4440,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesCreateCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.create" call.
@@ -4580,7 +4580,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.delete" call.
@@ -4682,7 +4682,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesDisableCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.disable" call.
@@ -4784,7 +4784,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesEnableCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.enable" call.
@@ -4896,7 +4896,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesFetchCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.fetch" call.
@@ -5004,7 +5004,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.get" call.
@@ -5144,7 +5144,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.list" call.
@@ -5291,7 +5291,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesPatchCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.patch" call.
@@ -5393,7 +5393,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesUndeleteCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.undelete" call.
@@ -5500,7 +5500,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationList
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.certificateRevocationLists.get" call.
@@ -5628,7 +5628,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationList
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.certificateRevocationLists.getIamPolicy" call.
@@ -5768,7 +5768,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationList
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.certificateRevocationLists.list" call.
@@ -5916,7 +5916,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationList
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.certificateRevocationLists.patch" call.
@@ -6021,7 +6021,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationList
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.certificateRevocationLists.setIamPolicy" call.
@@ -6129,7 +6129,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesCertificateRevocationList
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificateAuthorities.certificateRevocationLists.testIamPermissions" call.
@@ -6284,7 +6284,7 @@ func (c *ProjectsLocationsCaPoolsCertificatesCreateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificates.create" call.
@@ -6391,7 +6391,7 @@ func (c *ProjectsLocationsCaPoolsCertificatesGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificates.get" call.
@@ -6534,7 +6534,7 @@ func (c *ProjectsLocationsCaPoolsCertificatesListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificates.list" call.
@@ -6682,7 +6682,7 @@ func (c *ProjectsLocationsCaPoolsCertificatesPatchCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificates.patch" call.
@@ -6784,7 +6784,7 @@ func (c *ProjectsLocationsCaPoolsCertificatesRevokeCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.caPools.certificates.revoke" call.
@@ -6910,7 +6910,7 @@ func (c *ProjectsLocationsCertificateTemplatesCreateCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.certificateTemplates.create" call.
@@ -7022,7 +7022,7 @@ func (c *ProjectsLocationsCertificateTemplatesDeleteCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.certificateTemplates.delete" call.
@@ -7129,7 +7129,7 @@ func (c *ProjectsLocationsCertificateTemplatesGetCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.certificateTemplates.get" call.
@@ -7257,7 +7257,7 @@ func (c *ProjectsLocationsCertificateTemplatesGetIamPolicyCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.certificateTemplates.getIamPolicy" call.
@@ -7396,7 +7396,7 @@ func (c *ProjectsLocationsCertificateTemplatesListCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.certificateTemplates.list" call.
@@ -7543,7 +7543,7 @@ func (c *ProjectsLocationsCertificateTemplatesPatchCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.certificateTemplates.patch" call.
@@ -7648,7 +7648,7 @@ func (c *ProjectsLocationsCertificateTemplatesSetIamPolicyCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.certificateTemplates.setIamPolicy" call.
@@ -7756,7 +7756,7 @@ func (c *ProjectsLocationsCertificateTemplatesTestIamPermissionsCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.certificateTemplates.testIamPermissions" call.
@@ -7866,7 +7866,7 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.operations.cancel" call.
@@ -7964,7 +7964,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.operations.delete" call.
@@ -8073,7 +8073,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.operations.get" call.
@@ -8201,7 +8201,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "privateca.projects.locations.operations.list" call.

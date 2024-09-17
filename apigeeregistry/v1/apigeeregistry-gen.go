@@ -1697,7 +1697,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.get" call.
@@ -1828,7 +1828,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.list" call.
@@ -1961,7 +1961,7 @@ func (c *ProjectsLocationsApisCreateCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.create" call.
@@ -2065,7 +2065,7 @@ func (c *ProjectsLocationsApisDeleteCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.delete" call.
@@ -2173,7 +2173,7 @@ func (c *ProjectsLocationsApisGetCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.get" call.
@@ -2300,7 +2300,7 @@ func (c *ProjectsLocationsApisGetIamPolicyCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.getIamPolicy" call.
@@ -2442,7 +2442,7 @@ func (c *ProjectsLocationsApisListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.list" call.
@@ -2583,7 +2583,7 @@ func (c *ProjectsLocationsApisPatchCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.patch" call.
@@ -2688,7 +2688,7 @@ func (c *ProjectsLocationsApisSetIamPolicyCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.setIamPolicy" call.
@@ -2796,7 +2796,7 @@ func (c *ProjectsLocationsApisTestIamPermissionsCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.testIamPermissions" call.
@@ -2908,7 +2908,7 @@ func (c *ProjectsLocationsApisArtifactsCreateCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.artifacts.create" call.
@@ -3003,7 +3003,7 @@ func (c *ProjectsLocationsApisArtifactsDeleteCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.artifacts.delete" call.
@@ -3110,7 +3110,7 @@ func (c *ProjectsLocationsApisArtifactsGetCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.artifacts.get" call.
@@ -3221,7 +3221,7 @@ func (c *ProjectsLocationsApisArtifactsGetContentsCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.artifacts.getContents" call.
@@ -3348,7 +3348,7 @@ func (c *ProjectsLocationsApisArtifactsGetIamPolicyCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.artifacts.getIamPolicy" call.
@@ -3490,7 +3490,7 @@ func (c *ProjectsLocationsApisArtifactsListCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.artifacts.list" call.
@@ -3613,7 +3613,7 @@ func (c *ProjectsLocationsApisArtifactsReplaceArtifactCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.artifacts.replaceArtifact" call.
@@ -3718,7 +3718,7 @@ func (c *ProjectsLocationsApisArtifactsSetIamPolicyCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.artifacts.setIamPolicy" call.
@@ -3826,7 +3826,7 @@ func (c *ProjectsLocationsApisArtifactsTestIamPermissionsCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.artifacts.testIamPermissions" call.
@@ -3939,7 +3939,7 @@ func (c *ProjectsLocationsApisDeploymentsCreateCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.create" call.
@@ -4044,7 +4044,7 @@ func (c *ProjectsLocationsApisDeploymentsDeleteCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.delete" call.
@@ -4141,7 +4141,7 @@ func (c *ProjectsLocationsApisDeploymentsDeleteRevisionCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.deleteRevision" call.
@@ -4249,7 +4249,7 @@ func (c *ProjectsLocationsApisDeploymentsGetCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.get" call.
@@ -4376,7 +4376,7 @@ func (c *ProjectsLocationsApisDeploymentsGetIamPolicyCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.getIamPolicy" call.
@@ -4518,7 +4518,7 @@ func (c *ProjectsLocationsApisDeploymentsListCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.list" call.
@@ -4671,7 +4671,7 @@ func (c *ProjectsLocationsApisDeploymentsListRevisionsCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.listRevisions" call.
@@ -4812,7 +4812,7 @@ func (c *ProjectsLocationsApisDeploymentsPatchCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.patch" call.
@@ -4914,7 +4914,7 @@ func (c *ProjectsLocationsApisDeploymentsRollbackCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.rollback" call.
@@ -5019,7 +5019,7 @@ func (c *ProjectsLocationsApisDeploymentsSetIamPolicyCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.setIamPolicy" call.
@@ -5122,7 +5122,7 @@ func (c *ProjectsLocationsApisDeploymentsTagRevisionCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.tagRevision" call.
@@ -5230,7 +5230,7 @@ func (c *ProjectsLocationsApisDeploymentsTestIamPermissionsCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.testIamPermissions" call.
@@ -5342,7 +5342,7 @@ func (c *ProjectsLocationsApisDeploymentsArtifactsCreateCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.artifacts.create" call.
@@ -5437,7 +5437,7 @@ func (c *ProjectsLocationsApisDeploymentsArtifactsDeleteCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.artifacts.delete" call.
@@ -5544,7 +5544,7 @@ func (c *ProjectsLocationsApisDeploymentsArtifactsGetCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.artifacts.get" call.
@@ -5655,7 +5655,7 @@ func (c *ProjectsLocationsApisDeploymentsArtifactsGetContentsCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.artifacts.getContents" call.
@@ -5797,7 +5797,7 @@ func (c *ProjectsLocationsApisDeploymentsArtifactsListCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.artifacts.list" call.
@@ -5920,7 +5920,7 @@ func (c *ProjectsLocationsApisDeploymentsArtifactsReplaceArtifactCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.deployments.artifacts.replaceArtifact" call.
@@ -6031,7 +6031,7 @@ func (c *ProjectsLocationsApisVersionsCreateCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.create" call.
@@ -6135,7 +6135,7 @@ func (c *ProjectsLocationsApisVersionsDeleteCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.delete" call.
@@ -6243,7 +6243,7 @@ func (c *ProjectsLocationsApisVersionsGetCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.get" call.
@@ -6370,7 +6370,7 @@ func (c *ProjectsLocationsApisVersionsGetIamPolicyCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.getIamPolicy" call.
@@ -6512,7 +6512,7 @@ func (c *ProjectsLocationsApisVersionsListCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.list" call.
@@ -6653,7 +6653,7 @@ func (c *ProjectsLocationsApisVersionsPatchCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.patch" call.
@@ -6758,7 +6758,7 @@ func (c *ProjectsLocationsApisVersionsSetIamPolicyCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.setIamPolicy" call.
@@ -6866,7 +6866,7 @@ func (c *ProjectsLocationsApisVersionsTestIamPermissionsCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.testIamPermissions" call.
@@ -6978,7 +6978,7 @@ func (c *ProjectsLocationsApisVersionsArtifactsCreateCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.artifacts.create" call.
@@ -7073,7 +7073,7 @@ func (c *ProjectsLocationsApisVersionsArtifactsDeleteCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.artifacts.delete" call.
@@ -7180,7 +7180,7 @@ func (c *ProjectsLocationsApisVersionsArtifactsGetCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.artifacts.get" call.
@@ -7291,7 +7291,7 @@ func (c *ProjectsLocationsApisVersionsArtifactsGetContentsCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.artifacts.getContents" call.
@@ -7418,7 +7418,7 @@ func (c *ProjectsLocationsApisVersionsArtifactsGetIamPolicyCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.artifacts.getIamPolicy" call.
@@ -7560,7 +7560,7 @@ func (c *ProjectsLocationsApisVersionsArtifactsListCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.artifacts.list" call.
@@ -7683,7 +7683,7 @@ func (c *ProjectsLocationsApisVersionsArtifactsReplaceArtifactCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.artifacts.replaceArtifact" call.
@@ -7788,7 +7788,7 @@ func (c *ProjectsLocationsApisVersionsArtifactsSetIamPolicyCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.artifacts.setIamPolicy" call.
@@ -7896,7 +7896,7 @@ func (c *ProjectsLocationsApisVersionsArtifactsTestIamPermissionsCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.artifacts.testIamPermissions" call.
@@ -8008,7 +8008,7 @@ func (c *ProjectsLocationsApisVersionsSpecsCreateCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.create" call.
@@ -8113,7 +8113,7 @@ func (c *ProjectsLocationsApisVersionsSpecsDeleteCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.delete" call.
@@ -8211,7 +8211,7 @@ func (c *ProjectsLocationsApisVersionsSpecsDeleteRevisionCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.deleteRevision" call.
@@ -8319,7 +8319,7 @@ func (c *ProjectsLocationsApisVersionsSpecsGetCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.get" call.
@@ -8430,7 +8430,7 @@ func (c *ProjectsLocationsApisVersionsSpecsGetContentsCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.getContents" call.
@@ -8557,7 +8557,7 @@ func (c *ProjectsLocationsApisVersionsSpecsGetIamPolicyCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.getIamPolicy" call.
@@ -8699,7 +8699,7 @@ func (c *ProjectsLocationsApisVersionsSpecsListCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.list" call.
@@ -8852,7 +8852,7 @@ func (c *ProjectsLocationsApisVersionsSpecsListRevisionsCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.listRevisions" call.
@@ -8993,7 +8993,7 @@ func (c *ProjectsLocationsApisVersionsSpecsPatchCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.patch" call.
@@ -9095,7 +9095,7 @@ func (c *ProjectsLocationsApisVersionsSpecsRollbackCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.rollback" call.
@@ -9200,7 +9200,7 @@ func (c *ProjectsLocationsApisVersionsSpecsSetIamPolicyCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.setIamPolicy" call.
@@ -9302,7 +9302,7 @@ func (c *ProjectsLocationsApisVersionsSpecsTagRevisionCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.tagRevision" call.
@@ -9410,7 +9410,7 @@ func (c *ProjectsLocationsApisVersionsSpecsTestIamPermissionsCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.testIamPermissions" call.
@@ -9522,7 +9522,7 @@ func (c *ProjectsLocationsApisVersionsSpecsArtifactsCreateCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.artifacts.create" call.
@@ -9617,7 +9617,7 @@ func (c *ProjectsLocationsApisVersionsSpecsArtifactsDeleteCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.artifacts.delete" call.
@@ -9724,7 +9724,7 @@ func (c *ProjectsLocationsApisVersionsSpecsArtifactsGetCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.artifacts.get" call.
@@ -9835,7 +9835,7 @@ func (c *ProjectsLocationsApisVersionsSpecsArtifactsGetContentsCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.artifacts.getContents" call.
@@ -9962,7 +9962,7 @@ func (c *ProjectsLocationsApisVersionsSpecsArtifactsGetIamPolicyCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.artifacts.getIamPolicy" call.
@@ -10104,7 +10104,7 @@ func (c *ProjectsLocationsApisVersionsSpecsArtifactsListCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.artifacts.list" call.
@@ -10227,7 +10227,7 @@ func (c *ProjectsLocationsApisVersionsSpecsArtifactsReplaceArtifactCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.artifacts.replaceArtifact" call.
@@ -10332,7 +10332,7 @@ func (c *ProjectsLocationsApisVersionsSpecsArtifactsSetIamPolicyCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.artifacts.setIamPolicy" call.
@@ -10440,7 +10440,7 @@ func (c *ProjectsLocationsApisVersionsSpecsArtifactsTestIamPermissionsCall) doRe
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.apis.versions.specs.artifacts.testIamPermissions" call.
@@ -10552,7 +10552,7 @@ func (c *ProjectsLocationsArtifactsCreateCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.artifacts.create" call.
@@ -10647,7 +10647,7 @@ func (c *ProjectsLocationsArtifactsDeleteCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.artifacts.delete" call.
@@ -10754,7 +10754,7 @@ func (c *ProjectsLocationsArtifactsGetCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.artifacts.get" call.
@@ -10865,7 +10865,7 @@ func (c *ProjectsLocationsArtifactsGetContentsCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.artifacts.getContents" call.
@@ -10992,7 +10992,7 @@ func (c *ProjectsLocationsArtifactsGetIamPolicyCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.artifacts.getIamPolicy" call.
@@ -11134,7 +11134,7 @@ func (c *ProjectsLocationsArtifactsListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.artifacts.list" call.
@@ -11257,7 +11257,7 @@ func (c *ProjectsLocationsArtifactsReplaceArtifactCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.artifacts.replaceArtifact" call.
@@ -11362,7 +11362,7 @@ func (c *ProjectsLocationsArtifactsSetIamPolicyCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.artifacts.setIamPolicy" call.
@@ -11470,7 +11470,7 @@ func (c *ProjectsLocationsArtifactsTestIamPermissionsCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.artifacts.testIamPermissions" call.
@@ -11598,7 +11598,7 @@ func (c *ProjectsLocationsDocumentsGetIamPolicyCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.documents.getIamPolicy" call.
@@ -11703,7 +11703,7 @@ func (c *ProjectsLocationsDocumentsSetIamPolicyCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.documents.setIamPolicy" call.
@@ -11811,7 +11811,7 @@ func (c *ProjectsLocationsDocumentsTestIamPermissionsCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.documents.testIamPermissions" call.
@@ -11921,7 +11921,7 @@ func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.instances.create" call.
@@ -12017,7 +12017,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.instances.delete" call.
@@ -12125,7 +12125,7 @@ func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.instances.get" call.
@@ -12252,7 +12252,7 @@ func (c *ProjectsLocationsInstancesGetIamPolicyCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.instances.getIamPolicy" call.
@@ -12357,7 +12357,7 @@ func (c *ProjectsLocationsInstancesSetIamPolicyCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.instances.setIamPolicy" call.
@@ -12465,7 +12465,7 @@ func (c *ProjectsLocationsInstancesTestIamPermissionsCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.instances.testIamPermissions" call.
@@ -12575,7 +12575,7 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.operations.cancel" call.
@@ -12673,7 +12673,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.operations.delete" call.
@@ -12782,7 +12782,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.operations.get" call.
@@ -12910,7 +12910,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.operations.list" call.
@@ -13059,7 +13059,7 @@ func (c *ProjectsLocationsRuntimeGetIamPolicyCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.runtime.getIamPolicy" call.
@@ -13164,7 +13164,7 @@ func (c *ProjectsLocationsRuntimeSetIamPolicyCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.runtime.setIamPolicy" call.
@@ -13272,7 +13272,7 @@ func (c *ProjectsLocationsRuntimeTestIamPermissionsCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "apigeeregistry.projects.locations.runtime.testIamPermissions" call.

@@ -2237,7 +2237,7 @@ func (c *ProjectsLocationsCatalogsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.list" call.
@@ -2369,7 +2369,7 @@ func (c *ProjectsLocationsCatalogsPatchCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.patch" call.
@@ -2472,7 +2472,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsCreateCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.catalogItems.create" call.
@@ -2570,7 +2570,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsDeleteCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.catalogItems.delete" call.
@@ -2680,7 +2680,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsGetCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.catalogItems.get" call.
@@ -2787,7 +2787,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsImportCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.catalogItems.import" call.
@@ -2917,7 +2917,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsListCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.catalogItems.list" call.
@@ -3051,7 +3051,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsPatchCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.catalogItems.patch" call.
@@ -3161,7 +3161,7 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.operations.get" call.
@@ -3290,7 +3290,7 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.operations.list" call.
@@ -3416,7 +3416,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.placements.predict" call.
@@ -3541,7 +3541,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreate
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.create" call.
@@ -3639,7 +3639,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDelete
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.delete" call.
@@ -3763,7 +3763,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCa
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.list" call.
@@ -3922,7 +3922,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.userEvents.collect" call.
@@ -4030,7 +4030,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsImportCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.userEvents.import" call.
@@ -4186,7 +4186,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.userEvents.list" call.
@@ -4315,7 +4315,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.userEvents.purge" call.
@@ -4425,7 +4425,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.userEvents.rejoin" call.
@@ -4529,7 +4529,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.userEvents.write" call.
@@ -4639,7 +4639,7 @@ func (c *ProjectsLocationsCatalogsOperationsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.operations.get" call.
@@ -4768,7 +4768,7 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.operations.list" call.

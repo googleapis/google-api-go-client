@@ -2108,7 +2108,7 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.operations.cancel" call.
@@ -2207,7 +2207,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.operations.delete" call.
@@ -2317,7 +2317,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.operations.get" call.
@@ -2445,7 +2445,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.operations.list" call.
@@ -2582,7 +2582,7 @@ func (c *ProjectsLocationsWorkstationClustersCreateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.create" call.
@@ -2701,7 +2701,7 @@ func (c *ProjectsLocationsWorkstationClustersDeleteCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.delete" call.
@@ -2808,7 +2808,7 @@ func (c *ProjectsLocationsWorkstationClustersGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.get" call.
@@ -2930,7 +2930,7 @@ func (c *ProjectsLocationsWorkstationClustersListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.list" call.
@@ -3075,7 +3075,7 @@ func (c *ProjectsLocationsWorkstationClustersPatchCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.patch" call.
@@ -3190,7 +3190,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsCreateCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.create" call.
@@ -3308,7 +3308,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsDeleteCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.delete" call.
@@ -3415,7 +3415,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsGetCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.get" call.
@@ -3543,7 +3543,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsGetIamPolicyCall)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.getIamPolicy" call.
@@ -3664,7 +3664,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsListCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.list" call.
@@ -3808,7 +3808,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsListUsableCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.listUsable" call.
@@ -3953,7 +3953,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsPatchCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.patch" call.
@@ -4058,7 +4058,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsSetIamPolicyCall)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.setIamPolicy" call.
@@ -4166,7 +4166,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsTestIamPermission
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.testIamPermissions" call.
@@ -4282,7 +4282,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsCreat
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.create" call.
@@ -4392,7 +4392,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsDelet
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.delete" call.
@@ -4495,7 +4495,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsGener
 	googleapi.Expand(req.URL, map[string]string{
 		"workstation": c.workstation,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.generateAccessToken" call.
@@ -4603,7 +4603,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsGetCa
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.get" call.
@@ -4730,7 +4730,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsGetIa
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.getIamPolicy" call.
@@ -4852,7 +4852,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsListC
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.list" call.
@@ -4997,7 +4997,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsListU
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.listUsable" call.
@@ -5142,7 +5142,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsPatch
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.patch" call.
@@ -5247,7 +5247,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsSetIa
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.setIamPolicy" call.
@@ -5348,7 +5348,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsStart
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.start" call.
@@ -5449,7 +5449,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsStopC
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.stop" call.
@@ -5557,7 +5557,7 @@ func (c *ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsTestI
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "workstations.projects.locations.workstationClusters.workstationConfigs.workstations.testIamPermissions" call.

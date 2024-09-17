@@ -884,7 +884,7 @@ func (c *RecordsQueryHistoryRecordCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "chromeuxreport.records.queryHistoryRecord" call.
@@ -981,7 +981,7 @@ func (c *RecordsQueryRecordCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "chromeuxreport.records.queryRecord" call.

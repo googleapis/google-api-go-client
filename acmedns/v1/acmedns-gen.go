@@ -319,7 +319,7 @@ func (c *AcmeChallengeSetsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"rootDomain": c.rootDomain,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "acmedns.acmeChallengeSets.get" call.
@@ -425,7 +425,7 @@ func (c *AcmeChallengeSetsRotateChallengesCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"rootDomain": c.rootDomain,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "acmedns.acmeChallengeSets.rotateChallenges" call.

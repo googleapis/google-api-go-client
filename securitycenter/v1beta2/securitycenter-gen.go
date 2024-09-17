@@ -8851,7 +8851,7 @@ func (c *FoldersGetContainerThreatDetectionSettingsCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.getContainerThreatDetectionSettings" call.
@@ -8968,7 +8968,7 @@ func (c *FoldersGetEventThreatDetectionSettingsCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.getEventThreatDetectionSettings" call.
@@ -9087,7 +9087,7 @@ func (c *FoldersGetRapidVulnerabilityDetectionSettingsCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.getRapidVulnerabilityDetectionSettings" call.
@@ -9198,7 +9198,7 @@ func (c *FoldersGetSecurityCenterSettingsCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.getSecurityCenterSettings" call.
@@ -9315,7 +9315,7 @@ func (c *FoldersGetSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.getSecurityHealthAnalyticsSettings" call.
@@ -9434,7 +9434,7 @@ func (c *FoldersGetVirtualMachineThreatDetectionSettingsCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.getVirtualMachineThreatDetectionSettings" call.
@@ -9551,7 +9551,7 @@ func (c *FoldersGetWebSecurityScannerSettingsCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.getWebSecurityScannerSettings" call.
@@ -9667,7 +9667,7 @@ func (c *FoldersUpdateContainerThreatDetectionSettingsCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.updateContainerThreatDetectionSettings" call.
@@ -9780,7 +9780,7 @@ func (c *FoldersUpdateEventThreatDetectionSettingsCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.updateEventThreatDetectionSettings" call.
@@ -9894,7 +9894,7 @@ func (c *FoldersUpdateRapidVulnerabilityDetectionSettingsCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.updateRapidVulnerabilityDetectionSettings" call.
@@ -10008,7 +10008,7 @@ func (c *FoldersUpdateSecurityHealthAnalyticsSettingsCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.updateSecurityHealthAnalyticsSettings" call.
@@ -10122,7 +10122,7 @@ func (c *FoldersUpdateVirtualMachineThreatDetectionSettingsCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.updateVirtualMachineThreatDetectionSettings" call.
@@ -10235,7 +10235,7 @@ func (c *FoldersUpdateWebSecurityScannerSettingsCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.updateWebSecurityScannerSettings" call.
@@ -10354,7 +10354,7 @@ func (c *FoldersContainerThreatDetectionSettingsCalculateCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.containerThreatDetectionSettings.calculate" call.
@@ -10471,7 +10471,7 @@ func (c *FoldersEventThreatDetectionSettingsCalculateCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.eventThreatDetectionSettings.calculate" call.
@@ -10589,7 +10589,7 @@ func (c *FoldersRapidVulnerabilityDetectionSettingsCalculateCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.rapidVulnerabilityDetectionSettings.calculate" call.
@@ -10706,7 +10706,7 @@ func (c *FoldersSecurityHealthAnalyticsSettingsCalculateCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.securityHealthAnalyticsSettings.calculate" call.
@@ -10824,7 +10824,7 @@ func (c *FoldersVirtualMachineThreatDetectionSettingsCalculateCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.virtualMachineThreatDetectionSettings.calculate" call.
@@ -10941,7 +10941,7 @@ func (c *FoldersWebSecurityScannerSettingsCalculateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.folders.webSecurityScannerSettings.calculate" call.
@@ -11061,7 +11061,7 @@ func (c *OrganizationsGetContainerThreatDetectionSettingsCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.getContainerThreatDetectionSettings" call.
@@ -11178,7 +11178,7 @@ func (c *OrganizationsGetEventThreatDetectionSettingsCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.getEventThreatDetectionSettings" call.
@@ -11297,7 +11297,7 @@ func (c *OrganizationsGetRapidVulnerabilityDetectionSettingsCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.getRapidVulnerabilityDetectionSettings" call.
@@ -11408,7 +11408,7 @@ func (c *OrganizationsGetSecurityCenterSettingsCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.getSecurityCenterSettings" call.
@@ -11525,7 +11525,7 @@ func (c *OrganizationsGetSecurityHealthAnalyticsSettingsCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.getSecurityHealthAnalyticsSettings" call.
@@ -11634,7 +11634,7 @@ func (c *OrganizationsGetSubscriptionCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.getSubscription" call.
@@ -11752,7 +11752,7 @@ func (c *OrganizationsGetVirtualMachineThreatDetectionSettingsCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.getVirtualMachineThreatDetectionSettings" call.
@@ -11869,7 +11869,7 @@ func (c *OrganizationsGetWebSecurityScannerSettingsCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.getWebSecurityScannerSettings" call.
@@ -11985,7 +11985,7 @@ func (c *OrganizationsUpdateContainerThreatDetectionSettingsCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.updateContainerThreatDetectionSettings" call.
@@ -12098,7 +12098,7 @@ func (c *OrganizationsUpdateEventThreatDetectionSettingsCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.updateEventThreatDetectionSettings" call.
@@ -12212,7 +12212,7 @@ func (c *OrganizationsUpdateRapidVulnerabilityDetectionSettingsCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.updateRapidVulnerabilityDetectionSettings" call.
@@ -12326,7 +12326,7 @@ func (c *OrganizationsUpdateSecurityHealthAnalyticsSettingsCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.updateSecurityHealthAnalyticsSettings" call.
@@ -12440,7 +12440,7 @@ func (c *OrganizationsUpdateVirtualMachineThreatDetectionSettingsCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.updateVirtualMachineThreatDetectionSettings" call.
@@ -12553,7 +12553,7 @@ func (c *OrganizationsUpdateWebSecurityScannerSettingsCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.updateWebSecurityScannerSettings" call.
@@ -12672,7 +12672,7 @@ func (c *OrganizationsContainerThreatDetectionSettingsCalculateCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.containerThreatDetectionSettings.calculate" call.
@@ -12789,7 +12789,7 @@ func (c *OrganizationsEventThreatDetectionSettingsCalculateCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.eventThreatDetectionSettings.calculate" call.
@@ -12907,7 +12907,7 @@ func (c *OrganizationsRapidVulnerabilityDetectionSettingsCalculateCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.rapidVulnerabilityDetectionSettings.calculate" call.
@@ -13024,7 +13024,7 @@ func (c *OrganizationsSecurityHealthAnalyticsSettingsCalculateCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.securityHealthAnalyticsSettings.calculate" call.
@@ -13142,7 +13142,7 @@ func (c *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.virtualMachineThreatDetectionSettings.calculate" call.
@@ -13259,7 +13259,7 @@ func (c *OrganizationsWebSecurityScannerSettingsCalculateCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.organizations.webSecurityScannerSettings.calculate" call.
@@ -13379,7 +13379,7 @@ func (c *ProjectsGetContainerThreatDetectionSettingsCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.getContainerThreatDetectionSettings" call.
@@ -13496,7 +13496,7 @@ func (c *ProjectsGetEventThreatDetectionSettingsCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.getEventThreatDetectionSettings" call.
@@ -13615,7 +13615,7 @@ func (c *ProjectsGetRapidVulnerabilityDetectionSettingsCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.getRapidVulnerabilityDetectionSettings" call.
@@ -13726,7 +13726,7 @@ func (c *ProjectsGetSecurityCenterSettingsCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.getSecurityCenterSettings" call.
@@ -13843,7 +13843,7 @@ func (c *ProjectsGetSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.getSecurityHealthAnalyticsSettings" call.
@@ -13962,7 +13962,7 @@ func (c *ProjectsGetVirtualMachineThreatDetectionSettingsCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.getVirtualMachineThreatDetectionSettings" call.
@@ -14079,7 +14079,7 @@ func (c *ProjectsGetWebSecurityScannerSettingsCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.getWebSecurityScannerSettings" call.
@@ -14195,7 +14195,7 @@ func (c *ProjectsUpdateContainerThreatDetectionSettingsCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.updateContainerThreatDetectionSettings" call.
@@ -14308,7 +14308,7 @@ func (c *ProjectsUpdateEventThreatDetectionSettingsCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.updateEventThreatDetectionSettings" call.
@@ -14422,7 +14422,7 @@ func (c *ProjectsUpdateRapidVulnerabilityDetectionSettingsCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.updateRapidVulnerabilityDetectionSettings" call.
@@ -14536,7 +14536,7 @@ func (c *ProjectsUpdateSecurityHealthAnalyticsSettingsCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.updateSecurityHealthAnalyticsSettings" call.
@@ -14650,7 +14650,7 @@ func (c *ProjectsUpdateVirtualMachineThreatDetectionSettingsCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.updateVirtualMachineThreatDetectionSettings" call.
@@ -14763,7 +14763,7 @@ func (c *ProjectsUpdateWebSecurityScannerSettingsCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.updateWebSecurityScannerSettings" call.
@@ -14882,7 +14882,7 @@ func (c *ProjectsContainerThreatDetectionSettingsCalculateCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.containerThreatDetectionSettings.calculate" call.
@@ -14999,7 +14999,7 @@ func (c *ProjectsEventThreatDetectionSettingsCalculateCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.eventThreatDetectionSettings.calculate" call.
@@ -15119,7 +15119,7 @@ func (c *ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.locations.clusters.getContainerThreatDetectionSettings" call.
@@ -15235,7 +15235,7 @@ func (c *ProjectsLocationsClustersUpdateContainerThreatDetectionSettingsCall) do
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.locations.clusters.updateContainerThreatDetectionSettings" call.
@@ -15354,7 +15354,7 @@ func (c *ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.locations.clusters.containerThreatDetectionSettings.calculate" call.
@@ -15472,7 +15472,7 @@ func (c *ProjectsRapidVulnerabilityDetectionSettingsCalculateCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.rapidVulnerabilityDetectionSettings.calculate" call.
@@ -15589,7 +15589,7 @@ func (c *ProjectsSecurityHealthAnalyticsSettingsCalculateCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.securityHealthAnalyticsSettings.calculate" call.
@@ -15707,7 +15707,7 @@ func (c *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.virtualMachineThreatDetectionSettings.calculate" call.
@@ -15824,7 +15824,7 @@ func (c *ProjectsWebSecurityScannerSettingsCalculateCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "securitycenter.projects.webSecurityScannerSettings.calculate" call.

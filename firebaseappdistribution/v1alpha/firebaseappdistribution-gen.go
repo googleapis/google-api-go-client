@@ -1548,7 +1548,7 @@ func (c *AppsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"mobilesdkAppId": c.mobilesdkAppId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseappdistribution.apps.get" call.
@@ -1658,7 +1658,7 @@ func (c *AppsGetJwtCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"mobilesdkAppId": c.mobilesdkAppId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseappdistribution.apps.getJwt" call.
@@ -1757,7 +1757,7 @@ func (c *AppsProvisionAppCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"mobilesdkAppId": c.mobilesdkAppId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseappdistribution.apps.provisionApp" call.
@@ -1871,7 +1871,7 @@ func (c *AppsReleaseByHashGetCall) doRequest(alt string) (*http.Response, error)
 		"mobilesdkAppId": c.mobilesdkAppId,
 		"uploadHash":     c.uploadHash,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseappdistribution.apps.release_by_hash.get" call.
@@ -1979,7 +1979,7 @@ func (c *AppsReleasesEnableAccessCall) doRequest(alt string) (*http.Response, er
 		"mobilesdkAppId": c.mobilesdkAppId,
 		"releaseId":      c.releaseId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseappdistribution.apps.releases.enable_access" call.
@@ -2087,7 +2087,7 @@ func (c *AppsReleasesNotesCreateCall) doRequest(alt string) (*http.Response, err
 		"mobilesdkAppId": c.mobilesdkAppId,
 		"releaseId":      c.releaseId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseappdistribution.apps.releases.notes.create" call.
@@ -2204,7 +2204,7 @@ func (c *AppsTestersGetTesterUdidsCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"mobilesdkAppId": c.mobilesdkAppId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseappdistribution.apps.testers.getTesterUdids" call.
@@ -2318,7 +2318,7 @@ func (c *AppsUploadStatusGetCall) doRequest(alt string) (*http.Response, error) 
 		"mobilesdkAppId": c.mobilesdkAppId,
 		"uploadToken":    c.uploadToken,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseappdistribution.apps.upload_status.get" call.
@@ -2427,7 +2427,7 @@ func (c *ProjectsAppsGetTestConfigCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseappdistribution.projects.apps.getTestConfig" call.
@@ -2537,7 +2537,7 @@ func (c *ProjectsAppsUpdateTestConfigCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseappdistribution.projects.apps.updateTestConfig" call.
@@ -2649,7 +2649,7 @@ func (c *ProjectsAppsReleasesTestsCreateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseappdistribution.projects.apps.releases.tests.create" call.
@@ -2759,7 +2759,7 @@ func (c *ProjectsAppsReleasesTestsGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseappdistribution.projects.apps.releases.tests.get" call.
@@ -2883,7 +2883,7 @@ func (c *ProjectsAppsReleasesTestsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseappdistribution.projects.apps.releases.tests.list" call.
@@ -3024,7 +3024,7 @@ func (c *ProjectsTestersGetUdidsCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseappdistribution.projects.testers.getUdids" call.

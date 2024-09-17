@@ -2819,7 +2819,7 @@ func (c *AnywhereCachesDisableCall) doRequest(alt string) (*http.Response, error
 		"bucket":          c.bucket,
 		"anywhereCacheId": c.anywhereCacheId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.anywhereCaches.disable" call.
@@ -2930,7 +2930,7 @@ func (c *AnywhereCachesGetCall) doRequest(alt string) (*http.Response, error) {
 		"bucket":          c.bucket,
 		"anywhereCacheId": c.anywhereCacheId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.anywhereCaches.get" call.
@@ -3031,7 +3031,7 @@ func (c *AnywhereCachesInsertCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.anywhereCaches.insert" call.
@@ -3154,7 +3154,7 @@ func (c *AnywhereCachesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.anywhereCaches.list" call.
@@ -3274,7 +3274,7 @@ func (c *AnywhereCachesPauseCall) doRequest(alt string) (*http.Response, error) 
 		"bucket":          c.bucket,
 		"anywhereCacheId": c.anywhereCacheId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.anywhereCaches.pause" call.
@@ -3373,7 +3373,7 @@ func (c *AnywhereCachesResumeCall) doRequest(alt string) (*http.Response, error)
 		"bucket":          c.bucket,
 		"anywhereCacheId": c.anywhereCacheId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.anywhereCaches.resume" call.
@@ -3479,7 +3479,7 @@ func (c *AnywhereCachesUpdateCall) doRequest(alt string) (*http.Response, error)
 		"bucket":          c.bucket,
 		"anywhereCacheId": c.anywhereCacheId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.anywhereCaches.update" call.
@@ -3589,7 +3589,7 @@ func (c *BucketAccessControlsDeleteCall) doRequest(alt string) (*http.Response, 
 		"bucket": c.bucket,
 		"entity": c.entity,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.bucketAccessControls.delete" call.
@@ -3686,7 +3686,7 @@ func (c *BucketAccessControlsGetCall) doRequest(alt string) (*http.Response, err
 		"bucket": c.bucket,
 		"entity": c.entity,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.bucketAccessControls.get" call.
@@ -3795,7 +3795,7 @@ func (c *BucketAccessControlsInsertCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.bucketAccessControls.insert" call.
@@ -3910,7 +3910,7 @@ func (c *BucketAccessControlsListCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.bucketAccessControls.list" call.
@@ -4025,7 +4025,7 @@ func (c *BucketAccessControlsPatchCall) doRequest(alt string) (*http.Response, e
 		"bucket": c.bucket,
 		"entity": c.entity,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.bucketAccessControls.patch" call.
@@ -4140,7 +4140,7 @@ func (c *BucketAccessControlsUpdateCall) doRequest(alt string) (*http.Response, 
 		"bucket": c.bucket,
 		"entity": c.entity,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.bucketAccessControls.update" call.
@@ -4259,7 +4259,7 @@ func (c *BucketsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.buckets.delete" call.
@@ -4395,7 +4395,7 @@ func (c *BucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.buckets.get" call.
@@ -4518,7 +4518,7 @@ func (c *BucketsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.buckets.getIamPolicy" call.
@@ -4634,7 +4634,7 @@ func (c *BucketsGetStorageLayoutCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.buckets.getStorageLayout" call.
@@ -4816,7 +4816,7 @@ func (c *BucketsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.buckets.insert" call.
@@ -4969,7 +4969,7 @@ func (c *BucketsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.buckets.list" call.
@@ -5095,7 +5095,7 @@ func (c *BucketsLockRetentionPolicyCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.buckets.lockRetentionPolicy" call.
@@ -5290,7 +5290,7 @@ func (c *BucketsPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.buckets.patch" call.
@@ -5394,7 +5394,7 @@ func (c *BucketsRestoreCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.buckets.restore" call.
@@ -5479,7 +5479,7 @@ func (c *BucketsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.buckets.setIamPolicy" call.
@@ -5596,7 +5596,7 @@ func (c *BucketsTestIamPermissionsCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.buckets.testIamPermissions" call.
@@ -5792,7 +5792,7 @@ func (c *BucketsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.buckets.update" call.
@@ -5886,7 +5886,7 @@ func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.channels.stop" call.
@@ -5972,7 +5972,7 @@ func (c *DefaultObjectAccessControlsDeleteCall) doRequest(alt string) (*http.Res
 		"bucket": c.bucket,
 		"entity": c.entity,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.defaultObjectAccessControls.delete" call.
@@ -6070,7 +6070,7 @@ func (c *DefaultObjectAccessControlsGetCall) doRequest(alt string) (*http.Respon
 		"bucket": c.bucket,
 		"entity": c.entity,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.defaultObjectAccessControls.get" call.
@@ -6179,7 +6179,7 @@ func (c *DefaultObjectAccessControlsInsertCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.defaultObjectAccessControls.insert" call.
@@ -6310,7 +6310,7 @@ func (c *DefaultObjectAccessControlsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.defaultObjectAccessControls.list" call.
@@ -6425,7 +6425,7 @@ func (c *DefaultObjectAccessControlsPatchCall) doRequest(alt string) (*http.Resp
 		"bucket": c.bucket,
 		"entity": c.entity,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.defaultObjectAccessControls.patch" call.
@@ -6540,7 +6540,7 @@ func (c *DefaultObjectAccessControlsUpdateCall) doRequest(alt string) (*http.Res
 		"bucket": c.bucket,
 		"entity": c.entity,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.defaultObjectAccessControls.update" call.
@@ -6656,7 +6656,7 @@ func (c *FoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"bucket": c.bucket,
 		"folder": c.folder,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.folders.delete" call.
@@ -6762,7 +6762,7 @@ func (c *FoldersGetCall) doRequest(alt string) (*http.Response, error) {
 		"bucket": c.bucket,
 		"folder": c.folder,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.folders.get" call.
@@ -6871,7 +6871,7 @@ func (c *FoldersInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.folders.insert" call.
@@ -7028,7 +7028,7 @@ func (c *FoldersListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.folders.list" call.
@@ -7169,7 +7169,7 @@ func (c *FoldersRenameCall) doRequest(alt string) (*http.Response, error) {
 		"sourceFolder":      c.sourceFolder,
 		"destinationFolder": c.destinationFolder,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.folders.rename" call.
@@ -7294,7 +7294,7 @@ func (c *ManagedFoldersDeleteCall) doRequest(alt string) (*http.Response, error)
 		"bucket":        c.bucket,
 		"managedFolder": c.managedFolder,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.managedFolders.delete" call.
@@ -7399,7 +7399,7 @@ func (c *ManagedFoldersGetCall) doRequest(alt string) (*http.Response, error) {
 		"bucket":        c.bucket,
 		"managedFolder": c.managedFolder,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.managedFolders.get" call.
@@ -7526,7 +7526,7 @@ func (c *ManagedFoldersGetIamPolicyCall) doRequest(alt string) (*http.Response, 
 		"bucket":        c.bucket,
 		"managedFolder": c.managedFolder,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.managedFolders.getIamPolicy" call.
@@ -7627,7 +7627,7 @@ func (c *ManagedFoldersInsertCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.managedFolders.insert" call.
@@ -7755,7 +7755,7 @@ func (c *ManagedFoldersListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.managedFolders.list" call.
@@ -7888,7 +7888,7 @@ func (c *ManagedFoldersSetIamPolicyCall) doRequest(alt string) (*http.Response, 
 		"bucket":        c.bucket,
 		"managedFolder": c.managedFolder,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.managedFolders.setIamPolicy" call.
@@ -8009,7 +8009,7 @@ func (c *ManagedFoldersTestIamPermissionsCall) doRequest(alt string) (*http.Resp
 		"bucket":        c.bucket,
 		"managedFolder": c.managedFolder,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.managedFolders.testIamPermissions" call.
@@ -8116,7 +8116,7 @@ func (c *NotificationsDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"bucket":       c.bucket,
 		"notification": c.notification,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.notifications.delete" call.
@@ -8211,7 +8211,7 @@ func (c *NotificationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"bucket":       c.bucket,
 		"notification": c.notification,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.notifications.get" call.
@@ -8319,7 +8319,7 @@ func (c *NotificationsInsertCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.notifications.insert" call.
@@ -8433,7 +8433,7 @@ func (c *NotificationsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.notifications.list" call.
@@ -8556,7 +8556,7 @@ func (c *ObjectAccessControlsDeleteCall) doRequest(alt string) (*http.Response, 
 		"object": c.object,
 		"entity": c.entity,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objectAccessControls.delete" call.
@@ -8667,7 +8667,7 @@ func (c *ObjectAccessControlsGetCall) doRequest(alt string) (*http.Response, err
 		"object": c.object,
 		"entity": c.entity,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objectAccessControls.get" call.
@@ -8790,7 +8790,7 @@ func (c *ObjectAccessControlsInsertCall) doRequest(alt string) (*http.Response, 
 		"bucket": c.bucket,
 		"object": c.object,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objectAccessControls.insert" call.
@@ -8919,7 +8919,7 @@ func (c *ObjectAccessControlsListCall) doRequest(alt string) (*http.Response, er
 		"bucket": c.bucket,
 		"object": c.object,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objectAccessControls.list" call.
@@ -9048,7 +9048,7 @@ func (c *ObjectAccessControlsPatchCall) doRequest(alt string) (*http.Response, e
 		"object": c.object,
 		"entity": c.entity,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objectAccessControls.patch" call.
@@ -9177,7 +9177,7 @@ func (c *ObjectAccessControlsUpdateCall) doRequest(alt string) (*http.Response, 
 		"object": c.object,
 		"entity": c.entity,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objectAccessControls.update" call.
@@ -9280,7 +9280,7 @@ func (c *ObjectsBulkRestoreCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objects.bulkRestore" call.
@@ -9455,7 +9455,7 @@ func (c *ObjectsComposeCall) doRequest(alt string) (*http.Response, error) {
 		"destinationBucket": c.destinationBucket,
 		"destinationObject": c.destinationObject,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objects.compose" call.
@@ -9713,7 +9713,7 @@ func (c *ObjectsCopyCall) doRequest(alt string) (*http.Response, error) {
 		"destinationBucket": c.destinationBucket,
 		"destinationObject": c.destinationObject,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objects.copy" call.
@@ -9866,7 +9866,7 @@ func (c *ObjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"bucket": c.bucket,
 		"object": c.object,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objects.delete" call.
@@ -10027,7 +10027,7 @@ func (c *ObjectsGetCall) doRequest(alt string) (*http.Response, error) {
 		"bucket": c.bucket,
 		"object": c.object,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, true)
 }
 
 // Download fetches the API endpoint's "media" value, instead of the normal
@@ -10171,7 +10171,7 @@ func (c *ObjectsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) 
 		"bucket": c.bucket,
 		"object": c.object,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objects.getIamPolicy" call.
@@ -10468,9 +10468,9 @@ func (c *ObjectsInsertCall) doRequest(alt string) (*http.Response, error) {
 		"bucket": c.bucket,
 	})
 	if c.retry != nil {
-		return gensupport.SendRequestWithRetry(c.ctx_, c.s.client, req, c.retry)
+		return gensupport.SendRequestWithRetry(c.ctx_, c.s.client, req, c.retry, false)
 	}
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objects.insert" call.
@@ -10708,7 +10708,7 @@ func (c *ObjectsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objects.list" call.
@@ -10937,7 +10937,7 @@ func (c *ObjectsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"bucket": c.bucket,
 		"object": c.object,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objects.patch" call.
@@ -11102,7 +11102,7 @@ func (c *ObjectsRestoreCall) doRequest(alt string) (*http.Response, error) {
 		"bucket": c.bucket,
 		"object": c.object,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objects.restore" call.
@@ -11382,7 +11382,7 @@ func (c *ObjectsRewriteCall) doRequest(alt string) (*http.Response, error) {
 		"destinationBucket": c.destinationBucket,
 		"destinationObject": c.destinationObject,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objects.rewrite" call.
@@ -11505,7 +11505,7 @@ func (c *ObjectsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) 
 		"bucket": c.bucket,
 		"object": c.object,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objects.setIamPolicy" call.
@@ -11636,7 +11636,7 @@ func (c *ObjectsTestIamPermissionsCall) doRequest(alt string) (*http.Response, e
 		"bucket": c.bucket,
 		"object": c.object,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objects.testIamPermissions" call.
@@ -11845,7 +11845,7 @@ func (c *ObjectsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"bucket": c.bucket,
 		"object": c.object,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objects.update" call.
@@ -12034,7 +12034,7 @@ func (c *ObjectsWatchAllCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.objects.watchAll" call.
@@ -12135,7 +12135,7 @@ func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 		"bucket":      c.bucket,
 		"operationId": c.operationId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.buckets.operations.cancel" call.
@@ -12223,7 +12223,7 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 		"bucket":      c.bucket,
 		"operationId": c.operationId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.buckets.operations.get" call.
@@ -12355,7 +12355,7 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.buckets.operations.list" call.
@@ -12481,7 +12481,7 @@ func (c *ProjectsHmacKeysCreateCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.projects.hmacKeys.create" call.
@@ -12587,7 +12587,7 @@ func (c *ProjectsHmacKeysDeleteCall) doRequest(alt string) (*http.Response, erro
 		"projectId": c.projectId,
 		"accessId":  c.accessId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.projects.hmacKeys.delete" call.
@@ -12682,7 +12682,7 @@ func (c *ProjectsHmacKeysGetCall) doRequest(alt string) (*http.Response, error) 
 		"projectId": c.projectId,
 		"accessId":  c.accessId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.projects.hmacKeys.get" call.
@@ -12829,7 +12829,7 @@ func (c *ProjectsHmacKeysListCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.projects.hmacKeys.list" call.
@@ -12966,7 +12966,7 @@ func (c *ProjectsHmacKeysUpdateCall) doRequest(alt string) (*http.Response, erro
 		"projectId": c.projectId,
 		"accessId":  c.accessId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.projects.hmacKeys.update" call.
@@ -13082,7 +13082,7 @@ func (c *ProjectsServiceAccountGetCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "storage.projects.serviceAccount.get" call.

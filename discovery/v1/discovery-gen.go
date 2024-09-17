@@ -914,7 +914,7 @@ func (c *ApisGetRestCall) doRequest(alt string) (*http.Response, error) {
 		"api":     c.api,
 		"version": c.version,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discovery.apis.getRest" call.
@@ -1029,7 +1029,7 @@ func (c *ApisListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discovery.apis.list" call.

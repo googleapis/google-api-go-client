@@ -3181,7 +3181,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) doRequest(alt string) (*http
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "testing.applicationDetailService.getApkDetails" call.
@@ -3288,7 +3288,7 @@ func (c *ProjectsDeviceSessionsCancelCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "testing.projects.deviceSessions.cancel" call.
@@ -3390,7 +3390,7 @@ func (c *ProjectsDeviceSessionsCreateCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "testing.projects.deviceSessions.create" call.
@@ -3501,7 +3501,7 @@ func (c *ProjectsDeviceSessionsGetCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "testing.projects.deviceSessions.get" call.
@@ -3630,7 +3630,7 @@ func (c *ProjectsDeviceSessionsListCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "testing.projects.deviceSessions.list" call.
@@ -3764,7 +3764,7 @@ func (c *ProjectsDeviceSessionsPatchCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "testing.projects.deviceSessions.patch" call.
@@ -3868,7 +3868,7 @@ func (c *ProjectsTestMatricesCancelCall) doRequest(alt string) (*http.Response, 
 		"projectId":    c.projectId,
 		"testMatrixId": c.testMatrixId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "testing.projects.testMatrices.cancel" call.
@@ -3987,7 +3987,7 @@ func (c *ProjectsTestMatricesCreateCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "testing.projects.testMatrices.create" call.
@@ -4105,7 +4105,7 @@ func (c *ProjectsTestMatricesGetCall) doRequest(alt string) (*http.Response, err
 		"projectId":    c.projectId,
 		"testMatrixId": c.testMatrixId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "testing.projects.testMatrices.get" call.
@@ -4222,7 +4222,7 @@ func (c *TestEnvironmentCatalogGetCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"environmentType": c.environmentType,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "testing.testEnvironmentCatalog.get" call.

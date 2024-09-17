@@ -1870,7 +1870,7 @@ func (c *ProjectsLocationsPublishersModelsCountTokensCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"endpoint": c.endpoint,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseml.projects.locations.publishers.models.countTokens" call.
@@ -1976,7 +1976,7 @@ func (c *ProjectsLocationsPublishersModelsGenerateContentCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"model": c.model,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseml.projects.locations.publishers.models.generateContent" call.
@@ -2083,7 +2083,7 @@ func (c *ProjectsLocationsPublishersModelsStreamGenerateContentCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"model": c.model,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebaseml.projects.locations.publishers.models.streamGenerateContent" call.

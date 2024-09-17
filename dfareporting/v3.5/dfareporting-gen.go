@@ -749,7 +749,7 @@ func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 		"profileId":    strconv.FormatInt(c.profileId, 10),
 		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "dfareporting.media.upload" call.

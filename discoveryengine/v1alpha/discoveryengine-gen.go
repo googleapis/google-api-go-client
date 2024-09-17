@@ -18565,7 +18565,7 @@ func (c *ProjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.get" call.
@@ -18671,7 +18671,7 @@ func (c *ProjectsProvisionCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.provision" call.
@@ -18777,7 +18777,7 @@ func (c *ProjectsReportConsentChangeCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"project": c.project,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.reportConsentChange" call.
@@ -18880,7 +18880,7 @@ func (c *ProjectsLocationsEstimateDataSizeCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"location": c.location,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.estimateDataSize" call.
@@ -18991,7 +18991,7 @@ func (c *ProjectsLocationsGetAclConfigCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.getAclConfig" call.
@@ -19097,7 +19097,7 @@ func (c *ProjectsLocationsUpdateAclConfigCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.updateAclConfig" call.
@@ -19207,7 +19207,7 @@ func (c *ProjectsLocationsCollectionsDataConnectorOperationsGetCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataConnector.operations.get" call.
@@ -19336,7 +19336,7 @@ func (c *ProjectsLocationsCollectionsDataConnectorOperationsListCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataConnector.operations.list" call.
@@ -19516,7 +19516,7 @@ func (c *ProjectsLocationsCollectionsDataStoresCompleteQueryCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"dataStore": c.dataStore,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.completeQuery" call.
@@ -19655,7 +19655,7 @@ func (c *ProjectsLocationsCollectionsDataStoresCreateCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.create" call.
@@ -19756,7 +19756,7 @@ func (c *ProjectsLocationsCollectionsDataStoresDeleteCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.delete" call.
@@ -19869,7 +19869,7 @@ func (c *ProjectsLocationsCollectionsDataStoresGetCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.get" call.
@@ -19979,7 +19979,7 @@ func (c *ProjectsLocationsCollectionsDataStoresGetDocumentProcessingConfigCall) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.getDocumentProcessingConfig" call.
@@ -20091,7 +20091,7 @@ func (c *ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.getSiteSearchEngine" call.
@@ -20230,7 +20230,7 @@ func (c *ProjectsLocationsCollectionsDataStoresListCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.list" call.
@@ -20364,7 +20364,7 @@ func (c *ProjectsLocationsCollectionsDataStoresPatchCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.patch" call.
@@ -20469,7 +20469,7 @@ func (c *ProjectsLocationsCollectionsDataStoresTrainCustomModelCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"dataStore": c.dataStore,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.trainCustomModel" call.
@@ -20585,7 +20585,7 @@ func (c *ProjectsLocationsCollectionsDataStoresUpdateDocumentProcessingConfigCal
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.updateDocumentProcessingConfig" call.
@@ -20713,7 +20713,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesBatchGetDocumentsMetadata
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.batchGetDocumentsMetadata" call.
@@ -20830,7 +20830,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsCreateCall) doRe
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.create" call.
@@ -20931,7 +20931,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsDeleteCall) doRe
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.delete" call.
@@ -21044,7 +21044,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.get" call.
@@ -21191,7 +21191,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocu
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.getProcessedDocument" call.
@@ -21297,7 +21297,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsImportCall) doRe
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.import" call.
@@ -21430,7 +21430,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsListCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.list" call.
@@ -21573,7 +21573,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPatchCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.patch" call.
@@ -21682,7 +21682,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsPurgeCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.purge" call.
@@ -21795,7 +21795,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsChunksGetCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.chunks.get" call.
@@ -21928,7 +21928,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsChunksListCall) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.chunks.list" call.
@@ -22059,7 +22059,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesOperationsCancelCall) doR
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.operations.cancel" call.
@@ -22169,7 +22169,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesOperationsGetCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.operations.get" call.
@@ -22298,7 +22298,7 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesOperationsListCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.operations.list" call.
@@ -22423,7 +22423,7 @@ func (c *ProjectsLocationsCollectionsDataStoresCompletionSuggestionsImportCall) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.completionSuggestions.import" call.
@@ -22527,7 +22527,7 @@ func (c *ProjectsLocationsCollectionsDataStoresCompletionSuggestionsPurgeCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.completionSuggestions.purge" call.
@@ -22644,7 +22644,7 @@ func (c *ProjectsLocationsCollectionsDataStoresControlsCreateCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.controls.create" call.
@@ -22743,7 +22743,7 @@ func (c *ProjectsLocationsCollectionsDataStoresControlsDeleteCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.controls.delete" call.
@@ -22853,7 +22853,7 @@ func (c *ProjectsLocationsCollectionsDataStoresControlsGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.controls.get" call.
@@ -22988,7 +22988,7 @@ func (c *ProjectsLocationsCollectionsDataStoresControlsListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.controls.list" call.
@@ -23122,7 +23122,7 @@ func (c *ProjectsLocationsCollectionsDataStoresControlsPatchCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.controls.patch" call.
@@ -23230,7 +23230,7 @@ func (c *ProjectsLocationsCollectionsDataStoresConversationsConverseCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.conversations.converse" call.
@@ -23335,7 +23335,7 @@ func (c *ProjectsLocationsCollectionsDataStoresConversationsCreateCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.conversations.create" call.
@@ -23434,7 +23434,7 @@ func (c *ProjectsLocationsCollectionsDataStoresConversationsDeleteCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.conversations.delete" call.
@@ -23544,7 +23544,7 @@ func (c *ProjectsLocationsCollectionsDataStoresConversationsGetCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.conversations.get" call.
@@ -23686,7 +23686,7 @@ func (c *ProjectsLocationsCollectionsDataStoresConversationsListCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.conversations.list" call.
@@ -23822,7 +23822,7 @@ func (c *ProjectsLocationsCollectionsDataStoresConversationsPatchCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.conversations.patch" call.
@@ -23933,7 +23933,7 @@ func (c *ProjectsLocationsCollectionsDataStoresCustomModelsListCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"dataStore": c.dataStore,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.customModels.list" call.
@@ -24043,7 +24043,7 @@ func (c *ProjectsLocationsCollectionsDataStoresModelsOperationsGetCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.models.operations.get" call.
@@ -24172,7 +24172,7 @@ func (c *ProjectsLocationsCollectionsDataStoresModelsOperationsListCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.models.operations.list" call.
@@ -24303,7 +24303,7 @@ func (c *ProjectsLocationsCollectionsDataStoresOperationsGetCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.operations.get" call.
@@ -24432,7 +24432,7 @@ func (c *ProjectsLocationsCollectionsDataStoresOperationsListCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.operations.list" call.
@@ -24566,7 +24566,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSchemasCreateCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.schemas.create" call.
@@ -24664,7 +24664,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSchemasDeleteCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.schemas.delete" call.
@@ -24774,7 +24774,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSchemasGetCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.schemas.get" call.
@@ -24902,7 +24902,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSchemasListCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.schemas.list" call.
@@ -25036,7 +25036,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSchemasPatchCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.schemas.patch" call.
@@ -25146,7 +25146,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsGetCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.schemas.operations.get" call.
@@ -25275,7 +25275,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSchemasOperationsListCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.schemas.operations.list" call.
@@ -25403,7 +25403,7 @@ func (c *ProjectsLocationsCollectionsDataStoresServingConfigsAnswerCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"servingConfig": c.servingConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.servingConfigs.answer" call.
@@ -25514,7 +25514,7 @@ func (c *ProjectsLocationsCollectionsDataStoresServingConfigsGetCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.servingConfigs.get" call.
@@ -25640,7 +25640,7 @@ func (c *ProjectsLocationsCollectionsDataStoresServingConfigsListCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.servingConfigs.list" call.
@@ -25774,7 +25774,7 @@ func (c *ProjectsLocationsCollectionsDataStoresServingConfigsPatchCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.servingConfigs.patch" call.
@@ -25884,7 +25884,7 @@ func (c *ProjectsLocationsCollectionsDataStoresServingConfigsRecommendCall) doRe
 	googleapi.Expand(req.URL, map[string]string{
 		"servingConfig": c.servingConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.servingConfigs.recommend" call.
@@ -25992,7 +25992,7 @@ func (c *ProjectsLocationsCollectionsDataStoresServingConfigsSearchCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"servingConfig": c.servingConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.servingConfigs.search" call.
@@ -26118,7 +26118,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSessionsCreateCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.sessions.create" call.
@@ -26217,7 +26217,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSessionsDeleteCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.sessions.delete" call.
@@ -26327,7 +26327,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSessionsGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.sessions.get" call.
@@ -26469,7 +26469,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSessionsListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.sessions.list" call.
@@ -26603,7 +26603,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSessionsPatchCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.sessions.patch" call.
@@ -26713,7 +26713,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSessionsAnswersGetCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.sessions.answers.get" call.
@@ -26818,7 +26818,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineBatchVerifyTarget
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.batchVerifyTargetSites" call.
@@ -26923,7 +26923,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineDisableAdvancedSi
 	googleapi.Expand(req.URL, map[string]string{
 		"siteSearchEngine": c.siteSearchEngine,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.disableAdvancedSiteSearch" call.
@@ -27028,7 +27028,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineEnableAdvancedSit
 	googleapi.Expand(req.URL, map[string]string{
 		"siteSearchEngine": c.siteSearchEngine,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.enableAdvancedSiteSearch" call.
@@ -27161,7 +27161,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineFetchDomainVerifi
 	googleapi.Expand(req.URL, map[string]string{
 		"siteSearchEngine": c.siteSearchEngine,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.fetchDomainVerificationStatus" call.
@@ -27292,7 +27292,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineGetUriPatternDocu
 	googleapi.Expand(req.URL, map[string]string{
 		"siteSearchEngine": c.siteSearchEngine,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.getUriPatternDocumentData" call.
@@ -27395,7 +27395,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineRecrawlUrisCall) 
 	googleapi.Expand(req.URL, map[string]string{
 		"siteSearchEngine": c.siteSearchEngine,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.recrawlUris" call.
@@ -27499,7 +27499,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSetUriPatternDocu
 	googleapi.Expand(req.URL, map[string]string{
 		"siteSearchEngine": c.siteSearchEngine,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.setUriPatternDocumentData" call.
@@ -27609,7 +27609,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsGetCall
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.operations.get" call.
@@ -27738,7 +27738,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCal
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.operations.list" call.
@@ -27864,7 +27864,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesBatchC
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.batchCreate" call.
@@ -27968,7 +27968,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesCreate
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.create" call.
@@ -28069,7 +28069,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesDelete
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.delete" call.
@@ -28182,7 +28182,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesGetCal
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.get" call.
@@ -28313,7 +28313,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesListCa
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.list" call.
@@ -28439,7 +28439,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesPatchC
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.patch" call.
@@ -28549,7 +28549,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperat
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.operations.get" call.
@@ -28678,7 +28678,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesOperat
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.targetSites.operations.list" call.
@@ -28803,7 +28803,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSuggestionDenyListEntriesImportCa
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.suggestionDenyListEntries.import" call.
@@ -28907,7 +28907,7 @@ func (c *ProjectsLocationsCollectionsDataStoresSuggestionDenyListEntriesPurgeCal
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.suggestionDenyListEntries.purge" call.
@@ -29044,7 +29044,7 @@ func (c *ProjectsLocationsCollectionsDataStoresUserEventsCollectCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.userEvents.collect" call.
@@ -29152,7 +29152,7 @@ func (c *ProjectsLocationsCollectionsDataStoresUserEventsImportCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.userEvents.import" call.
@@ -29260,7 +29260,7 @@ func (c *ProjectsLocationsCollectionsDataStoresUserEventsPurgeCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.userEvents.purge" call.
@@ -29375,7 +29375,7 @@ func (c *ProjectsLocationsCollectionsDataStoresUserEventsWriteCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.dataStores.userEvents.write" call.
@@ -29488,7 +29488,7 @@ func (c *ProjectsLocationsCollectionsEnginesCreateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.create" call.
@@ -29589,7 +29589,7 @@ func (c *ProjectsLocationsCollectionsEnginesDeleteCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.delete" call.
@@ -29699,7 +29699,7 @@ func (c *ProjectsLocationsCollectionsEnginesGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.get" call.
@@ -29827,7 +29827,7 @@ func (c *ProjectsLocationsCollectionsEnginesListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.list" call.
@@ -29963,7 +29963,7 @@ func (c *ProjectsLocationsCollectionsEnginesPatchCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.patch" call.
@@ -30068,7 +30068,7 @@ func (c *ProjectsLocationsCollectionsEnginesPauseCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.pause" call.
@@ -30173,7 +30173,7 @@ func (c *ProjectsLocationsCollectionsEnginesResumeCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.resume" call.
@@ -30278,7 +30278,7 @@ func (c *ProjectsLocationsCollectionsEnginesTuneCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.tune" call.
@@ -30395,7 +30395,7 @@ func (c *ProjectsLocationsCollectionsEnginesControlsCreateCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.controls.create" call.
@@ -30494,7 +30494,7 @@ func (c *ProjectsLocationsCollectionsEnginesControlsDeleteCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.controls.delete" call.
@@ -30604,7 +30604,7 @@ func (c *ProjectsLocationsCollectionsEnginesControlsGetCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.controls.get" call.
@@ -30739,7 +30739,7 @@ func (c *ProjectsLocationsCollectionsEnginesControlsListCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.controls.list" call.
@@ -30873,7 +30873,7 @@ func (c *ProjectsLocationsCollectionsEnginesControlsPatchCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.controls.patch" call.
@@ -30981,7 +30981,7 @@ func (c *ProjectsLocationsCollectionsEnginesConversationsConverseCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.conversations.converse" call.
@@ -31086,7 +31086,7 @@ func (c *ProjectsLocationsCollectionsEnginesConversationsCreateCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.conversations.create" call.
@@ -31185,7 +31185,7 @@ func (c *ProjectsLocationsCollectionsEnginesConversationsDeleteCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.conversations.delete" call.
@@ -31295,7 +31295,7 @@ func (c *ProjectsLocationsCollectionsEnginesConversationsGetCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.conversations.get" call.
@@ -31437,7 +31437,7 @@ func (c *ProjectsLocationsCollectionsEnginesConversationsListCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.conversations.list" call.
@@ -31573,7 +31573,7 @@ func (c *ProjectsLocationsCollectionsEnginesConversationsPatchCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.conversations.patch" call.
@@ -31683,7 +31683,7 @@ func (c *ProjectsLocationsCollectionsEnginesOperationsGetCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.operations.get" call.
@@ -31812,7 +31812,7 @@ func (c *ProjectsLocationsCollectionsEnginesOperationsListCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.operations.list" call.
@@ -31940,7 +31940,7 @@ func (c *ProjectsLocationsCollectionsEnginesServingConfigsAnswerCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"servingConfig": c.servingConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.servingConfigs.answer" call.
@@ -32051,7 +32051,7 @@ func (c *ProjectsLocationsCollectionsEnginesServingConfigsGetCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.servingConfigs.get" call.
@@ -32177,7 +32177,7 @@ func (c *ProjectsLocationsCollectionsEnginesServingConfigsListCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.servingConfigs.list" call.
@@ -32311,7 +32311,7 @@ func (c *ProjectsLocationsCollectionsEnginesServingConfigsPatchCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.servingConfigs.patch" call.
@@ -32421,7 +32421,7 @@ func (c *ProjectsLocationsCollectionsEnginesServingConfigsRecommendCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"servingConfig": c.servingConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.servingConfigs.recommend" call.
@@ -32529,7 +32529,7 @@ func (c *ProjectsLocationsCollectionsEnginesServingConfigsSearchCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"servingConfig": c.servingConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.servingConfigs.search" call.
@@ -32655,7 +32655,7 @@ func (c *ProjectsLocationsCollectionsEnginesSessionsCreateCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.sessions.create" call.
@@ -32754,7 +32754,7 @@ func (c *ProjectsLocationsCollectionsEnginesSessionsDeleteCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.sessions.delete" call.
@@ -32864,7 +32864,7 @@ func (c *ProjectsLocationsCollectionsEnginesSessionsGetCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.sessions.get" call.
@@ -33006,7 +33006,7 @@ func (c *ProjectsLocationsCollectionsEnginesSessionsListCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.sessions.list" call.
@@ -33140,7 +33140,7 @@ func (c *ProjectsLocationsCollectionsEnginesSessionsPatchCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.sessions.patch" call.
@@ -33250,7 +33250,7 @@ func (c *ProjectsLocationsCollectionsEnginesSessionsAnswersGetCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.engines.sessions.answers.get" call.
@@ -33360,7 +33360,7 @@ func (c *ProjectsLocationsCollectionsOperationsGetCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.operations.get" call.
@@ -33489,7 +33489,7 @@ func (c *ProjectsLocationsCollectionsOperationsListCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.collections.operations.list" call.
@@ -33669,7 +33669,7 @@ func (c *ProjectsLocationsDataStoresCompleteQueryCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"dataStore": c.dataStore,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.completeQuery" call.
@@ -33808,7 +33808,7 @@ func (c *ProjectsLocationsDataStoresCreateCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.create" call.
@@ -33909,7 +33909,7 @@ func (c *ProjectsLocationsDataStoresDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.delete" call.
@@ -34022,7 +34022,7 @@ func (c *ProjectsLocationsDataStoresGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.get" call.
@@ -34132,7 +34132,7 @@ func (c *ProjectsLocationsDataStoresGetDocumentProcessingConfigCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.getDocumentProcessingConfig" call.
@@ -34244,7 +34244,7 @@ func (c *ProjectsLocationsDataStoresGetSiteSearchEngineCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.getSiteSearchEngine" call.
@@ -34383,7 +34383,7 @@ func (c *ProjectsLocationsDataStoresListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.list" call.
@@ -34517,7 +34517,7 @@ func (c *ProjectsLocationsDataStoresPatchCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.patch" call.
@@ -34633,7 +34633,7 @@ func (c *ProjectsLocationsDataStoresUpdateDocumentProcessingConfigCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.updateDocumentProcessingConfig" call.
@@ -34761,7 +34761,7 @@ func (c *ProjectsLocationsDataStoresBranchesBatchGetDocumentsMetadataCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.branches.batchGetDocumentsMetadata" call.
@@ -34878,7 +34878,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsCreateCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.branches.documents.create" call.
@@ -34979,7 +34979,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsDeleteCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.branches.documents.delete" call.
@@ -35092,7 +35092,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsGetCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.branches.documents.get" call.
@@ -35239,7 +35239,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.branches.documents.getProcessedDocument" call.
@@ -35345,7 +35345,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsImportCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.branches.documents.import" call.
@@ -35478,7 +35478,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsListCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.branches.documents.list" call.
@@ -35621,7 +35621,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsPatchCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.branches.documents.patch" call.
@@ -35730,7 +35730,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsPurgeCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.branches.documents.purge" call.
@@ -35843,7 +35843,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsChunksGetCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.branches.documents.chunks.get" call.
@@ -35976,7 +35976,7 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsChunksListCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.branches.documents.chunks.list" call.
@@ -36107,7 +36107,7 @@ func (c *ProjectsLocationsDataStoresBranchesOperationsCancelCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.branches.operations.cancel" call.
@@ -36217,7 +36217,7 @@ func (c *ProjectsLocationsDataStoresBranchesOperationsGetCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.branches.operations.get" call.
@@ -36346,7 +36346,7 @@ func (c *ProjectsLocationsDataStoresBranchesOperationsListCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.branches.operations.list" call.
@@ -36471,7 +36471,7 @@ func (c *ProjectsLocationsDataStoresCompletionSuggestionsImportCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.completionSuggestions.import" call.
@@ -36575,7 +36575,7 @@ func (c *ProjectsLocationsDataStoresCompletionSuggestionsPurgeCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.completionSuggestions.purge" call.
@@ -36692,7 +36692,7 @@ func (c *ProjectsLocationsDataStoresControlsCreateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.controls.create" call.
@@ -36791,7 +36791,7 @@ func (c *ProjectsLocationsDataStoresControlsDeleteCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.controls.delete" call.
@@ -36901,7 +36901,7 @@ func (c *ProjectsLocationsDataStoresControlsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.controls.get" call.
@@ -37036,7 +37036,7 @@ func (c *ProjectsLocationsDataStoresControlsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.controls.list" call.
@@ -37170,7 +37170,7 @@ func (c *ProjectsLocationsDataStoresControlsPatchCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.controls.patch" call.
@@ -37278,7 +37278,7 @@ func (c *ProjectsLocationsDataStoresConversationsConverseCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.conversations.converse" call.
@@ -37383,7 +37383,7 @@ func (c *ProjectsLocationsDataStoresConversationsCreateCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.conversations.create" call.
@@ -37482,7 +37482,7 @@ func (c *ProjectsLocationsDataStoresConversationsDeleteCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.conversations.delete" call.
@@ -37592,7 +37592,7 @@ func (c *ProjectsLocationsDataStoresConversationsGetCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.conversations.get" call.
@@ -37734,7 +37734,7 @@ func (c *ProjectsLocationsDataStoresConversationsListCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.conversations.list" call.
@@ -37870,7 +37870,7 @@ func (c *ProjectsLocationsDataStoresConversationsPatchCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.conversations.patch" call.
@@ -37980,7 +37980,7 @@ func (c *ProjectsLocationsDataStoresModelsOperationsGetCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.models.operations.get" call.
@@ -38109,7 +38109,7 @@ func (c *ProjectsLocationsDataStoresModelsOperationsListCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.models.operations.list" call.
@@ -38240,7 +38240,7 @@ func (c *ProjectsLocationsDataStoresOperationsGetCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.operations.get" call.
@@ -38369,7 +38369,7 @@ func (c *ProjectsLocationsDataStoresOperationsListCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.operations.list" call.
@@ -38503,7 +38503,7 @@ func (c *ProjectsLocationsDataStoresSchemasCreateCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.schemas.create" call.
@@ -38601,7 +38601,7 @@ func (c *ProjectsLocationsDataStoresSchemasDeleteCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.schemas.delete" call.
@@ -38711,7 +38711,7 @@ func (c *ProjectsLocationsDataStoresSchemasGetCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.schemas.get" call.
@@ -38839,7 +38839,7 @@ func (c *ProjectsLocationsDataStoresSchemasListCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.schemas.list" call.
@@ -38973,7 +38973,7 @@ func (c *ProjectsLocationsDataStoresSchemasPatchCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.schemas.patch" call.
@@ -39080,7 +39080,7 @@ func (c *ProjectsLocationsDataStoresServingConfigsAnswerCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"servingConfig": c.servingConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.servingConfigs.answer" call.
@@ -39191,7 +39191,7 @@ func (c *ProjectsLocationsDataStoresServingConfigsGetCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.servingConfigs.get" call.
@@ -39317,7 +39317,7 @@ func (c *ProjectsLocationsDataStoresServingConfigsListCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.servingConfigs.list" call.
@@ -39451,7 +39451,7 @@ func (c *ProjectsLocationsDataStoresServingConfigsPatchCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.servingConfigs.patch" call.
@@ -39561,7 +39561,7 @@ func (c *ProjectsLocationsDataStoresServingConfigsRecommendCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"servingConfig": c.servingConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.servingConfigs.recommend" call.
@@ -39669,7 +39669,7 @@ func (c *ProjectsLocationsDataStoresServingConfigsSearchCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"servingConfig": c.servingConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.servingConfigs.search" call.
@@ -39795,7 +39795,7 @@ func (c *ProjectsLocationsDataStoresSessionsCreateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.sessions.create" call.
@@ -39894,7 +39894,7 @@ func (c *ProjectsLocationsDataStoresSessionsDeleteCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.sessions.delete" call.
@@ -40004,7 +40004,7 @@ func (c *ProjectsLocationsDataStoresSessionsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.sessions.get" call.
@@ -40146,7 +40146,7 @@ func (c *ProjectsLocationsDataStoresSessionsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.sessions.list" call.
@@ -40280,7 +40280,7 @@ func (c *ProjectsLocationsDataStoresSessionsPatchCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.sessions.patch" call.
@@ -40390,7 +40390,7 @@ func (c *ProjectsLocationsDataStoresSessionsAnswersGetCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.sessions.answers.get" call.
@@ -40495,7 +40495,7 @@ func (c *ProjectsLocationsDataStoresSiteSearchEngineDisableAdvancedSiteSearchCal
 	googleapi.Expand(req.URL, map[string]string{
 		"siteSearchEngine": c.siteSearchEngine,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.disableAdvancedSiteSearch" call.
@@ -40600,7 +40600,7 @@ func (c *ProjectsLocationsDataStoresSiteSearchEngineEnableAdvancedSiteSearchCall
 	googleapi.Expand(req.URL, map[string]string{
 		"siteSearchEngine": c.siteSearchEngine,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.enableAdvancedSiteSearch" call.
@@ -40703,7 +40703,7 @@ func (c *ProjectsLocationsDataStoresSiteSearchEngineRecrawlUrisCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"siteSearchEngine": c.siteSearchEngine,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.recrawlUris" call.
@@ -40808,7 +40808,7 @@ func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesBatchCreateCall) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.batchCreate" call.
@@ -40912,7 +40912,7 @@ func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesCreateCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.create" call.
@@ -41013,7 +41013,7 @@ func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesDeleteCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.delete" call.
@@ -41126,7 +41126,7 @@ func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesGetCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.get" call.
@@ -41257,7 +41257,7 @@ func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesListCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.list" call.
@@ -41383,7 +41383,7 @@ func (c *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesPatchCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.targetSites.patch" call.
@@ -41487,7 +41487,7 @@ func (c *ProjectsLocationsDataStoresSuggestionDenyListEntriesImportCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.suggestionDenyListEntries.import" call.
@@ -41591,7 +41591,7 @@ func (c *ProjectsLocationsDataStoresSuggestionDenyListEntriesPurgeCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.suggestionDenyListEntries.purge" call.
@@ -41728,7 +41728,7 @@ func (c *ProjectsLocationsDataStoresUserEventsCollectCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.userEvents.collect" call.
@@ -41836,7 +41836,7 @@ func (c *ProjectsLocationsDataStoresUserEventsImportCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.userEvents.import" call.
@@ -41944,7 +41944,7 @@ func (c *ProjectsLocationsDataStoresUserEventsPurgeCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.userEvents.purge" call.
@@ -42059,7 +42059,7 @@ func (c *ProjectsLocationsDataStoresUserEventsWriteCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.dataStores.userEvents.write" call.
@@ -42163,7 +42163,7 @@ func (c *ProjectsLocationsEvaluationsCreateCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.evaluations.create" call.
@@ -42275,7 +42275,7 @@ func (c *ProjectsLocationsEvaluationsGetCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.evaluations.get" call.
@@ -42406,7 +42406,7 @@ func (c *ProjectsLocationsEvaluationsListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.evaluations.list" call.
@@ -42559,7 +42559,7 @@ func (c *ProjectsLocationsEvaluationsListResultsCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"evaluation": c.evaluation,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.evaluations.listResults" call.
@@ -42690,7 +42690,7 @@ func (c *ProjectsLocationsEvaluationsOperationsGetCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.evaluations.operations.get" call.
@@ -42793,7 +42793,7 @@ func (c *ProjectsLocationsGroundingConfigsCheckCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"groundingConfig": c.groundingConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.groundingConfigs.check" call.
@@ -42903,7 +42903,7 @@ func (c *ProjectsLocationsIdentityMappingStoresOperationsGetCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.identity_mapping_stores.operations.get" call.
@@ -43032,7 +43032,7 @@ func (c *ProjectsLocationsIdentityMappingStoresOperationsListCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.identity_mapping_stores.operations.list" call.
@@ -43163,7 +43163,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.operations.get" call.
@@ -43292,7 +43292,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.operations.list" call.
@@ -43417,7 +43417,7 @@ func (c *ProjectsLocationsRankingConfigsRankCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"rankingConfig": c.rankingConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.rankingConfigs.rank" call.
@@ -43520,7 +43520,7 @@ func (c *ProjectsLocationsRequirementsCheckRequirementCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"location": c.location,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.requirements.checkRequirement" call.
@@ -43637,7 +43637,7 @@ func (c *ProjectsLocationsSampleQuerySetsCreateCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.sampleQuerySets.create" call.
@@ -43738,7 +43738,7 @@ func (c *ProjectsLocationsSampleQuerySetsDeleteCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.sampleQuerySets.delete" call.
@@ -43851,7 +43851,7 @@ func (c *ProjectsLocationsSampleQuerySetsGetCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.sampleQuerySets.get" call.
@@ -43983,7 +43983,7 @@ func (c *ProjectsLocationsSampleQuerySetsListCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.sampleQuerySets.list" call.
@@ -44118,7 +44118,7 @@ func (c *ProjectsLocationsSampleQuerySetsPatchCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.sampleQuerySets.patch" call.
@@ -44228,7 +44228,7 @@ func (c *ProjectsLocationsSampleQuerySetsOperationsGetCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.sampleQuerySets.operations.get" call.
@@ -44345,7 +44345,7 @@ func (c *ProjectsLocationsSampleQuerySetsSampleQueriesCreateCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.sampleQuerySets.sampleQueries.create" call.
@@ -44446,7 +44446,7 @@ func (c *ProjectsLocationsSampleQuerySetsSampleQueriesDeleteCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.sampleQuerySets.sampleQueries.delete" call.
@@ -44559,7 +44559,7 @@ func (c *ProjectsLocationsSampleQuerySetsSampleQueriesGetCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.sampleQuerySets.sampleQueries.get" call.
@@ -44667,7 +44667,7 @@ func (c *ProjectsLocationsSampleQuerySetsSampleQueriesImportCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.sampleQuerySets.sampleQueries.import" call.
@@ -44799,7 +44799,7 @@ func (c *ProjectsLocationsSampleQuerySetsSampleQueriesListCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.sampleQuerySets.sampleQueries.list" call.
@@ -44934,7 +44934,7 @@ func (c *ProjectsLocationsSampleQuerySetsSampleQueriesPatchCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.sampleQuerySets.sampleQueries.patch" call.
@@ -45071,7 +45071,7 @@ func (c *ProjectsLocationsUserEventsCollectCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.userEvents.collect" call.
@@ -45186,7 +45186,7 @@ func (c *ProjectsLocationsUserEventsWriteCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.userEvents.write" call.
@@ -45296,7 +45296,7 @@ func (c *ProjectsLocationsUserStoresOperationsGetCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.userStores.operations.get" call.
@@ -45425,7 +45425,7 @@ func (c *ProjectsLocationsUserStoresOperationsListCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.locations.userStores.operations.list" call.
@@ -45556,7 +45556,7 @@ func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.operations.get" call.
@@ -45685,7 +45685,7 @@ func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "discoveryengine.projects.operations.list" call.

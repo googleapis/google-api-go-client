@@ -980,7 +980,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.get" call.
@@ -1111,7 +1111,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.list" call.
@@ -1265,7 +1265,7 @@ func (c *ProjectsLocationsConnectionsCreateCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.connections.create" call.
@@ -1391,7 +1391,7 @@ func (c *ProjectsLocationsConnectionsDeleteCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.connections.delete" call.
@@ -1502,7 +1502,7 @@ func (c *ProjectsLocationsConnectionsFetchGitHubInstallationsCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"connection": c.connection,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.connections.fetchGitHubInstallations" call.
@@ -1625,7 +1625,7 @@ func (c *ProjectsLocationsConnectionsFetchLinkableGitRepositoriesCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"connection": c.connection,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.connections.fetchLinkableGitRepositories" call.
@@ -1754,7 +1754,7 @@ func (c *ProjectsLocationsConnectionsGetCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.connections.get" call.
@@ -1889,7 +1889,7 @@ func (c *ProjectsLocationsConnectionsListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.connections.list" call.
@@ -2057,7 +2057,7 @@ func (c *ProjectsLocationsConnectionsPatchCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.connections.patch" call.
@@ -2194,7 +2194,7 @@ func (c *ProjectsLocationsConnectionsGitRepositoryLinksCreateCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.create" call.
@@ -2321,7 +2321,7 @@ func (c *ProjectsLocationsConnectionsGitRepositoryLinksDeleteCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.delete" call.
@@ -2455,7 +2455,7 @@ func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchGitRefsCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"gitRepositoryLink": c.gitRepositoryLink,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchGitRefs" call.
@@ -2579,7 +2579,7 @@ func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchReadTokenCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"gitRepositoryLink": c.gitRepositoryLink,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchReadToken" call.
@@ -2682,7 +2682,7 @@ func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchReadWriteTokenCall) 
 	googleapi.Expand(req.URL, map[string]string{
 		"gitRepositoryLink": c.gitRepositoryLink,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchReadWriteToken" call.
@@ -2790,7 +2790,7 @@ func (c *ProjectsLocationsConnectionsGitRepositoryLinksGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.get" call.
@@ -2926,7 +2926,7 @@ func (c *ProjectsLocationsConnectionsGitRepositoryLinksListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.list" call.
@@ -3057,7 +3057,7 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.operations.cancel" call.
@@ -3155,7 +3155,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.operations.delete" call.
@@ -3264,7 +3264,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.operations.get" call.
@@ -3392,7 +3392,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "developerconnect.projects.locations.operations.list" call.

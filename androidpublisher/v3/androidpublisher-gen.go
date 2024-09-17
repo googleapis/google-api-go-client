@@ -7652,7 +7652,7 @@ func (c *ApplicationsDataSafetyCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.applications.dataSafety" call.
@@ -7762,7 +7762,7 @@ func (c *ApplicationsDeviceTierConfigsCreateCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.applications.deviceTierConfigs.create" call.
@@ -7874,7 +7874,7 @@ func (c *ApplicationsDeviceTierConfigsGetCall) doRequest(alt string) (*http.Resp
 		"packageName":        c.packageName,
 		"deviceTierConfigId": strconv.FormatInt(c.deviceTierConfigId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.applications.deviceTierConfigs.get" call.
@@ -8001,7 +8001,7 @@ func (c *ApplicationsDeviceTierConfigsListCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.applications.deviceTierConfigs.list" call.
@@ -8131,7 +8131,7 @@ func (c *ApprecoveryAddTargetingCall) doRequest(alt string) (*http.Response, err
 		"packageName":   c.packageName,
 		"appRecoveryId": strconv.FormatInt(c.appRecoveryId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.apprecovery.addTargeting" call.
@@ -8239,7 +8239,7 @@ func (c *ApprecoveryCancelCall) doRequest(alt string) (*http.Response, error) {
 		"packageName":   c.packageName,
 		"appRecoveryId": strconv.FormatInt(c.appRecoveryId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.apprecovery.cancel" call.
@@ -8343,7 +8343,7 @@ func (c *ApprecoveryCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.apprecovery.create" call.
@@ -8452,7 +8452,7 @@ func (c *ApprecoveryDeployCall) doRequest(alt string) (*http.Response, error) {
 		"packageName":   c.packageName,
 		"appRecoveryId": strconv.FormatInt(c.appRecoveryId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.apprecovery.deploy" call.
@@ -8569,7 +8569,7 @@ func (c *ApprecoveryListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.apprecovery.list" call.
@@ -8679,7 +8679,7 @@ func (c *EditsCommitCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.commit" call.
@@ -8778,7 +8778,7 @@ func (c *EditsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.delete" call.
@@ -8866,7 +8866,7 @@ func (c *EditsGetCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.get" call.
@@ -8967,7 +8967,7 @@ func (c *EditsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.insert" call.
@@ -9066,7 +9066,7 @@ func (c *EditsValidateCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.validate" call.
@@ -9174,7 +9174,7 @@ func (c *EditsApksAddexternallyhostedCall) doRequest(alt string) (*http.Response
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.apks.addexternallyhosted" call.
@@ -9286,7 +9286,7 @@ func (c *EditsApksListCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.apks.list" call.
@@ -9436,7 +9436,7 @@ func (c *EditsApksUploadCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.apks.upload" call.
@@ -9564,7 +9564,7 @@ func (c *EditsBundlesListCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.bundles.list" call.
@@ -9735,7 +9735,7 @@ func (c *EditsBundlesUploadCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.bundles.upload" call.
@@ -9867,7 +9867,7 @@ func (c *EditsCountryavailabilityGetCall) doRequest(alt string) (*http.Response,
 		"editId":      c.editId,
 		"track":       c.track,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.countryavailability.get" call.
@@ -10026,7 +10026,7 @@ func (c *EditsDeobfuscationfilesUploadCall) doRequest(alt string) (*http.Respons
 		"apkVersionCode":        strconv.FormatInt(c.apkVersionCode, 10),
 		"deobfuscationFileType": c.deobfuscationFileType,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.deobfuscationfiles.upload" call.
@@ -10155,7 +10155,7 @@ func (c *EditsDetailsGetCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.details.get" call.
@@ -10260,7 +10260,7 @@ func (c *EditsDetailsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.details.patch" call.
@@ -10365,7 +10365,7 @@ func (c *EditsDetailsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.details.update" call.
@@ -10486,7 +10486,7 @@ func (c *EditsExpansionfilesGetCall) doRequest(alt string) (*http.Response, erro
 		"apkVersionCode":    strconv.FormatInt(c.apkVersionCode, 10),
 		"expansionFileType": c.expansionFileType,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.expansionfiles.get" call.
@@ -10602,7 +10602,7 @@ func (c *EditsExpansionfilesPatchCall) doRequest(alt string) (*http.Response, er
 		"apkVersionCode":    strconv.FormatInt(c.apkVersionCode, 10),
 		"expansionFileType": c.expansionFileType,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.expansionfiles.patch" call.
@@ -10718,7 +10718,7 @@ func (c *EditsExpansionfilesUpdateCall) doRequest(alt string) (*http.Response, e
 		"apkVersionCode":    strconv.FormatInt(c.apkVersionCode, 10),
 		"expansionFileType": c.expansionFileType,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.expansionfiles.update" call.
@@ -10877,7 +10877,7 @@ func (c *EditsExpansionfilesUploadCall) doRequest(alt string) (*http.Response, e
 		"apkVersionCode":    strconv.FormatInt(c.apkVersionCode, 10),
 		"expansionFileType": c.expansionFileType,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.expansionfiles.upload" call.
@@ -11008,7 +11008,7 @@ func (c *EditsImagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"imageType":   c.imageType,
 		"imageId":     c.imageId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.images.delete" call.
@@ -11096,7 +11096,7 @@ func (c *EditsImagesDeleteallCall) doRequest(alt string) (*http.Response, error)
 		"language":    c.language,
 		"imageType":   c.imageType,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.images.deleteall" call.
@@ -11219,7 +11219,7 @@ func (c *EditsImagesListCall) doRequest(alt string) (*http.Response, error) {
 		"language":    c.language,
 		"imageType":   c.imageType,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.images.list" call.
@@ -11380,7 +11380,7 @@ func (c *EditsImagesUploadCall) doRequest(alt string) (*http.Response, error) {
 		"language":    c.language,
 		"imageType":   c.imageType,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.images.upload" call.
@@ -11502,7 +11502,7 @@ func (c *EditsListingsDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"editId":      c.editId,
 		"language":    c.language,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.listings.delete" call.
@@ -11578,7 +11578,7 @@ func (c *EditsListingsDeleteallCall) doRequest(alt string) (*http.Response, erro
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.listings.deleteall" call.
@@ -11671,7 +11671,7 @@ func (c *EditsListingsGetCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 		"language":    c.language,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.listings.get" call.
@@ -11782,7 +11782,7 @@ func (c *EditsListingsListCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.listings.list" call.
@@ -11893,7 +11893,7 @@ func (c *EditsListingsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 		"language":    c.language,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.listings.patch" call.
@@ -12003,7 +12003,7 @@ func (c *EditsListingsUpdateCall) doRequest(alt string) (*http.Response, error) 
 		"editId":      c.editId,
 		"language":    c.language,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.listings.update" call.
@@ -12118,7 +12118,7 @@ func (c *EditsTestersGetCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 		"track":       c.track,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.testers.get" call.
@@ -12227,7 +12227,7 @@ func (c *EditsTestersPatchCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 		"track":       c.track,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.testers.patch" call.
@@ -12337,7 +12337,7 @@ func (c *EditsTestersUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 		"track":       c.track,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.testers.update" call.
@@ -12442,7 +12442,7 @@ func (c *EditsTracksCreateCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.tracks.create" call.
@@ -12558,7 +12558,7 @@ func (c *EditsTracksGetCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 		"track":       c.track,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.tracks.get" call.
@@ -12669,7 +12669,7 @@ func (c *EditsTracksListCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"editId":      c.editId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.tracks.list" call.
@@ -12780,7 +12780,7 @@ func (c *EditsTracksPatchCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 		"track":       c.track,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.tracks.patch" call.
@@ -12890,7 +12890,7 @@ func (c *EditsTracksUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"editId":      c.editId,
 		"track":       c.track,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.edits.tracks.update" call.
@@ -13003,7 +13003,7 @@ func (c *ExternaltransactionsCreateexternaltransactionCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.externaltransactions.createexternaltransaction" call.
@@ -13112,7 +13112,7 @@ func (c *ExternaltransactionsGetexternaltransactionCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.externaltransactions.getexternaltransaction" call.
@@ -13216,7 +13216,7 @@ func (c *ExternaltransactionsRefundexternaltransactionCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.externaltransactions.refundexternaltransaction" call.
@@ -13333,7 +13333,7 @@ func (c *GeneratedapksDownloadCall) doRequest(alt string) (*http.Response, error
 		"versionCode": strconv.FormatInt(c.versionCode, 10),
 		"downloadId":  c.downloadId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Download fetches the API endpoint's "media" value, instead of the normal
@@ -13438,7 +13438,7 @@ func (c *GeneratedapksListCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"versionCode": strconv.FormatInt(c.versionCode, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.generatedapks.list" call.
@@ -13541,7 +13541,7 @@ func (c *GrantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.grants.create" call.
@@ -13638,7 +13638,7 @@ func (c *GrantsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.grants.delete" call.
@@ -13726,7 +13726,7 @@ func (c *GrantsPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.grants.patch" call.
@@ -13833,7 +13833,7 @@ func (c *InappproductsBatchDeleteCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.inappproducts.batchDelete" call.
@@ -13928,7 +13928,7 @@ func (c *InappproductsBatchGetCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.inappproducts.batchGet" call.
@@ -14036,7 +14036,7 @@ func (c *InappproductsBatchUpdateCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.inappproducts.batchUpdate" call.
@@ -14164,7 +14164,7 @@ func (c *InappproductsDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"packageName": c.packageName,
 		"sku":         c.skuid,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.inappproducts.delete" call.
@@ -14256,7 +14256,7 @@ func (c *InappproductsGetCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"sku":         c.skuid,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.inappproducts.get" call.
@@ -14371,7 +14371,7 @@ func (c *InappproductsInsertCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.inappproducts.insert" call.
@@ -14506,7 +14506,7 @@ func (c *InappproductsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.inappproducts.list" call.
@@ -14649,7 +14649,7 @@ func (c *InappproductsPatchCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"sku":         c.skuid,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.inappproducts.patch" call.
@@ -14800,7 +14800,7 @@ func (c *InappproductsUpdateCall) doRequest(alt string) (*http.Response, error) 
 		"packageName": c.packageName,
 		"sku":         c.skuid,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.inappproducts.update" call.
@@ -14950,7 +14950,7 @@ func (c *InternalappsharingartifactsUploadapkCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.internalappsharingartifacts.uploadapk" call.
@@ -15118,7 +15118,7 @@ func (c *InternalappsharingartifactsUploadbundleCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.internalappsharingartifacts.uploadbundle" call.
@@ -15239,7 +15239,7 @@ func (c *MonetizationConvertRegionPricesCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.convertRegionPrices" call.
@@ -15346,7 +15346,7 @@ func (c *MonetizationSubscriptionsArchiveCall) doRequest(alt string) (*http.Resp
 		"packageName": c.packageName,
 		"productId":   c.productId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.archive" call.
@@ -15462,7 +15462,7 @@ func (c *MonetizationSubscriptionsBatchGetCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.batchGet" call.
@@ -15569,7 +15569,7 @@ func (c *MonetizationSubscriptionsBatchUpdateCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.batchUpdate" call.
@@ -15697,7 +15697,7 @@ func (c *MonetizationSubscriptionsCreateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.create" call.
@@ -15798,7 +15798,7 @@ func (c *MonetizationSubscriptionsDeleteCall) doRequest(alt string) (*http.Respo
 		"packageName": c.packageName,
 		"productId":   c.productId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.delete" call.
@@ -15886,7 +15886,7 @@ func (c *MonetizationSubscriptionsGetCall) doRequest(alt string) (*http.Response
 		"packageName": c.packageName,
 		"productId":   c.productId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.get" call.
@@ -16019,7 +16019,7 @@ func (c *MonetizationSubscriptionsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.list" call.
@@ -16205,7 +16205,7 @@ func (c *MonetizationSubscriptionsPatchCall) doRequest(alt string) (*http.Respon
 		"packageName": c.packageName,
 		"productId":   c.productId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.patch" call.
@@ -16315,7 +16315,7 @@ func (c *MonetizationSubscriptionsBasePlansActivateCall) doRequest(alt string) (
 		"productId":   c.productId,
 		"basePlanId":  c.basePlanId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.activate" call.
@@ -16427,7 +16427,7 @@ func (c *MonetizationSubscriptionsBasePlansBatchMigratePricesCall) doRequest(alt
 		"packageName": c.packageName,
 		"productId":   c.productId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.batchMigratePrices" call.
@@ -16538,7 +16538,7 @@ func (c *MonetizationSubscriptionsBasePlansBatchUpdateStatesCall) doRequest(alt 
 		"packageName": c.packageName,
 		"productId":   c.productId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.batchUpdateStates" call.
@@ -16650,7 +16650,7 @@ func (c *MonetizationSubscriptionsBasePlansDeactivateCall) doRequest(alt string)
 		"productId":   c.productId,
 		"basePlanId":  c.basePlanId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.deactivate" call.
@@ -16754,7 +16754,7 @@ func (c *MonetizationSubscriptionsBasePlansDeleteCall) doRequest(alt string) (*h
 		"productId":   c.productId,
 		"basePlanId":  c.basePlanId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.delete" call.
@@ -16844,7 +16844,7 @@ func (c *MonetizationSubscriptionsBasePlansMigratePricesCall) doRequest(alt stri
 		"productId":   c.productId,
 		"basePlanId":  c.basePlanId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.migratePrices" call.
@@ -16959,7 +16959,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersActivateCall) doRequest(alt str
 		"basePlanId":  c.basePlanId,
 		"offerId":     c.offerId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.offers.activate" call.
@@ -17074,7 +17074,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersBatchGetCall) doRequest(alt str
 		"productId":   c.productId,
 		"basePlanId":  c.basePlanId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.offers.batchGet" call.
@@ -17193,7 +17193,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersBatchUpdateCall) doRequest(alt 
 		"productId":   c.productId,
 		"basePlanId":  c.basePlanId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.offers.batchUpdate" call.
@@ -17312,7 +17312,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersBatchUpdateStatesCall) doReques
 		"productId":   c.productId,
 		"basePlanId":  c.basePlanId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.offers.batchUpdateStates" call.
@@ -17453,7 +17453,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersCreateCall) doRequest(alt strin
 		"productId":   c.productId,
 		"basePlanId":  c.basePlanId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.offers.create" call.
@@ -17569,7 +17569,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersDeactivateCall) doRequest(alt s
 		"basePlanId":  c.basePlanId,
 		"offerId":     c.offerId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.offers.deactivate" call.
@@ -17678,7 +17678,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersDeleteCall) doRequest(alt strin
 		"basePlanId":  c.basePlanId,
 		"offerId":     c.offerId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.offers.delete" call.
@@ -17774,7 +17774,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersGetCall) doRequest(alt string) 
 		"basePlanId":  c.basePlanId,
 		"offerId":     c.offerId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.offers.get" call.
@@ -17912,7 +17912,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersListCall) doRequest(alt string)
 		"productId":   c.productId,
 		"basePlanId":  c.basePlanId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.offers.list" call.
@@ -18106,7 +18106,7 @@ func (c *MonetizationSubscriptionsBasePlansOffersPatchCall) doRequest(alt string
 		"basePlanId":  c.basePlanId,
 		"offerId":     c.offerId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.monetization.subscriptions.basePlans.offers.patch" call.
@@ -18219,7 +18219,7 @@ func (c *OrdersRefundCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"orderId":     c.orderId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.orders.refund" call.
@@ -18307,7 +18307,7 @@ func (c *PurchasesProductsAcknowledgeCall) doRequest(alt string) (*http.Response
 		"productId":   c.productId,
 		"token":       c.token,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.purchases.products.acknowledge" call.
@@ -18389,7 +18389,7 @@ func (c *PurchasesProductsConsumeCall) doRequest(alt string) (*http.Response, er
 		"productId":   c.productId,
 		"token":       c.token,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.purchases.products.consume" call.
@@ -18483,7 +18483,7 @@ func (c *PurchasesProductsGetCall) doRequest(alt string) (*http.Response, error)
 		"productId":   c.productId,
 		"token":       c.token,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.purchases.products.get" call.
@@ -18595,7 +18595,7 @@ func (c *PurchasesSubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Res
 		"subscriptionId": c.subscriptionId,
 		"token":          c.token,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.purchases.subscriptions.acknowledge" call.
@@ -18678,7 +18678,7 @@ func (c *PurchasesSubscriptionsCancelCall) doRequest(alt string) (*http.Response
 		"subscriptionId": c.subscriptionId,
 		"token":          c.token,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.purchases.subscriptions.cancel" call.
@@ -18767,7 +18767,7 @@ func (c *PurchasesSubscriptionsDeferCall) doRequest(alt string) (*http.Response,
 		"subscriptionId": c.subscriptionId,
 		"token":          c.token,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.purchases.subscriptions.defer" call.
@@ -18886,7 +18886,7 @@ func (c *PurchasesSubscriptionsGetCall) doRequest(alt string) (*http.Response, e
 		"subscriptionId": c.subscriptionId,
 		"token":          c.token,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.purchases.subscriptions.get" call.
@@ -18994,7 +18994,7 @@ func (c *PurchasesSubscriptionsRefundCall) doRequest(alt string) (*http.Response
 		"subscriptionId": c.subscriptionId,
 		"token":          c.token,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.purchases.subscriptions.refund" call.
@@ -19078,7 +19078,7 @@ func (c *PurchasesSubscriptionsRevokeCall) doRequest(alt string) (*http.Response
 		"subscriptionId": c.subscriptionId,
 		"token":          c.token,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.purchases.subscriptions.revoke" call.
@@ -19168,7 +19168,7 @@ func (c *PurchasesSubscriptionsv2GetCall) doRequest(alt string) (*http.Response,
 		"packageName": c.packageName,
 		"token":       c.token,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.purchases.subscriptionsv2.get" call.
@@ -19276,7 +19276,7 @@ func (c *PurchasesSubscriptionsv2RevokeCall) doRequest(alt string) (*http.Respon
 		"packageName": c.packageName,
 		"token":       c.token,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.purchases.subscriptionsv2.revoke" call.
@@ -19458,7 +19458,7 @@ func (c *PurchasesVoidedpurchasesListCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.purchases.voidedpurchases.list" call.
@@ -19577,7 +19577,7 @@ func (c *ReviewsGetCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"reviewId":    c.reviewId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.reviews.get" call.
@@ -19712,7 +19712,7 @@ func (c *ReviewsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"packageName": c.packageName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.reviews.list" call.
@@ -19818,7 +19818,7 @@ func (c *ReviewsReplyCall) doRequest(alt string) (*http.Response, error) {
 		"packageName": c.packageName,
 		"reviewId":    c.reviewId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.reviews.reply" call.
@@ -19925,7 +19925,7 @@ func (c *SystemapksVariantsCreateCall) doRequest(alt string) (*http.Response, er
 		"packageName": c.packageName,
 		"versionCode": strconv.FormatInt(c.versionCode, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.systemapks.variants.create" call.
@@ -20041,7 +20041,7 @@ func (c *SystemapksVariantsDownloadCall) doRequest(alt string) (*http.Response, 
 		"versionCode": strconv.FormatInt(c.versionCode, 10),
 		"variantId":   strconv.FormatInt(c.variantId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Download fetches the API endpoint's "media" value, instead of the normal
@@ -20149,7 +20149,7 @@ func (c *SystemapksVariantsGetCall) doRequest(alt string) (*http.Response, error
 		"versionCode": strconv.FormatInt(c.versionCode, 10),
 		"variantId":   strconv.FormatInt(c.variantId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.systemapks.variants.get" call.
@@ -20260,7 +20260,7 @@ func (c *SystemapksVariantsListCall) doRequest(alt string) (*http.Response, erro
 		"packageName": c.packageName,
 		"versionCode": strconv.FormatInt(c.versionCode, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.systemapks.variants.list" call.
@@ -20363,7 +20363,7 @@ func (c *UsersCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.users.create" call.
@@ -20459,7 +20459,7 @@ func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.users.delete" call.
@@ -20558,7 +20558,7 @@ func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.users.list" call.
@@ -20689,7 +20689,7 @@ func (c *UsersPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "androidpublisher.users.patch" call.

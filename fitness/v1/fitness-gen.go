@@ -1290,7 +1290,7 @@ func (c *UsersDataSourcesCreateCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fitness.users.dataSources.create" call.
@@ -1391,7 +1391,7 @@ func (c *UsersDataSourcesDeleteCall) doRequest(alt string) (*http.Response, erro
 		"userId":       c.userId,
 		"dataSourceId": c.dataSourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fitness.users.dataSources.delete" call.
@@ -1503,7 +1503,7 @@ func (c *UsersDataSourcesGetCall) doRequest(alt string) (*http.Response, error) 
 		"userId":       c.userId,
 		"dataSourceId": c.dataSourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fitness.users.dataSources.get" call.
@@ -1622,7 +1622,7 @@ func (c *UsersDataSourcesListCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fitness.users.dataSources.list" call.
@@ -1731,7 +1731,7 @@ func (c *UsersDataSourcesUpdateCall) doRequest(alt string) (*http.Response, erro
 		"userId":       c.userId,
 		"dataSourceId": c.dataSourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fitness.users.dataSources.update" call.
@@ -1860,7 +1860,7 @@ func (c *UsersDataSourcesDataPointChangesListCall) doRequest(alt string) (*http.
 		"userId":       c.userId,
 		"dataSourceId": c.dataSourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fitness.users.dataSources.dataPointChanges.list" call.
@@ -1995,7 +1995,7 @@ func (c *UsersDataSourcesDatasetsDeleteCall) doRequest(alt string) (*http.Respon
 		"dataSourceId": c.dataSourceId,
 		"datasetId":    c.datasetId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fitness.users.dataSources.datasets.delete" call.
@@ -2117,7 +2117,7 @@ func (c *UsersDataSourcesDatasetsGetCall) doRequest(alt string) (*http.Response,
 		"dataSourceId": c.dataSourceId,
 		"datasetId":    c.datasetId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fitness.users.dataSources.datasets.get" call.
@@ -2253,7 +2253,7 @@ func (c *UsersDataSourcesDatasetsPatchCall) doRequest(alt string) (*http.Respons
 		"dataSourceId": c.dataSourceId,
 		"datasetId":    c.datasetId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fitness.users.dataSources.datasets.patch" call.
@@ -2378,7 +2378,7 @@ func (c *UsersDatasetAggregateCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fitness.users.dataset.aggregate" call.
@@ -2479,7 +2479,7 @@ func (c *UsersSessionsDeleteCall) doRequest(alt string) (*http.Response, error) 
 		"userId":    c.userId,
 		"sessionId": c.sessionId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fitness.users.sessions.delete" call.
@@ -2611,7 +2611,7 @@ func (c *UsersSessionsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"userId": c.userId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fitness.users.sessions.list" call.
@@ -2739,7 +2739,7 @@ func (c *UsersSessionsUpdateCall) doRequest(alt string) (*http.Response, error) 
 		"userId":    c.userId,
 		"sessionId": c.sessionId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fitness.users.sessions.update" call.

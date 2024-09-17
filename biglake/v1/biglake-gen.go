@@ -636,7 +636,7 @@ func (c *ProjectsLocationsCatalogsCreateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.create" call.
@@ -733,7 +733,7 @@ func (c *ProjectsLocationsCatalogsDeleteCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.delete" call.
@@ -842,7 +842,7 @@ func (c *ProjectsLocationsCatalogsGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.get" call.
@@ -968,7 +968,7 @@ func (c *ProjectsLocationsCatalogsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.list" call.
@@ -1101,7 +1101,7 @@ func (c *ProjectsLocationsCatalogsDatabasesCreateCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.create" call.
@@ -1198,7 +1198,7 @@ func (c *ProjectsLocationsCatalogsDatabasesDeleteCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.delete" call.
@@ -1307,7 +1307,7 @@ func (c *ProjectsLocationsCatalogsDatabasesGetCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.get" call.
@@ -1434,7 +1434,7 @@ func (c *ProjectsLocationsCatalogsDatabasesListCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.list" call.
@@ -1568,7 +1568,7 @@ func (c *ProjectsLocationsCatalogsDatabasesPatchCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.patch" call.
@@ -1679,7 +1679,7 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesCreateCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.tables.create" call.
@@ -1776,7 +1776,7 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesDeleteCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.tables.delete" call.
@@ -1885,7 +1885,7 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesGetCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.tables.get" call.
@@ -2027,7 +2027,7 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesListCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.tables.list" call.
@@ -2161,7 +2161,7 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesPatchCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.tables.patch" call.
@@ -2265,7 +2265,7 @@ func (c *ProjectsLocationsCatalogsDatabasesTablesRenameCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "biglake.projects.locations.catalogs.databases.tables.rename" call.

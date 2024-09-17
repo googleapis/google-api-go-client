@@ -320,7 +320,11 @@ type TermsOfServiceService struct {
 
 // AcceptTermsOfService: Reference to a Terms of Service resource.
 type AcceptTermsOfService struct {
-	// Name: Required. The resource name of the terms of service version.
+	// Name: Required. The resource name of the terms of service version in the
+	// format `termsOfService/{version}`. To retrieve the latest version, use the
+	// termsOfService.retrieveLatest
+	// (/merchant/api/reference/rest/accounts_v1beta/termsOfService/retrieveLatest)
+	// method.
 	Name string `json:"name,omitempty"`
 	// RegionCode: Required. Region code as defined by CLDR
 	// (https://cldr.unicode.org/). This is either a country when the ToS applies
@@ -947,7 +951,8 @@ type DeliveryTime struct {
 	HandlingBusinessDayConfig *BusinessDayConfig `json:"handlingBusinessDayConfig,omitempty"`
 	// MaxHandlingDays: Maximum number of business days spent before an order is
 	// shipped. 0 means same day shipped, 1 means next day shipped. Must be greater
-	// than or equal to `min_handling_days`.
+	// than or equal to `min_handling_days`. 'min_handling_days' and
+	// 'max_handling_days' should be either set or not set at the same time.
 	MaxHandlingDays int64 `json:"maxHandlingDays,omitempty"`
 	// MaxTransitDays: Maximum number of business days that is spent in transit. 0
 	// means same day delivery, 1 means next day delivery. Must be greater than or
@@ -955,6 +960,8 @@ type DeliveryTime struct {
 	MaxTransitDays int64 `json:"maxTransitDays,omitempty"`
 	// MinHandlingDays: Minimum number of business days spent before an order is
 	// shipped. 0 means same day shipped, 1 means next day shipped.
+	// 'min_handling_days' and 'max_handling_days' should be either set or not set
+	// at the same time.
 	MinHandlingDays int64 `json:"minHandlingDays,omitempty"`
 	// MinTransitDays: Minimum number of business days that is spent in transit. 0
 	// means same day delivery, 1 means next day delivery. Either

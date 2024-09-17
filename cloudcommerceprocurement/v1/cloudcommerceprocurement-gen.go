@@ -243,9 +243,9 @@ type Account struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Account) MarshalJSON() ([]byte, error) {
+func (s Account) MarshalJSON() ([]byte, error) {
 	type NoMethod Account
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Approval: An approval for some action on an account.
@@ -281,9 +281,9 @@ type Approval struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Approval) MarshalJSON() ([]byte, error) {
+func (s Approval) MarshalJSON() ([]byte, error) {
 	type NoMethod Approval
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApproveAccountRequest: Request message for
@@ -313,9 +313,9 @@ type ApproveAccountRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApproveAccountRequest) MarshalJSON() ([]byte, error) {
+func (s ApproveAccountRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApproveAccountRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApproveEntitlementPlanChangeRequest: Request message for
@@ -336,9 +336,9 @@ type ApproveEntitlementPlanChangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApproveEntitlementPlanChangeRequest) MarshalJSON() ([]byte, error) {
+func (s ApproveEntitlementPlanChangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApproveEntitlementPlanChangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ApproveEntitlementRequest: Request message for
@@ -366,9 +366,9 @@ type ApproveEntitlementRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ApproveEntitlementRequest) MarshalJSON() ([]byte, error) {
+func (s ApproveEntitlementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApproveEntitlementRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Consumer: A resource using (consuming) this entitlement.
@@ -388,9 +388,9 @@ type Consumer struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Consumer) MarshalJSON() ([]byte, error) {
+func (s Consumer) MarshalJSON() ([]byte, error) {
 	type NoMethod Consumer
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -588,9 +588,9 @@ type Entitlement struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Entitlement) MarshalJSON() ([]byte, error) {
+func (s Entitlement) MarshalJSON() ([]byte, error) {
 	type NoMethod Entitlement
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccountsResponse: Response message for
@@ -616,9 +616,9 @@ type ListAccountsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListAccountsResponse) MarshalJSON() ([]byte, error) {
+func (s ListAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccountsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEntitlementsResponse: Response message for
@@ -644,9 +644,9 @@ type ListEntitlementsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListEntitlementsResponse) MarshalJSON() ([]byte, error) {
+func (s ListEntitlementsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEntitlementsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RejectAccountRequest: Request message for
@@ -673,9 +673,9 @@ type RejectAccountRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RejectAccountRequest) MarshalJSON() ([]byte, error) {
+func (s RejectAccountRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RejectAccountRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RejectEntitlementPlanChangeRequest: Request message for
@@ -699,9 +699,9 @@ type RejectEntitlementPlanChangeRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RejectEntitlementPlanChangeRequest) MarshalJSON() ([]byte, error) {
+func (s RejectEntitlementPlanChangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RejectEntitlementPlanChangeRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RejectEntitlementRequest: Request message for
@@ -723,9 +723,9 @@ type RejectEntitlementRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *RejectEntitlementRequest) MarshalJSON() ([]byte, error) {
+func (s RejectEntitlementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RejectEntitlementRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResetAccountRequest: Request message for
@@ -752,9 +752,9 @@ type SuspendEntitlementRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SuspendEntitlementRequest) MarshalJSON() ([]byte, error) {
+func (s SuspendEntitlementRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SuspendEntitlementRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProvidersAccountsApproveCall struct {
@@ -819,7 +819,7 @@ func (c *ProvidersAccountsApproveCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcommerceprocurement.providers.accounts.approve" call.
@@ -926,7 +926,7 @@ func (c *ProvidersAccountsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcommerceprocurement.providers.accounts.get" call.
@@ -1048,7 +1048,7 @@ func (c *ProvidersAccountsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcommerceprocurement.providers.accounts.list" call.
@@ -1171,7 +1171,7 @@ func (c *ProvidersAccountsRejectCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcommerceprocurement.providers.accounts.reject" call.
@@ -1273,7 +1273,7 @@ func (c *ProvidersAccountsResetCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcommerceprocurement.providers.accounts.reset" call.
@@ -1377,7 +1377,7 @@ func (c *ProvidersEntitlementsApproveCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.approve" call.
@@ -1481,7 +1481,7 @@ func (c *ProvidersEntitlementsApprovePlanChangeCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.approvePlanChange" call.
@@ -1588,7 +1588,7 @@ func (c *ProvidersEntitlementsGetCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.get" call.
@@ -1742,7 +1742,7 @@ func (c *ProvidersEntitlementsListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.list" call.
@@ -1874,7 +1874,7 @@ func (c *ProvidersEntitlementsPatchCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.patch" call.
@@ -1977,7 +1977,7 @@ func (c *ProvidersEntitlementsRejectCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.reject" call.
@@ -2081,7 +2081,7 @@ func (c *ProvidersEntitlementsRejectPlanChangeCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.rejectPlanChange" call.
@@ -2183,7 +2183,7 @@ func (c *ProvidersEntitlementsSuspendCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcommerceprocurement.providers.entitlements.suspend" call.

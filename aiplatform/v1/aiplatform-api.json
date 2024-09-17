@@ -4271,7 +4271,7 @@
                   ],
                   "parameters": {
                     "featureGroupId": {
-                      "description": "Required. The ID to use for this FeatureGroup, which will become the final component of the FeatureGroup's resource name. This value may be up to 60 characters, and valid characters are `[a-z0-9_]`. The first character cannot be a number. The value must be unique within the project and location.",
+                      "description": "Required. The ID to use for this FeatureGroup, which will become the final component of the FeatureGroup's resource name. This value may be up to 128 characters, and valid characters are `[a-z0-9_]`. The first character cannot be a number. The value must be unique within the project and location.",
                       "location": "query",
                       "type": "string"
                     },
@@ -17760,7 +17760,7 @@
       }
     }
   },
-  "revision": "20240830",
+  "revision": "20240907",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "CloudAiLargeModelsVisionGenerateVideoResponse": {
@@ -17899,8 +17899,16 @@
       "type": "object"
     },
     "CloudAiLargeModelsVisionRaiInfo": {
+      "description": "Next ID: 6",
       "id": "CloudAiLargeModelsVisionRaiInfo",
       "properties": {
+        "blockedEntities": {
+          "description": "List of blocked entities from the blocklist if it is detected.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "detectedLabels": {
           "description": "The list of detected labels for different rai categories.",
           "items": {
@@ -19844,6 +19852,10 @@
           },
           "type": "array"
         },
+        "generationConfig": {
+          "$ref": "GoogleCloudAiplatformV1GenerationConfig",
+          "description": "Optional. Generation config that the model will use to generate the response."
+        },
         "instances": {
           "description": "Optional. The instances that are the input to token counting call. Schema is identical to the prediction schema of the underlying model.",
           "items": {
@@ -21061,6 +21073,13 @@
           "$ref": "GoogleCloudAiplatformV1IndexPrivateEndpoints",
           "description": "Output only. Provides paths for users to send requests directly to the deployed index services running on Cloud via private services access. This field is populated if network is configured.",
           "readOnly": true
+        },
+        "pscAutomationConfigs": {
+          "description": "Optional. If set for PSC deployed index, PSC connection will be automatically created after deployment is done and the endpoint information is populated in private_endpoints.psc_automated_endpoints.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1PSCAutomationConfig"
+          },
+          "type": "array"
         },
         "reservedIpRanges": {
           "description": "Optional. A list of reserved ip ranges under the VPC network that can be used for this DeployedIndex. If set, we will deploy the index within the provided ip ranges. Otherwise, the index might be deployed to any ip ranges under the provided VPC network. The value should be the name of the address (https://cloud.google.com/compute/docs/reference/rest/v1/addresses) Example: ['vertex-ai-ip-range']. For more information about subnets and network IP ranges, please see https://cloud.google.com/vpc/docs/subnets#manually_created_subnet_ip_ranges.",
@@ -23072,7 +23091,7 @@
           "description": "Required. Immutable. The BigQuery source URI that points to either a BigQuery Table or View."
         },
         "dense": {
-          "description": "Optional. If set, all feature values will be fetched from a single row per unique entityId including nulls. If not set, will collapse all rows for each unique entityId into a singe row with any non-null values if present, if no non-null values are present will sync null. ex: If source has schema (entity_id, feature_timestamp, f0, f1) and values (e1, 2020-01-01T10:00:00.123Z, 10, 15) (e1, 2020-02-01T10:00:00.123Z, 20, null) If dense is set, (e1, 20, null) is synced to online stores. If dense is not set, (e1, 20, 15) is synced to online stores.",
+          "description": "Optional. If set, all feature values will be fetched from a single row per unique entityId including nulls. If not set, will collapse all rows for each unique entityId into a singe row with any non-null values if present, if no non-null values are present will sync null. ex: If source has schema `(entity_id, feature_timestamp, f0, f1)` and the following rows: `(e1, 2020-01-01T10:00:00.123Z, 10, 15)` `(e1, 2020-02-01T10:00:00.123Z, 20, null)` If dense is set, `(e1, 20, null)` is synced to online stores. If dense is not set, `(e1, 20, 15)` is synced to online stores.",
           "type": "boolean"
         },
         "entityIdColumns": {
@@ -23746,7 +23765,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "Required. The BigQuery view/table URI that will be materialized on each manual sync trigger. The table/view is expected to have the following columns at least: Field name Type Mode corpus_id STRING REQUIRED/NULLABLE file_id STRING REQUIRED/NULLABLE chunk_id STRING REQUIRED/NULLABLE chunk_data_type STRING REQUIRED/NULLABLE chunk_data STRING REQUIRED/NULLABLE embeddings FLOAT REPEATED file_original_uri STRING REQUIRED/NULLABLE",
+          "description": "Required. The BigQuery view/table URI that will be materialized on each manual sync trigger. The table/view is expected to have the following columns and types at least: - `corpus_id` (STRING, NULLABLE/REQUIRED) - `file_id` (STRING, NULLABLE/REQUIRED) - `chunk_id` (STRING, NULLABLE/REQUIRED) - `chunk_data_type` (STRING, NULLABLE/REQUIRED) - `chunk_data` (STRING, NULLABLE/REQUIRED) - `embeddings` (FLOAT, REPEATED) - `file_original_uri` (STRING, NULLABLE/REQUIRED)",
           "type": "string"
         }
       },
@@ -24471,6 +24490,13 @@
         "generationConfig": {
           "$ref": "GoogleCloudAiplatformV1GenerationConfig",
           "description": "Optional. Generation config."
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. The labels with user-defined metadata for the request. It is used for billing and reporting only. Label keys and values can be no longer than 63 characters (Unicode codepoints) and can only contain lowercase letters, numeric characters, underscores, and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter.",
+          "type": "object"
         },
         "safetySettings": {
           "description": "Optional. Per request settings for blocking unsafe content. Enforced on GenerateContentResponse.candidates.",
@@ -29506,6 +29532,21 @@
       },
       "type": "object"
     },
+    "GoogleCloudAiplatformV1PSCAutomationConfig": {
+      "description": "PSC config that is used to automatically create forwarding rule via ServiceConnectionMap.",
+      "id": "GoogleCloudAiplatformV1PSCAutomationConfig",
+      "properties": {
+        "network": {
+          "description": "Required. The full name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks). [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert): `projects/{project}/global/networks/{network}`. Where {project} is a project number, as in '12345', and {network} is network name.",
+          "type": "string"
+        },
+        "projectId": {
+          "description": "Required. Project id used to create forwarding rule.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudAiplatformV1PairwiseMetricInput": {
       "description": "Input for pairwise metric.",
       "id": "GoogleCloudAiplatformV1PairwiseMetricInput",
@@ -32218,14 +32259,16 @@
             "HARM_CATEGORY_HATE_SPEECH",
             "HARM_CATEGORY_DANGEROUS_CONTENT",
             "HARM_CATEGORY_HARASSMENT",
-            "HARM_CATEGORY_SEXUALLY_EXPLICIT"
+            "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "HARM_CATEGORY_CIVIC_INTEGRITY"
           ],
           "enumDescriptions": [
             "The harm category is unspecified.",
             "The harm category is hate speech.",
             "The harm category is dangerous content.",
             "The harm category is harassment.",
-            "The harm category is sexually explicit content."
+            "The harm category is sexually explicit content.",
+            "The harm category is civic integrity."
           ],
           "readOnly": true,
           "type": "string"
@@ -32318,14 +32361,16 @@
             "HARM_CATEGORY_HATE_SPEECH",
             "HARM_CATEGORY_DANGEROUS_CONTENT",
             "HARM_CATEGORY_HARASSMENT",
-            "HARM_CATEGORY_SEXUALLY_EXPLICIT"
+            "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "HARM_CATEGORY_CIVIC_INTEGRITY"
           ],
           "enumDescriptions": [
             "The harm category is unspecified.",
             "The harm category is hate speech.",
             "The harm category is dangerous content.",
             "The harm category is harassment.",
-            "The harm category is sexually explicit content."
+            "The harm category is sexually explicit content.",
+            "The harm category is civic integrity."
           ],
           "type": "string"
         },
@@ -32350,14 +32395,16 @@
             "BLOCK_LOW_AND_ABOVE",
             "BLOCK_MEDIUM_AND_ABOVE",
             "BLOCK_ONLY_HIGH",
-            "BLOCK_NONE"
+            "BLOCK_NONE",
+            "OFF"
           ],
           "enumDescriptions": [
             "Unspecified harm block threshold.",
             "Block low threshold and above (i.e. block more).",
             "Block medium threshold and above.",
             "Block only high threshold (i.e. block less).",
-            "Block none."
+            "Block none.",
+            "Turn off the safety filter."
           ],
           "type": "string"
         }
@@ -32776,6 +32823,13 @@
           },
           "description": "Optional. SCHEMA FIELDS FOR TYPE OBJECT Properties of Type.OBJECT.",
           "type": "object"
+        },
+        "propertyOrdering": {
+          "description": "Optional. The order of the properties. Not a standard field in open api spec. Only used to support the order of the properties.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "required": {
           "description": "Optional. Required properties of Type.OBJECT.",
@@ -38070,7 +38124,7 @@
       "type": "object"
     },
     "GoogleCloudAiplatformV1SupervisedTuningSpec": {
-      "description": "Tuning Spec for Supervised Tuning.",
+      "description": "Tuning Spec for Supervised Tuning for first party models.",
       "id": "GoogleCloudAiplatformV1SupervisedTuningSpec",
       "properties": {
         "hyperParameters": {

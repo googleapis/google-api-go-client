@@ -1777,6 +1777,40 @@ func (s GoogleMapsPlacesV1PlaceSubDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleMapsPlacesV1Polyline: A route polyline. Only supports an encoded
+// polyline
+// (https://developers.google.com/maps/documentation/utilities/polylinealgorithm),
+// which can be passed as a string and includes compression with minimal
+// lossiness. This is the Routes API default output.
+type GoogleMapsPlacesV1Polyline struct {
+	// EncodedPolyline: An encoded polyline
+	// (https://developers.google.com/maps/documentation/utilities/polylinealgorithm),
+	// as returned by the Routes API by default
+	// (https://developers.google.com/maps/documentation/routes/reference/rest/v2/TopLevel/computeRoutes#polylineencoding).
+	// See the encoder
+	// (https://developers.google.com/maps/documentation/utilities/polylineutility)
+	// and decoder
+	// (https://developers.google.com/maps/documentation/routes/polylinedecoder)
+	// tools.
+	EncodedPolyline string `json:"encodedPolyline,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncodedPolyline") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncodedPolyline") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1Polyline) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1Polyline
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleMapsPlacesV1References: Experimental: See
 // https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
 // for more details. Reference that the generative content is related to.
@@ -1854,6 +1888,168 @@ func (s *GoogleMapsPlacesV1Review) UnmarshalJSON(data []byte) error {
 	}
 	s.Rating = float64(s1.Rating)
 	return nil
+}
+
+// GoogleMapsPlacesV1RouteModifiers: Encapsulates a set of optional conditions
+// to satisfy when calculating the routes.
+type GoogleMapsPlacesV1RouteModifiers struct {
+	// AvoidFerries: Optional. When set to true, avoids ferries where reasonable,
+	// giving preference to routes not containing ferries. Applies only to the
+	// `DRIVE` and `TWO_WHEELER` `TravelMode`.
+	AvoidFerries bool `json:"avoidFerries,omitempty"`
+	// AvoidHighways: Optional. When set to true, avoids highways where reasonable,
+	// giving preference to routes not containing highways. Applies only to the
+	// `DRIVE` and `TWO_WHEELER` `TravelMode`.
+	AvoidHighways bool `json:"avoidHighways,omitempty"`
+	// AvoidIndoor: Optional. When set to true, avoids navigating indoors where
+	// reasonable, giving preference to routes not containing indoor navigation.
+	// Applies only to the `WALK` `TravelMode`.
+	AvoidIndoor bool `json:"avoidIndoor,omitempty"`
+	// AvoidTolls: Optional. When set to true, avoids toll roads where reasonable,
+	// giving preference to routes not containing toll roads. Applies only to the
+	// `DRIVE` and `TWO_WHEELER` `TravelMode`.
+	AvoidTolls bool `json:"avoidTolls,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AvoidFerries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AvoidFerries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1RouteModifiers) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1RouteModifiers
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1RoutingParameters: Parameters to configure the routing
+// calculations to the places in the response, both along a route (where result
+// ranking will be influenced) and for calculating travel times on results.
+type GoogleMapsPlacesV1RoutingParameters struct {
+	// Origin: Optional. An explicit routing origin that overrides the origin
+	// defined in the polyline. By default, the polyline origin is used.
+	Origin *GoogleTypeLatLng `json:"origin,omitempty"`
+	// RouteModifiers: Optional. The route modifiers.
+	RouteModifiers *GoogleMapsPlacesV1RouteModifiers `json:"routeModifiers,omitempty"`
+	// RoutingPreference: Optional. Specifies how to compute the routing summaries.
+	// The server attempts to use the selected routing preference to compute the
+	// route. The traffic aware routing preference is only available for the
+	// `DRIVE` or `TWO_WHEELER` `travelMode`.
+	//
+	// Possible values:
+	//   "ROUTING_PREFERENCE_UNSPECIFIED" - No routing preference specified.
+	// Default to `TRAFFIC_UNAWARE`.
+	//   "TRAFFIC_UNAWARE" - Computes routes without taking live traffic conditions
+	// into consideration. Suitable when traffic conditions don't matter or are not
+	// applicable. Using this value produces the lowest latency. Note: For
+	// `TravelMode` `DRIVE` and `TWO_WHEELER`, the route and duration chosen are
+	// based on road network and average time-independent traffic conditions, not
+	// current road conditions. Consequently, routes may include roads that are
+	// temporarily closed. Results for a given request may vary over time due to
+	// changes in the road network, updated average traffic conditions, and the
+	// distributed nature of the service. Results may also vary between
+	// nearly-equivalent routes at any time or frequency.
+	//   "TRAFFIC_AWARE" - Calculates routes taking live traffic conditions into
+	// consideration. In contrast to `TRAFFIC_AWARE_OPTIMAL`, some optimizations
+	// are applied to significantly reduce latency.
+	//   "TRAFFIC_AWARE_OPTIMAL" - Calculates the routes taking live traffic
+	// conditions into consideration, without applying most performance
+	// optimizations. Using this value produces the highest latency.
+	RoutingPreference string `json:"routingPreference,omitempty"`
+	// TravelMode: Optional. The travel mode.
+	//
+	// Possible values:
+	//   "TRAVEL_MODE_UNSPECIFIED" - No travel mode specified. Defaults to `DRIVE`.
+	//   "DRIVE" - Travel by passenger car.
+	//   "BICYCLE" - Travel by bicycle. Not supported with
+	// `search_along_route_parameters`.
+	//   "WALK" - Travel by walking. Not supported with
+	// `search_along_route_parameters`.
+	//   "TWO_WHEELER" - Motorized two wheeled vehicles of all kinds such as
+	// scooters and motorcycles. Note that this is distinct from the `BICYCLE`
+	// travel mode which covers human-powered transport. Not supported with
+	// `search_along_route_parameters`. Only supported in those countries listed at
+	// [Countries and regions supported for two-wheeled
+	// vehicles](https://developers.google.com/maps/documentation/routes/coverage-tw
+	// o-wheeled).
+	TravelMode string `json:"travelMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Origin") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Origin") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1RoutingParameters) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1RoutingParameters
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1RoutingSummary: The duration and distance from the routing
+// origin to a place in the response, and a second leg from that place to the
+// destination, if requested. **Note:** Adding `routingSummaries` in the field
+// mask without also including either the `routingParameters.origin` parameter
+// or the `searchAlongRouteParameters.polyline.encodedPolyline` parameter in
+// the request causes an error.
+type GoogleMapsPlacesV1RoutingSummary struct {
+	// Legs: The legs of the trip. When you calculate travel duration and distance
+	// from a set origin, `legs` contains a single leg containing the duration and
+	// distance from the origin to the destination. When you do a search along
+	// route, `legs` contains two legs: one from the origin to place, and one from
+	// the place to the destination.
+	Legs []*GoogleMapsPlacesV1RoutingSummaryLeg `json:"legs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Legs") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Legs") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1RoutingSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1RoutingSummary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1RoutingSummaryLeg: A leg is a single portion of a journey
+// from one location to another.
+type GoogleMapsPlacesV1RoutingSummaryLeg struct {
+	// DistanceMeters: The distance of this leg of the trip.
+	DistanceMeters int64 `json:"distanceMeters,omitempty"`
+	// Duration: The time it takes to complete this leg of the trip.
+	Duration string `json:"duration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DistanceMeters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DistanceMeters") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1RoutingSummaryLeg) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1RoutingSummaryLeg
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlacesV1SearchNearbyRequest: Request proto for Search Nearby.
@@ -1941,6 +2137,9 @@ type GoogleMapsPlacesV1SearchNearbyRequest struct {
 	// https://www.unicode.org/cldr/charts/latest/supplemental/territory_language_information.html.
 	// Note that 3-digit region codes are not currently supported.
 	RegionCode string `json:"regionCode,omitempty"`
+	// RoutingParameters: Optional. Parameters that affect the routing to the
+	// search results.
+	RoutingParameters *GoogleMapsPlacesV1RoutingParameters `json:"routingParameters,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludedPrimaryTypes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1987,6 +2186,12 @@ type GoogleMapsPlacesV1SearchNearbyResponse struct {
 	// Places: A list of places that meets user's requirements like places types,
 	// number of places and specific location restriction.
 	Places []*GoogleMapsPlacesV1Place `json:"places,omitempty"`
+	// RoutingSummaries: A list of routing summaries where each entry associates to
+	// the corresponding place in the same index in the `places` field. If the
+	// routing summary is not available for one of the places, it will contain an
+	// empty entry. This list should have as many entries as the list of places if
+	// requested.
+	RoutingSummaries []*GoogleMapsPlacesV1RoutingSummary `json:"routingSummaries,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2094,6 +2299,11 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	// https://www.unicode.org/cldr/charts/latest/supplemental/territory_language_information.html.
 	// Note that 3-digit region codes are not currently supported.
 	RegionCode string `json:"regionCode,omitempty"`
+	// RoutingParameters: Optional. Additional parameters for routing to results.
+	RoutingParameters *GoogleMapsPlacesV1RoutingParameters `json:"routingParameters,omitempty"`
+	// SearchAlongRouteParameters: Optional. Additional parameters proto for
+	// searching along a route.
+	SearchAlongRouteParameters *GoogleMapsPlacesV1SearchTextRequestSearchAlongRouteParameters `json:"searchAlongRouteParameters,omitempty"`
 	// StrictTypeFiltering: Used to set strict type filtering for included_type. If
 	// set to true, only results of the same type will be returned. Default to
 	// false.
@@ -2254,6 +2464,40 @@ func (s GoogleMapsPlacesV1SearchTextRequestLocationRestriction) MarshalJSON() ([
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleMapsPlacesV1SearchTextRequestSearchAlongRouteParameters: Specifies a
+// precalculated polyline from the Routes API
+// (https://developers.google.com/maps/documentation/routes) defining the route
+// to search. Searching along a route is similar to using the `locationBias` or
+// `locationRestriction` request option to bias the search results. However,
+// while the `locationBias` and `locationRestriction` options let you specify a
+// region to bias the search results, this option lets you bias the results
+// along a trip route. Results are not guaranteed to be along the route
+// provided, but rather are ranked within the search area defined by the
+// polyline and, optionally, by the `locationBias` or `locationRestriction`
+// based on minimal detour times from origin to destination. The results might
+// be along an alternate route, especially if the provided polyline does not
+// define an optimal route from origin to destination.
+type GoogleMapsPlacesV1SearchTextRequestSearchAlongRouteParameters struct {
+	// Polyline: Required. The route polyline.
+	Polyline *GoogleMapsPlacesV1Polyline `json:"polyline,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Polyline") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Polyline") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1SearchTextRequestSearchAlongRouteParameters) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1SearchTextRequestSearchAlongRouteParameters
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleMapsPlacesV1SearchTextResponse: Response proto for SearchText.
 type GoogleMapsPlacesV1SearchTextResponse struct {
 	// ContextualContents: Experimental: See
@@ -2271,6 +2515,12 @@ type GoogleMapsPlacesV1SearchTextResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Places: A list of places that meet the user's text search criteria.
 	Places []*GoogleMapsPlacesV1Place `json:"places,omitempty"`
+	// RoutingSummaries: A list of routing summaries where each entry associates to
+	// the corresponding place in the same index in the `places` field. If the
+	// routing summary is not available for one of the places, it will contain an
+	// empty entry. This list will have as many entries as the list of places if
+	// requested.
+	RoutingSummaries []*GoogleMapsPlacesV1RoutingSummary `json:"routingSummaries,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

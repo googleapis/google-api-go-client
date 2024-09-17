@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package servicebroker provides access to the Service Broker API.
 //
 // For product documentation, see: https://cloud.google.com/kubernetes-engine/docs/concepts/add-on/service-broker
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	servicebrokerService, err := servicebroker.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	servicebrokerService, err := servicebroker.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	servicebrokerService, err := servicebroker.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package servicebroker // import "google.golang.org/api/servicebroker/v1alpha1"
 
 import (
@@ -50,8 +63,10 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
+	internaloption "google.golang.org/api/option/internaloption"
 	htransport "google.golang.org/api/transport/http"
 )
 
@@ -68,11 +83,14 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
+var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "servicebroker:v1alpha1"
 const apiName = "servicebroker"
 const apiVersion = "v1alpha1"
 const basePath = "https://servicebroker.googleapis.com/"
+const basePathTemplate = "https://servicebroker.UNIVERSE_DOMAIN/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -82,11 +100,14 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
+	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -253,156 +274,121 @@ type GoogleCloudServicebrokerV1alpha1__Binding struct {
 	// associated with
 	// the binding to be created.
 	BindResource googleapi.RawMessage `json:"bind_resource,omitempty"`
-
-	// BindingId: The id of the binding. Must be unique within GCP
-	// project.
+	// BindingId: The id of the binding. Must be unique within GCP project.
 	// Maximum length is 64, GUID recommended.
 	// Required.
 	BindingId string `json:"binding_id,omitempty"`
-
 	// CreateTime: Output only. Timestamp for when the binding was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Parameters: Configuration options for the service binding.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
-
 	// PlanId: The ID of the plan. See `Service` and `Plan` resources for
 	// details.
 	// Maximum length is 64, GUID recommended.
 	// Required.
 	PlanId string `json:"plan_id,omitempty"`
-
 	// ServiceId: The id of the service. Must be a valid identifier of a
 	// service
 	// contained in the list from a `ListServices()` call.
 	// Maximum length is 64, GUID recommended.
 	// Required.
 	ServiceId string `json:"service_id,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BindResource") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BindResource") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BindResource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudServicebrokerV1alpha1__Binding) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudServicebrokerV1alpha1__Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudServicebrokerV1alpha1__Binding
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudServicebrokerV1alpha1__CreateBindingResponse: Response for
-// the `CreateBinding()` method.
+// GoogleCloudServicebrokerV1alpha1__CreateBindingResponse: Response for the
+// `CreateBinding()` method.
 type GoogleCloudServicebrokerV1alpha1__CreateBindingResponse struct {
 	// Credentials: Credentials to use the binding.
 	Credentials googleapi.RawMessage `json:"credentials,omitempty"`
-
-	// Description: Used to communicate description of the response. Usually
-	// for non-standard
+	// Description: Used to communicate description of the response. Usually for
+	// non-standard
 	// error
 	// codes.
-	// https://github.com/openservicebrokerapi/servicebroker/blob/mast
-	// er/spec.md#service-broker-errors
+	// https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md#service-broker-errors
 	Description string `json:"description,omitempty"`
-
 	// Operation: If broker executes operation asynchronously, this is the
 	// operation ID that
 	// can be polled to check the completion status of said operation.
-	// This broker always executes all create/delete operations
-	// asynchronously.
+	// This broker always executes all create/delete operations asynchronously.
 	Operation string `json:"operation,omitempty"`
-
-	// RouteServiceUrl: A URL to which the platform may proxy requests for
-	// the address sent with
+	// RouteServiceUrl: A URL to which the platform may proxy requests for the
+	// address sent with
 	// bind_resource.route
 	RouteServiceUrl string `json:"route_service_url,omitempty"`
-
 	// SyslogDrainUrl: From where to read system logs.
 	SyslogDrainUrl string `json:"syslog_drain_url,omitempty"`
-
 	// VolumeMounts: An array of configuration for mounting volumes.
 	VolumeMounts []googleapi.RawMessage `json:"volume_mounts,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Credentials") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Credentials") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Credentials") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudServicebrokerV1alpha1__CreateBindingResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudServicebrokerV1alpha1__CreateBindingResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudServicebrokerV1alpha1__CreateBindingResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudServicebrokerV1alpha1__CreateServiceInstanceResponse:
-// Response for the `CreateServiceInstance()` method.
+// GoogleCloudServicebrokerV1alpha1__CreateServiceInstanceResponse: Response
+// for the `CreateServiceInstance()` method.
 type GoogleCloudServicebrokerV1alpha1__CreateServiceInstanceResponse struct {
-	// Description: Used to communicate description of the response. Usually
-	// for non-standard
+	// Description: Used to communicate description of the response. Usually for
+	// non-standard
 	// error
 	// codes.
-	// https://github.com/openservicebrokerapi/servicebroker/blob/mast
-	// er/spec.md#service-broker-errors
+	// https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md#service-broker-errors
 	Description string `json:"description,omitempty"`
-
 	// Operation: If broker executes operation asynchronously, this is the
 	// operation ID that
 	// can be polled to check the completion status of said operation.
 	// This broker always will return a non-empty operation on success.
 	Operation string `json:"operation,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudServicebrokerV1alpha1__CreateServiceInstanceResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudServicebrokerV1alpha1__CreateServiceInstanceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudServicebrokerV1alpha1__CreateServiceInstanceResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudServicebrokerV1alpha1__DashboardClient: Message containing
@@ -410,192 +396,150 @@ func (s *GoogleCloudServicebrokerV1alpha1__CreateServiceInstanceResponse) Marsha
 type GoogleCloudServicebrokerV1alpha1__DashboardClient struct {
 	// Id: The id of the Oauth client that the dashboard will use.
 	Id string `json:"id,omitempty"`
-
 	// RedirectUri: A URI for the service dashboard.
-	// Validated by the OAuth token server when the dashboard requests a
-	// token.
+	// Validated by the OAuth token server when the dashboard requests a token.
 	RedirectUri string `json:"redirect_uri,omitempty"`
-
 	// Secret: A secret for the dashboard client.
 	Secret string `json:"secret,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudServicebrokerV1alpha1__DashboardClient) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudServicebrokerV1alpha1__DashboardClient) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudServicebrokerV1alpha1__DashboardClient
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudServicebrokerV1alpha1__DeleteBindingResponse: Response for
-// the `DeleteBinding()` method.
+// GoogleCloudServicebrokerV1alpha1__DeleteBindingResponse: Response for the
+// `DeleteBinding()` method.
 type GoogleCloudServicebrokerV1alpha1__DeleteBindingResponse struct {
-	// Description: Used to communicate description of the response. Usually
-	// for non-standard
+	// Description: Used to communicate description of the response. Usually for
+	// non-standard
 	// error
 	// codes.
-	// https://github.com/openservicebrokerapi/servicebroker/blob/mast
-	// er/spec.md#service-broker-errors
+	// https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md#service-broker-errors
 	Description string `json:"description,omitempty"`
-
 	// Operation: If broker executes operation asynchronously, this is the
 	// operation ID that
 	// can be polled to check the completion status of said operation.
 	Operation string `json:"operation,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudServicebrokerV1alpha1__DeleteBindingResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudServicebrokerV1alpha1__DeleteBindingResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudServicebrokerV1alpha1__DeleteBindingResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudServicebrokerV1alpha1__DeleteServiceInstanceResponse:
-// Response for the `DeleteServiceInstance()` method.
+// GoogleCloudServicebrokerV1alpha1__DeleteServiceInstanceResponse: Response
+// for the `DeleteServiceInstance()` method.
 type GoogleCloudServicebrokerV1alpha1__DeleteServiceInstanceResponse struct {
-	// Description: Used to communicate description of the response. Usually
-	// for non-standard
+	// Description: Used to communicate description of the response. Usually for
+	// non-standard
 	// error
 	// codes.
-	// https://github.com/openservicebrokerapi/servicebroker/blob/mast
-	// er/spec.md#service-broker-errors
+	// https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md#service-broker-errors
 	Description string `json:"description,omitempty"`
-
 	// Operation: If broker executes operation asynchronously, this is the
 	// operation ID that
 	// can be polled to check the completion status of said operation.
 	Operation string `json:"operation,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudServicebrokerV1alpha1__DeleteServiceInstanceResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudServicebrokerV1alpha1__DeleteServiceInstanceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudServicebrokerV1alpha1__DeleteServiceInstanceResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudServicebrokerV1alpha1__GetBindingResponse: Response for
-// the `GetBinding()` method.
+// GoogleCloudServicebrokerV1alpha1__GetBindingResponse: Response for the
+// `GetBinding()` method.
 type GoogleCloudServicebrokerV1alpha1__GetBindingResponse struct {
 	// Credentials: Credentials to use the binding.
 	Credentials googleapi.RawMessage `json:"credentials,omitempty"`
-
-	// Description: Used to communicate description of the response. Usually
-	// for non-standard
+	// Description: Used to communicate description of the response. Usually for
+	// non-standard
 	// error
 	// codes.
-	// https://github.com/openservicebrokerapi/servicebroker/blob/mast
-	// er/spec.md#service-broker-errors
+	// https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md#service-broker-errors
 	Description string `json:"description,omitempty"`
-
-	// RouteServiceUrl: A URL to which the platform may proxy requests for
-	// the address sent with
+	// RouteServiceUrl: A URL to which the platform may proxy requests for the
+	// address sent with
 	// bind_resource.route
 	RouteServiceUrl string `json:"route_service_url,omitempty"`
-
 	// SyslogDrainUrl: From where to read system logs.
 	SyslogDrainUrl string `json:"syslog_drain_url,omitempty"`
-
 	// VolumeMounts: An array of configuration for mounting volumes.
 	VolumeMounts []googleapi.RawMessage `json:"volume_mounts,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Credentials") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Credentials") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Credentials") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudServicebrokerV1alpha1__GetBindingResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudServicebrokerV1alpha1__GetBindingResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudServicebrokerV1alpha1__GetBindingResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudServicebrokerV1alpha1__ListBindingsResponse: The response
-// for the `ListBindings()` method.
+// GoogleCloudServicebrokerV1alpha1__ListBindingsResponse: The response for the
+// `ListBindings()` method.
 type GoogleCloudServicebrokerV1alpha1__ListBindingsResponse struct {
 	// Bindings: The list of the bindings in the instance.
 	Bindings []*GoogleCloudServicebrokerV1alpha1__Binding `json:"bindings,omitempty"`
-
-	// Description: Used to communicate description of the response. Usually
-	// for non-standard
+	// Description: Used to communicate description of the response. Usually for
+	// non-standard
 	// error
 	// codes.
-	// https://github.com/openservicebrokerapi/servicebroker/blob/mast
-	// er/spec.md#service-broker-errors
+	// https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md#service-broker-errors
 	Description string `json:"description,omitempty"`
-
-	// NextPageToken: This token allows you to get the next page of results
-	// for list requests.
+	// NextPageToken: This token allows you to get the next page of results for
+	// list requests.
 	// If the number of results is larger than `pageSize`, use the
 	// `nextPageToken`
 	// as a value for the query parameter `pageToken` in the next list
@@ -605,46 +549,37 @@ type GoogleCloudServicebrokerV1alpha1__ListBindingsResponse struct {
 	// paging through the results
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Bindings") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Bindings") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Bindings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudServicebrokerV1alpha1__ListBindingsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudServicebrokerV1alpha1__ListBindingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudServicebrokerV1alpha1__ListBindingsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudServicebrokerV1alpha1__ListCatalogResponse: Response
-// message for the `ListCatalog()` method.
+// GoogleCloudServicebrokerV1alpha1__ListCatalogResponse: Response message for
+// the `ListCatalog()` method.
 type GoogleCloudServicebrokerV1alpha1__ListCatalogResponse struct {
-	// Description: Used to communicate description of the response. Usually
-	// for non-standard
+	// Description: Used to communicate description of the response. Usually for
+	// non-standard
 	// error
 	// codes.
-	// https://github.com/openservicebrokerapi/servicebroker/blob/mast
-	// er/spec.md#service-broker-errors
+	// https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md#service-broker-errors
 	Description string `json:"description,omitempty"`
-
-	// NextPageToken: This token allows you to get the next page of results
-	// for list requests.
+	// NextPageToken: This token allows you to get the next page of results for
+	// list requests.
 	// If the number of results is larger than `pageSize`, use the
 	// `nextPageToken`
 	// as a value for the query parameter `pageToken` in the next list
@@ -653,53 +588,42 @@ type GoogleCloudServicebrokerV1alpha1__ListCatalogResponse struct {
 	// continue
 	// paging through the results
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Services: The services available for the requested GCP project.
 	Services []*GoogleCloudServicebrokerV1alpha1__Service `json:"services,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudServicebrokerV1alpha1__ListCatalogResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudServicebrokerV1alpha1__ListCatalogResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudServicebrokerV1alpha1__ListCatalogResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudServicebrokerV1alpha1__ListServiceInstancesResponse: The
-// response for the `ListServiceInstances()` method.
+// GoogleCloudServicebrokerV1alpha1__ListServiceInstancesResponse: The response
+// for the `ListServiceInstances()` method.
 type GoogleCloudServicebrokerV1alpha1__ListServiceInstancesResponse struct {
-	// Description: Used to communicate description of the response. Usually
-	// for non-standard
+	// Description: Used to communicate description of the response. Usually for
+	// non-standard
 	// error
 	// codes.
-	// https://github.com/openservicebrokerapi/servicebroker/blob/mast
-	// er/spec.md#service-broker-errors
+	// https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md#service-broker-errors
 	Description string `json:"description,omitempty"`
-
 	// Instances: The list of the instances in the broker.
 	Instances []*GoogleCloudServicebrokerV1alpha1__ServiceInstance `json:"instances,omitempty"`
-
-	// NextPageToken: This token allows you to get the next page of results
-	// for list requests.
+	// NextPageToken: This token allows you to get the next page of results for
+	// list requests.
 	// If the number of results is larger than `pageSize`, use the
 	// `nextPageToken`
 	// as a value for the query parameter `pageToken` in the next list
@@ -709,31 +633,24 @@ type GoogleCloudServicebrokerV1alpha1__ListServiceInstancesResponse struct {
 	// paging through the results
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudServicebrokerV1alpha1__ListServiceInstancesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudServicebrokerV1alpha1__ListServiceInstancesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudServicebrokerV1alpha1__ListServiceInstancesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudServicebrokerV1alpha1__Operation: Describes a long running
@@ -741,131 +658,102 @@ func (s *GoogleCloudServicebrokerV1alpha1__ListServiceInstancesResponse) Marshal
 type GoogleCloudServicebrokerV1alpha1__Operation struct {
 	// Description: Optional description of the Operation state.
 	Description string `json:"description,omitempty"`
-
 	// State: The state of the operation.
 	// Valid values are: "in progress", "succeeded", and "failed".
 	State string `json:"state,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudServicebrokerV1alpha1__Operation) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudServicebrokerV1alpha1__Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudServicebrokerV1alpha1__Operation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudServicebrokerV1alpha1__Plan: Plan message describes a
-// Service Plan.
+// GoogleCloudServicebrokerV1alpha1__Plan: Plan message describes a Service
+// Plan.
 type GoogleCloudServicebrokerV1alpha1__Plan struct {
 	// Bindable: Specifies whether instances of the service can be bound to
 	// applications.
 	// If not specified, `Service.bindable` will be presumed.
 	Bindable bool `json:"bindable,omitempty"`
-
 	// Description: Textual description of the plan. Optional.
 	Description string `json:"description,omitempty"`
-
 	// Free: Whether the service is free.
 	Free bool `json:"free,omitempty"`
-
 	// Id: ID is a globally unique identifier used to uniquely identify the
 	// plan.
 	// User must make no presumption about the format of this field.
 	Id string `json:"id,omitempty"`
-
 	// Metadata: A list of metadata for a service offering.
 	// Metadata is an arbitrary JSON object.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
 	// Name: User friendly name of the plan.
 	// The name must be globally unique within GCP project.
 	// Note, which is different from ("This must be globally unique within
 	// a
 	// platform marketplace").
 	Name string `json:"name,omitempty"`
-
-	// Schemas: Schema definitions for service instances and bindings for
-	// the plan.
+	// Schemas: Schema definitions for service instances and bindings for the plan.
 	Schemas googleapi.RawMessage `json:"schemas,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Bindable") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Bindable") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Bindable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudServicebrokerV1alpha1__Plan) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudServicebrokerV1alpha1__Plan) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudServicebrokerV1alpha1__Plan
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudServicebrokerV1alpha1__Service: The resource model mostly
-// follows the Open Service Broker API, as
+// GoogleCloudServicebrokerV1alpha1__Service: The resource model mostly follows
+// the Open Service Broker API, as
 // described
 // here:
-// https://github.com/openservicebrokerapi/servicebroker/blob/maste
-// r/_spec.md
+// https://github.com/openservicebrokerapi/servicebroker/blob/master/_spec.md
 // Though due to Google Specifics it has additional optional fields.
 type GoogleCloudServicebrokerV1alpha1__Service struct {
 	// Bindable: Specifies whether instances of the service can be bound to
 	// applications.
 	// Required.
 	Bindable bool `json:"bindable,omitempty"`
-
-	// BindingRetrievable: Whether the service provides an endpoint to get
-	// service bindings.
+	// BindingRetrievable: Whether the service provides an endpoint to get service
+	// bindings.
 	BindingRetrievable bool `json:"binding_retrievable,omitempty"`
-
 	// DashboardClient: Information to activate Dashboard SSO feature.
 	DashboardClient *GoogleCloudServicebrokerV1alpha1__DashboardClient `json:"dashboard_client,omitempty"`
-
 	// Description: Textual description of the service. Required.
 	Description string `json:"description,omitempty"`
-
 	// Id: ID is a globally unique identifier used to uniquely identify the
 	// service.
 	// ID is an opaque string.
 	Id string `json:"id,omitempty"`
-
-	// InstanceRetrievable: Whether the service provides an endpoint to get
-	// service instances.
+	// InstanceRetrievable: Whether the service provides an endpoint to get service
+	// instances.
 	InstanceRetrievable bool `json:"instance_retrievable,omitempty"`
-
 	// Metadata: A list of metadata for a service offering.
 	// Metadata is an arbitrary JSON object.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
 	// Name: User friendly service name.
 	// Name must match [a-z0-9]+ regexp.
 	// The name must be globally unique within GCP project.
@@ -874,176 +762,138 @@ type GoogleCloudServicebrokerV1alpha1__Service struct {
 	// platform marketplace").
 	// Required.
 	Name string `json:"name,omitempty"`
-
-	// PlanUpdateable: Whether the service supports upgrade/downgrade for
-	// some plans.
+	// PlanUpdateable: Whether the service supports upgrade/downgrade for some
+	// plans.
 	PlanUpdateable bool `json:"plan_updateable,omitempty"`
-
 	// Plans: A list of plans for this service.
 	// At least one plan is required.
 	Plans []*GoogleCloudServicebrokerV1alpha1__Plan `json:"plans,omitempty"`
-
 	// Tags: Tags provide a flexible mechanism to expose a classification,
 	// attribute, or
 	// base technology of a service.
 	Tags []string `json:"tags,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Bindable") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Bindable") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Bindable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudServicebrokerV1alpha1__Service) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudServicebrokerV1alpha1__Service) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudServicebrokerV1alpha1__Service
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudServicebrokerV1alpha1__ServiceInstance: Message describing
-// inputs to Provision and Update Service instance requests.
+// GoogleCloudServicebrokerV1alpha1__ServiceInstance: Message describing inputs
+// to Provision and Update Service instance requests.
 type GoogleCloudServicebrokerV1alpha1__ServiceInstance struct {
-	// Context: Platform specific contextual information under which the
-	// service instance
-	// is to be provisioned. This replaces organization_guid and
-	// space_guid.
+	// Context: Platform specific contextual information under which the service
+	// instance
+	// is to be provisioned. This replaces organization_guid and space_guid.
 	// But can also contain anything.
 	// Currently only used for logging context information.
 	Context googleapi.RawMessage `json:"context,omitempty"`
-
 	// CreateTime: Output only. Timestamp for when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// DeploymentName: Output only. Name of the Deployment Manager
-	// deployment used for provisioning of this
+	// DeploymentName: Output only. Name of the Deployment Manager deployment used
+	// for provisioning of this
 	// service instance.
 	DeploymentName string `json:"deploymentName,omitempty"`
-
 	// InstanceId: The id of the service instance. Must be unique within GCP
 	// project.
 	// Maximum length is 64, GUID recommended.
 	// Required.
 	InstanceId string `json:"instance_id,omitempty"`
-
-	// OrganizationGuid: The platform GUID for the organization under which
-	// the service is to be
+	// OrganizationGuid: The platform GUID for the organization under which the
+	// service is to be
 	// provisioned.
 	// Required.
 	OrganizationGuid string `json:"organization_guid,omitempty"`
-
-	// Parameters: Configuration options for the service
-	// instance.
+	// Parameters: Configuration options for the service instance.
 	// Parameters is JSON object serialized to string.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
-
 	// PlanId: The ID of the plan. See `Service` and `Plan` resources for
 	// details.
 	// Maximum length is 64, GUID recommended.
 	// Required.
 	PlanId string `json:"plan_id,omitempty"`
-
-	// PreviousValues: Used only in UpdateServiceInstance request to
-	// optionally specify previous
+	// PreviousValues: Used only in UpdateServiceInstance request to optionally
+	// specify previous
 	// fields.
 	PreviousValues googleapi.RawMessage `json:"previous_values,omitempty"`
-
 	// ResourceName: Output only. The resource name of the instance,
 	// e.g.
-	// projects/project_id/brokers/broker_id/service_instances/instance_
-	// id
+	// projects/project_id/brokers/broker_id/service_instances/instance_id
 	ResourceName string `json:"resourceName,omitempty"`
-
 	// ServiceId: The id of the service. Must be a valid identifier of a
 	// service
 	// contained in the list from a `ListServices()` call.
 	// Maximum length is 64, GUID recommended.
 	// Required.
 	ServiceId string `json:"service_id,omitempty"`
-
 	// SpaceGuid: The identifier for the project space within the platform
 	// organization.
 	// Required.
 	SpaceGuid string `json:"space_guid,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Context") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Context") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Context") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Context") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudServicebrokerV1alpha1__ServiceInstance) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudServicebrokerV1alpha1__ServiceInstance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudServicebrokerV1alpha1__ServiceInstance
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudServicebrokerV1alpha1__UpdateServiceInstanceResponse:
-// Response for the `UpdateServiceInstance()` method.
+// GoogleCloudServicebrokerV1alpha1__UpdateServiceInstanceResponse: Response
+// for the `UpdateServiceInstance()` method.
 type GoogleCloudServicebrokerV1alpha1__UpdateServiceInstanceResponse struct {
-	// Description: Used to communicate description of the response. Usually
-	// for non-standard
+	// Description: Used to communicate description of the response. Usually for
+	// non-standard
 	// error
 	// codes.
-	// https://github.com/openservicebrokerapi/servicebroker/blob/mast
-	// er/spec.md#service-broker-errors
+	// https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md#service-broker-errors
 	Description string `json:"description,omitempty"`
-
 	// Operation: If broker executes operation asynchronously, this is the
 	// operation ID that
 	// can be polled to check the completion status of said operation.
 	Operation string `json:"operation,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudServicebrokerV1alpha1__UpdateServiceInstanceResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudServicebrokerV1alpha1__UpdateServiceInstanceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudServicebrokerV1alpha1__UpdateServiceInstanceResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1__Binding: Associates `members` with a `role`.
@@ -1055,111 +905,83 @@ type GoogleIamV1__Binding struct {
 	// examined
 	// independently.
 	Condition *GoogleType__Expr `json:"condition,omitempty"`
-
-	// Members: Specifies the identities requesting access for a Cloud
-	// Platform resource.
+	// Members: Specifies the identities requesting access for a Cloud Platform
+	// resource.
 	// `members` can have the following values:
 	//
 	// * `allUsers`: A special identifier that represents anyone who is
 	//    on the internet; with or without a Google account.
 	//
-	// * `allAuthenticatedUsers`: A special identifier that represents
-	// anyone
-	//    who is authenticated with a Google account or a service
-	// account.
+	// * `allAuthenticatedUsers`: A special identifier that represents anyone
+	//    who is authenticated with a Google account or a service account.
 	//
-	// * `user:{emailid}`: An email address that represents a specific
-	// Google
+	// * `user:{emailid}`: An email address that represents a specific Google
 	//    account. For example, `alice@example.com` .
 	//
 	//
-	// * `serviceAccount:{emailid}`: An email address that represents a
-	// service
-	//    account. For example,
-	// `my-other-app@appspot.gserviceaccount.com`.
+	// * `serviceAccount:{emailid}`: An email address that represents a service
+	//    account. For example, `my-other-app@appspot.gserviceaccount.com`.
 	//
-	// * `group:{emailid}`: An email address that represents a Google
-	// group.
+	// * `group:{emailid}`: An email address that represents a Google group.
 	//    For example, `admins@example.com`.
 	//
-	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
-	//    identifier) representing a user that has been recently deleted.
-	// For
-	//    example, `alice@example.com?uid=123456789012345678901`. If the
-	// user is
-	//    recovered, this value reverts to `user:{emailid}` and the
-	// recovered user
+	// * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
+	//    identifier) representing a user that has been recently deleted. For
+	//    example, `alice@example.com?uid=123456789012345678901`. If the user is
+	//    recovered, this value reverts to `user:{emailid}` and the recovered user
 	//    retains the role in the binding.
 	//
-	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus
-	//    unique identifier) representing a service account that has been
-	// recently
+	// * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
+	//    unique identifier) representing a service account that has been recently
 	//    deleted. For example,
-	//
-	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	//
+	//    `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
 	//    If the service account is undeleted, this value reverts to
-	//    `serviceAccount:{emailid}` and the undeleted service account
-	// retains the
+	//    `serviceAccount:{emailid}` and the undeleted service account retains the
 	//    role in the binding.
 	//
-	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique
+	// * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
 	//    identifier) representing a Google group that has been recently
-	//    deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If
-	//    the group is recovered, this value reverts to `group:{emailid}`
-	// and the
+	//    deleted. For example, `admins@example.com?uid=123456789012345678901`. If
+	//    the group is recovered, this value reverts to `group:{emailid}` and the
 	//    recovered group retains the role in the binding.
 	//
 	//
-	// * `domain:{domain}`: The G Suite domain (primary) that represents all
-	// the
-	//    users of that domain. For example, `google.com` or
-	// `example.com`.
+	// * `domain:{domain}`: The G Suite domain (primary) that represents all the
+	//    users of that domain. For example, `google.com` or `example.com`.
 	//
 	//
 	Members []string `json:"members,omitempty"`
-
 	// Role: Role that is assigned to `members`.
 	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Condition") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Condition") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Condition") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1__Binding
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleIamV1__Policy: An Identity and Access Management (IAM) policy,
-// which specifies access
+// GoogleIamV1__Policy: An Identity and Access Management (IAM) policy, which
+// specifies access
 // controls for Google Cloud resources.
 //
 // A `Policy` is a collection of `bindings`. A `binding` binds one or
 // more
 // `members` to a single `role`. Members can be user accounts, service
 // accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of
+// Google groups, and domains (such as G Suite). A `role` is a named list
+// of
 // permissions; each `role` can be an IAM predefined role or a
 // user-created
 // custom role.
@@ -1182,18 +1004,16 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 //	        "user:mike@example.com",
 //	        "group:admins@example.com",
 //	        "domain:google.com",
-//
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com"
-//
-//	  ]
-//	},
-//	{
-//	  "role": "roles/resourcemanager.organizationViewer",
-//	  "members": ["user:eve@example.com"],
-//	  "condition": {
-//	    "title": "expirable access",
-//	    "description": "Does not grant access after Sep 2020",
-//	    "expression": "request.time <
+//	        "serviceAccount:my-project-id@appspot.gserviceaccount.com"
+//	      ]
+//	    },
+//	    {
+//	      "role": "roles/resourcemanager.organizationViewer",
+//	      "members": ["user:eve@example.com"],
+//	      "condition": {
+//	        "title": "expirable access",
+//	        "description": "Does not grant access after Sep 2020",
+//	        "expression": "request.time <
 //
 // timestamp('2020-10-01T00:00:00.000Z')",
 //
@@ -1219,34 +1039,29 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 //	  condition:
 //	    title: expirable access
 //	    description: Does not grant access after Sep 2020
-//	    expression: request.time <
-//
-// timestamp('2020-10-01T00:00:00.000Z')
-//   - etag: BwWWja0YfJA=
-//   - version: 3
+//	    expression: request.time < timestamp('2020-10-01T00:00:00.000Z')
+//	- etag: BwWWja0YfJA=
+//	- version: 3
 //
 // For a description of IAM and its features, see the
-// [IAM documentation](https://cloud.google.com/iam/docs/).
+// IAM documentation (https://cloud.google.com/iam/docs/).
 type GoogleIamV1__Policy struct {
 	// Bindings: Associates a list of `members` to a `role`. Optionally, may
 	// specify a
-	// `condition` that determines how and when the `bindings` are applied.
-	// Each
+	// `condition` that determines how and when the `bindings` are applied. Each
 	// of the `bindings` must contain at least one member.
 	Bindings []*GoogleIamV1__Binding `json:"bindings,omitempty"`
-
 	// Etag: `etag` is used for optimistic concurrency control as a way to
 	// help
-	// prevent simultaneous updates of a policy from overwriting each
-	// other.
+	// prevent simultaneous updates of a policy from overwriting each other.
 	// It is strongly suggested that systems make use of the `etag` in
 	// the
 	// read-modify-write cycle to perform policy updates in order to avoid
 	// race
 	// conditions: An `etag` is returned in the response to `getIamPolicy`,
 	// and
-	// systems are expected to put that etag in the request to
-	// `setIamPolicy` to
+	// systems are expected to put that etag in the request to `setIamPolicy`
+	// to
 	// ensure that their change will be applied to the same version of the
 	// policy.
 	//
@@ -1254,11 +1069,10 @@ type GoogleIamV1__Policy struct {
 	// field
 	// whenever you call `setIamPolicy`. If you omit this field, then IAM
 	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// you to overwrite a version `3` policy with a version `1` policy, and all
+	// of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
-
 	// Version: Specifies the format of the policy.
 	//
 	// Valid values are `0`, `1`, and `3`. Requests that specify an invalid
@@ -1272,152 +1086,121 @@ type GoogleIamV1__Policy struct {
 	// * Getting a policy that includes a conditional role binding
 	// * Adding a conditional role binding to a policy
 	// * Changing a conditional role binding in a policy
-	// * Removing any role binding, with or without a condition, from a
-	// policy
+	// * Removing any role binding, with or without a condition, from a policy
 	//   that includes conditions
 	//
 	// **Important:** If you use IAM Conditions, you must include the `etag`
 	// field
 	// whenever you call `setIamPolicy`. If you omit this field, then IAM
 	// allows
-	// you to overwrite a version `3` policy with a version `1` policy, and
-	// all of
+	// you to overwrite a version `3` policy with a version `1` policy, and all
+	// of
 	// the conditions in the version `3` policy are lost.
 	//
-	// If a policy does not include any conditions, operations on that
-	// policy may
+	// If a policy does not include any conditions, operations on that policy
+	// may
 	// specify any valid version or leave the field unset.
 	Version int64 `json:"version,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Bindings") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Bindings") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Bindings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1__Policy) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1__Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1__Policy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleIamV1__SetIamPolicyRequest: Request message for `SetIamPolicy`
-// method.
+// GoogleIamV1__SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type GoogleIamV1__SetIamPolicyRequest struct {
-	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of
+	// Policy: REQUIRED: The complete policy to be applied to the `resource`. The
+	// size of
 	// the policy is limited to a few 10s of KB. An empty policy is a
-	// valid policy but certain Cloud Platform services (such as
-	// Projects)
+	// valid policy but certain Cloud Platform services (such as Projects)
 	// might reject them.
 	Policy *GoogleIamV1__Policy `json:"policy,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Policy") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Policy") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1__SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1__SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1__SetIamPolicyRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1__TestIamPermissionsRequest: Request message for
 // `TestIamPermissions` method.
 type GoogleIamV1__TestIamPermissionsRequest struct {
-	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with
-	// wildcards (such as '*' or 'storage.*') are not allowed. For
-	// more
+	// Permissions: The set of permissions to check for the `resource`. Permissions
+	// with
+	// wildcards (such as '*' or 'storage.*') are not allowed. For more
 	// information see
-	// [IAM
-	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	// IAM Overview (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permissions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permissions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1__TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1__TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1__TestIamPermissionsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleIamV1__TestIamPermissionsResponse: Response message for
 // `TestIamPermissions` method.
 type GoogleIamV1__TestIamPermissionsResponse struct {
-	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is
+	// Permissions: A subset of `TestPermissionsRequest.permissions` that the
+	// caller is
 	// allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permissions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permissions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleIamV1__TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleIamV1__TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleIamV1__TestIamPermissionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleType__Expr: Represents an expression text. Example:
@@ -1426,11 +1209,10 @@ func (s *GoogleIamV1__TestIamPermissionsResponse) MarshalJSON() ([]byte, error) 
 //	description: "Determines whether the request has a user account"
 //	expression: "size(request.user) > 0"
 type GoogleType__Expr struct {
-	// Description: An optional description of the expression. This is a
-	// longer text which
+	// Description: An optional description of the expression. This is a longer
+	// text which
 	// describes the expression, e.g. when hovered over it in a UI.
 	Description string `json:"description,omitempty"`
-
 	// Expression: Textual representation of an expression in
 	// Common Expression Language syntax.
 	//
@@ -1438,43 +1220,33 @@ type GoogleType__Expr struct {
 	// which
 	// well-known feature set of CEL is supported.
 	Expression string `json:"expression,omitempty"`
-
-	// Location: An optional string indicating the location of the
-	// expression for error
+	// Location: An optional string indicating the location of the expression for
+	// error
 	// reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
-
 	// Title: An optional title for the expression, i.e. a short string
 	// describing
 	// its purpose. This can be used e.g. in UIs which allow to enter
 	// the
 	// expression.
 	Title string `json:"title,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleType__Expr) MarshalJSON() ([]byte, error) {
+func (s GoogleType__Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleType__Expr
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "servicebroker.projects.brokers.instances.get":
 
 type ProjectsBrokersInstancesGetCall struct {
 	s            *Service
@@ -1488,6 +1260,8 @@ type ProjectsBrokersInstancesGetCall struct {
 // Get: Gets the given service instance from the system.
 // This API is an extension and not part of the OSB spec.
 // Hence the path is a standard Google API URL.
+//
+// - name: The resource name of the instance to return.
 func (r *ProjectsBrokersInstancesService) Get(name string) *ProjectsBrokersInstancesGetCall {
 	c := &ProjectsBrokersInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1495,33 +1269,29 @@ func (r *ProjectsBrokersInstancesService) Get(name string) *ProjectsBrokersInsta
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsBrokersInstancesGetCall) Fields(s ...googleapi.Field) *ProjectsBrokersInstancesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsBrokersInstancesGetCall) IfNoneMatch(entityTag string) *ProjectsBrokersInstancesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsBrokersInstancesGetCall) Context(ctx context.Context) *ProjectsBrokersInstancesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsBrokersInstancesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1530,12 +1300,7 @@ func (c *ProjectsBrokersInstancesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsBrokersInstancesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1552,18 +1317,15 @@ func (c *ProjectsBrokersInstancesGetCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.projects.brokers.instances.get" call.
-// Exactly one of *GoogleCloudServicebrokerV1alpha1__ServiceInstance or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudServicebrokerV1alpha1__ServiceInstance.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudServicebrokerV1alpha1__ServiceInstance.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsBrokersInstancesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudServicebrokerV1alpha1__ServiceInstance, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1571,17 +1333,17 @@ func (c *ProjectsBrokersInstancesGetCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudServicebrokerV1alpha1__ServiceInstance{
 		ServerResponse: googleapi.ServerResponse{
@@ -1594,35 +1356,7 @@ func (c *ProjectsBrokersInstancesGetCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the given service instance from the system.\nThis API is an extension and not part of the OSB spec.\nHence the path is a standard Google API URL.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/brokers/{brokersId}/instances/{instancesId}",
-	//   "httpMethod": "GET",
-	//   "id": "servicebroker.projects.brokers.instances.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the instance to return.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/brokers/[^/]+/instances/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__ServiceInstance"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "servicebroker.projects.brokers.instances.service_bindings.list":
 
 type ProjectsBrokersInstancesServiceBindingsListCall struct {
 	s            *Service
@@ -1634,14 +1368,19 @@ type ProjectsBrokersInstancesServiceBindingsListCall struct {
 }
 
 // List: Lists all the bindings in the instance
+//
+//   - parent: Parent must
+//     match
+//
+// `projects/[PROJECT_ID]/brokers/[BROKER_ID]/instances/[INSTANCE_ID]`.
 func (r *ProjectsBrokersInstancesServiceBindingsService) List(parent string) *ProjectsBrokersInstancesServiceBindingsListCall {
 	c := &ProjectsBrokersInstancesServiceBindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Specifies the number
-// of results to return per page. If there are fewer
+// PageSize sets the optional parameter "pageSize": Specifies the number of
+// results to return per page. If there are fewer
 // elements than the specified number, returns all elements.
 //
 //	If unset or 0, all the results will be returned.
@@ -1650,8 +1389,8 @@ func (c *ProjectsBrokersInstancesServiceBindingsListCall) PageSize(pageSize int6
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Specifies a page
-// token to use. Set `pageToken` to a `nextPageToken`
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to a `nextPageToken`
 // returned by a previous list request to get the next page of results.
 func (c *ProjectsBrokersInstancesServiceBindingsListCall) PageToken(pageToken string) *ProjectsBrokersInstancesServiceBindingsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -1659,33 +1398,29 @@ func (c *ProjectsBrokersInstancesServiceBindingsListCall) PageToken(pageToken st
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsBrokersInstancesServiceBindingsListCall) Fields(s ...googleapi.Field) *ProjectsBrokersInstancesServiceBindingsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsBrokersInstancesServiceBindingsListCall) IfNoneMatch(entityTag string) *ProjectsBrokersInstancesServiceBindingsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsBrokersInstancesServiceBindingsListCall) Context(ctx context.Context) *ProjectsBrokersInstancesServiceBindingsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsBrokersInstancesServiceBindingsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1694,12 +1429,7 @@ func (c *ProjectsBrokersInstancesServiceBindingsListCall) Header() http.Header {
 }
 
 func (c *ProjectsBrokersInstancesServiceBindingsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1716,19 +1446,17 @@ func (c *ProjectsBrokersInstancesServiceBindingsListCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.projects.brokers.instances.service_bindings.list" call.
-// Exactly one of
-// *GoogleCloudServicebrokerV1alpha1__ListBindingsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudServicebrokerV1alpha1__ListBindingsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudServicebrokerV1alpha1__ListBindingsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsBrokersInstancesServiceBindingsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudServicebrokerV1alpha1__ListBindingsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1736,17 +1464,17 @@ func (c *ProjectsBrokersInstancesServiceBindingsListCall) Do(opts ...googleapi.C
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudServicebrokerV1alpha1__ListBindingsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1759,43 +1487,6 @@ func (c *ProjectsBrokersInstancesServiceBindingsListCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all the bindings in the instance",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/brokers/{brokersId}/instances/{instancesId}/service_bindings",
-	//   "httpMethod": "GET",
-	//   "id": "servicebroker.projects.brokers.instances.service_bindings.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Specifies the number of results to return per page. If there are fewer\nelements than the specified number, returns all elements.\nOptional. If unset or 0, all the results will be returned.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Specifies a page token to use. Set `pageToken` to a `nextPageToken`\nreturned by a previous list request to get the next page of results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Parent must match\n`projects/[PROJECT_ID]/brokers/[BROKER_ID]/instances/[INSTANCE_ID]`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/brokers/[^/]+/instances/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+parent}/service_bindings",
-	//   "response": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__ListBindingsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1803,7 +1494,7 @@ func (c *ProjectsBrokersInstancesServiceBindingsListCall) Do(opts ...googleapi.C
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsBrokersInstancesServiceBindingsListCall) Pages(ctx context.Context, f func(*GoogleCloudServicebrokerV1alpha1__ListBindingsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1819,8 +1510,6 @@ func (c *ProjectsBrokersInstancesServiceBindingsListCall) Pages(ctx context.Cont
 	}
 }
 
-// method id "servicebroker.projects.brokers.service_instances.list":
-
 type ProjectsBrokersServiceInstancesListCall struct {
 	s            *Service
 	parent       string
@@ -1833,14 +1522,16 @@ type ProjectsBrokersServiceInstancesListCall struct {
 // List: Lists all the instances in the brokers
 // This API is an extension and not part of the OSB spec.
 // Hence the path is a standard Google API URL.
+//
+// - parent: Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.
 func (r *ProjectsBrokersServiceInstancesService) List(parent string) *ProjectsBrokersServiceInstancesListCall {
 	c := &ProjectsBrokersServiceInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Specifies the number
-// of results to return per page. If there are fewer
+// PageSize sets the optional parameter "pageSize": Specifies the number of
+// results to return per page. If there are fewer
 // elements than the specified number, returns all elements.
 //
 //	If unset or 0, all the results will be returned.
@@ -1849,8 +1540,8 @@ func (c *ProjectsBrokersServiceInstancesListCall) PageSize(pageSize int64) *Proj
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Specifies a page
-// token to use. Set `pageToken` to a `nextPageToken`
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to a `nextPageToken`
 // returned by a previous list request to get the next page of results.
 func (c *ProjectsBrokersServiceInstancesListCall) PageToken(pageToken string) *ProjectsBrokersServiceInstancesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -1858,33 +1549,29 @@ func (c *ProjectsBrokersServiceInstancesListCall) PageToken(pageToken string) *P
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsBrokersServiceInstancesListCall) Fields(s ...googleapi.Field) *ProjectsBrokersServiceInstancesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsBrokersServiceInstancesListCall) IfNoneMatch(entityTag string) *ProjectsBrokersServiceInstancesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsBrokersServiceInstancesListCall) Context(ctx context.Context) *ProjectsBrokersServiceInstancesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsBrokersServiceInstancesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1893,12 +1580,7 @@ func (c *ProjectsBrokersServiceInstancesListCall) Header() http.Header {
 }
 
 func (c *ProjectsBrokersServiceInstancesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1915,19 +1597,15 @@ func (c *ProjectsBrokersServiceInstancesListCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.projects.brokers.service_instances.list" call.
-// Exactly one of
-// *GoogleCloudServicebrokerV1alpha1__ListServiceInstancesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudServicebrokerV1alpha1__ListServiceInstancesResponse.Server
-// Response.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudServicebrokerV1alpha1__ListServiceInstancesResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsBrokersServiceInstancesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudServicebrokerV1alpha1__ListServiceInstancesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1935,17 +1613,17 @@ func (c *ProjectsBrokersServiceInstancesListCall) Do(opts ...googleapi.CallOptio
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudServicebrokerV1alpha1__ListServiceInstancesResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1958,43 +1636,6 @@ func (c *ProjectsBrokersServiceInstancesListCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all the instances in the brokers\nThis API is an extension and not part of the OSB spec.\nHence the path is a standard Google API URL.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/brokers/{brokersId}/service_instances",
-	//   "httpMethod": "GET",
-	//   "id": "servicebroker.projects.brokers.service_instances.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Specifies the number of results to return per page. If there are fewer\nelements than the specified number, returns all elements.\nOptional. If unset or 0, all the results will be returned.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Specifies a page token to use. Set `pageToken` to a `nextPageToken`\nreturned by a previous list request to get the next page of results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/brokers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+parent}/service_instances",
-	//   "response": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__ListServiceInstancesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2002,7 +1643,7 @@ func (c *ProjectsBrokersServiceInstancesListCall) Do(opts ...googleapi.CallOptio
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsBrokersServiceInstancesListCall) Pages(ctx context.Context, f func(*GoogleCloudServicebrokerV1alpha1__ListServiceInstancesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2018,8 +1659,6 @@ func (c *ProjectsBrokersServiceInstancesListCall) Pages(ctx context.Context, f f
 	}
 }
 
-// method id "servicebroker.projects.brokers.v2.catalog.list":
-
 type ProjectsBrokersV2CatalogListCall struct {
 	s            *Service
 	parent       string
@@ -2029,19 +1668,20 @@ type ProjectsBrokersV2CatalogListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all the Services registered with this broker for
-// consumption for
-// given service registry broker, which contains an set of
-// services.
+// List: Lists all the Services registered with this broker for consumption
+// for
+// given service registry broker, which contains an set of services.
 // Note, that Service producer API is separate from Broker API.
+//
+// - parent: Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.
 func (r *ProjectsBrokersV2CatalogService) List(parent string) *ProjectsBrokersV2CatalogListCall {
 	c := &ProjectsBrokersV2CatalogListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Specifies the number
-// of results to return per page. If there are fewer
+// PageSize sets the optional parameter "pageSize": Specifies the number of
+// results to return per page. If there are fewer
 // elements than the specified number, returns all elements.
 //
 //	If unset or 0, all the results will be returned.
@@ -2050,8 +1690,8 @@ func (c *ProjectsBrokersV2CatalogListCall) PageSize(pageSize int64) *ProjectsBro
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Specifies a page
-// token to use. Set `pageToken` to a `nextPageToken`
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to a `nextPageToken`
 // returned by a previous list request to get the next page of results.
 func (c *ProjectsBrokersV2CatalogListCall) PageToken(pageToken string) *ProjectsBrokersV2CatalogListCall {
 	c.urlParams_.Set("pageToken", pageToken)
@@ -2059,33 +1699,29 @@ func (c *ProjectsBrokersV2CatalogListCall) PageToken(pageToken string) *Projects
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsBrokersV2CatalogListCall) Fields(s ...googleapi.Field) *ProjectsBrokersV2CatalogListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsBrokersV2CatalogListCall) IfNoneMatch(entityTag string) *ProjectsBrokersV2CatalogListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsBrokersV2CatalogListCall) Context(ctx context.Context) *ProjectsBrokersV2CatalogListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsBrokersV2CatalogListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2094,12 +1730,7 @@ func (c *ProjectsBrokersV2CatalogListCall) Header() http.Header {
 }
 
 func (c *ProjectsBrokersV2CatalogListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2116,18 +1747,15 @@ func (c *ProjectsBrokersV2CatalogListCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.projects.brokers.v2.catalog.list" call.
-// Exactly one of *GoogleCloudServicebrokerV1alpha1__ListCatalogResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudServicebrokerV1alpha1__ListCatalogResponse.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudServicebrokerV1alpha1__ListCatalogResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsBrokersV2CatalogListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudServicebrokerV1alpha1__ListCatalogResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2135,17 +1763,17 @@ func (c *ProjectsBrokersV2CatalogListCall) Do(opts ...googleapi.CallOption) (*Go
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudServicebrokerV1alpha1__ListCatalogResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2158,43 +1786,6 @@ func (c *ProjectsBrokersV2CatalogListCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all the Services registered with this broker for consumption for\ngiven service registry broker, which contains an set of services.\nNote, that Service producer API is separate from Broker API.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/brokers/{brokersId}/v2/catalog",
-	//   "httpMethod": "GET",
-	//   "id": "servicebroker.projects.brokers.v2.catalog.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Specifies the number of results to return per page. If there are fewer\nelements than the specified number, returns all elements.\nOptional. If unset or 0, all the results will be returned.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Specifies a page token to use. Set `pageToken` to a `nextPageToken`\nreturned by a previous list request to get the next page of results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/brokers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+parent}/v2/catalog",
-	//   "response": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__ListCatalogResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2202,7 +1793,7 @@ func (c *ProjectsBrokersV2CatalogListCall) Do(opts ...googleapi.CallOption) (*Go
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsBrokersV2CatalogListCall) Pages(ctx context.Context, f func(*GoogleCloudServicebrokerV1alpha1__ListCatalogResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2218,8 +1809,6 @@ func (c *ProjectsBrokersV2CatalogListCall) Pages(ctx context.Context, f func(*Go
 	}
 }
 
-// method id "servicebroker.projects.brokers.v2.service_instances.create":
-
 type ProjectsBrokersV2ServiceInstancesCreateCall struct {
 	s                                                 *Service
 	parent                                            string
@@ -2233,22 +1822,26 @@ type ProjectsBrokersV2ServiceInstancesCreateCall struct {
 // Create: Provisions a service instance.
 // If `request.accepts_incomplete` is false and Broker cannot execute
 // request
-// synchronously HTTP 422 error will be returned along
-// with
+// synchronously HTTP 422 error will be returned along with
 // FAILED_PRECONDITION status.
 // If `request.accepts_incomplete` is true and the Broker decides to
 // execute
-// resource asynchronously then HTTP 202 response code will be returned
-// and a
+// resource asynchronously then HTTP 202 response code will be returned and
+// a
 // valid polling operation in the response will be included.
 // If Broker executes the request synchronously and it succeeds HTTP
 // 201
 // response will be furnished.
-// If identical instance exists, then HTTP 200 response will be
-// returned.
+// If identical instance exists, then HTTP 200 response will be returned.
 // If an instance with identical ID but mismatching parameters exists,
 // then
 // HTTP 409 status code will be returned.
+//
+//   - instanceId: The id of the service instance. Must be unique within GCP
+//     project.
+//
+// Maximum length is 64, GUID recommended.
+// - parent: Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.
 func (r *ProjectsBrokersV2ServiceInstancesService) Create(parent string, instanceId string, googlecloudservicebrokerv1alpha1__serviceinstance *GoogleCloudServicebrokerV1alpha1__ServiceInstance) *ProjectsBrokersV2ServiceInstancesCreateCall {
 	c := &ProjectsBrokersV2ServiceInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2257,14 +1850,12 @@ func (r *ProjectsBrokersV2ServiceInstancesService) Create(parent string, instanc
 	return c
 }
 
-// AcceptsIncomplete sets the optional parameter "acceptsIncomplete":
-// Value indicating that API client supports asynchronous operations.
-// If
+// AcceptsIncomplete sets the optional parameter "acceptsIncomplete": Value
+// indicating that API client supports asynchronous operations. If
 // Broker cannot execute the request synchronously HTTP 422 code will
 // be
 // returned to HTTP clients along with FAILED_PRECONDITION error.
-// If true and broker will execute request asynchronously 202 HTTP code
-// will
+// If true and broker will execute request asynchronously 202 HTTP code will
 // be returned.
 // This broker always requires this to be true as all mutator operations
 // are
@@ -2275,23 +1866,21 @@ func (c *ProjectsBrokersV2ServiceInstancesCreateCall) AcceptsIncomplete(acceptsI
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsBrokersV2ServiceInstancesCreateCall) Fields(s ...googleapi.Field) *ProjectsBrokersV2ServiceInstancesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsBrokersV2ServiceInstancesCreateCall) Context(ctx context.Context) *ProjectsBrokersV2ServiceInstancesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsBrokersV2ServiceInstancesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2300,18 +1889,12 @@ func (c *ProjectsBrokersV2ServiceInstancesCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsBrokersV2ServiceInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudservicebrokerv1alpha1__serviceinstance)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/v2/service_instances/{+instance_id}")
@@ -2325,19 +1908,15 @@ func (c *ProjectsBrokersV2ServiceInstancesCreateCall) doRequest(alt string) (*ht
 		"parent":      c.parent,
 		"instance_id": c.instanceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.projects.brokers.v2.service_instances.create" call.
-// Exactly one of
-// *GoogleCloudServicebrokerV1alpha1__CreateServiceInstanceResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudServicebrokerV1alpha1__CreateServiceInstanceResponse.Serve
-// rResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudServicebrokerV1alpha1__CreateServiceInstanceResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsBrokersV2ServiceInstancesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudServicebrokerV1alpha1__CreateServiceInstanceResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2345,17 +1924,17 @@ func (c *ProjectsBrokersV2ServiceInstancesCreateCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudServicebrokerV1alpha1__CreateServiceInstanceResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2368,51 +1947,7 @@ func (c *ProjectsBrokersV2ServiceInstancesCreateCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Provisions a service instance.\nIf `request.accepts_incomplete` is false and Broker cannot execute request\nsynchronously HTTP 422 error will be returned along with\nFAILED_PRECONDITION status.\nIf `request.accepts_incomplete` is true and the Broker decides to execute\nresource asynchronously then HTTP 202 response code will be returned and a\nvalid polling operation in the response will be included.\nIf Broker executes the request synchronously and it succeeds HTTP 201\nresponse will be furnished.\nIf identical instance exists, then HTTP 200 response will be returned.\nIf an instance with identical ID but mismatching parameters exists, then\nHTTP 409 status code will be returned.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/brokers/{brokersId}/v2/service_instances/{service_instancesId}",
-	//   "httpMethod": "PUT",
-	//   "id": "servicebroker.projects.brokers.v2.service_instances.create",
-	//   "parameterOrder": [
-	//     "parent",
-	//     "instance_id"
-	//   ],
-	//   "parameters": {
-	//     "acceptsIncomplete": {
-	//       "description": "Value indicating that API client supports asynchronous operations. If\nBroker cannot execute the request synchronously HTTP 422 code will be\nreturned to HTTP clients along with FAILED_PRECONDITION error.\nIf true and broker will execute request asynchronously 202 HTTP code will\nbe returned.\nThis broker always requires this to be true as all mutator operations are\nasynchronous.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "instance_id": {
-	//       "description": "The id of the service instance. Must be unique within GCP project.\nMaximum length is 64, GUID recommended.\nRequired.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/brokers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+parent}/v2/service_instances/{+instance_id}",
-	//   "request": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__ServiceInstance"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__CreateServiceInstanceResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "servicebroker.projects.brokers.v2.service_instances.delete":
 
 type ProjectsBrokersV2ServiceInstancesDeleteCall struct {
 	s          *Service
@@ -2428,6 +1963,9 @@ type ProjectsBrokersV2ServiceInstancesDeleteCall struct {
 // CreateServiceInstance
 // method.
 // If service instance does not exist HTTP 410 status will be returned.
+//
+// - instanceId: The instance id to deprovision.
+// - parent: Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.
 func (r *ProjectsBrokersV2ServiceInstancesService) Delete(parent string, instanceId string) *ProjectsBrokersV2ServiceInstancesDeleteCall {
 	c := &ProjectsBrokersV2ServiceInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2435,45 +1973,43 @@ func (r *ProjectsBrokersV2ServiceInstancesService) Delete(parent string, instanc
 	return c
 }
 
-// AcceptsIncomplete sets the optional parameter "acceptsIncomplete":
-// See CreateServiceInstanceRequest for details.
+// AcceptsIncomplete sets the optional parameter "acceptsIncomplete": See
+// CreateServiceInstanceRequest for details.
 func (c *ProjectsBrokersV2ServiceInstancesDeleteCall) AcceptsIncomplete(acceptsIncomplete bool) *ProjectsBrokersV2ServiceInstancesDeleteCall {
 	c.urlParams_.Set("acceptsIncomplete", fmt.Sprint(acceptsIncomplete))
 	return c
 }
 
-// PlanId sets the optional parameter "planId": The plan id of the
-// service instance.
+// PlanId sets the optional parameter "planId": The plan id of the service
+// instance.
 func (c *ProjectsBrokersV2ServiceInstancesDeleteCall) PlanId(planId string) *ProjectsBrokersV2ServiceInstancesDeleteCall {
 	c.urlParams_.Set("planId", planId)
 	return c
 }
 
-// ServiceId sets the optional parameter "serviceId": The service id of
-// the service instance.
+// ServiceId sets the optional parameter "serviceId": The service id of the
+// service instance.
 func (c *ProjectsBrokersV2ServiceInstancesDeleteCall) ServiceId(serviceId string) *ProjectsBrokersV2ServiceInstancesDeleteCall {
 	c.urlParams_.Set("serviceId", serviceId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsBrokersV2ServiceInstancesDeleteCall) Fields(s ...googleapi.Field) *ProjectsBrokersV2ServiceInstancesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsBrokersV2ServiceInstancesDeleteCall) Context(ctx context.Context) *ProjectsBrokersV2ServiceInstancesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsBrokersV2ServiceInstancesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2482,12 +2018,7 @@ func (c *ProjectsBrokersV2ServiceInstancesDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsBrokersV2ServiceInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2502,19 +2033,15 @@ func (c *ProjectsBrokersV2ServiceInstancesDeleteCall) doRequest(alt string) (*ht
 		"parent":     c.parent,
 		"instanceId": c.instanceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.projects.brokers.v2.service_instances.delete" call.
-// Exactly one of
-// *GoogleCloudServicebrokerV1alpha1__DeleteServiceInstanceResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudServicebrokerV1alpha1__DeleteServiceInstanceResponse.Serve
-// rResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudServicebrokerV1alpha1__DeleteServiceInstanceResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsBrokersV2ServiceInstancesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudServicebrokerV1alpha1__DeleteServiceInstanceResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2522,17 +2049,17 @@ func (c *ProjectsBrokersV2ServiceInstancesDeleteCall) Do(opts ...googleapi.CallO
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudServicebrokerV1alpha1__DeleteServiceInstanceResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2545,58 +2072,7 @@ func (c *ProjectsBrokersV2ServiceInstancesDeleteCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deprovisions a service instance.\nFor synchronous/asynchronous request details see CreateServiceInstance\nmethod.\nIf service instance does not exist HTTP 410 status will be returned.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/brokers/{brokersId}/v2/service_instances/{service_instancesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "servicebroker.projects.brokers.v2.service_instances.delete",
-	//   "parameterOrder": [
-	//     "parent",
-	//     "instanceId"
-	//   ],
-	//   "parameters": {
-	//     "acceptsIncomplete": {
-	//       "description": "See CreateServiceInstanceRequest for details.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "instanceId": {
-	//       "description": "The instance id to deprovision.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/brokers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "planId": {
-	//       "description": "The plan id of the service instance.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "serviceId": {
-	//       "description": "The service id of the service instance.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+parent}/v2/service_instances/{+instanceId}",
-	//   "response": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__DeleteServiceInstanceResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "servicebroker.projects.brokers.v2.service_instances.get":
 
 type ProjectsBrokersV2ServiceInstancesGetCall struct {
 	s            *Service
@@ -2610,6 +2086,8 @@ type ProjectsBrokersV2ServiceInstancesGetCall struct {
 // Get: Gets the given service instance from the system.
 // This API is an extension and not part of the OSB spec.
 // Hence the path is a standard Google API URL.
+//
+// - name: The resource name of the instance to return.
 func (r *ProjectsBrokersV2ServiceInstancesService) Get(name string) *ProjectsBrokersV2ServiceInstancesGetCall {
 	c := &ProjectsBrokersV2ServiceInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2617,33 +2095,29 @@ func (r *ProjectsBrokersV2ServiceInstancesService) Get(name string) *ProjectsBro
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsBrokersV2ServiceInstancesGetCall) Fields(s ...googleapi.Field) *ProjectsBrokersV2ServiceInstancesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsBrokersV2ServiceInstancesGetCall) IfNoneMatch(entityTag string) *ProjectsBrokersV2ServiceInstancesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsBrokersV2ServiceInstancesGetCall) Context(ctx context.Context) *ProjectsBrokersV2ServiceInstancesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsBrokersV2ServiceInstancesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2652,12 +2126,7 @@ func (c *ProjectsBrokersV2ServiceInstancesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsBrokersV2ServiceInstancesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2674,18 +2143,15 @@ func (c *ProjectsBrokersV2ServiceInstancesGetCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.projects.brokers.v2.service_instances.get" call.
-// Exactly one of *GoogleCloudServicebrokerV1alpha1__ServiceInstance or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudServicebrokerV1alpha1__ServiceInstance.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudServicebrokerV1alpha1__ServiceInstance.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsBrokersV2ServiceInstancesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudServicebrokerV1alpha1__ServiceInstance, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2693,17 +2159,17 @@ func (c *ProjectsBrokersV2ServiceInstancesGetCall) Do(opts ...googleapi.CallOpti
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudServicebrokerV1alpha1__ServiceInstance{
 		ServerResponse: googleapi.ServerResponse{
@@ -2716,35 +2182,7 @@ func (c *ProjectsBrokersV2ServiceInstancesGetCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the given service instance from the system.\nThis API is an extension and not part of the OSB spec.\nHence the path is a standard Google API URL.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/brokers/{brokersId}/v2/service_instances/{service_instancesId}",
-	//   "httpMethod": "GET",
-	//   "id": "servicebroker.projects.brokers.v2.service_instances.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the instance to return.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/brokers/[^/]+/v2/service_instances/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__ServiceInstance"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "servicebroker.projects.brokers.v2.service_instances.getLast_operation":
 
 type ProjectsBrokersV2ServiceInstancesGetLastOperationCall struct {
 	s            *Service
@@ -2756,9 +2194,12 @@ type ProjectsBrokersV2ServiceInstancesGetLastOperationCall struct {
 	header_      http.Header
 }
 
-// GetLastOperation: Returns the state of the last operation for the
-// service instance.
+// GetLastOperation: Returns the state of the last operation for the service
+// instance.
 // Only last (or current) operation can be polled.
+//
+// - instanceId: The instance id for which to return the last operation status.
+// - parent: Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.
 func (r *ProjectsBrokersV2ServiceInstancesService) GetLastOperation(parent string, instanceId string) *ProjectsBrokersV2ServiceInstancesGetLastOperationCall {
 	c := &ProjectsBrokersV2ServiceInstancesGetLastOperationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2787,33 +2228,29 @@ func (c *ProjectsBrokersV2ServiceInstancesGetLastOperationCall) ServiceId(servic
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsBrokersV2ServiceInstancesGetLastOperationCall) Fields(s ...googleapi.Field) *ProjectsBrokersV2ServiceInstancesGetLastOperationCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsBrokersV2ServiceInstancesGetLastOperationCall) IfNoneMatch(entityTag string) *ProjectsBrokersV2ServiceInstancesGetLastOperationCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsBrokersV2ServiceInstancesGetLastOperationCall) Context(ctx context.Context) *ProjectsBrokersV2ServiceInstancesGetLastOperationCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsBrokersV2ServiceInstancesGetLastOperationCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2822,12 +2259,7 @@ func (c *ProjectsBrokersV2ServiceInstancesGetLastOperationCall) Header() http.He
 }
 
 func (c *ProjectsBrokersV2ServiceInstancesGetLastOperationCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2845,18 +2277,15 @@ func (c *ProjectsBrokersV2ServiceInstancesGetLastOperationCall) doRequest(alt st
 		"parent":     c.parent,
 		"instanceId": c.instanceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.projects.brokers.v2.service_instances.getLast_operation" call.
-// Exactly one of *GoogleCloudServicebrokerV1alpha1__Operation or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudServicebrokerV1alpha1__Operation.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudServicebrokerV1alpha1__Operation.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsBrokersV2ServiceInstancesGetLastOperationCall) Do(opts ...googleapi.CallOption) (*GoogleCloudServicebrokerV1alpha1__Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2864,17 +2293,17 @@ func (c *ProjectsBrokersV2ServiceInstancesGetLastOperationCall) Do(opts ...googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudServicebrokerV1alpha1__Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -2887,58 +2316,7 @@ func (c *ProjectsBrokersV2ServiceInstancesGetLastOperationCall) Do(opts ...googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the state of the last operation for the service instance.\nOnly last (or current) operation can be polled.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/brokers/{brokersId}/v2/service_instances/{service_instancesId}/last_operation",
-	//   "httpMethod": "GET",
-	//   "id": "servicebroker.projects.brokers.v2.service_instances.getLast_operation",
-	//   "parameterOrder": [
-	//     "parent",
-	//     "instanceId"
-	//   ],
-	//   "parameters": {
-	//     "instanceId": {
-	//       "description": "The instance id for which to return the last operation status.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "operation": {
-	//       "description": "If `operation` was returned during mutation operation, this field must be\npopulated with the provided value.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/brokers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "planId": {
-	//       "description": "Plan id.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "serviceId": {
-	//       "description": "Service id.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+parent}/v2/service_instances/{+instanceId}/last_operation",
-	//   "response": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "servicebroker.projects.brokers.v2.service_instances.patch":
 
 type ProjectsBrokersV2ServiceInstancesPatchCall struct {
 	s                                                 *Service
@@ -2952,6 +2330,12 @@ type ProjectsBrokersV2ServiceInstancesPatchCall struct {
 
 // Patch: Updates an existing service instance.
 // See CreateServiceInstance for possible response codes.
+//
+//   - instanceId: The id of the service instance. Must be unique within GCP
+//     project.
+//
+// Maximum length is 64, GUID recommended.
+// - parent: Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.
 func (r *ProjectsBrokersV2ServiceInstancesService) Patch(parent string, instanceId string, googlecloudservicebrokerv1alpha1__serviceinstance *GoogleCloudServicebrokerV1alpha1__ServiceInstance) *ProjectsBrokersV2ServiceInstancesPatchCall {
 	c := &ProjectsBrokersV2ServiceInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2960,31 +2344,29 @@ func (r *ProjectsBrokersV2ServiceInstancesService) Patch(parent string, instance
 	return c
 }
 
-// AcceptsIncomplete sets the optional parameter "acceptsIncomplete":
-// See CreateServiceInstanceRequest for details.
+// AcceptsIncomplete sets the optional parameter "acceptsIncomplete": See
+// CreateServiceInstanceRequest for details.
 func (c *ProjectsBrokersV2ServiceInstancesPatchCall) AcceptsIncomplete(acceptsIncomplete bool) *ProjectsBrokersV2ServiceInstancesPatchCall {
 	c.urlParams_.Set("acceptsIncomplete", fmt.Sprint(acceptsIncomplete))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsBrokersV2ServiceInstancesPatchCall) Fields(s ...googleapi.Field) *ProjectsBrokersV2ServiceInstancesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsBrokersV2ServiceInstancesPatchCall) Context(ctx context.Context) *ProjectsBrokersV2ServiceInstancesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsBrokersV2ServiceInstancesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2993,18 +2375,12 @@ func (c *ProjectsBrokersV2ServiceInstancesPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsBrokersV2ServiceInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudservicebrokerv1alpha1__serviceinstance)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/v2/service_instances/{+instance_id}")
@@ -3018,19 +2394,15 @@ func (c *ProjectsBrokersV2ServiceInstancesPatchCall) doRequest(alt string) (*htt
 		"parent":      c.parent,
 		"instance_id": c.instanceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.projects.brokers.v2.service_instances.patch" call.
-// Exactly one of
-// *GoogleCloudServicebrokerV1alpha1__UpdateServiceInstanceResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudServicebrokerV1alpha1__UpdateServiceInstanceResponse.Serve
-// rResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudServicebrokerV1alpha1__UpdateServiceInstanceResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsBrokersV2ServiceInstancesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudServicebrokerV1alpha1__UpdateServiceInstanceResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3038,17 +2410,17 @@ func (c *ProjectsBrokersV2ServiceInstancesPatchCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudServicebrokerV1alpha1__UpdateServiceInstanceResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3061,51 +2433,7 @@ func (c *ProjectsBrokersV2ServiceInstancesPatchCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates an existing service instance.\nSee CreateServiceInstance for possible response codes.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/brokers/{brokersId}/v2/service_instances/{service_instancesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "servicebroker.projects.brokers.v2.service_instances.patch",
-	//   "parameterOrder": [
-	//     "parent",
-	//     "instance_id"
-	//   ],
-	//   "parameters": {
-	//     "acceptsIncomplete": {
-	//       "description": "See CreateServiceInstanceRequest for details.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "instance_id": {
-	//       "description": "The id of the service instance. Must be unique within GCP project.\nMaximum length is 64, GUID recommended.\nRequired.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/brokers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+parent}/v2/service_instances/{+instance_id}",
-	//   "request": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__ServiceInstance"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__UpdateServiceInstanceResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "servicebroker.projects.brokers.v2.service_instances.service_bindings.create":
 
 type ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall struct {
 	s                                         *Service
@@ -3118,9 +2446,19 @@ type ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall struct {
 	header_                                   http.Header
 }
 
-// Create: CreateBinding generates a service binding to an existing
-// service instance.
+// Create: CreateBinding generates a service binding to an existing service
+// instance.
 // See ProviServiceInstance for async operation details.
+//
+//   - bindingId: The id of the binding. Must be unique within GCP
+//     project.
+//
+// Maximum length is 64, GUID recommended.
+//   - instanceId: The service instance to which to bind.
+//   - parent: The GCP container.
+//     Must match
+//
+// `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.
 func (r *ProjectsBrokersV2ServiceInstancesServiceBindingsService) Create(parent string, instanceId string, bindingId string, googlecloudservicebrokerv1alpha1__binding *GoogleCloudServicebrokerV1alpha1__Binding) *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall {
 	c := &ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3130,31 +2468,29 @@ func (r *ProjectsBrokersV2ServiceInstancesServiceBindingsService) Create(parent 
 	return c
 }
 
-// AcceptsIncomplete sets the optional parameter "acceptsIncomplete":
-// See CreateServiceInstanceRequest for details.
+// AcceptsIncomplete sets the optional parameter "acceptsIncomplete": See
+// CreateServiceInstanceRequest for details.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall) AcceptsIncomplete(acceptsIncomplete bool) *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall {
 	c.urlParams_.Set("acceptsIncomplete", fmt.Sprint(acceptsIncomplete))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall) Fields(s ...googleapi.Field) *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall) Context(ctx context.Context) *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3163,18 +2499,12 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall) Header() ht
 }
 
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudservicebrokerv1alpha1__binding)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/v2/service_instances/{+instanceId}/service_bindings/{+binding_id}")
@@ -3189,19 +2519,15 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall) doRequest(a
 		"instanceId": c.instanceId,
 		"binding_id": c.bindingId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.projects.brokers.v2.service_instances.service_bindings.create" call.
-// Exactly one of
-// *GoogleCloudServicebrokerV1alpha1__CreateBindingResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudServicebrokerV1alpha1__CreateBindingResponse.ServerRespons
-// e.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudServicebrokerV1alpha1__CreateBindingResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudServicebrokerV1alpha1__CreateBindingResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3209,17 +2535,17 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall) Do(opts ...
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudServicebrokerV1alpha1__CreateBindingResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3232,59 +2558,7 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsCreateCall) Do(opts ...
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "CreateBinding generates a service binding to an existing service instance.\nSee ProviServiceInstance for async operation details.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/brokers/{brokersId}/v2/service_instances/{service_instancesId}/service_bindings/{service_bindingsId}",
-	//   "httpMethod": "PUT",
-	//   "id": "servicebroker.projects.brokers.v2.service_instances.service_bindings.create",
-	//   "parameterOrder": [
-	//     "parent",
-	//     "instanceId",
-	//     "binding_id"
-	//   ],
-	//   "parameters": {
-	//     "acceptsIncomplete": {
-	//       "description": "See CreateServiceInstanceRequest for details.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "binding_id": {
-	//       "description": "The id of the binding. Must be unique within GCP project.\nMaximum length is 64, GUID recommended.\nRequired.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "instanceId": {
-	//       "description": "The service instance to which to bind.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The GCP container.\nMust match\n`projects/[PROJECT_ID]/brokers/[BROKER_ID]`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/brokers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+parent}/v2/service_instances/{+instanceId}/service_bindings/{+binding_id}",
-	//   "request": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__Binding"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__CreateBindingResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "servicebroker.projects.brokers.v2.service_instances.service_bindings.delete":
 
 type ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall struct {
 	s          *Service
@@ -3301,6 +2575,10 @@ type ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall struct {
 // CreateServiceInstance
 // method.
 // If binding does not exist HTTP 410 status will be returned.
+//
+// - bindingId: The id of the binding to delete.
+// - instanceId: The service instance id that deleted binding is bound to.
+// - parent: Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.
 func (r *ProjectsBrokersV2ServiceInstancesServiceBindingsService) Delete(parent string, instanceId string, bindingId string) *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall {
 	c := &ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3309,15 +2587,15 @@ func (r *ProjectsBrokersV2ServiceInstancesServiceBindingsService) Delete(parent 
 	return c
 }
 
-// AcceptsIncomplete sets the optional parameter "acceptsIncomplete":
-// See CreateServiceInstanceRequest for details.
+// AcceptsIncomplete sets the optional parameter "acceptsIncomplete": See
+// CreateServiceInstanceRequest for details.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall) AcceptsIncomplete(acceptsIncomplete bool) *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall {
 	c.urlParams_.Set("acceptsIncomplete", fmt.Sprint(acceptsIncomplete))
 	return c
 }
 
-// PlanId sets the optional parameter "planId": The plan id of the
-// service instance.
+// PlanId sets the optional parameter "planId": The plan id of the service
+// instance.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall) PlanId(planId string) *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall {
 	c.urlParams_.Set("planId", planId)
 	return c
@@ -3332,23 +2610,21 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall) ServiceId(s
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall) Fields(s ...googleapi.Field) *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall) Context(ctx context.Context) *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3357,12 +2633,7 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall) Header() ht
 }
 
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3378,19 +2649,15 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall) doRequest(a
 		"instanceId": c.instanceId,
 		"bindingId":  c.bindingId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.projects.brokers.v2.service_instances.service_bindings.delete" call.
-// Exactly one of
-// *GoogleCloudServicebrokerV1alpha1__DeleteBindingResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudServicebrokerV1alpha1__DeleteBindingResponse.ServerRespons
-// e.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudServicebrokerV1alpha1__DeleteBindingResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudServicebrokerV1alpha1__DeleteBindingResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3398,17 +2665,17 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall) Do(opts ...
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudServicebrokerV1alpha1__DeleteBindingResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3421,64 +2688,7 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsDeleteCall) Do(opts ...
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Unbinds from a service instance.\nFor synchronous/asynchronous request details see CreateServiceInstance\nmethod.\nIf binding does not exist HTTP 410 status will be returned.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/brokers/{brokersId}/v2/service_instances/{instanceId}/service_bindings/{bindingId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "servicebroker.projects.brokers.v2.service_instances.service_bindings.delete",
-	//   "parameterOrder": [
-	//     "parent",
-	//     "instanceId",
-	//     "bindingId"
-	//   ],
-	//   "parameters": {
-	//     "acceptsIncomplete": {
-	//       "description": "See CreateServiceInstanceRequest for details.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "bindingId": {
-	//       "description": "The id of the binding to delete.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "instanceId": {
-	//       "description": "The service instance id that deleted binding is bound to.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/brokers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "planId": {
-	//       "description": "The plan id of the service instance.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "serviceId": {
-	//       "description": "Additional query parameter hints.\nThe service id of the service instance.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+parent}/v2/service_instances/{instanceId}/service_bindings/{bindingId}",
-	//   "response": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__DeleteBindingResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "servicebroker.projects.brokers.v2.service_instances.service_bindings.get":
 
 type ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall struct {
 	s            *Service
@@ -3492,6 +2702,10 @@ type ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall struct {
 }
 
 // Get: GetBinding returns the binding information.
+//
+// - bindingId: The binding id.
+// - instanceId: Instance id to which the binding is bound.
+// - parent: Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.
 func (r *ProjectsBrokersV2ServiceInstancesServiceBindingsService) Get(parent string, instanceId string, bindingId string) *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall {
 	c := &ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3513,33 +2727,29 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall) ServiceId(serv
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall) Fields(s ...googleapi.Field) *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall) IfNoneMatch(entityTag string) *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall) Context(ctx context.Context) *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3548,12 +2758,7 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall) Header() http.
 }
 
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3572,18 +2777,15 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall) doRequest(alt 
 		"instanceId": c.instanceId,
 		"bindingId":  c.bindingId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.projects.brokers.v2.service_instances.service_bindings.get" call.
-// Exactly one of *GoogleCloudServicebrokerV1alpha1__GetBindingResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudServicebrokerV1alpha1__GetBindingResponse.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudServicebrokerV1alpha1__GetBindingResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudServicebrokerV1alpha1__GetBindingResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3591,17 +2793,17 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall) Do(opts ...goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudServicebrokerV1alpha1__GetBindingResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -3614,61 +2816,7 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetCall) Do(opts ...goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "GetBinding returns the binding information.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/brokers/{brokersId}/v2/service_instances/{service_instancesId}/service_bindings/{service_bindingsId}",
-	//   "httpMethod": "GET",
-	//   "id": "servicebroker.projects.brokers.v2.service_instances.service_bindings.get",
-	//   "parameterOrder": [
-	//     "parent",
-	//     "instanceId",
-	//     "bindingId"
-	//   ],
-	//   "parameters": {
-	//     "bindingId": {
-	//       "description": "The binding id.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "instanceId": {
-	//       "description": "Instance id to which the binding is bound.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/brokers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "planId": {
-	//       "description": "Plan id.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "serviceId": {
-	//       "description": "Service id.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+parent}/v2/service_instances/{+instanceId}/service_bindings/{+bindingId}",
-	//   "response": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__GetBindingResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "servicebroker.projects.brokers.v2.service_instances.service_bindings.getLast_operation":
 
 type ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall struct {
 	s            *Service
@@ -3684,6 +2832,10 @@ type ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall struct
 // GetLastOperation: Returns the state of the last operation for the
 // binding.
 // Only last (or current) operation can be polled.
+//
+// - bindingId: The binding id for which to return the last operation.
+// - instanceId: The instance id that the binding is bound to.
+// - parent: Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.
 func (r *ProjectsBrokersV2ServiceInstancesServiceBindingsService) GetLastOperation(parent string, instanceId string, bindingId string) *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall {
 	c := &ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3713,33 +2865,29 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall) S
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall) Fields(s ...googleapi.Field) *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall) IfNoneMatch(entityTag string) *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall) Context(ctx context.Context) *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3748,12 +2896,7 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall) H
 }
 
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3772,18 +2915,15 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall) d
 		"instanceId": c.instanceId,
 		"bindingId":  c.bindingId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.projects.brokers.v2.service_instances.service_bindings.getLast_operation" call.
-// Exactly one of *GoogleCloudServicebrokerV1alpha1__Operation or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudServicebrokerV1alpha1__Operation.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudServicebrokerV1alpha1__Operation.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall) Do(opts ...googleapi.CallOption) (*GoogleCloudServicebrokerV1alpha1__Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3791,17 +2931,17 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall) D
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudServicebrokerV1alpha1__Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -3814,66 +2954,7 @@ func (c *ProjectsBrokersV2ServiceInstancesServiceBindingsGetLastOperationCall) D
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the state of the last operation for the binding.\nOnly last (or current) operation can be polled.",
-	//   "flatPath": "v1alpha1/projects/{projectsId}/brokers/{brokersId}/v2/service_instances/{service_instancesId}/service_bindings/{service_bindingsId}/last_operation",
-	//   "httpMethod": "GET",
-	//   "id": "servicebroker.projects.brokers.v2.service_instances.service_bindings.getLast_operation",
-	//   "parameterOrder": [
-	//     "parent",
-	//     "instanceId",
-	//     "bindingId"
-	//   ],
-	//   "parameters": {
-	//     "bindingId": {
-	//       "description": "The binding id for which to return the last operation",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "instanceId": {
-	//       "description": "The instance id that the binding is bound to.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "operation": {
-	//       "description": "If `operation` was returned during mutation operation, this field must be\npopulated with the provided value.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Parent must match `projects/[PROJECT_ID]/brokers/[BROKER_ID]`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/brokers/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "planId": {
-	//       "description": "Plan id.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "serviceId": {
-	//       "description": "Service id.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+parent}/v2/service_instances/{+instanceId}/service_bindings/{+bindingId}/last_operation",
-	//   "response": {
-	//     "$ref": "GoogleCloudServicebrokerV1alpha1__Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "servicebroker.getIamPolicy":
 
 type V1alpha1GetIamPolicyCall struct {
 	s            *Service
@@ -3888,6 +2969,10 @@ type V1alpha1GetIamPolicyCall struct {
 // Returns an empty policy if the resource exists and does not have a
 // policy
 // set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested.
+//     See the operation documentation for the appropriate value for this field.
 func (r *V1alpha1Service) GetIamPolicy(resource string) *V1alpha1GetIamPolicyCall {
 	c := &V1alpha1GetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3898,12 +2983,12 @@ func (r *V1alpha1Service) GetIamPolicy(resource string) *V1alpha1GetIamPolicyCal
 // "options.requestedPolicyVersion": The policy format version to be
 // returned.
 //
-// Valid values are 0, 1, and 3. Requests specifying an invalid value
-// will be
+// Valid values are 0, 1, and 3. Requests specifying an invalid value will
+// be
 // rejected.
 //
-// Requests for policies with any conditional bindings must specify
-// version 3.
+// Requests for policies with any conditional bindings must specify version
+// 3.
 // Policies without any conditional bindings may specify any valid value
 // or
 // leave the field unset.
@@ -3913,33 +2998,29 @@ func (c *V1alpha1GetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequeste
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *V1alpha1GetIamPolicyCall) Fields(s ...googleapi.Field) *V1alpha1GetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *V1alpha1GetIamPolicyCall) IfNoneMatch(entityTag string) *V1alpha1GetIamPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *V1alpha1GetIamPolicyCall) Context(ctx context.Context) *V1alpha1GetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *V1alpha1GetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3948,12 +3029,7 @@ func (c *V1alpha1GetIamPolicyCall) Header() http.Header {
 }
 
 func (c *V1alpha1GetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3970,16 +3046,15 @@ func (c *V1alpha1GetIamPolicyCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.getIamPolicy" call.
-// Exactly one of *GoogleIamV1__Policy or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleIamV1__Policy.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1__Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *V1alpha1GetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1__Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3987,17 +3062,17 @@ func (c *V1alpha1GetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIamV1__Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -4010,41 +3085,7 @@ func (c *V1alpha1GetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
-	//   "flatPath": "v1alpha1/{v1alpha1Id}:getIamPolicy",
-	//   "httpMethod": "GET",
-	//   "id": "servicebroker.getIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The policy format version to be returned.\n\nValid values are 0, 1, and 3. Requests specifying an invalid value will be\nrejected.\n\nRequests for policies with any conditional bindings must specify version 3.\nPolicies without any conditional bindings may specify any valid value or\nleave the field unset.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^.+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+resource}:getIamPolicy",
-	//   "response": {
-	//     "$ref": "GoogleIamV1__Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "servicebroker.setIamPolicy":
 
 type V1alpha1SetIamPolicyCall struct {
 	s                                *Service
@@ -4055,12 +3096,15 @@ type V1alpha1SetIamPolicyCall struct {
 	header_                          http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any
+// SetIamPolicy: Sets the access control policy on the specified resource.
+// Replaces any
 // existing policy.
 //
-// Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and
-// PERMISSION_DENIED
+// Can return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified.
+//     See the operation documentation for the appropriate value for this field.
 func (r *V1alpha1Service) SetIamPolicy(resource string, googleiamv1__setiampolicyrequest *GoogleIamV1__SetIamPolicyRequest) *V1alpha1SetIamPolicyCall {
 	c := &V1alpha1SetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4069,23 +3113,21 @@ func (r *V1alpha1Service) SetIamPolicy(resource string, googleiamv1__setiampolic
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *V1alpha1SetIamPolicyCall) Fields(s ...googleapi.Field) *V1alpha1SetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *V1alpha1SetIamPolicyCall) Context(ctx context.Context) *V1alpha1SetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *V1alpha1SetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4094,18 +3136,12 @@ func (c *V1alpha1SetIamPolicyCall) Header() http.Header {
 }
 
 func (c *V1alpha1SetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1__setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+resource}:setIamPolicy")
@@ -4118,16 +3154,15 @@ func (c *V1alpha1SetIamPolicyCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.setIamPolicy" call.
-// Exactly one of *GoogleIamV1__Policy or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleIamV1__Policy.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1__Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *V1alpha1SetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1__Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4135,17 +3170,17 @@ func (c *V1alpha1SetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIamV1__Policy{
 		ServerResponse: googleapi.ServerResponse{
@@ -4158,38 +3193,7 @@ func (c *V1alpha1SetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.\n\nCan return Public Errors: NOT_FOUND, INVALID_ARGUMENT and PERMISSION_DENIED",
-	//   "flatPath": "v1alpha1/{v1alpha1Id}:setIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "servicebroker.setIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^.+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+resource}:setIamPolicy",
-	//   "request": {
-	//     "$ref": "GoogleIamV1__SetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleIamV1__Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "servicebroker.testIamPermissions":
 
 type V1alpha1TestIamPermissionsCall struct {
 	s                                      *Service
@@ -4200,8 +3204,8 @@ type V1alpha1TestIamPermissionsCall struct {
 	header_                                http.Header
 }
 
-// TestIamPermissions: Returns permissions that a caller has on the
-// specified resource.
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource.
 // If the resource does not exist, this will return an empty set
 // of
 // permissions, not a NOT_FOUND error.
@@ -4211,6 +3215,10 @@ type V1alpha1TestIamPermissionsCall struct {
 // UIs and command-line tools, not for authorization checking. This
 // operation
 // may "fail open" without warning.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested.
+//     See the operation documentation for the appropriate value for this field.
 func (r *V1alpha1Service) TestIamPermissions(resource string, googleiamv1__testiampermissionsrequest *GoogleIamV1__TestIamPermissionsRequest) *V1alpha1TestIamPermissionsCall {
 	c := &V1alpha1TestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4219,23 +3227,21 @@ func (r *V1alpha1Service) TestIamPermissions(resource string, googleiamv1__testi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *V1alpha1TestIamPermissionsCall) Fields(s ...googleapi.Field) *V1alpha1TestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *V1alpha1TestIamPermissionsCall) Context(ctx context.Context) *V1alpha1TestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *V1alpha1TestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4244,18 +3250,12 @@ func (c *V1alpha1TestIamPermissionsCall) Header() http.Header {
 }
 
 func (c *V1alpha1TestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleiamv1__testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+resource}:testIamPermissions")
@@ -4268,17 +3268,15 @@ func (c *V1alpha1TestIamPermissionsCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicebroker.testIamPermissions" call.
-// Exactly one of *GoogleIamV1__TestIamPermissionsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleIamV1__TestIamPermissionsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1__TestIamPermissionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *V1alpha1TestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1__TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4286,17 +3284,17 @@ func (c *V1alpha1TestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Goog
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIamV1__TestIamPermissionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -4309,33 +3307,4 @@ func (c *V1alpha1TestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
-	//   "flatPath": "v1alpha1/{v1alpha1Id}:testIamPermissions",
-	//   "httpMethod": "POST",
-	//   "id": "servicebroker.testIamPermissions",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^.+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+resource}:testIamPermissions",
-	//   "request": {
-	//     "$ref": "GoogleIamV1__TestIamPermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleIamV1__TestIamPermissionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

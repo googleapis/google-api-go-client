@@ -64,21 +64,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "acmedns:v1",
-      "name": "acmedns",
-      "version": "v1",
-      "title": "ACME DNS API",
-      "description": "Google Domains ACME DNS API that allows users to complete ACME DNS-01 challenges for a domain.",
-      "discoveryRestUrl": "https://acmedns.googleapis.com/$discovery/rest?version=v1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://developers.google.com/domains/acme-dns/",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "addressvalidation:v1",
       "name": "addressvalidation",
       "version": "v1",
@@ -225,6 +210,36 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/adsense/host/index",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "adsenseplatform:v1alpha",
+      "name": "adsenseplatform",
+      "version": "v1alpha",
+      "title": "AdSense Platform API",
+      "description": "",
+      "discoveryRestUrl": "https://adsenseplatform.googleapis.com/$discovery/rest?version=v1alpha",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/adsense/platforms/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "adsenseplatform:v1",
+      "name": "adsenseplatform",
+      "version": "v1",
+      "title": "AdSense Platform API",
+      "description": "",
+      "discoveryRestUrl": "https://adsenseplatform.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/adsense/platforms/",
       "preferred": true
     },
     {
@@ -765,6 +780,21 @@
       },
       "documentationLink": "https://cloud.google.com/learnmoreurl",
       "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "authorizedbuyersmarketplace:v1alpha",
+      "name": "authorizedbuyersmarketplace",
+      "version": "v1alpha",
+      "title": "Authorized Buyers Marketplace API",
+      "description": "The Authorized Buyers Marketplace API lets buyers programmatically discover inventory; propose, retrieve and negotiate deals with publishers.",
+      "discoveryRestUrl": "https://authorizedbuyersmarketplace.googleapis.com/$discovery/rest?version=v1alpha",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/authorized-buyers/apis/marketplace/reference/rest/",
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",
@@ -1996,7 +2026,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/container-engine/",
+      "documentationLink": "https://cloud.google.com/kubernetes-engine/docs/",
       "preferred": false
     },
     {
@@ -2011,7 +2041,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/container-engine/",
+      "documentationLink": "https://cloud.google.com/kubernetes-engine/docs/",
       "preferred": true
     },
     {
@@ -2611,7 +2641,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/discovery-engine/docs",
+      "documentationLink": "https://cloud.google.com/generative-ai-app-builder/docs/",
       "preferred": false
     },
     {
@@ -2626,7 +2656,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/discovery-engine/docs",
+      "documentationLink": "https://cloud.google.com/generative-ai-app-builder/docs/",
       "preferred": false
     },
     {
@@ -2641,7 +2671,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/discovery-engine/docs",
+      "documentationLink": "https://cloud.google.com/generative-ai-app-builder/docs/",
       "preferred": true
     },
     {
@@ -2822,21 +2852,6 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/domains/",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "domainsrdap:v1",
-      "name": "domainsrdap",
-      "version": "v1",
-      "title": "Domains RDAP API",
-      "description": "Read-only public API that lets users search for information about domain names.",
-      "discoveryRestUrl": "https://domainsrdap.googleapis.com/$discovery/rest?version=v1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://developers.google.com/domains/rdap/",
       "preferred": true
     },
     {
@@ -3458,12 +3473,42 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "gkehub:v2beta",
+      "name": "gkehub",
+      "version": "v2beta",
+      "title": "GKE Hub API",
+      "description": "",
+      "discoveryRestUrl": "https://gkehub.googleapis.com/$discovery/rest?version=v2beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "gkehub:v1",
       "name": "gkehub",
       "version": "v1",
       "title": "GKE Hub API",
       "description": "",
       "discoveryRestUrl": "https://gkehub.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "gkehub:v2",
+      "name": "gkehub",
+      "version": "v2",
+      "title": "GKE Hub API",
+      "description": "",
+      "discoveryRestUrl": "https://gkehub.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -4279,6 +4324,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.devsite.corp.google.com/merchant/api",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "merchantapi:reviews_v1beta",
+      "name": "merchantapi",
+      "version": "reviews_v1beta",
+      "title": "Merchant API",
+      "description": "Programmatically manage your Merchant Center Accounts.",
+      "discoveryRestUrl": "https://merchantapi.googleapis.com/$discovery/rest?version=reviews_v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.devsite.corp.google.com/merchant/api",
       "preferred": true
     },
     {
@@ -4700,6 +4760,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/container-analysis/docs/on-demand-scanning/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "oracledatabase:v1",
+      "name": "oracledatabase",
+      "version": "v1",
+      "title": "Oracle Database@Google Cloud API",
+      "description": "The Oracle Database@Google Cloud API provides a set of APIs to manage Oracle database services, such as Exadata and Autonomous Databases.",
+      "discoveryRestUrl": "https://oracledatabase.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/oracle/database/docs",
       "preferred": true
     },
     {
@@ -5256,21 +5331,6 @@
       },
       "documentationLink": "https://developers.google.com/news/subscribe/subscription-linking/overview",
       "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "realtimebidding:v1alpha",
-      "name": "realtimebidding",
-      "version": "v1alpha",
-      "title": "Real-time Bidding API",
-      "description": "Allows external bidders to manage their RTB integration with Google. This includes managing bidder endpoints, QPS quotas, configuring what ad inventory to receive via pretargeting, submitting creatives for verification, and accessing creative metadata such as approval status.",
-      "discoveryRestUrl": "https://realtimebidding.googleapis.com/$discovery/rest?version=v1alpha",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://developers.google.com/authorized-buyers/apis/realtimebidding/reference/rest/",
-      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",

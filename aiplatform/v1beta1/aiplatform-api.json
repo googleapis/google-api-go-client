@@ -6003,7 +6003,7 @@
                   ],
                   "parameters": {
                     "featureGroupId": {
-                      "description": "Required. The ID to use for this FeatureGroup, which will become the final component of the FeatureGroup's resource name. This value may be up to 60 characters, and valid characters are `[a-z0-9_]`. The first character cannot be a number. The value must be unique within the project and location.",
+                      "description": "Required. The ID to use for this FeatureGroup, which will become the final component of the FeatureGroup's resource name. This value may be up to 128 characters, and valid characters are `[a-z0-9_]`. The first character cannot be a number. The value must be unique within the project and location.",
                       "location": "query",
                       "type": "string"
                     },
@@ -21143,7 +21143,7 @@
       }
     }
   },
-  "revision": "20240830",
+  "revision": "20240907",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "CloudAiLargeModelsVisionGenerateVideoResponse": {
@@ -21282,8 +21282,16 @@
       "type": "object"
     },
     "CloudAiLargeModelsVisionRaiInfo": {
+      "description": "Next ID: 6",
       "id": "CloudAiLargeModelsVisionRaiInfo",
       "properties": {
+        "blockedEntities": {
+          "description": "List of blocked entities from the blocklist if it is detected.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "detectedLabels": {
           "description": "The list of detected labels for different rai categories.",
           "items": {
@@ -21793,6 +21801,30 @@
         },
         "uri": {
           "description": "The uniform resource identifier of the artifact file. May be empty if there is no actual artifact file.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1ArtifactTypeSchema": {
+      "description": "The definition of a artifact type in MLMD.",
+      "id": "GoogleCloudAiplatformV1beta1ArtifactTypeSchema",
+      "properties": {
+        "instanceSchema": {
+          "description": "Contains a raw YAML string, describing the format of the properties of the type.",
+          "type": "string"
+        },
+        "schemaTitle": {
+          "description": "The name of the type. The format of the title must be: `.`. Examples: - `aiplatform.Model` - `acme.CustomModel` When this field is set, the type must be pre-registered in the MLMD store.",
+          "type": "string"
+        },
+        "schemaUri": {
+          "deprecated": true,
+          "description": "Points to a YAML file stored on Cloud Storage describing the format. Deprecated. Use PipelineArtifactTypeSchema.schema_title or PipelineArtifactTypeSchema.instance_schema instead.",
+          "type": "string"
+        },
+        "schemaVersion": {
+          "description": "The schema version of the artifact. If the value is not set, it defaults to the latest version in the system.",
           "type": "string"
         }
       },
@@ -23714,6 +23746,10 @@
           },
           "type": "array"
         },
+        "generationConfig": {
+          "$ref": "GoogleCloudAiplatformV1beta1GenerationConfig",
+          "description": "Optional. Generation config that the model will use to generate the response."
+        },
         "instances": {
           "description": "Optional. The instances that are the input to token counting call. Schema is identical to the prediction schema of the underlying model.",
           "items": {
@@ -25130,6 +25166,13 @@
           "$ref": "GoogleCloudAiplatformV1beta1IndexPrivateEndpoints",
           "description": "Output only. Provides paths for users to send requests directly to the deployed index services running on Cloud via private services access. This field is populated if network is configured.",
           "readOnly": true
+        },
+        "pscAutomationConfigs": {
+          "description": "Optional. If set for PSC deployed index, PSC connection will be automatically created after deployment is done and the endpoint information is populated in private_endpoints.psc_automated_endpoints.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1PSCAutomationConfig"
+          },
+          "type": "array"
         },
         "reservedIpRanges": {
           "description": "Optional. A list of reserved ip ranges under the VPC network that can be used for this DeployedIndex. If set, we will deploy the index within the provided ip ranges. Otherwise, the index might be deployed to any ip ranges under the provided VPC network. The value should be the name of the address (https://cloud.google.com/compute/docs/reference/rest/v1/addresses) Example: ['vertex-ai-ip-range']. For more information about subnets and network IP ranges, please see https://cloud.google.com/vpc/docs/subnets#manually_created_subnet_ip_ranges.",
@@ -27418,7 +27461,7 @@
           "description": "Required. Immutable. The BigQuery source URI that points to either a BigQuery Table or View."
         },
         "dense": {
-          "description": "Optional. If set, all feature values will be fetched from a single row per unique entityId including nulls. If not set, will collapse all rows for each unique entityId into a singe row with any non-null values if present, if no non-null values are present will sync null. ex: If source has schema (entity_id, feature_timestamp, f0, f1) and values (e1, 2020-01-01T10:00:00.123Z, 10, 15) (e1, 2020-02-01T10:00:00.123Z, 20, null) If dense is set, (e1, 20, null) is synced to online stores. If dense is not set, (e1, 20, 15) is synced to online stores.",
+          "description": "Optional. If set, all feature values will be fetched from a single row per unique entityId including nulls. If not set, will collapse all rows for each unique entityId into a singe row with any non-null values if present, if no non-null values are present will sync null. ex: If source has schema `(entity_id, feature_timestamp, f0, f1)` and the following rows: `(e1, 2020-01-01T10:00:00.123Z, 10, 15)` `(e1, 2020-02-01T10:00:00.123Z, 20, null)` If dense is set, `(e1, 20, null)` is synced to online stores. If dense is not set, `(e1, 20, 15)` is synced to online stores.",
           "type": "boolean"
         },
         "entityIdColumns": {
@@ -28201,7 +28244,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "Required. The BigQuery view/table URI that will be materialized on each manual sync trigger. The table/view is expected to have the following columns at least: Field name Type Mode corpus_id STRING REQUIRED/NULLABLE file_id STRING REQUIRED/NULLABLE chunk_id STRING REQUIRED/NULLABLE chunk_data_type STRING REQUIRED/NULLABLE chunk_data STRING REQUIRED/NULLABLE embeddings FLOAT REPEATED file_original_uri STRING REQUIRED/NULLABLE",
+          "description": "Required. The BigQuery view/table URI that will be materialized on each manual sync trigger. The table/view is expected to have the following columns and types at least: - `corpus_id` (STRING, NULLABLE/REQUIRED) - `file_id` (STRING, NULLABLE/REQUIRED) - `chunk_id` (STRING, NULLABLE/REQUIRED) - `chunk_data_type` (STRING, NULLABLE/REQUIRED) - `chunk_data` (STRING, NULLABLE/REQUIRED) - `embeddings` (FLOAT, REPEATED) - `file_original_uri` (STRING, NULLABLE/REQUIRED)",
           "type": "string"
         }
       },
@@ -29018,6 +29061,13 @@
         "generationConfig": {
           "$ref": "GoogleCloudAiplatformV1beta1GenerationConfig",
           "description": "Optional. Generation config."
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. The labels with user-defined metadata for the request. It is used for billing and reporting only. Label keys and values can be no longer than 63 characters (Unicode codepoints) and can only contain lowercase letters, numeric characters, underscores, and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter.",
+          "type": "object"
         },
         "safetySettings": {
           "description": "Optional. Per request settings for blocking unsafe content. Enforced on GenerateContentResponse.candidates.",
@@ -29919,6 +29969,14 @@
           "description": "Optional. The max number of queries per minute that this job is allowed to make to the embedding model specified on the corpus. This value is specific to this job and not shared across other import jobs. Consult the Quotas page on the project to set an appropriate value here. If unspecified, a default value of 1,000 QPM would be used.",
           "format": "int32",
           "type": "integer"
+        },
+        "partialFailureBigquerySink": {
+          "$ref": "GoogleCloudAiplatformV1beta1BigQueryDestination",
+          "description": "The BigQuery destination to write partial failures to. It should be a bigquery table resource name (e.g. \"bq://projectId.bqDatasetId.bqTableId\"). If the dataset id does not exist, it will be created. If the table does not exist, it will be created with the expected schema. If the table exists, the schema will be validated and data will be added to this existing table."
+        },
+        "partialFailureGcsSink": {
+          "$ref": "GoogleCloudAiplatformV1beta1GcsDestination",
+          "description": "The Cloud Storage path to write partial failures to."
         },
         "ragFileChunkingConfig": {
           "$ref": "GoogleCloudAiplatformV1beta1RagFileChunkingConfig",
@@ -35200,6 +35258,21 @@
       },
       "type": "object"
     },
+    "GoogleCloudAiplatformV1beta1PSCAutomationConfig": {
+      "description": "PSC config that is used to automatically create forwarding rule via ServiceConnectionMap.",
+      "id": "GoogleCloudAiplatformV1beta1PSCAutomationConfig",
+      "properties": {
+        "network": {
+          "description": "Required. The full name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks). [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert): `projects/{project}/global/networks/{network}`. Where {project} is a project number, as in '12345', and {network} is network name.",
+          "type": "string"
+        },
+        "projectId": {
+          "description": "Required. Project id used to create forwarding rule.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudAiplatformV1beta1PairwiseMetricInput": {
       "description": "Input for pairwise metric.",
       "id": "GoogleCloudAiplatformV1beta1PairwiseMetricInput",
@@ -35674,6 +35747,12 @@
           "description": "The full name of the Compute Engine [network](/compute/docs/networks-and-firewalls#networks) to which the Pipeline Job's workload should be peered. For example, `projects/12345/global/networks/myVPC`. [Format](/compute/docs/reference/rest/v1/networks/insert) is of the form `projects/{project}/global/networks/{network}`. Where {project} is a project number, as in `12345`, and {network} is a network name. Private services access must already be configured for the network. Pipeline job will apply the network configuration to the Google Cloud resources being launched, if applied, such as Vertex AI Training or Dataflow job. If left unspecified, the workload is not peered with any network.",
           "type": "string"
         },
+        "originalPipelineJobId": {
+          "description": "Output only. The original pipeline job id if this pipeline job is a rerun of a previous pipeline job.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
         "pipelineSpec": {
           "additionalProperties": {
             "description": "Properties of the object.",
@@ -35681,6 +35760,14 @@
           },
           "description": "The spec of the pipeline.",
           "type": "object"
+        },
+        "pipelineTaskRerunConfigs": {
+          "description": "Output only. The rerun configs for each task in the pipeline job. By default, the rerun will: 1. Use the same input artifacts as the original run. 2. Use the same input parameters as the original run. 3. Skip all the tasks that are already succeeded in the original run. 4. Rerun all the tasks that are not succeeded in the original run. By providing this field, users can override the default behavior and specify the rerun config for each task.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1PipelineTaskRerunConfig"
+          },
+          "readOnly": true,
+          "type": "array"
         },
         "preflightValidations": {
           "description": "Optional. Whether to do component level validations before job creation.",
@@ -36088,6 +36175,77 @@
           "description": "Output only. The name of the CustomJob.",
           "readOnly": true,
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1PipelineTaskRerunConfig": {
+      "description": "User provided rerun config to submit a rerun pipelinejob. This includes 1. Which task to rerun 2. User override input parameters and artifacts.",
+      "id": "GoogleCloudAiplatformV1beta1PipelineTaskRerunConfig",
+      "properties": {
+        "inputs": {
+          "$ref": "GoogleCloudAiplatformV1beta1PipelineTaskRerunConfigInputs",
+          "description": "Output only. The runtime input of the task overridden by the user.",
+          "readOnly": true
+        },
+        "skipDownstreamTasks": {
+          "description": "Output only. Whether to skip downstream tasks. Default value is False.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "skipTask": {
+          "description": "Output only. Whether to skip this task. Default value is False.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "taskId": {
+          "description": "Output only. The system generated ID of the task. Retrieved from original run.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
+        "taskName": {
+          "description": "Output only. The name of the task.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1PipelineTaskRerunConfigArtifactList": {
+      "description": "A list of artifact metadata.",
+      "id": "GoogleCloudAiplatformV1beta1PipelineTaskRerunConfigArtifactList",
+      "properties": {
+        "artifacts": {
+          "description": "Output only. A list of artifact metadata.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1beta1RuntimeArtifact"
+          },
+          "readOnly": true,
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1PipelineTaskRerunConfigInputs": {
+      "description": "Runtime inputs data of the task.",
+      "id": "GoogleCloudAiplatformV1beta1PipelineTaskRerunConfigInputs",
+      "properties": {
+        "artifacts": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudAiplatformV1beta1PipelineTaskRerunConfigArtifactList"
+          },
+          "description": "Output only. Input artifacts.",
+          "readOnly": true,
+          "type": "object"
+        },
+        "parameterValues": {
+          "additionalProperties": {
+            "type": "any"
+          },
+          "description": "Output only. Input parameters.",
+          "readOnly": true,
+          "type": "object"
         }
       },
       "type": "object"
@@ -37720,6 +37878,10 @@
           "$ref": "GoogleCloudAiplatformV1beta1ApiAuth",
           "description": "Authentication config for the chosen Vector DB."
         },
+        "pinecone": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagVectorDbConfigPinecone",
+          "description": "The config for the Pinecone."
+        },
         "ragManagedDb": {
           "$ref": "GoogleCloudAiplatformV1beta1RagVectorDbConfigRagManagedDb",
           "description": "The config for the RAG-managed Vector DB."
@@ -37728,9 +37890,24 @@
           "$ref": "GoogleCloudAiplatformV1beta1RagVectorDbConfigVertexFeatureStore",
           "description": "The config for the Vertex Feature Store."
         },
+        "vertexVectorSearch": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagVectorDbConfigVertexVectorSearch",
+          "description": "The config for the Vertex Vector Search."
+        },
         "weaviate": {
           "$ref": "GoogleCloudAiplatformV1beta1RagVectorDbConfigWeaviate",
           "description": "The config for the Weaviate."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1RagVectorDbConfigPinecone": {
+      "description": "The config for the Pinecone.",
+      "id": "GoogleCloudAiplatformV1beta1RagVectorDbConfigPinecone",
+      "properties": {
+        "indexName": {
+          "description": "Pinecone index name. This value cannot be changed after it's set.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -37747,6 +37924,21 @@
       "properties": {
         "featureViewResourceName": {
           "description": "The resource name of the FeatureView. Format: `projects/{project}/locations/{location}/featureOnlineStores/{feature_online_store}/featureViews/{feature_view}`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1RagVectorDbConfigVertexVectorSearch": {
+      "description": "The config for the Vertex Vector Search.",
+      "id": "GoogleCloudAiplatformV1beta1RagVectorDbConfigVertexVectorSearch",
+      "properties": {
+        "index": {
+          "description": "The resource name of the Index. Format: `projects/{project}/locations/{location}/indexes/{index}`",
+          "type": "string"
+        },
+        "indexEndpoint": {
+          "description": "The resource name of the Index Endpoint. Format: `projects/{project}/locations/{location}/indexEndpoints/{index_endpoint}`",
           "type": "string"
         }
       },
@@ -38608,6 +38800,49 @@
       },
       "type": "object"
     },
+    "GoogleCloudAiplatformV1beta1RuntimeArtifact": {
+      "description": "The definition of a runtime artifact.",
+      "id": "GoogleCloudAiplatformV1beta1RuntimeArtifact",
+      "properties": {
+        "customProperties": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudAiplatformV1beta1Value"
+          },
+          "deprecated": true,
+          "description": "The custom properties of the artifact. Deprecated. Use RuntimeArtifact.metadata instead.",
+          "type": "object"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Properties of the Artifact.",
+          "type": "object"
+        },
+        "name": {
+          "description": "The name of an artifact.",
+          "type": "string"
+        },
+        "properties": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudAiplatformV1beta1Value"
+          },
+          "deprecated": true,
+          "description": "The properties of the artifact. Deprecated. Use RuntimeArtifact.metadata instead.",
+          "type": "object"
+        },
+        "type": {
+          "$ref": "GoogleCloudAiplatformV1beta1ArtifactTypeSchema",
+          "description": "The type of the artifact."
+        },
+        "uri": {
+          "description": "The URI of the artifact.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudAiplatformV1beta1RuntimeConfig": {
       "description": "Runtime configuration to run the extension.",
       "id": "GoogleCloudAiplatformV1beta1RuntimeConfig",
@@ -38701,14 +38936,16 @@
             "HARM_CATEGORY_HATE_SPEECH",
             "HARM_CATEGORY_DANGEROUS_CONTENT",
             "HARM_CATEGORY_HARASSMENT",
-            "HARM_CATEGORY_SEXUALLY_EXPLICIT"
+            "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "HARM_CATEGORY_CIVIC_INTEGRITY"
           ],
           "enumDescriptions": [
             "The harm category is unspecified.",
             "The harm category is hate speech.",
             "The harm category is dangerous content.",
             "The harm category is harassment.",
-            "The harm category is sexually explicit content."
+            "The harm category is sexually explicit content.",
+            "The harm category is civic integrity."
           ],
           "readOnly": true,
           "type": "string"
@@ -38801,14 +39038,16 @@
             "HARM_CATEGORY_HATE_SPEECH",
             "HARM_CATEGORY_DANGEROUS_CONTENT",
             "HARM_CATEGORY_HARASSMENT",
-            "HARM_CATEGORY_SEXUALLY_EXPLICIT"
+            "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            "HARM_CATEGORY_CIVIC_INTEGRITY"
           ],
           "enumDescriptions": [
             "The harm category is unspecified.",
             "The harm category is hate speech.",
             "The harm category is dangerous content.",
             "The harm category is harassment.",
-            "The harm category is sexually explicit content."
+            "The harm category is sexually explicit content.",
+            "The harm category is civic integrity."
           ],
           "type": "string"
         },
@@ -38833,14 +39072,16 @@
             "BLOCK_LOW_AND_ABOVE",
             "BLOCK_MEDIUM_AND_ABOVE",
             "BLOCK_ONLY_HIGH",
-            "BLOCK_NONE"
+            "BLOCK_NONE",
+            "OFF"
           ],
           "enumDescriptions": [
             "Unspecified harm block threshold.",
             "Block low threshold and above (i.e. block more).",
             "Block medium threshold and above.",
             "Block only high threshold (i.e. block less).",
-            "Block none."
+            "Block none.",
+            "Turn off the safety filter."
           ],
           "type": "string"
         }
@@ -39263,6 +39504,13 @@
           },
           "description": "Optional. SCHEMA FIELDS FOR TYPE OBJECT Properties of Type.OBJECT.",
           "type": "object"
+        },
+        "propertyOrdering": {
+          "description": "Optional. The order of the properties. Not a standard field in open api spec. Only used to support the order of the properties.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "required": {
           "description": "Optional. Required properties of Type.OBJECT.",
@@ -44719,7 +44967,7 @@
       "type": "object"
     },
     "GoogleCloudAiplatformV1beta1SupervisedTuningSpec": {
-      "description": "Tuning Spec for Supervised Tuning.",
+      "description": "Tuning Spec for Supervised Tuning for first party models.",
       "id": "GoogleCloudAiplatformV1beta1SupervisedTuningSpec",
       "properties": {
         "hyperParameters": {

@@ -3423,6 +3423,10 @@ type AccountsRunAccessReportCall struct {
 // property configuration changes like adding a stream or changing a property's
 // time zone. For configuration change history, see searchChangeHistoryEvents
 // (https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).
+// To give your feedback on this API, complete the Google Analytics Access
+// Reports feedback
+// (https://docs.google.com/forms/d/e/1FAIpQLSdmEBUrMzAEdiEKk5TV5dEHvDUZDRlgWYdQdAeSdtR4hVjEhw/viewform)
+// form.
 //
 //   - entity: The Data Access Report supports requesting at the property level
 //     or account level. If requested at the account level, Data Access Reports
@@ -4472,6 +4476,10 @@ type PropertiesRunAccessReportCall struct {
 // property configuration changes like adding a stream or changing a property's
 // time zone. For configuration change history, see searchChangeHistoryEvents
 // (https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).
+// To give your feedback on this API, complete the Google Analytics Access
+// Reports feedback
+// (https://docs.google.com/forms/d/e/1FAIpQLSdmEBUrMzAEdiEKk5TV5dEHvDUZDRlgWYdQdAeSdtR4hVjEhw/viewform)
+// form.
 //
 //   - entity: The Data Access Report supports requesting at the property level
 //     or account level. If requested at the account level, Data Access Reports

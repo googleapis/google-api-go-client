@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package run provides access to the Cloud Run Admin API.
 //
 // For product documentation, see: https://cloud.google.com/run/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	runService, err := run.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	runService, err := run.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	runService, err := run.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package run // import "google.golang.org/api/run/v1beta1"
 
 import (
@@ -50,6 +63,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -70,11 +84,13 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "run:v1beta1"
 const apiName = "run"
 const apiVersion = "v1beta1"
 const basePath = "https://run.googleapis.com/"
+const basePathTemplate = "https://run.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://run.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
@@ -85,13 +101,15 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -204,547 +222,406 @@ type ProjectsLocationsCustomresourcedefinitionsService struct {
 	s *Service
 }
 
-// CustomResourceColumnDefinition: CustomResourceColumnDefinition
-// specifies a column for server side printing.
+// CustomResourceColumnDefinition: CustomResourceColumnDefinition specifies a
+// column for server side printing.
 type CustomResourceColumnDefinition struct {
-	// Description: description is a human readable description of this
-	// column. +optional
+	// Description: description is a human readable description of this column.
+	// +optional
 	Description string `json:"description,omitempty"`
-
-	// Format: format is an optional OpenAPI type definition for this
-	// column. The 'name' format is applied to the primary identifier column
-	// to assist in clients identifying column is the resource name. See
+	// Format: format is an optional OpenAPI type definition for this column. The
+	// 'name' format is applied to the primary identifier column to assist in
+	// clients identifying column is the resource name. See
 	// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types
 	// for more. +optional
 	Format string `json:"format,omitempty"`
-
 	// JsonPath: JSONPath is a simple JSON path, i.e. with array notation.
 	JsonPath string `json:"jsonPath,omitempty"`
-
 	// Name: name is a human readable name for the column.
 	Name string `json:"name,omitempty"`
-
-	// Priority: priority is an integer defining the relative importance of
-	// this column compared to others. Lower numbers are considered higher
-	// priority. Columns that may be omitted in limited space scenarios
-	// should be given a higher priority. +optional
+	// Priority: priority is an integer defining the relative importance of this
+	// column compared to others. Lower numbers are considered higher priority.
+	// Columns that may be omitted in limited space scenarios should be given a
+	// higher priority. +optional
 	Priority int64 `json:"priority,omitempty"`
-
 	// Type: type is an OpenAPI type definition for this column. See
 	// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types
 	// for more.
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomResourceColumnDefinition) MarshalJSON() ([]byte, error) {
+func (s CustomResourceColumnDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomResourceColumnDefinition
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomResourceDefinition: CustomResourceDefinition represents a
-// resource that should be exposed on the API server. Its name MUST be
-// in the format <.spec.name>.<.spec.group>.
+// CustomResourceDefinition: CustomResourceDefinition represents a resource
+// that should be exposed on the API server. Its name MUST be in the format
+// <.spec.name>.<.spec.group>.
 type CustomResourceDefinition struct {
 	// ApiVersion: The API version for this call such as
 	// "k8s.apiextensions.io/v1beta1".
 	ApiVersion string `json:"apiVersion,omitempty"`
-
-	// Kind: The kind of resource, in this case always
-	// "CustomResourceDefinition".
+	// Kind: The kind of resource, in this case always "CustomResourceDefinition".
 	Kind string `json:"kind,omitempty"`
-
 	// Metadata: Metadata associated with this CustomResourceDefinition.
 	Metadata *ObjectMeta `json:"metadata,omitempty"`
-
 	// Spec: Spec describes how the user wants the resources to appear
 	Spec *CustomResourceDefinitionSpec `json:"spec,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomResourceDefinition) MarshalJSON() ([]byte, error) {
+func (s CustomResourceDefinition) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomResourceDefinition
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomResourceDefinitionNames: CustomResourceDefinitionNames
-// indicates the names to serve this CustomResourceDefinition
+// CustomResourceDefinitionNames: CustomResourceDefinitionNames indicates the
+// names to serve this CustomResourceDefinition
 type CustomResourceDefinitionNames struct {
-	// Categories: Categories is a list of grouped resources custom
-	// resources belong to (e.g. 'all') +optional
+	// Categories: Categories is a list of grouped resources custom resources
+	// belong to (e.g. 'all') +optional
 	Categories []string `json:"categories,omitempty"`
-
-	// Kind: Kind is the serialized kind of the resource. It is normally
-	// CamelCase and singular.
+	// Kind: Kind is the serialized kind of the resource. It is normally CamelCase
+	// and singular.
 	Kind string `json:"kind,omitempty"`
-
-	// ListKind: ListKind is the serialized kind of the list for this
-	// resource. Defaults to List. +optional
+	// ListKind: ListKind is the serialized kind of the list for this resource.
+	// Defaults to List. +optional
 	ListKind string `json:"listKind,omitempty"`
-
-	// Plural: Plural is the plural name of the resource to serve. It must
-	// match the name of the CustomResourceDefinition-registration too:
-	// plural.group and it must be all lowercase.
+	// Plural: Plural is the plural name of the resource to serve. It must match
+	// the name of the CustomResourceDefinition-registration too: plural.group and
+	// it must be all lowercase.
 	Plural string `json:"plural,omitempty"`
-
-	// ShortNames: ShortNames are short names for the resource. It must be
-	// all lowercase. +optional
+	// ShortNames: ShortNames are short names for the resource. It must be all
+	// lowercase. +optional
 	ShortNames []string `json:"shortNames,omitempty"`
-
-	// Singular: Singular is the singular name of the resource. It must be
-	// all lowercase Defaults to lowercased +optional
+	// Singular: Singular is the singular name of the resource. It must be all
+	// lowercase Defaults to lowercased +optional
 	Singular string `json:"singular,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Categories") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Categories") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Categories") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomResourceDefinitionNames) MarshalJSON() ([]byte, error) {
+func (s CustomResourceDefinitionNames) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomResourceDefinitionNames
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomResourceDefinitionSpec: CustomResourceDefinitionSpec describes
-// how a user wants their resource to appear
+// CustomResourceDefinitionSpec: CustomResourceDefinitionSpec describes how a
+// user wants their resource to appear
 type CustomResourceDefinitionSpec struct {
-	// AdditionalPrinterColumns: AdditionalPrinterColumns are additional
-	// columns shown e.g. in kubectl next to the name. Defaults to a
-	// created-at column. +optional
+	// AdditionalPrinterColumns: AdditionalPrinterColumns are additional columns
+	// shown e.g. in kubectl next to the name. Defaults to a created-at column.
+	// +optional
 	AdditionalPrinterColumns []*CustomResourceColumnDefinition `json:"additionalPrinterColumns,omitempty"`
-
 	// Group: Group is the group this resource belongs in
 	Group string `json:"group,omitempty"`
-
 	// Names: Names are the names used to describe this custom resource
 	Names *CustomResourceDefinitionNames `json:"names,omitempty"`
-
-	// Scope: Scope indicates whether this resource is cluster or namespace
-	// scoped. Default is namespaced
+	// Scope: Scope indicates whether this resource is cluster or namespace scoped.
+	// Default is namespaced
 	Scope string `json:"scope,omitempty"`
-
-	// Subresources: Subresources describes the subresources for
-	// CustomResources +optional
+	// Subresources: Subresources describes the subresources for CustomResources
+	// +optional
 	Subresources *CustomResourceSubresources `json:"subresources,omitempty"`
-
-	// Validation: Validation describes the validation methods for
-	// CustomResources +optional
+	// Validation: Validation describes the validation methods for CustomResources
+	// +optional
 	Validation *CustomResourceValidation `json:"validation,omitempty"`
-
-	// Version: Version is the version this resource belongs in Should be
-	// always first item in Versions field if provided. Optional, but at
-	// least one of Version or Versions must be set. Deprecated: Please use
-	// `Versions`. +optional
+	// Version: Version is the version this resource belongs in Should be always
+	// first item in Versions field if provided. Optional, but at least one of
+	// Version or Versions must be set. Deprecated: Please use `Versions`.
+	// +optional
 	Version string `json:"version,omitempty"`
-
-	// Versions: Versions is the list of all supported versions for this
-	// resource. If Version field is provided, this field is optional.
-	// Validation: All versions must use the same validation schema for now.
-	// i.e., top level Validation field is applied to all of these versions.
-	// Order: The version name will be used to compute the order. If the
-	// version string is "kube-like", it will sort above non "kube-like"
-	// version strings, which are ordered lexicographically. "Kube-like"
-	// versions start with a "v", then are followed by a number (the major
-	// version), then optionally the string "alpha" or "beta" and another
-	// number (the minor version). These are sorted first by GA > beta >
-	// alpha (where GA is a version with no suffix such as beta or alpha),
-	// and then by comparing major version, then minor version. An example
+	// Versions: Versions is the list of all supported versions for this resource.
+	// If Version field is provided, this field is optional. Validation: All
+	// versions must use the same validation schema for now. i.e., top level
+	// Validation field is applied to all of these versions. Order: The version
+	// name will be used to compute the order. If the version string is
+	// "kube-like", it will sort above non "kube-like" version strings, which are
+	// ordered lexicographically. "Kube-like" versions start with a "v", then are
+	// followed by a number (the major version), then optionally the string "alpha"
+	// or "beta" and another number (the minor version). These are sorted first by
+	// GA > beta > alpha (where GA is a version with no suffix such as beta or
+	// alpha), and then by comparing major version, then minor version. An example
 	// sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1,
 	// v12alpha1, v11alpha2, foo1, foo10. +optional
 	Versions []*CustomResourceDefinitionVersion `json:"versions,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AdditionalPrinterColumns") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdditionalPrinterColumns")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdditionalPrinterColumns")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdditionalPrinterColumns") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomResourceDefinitionSpec) MarshalJSON() ([]byte, error) {
+func (s CustomResourceDefinitionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomResourceDefinitionSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type CustomResourceDefinitionVersion struct {
 	// Name: Name is the version name, e.g. “v1”, “v2beta1”, etc.
 	Name string `json:"name,omitempty"`
-
-	// Served: Served is a flag enabling/disabling this version from being
-	// served via REST APIs
+	// Served: Served is a flag enabling/disabling this version from being served
+	// via REST APIs
 	Served bool `json:"served,omitempty"`
-
-	// Storage: Storage flags the version as storage version. There must be
-	// exactly one flagged as storage version.
+	// Storage: Storage flags the version as storage version. There must be exactly
+	// one flagged as storage version.
 	Storage bool `json:"storage,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomResourceDefinitionVersion) MarshalJSON() ([]byte, error) {
+func (s CustomResourceDefinitionVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomResourceDefinitionVersion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomResourceSubresourceScale: CustomResourceSubresourceScale
-// defines how to serve the scale subresource for CustomResources.
+// CustomResourceSubresourceScale: CustomResourceSubresourceScale defines how
+// to serve the scale subresource for CustomResources.
 type CustomResourceSubresourceScale struct {
-	// LabelSelectorPath: LabelSelectorPath defines the JSON path inside of
-	// a CustomResource that corresponds to Scale.Status.Selector. Only JSON
-	// paths without the array notation are allowed. Must be a JSON Path
-	// under .status. Must be set to work with HPA. If there is no value
-	// under the given path in the CustomResource, the status label selector
-	// value in the /scale subresource will default to the empty string.
-	// +optional
+	// LabelSelectorPath: LabelSelectorPath defines the JSON path inside of a
+	// CustomResource that corresponds to Scale.Status.Selector. Only JSON paths
+	// without the array notation are allowed. Must be a JSON Path under .status.
+	// Must be set to work with HPA. If there is no value under the given path in
+	// the CustomResource, the status label selector value in the /scale
+	// subresource will default to the empty string. +optional
 	LabelSelectorPath string `json:"labelSelectorPath,omitempty"`
-
 	// SpecReplicasPath: SpecReplicasPath defines the JSON path inside of a
-	// CustomResource that corresponds to Scale.Spec.Replicas. Only JSON
-	// paths without the array notation are allowed. Must be a JSON Path
-	// under .spec. If there is no value under the given path in the
-	// CustomResource, the /scale subresource will return an error on GET.
+	// CustomResource that corresponds to Scale.Spec.Replicas. Only JSON paths
+	// without the array notation are allowed. Must be a JSON Path under .spec. If
+	// there is no value under the given path in the CustomResource, the /scale
+	// subresource will return an error on GET.
 	SpecReplicasPath string `json:"specReplicasPath,omitempty"`
-
-	// StatusReplicasPath: StatusReplicasPath defines the JSON path inside
-	// of a CustomResource that corresponds to Scale.Status.Replicas. Only
-	// JSON paths without the array notation are allowed. Must be a JSON
-	// Path under .status. If there is no value under the given path in the
-	// CustomResource, the status replica value in the /scale subresource
-	// will default to 0.
+	// StatusReplicasPath: StatusReplicasPath defines the JSON path inside of a
+	// CustomResource that corresponds to Scale.Status.Replicas. Only JSON paths
+	// without the array notation are allowed. Must be a JSON Path under .status.
+	// If there is no value under the given path in the CustomResource, the status
+	// replica value in the /scale subresource will default to 0.
 	StatusReplicasPath string `json:"statusReplicasPath,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LabelSelectorPath")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "LabelSelectorPath") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LabelSelectorPath") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "LabelSelectorPath") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomResourceSubresourceScale) MarshalJSON() ([]byte, error) {
+func (s CustomResourceSubresourceScale) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomResourceSubresourceScale
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomResourceSubresourceStatus: CustomResourceSubresourceStatus
-// defines how to serve the status subresource for CustomResources.
-// Status is represented by the `.status` JSON path inside of a
-// CustomResource. When set, * exposes a /status subresource for the
-// custom resource * PUT requests to the /status subresource take a
-// custom resource object, and ignore changes to anything except the
-// status stanza * PUT/POST/PATCH requests to the custom resource ignore
-// changes to the status stanza
+// CustomResourceSubresourceStatus: CustomResourceSubresourceStatus defines how
+// to serve the status subresource for CustomResources. Status is represented
+// by the `.status` JSON path inside of a CustomResource. When set, * exposes a
+// /status subresource for the custom resource * PUT requests to the /status
+// subresource take a custom resource object, and ignore changes to anything
+// except the status stanza * PUT/POST/PATCH requests to the custom resource
+// ignore changes to the status stanza
 type CustomResourceSubresourceStatus struct {
 }
 
-// CustomResourceSubresources: CustomResourceSubresources defines the
-// status and scale subresources for CustomResources.
+// CustomResourceSubresources: CustomResourceSubresources defines the status
+// and scale subresources for CustomResources.
 type CustomResourceSubresources struct {
-	// Scale: Scale denotes the scale subresource for CustomResources
-	// +optional
+	// Scale: Scale denotes the scale subresource for CustomResources +optional
 	Scale *CustomResourceSubresourceScale `json:"scale,omitempty"`
-
-	// Status: Status denotes the status subresource for CustomResources
-	// +optional
+	// Status: Status denotes the status subresource for CustomResources +optional
 	Status *CustomResourceSubresourceStatus `json:"status,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Scale") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Scale") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Scale") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomResourceSubresources) MarshalJSON() ([]byte, error) {
+func (s CustomResourceSubresources) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomResourceSubresources
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomResourceValidation: CustomResourceValidation is a list of
-// validation methods for CustomResources.
+// CustomResourceValidation: CustomResourceValidation is a list of validation
+// methods for CustomResources.
 type CustomResourceValidation struct {
-	// OpenAPIV3Schema: OpenAPIV3Schema is the OpenAPI v3 schema to be
-	// validated against. +optional
+	// OpenAPIV3Schema: OpenAPIV3Schema is the OpenAPI v3 schema to be validated
+	// against. +optional
 	OpenAPIV3Schema *JSONSchemaProps `json:"openAPIV3Schema,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "OpenAPIV3Schema") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OpenAPIV3Schema") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "OpenAPIV3Schema") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *CustomResourceValidation) MarshalJSON() ([]byte, error) {
+func (s CustomResourceValidation) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomResourceValidation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExternalDocumentation: ExternalDocumentation allows referencing an
-// external resource for extended documentation.
+// ExternalDocumentation: ExternalDocumentation allows referencing an external
+// resource for extended documentation.
 type ExternalDocumentation struct {
 	Description string `json:"description,omitempty"`
-
-	Url string `json:"url,omitempty"`
-
+	Url         string `json:"url,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ExternalDocumentation) MarshalJSON() ([]byte, error) {
+func (s ExternalDocumentation) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalDocumentation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// JSON: JSON represents any valid JSON value. These types are
-// supported: bool, int64, float64, string, []interface{},
-// map[string]interface{} and nil.
+// JSON: JSON represents any valid JSON value. These types are supported: bool,
+// int64, float64, string, []interface{}, map[string]interface{} and nil.
 type JSON struct {
 	Raw string `json:"raw,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Raw") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Raw") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Raw") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Raw") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *JSON) MarshalJSON() ([]byte, error) {
+func (s JSON) MarshalJSON() ([]byte, error) {
 	type NoMethod JSON
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// JSONSchemaProps: JSONSchemaProps is a JSON-Schema following
-// Specification Draft 4 (http://json-schema.org/).
+// JSONSchemaProps: JSONSchemaProps is a JSON-Schema following Specification
+// Draft 4 (http://json-schema.org/).
 type JSONSchemaProps struct {
-	AdditionalItems *JSONSchemaPropsOrBool `json:"additionalItems,omitempty"`
-
-	AdditionalProperties *JSONSchemaPropsOrBool `json:"additionalProperties,omitempty"`
-
-	AllOf []*JSONSchemaProps `json:"allOf,omitempty"`
-
-	AnyOf []*JSONSchemaProps `json:"anyOf,omitempty"`
-
-	Default *JSON `json:"default,omitempty"`
-
-	Definitions map[string]JSONSchemaProps `json:"definitions,omitempty"`
-
-	Dependencies map[string]JSONSchemaPropsOrStringArray `json:"dependencies,omitempty"`
-
-	Description string `json:"description,omitempty"`
-
-	Enum []string `json:"enum,omitempty"`
-
-	Example *JSON `json:"example,omitempty"`
-
-	ExclusiveMaximum bool `json:"exclusiveMaximum,omitempty"`
-
-	ExclusiveMinimum bool `json:"exclusiveMinimum,omitempty"`
-
-	ExternalDocs *ExternalDocumentation `json:"externalDocs,omitempty"`
-
-	Format string `json:"format,omitempty"`
-
-	Id string `json:"id,omitempty"`
-
-	Items *JSONSchemaPropsOrArray `json:"items,omitempty"`
-
-	MaxItems int64 `json:"maxItems,omitempty,string"`
-
-	MaxLength int64 `json:"maxLength,omitempty,string"`
-
-	MaxProperties int64 `json:"maxProperties,omitempty,string"`
-
-	Maximum float64 `json:"maximum,omitempty"`
-
-	MinItems int64 `json:"minItems,omitempty,string"`
-
-	MinLength int64 `json:"minLength,omitempty,string"`
-
-	MinProperties int64 `json:"minProperties,omitempty,string"`
-
-	Minimum float64 `json:"minimum,omitempty"`
-
-	MultipleOf float64 `json:"multipleOf,omitempty"`
-
-	Not *JSONSchemaProps `json:"not,omitempty"`
-
-	OneOf []*JSONSchemaProps `json:"oneOf,omitempty"`
-
-	Pattern string `json:"pattern,omitempty"`
-
-	PatternProperties map[string]JSONSchemaProps `json:"patternProperties,omitempty"`
-
-	Properties map[string]JSONSchemaProps `json:"properties,omitempty"`
-
-	Ref string `json:"ref,omitempty"`
-
-	Required []string `json:"required,omitempty"`
-
-	Schema string `json:"schema,omitempty"`
-
-	Title string `json:"title,omitempty"`
-
-	Type string `json:"type,omitempty"`
-
-	UniqueItems bool `json:"uniqueItems,omitempty"`
-
+	AdditionalItems      *JSONSchemaPropsOrBool                  `json:"additionalItems,omitempty"`
+	AdditionalProperties *JSONSchemaPropsOrBool                  `json:"additionalProperties,omitempty"`
+	AllOf                []*JSONSchemaProps                      `json:"allOf,omitempty"`
+	AnyOf                []*JSONSchemaProps                      `json:"anyOf,omitempty"`
+	Default              *JSON                                   `json:"default,omitempty"`
+	Definitions          map[string]JSONSchemaProps              `json:"definitions,omitempty"`
+	Dependencies         map[string]JSONSchemaPropsOrStringArray `json:"dependencies,omitempty"`
+	Description          string                                  `json:"description,omitempty"`
+	Enum                 []string                                `json:"enum,omitempty"`
+	Example              *JSON                                   `json:"example,omitempty"`
+	ExclusiveMaximum     bool                                    `json:"exclusiveMaximum,omitempty"`
+	ExclusiveMinimum     bool                                    `json:"exclusiveMinimum,omitempty"`
+	ExternalDocs         *ExternalDocumentation                  `json:"externalDocs,omitempty"`
+	Format               string                                  `json:"format,omitempty"`
+	Id                   string                                  `json:"id,omitempty"`
+	Items                *JSONSchemaPropsOrArray                 `json:"items,omitempty"`
+	MaxItems             int64                                   `json:"maxItems,omitempty,string"`
+	MaxLength            int64                                   `json:"maxLength,omitempty,string"`
+	MaxProperties        int64                                   `json:"maxProperties,omitempty,string"`
+	Maximum              float64                                 `json:"maximum,omitempty"`
+	MinItems             int64                                   `json:"minItems,omitempty,string"`
+	MinLength            int64                                   `json:"minLength,omitempty,string"`
+	MinProperties        int64                                   `json:"minProperties,omitempty,string"`
+	Minimum              float64                                 `json:"minimum,omitempty"`
+	MultipleOf           float64                                 `json:"multipleOf,omitempty"`
+	Not                  *JSONSchemaProps                        `json:"not,omitempty"`
+	OneOf                []*JSONSchemaProps                      `json:"oneOf,omitempty"`
+	Pattern              string                                  `json:"pattern,omitempty"`
+	PatternProperties    map[string]JSONSchemaProps              `json:"patternProperties,omitempty"`
+	Properties           map[string]JSONSchemaProps              `json:"properties,omitempty"`
+	Ref                  string                                  `json:"ref,omitempty"`
+	Required             []string                                `json:"required,omitempty"`
+	Schema               string                                  `json:"schema,omitempty"`
+	Title                string                                  `json:"title,omitempty"`
+	Type                 string                                  `json:"type,omitempty"`
+	UniqueItems          bool                                    `json:"uniqueItems,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalItems") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdditionalItems") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdditionalItems") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *JSONSchemaProps) MarshalJSON() ([]byte, error) {
+func (s JSONSchemaProps) MarshalJSON() ([]byte, error) {
 	type NoMethod JSONSchemaProps
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *JSONSchemaProps) UnmarshalJSON(data []byte) error {
@@ -765,408 +642,323 @@ func (s *JSONSchemaProps) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// JSONSchemaPropsOrArray: JSONSchemaPropsOrArray represents a value
-// that can either be a JSONSchemaProps or an array of JSONSchemaProps.
-// Mainly here for serialization purposes.
+// JSONSchemaPropsOrArray: JSONSchemaPropsOrArray represents a value that can
+// either be a JSONSchemaProps or an array of JSONSchemaProps. Mainly here for
+// serialization purposes.
 type JSONSchemaPropsOrArray struct {
 	JsonSchemas []*JSONSchemaProps `json:"jsonSchemas,omitempty"`
-
-	Schema *JSONSchemaProps `json:"schema,omitempty"`
-
+	Schema      *JSONSchemaProps   `json:"schema,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "JsonSchemas") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "JsonSchemas") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "JsonSchemas") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *JSONSchemaPropsOrArray) MarshalJSON() ([]byte, error) {
+func (s JSONSchemaPropsOrArray) MarshalJSON() ([]byte, error) {
 	type NoMethod JSONSchemaPropsOrArray
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// JSONSchemaPropsOrBool: JSONSchemaPropsOrBool represents
-// JSONSchemaProps or a boolean value. Defaults to true for the boolean
-// property.
+// JSONSchemaPropsOrBool: JSONSchemaPropsOrBool represents JSONSchemaProps or a
+// boolean value. Defaults to true for the boolean property.
 type JSONSchemaPropsOrBool struct {
-	Allows bool `json:"allows,omitempty"`
-
+	Allows bool             `json:"allows,omitempty"`
 	Schema *JSONSchemaProps `json:"schema,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Allows") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Allows") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Allows") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *JSONSchemaPropsOrBool) MarshalJSON() ([]byte, error) {
+func (s JSONSchemaPropsOrBool) MarshalJSON() ([]byte, error) {
 	type NoMethod JSONSchemaPropsOrBool
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// JSONSchemaPropsOrStringArray: JSONSchemaPropsOrStringArray represents
-// a JSONSchemaProps or a string array.
+// JSONSchemaPropsOrStringArray: JSONSchemaPropsOrStringArray represents a
+// JSONSchemaProps or a string array.
 type JSONSchemaPropsOrStringArray struct {
-	Property []string `json:"property,omitempty"`
-
-	Schema *JSONSchemaProps `json:"schema,omitempty"`
-
+	Property []string         `json:"property,omitempty"`
+	Schema   *JSONSchemaProps `json:"schema,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Property") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Property") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Property") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *JSONSchemaPropsOrStringArray) MarshalJSON() ([]byte, error) {
+func (s JSONSchemaPropsOrStringArray) MarshalJSON() ([]byte, error) {
 	type NoMethod JSONSchemaPropsOrStringArray
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ListCustomResourceDefinitionsResponse struct {
 	// ApiVersion: The API version for this call such as
 	// "k8s.apiextensions.io/v1beta1".
 	ApiVersion string `json:"apiVersion,omitempty"`
-
 	// Items: List of CustomResourceDefinitions.
 	Items []*CustomResourceDefinition `json:"items,omitempty"`
-
 	// Kind: The kind of this resource, in this case
 	// "CustomResourceDefinitionList".
 	Kind string `json:"kind,omitempty"`
-
-	// Metadata: Metadata associated with this CustomResourceDefinition
-	// list.
+	// Metadata: Metadata associated with this CustomResourceDefinition list.
 	Metadata *ListMeta `json:"metadata,omitempty"`
-
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ListCustomResourceDefinitionsResponse) MarshalJSON() ([]byte, error) {
+func (s ListCustomResourceDefinitionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCustomResourceDefinitionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListMeta: ListMeta describes metadata that synthetic resources must
-// have, including lists and various status objects. A resource may have
-// only one of {ObjectMeta, ListMeta}.
+// ListMeta: ListMeta describes metadata that synthetic resources must have,
+// including lists and various status objects. A resource may have only one of
+// {ObjectMeta, ListMeta}.
 type ListMeta struct {
-	// Continue: continue may be set if the user set a limit on the number
-	// of items returned, and indicates that the server has more data
-	// available. The value is opaque and may be used to issue another
-	// request to the endpoint that served this list to retrieve the next
-	// set of available objects. Continuing a list may not be possible if
-	// the server configuration has changed or more than a few minutes have
-	// passed. The resourceVersion field returned when using this continue
-	// value will be identical to the value in the first response.
+	// Continue: continue may be set if the user set a limit on the number of items
+	// returned, and indicates that the server has more data available. The value
+	// is opaque and may be used to issue another request to the endpoint that
+	// served this list to retrieve the next set of available objects. Continuing a
+	// list may not be possible if the server configuration has changed or more
+	// than a few minutes have passed. The resourceVersion field returned when
+	// using this continue value will be identical to the value in the first
+	// response.
 	Continue string `json:"continue,omitempty"`
-
-	// ResourceVersion: String that identifies the server's internal version
-	// of this object that can be used by clients to determine when objects
-	// have changed. Value must be treated as opaque by clients and passed
-	// unmodified back to the server. Populated by the system. Read-only.
-	// More info:
+	// ResourceVersion: String that identifies the server's internal version of
+	// this object that can be used by clients to determine when objects have
+	// changed. Value must be treated as opaque by clients and passed unmodified
+	// back to the server. Populated by the system. Read-only. More info:
 	// https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency
 	// +optional
 	ResourceVersion string `json:"resourceVersion,omitempty"`
-
-	// SelfLink: SelfLink is a URL representing this object. Populated by
-	// the system. Read-only. +optional
+	// SelfLink: SelfLink is a URL representing this object. Populated by the
+	// system. Read-only. +optional
 	SelfLink string `json:"selfLink,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Continue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Continue") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Continue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ListMeta) MarshalJSON() ([]byte, error) {
+func (s ListMeta) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMeta
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ObjectMeta: k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta is
-// metadata that all persisted resources must have, which includes all
-// objects users must create.
+// ObjectMeta: k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta is metadata that
+// all persisted resources must have, which includes all objects users must
+// create.
 type ObjectMeta struct {
-	// Annotations: (Optional) Annotations is an unstructured key value map
-	// stored with a resource that may be set by external tools to store and
-	// retrieve arbitrary metadata. They are not queryable and should be
-	// preserved when modifying objects. More info:
+	// Annotations: (Optional) Annotations is an unstructured key value map stored
+	// with a resource that may be set by external tools to store and retrieve
+	// arbitrary metadata. They are not queryable and should be preserved when
+	// modifying objects. More info:
 	// http://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
-
-	// ClusterName: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported The name of the cluster which the object
-	// belongs to. This is used to distinguish resources with same name and
-	// namespace in different clusters. This field is not set anywhere right
-	// now and apiserver is going to ignore it if set in create or update
-	// request.
+	// ClusterName: (Optional) Cloud Run fully managed: not supported Cloud Run for
+	// Anthos: supported The name of the cluster which the object belongs to. This
+	// is used to distinguish resources with same name and namespace in different
+	// clusters. This field is not set anywhere right now and apiserver is going to
+	// ignore it if set in create or update request.
 	ClusterName string `json:"clusterName,omitempty"`
-
-	// CreationTimestamp: (Optional) CreationTimestamp is a timestamp
-	// representing the server time when this object was created. It is not
-	// guaranteed to be set in happens-before order across separate
-	// operations. Clients may not set this value. It is represented in
-	// RFC3339 form and is in UTC. Populated by the system. Read-only. Null
-	// for lists. More info:
+	// CreationTimestamp: (Optional) CreationTimestamp is a timestamp representing
+	// the server time when this object was created. It is not guaranteed to be set
+	// in happens-before order across separate operations. Clients may not set this
+	// value. It is represented in RFC3339 form and is in UTC. Populated by the
+	// system. Read-only. Null for lists. More info:
 	// https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
-
 	// DeletionGracePeriodSeconds: (Optional) Cloud Run fully managed: not
-	// supported Cloud Run for Anthos: supported Number of seconds allowed
-	// for this object to gracefully terminate before it will be removed
-	// from the system. Only set when deletionTimestamp is also set. May
-	// only be shortened. Read-only.
+	// supported Cloud Run for Anthos: supported Number of seconds allowed for this
+	// object to gracefully terminate before it will be removed from the system.
+	// Only set when deletionTimestamp is also set. May only be shortened.
+	// Read-only.
 	DeletionGracePeriodSeconds int64 `json:"deletionGracePeriodSeconds,omitempty"`
-
-	// DeletionTimestamp: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported DeletionTimestamp is RFC 3339 date
-	// and time at which this resource will be deleted. This field is set by
-	// the server when a graceful deletion is requested by the user, and is
-	// not directly settable by a client. The resource is expected to be
-	// deleted (no longer visible from resource lists, and not reachable by
-	// name) after the time in this field, once the finalizers list is
-	// empty. As long as the finalizers list contains items, deletion is
-	// blocked. Once the deletionTimestamp is set, this value may not be
-	// unset or be set further into the future, although it may be shortened
-	// or the resource may be deleted prior to this time. For example, a
-	// user may request that a pod is deleted in 30 seconds. The Kubelet
-	// will react by sending a graceful termination signal to the containers
-	// in the pod. After that 30 seconds, the Kubelet will send a hard
-	// termination signal (SIGKILL) to the container and after cleanup,
-	// remove the pod from the API. In the presence of network partitions,
-	// this object may still exist after this timestamp, until an
-	// administrator or automated process can determine the resource is
-	// fully terminated. If not set, graceful deletion of the object has not
-	// been requested. Populated by the system when a graceful deletion is
+	// DeletionTimestamp: (Optional) Cloud Run fully managed: not supported Cloud
+	// Run for Anthos: supported DeletionTimestamp is RFC 3339 date and time at
+	// which this resource will be deleted. This field is set by the server when a
+	// graceful deletion is requested by the user, and is not directly settable by
+	// a client. The resource is expected to be deleted (no longer visible from
+	// resource lists, and not reachable by name) after the time in this field,
+	// once the finalizers list is empty. As long as the finalizers list contains
+	// items, deletion is blocked. Once the deletionTimestamp is set, this value
+	// may not be unset or be set further into the future, although it may be
+	// shortened or the resource may be deleted prior to this time. For example, a
+	// user may request that a pod is deleted in 30 seconds. The Kubelet will react
+	// by sending a graceful termination signal to the containers in the pod. After
+	// that 30 seconds, the Kubelet will send a hard termination signal (SIGKILL)
+	// to the container and after cleanup, remove the pod from the API. In the
+	// presence of network partitions, this object may still exist after this
+	// timestamp, until an administrator or automated process can determine the
+	// resource is fully terminated. If not set, graceful deletion of the object
+	// has not been requested. Populated by the system when a graceful deletion is
 	// requested. Read-only. More info:
 	// https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	DeletionTimestamp string `json:"deletionTimestamp,omitempty"`
-
-	// Finalizers: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Must be empty before the object is deleted
-	// from the registry. Each entry is an identifier for the responsible
-	// component that will remove the entry from the list. If the
-	// deletionTimestamp of the object is non-nil, entries in this list can
-	// only be removed. +patchStrategy=merge
+	// Finalizers: (Optional) Cloud Run fully managed: not supported Cloud Run for
+	// Anthos: supported Must be empty before the object is deleted from the
+	// registry. Each entry is an identifier for the responsible component that
+	// will remove the entry from the list. If the deletionTimestamp of the object
+	// is non-nil, entries in this list can only be removed. +patchStrategy=merge
 	Finalizers []string `json:"finalizers,omitempty"`
-
-	// GenerateName: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported GenerateName is an optional prefix, used by
-	// the server, to generate a unique name ONLY IF the Name field has not
-	// been provided. If this field is used, the name returned to the client
-	// will be different than the name passed. This value will also be
-	// combined with a unique suffix. The provided value has the same
-	// validation rules as the Name field, and may be truncated by the
-	// length of the suffix required to make the value unique on the server.
-	// If this field is specified and the generated name exists, the server
-	// will NOT return a 409 - instead, it will either return 201 Created or
-	// 500 with Reason ServerTimeout indicating a unique name could not be
-	// found in the time allotted, and the client should retry (optionally
-	// after the time indicated in the Retry-After header). Applied only if
-	// Name is not specified. More info:
+	// GenerateName: (Optional) Cloud Run fully managed: not supported Cloud Run
+	// for Anthos: supported GenerateName is an optional prefix, used by the
+	// server, to generate a unique name ONLY IF the Name field has not been
+	// provided. If this field is used, the name returned to the client will be
+	// different than the name passed. This value will also be combined with a
+	// unique suffix. The provided value has the same validation rules as the Name
+	// field, and may be truncated by the length of the suffix required to make the
+	// value unique on the server. If this field is specified and the generated
+	// name exists, the server will NOT return a 409 - instead, it will either
+	// return 201 Created or 500 with Reason ServerTimeout indicating a unique name
+	// could not be found in the time allotted, and the client should retry
+	// (optionally after the time indicated in the Retry-After header). Applied
+	// only if Name is not specified. More info:
 	// https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency
 	// string generateName = 2;
 	GenerateName string `json:"generateName,omitempty"`
-
-	// Generation: (Optional) A sequence number representing a specific
-	// generation of the desired state. Populated by the system. Read-only.
+	// Generation: (Optional) A sequence number representing a specific generation
+	// of the desired state. Populated by the system. Read-only.
 	Generation int64 `json:"generation,omitempty"`
-
 	// Labels: (Optional) Map of string keys and values that can be used to
-	// organize and categorize (scope and select) objects. May match
-	// selectors of replication controllers and routes. More info:
+	// organize and categorize (scope and select) objects. May match selectors of
+	// replication controllers and routes. More info:
 	// http://kubernetes.io/docs/user-guide/labels
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// Name: Name must be unique within a namespace, within a Cloud Run
-	// region. Is required when creating resources, although some resources
-	// may allow a client to request the generation of an appropriate name
-	// automatically. Name is primarily intended for creation idempotence
-	// and configuration definition. Cannot be updated. More info:
+	// Name: Name must be unique within a namespace, within a Cloud Run region. Is
+	// required when creating resources, although some resources may allow a client
+	// to request the generation of an appropriate name automatically. Name is
+	// primarily intended for creation idempotence and configuration definition.
+	// Cannot be updated. More info:
 	// http://kubernetes.io/docs/user-guide/identifiers#names +optional
 	Name string `json:"name,omitempty"`
-
-	// Namespace: Namespace defines the space within each name must be
-	// unique, within a Cloud Run region. In Cloud Run the namespace must be
-	// equal to either the project ID or project number.
+	// Namespace: Namespace defines the space within each name must be unique,
+	// within a Cloud Run region. In Cloud Run the namespace must be equal to
+	// either the project ID or project number.
 	Namespace string `json:"namespace,omitempty"`
-
-	// OwnerReferences: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported List of objects that own this object.
-	// If ALL objects in the list have been deleted, this object will be
-	// garbage collected.
+	// OwnerReferences: (Optional) Cloud Run fully managed: not supported Cloud Run
+	// for Anthos: supported List of objects that own this object. If ALL objects
+	// in the list have been deleted, this object will be garbage collected.
 	OwnerReferences []*OwnerReference `json:"ownerReferences,omitempty"`
-
-	// ResourceVersion: (Optional) An opaque value that represents the
-	// internal version of this object that can be used by clients to
-	// determine when objects have changed. May be used for optimistic
-	// concurrency, change detection, and the watch operation on a resource
-	// or set of resources. Clients must treat these values as opaque and
-	// passed unmodified back to the server. They may only be valid for a
-	// particular resource or set of resources. Populated by the system.
-	// Read-only. Value must be treated as opaque by clients. More info:
+	// ResourceVersion: (Optional) An opaque value that represents the internal
+	// version of this object that can be used by clients to determine when objects
+	// have changed. May be used for optimistic concurrency, change detection, and
+	// the watch operation on a resource or set of resources. Clients must treat
+	// these values as opaque and passed unmodified back to the server. They may
+	// only be valid for a particular resource or set of resources. Populated by
+	// the system. Read-only. Value must be treated as opaque by clients. More
+	// info:
 	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
 	ResourceVersion string `json:"resourceVersion,omitempty"`
-
-	// SelfLink: (Optional) SelfLink is a URL representing this object.
-	// Populated by the system. Read-only. string selfLink = 4;
+	// SelfLink: (Optional) SelfLink is a URL representing this object. Populated
+	// by the system. Read-only. string selfLink = 4;
 	SelfLink string `json:"selfLink,omitempty"`
-
-	// Uid: (Optional) UID is the unique in time and space value for this
-	// object. It is typically generated by the server on successful
-	// creation of a resource and is not allowed to change on PUT
-	// operations. Populated by the system. Read-only. More info:
-	// http://kubernetes.io/docs/user-guide/identifiers#uids
+	// Uid: (Optional) UID is the unique in time and space value for this object.
+	// It is typically generated by the server on successful creation of a resource
+	// and is not allowed to change on PUT operations. Populated by the system.
+	// Read-only. More info: http://kubernetes.io/docs/user-guide/identifiers#uids
 	Uid string `json:"uid,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Annotations") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ObjectMeta) MarshalJSON() ([]byte, error) {
+func (s ObjectMeta) MarshalJSON() ([]byte, error) {
 	type NoMethod ObjectMeta
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // OwnerReference: OwnerReference contains enough information to let you
-// identify an owning object. Currently, an owning object must be in the
-// same namespace, so there is no namespace field.
+// identify an owning object. Currently, an owning object must be in the same
+// namespace, so there is no namespace field.
 type OwnerReference struct {
 	// ApiVersion: API version of the referent.
 	ApiVersion string `json:"apiVersion,omitempty"`
-
-	// BlockOwnerDeletion: If true, AND if the owner has the
-	// "foregroundDeletion" finalizer, then the owner cannot be deleted from
-	// the key-value store until this reference is removed. Defaults to
-	// false. To set this field, a user needs "delete" permission of the
-	// owner, otherwise 422 (Unprocessable Entity) will be returned.
-	// +optional
+	// BlockOwnerDeletion: If true, AND if the owner has the "foregroundDeletion"
+	// finalizer, then the owner cannot be deleted from the key-value store until
+	// this reference is removed. Defaults to false. To set this field, a user
+	// needs "delete" permission of the owner, otherwise 422 (Unprocessable Entity)
+	// will be returned. +optional
 	BlockOwnerDeletion bool `json:"blockOwnerDeletion,omitempty"`
-
-	// Controller: If true, this reference points to the managing
-	// controller. +optional
+	// Controller: If true, this reference points to the managing controller.
+	// +optional
 	Controller bool `json:"controller,omitempty"`
-
 	// Kind: Kind of the referent. More info:
 	// https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
 	Kind string `json:"kind,omitempty"`
-
 	// Name: Name of the referent. More info:
 	// http://kubernetes.io/docs/user-guide/identifiers#names
 	Name string `json:"name,omitempty"`
-
 	// Uid: UID of the referent. More info:
 	// http://kubernetes.io/docs/user-guide/identifiers#uids
 	Uid string `json:"uid,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *OwnerReference) MarshalJSON() ([]byte, error) {
+func (s OwnerReference) MarshalJSON() ([]byte, error) {
 	type NoMethod OwnerReference
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "run.customresourcedefinitions.list":
 
 type CustomresourcedefinitionsListCall struct {
 	s            *Service
@@ -1182,32 +974,32 @@ func (r *CustomresourcedefinitionsService) List() *CustomresourcedefinitionsList
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Optional encoded string to
+// continue paging.
 func (c *CustomresourcedefinitionsListCall) Continue(continue_ string) *CustomresourcedefinitionsListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
 }
 
-// FieldSelector sets the optional parameter "fieldSelector": Allows to
-// filter resources based on a specific value for a field name. Send
-// this in a query string format. i.e. 'metadata.name%3Dlorem'. Not
-// currently used by Cloud Run.
+// FieldSelector sets the optional parameter "fieldSelector": Allows to filter
+// resources based on a specific value for a field name. Send this in a query
+// string format. i.e. 'metadata.name%3Dlorem'. Not currently used by Cloud
+// Run.
 func (c *CustomresourcedefinitionsListCall) FieldSelector(fieldSelector string) *CustomresourcedefinitionsListCall {
 	c.urlParams_.Set("fieldSelector", fieldSelector)
 	return c
 }
 
-// IncludeUninitialized sets the optional parameter
-// "includeUninitialized": Not currently used by Cloud Run.
+// IncludeUninitialized sets the optional parameter "includeUninitialized": Not
+// currently used by Cloud Run.
 func (c *CustomresourcedefinitionsListCall) IncludeUninitialized(includeUninitialized bool) *CustomresourcedefinitionsListCall {
 	c.urlParams_.Set("includeUninitialized", fmt.Sprint(includeUninitialized))
 	return c
 }
 
-// LabelSelector sets the optional parameter "labelSelector": Allows to
-// filter resources based on a label. Supported operations are =, !=,
-// exists, in, and notIn.
+// LabelSelector sets the optional parameter "labelSelector": Allows to filter
+// resources based on a label. Supported operations are =, !=, exists, in, and
+// notIn.
 func (c *CustomresourcedefinitionsListCall) LabelSelector(labelSelector string) *CustomresourcedefinitionsListCall {
 	c.urlParams_.Set("labelSelector", labelSelector)
 	return c
@@ -1219,57 +1011,53 @@ func (c *CustomresourcedefinitionsListCall) Limit(limit int64) *Customresourcede
 	return c
 }
 
-// Parent sets the optional parameter "parent": The project ID or
-// project number from which the storages should be listed.
+// Parent sets the optional parameter "parent": The project ID or project
+// number from which the storages should be listed.
 func (c *CustomresourcedefinitionsListCall) Parent(parent string) *CustomresourcedefinitionsListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
 }
 
-// ResourceVersion sets the optional parameter "resourceVersion": The
-// baseline resource version from which the list or watch operation
-// should start. Not currently used by Cloud Run.
+// ResourceVersion sets the optional parameter "resourceVersion": The baseline
+// resource version from which the list or watch operation should start. Not
+// currently used by Cloud Run.
 func (c *CustomresourcedefinitionsListCall) ResourceVersion(resourceVersion string) *CustomresourcedefinitionsListCall {
 	c.urlParams_.Set("resourceVersion", resourceVersion)
 	return c
 }
 
-// Watch sets the optional parameter "watch": Flag that indicates that
-// the client expects to watch this resource as well. Not currently used
-// by Cloud Run.
+// Watch sets the optional parameter "watch": Flag that indicates that the
+// client expects to watch this resource as well. Not currently used by Cloud
+// Run.
 func (c *CustomresourcedefinitionsListCall) Watch(watch bool) *CustomresourcedefinitionsListCall {
 	c.urlParams_.Set("watch", fmt.Sprint(watch))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomresourcedefinitionsListCall) Fields(s ...googleapi.Field) *CustomresourcedefinitionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CustomresourcedefinitionsListCall) IfNoneMatch(entityTag string) *CustomresourcedefinitionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomresourcedefinitionsListCall) Context(ctx context.Context) *CustomresourcedefinitionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomresourcedefinitionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1278,12 +1066,7 @@ func (c *CustomresourcedefinitionsListCall) Header() http.Header {
 }
 
 func (c *CustomresourcedefinitionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1297,17 +1080,15 @@ func (c *CustomresourcedefinitionsListCall) doRequest(alt string) (*http.Respons
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "run.customresourcedefinitions.list" call.
-// Exactly one of *ListCustomResourceDefinitionsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *ListCustomResourceDefinitionsResponse.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *CustomresourcedefinitionsListCall) Do(opts ...googleapi.CallOption) (*ListCustomResourceDefinitionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1315,17 +1096,17 @@ func (c *CustomresourcedefinitionsListCall) Do(opts ...googleapi.CallOption) (*L
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCustomResourceDefinitionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1338,66 +1119,7 @@ func (c *CustomresourcedefinitionsListCall) Do(opts ...googleapi.CallOption) (*L
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Rpc to list custom resource definitions.",
-	//   "flatPath": "apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions",
-	//   "httpMethod": "GET",
-	//   "id": "run.customresourcedefinitions.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "fieldSelector": {
-	//       "description": "Allows to filter resources based on a specific value for a field name. Send this in a query string format. i.e. 'metadata.name%3Dlorem'. Not currently used by Cloud Run.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "includeUninitialized": {
-	//       "description": "Not currently used by Cloud Run.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "labelSelector": {
-	//       "description": "Allows to filter resources based on a label. Supported operations are =, !=, exists, in, and notIn.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "limit": {
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "parent": {
-	//       "description": "The project ID or project number from which the storages should be listed.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resourceVersion": {
-	//       "description": "The baseline resource version from which the list or watch operation should start. Not currently used by Cloud Run.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "watch": {
-	//       "description": "Flag that indicates that the client expects to watch this resource as well. Not currently used by Cloud Run.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions",
-	//   "response": {
-	//     "$ref": "ListCustomResourceDefinitionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "run.namespaces.customresourcedefinitions.get":
 
 type NamespacesCustomresourcedefinitionsGetCall struct {
 	s            *Service
@@ -1410,8 +1132,8 @@ type NamespacesCustomresourcedefinitionsGetCall struct {
 
 // Get: Rpc to get information about a CustomResourceDefinition.
 //
-//   - name: The name of the CustomResourceDefinition being retrieved. If
-//     needed, replace {namespace_id} with the project ID.
+//   - name: The name of the CustomResourceDefinition being retrieved. If needed,
+//     replace {namespace_id} with the project ID.
 func (r *NamespacesCustomresourcedefinitionsService) Get(name string) *NamespacesCustomresourcedefinitionsGetCall {
 	c := &NamespacesCustomresourcedefinitionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1419,33 +1141,29 @@ func (r *NamespacesCustomresourcedefinitionsService) Get(name string) *Namespace
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *NamespacesCustomresourcedefinitionsGetCall) Fields(s ...googleapi.Field) *NamespacesCustomresourcedefinitionsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *NamespacesCustomresourcedefinitionsGetCall) IfNoneMatch(entityTag string) *NamespacesCustomresourcedefinitionsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *NamespacesCustomresourcedefinitionsGetCall) Context(ctx context.Context) *NamespacesCustomresourcedefinitionsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *NamespacesCustomresourcedefinitionsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1454,12 +1172,7 @@ func (c *NamespacesCustomresourcedefinitionsGetCall) Header() http.Header {
 }
 
 func (c *NamespacesCustomresourcedefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1476,16 +1189,15 @@ func (c *NamespacesCustomresourcedefinitionsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "run.namespaces.customresourcedefinitions.get" call.
-// Exactly one of *CustomResourceDefinition or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *CustomResourceDefinition.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *NamespacesCustomresourcedefinitionsGetCall) Do(opts ...googleapi.CallOption) (*CustomResourceDefinition, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1493,17 +1205,17 @@ func (c *NamespacesCustomresourcedefinitionsGetCall) Do(opts ...googleapi.CallOp
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomResourceDefinition{
 		ServerResponse: googleapi.ServerResponse{
@@ -1516,35 +1228,7 @@ func (c *NamespacesCustomresourcedefinitionsGetCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Rpc to get information about a CustomResourceDefinition.",
-	//   "flatPath": "apis/apiextensions.k8s.io/v1beta1/namespaces/{namespacesId}/customresourcedefinitions/{customresourcedefinitionsId}",
-	//   "httpMethod": "GET",
-	//   "id": "run.namespaces.customresourcedefinitions.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the CustomResourceDefinition being retrieved. If needed, replace {namespace_id} with the project ID.",
-	//       "location": "path",
-	//       "pattern": "^namespaces/[^/]+/customresourcedefinitions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apis/apiextensions.k8s.io/v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "CustomResourceDefinition"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "run.projects.locations.customresourcedefinitions.get":
 
 type ProjectsLocationsCustomresourcedefinitionsGetCall struct {
 	s            *Service
@@ -1557,8 +1241,8 @@ type ProjectsLocationsCustomresourcedefinitionsGetCall struct {
 
 // Get: Rpc to get information about a CustomResourceDefinition.
 //
-//   - name: The name of the CustomResourceDefinition being retrieved. If
-//     needed, replace {namespace_id} with the project ID.
+//   - name: The name of the CustomResourceDefinition being retrieved. If needed,
+//     replace {namespace_id} with the project ID.
 func (r *ProjectsLocationsCustomresourcedefinitionsService) Get(name string) *ProjectsLocationsCustomresourcedefinitionsGetCall {
 	c := &ProjectsLocationsCustomresourcedefinitionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1566,33 +1250,29 @@ func (r *ProjectsLocationsCustomresourcedefinitionsService) Get(name string) *Pr
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomresourcedefinitionsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCustomresourcedefinitionsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) Context(ctx context.Context) *ProjectsLocationsCustomresourcedefinitionsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1601,12 +1281,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) Header() http.Header
 }
 
 func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1623,16 +1298,15 @@ func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "run.projects.locations.customresourcedefinitions.get" call.
-// Exactly one of *CustomResourceDefinition or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *CustomResourceDefinition.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) Do(opts ...googleapi.CallOption) (*CustomResourceDefinition, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1640,17 +1314,17 @@ func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) Do(opts ...googleapi
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &CustomResourceDefinition{
 		ServerResponse: googleapi.ServerResponse{
@@ -1663,35 +1337,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsGetCall) Do(opts ...googleapi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Rpc to get information about a CustomResourceDefinition.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/customresourcedefinitions/{customresourcedefinitionsId}",
-	//   "httpMethod": "GET",
-	//   "id": "run.projects.locations.customresourcedefinitions.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the CustomResourceDefinition being retrieved. If needed, replace {namespace_id} with the project ID.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/customresourcedefinitions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "CustomResourceDefinition"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "run.projects.locations.customresourcedefinitions.list":
 
 type ProjectsLocationsCustomresourcedefinitionsListCall struct {
 	s            *Service
@@ -1704,40 +1350,40 @@ type ProjectsLocationsCustomresourcedefinitionsListCall struct {
 
 // List: Rpc to list custom resource definitions.
 //
-//   - parent: The project ID or project number from which the storages
-//     should be listed.
+//   - parent: The project ID or project number from which the storages should be
+//     listed.
 func (r *ProjectsLocationsCustomresourcedefinitionsService) List(parent string) *ProjectsLocationsCustomresourcedefinitionsListCall {
 	c := &ProjectsLocationsCustomresourcedefinitionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Optional encoded string to
+// continue paging.
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Continue(continue_ string) *ProjectsLocationsCustomresourcedefinitionsListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
 }
 
-// FieldSelector sets the optional parameter "fieldSelector": Allows to
-// filter resources based on a specific value for a field name. Send
-// this in a query string format. i.e. 'metadata.name%3Dlorem'. Not
-// currently used by Cloud Run.
+// FieldSelector sets the optional parameter "fieldSelector": Allows to filter
+// resources based on a specific value for a field name. Send this in a query
+// string format. i.e. 'metadata.name%3Dlorem'. Not currently used by Cloud
+// Run.
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) FieldSelector(fieldSelector string) *ProjectsLocationsCustomresourcedefinitionsListCall {
 	c.urlParams_.Set("fieldSelector", fieldSelector)
 	return c
 }
 
-// IncludeUninitialized sets the optional parameter
-// "includeUninitialized": Not currently used by Cloud Run.
+// IncludeUninitialized sets the optional parameter "includeUninitialized": Not
+// currently used by Cloud Run.
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) IncludeUninitialized(includeUninitialized bool) *ProjectsLocationsCustomresourcedefinitionsListCall {
 	c.urlParams_.Set("includeUninitialized", fmt.Sprint(includeUninitialized))
 	return c
 }
 
-// LabelSelector sets the optional parameter "labelSelector": Allows to
-// filter resources based on a label. Supported operations are =, !=,
-// exists, in, and notIn.
+// LabelSelector sets the optional parameter "labelSelector": Allows to filter
+// resources based on a label. Supported operations are =, !=, exists, in, and
+// notIn.
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) LabelSelector(labelSelector string) *ProjectsLocationsCustomresourcedefinitionsListCall {
 	c.urlParams_.Set("labelSelector", labelSelector)
 	return c
@@ -1749,50 +1395,46 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Limit(limit int64) 
 	return c
 }
 
-// ResourceVersion sets the optional parameter "resourceVersion": The
-// baseline resource version from which the list or watch operation
-// should start. Not currently used by Cloud Run.
+// ResourceVersion sets the optional parameter "resourceVersion": The baseline
+// resource version from which the list or watch operation should start. Not
+// currently used by Cloud Run.
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) ResourceVersion(resourceVersion string) *ProjectsLocationsCustomresourcedefinitionsListCall {
 	c.urlParams_.Set("resourceVersion", resourceVersion)
 	return c
 }
 
-// Watch sets the optional parameter "watch": Flag that indicates that
-// the client expects to watch this resource as well. Not currently used
-// by Cloud Run.
+// Watch sets the optional parameter "watch": Flag that indicates that the
+// client expects to watch this resource as well. Not currently used by Cloud
+// Run.
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Watch(watch bool) *ProjectsLocationsCustomresourcedefinitionsListCall {
 	c.urlParams_.Set("watch", fmt.Sprint(watch))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomresourcedefinitionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCustomresourcedefinitionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Context(ctx context.Context) *ProjectsLocationsCustomresourcedefinitionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1801,12 +1443,7 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Header() http.Heade
 }
 
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210331")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1823,17 +1460,15 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "run.projects.locations.customresourcedefinitions.list" call.
-// Exactly one of *ListCustomResourceDefinitionsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *ListCustomResourceDefinitionsResponse.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Do(opts ...googleapi.CallOption) (*ListCustomResourceDefinitionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1841,17 +1476,17 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Do(opts ...googleap
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ListCustomResourceDefinitionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1864,65 +1499,4 @@ func (c *ProjectsLocationsCustomresourcedefinitionsListCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Rpc to list custom resource definitions.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/customresourcedefinitions",
-	//   "httpMethod": "GET",
-	//   "id": "run.projects.locations.customresourcedefinitions.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "fieldSelector": {
-	//       "description": "Allows to filter resources based on a specific value for a field name. Send this in a query string format. i.e. 'metadata.name%3Dlorem'. Not currently used by Cloud Run.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "includeUninitialized": {
-	//       "description": "Not currently used by Cloud Run.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "labelSelector": {
-	//       "description": "Allows to filter resources based on a label. Supported operations are =, !=, exists, in, and notIn.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "limit": {
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "parent": {
-	//       "description": "The project ID or project number from which the storages should be listed.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "resourceVersion": {
-	//       "description": "The baseline resource version from which the list or watch operation should start. Not currently used by Cloud Run.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "watch": {
-	//       "description": "Flag that indicates that the client expects to watch this resource as well. Not currently used by Cloud Run.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/customresourcedefinitions",
-	//   "response": {
-	//     "$ref": "ListCustomResourceDefinitionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

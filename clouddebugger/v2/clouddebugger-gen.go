@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package clouddebugger provides access to the Cloud Debugger API (Deprecated).
 //
 // For product documentation, see: https://cloud.google.com/debugger
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	clouddebuggerService, err := clouddebugger.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	clouddebuggerService, err := clouddebugger.NewService(ctx, option.WithScopes(clouddebugger.CloudDebuggerScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	clouddebuggerService, err := clouddebugger.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	clouddebuggerService, err := clouddebugger.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package clouddebugger // import "google.golang.org/api/clouddebugger/v2"
 
 import (
@@ -81,12 +95,13 @@ const apiId = "clouddebugger:v2"
 const apiName = "clouddebugger"
 const apiVersion = "v2"
 const basePath = "https://clouddebugger.googleapis.com/"
+const basePathTemplate = "https://clouddebugger.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://clouddebugger.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Use Stackdriver Debugger
@@ -102,7 +117,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -223,1170 +240,925 @@ type AliasContext struct {
 	//   "ANY" - Do not use.
 	//   "FIXED" - Git tag
 	//   "MOVABLE" - Git branch
-	//   "OTHER" - OTHER is used to specify non-standard aliases, those not
-	// of the kinds above. For example, if a Git repo has a ref named
-	// "refs/foo/bar", it is considered to be of kind OTHER.
+	//   "OTHER" - OTHER is used to specify non-standard aliases, those not of the
+	// kinds above. For example, if a Git repo has a ref named "refs/foo/bar", it
+	// is considered to be of kind OTHER.
 	Kind string `json:"kind,omitempty"`
-
 	// Name: The alias name.
 	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *AliasContext) MarshalJSON() ([]byte, error) {
+func (s AliasContext) MarshalJSON() ([]byte, error) {
 	type NoMethod AliasContext
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Breakpoint:
-// ----------------------------------------------------------------------
-// -------- ## Breakpoint (the resource) Represents the breakpoint
-// specification, status and results.
+// -----------------------------------------------------------------------------
+// - ## Breakpoint (the resource) Represents the breakpoint specification,
+// status and results.
 type Breakpoint struct {
-	// Action: Action that the agent should perform when the code at the
-	// breakpoint location is hit.
+	// Action: Action that the agent should perform when the code at the breakpoint
+	// location is hit.
 	//
 	// Possible values:
-	//   "CAPTURE" - Capture stack frame and variables and update the
-	// breakpoint. The data is only captured once. After that the breakpoint
-	// is set in a final state.
-	//   "LOG" - Log each breakpoint hit. The breakpoint remains active
-	// until deleted or expired.
+	//   "CAPTURE" - Capture stack frame and variables and update the breakpoint.
+	// The data is only captured once. After that the breakpoint is set in a final
+	// state.
+	//   "LOG" - Log each breakpoint hit. The breakpoint remains active until
+	// deleted or expired.
 	Action string `json:"action,omitempty"`
-
-	// CanaryExpireTime: The deadline for the breakpoint to stay in
-	// CANARY_ACTIVE state. The value is meaningless when the breakpoint is
-	// not in CANARY_ACTIVE state.
+	// CanaryExpireTime: The deadline for the breakpoint to stay in CANARY_ACTIVE
+	// state. The value is meaningless when the breakpoint is not in CANARY_ACTIVE
+	// state.
 	CanaryExpireTime string `json:"canaryExpireTime,omitempty"`
-
 	// Condition: Condition that triggers the breakpoint. The condition is a
-	// compound boolean expression composed using expressions in a
-	// programming language at the source location.
+	// compound boolean expression composed using expressions in a programming
+	// language at the source location.
 	Condition string `json:"condition,omitempty"`
-
 	// CreateTime: Time this breakpoint was created by the server in seconds
 	// resolution.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// EvaluatedExpressions: Values of evaluated expressions at breakpoint
-	// time. The evaluated expressions appear in exactly the same order they
-	// are listed in the `expressions` field. The `name` field holds the
-	// original expression text, the `value` or `members` field holds the
-	// result of the evaluated expression. If the expression cannot be
-	// evaluated, the `status` inside the `Variable` will indicate an error
-	// and contain the error text.
+	// EvaluatedExpressions: Values of evaluated expressions at breakpoint time.
+	// The evaluated expressions appear in exactly the same order they are listed
+	// in the `expressions` field. The `name` field holds the original expression
+	// text, the `value` or `members` field holds the result of the evaluated
+	// expression. If the expression cannot be evaluated, the `status` inside the
+	// `Variable` will indicate an error and contain the error text.
 	EvaluatedExpressions []*Variable `json:"evaluatedExpressions,omitempty"`
-
-	// Expressions: List of read-only expressions to evaluate at the
-	// breakpoint location. The expressions are composed using expressions
-	// in the programming language at the source location. If the breakpoint
-	// action is `LOG`, the evaluated expressions are included in log
-	// statements.
+	// Expressions: List of read-only expressions to evaluate at the breakpoint
+	// location. The expressions are composed using expressions in the programming
+	// language at the source location. If the breakpoint action is `LOG`, the
+	// evaluated expressions are included in log statements.
 	Expressions []string `json:"expressions,omitempty"`
-
-	// FinalTime: Time this breakpoint was finalized as seen by the server
-	// in seconds resolution.
+	// FinalTime: Time this breakpoint was finalized as seen by the server in
+	// seconds resolution.
 	FinalTime string `json:"finalTime,omitempty"`
-
 	// Id: Breakpoint identifier, unique in the scope of the debuggee.
 	Id string `json:"id,omitempty"`
-
-	// IsFinalState: When true, indicates that this is a final result and
-	// the breakpoint state will not change from here on.
+	// IsFinalState: When true, indicates that this is a final result and the
+	// breakpoint state will not change from here on.
 	IsFinalState bool `json:"isFinalState,omitempty"`
-
-	// Labels: A set of custom breakpoint properties, populated by the
-	// agent, to be displayed to the user.
+	// Labels: A set of custom breakpoint properties, populated by the agent, to be
+	// displayed to the user.
 	Labels map[string]string `json:"labels,omitempty"`
-
 	// Location: Breakpoint source location.
 	Location *SourceLocation `json:"location,omitempty"`
-
-	// LogLevel: Indicates the severity of the log. Only relevant when
-	// action is `LOG`.
+	// LogLevel: Indicates the severity of the log. Only relevant when action is
+	// `LOG`.
 	//
 	// Possible values:
 	//   "INFO" - Information log message.
 	//   "WARNING" - Warning log message.
 	//   "ERROR" - Error log message.
 	LogLevel string `json:"logLevel,omitempty"`
-
-	// LogMessageFormat: Only relevant when action is `LOG`. Defines the
-	// message to log when the breakpoint hits. The message may include
-	// parameter placeholders `$0`, `$1`, etc. These placeholders are
-	// replaced with the evaluated value of the appropriate expression.
-	// Expressions not referenced in `log_message_format` are not logged.
-	// Example: `Message received, id = $0, count = $1` with `expressions` =
-	// `[ message.id, message.count ]`.
+	// LogMessageFormat: Only relevant when action is `LOG`. Defines the message to
+	// log when the breakpoint hits. The message may include parameter placeholders
+	// `$0`, `$1`, etc. These placeholders are replaced with the evaluated value of
+	// the appropriate expression. Expressions not referenced in
+	// `log_message_format` are not logged. Example: `Message received, id = $0,
+	// count = $1` with `expressions` = `[ message.id, message.count ]`.
 	LogMessageFormat string `json:"logMessageFormat,omitempty"`
-
-	// StackFrames: The stack at breakpoint time, where stack_frames[0]
-	// represents the most recently entered function.
+	// StackFrames: The stack at breakpoint time, where stack_frames[0] represents
+	// the most recently entered function.
 	StackFrames []*StackFrame `json:"stackFrames,omitempty"`
-
 	// State: The current state of the breakpoint.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Breakpoint state UNSPECIFIED.
 	//   "STATE_CANARY_PENDING_AGENTS" - Enabling canary but no agents are
 	// available.
-	//   "STATE_CANARY_ACTIVE" - Enabling canary and successfully assigning
-	// canary agents.
+	//   "STATE_CANARY_ACTIVE" - Enabling canary and successfully assigning canary
+	// agents.
 	//   "STATE_ROLLING_TO_ALL" - Breakpoint rolling out to all agents.
 	//   "STATE_IS_FINAL" - Breakpoint is hit/complete/failed.
 	State string `json:"state,omitempty"`
-
-	// Status: Breakpoint status. The status includes an error flag and a
-	// human readable message. This field is usually unset. The message can
-	// be either informational or an error message. Regardless, clients
-	// should always display the text message back to the user. Error status
-	// indicates complete failure of the breakpoint. Example (non-final
-	// state): `Still loading symbols...` Examples (final state): * `Invalid
-	// line number` referring to location * `Field f not found in class C`
-	// referring to condition
+	// Status: Breakpoint status. The status includes an error flag and a human
+	// readable message. This field is usually unset. The message can be either
+	// informational or an error message. Regardless, clients should always display
+	// the text message back to the user. Error status indicates complete failure
+	// of the breakpoint. Example (non-final state): `Still loading symbols...`
+	// Examples (final state): * `Invalid line number` referring to location *
+	// `Field f not found in class C` referring to condition
 	Status *StatusMessage `json:"status,omitempty"`
-
 	// UserEmail: E-mail address of the user that created this breakpoint
 	UserEmail string `json:"userEmail,omitempty"`
-
-	// VariableTable: The `variable_table` exists to aid with computation,
-	// memory and network traffic optimization. It enables storing a
-	// variable once and reference it from multiple variables, including
-	// variables stored in the `variable_table` itself. For example, the
-	// same `this` object, which may appear at many levels of the stack, can
-	// have all of its data stored once in this table. The stack frame
-	// variables then would hold only a reference to it. The variable
-	// `var_table_index` field is an index into this repeated field. The
-	// stored objects are nameless and get their name from the referencing
-	// variable. The effective variable is a merge of the referencing
+	// VariableTable: The `variable_table` exists to aid with computation, memory
+	// and network traffic optimization. It enables storing a variable once and
+	// reference it from multiple variables, including variables stored in the
+	// `variable_table` itself. For example, the same `this` object, which may
+	// appear at many levels of the stack, can have all of its data stored once in
+	// this table. The stack frame variables then would hold only a reference to
+	// it. The variable `var_table_index` field is an index into this repeated
+	// field. The stored objects are nameless and get their name from the
+	// referencing variable. The effective variable is a merge of the referencing
 	// variable and the referenced variable.
 	VariableTable []*Variable `json:"variableTable,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Action") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Action") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Breakpoint) MarshalJSON() ([]byte, error) {
+func (s Breakpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod Breakpoint
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudRepoSourceContext: A CloudRepoSourceContext denotes a particular
-// revision in a cloud repo (a repo hosted by the Google Cloud
-// Platform).
+// revision in a cloud repo (a repo hosted by the Google Cloud Platform).
 type CloudRepoSourceContext struct {
 	// AliasContext: An alias, which may be a branch or tag.
 	AliasContext *AliasContext `json:"aliasContext,omitempty"`
-
 	// AliasName: The name of an alias (branch, tag, etc.).
 	AliasName string `json:"aliasName,omitempty"`
-
 	// RepoId: The ID of the repo.
 	RepoId *RepoId `json:"repoId,omitempty"`
-
 	// RevisionId: A revision ID.
 	RevisionId string `json:"revisionId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AliasContext") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AliasContext") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AliasContext") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudRepoSourceContext) MarshalJSON() ([]byte, error) {
+func (s CloudRepoSourceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudRepoSourceContext
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CloudWorkspaceId: A CloudWorkspaceId is a unique identifier for a
-// cloud workspace. A cloud workspace is a place associated with a repo
-// where modified files can be stored before they are committed.
+// CloudWorkspaceId: A CloudWorkspaceId is a unique identifier for a cloud
+// workspace. A cloud workspace is a place associated with a repo where
+// modified files can be stored before they are committed.
 type CloudWorkspaceId struct {
-	// Name: The unique name of the workspace within the repo. This is the
-	// name chosen by the client in the Source API's CreateWorkspace method.
+	// Name: The unique name of the workspace within the repo. This is the name
+	// chosen by the client in the Source API's CreateWorkspace method.
 	Name string `json:"name,omitempty"`
-
 	// RepoId: The ID of the repo containing the workspace.
 	RepoId *RepoId `json:"repoId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudWorkspaceId) MarshalJSON() ([]byte, error) {
+func (s CloudWorkspaceId) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudWorkspaceId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudWorkspaceSourceContext: A CloudWorkspaceSourceContext denotes a
 // workspace at a particular snapshot.
 type CloudWorkspaceSourceContext struct {
-	// SnapshotId: The ID of the snapshot. An empty snapshot_id refers to
-	// the most recent snapshot.
+	// SnapshotId: The ID of the snapshot. An empty snapshot_id refers to the most
+	// recent snapshot.
 	SnapshotId string `json:"snapshotId,omitempty"`
-
 	// WorkspaceId: The ID of the workspace.
 	WorkspaceId *CloudWorkspaceId `json:"workspaceId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SnapshotId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SnapshotId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SnapshotId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *CloudWorkspaceSourceContext) MarshalJSON() ([]byte, error) {
+func (s CloudWorkspaceSourceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudWorkspaceSourceContext
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Debuggee: Represents the debugged application. The application may
-// include one or more replicated processes executing the same code.
-// Each of these processes is attached with a debugger agent, carrying
-// out the debugging commands. Agents attached to the same debuggee
-// identify themselves as such by using exactly the same Debuggee
-// message value when registering.
+// Debuggee: Represents the debugged application. The application may include
+// one or more replicated processes executing the same code. Each of these
+// processes is attached with a debugger agent, carrying out the debugging
+// commands. Agents attached to the same debuggee identify themselves as such
+// by using exactly the same Debuggee message value when registering.
 type Debuggee struct {
 	// AgentVersion: Version ID of the agent. Schema:
 	// `domain/language-platform/vmajor.minor` (for example
 	// `google.com/java-gcp/v1.1`).
 	AgentVersion string `json:"agentVersion,omitempty"`
-
 	// CanaryMode: Used when setting breakpoint canary for this debuggee.
 	//
 	// Possible values:
-	//   "CANARY_MODE_UNSPECIFIED" - CANARY_MODE_UNSPECIFIED is equivalent
-	// to CANARY_MODE_ALWAYS_DISABLED so that if the debuggee is not
-	// configured to use the canary feature, the feature will be disabled.
-	//   "CANARY_MODE_ALWAYS_ENABLED" - Always enable breakpoint canary
-	// regardless of the value of breakpoint's canary option.
+	//   "CANARY_MODE_UNSPECIFIED" - CANARY_MODE_UNSPECIFIED is equivalent to
+	// CANARY_MODE_ALWAYS_DISABLED so that if the debuggee is not configured to use
+	// the canary feature, the feature will be disabled.
+	//   "CANARY_MODE_ALWAYS_ENABLED" - Always enable breakpoint canary regardless
+	// of the value of breakpoint's canary option.
 	//   "CANARY_MODE_ALWAYS_DISABLED" - Always disable breakpoint canary
 	// regardless of the value of breakpoint's canary option.
-	//   "CANARY_MODE_DEFAULT_ENABLED" - Depends on the breakpoint's canary
-	// option. Enable canary by default if the breakpoint's canary option is
-	// not specified.
+	//   "CANARY_MODE_DEFAULT_ENABLED" - Depends on the breakpoint's canary option.
+	// Enable canary by default if the breakpoint's canary option is not specified.
 	//   "CANARY_MODE_DEFAULT_DISABLED" - Depends on the breakpoint's canary
-	// option. Disable canary by default if the breakpoint's canary option
-	// is not specified.
+	// option. Disable canary by default if the breakpoint's canary option is not
+	// specified.
 	CanaryMode string `json:"canaryMode,omitempty"`
-
 	// Description: Human readable description of the debuggee. Including a
-	// human-readable project name, environment name and version information
-	// is recommended.
+	// human-readable project name, environment name and version information is
+	// recommended.
 	Description string `json:"description,omitempty"`
-
-	// ExtSourceContexts: References to the locations and revisions of the
-	// source code used in the deployed application.
+	// ExtSourceContexts: References to the locations and revisions of the source
+	// code used in the deployed application.
 	ExtSourceContexts []*ExtendedSourceContext `json:"extSourceContexts,omitempty"`
-
-	// Id: Unique identifier for the debuggee generated by the controller
-	// service.
+	// Id: Unique identifier for the debuggee generated by the controller service.
 	Id string `json:"id,omitempty"`
-
-	// IsDisabled: If set to `true`, indicates that the agent should disable
-	// itself and detach from the debuggee.
+	// IsDisabled: If set to `true`, indicates that the agent should disable itself
+	// and detach from the debuggee.
 	IsDisabled bool `json:"isDisabled,omitempty"`
-
-	// IsInactive: If set to `true`, indicates that Controller service does
-	// not detect any activity from the debuggee agents and the application
-	// is possibly stopped.
+	// IsInactive: If set to `true`, indicates that Controller service does not
+	// detect any activity from the debuggee agents and the application is possibly
+	// stopped.
 	IsInactive bool `json:"isInactive,omitempty"`
-
-	// Labels: A set of custom debuggee properties, populated by the agent,
-	// to be displayed to the user.
+	// Labels: A set of custom debuggee properties, populated by the agent, to be
+	// displayed to the user.
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// Project: Project the debuggee is associated with. Use project number
-	// or id when registering a Google Cloud Platform project.
+	// Project: Project the debuggee is associated with. Use project number or id
+	// when registering a Google Cloud Platform project.
 	Project string `json:"project,omitempty"`
-
-	// SourceContexts: References to the locations and revisions of the
-	// source code used in the deployed application.
+	// SourceContexts: References to the locations and revisions of the source code
+	// used in the deployed application.
 	SourceContexts []*SourceContext `json:"sourceContexts,omitempty"`
-
 	// Status: Human readable message to be displayed to the user about this
-	// debuggee. Absence of this field indicates no status. The message can
-	// be either informational or an error status.
+	// debuggee. Absence of this field indicates no status. The message can be
+	// either informational or an error status.
 	Status *StatusMessage `json:"status,omitempty"`
-
 	// Uniquifier: Uniquifier to further distinguish the application. It is
-	// possible that different applications might have identical values in
-	// the debuggee message, thus, incorrectly identified as a single
-	// application by the Controller service. This field adds salt to
-	// further distinguish the application. Agents should consider seeding
-	// this field with value that identifies the code, binary, configuration
-	// and environment.
+	// possible that different applications might have identical values in the
+	// debuggee message, thus, incorrectly identified as a single application by
+	// the Controller service. This field adds salt to further distinguish the
+	// application. Agents should consider seeding this field with value that
+	// identifies the code, binary, configuration and environment.
 	Uniquifier string `json:"uniquifier,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AgentVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AgentVersion") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AgentVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Debuggee) MarshalJSON() ([]byte, error) {
+func (s Debuggee) MarshalJSON() ([]byte, error) {
 	type NoMethod Debuggee
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// ExtendedSourceContext: An ExtendedSourceContext is a SourceContext
-// combined with additional details describing the context.
+// ExtendedSourceContext: An ExtendedSourceContext is a SourceContext combined
+// with additional details describing the context.
 type ExtendedSourceContext struct {
 	// Context: Any source context.
 	Context *SourceContext `json:"context,omitempty"`
-
 	// Labels: Labels with user defined metadata.
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Context") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Context") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Context") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Context") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ExtendedSourceContext) MarshalJSON() ([]byte, error) {
+func (s ExtendedSourceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod ExtendedSourceContext
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FormatMessage: Represents a message with parameters.
 type FormatMessage struct {
-	// Format: Format template for the message. The `format` uses
-	// placeholders `$0`, `$1`, etc. to reference parameters. `$$` can be
-	// used to denote the `$` character. Examples: * `Failed to load '$0'
-	// which helps debug $1 the first time it is loaded. Again, $0 is very
-	// important.` * `Please pay $$10 to use $0 instead of $1.`
+	// Format: Format template for the message. The `format` uses placeholders
+	// `$0`, `$1`, etc. to reference parameters. `$$` can be used to denote the `$`
+	// character. Examples: * `Failed to load '$0' which helps debug $1 the first
+	// time it is loaded. Again, $0 is very important.` * `Please pay $$10 to use
+	// $0 instead of $1.`
 	Format string `json:"format,omitempty"`
-
 	// Parameters: Optional parameters to be embedded into the message.
 	Parameters []string `json:"parameters,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Format") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Format") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Format") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *FormatMessage) MarshalJSON() ([]byte, error) {
+func (s FormatMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod FormatMessage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GerritSourceContext: A SourceContext referring to a Gerrit project.
 type GerritSourceContext struct {
 	// AliasContext: An alias, which may be a branch or tag.
 	AliasContext *AliasContext `json:"aliasContext,omitempty"`
-
 	// AliasName: The name of an alias (branch, tag, etc.).
 	AliasName string `json:"aliasName,omitempty"`
-
 	// GerritProject: The full project name within the host. Projects may be
-	// nested, so "project/subproject" is a valid project name. The "repo
-	// name" is hostURI/project.
+	// nested, so "project/subproject" is a valid project name. The "repo name" is
+	// hostURI/project.
 	GerritProject string `json:"gerritProject,omitempty"`
-
 	// HostUri: The URI of a running Gerrit instance.
 	HostUri string `json:"hostUri,omitempty"`
-
 	// RevisionId: A revision (commit) ID.
 	RevisionId string `json:"revisionId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AliasContext") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AliasContext") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AliasContext") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GerritSourceContext) MarshalJSON() ([]byte, error) {
+func (s GerritSourceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GerritSourceContext
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GetBreakpointResponse: Response for getting breakpoint information.
 type GetBreakpointResponse struct {
-	// Breakpoint: Complete breakpoint state. The fields `id` and `location`
-	// are guaranteed to be set.
+	// Breakpoint: Complete breakpoint state. The fields `id` and `location` are
+	// guaranteed to be set.
 	Breakpoint *Breakpoint `json:"breakpoint,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Breakpoint") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Breakpoint") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Breakpoint") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GetBreakpointResponse) MarshalJSON() ([]byte, error) {
+func (s GetBreakpointResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetBreakpointResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GitSourceContext: A GitSourceContext denotes a particular revision in
-// a third party Git repository (e.g. GitHub).
+// GitSourceContext: A GitSourceContext denotes a particular revision in a
+// third party Git repository (e.g. GitHub).
 type GitSourceContext struct {
 	// RevisionId: Git commit hash. required.
 	RevisionId string `json:"revisionId,omitempty"`
-
 	// Url: Git repository URL.
 	Url string `json:"url,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "RevisionId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RevisionId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "RevisionId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GitSourceContext) MarshalJSON() ([]byte, error) {
+func (s GitSourceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod GitSourceContext
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListActiveBreakpointsResponse: Response for listing active
-// breakpoints.
+// ListActiveBreakpointsResponse: Response for listing active breakpoints.
 type ListActiveBreakpointsResponse struct {
-	// Breakpoints: List of all active breakpoints. The fields `id` and
-	// `location` are guaranteed to be set on each breakpoint.
+	// Breakpoints: List of all active breakpoints. The fields `id` and `location`
+	// are guaranteed to be set on each breakpoint.
 	Breakpoints []*Breakpoint `json:"breakpoints,omitempty"`
-
-	// NextWaitToken: A token that can be used in the next method call to
-	// block until the list of breakpoints changes.
+	// NextWaitToken: A token that can be used in the next method call to block
+	// until the list of breakpoints changes.
 	NextWaitToken string `json:"nextWaitToken,omitempty"`
-
-	// WaitExpired: If set to `true`, indicates that there is no change to
-	// the list of active breakpoints and the server-selected timeout has
-	// expired. The `breakpoints` field would be empty and should be
-	// ignored.
+	// WaitExpired: If set to `true`, indicates that there is no change to the list
+	// of active breakpoints and the server-selected timeout has expired. The
+	// `breakpoints` field would be empty and should be ignored.
 	WaitExpired bool `json:"waitExpired,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Breakpoints") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Breakpoints") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Breakpoints") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ListActiveBreakpointsResponse) MarshalJSON() ([]byte, error) {
+func (s ListActiveBreakpointsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListActiveBreakpointsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListBreakpointsResponse: Response for listing breakpoints.
 type ListBreakpointsResponse struct {
-	// Breakpoints: List of breakpoints matching the request. The fields
-	// `id` and `location` are guaranteed to be set on each breakpoint. The
-	// fields: `stack_frames`, `evaluated_expressions` and `variable_table`
-	// are cleared on each breakpoint regardless of its status.
+	// Breakpoints: List of breakpoints matching the request. The fields `id` and
+	// `location` are guaranteed to be set on each breakpoint. The fields:
+	// `stack_frames`, `evaluated_expressions` and `variable_table` are cleared on
+	// each breakpoint regardless of its status.
 	Breakpoints []*Breakpoint `json:"breakpoints,omitempty"`
-
-	// NextWaitToken: A wait token that can be used in the next call to
-	// `list` (REST) or `ListBreakpoints` (RPC) to block until the list of
-	// breakpoints has changes.
+	// NextWaitToken: A wait token that can be used in the next call to `list`
+	// (REST) or `ListBreakpoints` (RPC) to block until the list of breakpoints has
+	// changes.
 	NextWaitToken string `json:"nextWaitToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Breakpoints") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Breakpoints") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Breakpoints") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBreakpointsResponse) MarshalJSON() ([]byte, error) {
+func (s ListBreakpointsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBreakpointsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDebuggeesResponse: Response for listing debuggees.
 type ListDebuggeesResponse struct {
-	// Debuggees: List of debuggees accessible to the calling user. The
-	// fields `debuggee.id` and `description` are guaranteed to be set. The
-	// `description` field is a human readable field provided by agents and
-	// can be displayed to users.
+	// Debuggees: List of debuggees accessible to the calling user. The fields
+	// `debuggee.id` and `description` are guaranteed to be set. The `description`
+	// field is a human readable field provided by agents and can be displayed to
+	// users.
 	Debuggees []*Debuggee `json:"debuggees,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Debuggees") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Debuggees") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Debuggees") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ListDebuggeesResponse) MarshalJSON() ([]byte, error) {
+func (s ListDebuggeesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDebuggeesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ProjectRepoId: Selects a repo using a Google Cloud Platform project
-// ID (e.g. winged-cargo-31) and a repo name within that project.
+// ProjectRepoId: Selects a repo using a Google Cloud Platform project ID (e.g.
+// winged-cargo-31) and a repo name within that project.
 type ProjectRepoId struct {
 	// ProjectId: The ID of the project.
 	ProjectId string `json:"projectId,omitempty"`
-
 	// RepoName: The name of the repo. Leave empty for the default repo.
 	RepoName string `json:"repoName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ProjectId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ProjectId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ProjectId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ProjectRepoId) MarshalJSON() ([]byte, error) {
+func (s ProjectRepoId) MarshalJSON() ([]byte, error) {
 	type NoMethod ProjectRepoId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegisterDebuggeeRequest: Request to register a debuggee.
 type RegisterDebuggeeRequest struct {
-	// Debuggee: Required. Debuggee information to register. The fields
-	// `project`, `uniquifier`, `description` and `agent_version` of the
-	// debuggee must be set.
+	// Debuggee: Required. Debuggee information to register. The fields `project`,
+	// `uniquifier`, `description` and `agent_version` of the debuggee must be set.
 	Debuggee *Debuggee `json:"debuggee,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Debuggee") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Debuggee") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Debuggee") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *RegisterDebuggeeRequest) MarshalJSON() ([]byte, error) {
+func (s RegisterDebuggeeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RegisterDebuggeeRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RegisterDebuggeeResponse: Response for registering a debuggee.
 type RegisterDebuggeeResponse struct {
-	// AgentId: A unique ID generated for the agent. Each RegisterDebuggee
-	// request will generate a new agent ID.
+	// AgentId: A unique ID generated for the agent. Each RegisterDebuggee request
+	// will generate a new agent ID.
 	AgentId string `json:"agentId,omitempty"`
-
-	// Debuggee: Debuggee resource. The field `id` is guaranteed to be set
-	// (in addition to the echoed fields). If the field `is_disabled` is set
-	// to `true`, the agent should disable itself by removing all
-	// breakpoints and detaching from the application. It should however
-	// continue to poll `RegisterDebuggee` until reenabled.
+	// Debuggee: Debuggee resource. The field `id` is guaranteed to be set (in
+	// addition to the echoed fields). If the field `is_disabled` is set to `true`,
+	// the agent should disable itself by removing all breakpoints and detaching
+	// from the application. It should however continue to poll `RegisterDebuggee`
+	// until reenabled.
 	Debuggee *Debuggee `json:"debuggee,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AgentId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AgentId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AgentId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AgentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *RegisterDebuggeeResponse) MarshalJSON() ([]byte, error) {
+func (s RegisterDebuggeeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RegisterDebuggeeResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RepoId: A unique identifier for a cloud repo.
 type RepoId struct {
 	// ProjectRepoId: A combination of a project ID and a repo name.
 	ProjectRepoId *ProjectRepoId `json:"projectRepoId,omitempty"`
-
 	// Uid: A server-assigned, globally unique identifier.
 	Uid string `json:"uid,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ProjectRepoId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ProjectRepoId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ProjectRepoId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *RepoId) MarshalJSON() ([]byte, error) {
+func (s RepoId) MarshalJSON() ([]byte, error) {
 	type NoMethod RepoId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetBreakpointResponse: Response for setting a breakpoint.
 type SetBreakpointResponse struct {
-	// Breakpoint: Breakpoint resource. The field `id` is guaranteed to be
-	// set (in addition to the echoed fields).
+	// Breakpoint: Breakpoint resource. The field `id` is guaranteed to be set (in
+	// addition to the echoed fields).
 	Breakpoint *Breakpoint `json:"breakpoint,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Breakpoint") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Breakpoint") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Breakpoint") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *SetBreakpointResponse) MarshalJSON() ([]byte, error) {
+func (s SetBreakpointResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SetBreakpointResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SourceContext: A SourceContext is a reference to a tree of files. A
-// SourceContext together with a path point to a unique revision of a
-// single file or directory.
+// SourceContext together with a path point to a unique revision of a single
+// file or directory.
 type SourceContext struct {
 	// CloudRepo: A SourceContext referring to a revision in a cloud repo.
 	CloudRepo *CloudRepoSourceContext `json:"cloudRepo,omitempty"`
-
 	// CloudWorkspace: A SourceContext referring to a snapshot in a cloud
 	// workspace.
 	CloudWorkspace *CloudWorkspaceSourceContext `json:"cloudWorkspace,omitempty"`
-
 	// Gerrit: A SourceContext referring to a Gerrit project.
 	Gerrit *GerritSourceContext `json:"gerrit,omitempty"`
-
-	// Git: A SourceContext referring to any third party Git repo (e.g.
-	// GitHub).
+	// Git: A SourceContext referring to any third party Git repo (e.g. GitHub).
 	Git *GitSourceContext `json:"git,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CloudRepo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CloudRepo") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CloudRepo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *SourceContext) MarshalJSON() ([]byte, error) {
+func (s SourceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceContext
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SourceLocation: Represents a location in the source code.
 type SourceLocation struct {
-	// Column: Column within a line. The first column in a line as the value
-	// `1`. Agents that do not support setting breakpoints on specific
-	// columns ignore this field.
+	// Column: Column within a line. The first column in a line as the value `1`.
+	// Agents that do not support setting breakpoints on specific columns ignore
+	// this field.
 	Column int64 `json:"column,omitempty"`
-
-	// Line: Line inside the file. The first line in the file has the value
-	// `1`.
+	// Line: Line inside the file. The first line in the file has the value `1`.
 	Line int64 `json:"line,omitempty"`
-
 	// Path: Path to the source file within the source context of the target
 	// binary.
 	Path string `json:"path,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Column") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Column") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *SourceLocation) MarshalJSON() ([]byte, error) {
+func (s SourceLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceLocation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StackFrame: Represents a stack frame context.
 type StackFrame struct {
-	// Arguments: Set of arguments passed to this function. Note that this
-	// might not be populated for all stack frames.
+	// Arguments: Set of arguments passed to this function. Note that this might
+	// not be populated for all stack frames.
 	Arguments []*Variable `json:"arguments,omitempty"`
-
 	// Function: Demangled function name at the call site.
 	Function string `json:"function,omitempty"`
-
-	// Locals: Set of local variables at the stack frame location. Note that
-	// this might not be populated for all stack frames.
+	// Locals: Set of local variables at the stack frame location. Note that this
+	// might not be populated for all stack frames.
 	Locals []*Variable `json:"locals,omitempty"`
-
 	// Location: Source location of the call site.
 	Location *SourceLocation `json:"location,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Arguments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Arguments") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Arguments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *StackFrame) MarshalJSON() ([]byte, error) {
+func (s StackFrame) MarshalJSON() ([]byte, error) {
 	type NoMethod StackFrame
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StatusMessage: Represents a contextual status message. The message
-// can indicate an error or informational status, and refer to specific
-// parts of the containing object. For example, the `Breakpoint.status`
-// field can indicate an error referring to the
-// `BREAKPOINT_SOURCE_LOCATION` with the message `Location not found`.
+// StatusMessage: Represents a contextual status message. The message can
+// indicate an error or informational status, and refer to specific parts of
+// the containing object. For example, the `Breakpoint.status` field can
+// indicate an error referring to the `BREAKPOINT_SOURCE_LOCATION` with the
+// message `Location not found`.
 type StatusMessage struct {
 	// Description: Status message text.
 	Description *FormatMessage `json:"description,omitempty"`
-
 	// IsError: Distinguishes errors from informational messages.
 	IsError bool `json:"isError,omitempty"`
-
 	// RefersTo: Reference to which the message applies.
 	//
 	// Possible values:
 	//   "UNSPECIFIED" - Status doesn't refer to any particular input.
-	//   "BREAKPOINT_SOURCE_LOCATION" - Status applies to the breakpoint and
-	// is related to its location.
-	//   "BREAKPOINT_CONDITION" - Status applies to the breakpoint and is
-	// related to its condition.
-	//   "BREAKPOINT_EXPRESSION" - Status applies to the breakpoint and is
-	// related to its expressions.
-	//   "BREAKPOINT_AGE" - Status applies to the breakpoint and is related
-	// to its age.
-	//   "BREAKPOINT_CANARY_FAILED" - Status applies to the breakpoint when
-	// the breakpoint failed to exit the canary state.
+	//   "BREAKPOINT_SOURCE_LOCATION" - Status applies to the breakpoint and is
+	// related to its location.
+	//   "BREAKPOINT_CONDITION" - Status applies to the breakpoint and is related
+	// to its condition.
+	//   "BREAKPOINT_EXPRESSION" - Status applies to the breakpoint and is related
+	// to its expressions.
+	//   "BREAKPOINT_AGE" - Status applies to the breakpoint and is related to its
+	// age.
+	//   "BREAKPOINT_CANARY_FAILED" - Status applies to the breakpoint when the
+	// breakpoint failed to exit the canary state.
 	//   "VARIABLE_NAME" - Status applies to the entire variable.
-	//   "VARIABLE_VALUE" - Status applies to variable value (variable name
-	// is valid).
+	//   "VARIABLE_VALUE" - Status applies to variable value (variable name is
+	// valid).
 	RefersTo string `json:"refersTo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *StatusMessage) MarshalJSON() ([]byte, error) {
+func (s StatusMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod StatusMessage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UpdateActiveBreakpointRequest: Request to update an active
-// breakpoint.
+// UpdateActiveBreakpointRequest: Request to update an active breakpoint.
 type UpdateActiveBreakpointRequest struct {
-	// Breakpoint: Required. Updated breakpoint information. The field `id`
-	// must be set. The agent must echo all Breakpoint specification fields
-	// in the update.
+	// Breakpoint: Required. Updated breakpoint information. The field `id` must be
+	// set. The agent must echo all Breakpoint specification fields in the update.
 	Breakpoint *Breakpoint `json:"breakpoint,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Breakpoint") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Breakpoint") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Breakpoint") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateActiveBreakpointRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateActiveBreakpointRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateActiveBreakpointRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UpdateActiveBreakpointResponse: Response for updating an active
-// breakpoint. The message is defined to allow future extensions.
+// UpdateActiveBreakpointResponse: Response for updating an active breakpoint.
+// The message is defined to allow future extensions.
 type UpdateActiveBreakpointResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Variable: Represents a variable or an argument possibly of a compound
-// object type. Note how the following variables are represented: 1) A
-// simple variable: int x = 5 { name: "x", value: "5", type: "int" } //
-// Captured variable 2) A compound object: struct T { int m1; int m2; };
-// T x = { 3, 7 }; { // Captured variable name: "x", type: "T", members
-// { name: "m1", value: "3", type: "int" }, members { name: "m2", value:
-// "7", type: "int" } } 3) A pointer where the pointee was captured: T x
-// = { 3, 7 }; T* p = &x; { // Captured variable name: "p", type: "T*",
-// value: "0x00500500", members { name: "m1", value: "3", type: "int" },
-// members { name: "m2", value: "7", type: "int" } } 4) A pointer where
-// the pointee was not captured: T* p = new T; { // Captured variable
-// name: "p", type: "T*", value: "0x00400400" status { is_error: true,
-// description { format: "unavailable" } } } The status should describe
-// the reason for the missing value, such as “, “, “. Note that a
-// null pointer should not have members. 5) An unnamed value: int* p =
-// new int(7); { // Captured variable name: "p", value: "0x00500500",
-// type: "int*", members { value: "7", type: "int" } } 6) An unnamed
-// pointer where the pointee was not captured: int* p = new int(7);
-// int** pp = &p; { // Captured variable name: "pp", value:
-// "0x00500500", type: "int**", members { value: "0x00400400", type:
-// "int*" status { is_error: true, description: { format: "unavailable"
-// } } } } } To optimize computation, memory and network traffic,
-// variables that repeat in the output multiple times can be stored once
-// in a shared variable table and be referenced using the
+// Variable: Represents a variable or an argument possibly of a compound object
+// type. Note how the following variables are represented: 1) A simple
+// variable: int x = 5 { name: "x", value: "5", type: "int" } // Captured
+// variable 2) A compound object: struct T { int m1; int m2; }; T x = { 3, 7 };
+// { // Captured variable name: "x", type: "T", members { name: "m1", value:
+// "3", type: "int" }, members { name: "m2", value: "7", type: "int" } } 3) A
+// pointer where the pointee was captured: T x = { 3, 7 }; T* p = &x; { //
+// Captured variable name: "p", type: "T*", value: "0x00500500", members {
+// name: "m1", value: "3", type: "int" }, members { name: "m2", value: "7",
+// type: "int" } } 4) A pointer where the pointee was not captured: T* p = new
+// T; { // Captured variable name: "p", type: "T*", value: "0x00400400" status
+// { is_error: true, description { format: "unavailable" } } } The status
+// should describe the reason for the missing value, such as “, “, “. Note
+// that a null pointer should not have members. 5) An unnamed value: int* p =
+// new int(7); { // Captured variable name: "p", value: "0x00500500", type:
+// "int*", members { value: "7", type: "int" } } 6) An unnamed pointer where
+// the pointee was not captured: int* p = new int(7); int** pp = &p; { //
+// Captured variable name: "pp", value: "0x00500500", type: "int**", members {
+// value: "0x00400400", type: "int*" status { is_error: true, description: {
+// format: "unavailable" } } } } } To optimize computation, memory and network
+// traffic, variables that repeat in the output multiple times can be stored
+// once in a shared variable table and be referenced using the
 // `var_table_index` field. The variables stored in the shared table are
 // nameless and are essentially a partition of the complete variable. To
-// reconstruct the complete variable, merge the referencing variable
-// with the referenced variable. When using the shared variable table,
-// the following variables: T x = { 3, 7 }; T* p = &x; T& r = x; { name:
-// "x", var_table_index: 3, type: "T" } // Captured variables { name:
-// "p", value "0x00500500", type="T*", var_table_index: 3 } { name: "r",
-// type="T&", var_table_index: 3 } { // Shared variable table entry #3:
-// members { name: "m1", value: "3", type: "int" }, members { name:
-// "m2", value: "7", type: "int" } } Note that the pointer address is
-// stored with the referencing variable and not with the referenced
-// variable. This allows the referenced variable to be shared between
-// pointers and references. The type field is optional. The debugger
-// agent may or may not support it.
+// reconstruct the complete variable, merge the referencing variable with the
+// referenced variable. When using the shared variable table, the following
+// variables: T x = { 3, 7 }; T* p = &x; T& r = x; { name: "x",
+// var_table_index: 3, type: "T" } // Captured variables { name: "p", value
+// "0x00500500", type="T*", var_table_index: 3 } { name: "r", type="T&",
+// var_table_index: 3 } { // Shared variable table entry #3: members { name:
+// "m1", value: "3", type: "int" }, members { name: "m2", value: "7", type:
+// "int" } } Note that the pointer address is stored with the referencing
+// variable and not with the referenced variable. This allows the referenced
+// variable to be shared between pointers and references. The type field is
+// optional. The debugger agent may or may not support it.
 type Variable struct {
 	// Members: Members contained or pointed to by the variable.
 	Members []*Variable `json:"members,omitempty"`
-
 	// Name: Name of the variable, if any.
 	Name string `json:"name,omitempty"`
-
-	// Status: Status associated with the variable. This field will usually
-	// stay unset. A status of a single variable only applies to that
-	// variable or expression. The rest of breakpoint data still remains
-	// valid. Variables might be reported in error state even when
-	// breakpoint is not in final state. The message may refer to variable
-	// name with `refers_to` set to `VARIABLE_NAME`. Alternatively
-	// `refers_to` will be set to `VARIABLE_VALUE`. In either case variable
-	// value and members will be unset. Example of error message applied to
-	// name: `Invalid expression syntax`. Example of information message
-	// applied to value: `Not captured`. Examples of error message applied
-	// to value: * `Malformed string`, * `Field f not found in class C` *
-	// `Null pointer dereference`
+	// Status: Status associated with the variable. This field will usually stay
+	// unset. A status of a single variable only applies to that variable or
+	// expression. The rest of breakpoint data still remains valid. Variables might
+	// be reported in error state even when breakpoint is not in final state. The
+	// message may refer to variable name with `refers_to` set to `VARIABLE_NAME`.
+	// Alternatively `refers_to` will be set to `VARIABLE_VALUE`. In either case
+	// variable value and members will be unset. Example of error message applied
+	// to name: `Invalid expression syntax`. Example of information message applied
+	// to value: `Not captured`. Examples of error message applied to value: *
+	// `Malformed string`, * `Field f not found in class C` * `Null pointer
+	// dereference`
 	Status *StatusMessage `json:"status,omitempty"`
-
 	// Type: Variable type (e.g. `MyClass`). If the variable is split with
-	// `var_table_index`, `type` goes next to `value`. The interpretation of
-	// a type is agent specific. It is recommended to include the dynamic
-	// type rather than a static type of an object.
+	// `var_table_index`, `type` goes next to `value`. The interpretation of a type
+	// is agent specific. It is recommended to include the dynamic type rather than
+	// a static type of an object.
 	Type string `json:"type,omitempty"`
-
 	// Value: Simple value of the variable.
 	Value string `json:"value,omitempty"`
-
-	// VarTableIndex: Reference to a variable in the shared variable table.
-	// More than one variable can reference the same variable in the table.
-	// The `var_table_index` field is an index into `variable_table` in
-	// Breakpoint.
+	// VarTableIndex: Reference to a variable in the shared variable table. More
+	// than one variable can reference the same variable in the table. The
+	// `var_table_index` field is an index into `variable_table` in Breakpoint.
 	VarTableIndex int64 `json:"varTableIndex,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Members") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Members") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Members") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Members") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Variable) MarshalJSON() ([]byte, error) {
+func (s Variable) MarshalJSON() ([]byte, error) {
 	type NoMethod Variable
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "clouddebugger.controller.debuggees.register":
 
 type ControllerDebuggeesRegisterCall struct {
 	s                       *Service
@@ -1396,14 +1168,14 @@ type ControllerDebuggeesRegisterCall struct {
 	header_                 http.Header
 }
 
-// Register: Registers the debuggee with the controller service. All
-// agents attached to the same application must call this method with
-// exactly the same request content to get back the same stable
-// `debuggee_id`. Agents should call this method again whenever
-// `google.rpc.Code.NOT_FOUND` is returned from any controller method.
-// This protocol allows the controller service to disable debuggees,
-// recover from data loss, or change the `debuggee_id` format. Agents
-// must handle `debuggee_id` value changing upon re-registration.
+// Register: Registers the debuggee with the controller service. All agents
+// attached to the same application must call this method with exactly the same
+// request content to get back the same stable `debuggee_id`. Agents should
+// call this method again whenever `google.rpc.Code.NOT_FOUND` is returned from
+// any controller method. This protocol allows the controller service to
+// disable debuggees, recover from data loss, or change the `debuggee_id`
+// format. Agents must handle `debuggee_id` value changing upon
+// re-registration.
 func (r *ControllerDebuggeesService) Register(registerdebuggeerequest *RegisterDebuggeeRequest) *ControllerDebuggeesRegisterCall {
 	c := &ControllerDebuggeesRegisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registerdebuggeerequest = registerdebuggeerequest
@@ -1411,23 +1183,21 @@ func (r *ControllerDebuggeesService) Register(registerdebuggeerequest *RegisterD
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ControllerDebuggeesRegisterCall) Fields(s ...googleapi.Field) *ControllerDebuggeesRegisterCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ControllerDebuggeesRegisterCall) Context(ctx context.Context) *ControllerDebuggeesRegisterCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ControllerDebuggeesRegisterCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1436,18 +1206,12 @@ func (c *ControllerDebuggeesRegisterCall) Header() http.Header {
 }
 
 func (c *ControllerDebuggeesRegisterCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.registerdebuggeerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/controller/debuggees/register")
@@ -1457,16 +1221,15 @@ func (c *ControllerDebuggeesRegisterCall) doRequest(alt string) (*http.Response,
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddebugger.controller.debuggees.register" call.
-// Exactly one of *RegisterDebuggeeResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *RegisterDebuggeeResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ControllerDebuggeesRegisterCall) Do(opts ...googleapi.CallOption) (*RegisterDebuggeeResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1497,29 +1260,7 @@ func (c *ControllerDebuggeesRegisterCall) Do(opts ...googleapi.CallOption) (*Reg
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Registers the debuggee with the controller service. All agents attached to the same application must call this method with exactly the same request content to get back the same stable `debuggee_id`. Agents should call this method again whenever `google.rpc.Code.NOT_FOUND` is returned from any controller method. This protocol allows the controller service to disable debuggees, recover from data loss, or change the `debuggee_id` format. Agents must handle `debuggee_id` value changing upon re-registration.",
-	//   "flatPath": "v2/controller/debuggees/register",
-	//   "httpMethod": "POST",
-	//   "id": "clouddebugger.controller.debuggees.register",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v2/controller/debuggees/register",
-	//   "request": {
-	//     "$ref": "RegisterDebuggeeRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "RegisterDebuggeeResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud_debugger"
-	//   ]
-	// }
-
 }
-
-// method id "clouddebugger.controller.debuggees.breakpoints.list":
 
 type ControllerDebuggeesBreakpointsListCall struct {
 	s            *Service
@@ -1530,16 +1271,15 @@ type ControllerDebuggeesBreakpointsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns the list of all active breakpoints for the debuggee.
-// The breakpoint specification (`location`, `condition`, and
-// `expressions` fields) is semantically immutable, although the field
-// values may change. For example, an agent may update the location line
-// number to reflect the actual line where the breakpoint was set, but
-// this doesn't change the breakpoint semantics. This means that an
-// agent does not need to check if a breakpoint has changed when it
-// encounters the same breakpoint on a successive call. Moreover, an
-// agent should remember the breakpoints that are completed until the
-// controller removes them from the active list to avoid setting those
+// List: Returns the list of all active breakpoints for the debuggee. The
+// breakpoint specification (`location`, `condition`, and `expressions` fields)
+// is semantically immutable, although the field values may change. For
+// example, an agent may update the location line number to reflect the actual
+// line where the breakpoint was set, but this doesn't change the breakpoint
+// semantics. This means that an agent does not need to check if a breakpoint
+// has changed when it encounters the same breakpoint on a successive call.
+// Moreover, an agent should remember the breakpoints that are completed until
+// the controller removes them from the active list to avoid setting those
 // breakpoints again.
 //
 // - debuggeeId: Identifies the debuggee.
@@ -1549,62 +1289,57 @@ func (r *ControllerDebuggeesBreakpointsService) List(debuggeeId string) *Control
 	return c
 }
 
-// AgentId sets the optional parameter "agentId": Identifies the agent.
-// This is the ID returned in the RegisterDebuggee response.
+// AgentId sets the optional parameter "agentId": Identifies the agent. This is
+// the ID returned in the RegisterDebuggee response.
 func (c *ControllerDebuggeesBreakpointsListCall) AgentId(agentId string) *ControllerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("agentId", agentId)
 	return c
 }
 
-// SuccessOnTimeout sets the optional parameter "successOnTimeout": If
-// set to `true` (recommended), returns `google.rpc.Code.OK` status and
-// sets the `wait_expired` response field to `true` when the
-// server-selected timeout has expired. If set to `false` (deprecated),
-// returns `google.rpc.Code.ABORTED` status when the server-selected
-// timeout has expired.
+// SuccessOnTimeout sets the optional parameter "successOnTimeout": If set to
+// `true` (recommended), returns `google.rpc.Code.OK` status and sets the
+// `wait_expired` response field to `true` when the server-selected timeout has
+// expired. If set to `false` (deprecated), returns `google.rpc.Code.ABORTED`
+// status when the server-selected timeout has expired.
 func (c *ControllerDebuggeesBreakpointsListCall) SuccessOnTimeout(successOnTimeout bool) *ControllerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("successOnTimeout", fmt.Sprint(successOnTimeout))
 	return c
 }
 
 // WaitToken sets the optional parameter "waitToken": A token that, if
-// specified, blocks the method call until the list of active
-// breakpoints has changed, or a server-selected timeout has expired.
-// The value should be set from the `next_wait_token` field in the last
-// response. The initial value should be set to "init".
+// specified, blocks the method call until the list of active breakpoints has
+// changed, or a server-selected timeout has expired. The value should be set
+// from the `next_wait_token` field in the last response. The initial value
+// should be set to "init".
 func (c *ControllerDebuggeesBreakpointsListCall) WaitToken(waitToken string) *ControllerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("waitToken", waitToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ControllerDebuggeesBreakpointsListCall) Fields(s ...googleapi.Field) *ControllerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ControllerDebuggeesBreakpointsListCall) IfNoneMatch(entityTag string) *ControllerDebuggeesBreakpointsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ControllerDebuggeesBreakpointsListCall) Context(ctx context.Context) *ControllerDebuggeesBreakpointsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ControllerDebuggeesBreakpointsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1613,12 +1348,7 @@ func (c *ControllerDebuggeesBreakpointsListCall) Header() http.Header {
 }
 
 func (c *ControllerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1635,16 +1365,15 @@ func (c *ControllerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"debuggeeId": c.debuggeeId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddebugger.controller.debuggees.breakpoints.list" call.
-// Exactly one of *ListActiveBreakpointsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListActiveBreakpointsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListActiveBreakpointsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ControllerDebuggeesBreakpointsListCall) Do(opts ...googleapi.CallOption) (*ListActiveBreakpointsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1675,50 +1404,7 @@ func (c *ControllerDebuggeesBreakpointsListCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the list of all active breakpoints for the debuggee. The breakpoint specification (`location`, `condition`, and `expressions` fields) is semantically immutable, although the field values may change. For example, an agent may update the location line number to reflect the actual line where the breakpoint was set, but this doesn't change the breakpoint semantics. This means that an agent does not need to check if a breakpoint has changed when it encounters the same breakpoint on a successive call. Moreover, an agent should remember the breakpoints that are completed until the controller removes them from the active list to avoid setting those breakpoints again.",
-	//   "flatPath": "v2/controller/debuggees/{debuggeeId}/breakpoints",
-	//   "httpMethod": "GET",
-	//   "id": "clouddebugger.controller.debuggees.breakpoints.list",
-	//   "parameterOrder": [
-	//     "debuggeeId"
-	//   ],
-	//   "parameters": {
-	//     "agentId": {
-	//       "description": "Identifies the agent. This is the ID returned in the RegisterDebuggee response.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "debuggeeId": {
-	//       "description": "Required. Identifies the debuggee.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "successOnTimeout": {
-	//       "description": "If set to `true` (recommended), returns `google.rpc.Code.OK` status and sets the `wait_expired` response field to `true` when the server-selected timeout has expired. If set to `false` (deprecated), returns `google.rpc.Code.ABORTED` status when the server-selected timeout has expired.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "waitToken": {
-	//       "description": "A token that, if specified, blocks the method call until the list of active breakpoints has changed, or a server-selected timeout has expired. The value should be set from the `next_wait_token` field in the last response. The initial value should be set to `\"init\"`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/controller/debuggees/{debuggeeId}/breakpoints",
-	//   "response": {
-	//     "$ref": "ListActiveBreakpointsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud_debugger"
-	//   ]
-	// }
-
 }
-
-// method id "clouddebugger.controller.debuggees.breakpoints.update":
 
 type ControllerDebuggeesBreakpointsUpdateCall struct {
 	s                             *Service
@@ -1731,13 +1417,12 @@ type ControllerDebuggeesBreakpointsUpdateCall struct {
 }
 
 // Update: Updates the breakpoint state or mutable fields. The entire
-// Breakpoint message must be sent back to the controller service.
-// Updates to active breakpoint fields are only allowed if the new value
-// does not change the breakpoint specification. Updates to the
-// `location`, `condition` and `expressions` fields should not alter the
-// breakpoint semantics. These may only make changes such as
-// canonicalizing a value or snapping the location to the correct line
-// of code.
+// Breakpoint message must be sent back to the controller service. Updates to
+// active breakpoint fields are only allowed if the new value does not change
+// the breakpoint specification. Updates to the `location`, `condition` and
+// `expressions` fields should not alter the breakpoint semantics. These may
+// only make changes such as canonicalizing a value or snapping the location to
+// the correct line of code.
 //
 // - debuggeeId: Identifies the debuggee being debugged.
 // - id: Breakpoint identifier, unique in the scope of the debuggee.
@@ -1750,23 +1435,21 @@ func (r *ControllerDebuggeesBreakpointsService) Update(debuggeeId string, id str
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ControllerDebuggeesBreakpointsUpdateCall) Fields(s ...googleapi.Field) *ControllerDebuggeesBreakpointsUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ControllerDebuggeesBreakpointsUpdateCall) Context(ctx context.Context) *ControllerDebuggeesBreakpointsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ControllerDebuggeesBreakpointsUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1775,18 +1458,12 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) Header() http.Header {
 }
 
 func (c *ControllerDebuggeesBreakpointsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updateactivebreakpointrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/controller/debuggees/{debuggeeId}/breakpoints/{id}")
@@ -1800,16 +1477,15 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) doRequest(alt string) (*http.
 		"debuggeeId": c.debuggeeId,
 		"id":         c.id,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddebugger.controller.debuggees.breakpoints.update" call.
-// Exactly one of *UpdateActiveBreakpointResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *UpdateActiveBreakpointResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *UpdateActiveBreakpointResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ControllerDebuggeesBreakpointsUpdateCall) Do(opts ...googleapi.CallOption) (*UpdateActiveBreakpointResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1840,45 +1516,7 @@ func (c *ControllerDebuggeesBreakpointsUpdateCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the breakpoint state or mutable fields. The entire Breakpoint message must be sent back to the controller service. Updates to active breakpoint fields are only allowed if the new value does not change the breakpoint specification. Updates to the `location`, `condition` and `expressions` fields should not alter the breakpoint semantics. These may only make changes such as canonicalizing a value or snapping the location to the correct line of code.",
-	//   "flatPath": "v2/controller/debuggees/{debuggeeId}/breakpoints/{id}",
-	//   "httpMethod": "PUT",
-	//   "id": "clouddebugger.controller.debuggees.breakpoints.update",
-	//   "parameterOrder": [
-	//     "debuggeeId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "debuggeeId": {
-	//       "description": "Required. Identifies the debuggee being debugged.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Breakpoint identifier, unique in the scope of the debuggee.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/controller/debuggees/{debuggeeId}/breakpoints/{id}",
-	//   "request": {
-	//     "$ref": "UpdateActiveBreakpointRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "UpdateActiveBreakpointResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud_debugger"
-	//   ]
-	// }
-
 }
-
-// method id "clouddebugger.debugger.debuggees.list":
 
 type DebuggerDebuggeesListCall struct {
 	s            *Service
@@ -1894,57 +1532,53 @@ func (r *DebuggerDebuggeesService) List() *DebuggerDebuggeesListCall {
 	return c
 }
 
-// ClientVersion sets the optional parameter "clientVersion": Required.
-// The client version making the call. Schema: `domain/type/version`
-// (e.g., `google.com/intellij/v1`).
+// ClientVersion sets the optional parameter "clientVersion": Required. The
+// client version making the call. Schema: `domain/type/version` (e.g.,
+// `google.com/intellij/v1`).
 func (c *DebuggerDebuggeesListCall) ClientVersion(clientVersion string) *DebuggerDebuggeesListCall {
 	c.urlParams_.Set("clientVersion", clientVersion)
 	return c
 }
 
-// IncludeInactive sets the optional parameter "includeInactive": When
-// set to `true`, the result includes all debuggees. Otherwise, the
-// result includes only debuggees that are active.
+// IncludeInactive sets the optional parameter "includeInactive": When set to
+// `true`, the result includes all debuggees. Otherwise, the result includes
+// only debuggees that are active.
 func (c *DebuggerDebuggeesListCall) IncludeInactive(includeInactive bool) *DebuggerDebuggeesListCall {
 	c.urlParams_.Set("includeInactive", fmt.Sprint(includeInactive))
 	return c
 }
 
-// Project sets the optional parameter "project": Required. Project
-// number of a Google Cloud project whose debuggees to list.
+// Project sets the optional parameter "project": Required. Project number of a
+// Google Cloud project whose debuggees to list.
 func (c *DebuggerDebuggeesListCall) Project(project string) *DebuggerDebuggeesListCall {
 	c.urlParams_.Set("project", project)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *DebuggerDebuggeesListCall) Fields(s ...googleapi.Field) *DebuggerDebuggeesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *DebuggerDebuggeesListCall) IfNoneMatch(entityTag string) *DebuggerDebuggeesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *DebuggerDebuggeesListCall) Context(ctx context.Context) *DebuggerDebuggeesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *DebuggerDebuggeesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1953,12 +1587,7 @@ func (c *DebuggerDebuggeesListCall) Header() http.Header {
 }
 
 func (c *DebuggerDebuggeesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1972,16 +1601,15 @@ func (c *DebuggerDebuggeesListCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddebugger.debugger.debuggees.list" call.
-// Exactly one of *ListDebuggeesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListDebuggeesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDebuggeesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *DebuggerDebuggeesListCall) Do(opts ...googleapi.CallOption) (*ListDebuggeesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2012,42 +1640,7 @@ func (c *DebuggerDebuggeesListCall) Do(opts ...googleapi.CallOption) (*ListDebug
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all the debuggees that the user has access to.",
-	//   "flatPath": "v2/debugger/debuggees",
-	//   "httpMethod": "GET",
-	//   "id": "clouddebugger.debugger.debuggees.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "clientVersion": {
-	//       "description": "Required. The client version making the call. Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "includeInactive": {
-	//       "description": "When set to `true`, the result includes all debuggees. Otherwise, the result includes only debuggees that are active.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "project": {
-	//       "description": "Required. Project number of a Google Cloud project whose debuggees to list.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/debugger/debuggees",
-	//   "response": {
-	//     "$ref": "ListDebuggeesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud_debugger"
-	//   ]
-	// }
-
 }
-
-// method id "clouddebugger.debugger.debuggees.breakpoints.delete":
 
 type DebuggerDebuggeesBreakpointsDeleteCall struct {
 	s            *Service
@@ -2069,32 +1662,30 @@ func (r *DebuggerDebuggeesBreakpointsService) Delete(debuggeeId string, breakpoi
 	return c
 }
 
-// ClientVersion sets the optional parameter "clientVersion": Required.
-// The client version making the call. Schema: `domain/type/version`
-// (e.g., `google.com/intellij/v1`).
+// ClientVersion sets the optional parameter "clientVersion": Required. The
+// client version making the call. Schema: `domain/type/version` (e.g.,
+// `google.com/intellij/v1`).
 func (c *DebuggerDebuggeesBreakpointsDeleteCall) ClientVersion(clientVersion string) *DebuggerDebuggeesBreakpointsDeleteCall {
 	c.urlParams_.Set("clientVersion", clientVersion)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *DebuggerDebuggeesBreakpointsDeleteCall) Fields(s ...googleapi.Field) *DebuggerDebuggeesBreakpointsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *DebuggerDebuggeesBreakpointsDeleteCall) Context(ctx context.Context) *DebuggerDebuggeesBreakpointsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *DebuggerDebuggeesBreakpointsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2103,12 +1694,7 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) Header() http.Header {
 }
 
 func (c *DebuggerDebuggeesBreakpointsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2123,16 +1709,14 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) doRequest(alt string) (*http.Re
 		"debuggeeId":   c.debuggeeId,
 		"breakpointId": c.breakpointId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddebugger.debugger.debuggees.breakpoints.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *DebuggerDebuggeesBreakpointsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2163,47 +1747,7 @@ func (c *DebuggerDebuggeesBreakpointsDeleteCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes the breakpoint from the debuggee.",
-	//   "flatPath": "v2/debugger/debuggees/{debuggeeId}/breakpoints/{breakpointId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "clouddebugger.debugger.debuggees.breakpoints.delete",
-	//   "parameterOrder": [
-	//     "debuggeeId",
-	//     "breakpointId"
-	//   ],
-	//   "parameters": {
-	//     "breakpointId": {
-	//       "description": "Required. ID of the breakpoint to delete.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "clientVersion": {
-	//       "description": "Required. The client version making the call. Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "debuggeeId": {
-	//       "description": "Required. ID of the debuggee whose breakpoint to delete.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/debugger/debuggees/{debuggeeId}/breakpoints/{breakpointId}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud_debugger"
-	//   ]
-	// }
-
 }
-
-// method id "clouddebugger.debugger.debuggees.breakpoints.get":
 
 type DebuggerDebuggeesBreakpointsGetCall struct {
 	s            *Service
@@ -2226,42 +1770,38 @@ func (r *DebuggerDebuggeesBreakpointsService) Get(debuggeeId string, breakpointI
 	return c
 }
 
-// ClientVersion sets the optional parameter "clientVersion": Required.
-// The client version making the call. Schema: `domain/type/version`
-// (e.g., `google.com/intellij/v1`).
+// ClientVersion sets the optional parameter "clientVersion": Required. The
+// client version making the call. Schema: `domain/type/version` (e.g.,
+// `google.com/intellij/v1`).
 func (c *DebuggerDebuggeesBreakpointsGetCall) ClientVersion(clientVersion string) *DebuggerDebuggeesBreakpointsGetCall {
 	c.urlParams_.Set("clientVersion", clientVersion)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *DebuggerDebuggeesBreakpointsGetCall) Fields(s ...googleapi.Field) *DebuggerDebuggeesBreakpointsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *DebuggerDebuggeesBreakpointsGetCall) IfNoneMatch(entityTag string) *DebuggerDebuggeesBreakpointsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *DebuggerDebuggeesBreakpointsGetCall) Context(ctx context.Context) *DebuggerDebuggeesBreakpointsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *DebuggerDebuggeesBreakpointsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2270,12 +1810,7 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) Header() http.Header {
 }
 
 func (c *DebuggerDebuggeesBreakpointsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2293,16 +1828,15 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) doRequest(alt string) (*http.Respo
 		"debuggeeId":   c.debuggeeId,
 		"breakpointId": c.breakpointId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddebugger.debugger.debuggees.breakpoints.get" call.
-// Exactly one of *GetBreakpointResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GetBreakpointResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GetBreakpointResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *DebuggerDebuggeesBreakpointsGetCall) Do(opts ...googleapi.CallOption) (*GetBreakpointResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2333,47 +1867,7 @@ func (c *DebuggerDebuggeesBreakpointsGetCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets breakpoint information.",
-	//   "flatPath": "v2/debugger/debuggees/{debuggeeId}/breakpoints/{breakpointId}",
-	//   "httpMethod": "GET",
-	//   "id": "clouddebugger.debugger.debuggees.breakpoints.get",
-	//   "parameterOrder": [
-	//     "debuggeeId",
-	//     "breakpointId"
-	//   ],
-	//   "parameters": {
-	//     "breakpointId": {
-	//       "description": "Required. ID of the breakpoint to get.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "clientVersion": {
-	//       "description": "Required. The client version making the call. Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "debuggeeId": {
-	//       "description": "Required. ID of the debuggee whose breakpoint to get.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/debugger/debuggees/{debuggeeId}/breakpoints/{breakpointId}",
-	//   "response": {
-	//     "$ref": "GetBreakpointResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud_debugger"
-	//   ]
-	// }
-
 }
-
-// method id "clouddebugger.debugger.debuggees.breakpoints.list":
 
 type DebuggerDebuggeesBreakpointsListCall struct {
 	s            *Service
@@ -2393,95 +1887,90 @@ func (r *DebuggerDebuggeesBreakpointsService) List(debuggeeId string) *DebuggerD
 	return c
 }
 
-// ActionValue sets the optional parameter "action.value": Only
-// breakpoints with the specified action will pass the filter.
+// ActionValue sets the optional parameter "action.value": Only breakpoints
+// with the specified action will pass the filter.
 //
 // Possible values:
 //
-//	"CAPTURE" - Capture stack frame and variables and update the
+//	"CAPTURE" - Capture stack frame and variables and update the breakpoint.
 //
-// breakpoint. The data is only captured once. After that the breakpoint
-// is set in a final state.
+// The data is only captured once. After that the breakpoint is set in a final
+// state.
 //
-//	"LOG" - Log each breakpoint hit. The breakpoint remains active
+//	"LOG" - Log each breakpoint hit. The breakpoint remains active until
 //
-// until deleted or expired.
+// deleted or expired.
 func (c *DebuggerDebuggeesBreakpointsListCall) ActionValue(actionValue string) *DebuggerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("action.value", actionValue)
 	return c
 }
 
-// ClientVersion sets the optional parameter "clientVersion": Required.
-// The client version making the call. Schema: `domain/type/version`
-// (e.g., `google.com/intellij/v1`).
+// ClientVersion sets the optional parameter "clientVersion": Required. The
+// client version making the call. Schema: `domain/type/version` (e.g.,
+// `google.com/intellij/v1`).
 func (c *DebuggerDebuggeesBreakpointsListCall) ClientVersion(clientVersion string) *DebuggerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("clientVersion", clientVersion)
 	return c
 }
 
-// IncludeAllUsers sets the optional parameter "includeAllUsers": When
-// set to `true`, the response includes the list of breakpoints set by
-// any user. Otherwise, it includes only breakpoints set by the caller.
+// IncludeAllUsers sets the optional parameter "includeAllUsers": When set to
+// `true`, the response includes the list of breakpoints set by any user.
+// Otherwise, it includes only breakpoints set by the caller.
 func (c *DebuggerDebuggeesBreakpointsListCall) IncludeAllUsers(includeAllUsers bool) *DebuggerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("includeAllUsers", fmt.Sprint(includeAllUsers))
 	return c
 }
 
-// IncludeInactive sets the optional parameter "includeInactive": When
-// set to `true`, the response includes active and inactive breakpoints.
-// Otherwise, it includes only active breakpoints.
+// IncludeInactive sets the optional parameter "includeInactive": When set to
+// `true`, the response includes active and inactive breakpoints. Otherwise, it
+// includes only active breakpoints.
 func (c *DebuggerDebuggeesBreakpointsListCall) IncludeInactive(includeInactive bool) *DebuggerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("includeInactive", fmt.Sprint(includeInactive))
 	return c
 }
 
-// StripResults sets the optional parameter "stripResults": This field
-// is deprecated. The following fields are always stripped out of the
-// result: `stack_frames`, `evaluated_expressions` and `variable_table`.
+// StripResults sets the optional parameter "stripResults": This field is
+// deprecated. The following fields are always stripped out of the result:
+// `stack_frames`, `evaluated_expressions` and `variable_table`.
 func (c *DebuggerDebuggeesBreakpointsListCall) StripResults(stripResults bool) *DebuggerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("stripResults", fmt.Sprint(stripResults))
 	return c
 }
 
-// WaitToken sets the optional parameter "waitToken": A wait token that,
-// if specified, blocks the call until the breakpoints list has changed,
-// or a server selected timeout has expired. The value should be set
-// from the last response. The error code `google.rpc.Code.ABORTED`
-// (RPC) is returned on wait timeout, which should be called again with
-// the same `wait_token`.
+// WaitToken sets the optional parameter "waitToken": A wait token that, if
+// specified, blocks the call until the breakpoints list has changed, or a
+// server selected timeout has expired. The value should be set from the last
+// response. The error code `google.rpc.Code.ABORTED` (RPC) is returned on wait
+// timeout, which should be called again with the same `wait_token`.
 func (c *DebuggerDebuggeesBreakpointsListCall) WaitToken(waitToken string) *DebuggerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("waitToken", waitToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *DebuggerDebuggeesBreakpointsListCall) Fields(s ...googleapi.Field) *DebuggerDebuggeesBreakpointsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *DebuggerDebuggeesBreakpointsListCall) IfNoneMatch(entityTag string) *DebuggerDebuggeesBreakpointsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *DebuggerDebuggeesBreakpointsListCall) Context(ctx context.Context) *DebuggerDebuggeesBreakpointsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *DebuggerDebuggeesBreakpointsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2490,12 +1979,7 @@ func (c *DebuggerDebuggeesBreakpointsListCall) Header() http.Header {
 }
 
 func (c *DebuggerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2512,16 +1996,15 @@ func (c *DebuggerDebuggeesBreakpointsListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"debuggeeId": c.debuggeeId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddebugger.debugger.debuggees.breakpoints.list" call.
-// Exactly one of *ListBreakpointsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *ListBreakpointsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *DebuggerDebuggeesBreakpointsListCall) Do(opts ...googleapi.CallOption) (*ListBreakpointsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2552,74 +2035,7 @@ func (c *DebuggerDebuggeesBreakpointsListCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all breakpoints for the debuggee.",
-	//   "flatPath": "v2/debugger/debuggees/{debuggeeId}/breakpoints",
-	//   "httpMethod": "GET",
-	//   "id": "clouddebugger.debugger.debuggees.breakpoints.list",
-	//   "parameterOrder": [
-	//     "debuggeeId"
-	//   ],
-	//   "parameters": {
-	//     "action.value": {
-	//       "description": "Only breakpoints with the specified action will pass the filter.",
-	//       "enum": [
-	//         "CAPTURE",
-	//         "LOG"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Capture stack frame and variables and update the breakpoint. The data is only captured once. After that the breakpoint is set in a final state.",
-	//         "Log each breakpoint hit. The breakpoint remains active until deleted or expired."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "clientVersion": {
-	//       "description": "Required. The client version making the call. Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "debuggeeId": {
-	//       "description": "Required. ID of the debuggee whose breakpoints to list.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "includeAllUsers": {
-	//       "description": "When set to `true`, the response includes the list of breakpoints set by any user. Otherwise, it includes only breakpoints set by the caller.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "includeInactive": {
-	//       "description": "When set to `true`, the response includes active and inactive breakpoints. Otherwise, it includes only active breakpoints.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "stripResults": {
-	//       "deprecated": true,
-	//       "description": "This field is deprecated. The following fields are always stripped out of the result: `stack_frames`, `evaluated_expressions` and `variable_table`.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "waitToken": {
-	//       "description": "A wait token that, if specified, blocks the call until the breakpoints list has changed, or a server selected timeout has expired. The value should be set from the last response. The error code `google.rpc.Code.ABORTED` (RPC) is returned on wait timeout, which should be called again with the same `wait_token`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/debugger/debuggees/{debuggeeId}/breakpoints",
-	//   "response": {
-	//     "$ref": "ListBreakpointsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud_debugger"
-	//   ]
-	// }
-
 }
-
-// method id "clouddebugger.debugger.debuggees.breakpoints.set":
 
 type DebuggerDebuggeesBreakpointsSetCall struct {
 	s          *Service
@@ -2640,55 +2056,50 @@ func (r *DebuggerDebuggeesBreakpointsService) Set(debuggeeId string, breakpoint 
 	return c
 }
 
-// CanaryOption sets the optional parameter "canaryOption": The canary
-// option set by the user upon setting breakpoint.
+// CanaryOption sets the optional parameter "canaryOption": The canary option
+// set by the user upon setting breakpoint.
 //
 // Possible values:
 //
-//	"CANARY_OPTION_UNSPECIFIED" - Depends on the canary_mode of the
+//	"CANARY_OPTION_UNSPECIFIED" - Depends on the canary_mode of the debuggee.
+//	"CANARY_OPTION_TRY_ENABLE" - Enable the canary for this breakpoint if the
 //
-// debuggee.
+// canary_mode of the debuggee is not CANARY_MODE_ALWAYS_ENABLED or
+// CANARY_MODE_ALWAYS_DISABLED.
 //
-//	"CANARY_OPTION_TRY_ENABLE" - Enable the canary for this breakpoint
+//	"CANARY_OPTION_TRY_DISABLE" - Disable the canary for this breakpoint if
 //
-// if the canary_mode of the debuggee is not CANARY_MODE_ALWAYS_ENABLED
-// or CANARY_MODE_ALWAYS_DISABLED.
-//
-//	"CANARY_OPTION_TRY_DISABLE" - Disable the canary for this
-//
-// breakpoint if the canary_mode of the debuggee is not
-// CANARY_MODE_ALWAYS_ENABLED or CANARY_MODE_ALWAYS_DISABLED.
+// the canary_mode of the debuggee is not CANARY_MODE_ALWAYS_ENABLED or
+// CANARY_MODE_ALWAYS_DISABLED.
 func (c *DebuggerDebuggeesBreakpointsSetCall) CanaryOption(canaryOption string) *DebuggerDebuggeesBreakpointsSetCall {
 	c.urlParams_.Set("canaryOption", canaryOption)
 	return c
 }
 
-// ClientVersion sets the optional parameter "clientVersion": Required.
-// The client version making the call. Schema: `domain/type/version`
-// (e.g., `google.com/intellij/v1`).
+// ClientVersion sets the optional parameter "clientVersion": Required. The
+// client version making the call. Schema: `domain/type/version` (e.g.,
+// `google.com/intellij/v1`).
 func (c *DebuggerDebuggeesBreakpointsSetCall) ClientVersion(clientVersion string) *DebuggerDebuggeesBreakpointsSetCall {
 	c.urlParams_.Set("clientVersion", clientVersion)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *DebuggerDebuggeesBreakpointsSetCall) Fields(s ...googleapi.Field) *DebuggerDebuggeesBreakpointsSetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *DebuggerDebuggeesBreakpointsSetCall) Context(ctx context.Context) *DebuggerDebuggeesBreakpointsSetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *DebuggerDebuggeesBreakpointsSetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2697,18 +2108,12 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) Header() http.Header {
 }
 
 func (c *DebuggerDebuggeesBreakpointsSetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.breakpoint)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/debugger/debuggees/{debuggeeId}/breakpoints/set")
@@ -2721,16 +2126,15 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"debuggeeId": c.debuggeeId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddebugger.debugger.debuggees.breakpoints.set" call.
-// Exactly one of *SetBreakpointResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *SetBreakpointResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SetBreakpointResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *DebuggerDebuggeesBreakpointsSetCall) Do(opts ...googleapi.CallOption) (*SetBreakpointResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2761,53 +2165,4 @@ func (c *DebuggerDebuggeesBreakpointsSetCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Sets the breakpoint to the debuggee.",
-	//   "flatPath": "v2/debugger/debuggees/{debuggeeId}/breakpoints/set",
-	//   "httpMethod": "POST",
-	//   "id": "clouddebugger.debugger.debuggees.breakpoints.set",
-	//   "parameterOrder": [
-	//     "debuggeeId"
-	//   ],
-	//   "parameters": {
-	//     "canaryOption": {
-	//       "description": "The canary option set by the user upon setting breakpoint.",
-	//       "enum": [
-	//         "CANARY_OPTION_UNSPECIFIED",
-	//         "CANARY_OPTION_TRY_ENABLE",
-	//         "CANARY_OPTION_TRY_DISABLE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Depends on the canary_mode of the debuggee.",
-	//         "Enable the canary for this breakpoint if the canary_mode of the debuggee is not CANARY_MODE_ALWAYS_ENABLED or CANARY_MODE_ALWAYS_DISABLED.",
-	//         "Disable the canary for this breakpoint if the canary_mode of the debuggee is not CANARY_MODE_ALWAYS_ENABLED or CANARY_MODE_ALWAYS_DISABLED."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "clientVersion": {
-	//       "description": "Required. The client version making the call. Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "debuggeeId": {
-	//       "description": "Required. ID of the debuggee where the breakpoint is to be set.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/debugger/debuggees/{debuggeeId}/breakpoints/set",
-	//   "request": {
-	//     "$ref": "Breakpoint"
-	//   },
-	//   "response": {
-	//     "$ref": "SetBreakpointResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud_debugger"
-	//   ]
-	// }
-
 }

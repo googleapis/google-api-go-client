@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package playablelocations provides access to the Playable Locations API.
 //
 // For product documentation, see: https://developers.google.com/maps/contact-sales/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	playablelocationsService, err := playablelocations.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	playablelocationsService, err := playablelocations.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	playablelocationsService, err := playablelocations.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package playablelocations // import "google.golang.org/api/playablelocations/v3"
 
 import (
@@ -50,6 +63,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -70,17 +84,21 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "playablelocations:v3"
 const apiName = "playablelocations"
 const apiVersion = "v3"
 const basePath = "https://playablelocations.googleapis.com/"
+const basePathTemplate = "https://playablelocations.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://playablelocations.mtls.googleapis.com/"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -133,18 +151,16 @@ type V3Service struct {
 	s *Service
 }
 
-// GoogleMapsPlayablelocationsV3Impression: Encapsulates impression
-// event details.
+// GoogleMapsPlayablelocationsV3Impression: Encapsulates impression event
+// details.
 type GoogleMapsPlayablelocationsV3Impression struct {
-	// GameObjectType: An arbitrary, developer-defined type identifier for
-	// each type of game object used in your game. Since players interact
-	// with differ types of game objects in different ways, this field
-	// allows you to segregate impression data by type for analysis. You
-	// should assign a unique `game_object_type` ID to represent a distinct
-	// type of game object in your game. For example, 1=monster location,
-	// 2=powerup location.
+	// GameObjectType: An arbitrary, developer-defined type identifier for each
+	// type of game object used in your game. Since players interact with differ
+	// types of game objects in different ways, this field allows you to segregate
+	// impression data by type for analysis. You should assign a unique
+	// `game_object_type` ID to represent a distinct type of game object in your
+	// game. For example, 1=monster location, 2=powerup location.
 	GameObjectType int64 `json:"gameObjectType,omitempty"`
-
 	// ImpressionType: Required. The type of impression event.
 	//
 	// Possible values:
@@ -152,366 +168,291 @@ type GoogleMapsPlayablelocationsV3Impression struct {
 	//   "PRESENTED" - The playable location was presented to a player.
 	//   "INTERACTED" - A player interacted with the playable location.
 	ImpressionType string `json:"impressionType,omitempty"`
-
 	// LocationName: Required. The name of the playable location.
 	LocationName string `json:"locationName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GameObjectType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GameObjectType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GameObjectType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlayablelocationsV3Impression) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlayablelocationsV3Impression) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlayablelocationsV3Impression
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleMapsPlayablelocationsV3LogImpressionsRequest: A request for
-// logging impressions.
+// GoogleMapsPlayablelocationsV3LogImpressionsRequest: A request for logging
+// impressions.
 type GoogleMapsPlayablelocationsV3LogImpressionsRequest struct {
-	// ClientInfo: Required. Information about the client device. For
-	// example, device model and operating system.
+	// ClientInfo: Required. Information about the client device. For example,
+	// device model and operating system.
 	ClientInfo *GoogleMapsUnityClientInfo `json:"clientInfo,omitempty"`
-
-	// Impressions: Required. Impression event details. The maximum number
-	// of impression reports that you can log at once is 50.
+	// Impressions: Required. Impression event details. The maximum number of
+	// impression reports that you can log at once is 50.
 	Impressions []*GoogleMapsPlayablelocationsV3Impression `json:"impressions,omitempty"`
-
-	// RequestId: Required. A string that uniquely identifies the log
-	// impressions request. This allows you to detect duplicate requests. We
-	// recommend that you use UUIDs for this value. The value must not
-	// exceed 50 characters. You should reuse the `request_id` only when
-	// retrying a request in case of failure. In this case, the request must
-	// be identical to the one that failed.
+	// RequestId: Required. A string that uniquely identifies the log impressions
+	// request. This allows you to detect duplicate requests. We recommend that you
+	// use UUIDs for this value. The value must not exceed 50 characters. You
+	// should reuse the `request_id` only when retrying a request in case of
+	// failure. In this case, the request must be identical to the one that failed.
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientInfo") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClientInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlayablelocationsV3LogImpressionsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlayablelocationsV3LogImpressionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlayablelocationsV3LogImpressionsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleMapsPlayablelocationsV3LogImpressionsResponse: A response for
-// the LogImpressions method. This method returns no data upon success.
+// GoogleMapsPlayablelocationsV3LogImpressionsResponse: A response for the
+// LogImpressions method. This method returns no data upon success.
 type GoogleMapsPlayablelocationsV3LogImpressionsResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleMapsPlayablelocationsV3LogPlayerReportsRequest: A request for
-// logging your player's bad location reports.
+// GoogleMapsPlayablelocationsV3LogPlayerReportsRequest: A request for logging
+// your player's bad location reports.
 type GoogleMapsPlayablelocationsV3LogPlayerReportsRequest struct {
-	// ClientInfo: Required. Information about the client device (for
-	// example, device model and operating system).
+	// ClientInfo: Required. Information about the client device (for example,
+	// device model and operating system).
 	ClientInfo *GoogleMapsUnityClientInfo `json:"clientInfo,omitempty"`
-
 	// PlayerReports: Required. Player reports. The maximum number of player
 	// reports that you can log at once is 50.
 	PlayerReports []*GoogleMapsPlayablelocationsV3PlayerReport `json:"playerReports,omitempty"`
-
 	// RequestId: Required. A string that uniquely identifies the log player
-	// reports request. This allows you to detect duplicate requests. We
-	// recommend that you use UUIDs for this value. The value must not
-	// exceed 50 characters. You should reuse the `request_id` only when
-	// retrying a request in the case of a failure. In that case, the
-	// request must be identical to the one that failed.
+	// reports request. This allows you to detect duplicate requests. We recommend
+	// that you use UUIDs for this value. The value must not exceed 50 characters.
+	// You should reuse the `request_id` only when retrying a request in the case
+	// of a failure. In that case, the request must be identical to the one that
+	// failed.
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientInfo") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClientInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlayablelocationsV3LogPlayerReportsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlayablelocationsV3LogPlayerReportsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlayablelocationsV3LogPlayerReportsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleMapsPlayablelocationsV3LogPlayerReportsResponse: A response for
-// the LogPlayerReports method. This method returns no data upon
-// success.
+// GoogleMapsPlayablelocationsV3LogPlayerReportsResponse: A response for the
+// LogPlayerReports method. This method returns no data upon success.
 type GoogleMapsPlayablelocationsV3LogPlayerReportsResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleMapsPlayablelocationsV3PlayerReport: A report submitted by a
-// player about a playable location that is considered inappropriate for
-// use in the game.
+// GoogleMapsPlayablelocationsV3PlayerReport: A report submitted by a player
+// about a playable location that is considered inappropriate for use in the
+// game.
 type GoogleMapsPlayablelocationsV3PlayerReport struct {
-	// LanguageCode: Language code (in BCP-47 format) indicating the
-	// language of the freeform description provided in `reason_details`.
-	// Examples are "en", "en-US" or "ja-Latn". For more information, see
+	// LanguageCode: Language code (in BCP-47 format) indicating the language of
+	// the freeform description provided in `reason_details`. Examples are "en",
+	// "en-US" or "ja-Latn". For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// LocationName: Required. The name of the playable location.
 	LocationName string `json:"locationName,omitempty"`
-
-	// ReasonDetails: Required. A free-form description detailing why the
-	// playable location is considered bad.
+	// ReasonDetails: Required. A free-form description detailing why the playable
+	// location is considered bad.
 	ReasonDetails string `json:"reasonDetails,omitempty"`
-
 	// Reasons: Required. One or more reasons why this playable location is
 	// considered bad.
 	//
 	// Possible values:
 	//   "BAD_LOCATION_REASON_UNSPECIFIED" - Unspecified reason. Do not use.
 	//   "OTHER" - The reason isn't one of the reasons in this enumeration.
-	//   "NOT_PEDESTRIAN_ACCESSIBLE" - The playable location isn't
-	// accessible to pedestrians. For example, if it's in the middle of a
-	// highway.
-	//   "NOT_OPEN_TO_PUBLIC" - The playable location isn't open to the
-	// public. For example, a private office building.
-	//   "PERMANENTLY_CLOSED" - The playable location is permanently closed.
-	// For example, when a business has been shut down.
+	//   "NOT_PEDESTRIAN_ACCESSIBLE" - The playable location isn't accessible to
+	// pedestrians. For example, if it's in the middle of a highway.
+	//   "NOT_OPEN_TO_PUBLIC" - The playable location isn't open to the public. For
+	// example, a private office building.
+	//   "PERMANENTLY_CLOSED" - The playable location is permanently closed. For
+	// example, when a business has been shut down.
 	//   "TEMPORARILY_INACCESSIBLE" - The playable location is temporarily
-	// inaccessible. For example, when a business has closed for
-	// renovations.
+	// inaccessible. For example, when a business has closed for renovations.
 	Reasons []string `json:"reasons,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LanguageCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LanguageCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlayablelocationsV3PlayerReport) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlayablelocationsV3PlayerReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlayablelocationsV3PlayerReport
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleMapsPlayablelocationsV3SampleAreaFilter: Specifies the area to
-// search for playable locations.
+// GoogleMapsPlayablelocationsV3SampleAreaFilter: Specifies the area to search
+// for playable locations.
 type GoogleMapsPlayablelocationsV3SampleAreaFilter struct {
 	// S2CellId: Required. The S2 cell ID of the area you want. This must be
-	// between cell level 11 and 14 (inclusive). S2 cells are 64-bit
-	// integers that identify areas on the Earth. They are hierarchical, and
-	// can therefore be used for spatial indexing. The S2 geometry library
-	// is available in a number of languages: * C++
-	// (https://github.com/google/s2geometry) * Java
+	// between cell level 11 and 14 (inclusive). S2 cells are 64-bit integers that
+	// identify areas on the Earth. They are hierarchical, and can therefore be
+	// used for spatial indexing. The S2 geometry library is available in a number
+	// of languages: * C++ (https://github.com/google/s2geometry) * Java
 	// (https://github.com/google/s2-geometry-library-java) * Go
 	// (https://github.com/golang/geo) * Python
 	// (https://github.com/google/s2geometry/tree/master/src/python)
 	S2CellId uint64 `json:"s2CellId,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "S2CellId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "S2CellId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "S2CellId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlayablelocationsV3SampleAreaFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlayablelocationsV3SampleAreaFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlayablelocationsV3SampleAreaFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlayablelocationsV3SampleCriterion: Encapsulates a filter
 // criterion for searching for a set of playable locations.
 type GoogleMapsPlayablelocationsV3SampleCriterion struct {
-	// FieldsToReturn: Specifies which `PlayableLocation` fields are
-	// returned. `name` (which is used for logging impressions),
-	// `center_point` and `place_id` (or `plus_code`) are always returned.
-	// The following fields are omitted unless you specify them here: *
-	// snapped_point * types Note: The more fields you include, the more
-	// expensive in terms of data and associated latency your query will be.
+	// FieldsToReturn: Specifies which `PlayableLocation` fields are returned.
+	// `name` (which is used for logging impressions), `center_point` and
+	// `place_id` (or `plus_code`) are always returned. The following fields are
+	// omitted unless you specify them here: * snapped_point * types Note: The more
+	// fields you include, the more expensive in terms of data and associated
+	// latency your query will be.
 	FieldsToReturn string `json:"fieldsToReturn,omitempty"`
-
-	// Filter: Specifies filtering options, and specifies what will be
-	// included in the result set.
+	// Filter: Specifies filtering options, and specifies what will be included in
+	// the result set.
 	Filter *GoogleMapsPlayablelocationsV3SampleFilter `json:"filter,omitempty"`
-
-	// GameObjectType: Required. An arbitrary, developer-defined identifier
-	// of the type of game object that the playable location is used for.
-	// This field allows you to specify criteria per game object type when
-	// searching for playable locations. You should assign a unique
-	// `game_object_type` ID across all `request_criteria` to represent a
-	// distinct type of game object. For example, 1=monster location,
-	// 2=powerup location. The response contains a map.
+	// GameObjectType: Required. An arbitrary, developer-defined identifier of the
+	// type of game object that the playable location is used for. This field
+	// allows you to specify criteria per game object type when searching for
+	// playable locations. You should assign a unique `game_object_type` ID across
+	// all `request_criteria` to represent a distinct type of game object. For
+	// example, 1=monster location, 2=powerup location. The response contains a
+	// map.
 	GameObjectType int64 `json:"gameObjectType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FieldsToReturn") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FieldsToReturn") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "FieldsToReturn") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlayablelocationsV3SampleCriterion) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlayablelocationsV3SampleCriterion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlayablelocationsV3SampleCriterion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleMapsPlayablelocationsV3SampleFilter: Specifies the filters to
-// use when searching for playable locations.
+// GoogleMapsPlayablelocationsV3SampleFilter: Specifies the filters to use when
+// searching for playable locations.
 type GoogleMapsPlayablelocationsV3SampleFilter struct {
-	// IncludedTypes: Restricts the set of playable locations to just the
-	// types (/maps/documentation/gaming/tt/types) that you want.
+	// IncludedTypes: Restricts the set of playable locations to just the types
+	// (/maps/documentation/gaming/tt/types) that you want.
 	IncludedTypes []string `json:"includedTypes,omitempty"`
-
-	// MaxLocationCount: Specifies the maximum number of playable locations
-	// to return. This value must not be greater than 1000. The default
-	// value is 100. Only the top-ranking playable locations are returned.
+	// MaxLocationCount: Specifies the maximum number of playable locations to
+	// return. This value must not be greater than 1000. The default value is 100.
+	// Only the top-ranking playable locations are returned.
 	MaxLocationCount int64 `json:"maxLocationCount,omitempty"`
-
 	// Spacing: A set of options that control the spacing between playable
 	// locations. By default the minimum distance between locations is 200m.
 	Spacing *GoogleMapsPlayablelocationsV3SampleSpacingOptions `json:"spacing,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "IncludedTypes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IncludedTypes") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IncludedTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlayablelocationsV3SampleFilter) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlayablelocationsV3SampleFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlayablelocationsV3SampleFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleMapsPlayablelocationsV3SamplePlayableLocation: A geographical
-// point suitable for placing game objects in location-based games.
+// GoogleMapsPlayablelocationsV3SamplePlayableLocation: A geographical point
+// suitable for placing game objects in location-based games.
 type GoogleMapsPlayablelocationsV3SamplePlayableLocation struct {
-	// CenterPoint: Required. The latitude and longitude associated with the
-	// center of the playable location. By default, the set of playable
-	// locations returned from SamplePlayableLocations use center-point
-	// coordinates.
+	// CenterPoint: Required. The latitude and longitude associated with the center
+	// of the playable location. By default, the set of playable locations returned
+	// from SamplePlayableLocations use center-point coordinates.
 	CenterPoint *GoogleTypeLatLng `json:"centerPoint,omitempty"`
-
 	// Name: Required. The name of this playable location.
 	Name string `json:"name,omitempty"`
-
 	// PlaceId: A [place ID] (https://developers.google.com/places/place-id)
 	PlaceId string `json:"placeId,omitempty"`
-
 	// PlusCode: A [plus code] (http://openlocationcode.com)
 	PlusCode string `json:"plusCode,omitempty"`
-
-	// SnappedPoint: The playable location's coordinates, snapped to the
-	// sidewalk of the nearest road, if a nearby road exists.
+	// SnappedPoint: The playable location's coordinates, snapped to the sidewalk
+	// of the nearest road, if a nearby road exists.
 	SnappedPoint *GoogleTypeLatLng `json:"snappedPoint,omitempty"`
-
 	// Types: A collection of Playable Location Types
-	// (/maps/documentation/gaming/tt/types) for this playable location. The
-	// first type in the collection is the primary type. Type information
-	// might not be available for all playable locations.
+	// (/maps/documentation/gaming/tt/types) for this playable location. The first
+	// type in the collection is the primary type. Type information might not be
+	// available for all playable locations.
 	Types []string `json:"types,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CenterPoint") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CenterPoint") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CenterPoint") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlayablelocationsV3SamplePlayableLocation) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlayablelocationsV3SamplePlayableLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlayablelocationsV3SamplePlayableLocation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleMapsPlayablelocationsV3SamplePlayableLocationList: A list of
@@ -519,183 +460,147 @@ func (s *GoogleMapsPlayablelocationsV3SamplePlayableLocation) MarshalJSON() ([]b
 type GoogleMapsPlayablelocationsV3SamplePlayableLocationList struct {
 	// Locations: A list of playable locations for this game object type.
 	Locations []*GoogleMapsPlayablelocationsV3SamplePlayableLocation `json:"locations,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Locations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Locations") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Locations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlayablelocationsV3SamplePlayableLocationList) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlayablelocationsV3SamplePlayableLocationList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlayablelocationsV3SamplePlayableLocationList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleMapsPlayablelocationsV3SamplePlayableLocationsRequest:  Life of
-// a query: - When a game starts in a new location, your game server
-// issues a SamplePlayableLocations request. The request specifies the
-// S2 cell, and contains one or more "criteria" for filtering: -
-// Criterion 0: i locations for long-lived bases, or level 0 monsters,
-// or... - Criterion 1: j locations for short-lived bases, or level 1
-// monsters, ... - Criterion 2: k locations for random objects. - etc
-// (up to 5 criterion may be specified). `PlayableLocationList` will
-// then contain mutually exclusive lists of `PlayableLocation` objects
-// that satisfy each of the criteria. Think of it as a collection of
-// real-world locations that you can then associate with your game
-// state. Note: These points are impermanent in nature. E.g, parks can
-// close, and places can be removed. The response specifies how long you
-// can expect the playable locations to last. Once they expire, you
-// should query the `samplePlayableLocations` API again to get a fresh
-// view of the real world.
+// GoogleMapsPlayablelocationsV3SamplePlayableLocationsRequest:  Life of a
+// query: - When a game starts in a new location, your game server issues a
+// SamplePlayableLocations request. The request specifies the S2 cell, and
+// contains one or more "criteria" for filtering: - Criterion 0: i locations
+// for long-lived bases, or level 0 monsters, or... - Criterion 1: j locations
+// for short-lived bases, or level 1 monsters, ... - Criterion 2: k locations
+// for random objects. - etc (up to 5 criterion may be specified).
+// `PlayableLocationList` will then contain mutually exclusive lists of
+// `PlayableLocation` objects that satisfy each of the criteria. Think of it as
+// a collection of real-world locations that you can then associate with your
+// game state. Note: These points are impermanent in nature. E.g, parks can
+// close, and places can be removed. The response specifies how long you can
+// expect the playable locations to last. Once they expire, you should query
+// the `samplePlayableLocations` API again to get a fresh view of the real
+// world.
 type GoogleMapsPlayablelocationsV3SamplePlayableLocationsRequest struct {
-	// AreaFilter: Required. Specifies the area to search within for
-	// playable locations.
+	// AreaFilter: Required. Specifies the area to search within for playable
+	// locations.
 	AreaFilter *GoogleMapsPlayablelocationsV3SampleAreaFilter `json:"areaFilter,omitempty"`
-
-	// Criteria: Required. Specifies one or more (up to 5) criteria for
-	// filtering the returned playable locations.
+	// Criteria: Required. Specifies one or more (up to 5) criteria for filtering
+	// the returned playable locations.
 	Criteria []*GoogleMapsPlayablelocationsV3SampleCriterion `json:"criteria,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AreaFilter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AreaFilter") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AreaFilter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlayablelocationsV3SamplePlayableLocationsRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlayablelocationsV3SamplePlayableLocationsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlayablelocationsV3SamplePlayableLocationsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleMapsPlayablelocationsV3SamplePlayableLocationsResponse:
-// Response for the SamplePlayableLocations method.
+// GoogleMapsPlayablelocationsV3SamplePlayableLocationsResponse:  Response for
+// the SamplePlayableLocations method.
 type GoogleMapsPlayablelocationsV3SamplePlayableLocationsResponse struct {
-	// LocationsPerGameObjectType: Each PlayableLocation object corresponds
-	// to a game_object_type specified in the request.
+	// LocationsPerGameObjectType: Each PlayableLocation object corresponds to a
+	// game_object_type specified in the request.
 	LocationsPerGameObjectType map[string]GoogleMapsPlayablelocationsV3SamplePlayableLocationList `json:"locationsPerGameObjectType,omitempty"`
-
 	// Ttl: Required. Specifies the "time-to-live" for the set of playable
-	// locations. You can use this value to determine how long to cache the
-	// set of playable locations. After this length of time, your back-end
-	// game server should issue a new SamplePlayableLocations request to get
-	// a fresh set of playable locations (because for example, they might
-	// have been removed, a park might have closed for the day, a business
-	// might have closed permanently).
+	// locations. You can use this value to determine how long to cache the set of
+	// playable locations. After this length of time, your back-end game server
+	// should issue a new SamplePlayableLocations request to get a fresh set of
+	// playable locations (because for example, they might have been removed, a
+	// park might have closed for the day, a business might have closed
+	// permanently).
 	Ttl string `json:"ttl,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "LocationsPerGameObjectType") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "LocationsPerGameObjectType")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "LocationsPerGameObjectType") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LocationsPerGameObjectType") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlayablelocationsV3SamplePlayableLocationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlayablelocationsV3SamplePlayableLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlayablelocationsV3SamplePlayableLocationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleMapsPlayablelocationsV3SampleSpacingOptions: A set of options
-// that specifies the separation between playable locations.
+// GoogleMapsPlayablelocationsV3SampleSpacingOptions: A set of options that
+// specifies the separation between playable locations.
 type GoogleMapsPlayablelocationsV3SampleSpacingOptions struct {
-	// MinSpacingMeters: Required. The minimum spacing between any two
-	// playable locations, measured in meters. The minimum value is 30. The
-	// maximum value is 1000. Inputs will be rounded up to the next 10 meter
-	// interval. The default value is 200m. Set this field to remove tight
-	// clusters of playable locations. Note: The spacing is a greedy
-	// algorithm. It optimizes for selecting the highest ranking locations
-	// first, not to maximize the number of locations selected. Consider the
-	// following scenario: * Rank: A: 2, B: 1, C: 3. * Distance:
-	// A--200m--B--200m--C If spacing=250, it will pick the highest ranked
-	// location [B], not [A, C]. Note: Spacing works within the game object
-	// type itself, as well as the previous ones. Suppose three game object
-	// types, each with the following spacing: * X: 400m, Y: undefined, Z:
-	// 200m. 1. Add locations for X, within 400m of each other. 2. Add
-	// locations for Y, without any spacing. 3. Finally, add locations for Z
-	// within 200m of each other as well X and Y. The distance diagram
-	// between those locations end up as: * From->To. * X->X: 400m * Y->X,
-	// Y->Y: unspecified. * Z->X, Z->Y, Z->Z: 200m.
+	// MinSpacingMeters: Required. The minimum spacing between any two playable
+	// locations, measured in meters. The minimum value is 30. The maximum value is
+	// 1000. Inputs will be rounded up to the next 10 meter interval. The default
+	// value is 200m. Set this field to remove tight clusters of playable
+	// locations. Note: The spacing is a greedy algorithm. It optimizes for
+	// selecting the highest ranking locations first, not to maximize the number of
+	// locations selected. Consider the following scenario: * Rank: A: 2, B: 1, C:
+	// 3. * Distance: A--200m--B--200m--C If spacing=250, it will pick the highest
+	// ranked location [B], not [A, C]. Note: Spacing works within the game object
+	// type itself, as well as the previous ones. Suppose three game object types,
+	// each with the following spacing: * X: 400m, Y: undefined, Z: 200m. 1. Add
+	// locations for X, within 400m of each other. 2. Add locations for Y, without
+	// any spacing. 3. Finally, add locations for Z within 200m of each other as
+	// well X and Y. The distance diagram between those locations end up as: *
+	// From->To. * X->X: 400m * Y->X, Y->Y: unspecified. * Z->X, Z->Y, Z->Z: 200m.
 	MinSpacingMeters float64 `json:"minSpacingMeters,omitempty"`
-
-	// PointType: Specifies whether the minimum spacing constraint applies
-	// to the center-point or to the snapped point of playable locations.
-	// The default value is `CENTER_POINT`. If a snapped point is not
-	// available for a playable location, its center-point is used instead.
-	// Set this to the point type used in your game.
+	// PointType: Specifies whether the minimum spacing constraint applies to the
+	// center-point or to the snapped point of playable locations. The default
+	// value is `CENTER_POINT`. If a snapped point is not available for a playable
+	// location, its center-point is used instead. Set this to the point type used
+	// in your game.
 	//
 	// Possible values:
-	//   "POINT_TYPE_UNSPECIFIED" - Unspecified point type. Do not use this
-	// value.
-	//   "CENTER_POINT" - The geographic coordinates correspond to the
-	// center of the location.
-	//   "SNAPPED_POINT" - The geographic coordinates correspond to the
-	// location snapped to the sidewalk of the nearest road (when a nearby
-	// road exists).
+	//   "POINT_TYPE_UNSPECIFIED" - Unspecified point type. Do not use this value.
+	//   "CENTER_POINT" - The geographic coordinates correspond to the center of
+	// the location.
+	//   "SNAPPED_POINT" - The geographic coordinates correspond to the location
+	// snapped to the sidewalk of the nearest road (when a nearby road exists).
 	PointType string `json:"pointType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MinSpacingMeters") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MinSpacingMeters") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MinSpacingMeters") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsPlayablelocationsV3SampleSpacingOptions) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsPlayablelocationsV3SampleSpacingOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlayablelocationsV3SampleSpacingOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleMapsPlayablelocationsV3SampleSpacingOptions) UnmarshalJSON(data []byte) error {
@@ -714,38 +619,29 @@ func (s *GoogleMapsPlayablelocationsV3SampleSpacingOptions) UnmarshalJSON(data [
 
 // GoogleMapsUnityClientInfo: Client information.
 type GoogleMapsUnityClientInfo struct {
-	// ApiClient: API client name and version. For example, the SDK calling
-	// the API. The exact format is up to the client.
+	// ApiClient: API client name and version. For example, the SDK calling the
+	// API. The exact format is up to the client.
 	ApiClient string `json:"apiClient,omitempty"`
-
-	// ApplicationId: Application ID, such as the package name on Android
-	// and the bundle identifier on iOS platforms.
+	// ApplicationId: Application ID, such as the package name on Android and the
+	// bundle identifier on iOS platforms.
 	ApplicationId string `json:"applicationId,omitempty"`
-
-	// ApplicationVersion: Application version number, such as "1.2.3". The
-	// exact format is application-dependent.
+	// ApplicationVersion: Application version number, such as "1.2.3". The exact
+	// format is application-dependent.
 	ApplicationVersion string `json:"applicationVersion,omitempty"`
-
-	// DeviceModel: Device model as reported by the device. The exact format
-	// is platform-dependent.
-	DeviceModel string `json:"deviceModel,omitempty"`
-
-	// LanguageCode: Language code (in BCP-47 format) indicating the UI
-	// language of the client. Examples are "en", "en-US" or "ja-Latn". For
-	// more information, see
-	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
-	LanguageCode string `json:"languageCode,omitempty"`
-
-	// OperatingSystem: Operating system name and version as reported by the
-	// OS. For example, "Mac OS X 10.10.4". The exact format is
+	// DeviceModel: Device model as reported by the device. The exact format is
 	// platform-dependent.
+	DeviceModel string `json:"deviceModel,omitempty"`
+	// LanguageCode: Language code (in BCP-47 format) indicating the UI language of
+	// the client. Examples are "en", "en-US" or "ja-Latn". For more information,
+	// see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// OperatingSystem: Operating system name and version as reported by the OS.
+	// For example, "Mac OS X 10.10.4". The exact format is platform-dependent.
 	OperatingSystem string `json:"operatingSystem,omitempty"`
-
-	// OperatingSystemBuild: Build number/version of the operating system.
-	// e.g., the contents of android.os.Build.ID in Android, or the contents
-	// of sysctl "kern.osversion" in iOS.
+	// OperatingSystemBuild: Build number/version of the operating system. e.g.,
+	// the contents of android.os.Build.ID in Android, or the contents of sysctl
+	// "kern.osversion" in iOS.
 	OperatingSystemBuild string `json:"operatingSystemBuild,omitempty"`
-
 	// Platform: Platform where the application is running.
 	//
 	// Possible values:
@@ -758,65 +654,50 @@ type GoogleMapsUnityClientInfo struct {
 	//   "IOS" - iOS
 	//   "WEB_GL" - WebGL.
 	Platform string `json:"platform,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ApiClient") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiClient") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApiClient") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleMapsUnityClientInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleMapsUnityClientInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsUnityClientInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeLatLng: An object that represents a latitude/longitude
-// pair. This is expressed as a pair of doubles to represent degrees
-// latitude and degrees longitude. Unless specified otherwise, this
-// object must conform to the WGS84 standard. Values must be within
-// normalized ranges.
+// GoogleTypeLatLng: An object that represents a latitude/longitude pair. This
+// is expressed as a pair of doubles to represent degrees latitude and degrees
+// longitude. Unless specified otherwise, this object must conform to the WGS84
+// standard. Values must be within normalized ranges.
 type GoogleTypeLatLng struct {
-	// Latitude: The latitude in degrees. It must be in the range [-90.0,
-	// +90.0].
+	// Latitude: The latitude in degrees. It must be in the range [-90.0, +90.0].
 	Latitude float64 `json:"latitude,omitempty"`
-
 	// Longitude: The longitude in degrees. It must be in the range [-180.0,
 	// +180.0].
 	Longitude float64 `json:"longitude,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Latitude") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Latitude") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Latitude") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleTypeLatLng) MarshalJSON() ([]byte, error) {
+func (s GoogleTypeLatLng) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeLatLng
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleTypeLatLng) UnmarshalJSON(data []byte) error {
@@ -835,8 +716,6 @@ func (s *GoogleTypeLatLng) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// method id "playablelocations.logImpressions":
-
 type V3LogImpressionsCall struct {
 	s                                                  *Service
 	googlemapsplayablelocationsv3logimpressionsrequest *GoogleMapsPlayablelocationsV3LogImpressionsRequest
@@ -845,10 +724,10 @@ type V3LogImpressionsCall struct {
 	header_                                            http.Header
 }
 
-// LogImpressions: Logs new events when playable locations are
-// displayed, and when they are interacted with. Impressions are not
-// partially saved; either all impressions are saved and this request
-// succeeds, or no impressions are saved, and this request fails.
+// LogImpressions: Logs new events when playable locations are displayed, and
+// when they are interacted with. Impressions are not partially saved; either
+// all impressions are saved and this request succeeds, or no impressions are
+// saved, and this request fails.
 func (r *V3Service) LogImpressions(googlemapsplayablelocationsv3logimpressionsrequest *GoogleMapsPlayablelocationsV3LogImpressionsRequest) *V3LogImpressionsCall {
 	c := &V3LogImpressionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googlemapsplayablelocationsv3logimpressionsrequest = googlemapsplayablelocationsv3logimpressionsrequest
@@ -856,23 +735,21 @@ func (r *V3Service) LogImpressions(googlemapsplayablelocationsv3logimpressionsre
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *V3LogImpressionsCall) Fields(s ...googleapi.Field) *V3LogImpressionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *V3LogImpressionsCall) Context(ctx context.Context) *V3LogImpressionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *V3LogImpressionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -881,18 +758,12 @@ func (c *V3LogImpressionsCall) Header() http.Header {
 }
 
 func (c *V3LogImpressionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlemapsplayablelocationsv3logimpressionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3:logImpressions")
@@ -902,18 +773,15 @@ func (c *V3LogImpressionsCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playablelocations.logImpressions" call.
-// Exactly one of *GoogleMapsPlayablelocationsV3LogImpressionsResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleMapsPlayablelocationsV3LogImpressionsResponse.ServerResponse.He
-// ader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleMapsPlayablelocationsV3LogImpressionsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *V3LogImpressionsCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlayablelocationsV3LogImpressionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -921,17 +789,17 @@ func (c *V3LogImpressionsCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlay
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleMapsPlayablelocationsV3LogImpressionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -944,25 +812,7 @@ func (c *V3LogImpressionsCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlay
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Logs new events when playable locations are displayed, and when they are interacted with. Impressions are not partially saved; either all impressions are saved and this request succeeds, or no impressions are saved, and this request fails.",
-	//   "flatPath": "v3:logImpressions",
-	//   "httpMethod": "POST",
-	//   "id": "playablelocations.logImpressions",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v3:logImpressions",
-	//   "request": {
-	//     "$ref": "GoogleMapsPlayablelocationsV3LogImpressionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleMapsPlayablelocationsV3LogImpressionsResponse"
-	//   }
-	// }
-
 }
-
-// method id "playablelocations.logPlayerReports":
 
 type V3LogPlayerReportsCall struct {
 	s                                                    *Service
@@ -972,10 +822,9 @@ type V3LogPlayerReportsCall struct {
 	header_                                              http.Header
 }
 
-// LogPlayerReports: Logs bad playable location reports submitted by
-// players. Reports are not partially saved; either all reports are
-// saved and this request succeeds, or no reports are saved, and this
-// request fails.
+// LogPlayerReports: Logs bad playable location reports submitted by players.
+// Reports are not partially saved; either all reports are saved and this
+// request succeeds, or no reports are saved, and this request fails.
 func (r *V3Service) LogPlayerReports(googlemapsplayablelocationsv3logplayerreportsrequest *GoogleMapsPlayablelocationsV3LogPlayerReportsRequest) *V3LogPlayerReportsCall {
 	c := &V3LogPlayerReportsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googlemapsplayablelocationsv3logplayerreportsrequest = googlemapsplayablelocationsv3logplayerreportsrequest
@@ -983,23 +832,21 @@ func (r *V3Service) LogPlayerReports(googlemapsplayablelocationsv3logplayerrepor
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *V3LogPlayerReportsCall) Fields(s ...googleapi.Field) *V3LogPlayerReportsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *V3LogPlayerReportsCall) Context(ctx context.Context) *V3LogPlayerReportsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *V3LogPlayerReportsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1008,18 +855,12 @@ func (c *V3LogPlayerReportsCall) Header() http.Header {
 }
 
 func (c *V3LogPlayerReportsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlemapsplayablelocationsv3logplayerreportsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3:logPlayerReports")
@@ -1029,18 +870,15 @@ func (c *V3LogPlayerReportsCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playablelocations.logPlayerReports" call.
-// Exactly one of *GoogleMapsPlayablelocationsV3LogPlayerReportsResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleMapsPlayablelocationsV3LogPlayerReportsResponse.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleMapsPlayablelocationsV3LogPlayerReportsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *V3LogPlayerReportsCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlayablelocationsV3LogPlayerReportsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1048,17 +886,17 @@ func (c *V3LogPlayerReportsCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleMapsPlayablelocationsV3LogPlayerReportsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1071,25 +909,7 @@ func (c *V3LogPlayerReportsCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Logs bad playable location reports submitted by players. Reports are not partially saved; either all reports are saved and this request succeeds, or no reports are saved, and this request fails.",
-	//   "flatPath": "v3:logPlayerReports",
-	//   "httpMethod": "POST",
-	//   "id": "playablelocations.logPlayerReports",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v3:logPlayerReports",
-	//   "request": {
-	//     "$ref": "GoogleMapsPlayablelocationsV3LogPlayerReportsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleMapsPlayablelocationsV3LogPlayerReportsResponse"
-	//   }
-	// }
-
 }
-
-// method id "playablelocations.samplePlayableLocations":
 
 type V3SamplePlayableLocationsCall struct {
 	s                                                           *Service
@@ -1099,10 +919,10 @@ type V3SamplePlayableLocationsCall struct {
 	header_                                                     http.Header
 }
 
-// SamplePlayableLocations: Returns a set of playable locations that lie
-// within a specified area, that satisfy optional filter criteria. Note:
-// Identical `SamplePlayableLocations` requests can return different
-// results as the state of the world changes over time.
+// SamplePlayableLocations: Returns a set of playable locations that lie within
+// a specified area, that satisfy optional filter criteria. Note: Identical
+// `SamplePlayableLocations` requests can return different results as the state
+// of the world changes over time.
 func (r *V3Service) SamplePlayableLocations(googlemapsplayablelocationsv3sampleplayablelocationsrequest *GoogleMapsPlayablelocationsV3SamplePlayableLocationsRequest) *V3SamplePlayableLocationsCall {
 	c := &V3SamplePlayableLocationsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googlemapsplayablelocationsv3sampleplayablelocationsrequest = googlemapsplayablelocationsv3sampleplayablelocationsrequest
@@ -1110,23 +930,21 @@ func (r *V3Service) SamplePlayableLocations(googlemapsplayablelocationsv3samplep
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *V3SamplePlayableLocationsCall) Fields(s ...googleapi.Field) *V3SamplePlayableLocationsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *V3SamplePlayableLocationsCall) Context(ctx context.Context) *V3SamplePlayableLocationsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *V3SamplePlayableLocationsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1135,18 +953,12 @@ func (c *V3SamplePlayableLocationsCall) Header() http.Header {
 }
 
 func (c *V3SamplePlayableLocationsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlemapsplayablelocationsv3sampleplayablelocationsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3:samplePlayableLocations")
@@ -1156,19 +968,15 @@ func (c *V3SamplePlayableLocationsCall) doRequest(alt string) (*http.Response, e
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playablelocations.samplePlayableLocations" call.
-// Exactly one of
-// *GoogleMapsPlayablelocationsV3SamplePlayableLocationsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleMapsPlayablelocationsV3SamplePlayableLocationsResponse.ServerRe
-// sponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleMapsPlayablelocationsV3SamplePlayableLocationsResponse.ServerResponse.
+// Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *V3SamplePlayableLocationsCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlayablelocationsV3SamplePlayableLocationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1176,17 +984,17 @@ func (c *V3SamplePlayableLocationsCall) Do(opts ...googleapi.CallOption) (*Googl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleMapsPlayablelocationsV3SamplePlayableLocationsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1199,20 +1007,4 @@ func (c *V3SamplePlayableLocationsCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a set of playable locations that lie within a specified area, that satisfy optional filter criteria. Note: Identical `SamplePlayableLocations` requests can return different results as the state of the world changes over time.",
-	//   "flatPath": "v3:samplePlayableLocations",
-	//   "httpMethod": "POST",
-	//   "id": "playablelocations.samplePlayableLocations",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v3:samplePlayableLocations",
-	//   "request": {
-	//     "$ref": "GoogleMapsPlayablelocationsV3SamplePlayableLocationsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleMapsPlayablelocationsV3SamplePlayableLocationsResponse"
-	//   }
-	// }
-
 }

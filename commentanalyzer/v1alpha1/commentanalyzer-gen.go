@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package commentanalyzer provides access to the Perspective Comment Analyzer API.
 //
 // For product documentation, see: https://github.com/conversationai/perspectiveapi/blob/master/README.md
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	commentanalyzerService, err := commentanalyzer.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	commentanalyzerService, err := commentanalyzer.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	commentanalyzerService, err := commentanalyzer.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package commentanalyzer // import "google.golang.org/api/commentanalyzer/v1alpha1"
 
 import (
@@ -50,6 +63,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -70,11 +84,14 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "commentanalyzer:v1alpha1"
 const apiName = "commentanalyzer"
 const apiVersion = "v1alpha1"
 const basePath = "https://commentanalyzer.googleapis.com/"
+const basePathTemplate = "https://commentanalyzer.UNIVERSE_DOMAIN/"
+const mtlsBasePath = "https://commentanalyzer.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -84,12 +101,15 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/userinfo.email",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -142,34 +162,27 @@ type CommentsService struct {
 	s *Service
 }
 
-// AnalyzeCommentRequest: The comment analysis request
-// message.
+// AnalyzeCommentRequest: The comment analysis request message.
 // LINT.IfChange
 type AnalyzeCommentRequest struct {
-	// ClientToken: Opaque token that is echoed from the request to the
-	// response.
+	// ClientToken: Opaque token that is echoed from the request to the response.
 	ClientToken string `json:"clientToken,omitempty"`
-
 	// Comment: The comment to analyze.
 	Comment *TextEntry `json:"comment,omitempty"`
-
-	// CommunityId: Optional identifier associating this
-	// AnalyzeCommentRequest with a
+	// CommunityId: Optional identifier associating this AnalyzeCommentRequest with
+	// a
 	// particular client's community. Different communities may have
 	// different
 	// norms and rules. Specifying this value enables us to explore
 	// building
 	// community-specific models for clients.
 	CommunityId string `json:"communityId,omitempty"`
-
 	// Context: The context of the comment.
 	Context *Context `json:"context,omitempty"`
-
-	// DoNotStore: Do not store the comment or context sent in this request.
-	// By default, the
+	// DoNotStore: Do not store the comment or context sent in this request. By
+	// default, the
 	// service may store comments/context for debugging purposes.
 	DoNotStore bool `json:"doNotStore,omitempty"`
-
 	// Languages: The language(s) of the comment and context. If none are
 	// specified, we
 	// attempt to automatically detect the language. Specifying multiple
@@ -186,7 +199,6 @@ type AnalyzeCommentRequest struct {
 	// the
 	// service.
 	Languages []string `json:"languages,omitempty"`
-
 	// RequestedAttributes: Specification of requested attributes. The
 	// AttributeParameters serve as
 	// configuration for each associated attribute. The map keys are
@@ -200,204 +212,165 @@ type AnalyzeCommentRequest struct {
 	// see
 	// go/checker-models (internal)
 	// and
-	// https://github.com/conversationai/perspectiveapi/blob/master/2-api
-	// /models.md#all-attribute-types.
+	// https://github.com/conversationai/perspectiveapi/blob/master/2-api/models.md#all-attribute-types.
 	RequestedAttributes map[string]AttributeParameters `json:"requestedAttributes,omitempty"`
-
-	// SessionId: Session ID. Used to join related RPCs into a single
-	// session. For example,
+	// SessionId: Session ID. Used to join related RPCs into a single session. For
+	// example,
 	// an interactive tool that calls both the AnalyzeComment
 	// and
-	// SuggestCommentScore RPCs should set all invocations of both RPCs to
-	// the
+	// SuggestCommentScore RPCs should set all invocations of both RPCs to the
 	// same Session ID, typically a random 64-bit integer.
 	SessionId string `json:"sessionId,omitempty"`
-
-	// SpanAnnotations: An advisory parameter that will return span
-	// annotations if the model
-	// is capable of providing scores with sub-comment resolution. This
-	// will
+	// SpanAnnotations: An advisory parameter that will return span annotations if
+	// the model
+	// is capable of providing scores with sub-comment resolution. This will
 	// likely increase the size of the returned message.
 	SpanAnnotations bool `json:"spanAnnotations,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClientToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *AnalyzeCommentRequest) MarshalJSON() ([]byte, error) {
+func (s AnalyzeCommentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AnalyzeCommentRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AnalyzeCommentResponse: The comment analysis response message.
 type AnalyzeCommentResponse struct {
-	// AttributeScores: Scores for the requested attributes. The map keys
-	// are attribute names (same
+	// AttributeScores: Scores for the requested attributes. The map keys are
+	// attribute names (same
 	// as the requested_attribute field in AnalyzeCommentRequest, for
 	// example
 	// "ATTACK_ON_AUTHOR", "INFLAMMATORY", etc).
 	AttributeScores map[string]AttributeScores `json:"attributeScores,omitempty"`
-
 	// ClientToken: Same token from the original AnalyzeCommentRequest.
 	ClientToken string `json:"clientToken,omitempty"`
-
-	// DetectedLanguages: Contains the languages detected from the text
-	// content, sorted in order of
+	// DetectedLanguages: Contains the languages detected from the text content,
+	// sorted in order of
 	// likelihood.
 	DetectedLanguages []string `json:"detectedLanguages,omitempty"`
-
-	// Languages: The language(s) used by CommentAnalyzer service to choose
-	// which Model to
+	// Languages: The language(s) used by CommentAnalyzer service to choose which
+	// Model to
 	// use when analyzing the comment. Might better be
 	// called
-	// "effective_languages". The logic used to make the choice is as
-	// follows:
+	// "effective_languages". The logic used to make the choice is as follows:
 	//   if !Request.languages.empty()
 	//     effective_languages = Request.languages
 	//   else
 	//     effective_languages = detected_languages[0]
 	Languages []string `json:"languages,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AttributeScores") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AttributeScores") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AttributeScores") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *AnalyzeCommentResponse) MarshalJSON() ([]byte, error) {
+func (s AnalyzeCommentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AnalyzeCommentResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ArticleAndParentComment: A type of context specific to a comment left
-// on a single-threaded comment
-// message board, where comments are either a top level comment or the
-// child of
+// ArticleAndParentComment: A type of context specific to a comment left on a
+// single-threaded comment
+// message board, where comments are either a top level comment or the child
+// of
 // a top level comment.
 type ArticleAndParentComment struct {
-	// Article: The source content about which the comment was made (article
-	// text, article
+	// Article: The source content about which the comment was made (article text,
+	// article
 	// summary, video transcript, etc).
 	Article *TextEntry `json:"article,omitempty"`
-
-	// ParentComment: Refers to text that is a direct parent of the source
-	// comment, such as in a
+	// ParentComment: Refers to text that is a direct parent of the source comment,
+	// such as in a
 	// one-deep threaded message board. This field will only be present
 	// for
 	// comments that are replies to other comments and will not be populated
 	// for
 	// direct comments on the article_text.
 	ParentComment *TextEntry `json:"parentComment,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Article") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Article") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Article") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Article") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ArticleAndParentComment) MarshalJSON() ([]byte, error) {
+func (s ArticleAndParentComment) MarshalJSON() ([]byte, error) {
 	type NoMethod ArticleAndParentComment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AttributeParameters: Configurable parameters for attribute scoring.
 type AttributeParameters struct {
-	// ScoreThreshold: Don't return scores for this attribute that are below
-	// this threshold. If
-	// unset, a default threshold will be applied. A FloatValue wrapper is
-	// used to
+	// ScoreThreshold: Don't return scores for this attribute that are below this
+	// threshold. If
+	// unset, a default threshold will be applied. A FloatValue wrapper is used
+	// to
 	// distinguish between 0 vs. default/unset.
 	ScoreThreshold float64 `json:"scoreThreshold,omitempty"`
-
-	// ScoreType: What type of scores to return. If unset, defaults to
-	// probability scores.
+	// ScoreType: What type of scores to return. If unset, defaults to probability
+	// scores.
 	//
 	// Possible values:
-	//   "SCORE_TYPE_UNSPECIFIED" - Unspecified. Defaults to PROBABILITY
-	// scores if available, and otherwise
+	//   "SCORE_TYPE_UNSPECIFIED" - Unspecified. Defaults to PROBABILITY scores if
+	// available, and otherwise
 	// RAW. Every model has a RAW score.
-	//   "PROBABILITY" - Probability scores are in the range [0, 1] and
-	// indicate level of confidence
+	//   "PROBABILITY" - Probability scores are in the range [0, 1] and indicate
+	// level of confidence
 	// in the attribute label.
-	//   "STD_DEV_SCORE" - Standard deviation scores are in the range (-inf,
-	// +inf).
-	//   "PERCENTILE" - Percentile scores are in the range [0, 1] and
-	// indicate the percentile of
+	//   "STD_DEV_SCORE" - Standard deviation scores are in the range (-inf, +inf).
+	//   "PERCENTILE" - Percentile scores are in the range [0, 1] and indicate the
+	// percentile of
 	// the raw score, normalized with a test dataset. This is not
 	// generally
 	// recommended, as the normalization is dependent on the dataset used,
 	// which
 	// may not match other usecases.
-	//   "RAW" - Raw scores are the raw values from the model, and may take
-	// any value. This
+	//   "RAW" - Raw scores are the raw values from the model, and may take any
+	// value. This
 	// is primarily for debugging/testing, and not generally recommended.
 	ScoreType string `json:"scoreType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ScoreThreshold") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ScoreThreshold") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ScoreThreshold") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *AttributeParameters) MarshalJSON() ([]byte, error) {
+func (s AttributeParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod AttributeParameters
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *AttributeParameters) UnmarshalJSON(data []byte) error {
@@ -414,82 +387,66 @@ func (s *AttributeParameters) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// AttributeScores: This holds score values for a single attribute. It
-// contains both per-span
+// AttributeScores: This holds score values for a single attribute. It contains
+// both per-span
 // scores as well as an overall summary score..
 type AttributeScores struct {
 	// SpanScores: Per-span scores.
 	SpanScores []*SpanScore `json:"spanScores,omitempty"`
-
 	// SummaryScore: Overall score for comment as a whole.
 	SummaryScore *Score `json:"summaryScore,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SpanScores") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SpanScores") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SpanScores") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *AttributeScores) MarshalJSON() ([]byte, error) {
+func (s AttributeScores) MarshalJSON() ([]byte, error) {
 	type NoMethod AttributeScores
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Context: Context is typically something that a Comment is referencing
-// or replying to
+// Context: Context is typically something that a Comment is referencing or
+// replying to
 // (such as an article, or previous comment).
-// Note: Populate only ONE OF the following fields. The oneof syntax
-// cannot be
-// used because that would require nesting entries inside another
-// message and
+// Note: Populate only ONE OF the following fields. The oneof syntax cannot
+// be
+// used because that would require nesting entries inside another message
+// and
 // breaking backwards compatibility. The server will return an error if
 // more
 // than one of the following fields is present.
 type Context struct {
-	// ArticleAndParentComment: Information about the source for which the
-	// original comment was made, and
+	// ArticleAndParentComment: Information about the source for which the original
+	// comment was made, and
 	// any parent comment info.
 	ArticleAndParentComment *ArticleAndParentComment `json:"articleAndParentComment,omitempty"`
-
-	// Entries: A list of messages. For example, a linear comments section
-	// or forum thread.
+	// Entries: A list of messages. For example, a linear comments section or forum
+	// thread.
 	Entries []*TextEntry `json:"entries,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ArticleAndParentComment") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ArticleAndParentComment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ArticleAndParentComment")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ArticleAndParentComment") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Context) MarshalJSON() ([]byte, error) {
+func (s Context) MarshalJSON() ([]byte, error) {
 	type NoMethod Context
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Score: Analysis scores are described by a value and a ScoreType.
@@ -497,50 +454,42 @@ type Score struct {
 	// Type: The type of the above value.
 	//
 	// Possible values:
-	//   "SCORE_TYPE_UNSPECIFIED" - Unspecified. Defaults to PROBABILITY
-	// scores if available, and otherwise
+	//   "SCORE_TYPE_UNSPECIFIED" - Unspecified. Defaults to PROBABILITY scores if
+	// available, and otherwise
 	// RAW. Every model has a RAW score.
-	//   "PROBABILITY" - Probability scores are in the range [0, 1] and
-	// indicate level of confidence
+	//   "PROBABILITY" - Probability scores are in the range [0, 1] and indicate
+	// level of confidence
 	// in the attribute label.
-	//   "STD_DEV_SCORE" - Standard deviation scores are in the range (-inf,
-	// +inf).
-	//   "PERCENTILE" - Percentile scores are in the range [0, 1] and
-	// indicate the percentile of
+	//   "STD_DEV_SCORE" - Standard deviation scores are in the range (-inf, +inf).
+	//   "PERCENTILE" - Percentile scores are in the range [0, 1] and indicate the
+	// percentile of
 	// the raw score, normalized with a test dataset. This is not
 	// generally
 	// recommended, as the normalization is dependent on the dataset used,
 	// which
 	// may not match other usecases.
-	//   "RAW" - Raw scores are the raw values from the model, and may take
-	// any value. This
+	//   "RAW" - Raw scores are the raw values from the model, and may take any
+	// value. This
 	// is primarily for debugging/testing, and not generally recommended.
 	Type string `json:"type,omitempty"`
-
 	// Value: Score value. Semantics described by type below.
 	Value float64 `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Type") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Type") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Score) MarshalJSON() ([]byte, error) {
+func (s Score) MarshalJSON() ([]byte, error) {
 	type NoMethod Score
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Score) UnmarshalJSON(data []byte) error {
@@ -559,8 +508,8 @@ func (s *Score) UnmarshalJSON(data []byte) error {
 
 // SpanScore: This is a single score for a given span of text.
 type SpanScore struct {
-	// Begin: "begin" and "end" describe the span of the original text that
-	// the attribute
+	// Begin: "begin" and "end" describe the span of the original text that the
+	// attribute
 	// score applies to. The values are the UTF-16 codepoint range. "end"
 	// is
 	// exclusive. For example, with the text "Hi there", the begin/end pair
@@ -569,56 +518,45 @@ type SpanScore struct {
 	//
 	// If "begin" and "end" are unset, the score applies to the full text.
 	Begin int64 `json:"begin,omitempty"`
-
-	End int64 `json:"end,omitempty"`
-
+	End   int64 `json:"end,omitempty"`
 	// Score: The score value.
 	Score *Score `json:"score,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Begin") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Begin") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Begin") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *SpanScore) MarshalJSON() ([]byte, error) {
+func (s SpanScore) MarshalJSON() ([]byte, error) {
 	type NoMethod SpanScore
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SuggestCommentScoreRequest: The comment score suggestion request
-// message.
+// SuggestCommentScoreRequest: The comment score suggestion request message.
 type SuggestCommentScoreRequest struct {
 	// AttributeScores: Attribute scores for the comment. The map keys are
 	// attribute names, same as
 	// the requested_attribute field in AnalyzeCommentRequest (for
 	// example
-	// "ATTACK_ON_AUTHOR", "INFLAMMATORY", etc.). This field has the same
-	// type as
+	// "ATTACK_ON_AUTHOR", "INFLAMMATORY", etc.). This field has the same type
+	// as
 	// the `attribute_scores` field in AnalyzeCommentResponse.
 	//
-	// To specify an overall attribute score for the entire comment as a
-	// whole,
+	// To specify an overall attribute score for the entire comment as a whole,
 	// use the `summary_score` field of the mapped AttributeScores object.
 	// To
 	// specify scores on specific subparts of the comment, use the
 	// `span_scores`
 	// field. All SpanScore objects must have begin and end fields set.
 	//
-	// All Score objects must be explicitly set (for binary classification,
-	// use
+	// All Score objects must be explicitly set (for binary classification, use
 	// the score values 0 and 1). If Score objects don't include a
 	// ScoreType,
 	// `PROBABILITY` is assumed.
@@ -629,145 +567,108 @@ type SuggestCommentScoreRequest struct {
 	// all
 	// malformed requests.
 	AttributeScores map[string]AttributeScores `json:"attributeScores,omitempty"`
-
-	// ClientToken: Opaque token that is echoed from the request to the
-	// response.
+	// ClientToken: Opaque token that is echoed from the request to the response.
 	ClientToken string `json:"clientToken,omitempty"`
-
 	// Comment: The comment being scored.
 	Comment *TextEntry `json:"comment,omitempty"`
-
-	// CommunityId: Optional identifier associating this comment score
-	// suggestion with a
-	// particular sub-community. Different communities may have different
-	// norms
-	// and rules. Specifying this value enables training
-	// community-specific
+	// CommunityId: Optional identifier associating this comment score suggestion
+	// with a
+	// particular sub-community. Different communities may have different norms
+	// and rules. Specifying this value enables training community-specific
 	// models.
 	CommunityId string `json:"communityId,omitempty"`
-
 	// Context: The context of the comment.
 	Context *Context `json:"context,omitempty"`
-
 	// Languages: The language(s) of the comment and context. If none are
 	// specified, we
 	// attempt to automatically detect the language. Both ISO and BCP-47
 	// language
 	// codes are accepted.
 	Languages []string `json:"languages,omitempty"`
-
-	// SessionId: Session ID. Used to join related RPCs into a single
-	// session. For example,
+	// SessionId: Session ID. Used to join related RPCs into a single session. For
+	// example,
 	// an interactive tool that calls both the AnalyzeComment
 	// and
-	// SuggestCommentScore RPCs should set all invocations of both RPCs to
-	// the
+	// SuggestCommentScore RPCs should set all invocations of both RPCs to the
 	// same Session ID, typically a random 64-bit integer.
 	SessionId string `json:"sessionId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AttributeScores") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AttributeScores") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AttributeScores") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *SuggestCommentScoreRequest) MarshalJSON() ([]byte, error) {
+func (s SuggestCommentScoreRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SuggestCommentScoreRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SuggestCommentScoreResponse: The comment score suggestion response
-// message.
+// SuggestCommentScoreResponse: The comment score suggestion response message.
 type SuggestCommentScoreResponse struct {
 	// ClientToken: Same token from the original SuggestCommentScoreRequest.
 	ClientToken string `json:"clientToken,omitempty"`
-
-	// DetectedLanguages: The list of languages detected from the comment
-	// text.
+	// DetectedLanguages: The list of languages detected from the comment text.
 	DetectedLanguages []string `json:"detectedLanguages,omitempty"`
-
 	// RequestedLanguages: The list of languages provided in the request.
 	RequestedLanguages []string `json:"requestedLanguages,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClientToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *SuggestCommentScoreResponse) MarshalJSON() ([]byte, error) {
+func (s SuggestCommentScoreResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SuggestCommentScoreResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TextEntry: Represents a body of text.
 type TextEntry struct {
 	// Text: UTF-8 encoded text.
 	Text string `json:"text,omitempty"`
-
 	// Type: Type of the text field.
 	//
 	// Possible values:
-	//   "TEXT_TYPE_UNSPECIFIED" - The content type is not specified. Text
-	// will be interpreted as plain text
+	//   "TEXT_TYPE_UNSPECIFIED" - The content type is not specified. Text will be
+	// interpreted as plain text
 	// by default.
 	//   "PLAIN_TEXT" - Plain text.
 	//   "HTML" - HTML.
 	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Text") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Text") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *TextEntry) MarshalJSON() ([]byte, error) {
+func (s TextEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod TextEntry
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "commentanalyzer.comments.analyze":
 
 type CommentsAnalyzeCall struct {
 	s                     *Service
@@ -786,23 +687,21 @@ func (r *CommentsService) Analyze(analyzecommentrequest *AnalyzeCommentRequest) 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CommentsAnalyzeCall) Fields(s ...googleapi.Field) *CommentsAnalyzeCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CommentsAnalyzeCall) Context(ctx context.Context) *CommentsAnalyzeCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CommentsAnalyzeCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -811,18 +710,12 @@ func (c *CommentsAnalyzeCall) Header() http.Header {
 }
 
 func (c *CommentsAnalyzeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.analyzecommentrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/comments:analyze")
@@ -832,16 +725,15 @@ func (c *CommentsAnalyzeCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "commentanalyzer.comments.analyze" call.
-// Exactly one of *AnalyzeCommentResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *AnalyzeCommentResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *AnalyzeCommentResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *CommentsAnalyzeCall) Do(opts ...googleapi.CallOption) (*AnalyzeCommentResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -849,17 +741,17 @@ func (c *CommentsAnalyzeCall) Do(opts ...googleapi.CallOption) (*AnalyzeCommentR
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &AnalyzeCommentResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -872,28 +764,7 @@ func (c *CommentsAnalyzeCall) Do(opts ...googleapi.CallOption) (*AnalyzeCommentR
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Analyzes the provided text and returns scores for requested attributes.",
-	//   "flatPath": "v1alpha1/comments:analyze",
-	//   "httpMethod": "POST",
-	//   "id": "commentanalyzer.comments.analyze",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1alpha1/comments:analyze",
-	//   "request": {
-	//     "$ref": "AnalyzeCommentRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "AnalyzeCommentResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/userinfo.email"
-	//   ]
-	// }
-
 }
-
-// method id "commentanalyzer.comments.suggestscore":
 
 type CommentsSuggestscoreCall struct {
 	s                          *Service
@@ -911,23 +782,21 @@ func (r *CommentsService) Suggestscore(suggestcommentscorerequest *SuggestCommen
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CommentsSuggestscoreCall) Fields(s ...googleapi.Field) *CommentsSuggestscoreCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CommentsSuggestscoreCall) Context(ctx context.Context) *CommentsSuggestscoreCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CommentsSuggestscoreCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -936,18 +805,12 @@ func (c *CommentsSuggestscoreCall) Header() http.Header {
 }
 
 func (c *CommentsSuggestscoreCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200506")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.suggestcommentscorerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/comments:suggestscore")
@@ -957,16 +820,15 @@ func (c *CommentsSuggestscoreCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "commentanalyzer.comments.suggestscore" call.
-// Exactly one of *SuggestCommentScoreResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *SuggestCommentScoreResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *SuggestCommentScoreResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *CommentsSuggestscoreCall) Do(opts ...googleapi.CallOption) (*SuggestCommentScoreResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -974,17 +836,17 @@ func (c *CommentsSuggestscoreCall) Do(opts ...googleapi.CallOption) (*SuggestCom
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &SuggestCommentScoreResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -997,23 +859,4 @@ func (c *CommentsSuggestscoreCall) Do(opts ...googleapi.CallOption) (*SuggestCom
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Suggest comment scores as training data.",
-	//   "flatPath": "v1alpha1/comments:suggestscore",
-	//   "httpMethod": "POST",
-	//   "id": "commentanalyzer.comments.suggestscore",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1alpha1/comments:suggestscore",
-	//   "request": {
-	//     "$ref": "SuggestCommentScoreRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "SuggestCommentScoreResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/userinfo.email"
-	//   ]
-	// }
-
 }

@@ -2634,8 +2634,8 @@ func (s LocationMetadata) MarshalJSON() ([]byte, error) {
 
 // LogBucket: Describes a repository in which log entries are stored.
 type LogBucket struct {
-	// AnalyticsEnabled: Whether log analytics is enabled for this bucket.Once
-	// enabled, log analytics features cannot be disabled.
+	// AnalyticsEnabled: Optional. Whether log analytics is enabled for this
+	// bucket.Once enabled, log analytics features cannot be disabled.
 	AnalyticsEnabled bool `json:"analyticsEnabled,omitempty"`
 	// CmekSettings: Optional. The CMEK settings of the log bucket. If present, new
 	// log entries written to this log bucket are encrypted using the CMEK key

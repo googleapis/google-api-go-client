@@ -5902,9 +5902,8 @@ type SubscriptionOffer struct {
 	// subscription belongs to.
 	PackageName string `json:"packageName,omitempty"`
 	// Phases: Required. The phases of this subscription offer. Must contain at
-	// least one entry, and may contain at most five. Users will always receive all
-	// these phases in the specified order. Phases may not be added, removed, or
-	// reordered after initial creation.
+	// least one and at most two entries. Users will always receive all these
+	// phases in the specified order.
 	Phases []*SubscriptionOfferPhase `json:"phases,omitempty"`
 	// ProductId: Required. Immutable. The ID of the parent subscription this offer
 	// belongs to.

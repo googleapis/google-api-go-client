@@ -761,6 +761,8 @@ type ClusterUpgradeDetails struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "NOT_STARTED" - Not started.
+	//   "IN_PROGRESS" - In progress.
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
@@ -1448,6 +1450,8 @@ type InstanceUpgradeDetails struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "NOT_STARTED" - Not started.
+	//   "IN_PROGRESS" - In progress.
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
@@ -2411,17 +2415,20 @@ type StageInfo struct {
 	//
 	// Possible values:
 	//   "STAGE_UNSPECIFIED" - Unspecified stage.
-	//   "ALLOYDB_PRECHECK" - This stage is for the custom checks done before
-	// upgrade.
-	//   "PG_UPGRADE_CHECK" - This stage is for `pg_upgrade --check` run before
-	// upgrade.
-	//   "PRIMARY_INSTANCE_UPGRADE" - This stage is primary upgrade.
-	//   "READ_POOL_UPGRADE" - This stage is read pool upgrade.
+	//   "ALLOYDB_PRECHECK" - Pre-upgrade custom checks, not covered by pg_upgrade.
+	//   "PG_UPGRADE_CHECK" - Pre-upgrade pg_upgrade checks.
+	//   "PREPARE_FOR_UPGRADE" - Clone the original cluster.
+	//   "PRIMARY_INSTANCE_UPGRADE" - Upgrade the primary instance(downtime).
+	//   "READ_POOL_INSTANCES_UPGRADE" - This stage is read pool upgrade.
+	//   "ROLLBACK" - Rollback in case of critical failures.
+	//   "CLEANUP" - Cleanup.
 	Stage string `json:"stage,omitempty"`
 	// Status: Status of the stage.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "NOT_STARTED" - Not started.
+	//   "IN_PROGRESS" - In progress.
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
@@ -2481,6 +2488,10 @@ func (s Status) MarshalJSON() ([]byte, error) {
 // StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration:
 // Configuration for availability of database instance
 type StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration struct {
+	// AutomaticFailoverRoutingConfigured: Checks for existence of (multi-cluster)
+	// routing configuration that allows automatic failover to a different
+	// zone/region in case of an outage. Applicable to Bigtable resources.
+	AutomaticFailoverRoutingConfigured bool `json:"automaticFailoverRoutingConfigured,omitempty"`
 	// AvailabilityType: Availability type. Potential values: * `ZONAL`: The
 	// instance serves data from only one zone. Outages in that zone affect data
 	// accessibility. * `REGIONAL`: The instance can serve data from more than one
@@ -2498,16 +2509,18 @@ type StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration struct {
 	CrossRegionReplicaConfigured bool `json:"crossRegionReplicaConfigured,omitempty"`
 	ExternalReplicaConfigured    bool `json:"externalReplicaConfigured,omitempty"`
 	PromotableReplicaConfigured  bool `json:"promotableReplicaConfigured,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AvailabilityType") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AutomaticFailoverRoutingConfigured") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AvailabilityType") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "AutomaticFailoverRoutingConfigured") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
@@ -3989,6 +4002,8 @@ type UpgradeClusterResponse struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified status.
+	//   "NOT_STARTED" - Not started.
+	//   "IN_PROGRESS" - In progress.
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
@@ -4016,6 +4031,9 @@ type User struct {
 	// DatabaseRoles: Optional. List of database roles this user has. The database
 	// role strings are subject to the PostgreSQL naming conventions.
 	DatabaseRoles []string `json:"databaseRoles,omitempty"`
+	// KeepExtraRoles: Input only. If the user already exists and it has additional
+	// roles, keep them granted.
+	KeepExtraRoles bool `json:"keepExtraRoles,omitempty"`
 	// Name: Output only. Name of the resource in the form of
 	// projects/{project}/locations/{location}/cluster/{cluster}/users/{user}.
 	Name string `json:"name,omitempty"`

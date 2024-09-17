@@ -290,8 +290,8 @@ type AccessSettings struct {
 	IdentitySources []string `json:"identitySources,omitempty"`
 	// OauthSettings: Optional. Settings to configure IAP's OAuth behavior.
 	OauthSettings *OAuthSettings `json:"oauthSettings,omitempty"`
-	// PolicyDelegationSettings: Optional. Settings to configure Policy delegation
-	// for apps hosted in tenant projects. INTERNAL_ONLY.
+	// PolicyDelegationSettings: Optional. Settings to allow google-internal teams
+	// to use IAP for apps hosted in a tenant project.
 	PolicyDelegationSettings *PolicyDelegationSettings `json:"policyDelegationSettings,omitempty"`
 	// ReauthSettings: Optional. Settings to configure reauthentication policies in
 	// IAP.
@@ -1156,7 +1156,7 @@ type ReauthSettings struct {
 	// MaxAge: Optional. Reauth session lifetime, how long before a user has to
 	// reauthenticate again.
 	MaxAge string `json:"maxAge,omitempty"`
-	// Method: Reauth method requested.
+	// Method: Optional. Reauth method requested.
 	//
 	// Possible values:
 	//   "METHOD_UNSPECIFIED" - Reauthentication disabled.

@@ -1350,7 +1350,9 @@ func (s ComputeEngineTargetDetails) MarshalJSON() ([]byte, error) {
 }
 
 // ComputeScheduling: Scheduling information for VM on maintenance/restart
-// behaviour and node allocation in sole tenant nodes.
+// behaviour and node allocation in sole tenant nodes. Options for instance
+// behavior when the host machine undergoes maintenance that may temporarily
+// impact instance performance.
 type ComputeScheduling struct {
 	// MinNodeCpus: The minimum number of virtual CPUs this instance will consume
 	// when running on a sole-tenant node. Ignored if no node_affinites are

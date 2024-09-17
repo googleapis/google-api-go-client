@@ -167,10 +167,22 @@ type AccountsService struct {
 
 func NewAccountsDataSourcesService(s *Service) *AccountsDataSourcesService {
 	rs := &AccountsDataSourcesService{s: s}
+	rs.FileUploads = NewAccountsDataSourcesFileUploadsService(s)
 	return rs
 }
 
 type AccountsDataSourcesService struct {
+	s *Service
+
+	FileUploads *AccountsDataSourcesFileUploadsService
+}
+
+func NewAccountsDataSourcesFileUploadsService(s *Service) *AccountsDataSourcesFileUploadsService {
+	rs := &AccountsDataSourcesFileUploadsService{s: s}
+	return rs
+}
+
+type AccountsDataSourcesFileUploadsService struct {
 	s *Service
 }
 
@@ -242,6 +254,68 @@ type DataSource struct {
 
 func (s DataSource) MarshalJSON() ([]byte, error) {
 	type NoMethod DataSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DataSourceReference: Data source reference can be used to manage related
+// data sources within the data source service.
+type DataSourceReference struct {
+	// PrimaryDataSourceName: Optional. The name of the primary data source.
+	// Format: `accounts/{account}/dataSources/{datasource}`
+	PrimaryDataSourceName string `json:"primaryDataSourceName,omitempty"`
+	// Self: Self should be used to reference the primary data source itself.
+	Self bool `json:"self,omitempty"`
+	// SupplementalDataSourceName: Optional. The name of the supplemental data
+	// source. Format: `accounts/{account}/dataSources/{datasource}`
+	SupplementalDataSourceName string `json:"supplementalDataSourceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PrimaryDataSourceName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PrimaryDataSourceName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataSourceReference) MarshalJSON() ([]byte, error) {
+	type NoMethod DataSourceReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DefaultRule: Default rule management of the data source.
+type DefaultRule struct {
+	// TakeFromDataSources: Required. The list of data sources linked in the
+	// default rule (https://support.google.com/merchants/answer/7450276). This
+	// list is ordered by the default rule priority of joining the data. It might
+	// include none or multiple references to `self` and supplemental data sources.
+	// The list must not be empty. To link the data source to the default rule, you
+	// need to add a new reference to this list (in sequential order). To unlink
+	// the data source from the default rule, you need to remove the given
+	// reference from this list. Changing the order of this list will result in
+	// changing the priority of data sources in the default rule. For example,
+	// providing the following list: [`1001`, `self`] will take attribute values
+	// from supplemental data source `1001`, and fallback to `self` if the
+	// attribute is not set in `1001`.
+	TakeFromDataSources []*DataSourceReference `json:"takeFromDataSources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TakeFromDataSources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TakeFromDataSources") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DefaultRule) MarshalJSON() ([]byte, error) {
+	type NoMethod DefaultRule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -361,6 +435,104 @@ func (s FileInput) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FileUpload: The file upload of a specific data source, that is, the result
+// of the retrieval of the data source at a certain timestamp computed
+// asynchronously when the data source processing is finished. Only applicable
+// to file data sources.
+type FileUpload struct {
+	// DataSourceId: Output only. The data source id.
+	DataSourceId int64 `json:"dataSourceId,omitempty,string"`
+	// Issues: Output only. The list of issues occurring in the data source.
+	Issues []*Issue `json:"issues,omitempty"`
+	// ItemsCreated: Output only. The number of items in the data source that were
+	// created.
+	ItemsCreated int64 `json:"itemsCreated,omitempty,string"`
+	// ItemsTotal: Output only. The number of items in the data source that were
+	// processed.
+	ItemsTotal int64 `json:"itemsTotal,omitempty,string"`
+	// ItemsUpdated: Output only. The number of items in the data source that were
+	// updated.
+	ItemsUpdated int64 `json:"itemsUpdated,omitempty,string"`
+	// Name: Identifier. The name of the data source file upload. Format:
+	// `{datasource.name=accounts/{account}/dataSources/{datasource}/fileUploads/{fi
+	// leupload}}`
+	Name string `json:"name,omitempty"`
+	// ProcessingState: Output only. The processing state of the data source.
+	//
+	// Possible values:
+	//   "PROCESSING_STATE_UNSPECIFIED" - Processing state unspecified.
+	//   "FAILED" - The data source could not be processed or all the items had
+	// errors.
+	//   "IN_PROGRESS" - The data source is being processed.
+	//   "SUCCEEDED" - The data source was processed successfully, though some
+	// items might have had errors.
+	ProcessingState string `json:"processingState,omitempty"`
+	// UploadTime: Output only. The date at which the file of the data source was
+	// uploaded.
+	UploadTime string `json:"uploadTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DataSourceId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataSourceId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FileUpload) MarshalJSON() ([]byte, error) {
+	type NoMethod FileUpload
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Issue: An error occurring in the data source, like "invalid price".
+type Issue struct {
+	// Code: Output only. The code of the error, for example,
+	// "validation/invalid_value". Returns "?" if the code is unknown.
+	Code string `json:"code,omitempty"`
+	// Count: Output only. The number of occurrences of the error in the file
+	// upload.
+	Count int64 `json:"count,omitempty,string"`
+	// Description: Output only. The error description, for example, "Your data
+	// source contains items which have too many attributes, or are too big. These
+	// items will be dropped".
+	Description string `json:"description,omitempty"`
+	// DocumentationUri: Output only. Link to the documentation explaining the
+	// issue in more details, if available.
+	DocumentationUri string `json:"documentationUri,omitempty"`
+	// Severity: Output only. The severity of the issue.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Severity unspecified.
+	//   "WARNING" - The issue is the warning.
+	//   "ERROR" - The issue is an error.
+	Severity string `json:"severity,omitempty"`
+	// Title: Output only. The title of the issue, for example, "Item too big".
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Issue) MarshalJSON() ([]byte, error) {
+	type NoMethod Issue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListDataSourcesResponse: Response message for the ListDataSources method.
 type ListDataSourcesResponse struct {
 	// DataSources: The data sources from the specified account.
@@ -441,6 +613,9 @@ type PrimaryProductDataSource struct {
 	// Represented as a CLDR territory code
 	// (https://github.com/unicode-org/cldr/blob/latest/common/main/en.xml).
 	Countries []string `json:"countries,omitempty"`
+	// DefaultRule: Optional. Default rule management of the data source. If set,
+	// the linked data sources will be replaced.
+	DefaultRule *DefaultRule `json:"defaultRule,omitempty"`
 	// FeedLabel: Optional. Immutable. The feed label that is specified on the data
 	// source level. Must be less than or equal to 20 uppercase letters (A-Z),
 	// numbers (0-9), and dashes (-). See also migration to feed labels
@@ -510,6 +685,10 @@ type ProductChange struct {
 	// retail](https://cloud.google.com/solutions/retail).
 	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
 	// retail](https://cloud.google.com/solutions/retail).
+	//   "PRODUCT_REVIEWS" - [Product
+	// Reviews](https://support.google.com/merchants/answer/14620732).
+	//   "MERCHANT_REVIEWS" - [Merchant
+	// Reviews](https://developers.google.com/merchant-review-feeds).
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -656,6 +835,11 @@ type SupplementalProductDataSource struct {
 	// combination. If unset, the data source will accept produts without that
 	// restriction.
 	FeedLabel string `json:"feedLabel,omitempty"`
+	// ReferencingPrimaryDataSources: Output only. The (unordered and deduplicated)
+	// list of all primary data sources linked to this data source in either
+	// default or custom rules. Supplemental data source cannot be deleted before
+	// all links are removed.
+	ReferencingPrimaryDataSources []*DataSourceReference `json:"referencingPrimaryDataSources,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContentLanguage") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1367,6 +1551,115 @@ func (c *AccountsDataSourcesPatchCall) Do(opts ...googleapi.CallOption) (*DataSo
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &DataSource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type AccountsDataSourcesFileUploadsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest data source file upload. Only the `latest` alias is
+// accepted for a file upload.
+//
+//   - name: The name of the data source file upload to retrieve. Format:
+//     `accounts/{account}/dataSources/{datasource}/fileUploads/latest`.
+func (r *AccountsDataSourcesFileUploadsService) Get(name string) *AccountsDataSourcesFileUploadsGetCall {
+	c := &AccountsDataSourcesFileUploadsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsDataSourcesFileUploadsGetCall) Fields(s ...googleapi.Field) *AccountsDataSourcesFileUploadsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsDataSourcesFileUploadsGetCall) IfNoneMatch(entityTag string) *AccountsDataSourcesFileUploadsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsDataSourcesFileUploadsGetCall) Context(ctx context.Context) *AccountsDataSourcesFileUploadsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsDataSourcesFileUploadsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsDataSourcesFileUploadsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "datasources/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.dataSources.fileUploads.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FileUpload.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountsDataSourcesFileUploadsGetCall) Do(opts ...googleapi.CallOption) (*FileUpload, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FileUpload{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

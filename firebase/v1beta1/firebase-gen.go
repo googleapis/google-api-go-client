@@ -1855,6 +1855,19 @@ type WebAppConfig struct {
 	// ProjectId: Immutable. A user-assigned unique identifier for the
 	// `FirebaseProject`.
 	ProjectId string `json:"projectId,omitempty"`
+	// ProjectNumber: Output only. Immutable. The globally unique, Google-assigned
+	// canonical identifier for the Project. Use this identifier when configuring
+	// integrations and/or making API calls to Google Cloud or third-party
+	// services.
+	ProjectNumber string `json:"projectNumber,omitempty"`
+	// RealtimeDatabaseUrl: Optional. Duplicate field for the URL of the default
+	// RTDB instances (if there is one) that uses the same field name as the
+	// unified V2 config file format. We wanted to make a single config file format
+	// for all the app platforms (Android, iOS and web) and we had to pick
+	// consistent names for all the fields since there was some varience between
+	// the platforms. If the request asks for the V2 format we will populate this
+	// field instead of realtime_database_instance_uri.
+	RealtimeDatabaseUrl string `json:"realtimeDatabaseUrl,omitempty"`
 	// StorageBucket: **DEPRECATED.** _Instead, find the default Cloud Storage for
 	// Firebase bucket using the list endpoint
 	// (https://firebase.google.com/docs/reference/rest/storage/rest/v1beta/projects.buckets/list)
@@ -1863,6 +1876,8 @@ type WebAppConfig struct {
 	// contain a default bucket._ The default Cloud Storage for Firebase storage
 	// bucket name.
 	StorageBucket string `json:"storageBucket,omitempty"`
+	// Version: Version of the config specification.
+	Version string `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

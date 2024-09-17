@@ -1909,7 +1909,9 @@ func (s GoogleCloudRunV2Revision) MarshalJSON() ([]byte, error) {
 // settings.
 type GoogleCloudRunV2RevisionScaling struct {
 	// MaxInstanceCount: Optional. Maximum number of serving instances that this
-	// resource should have.
+	// resource should have. When unspecified, the field is set to the server
+	// default value of 100. For more information see
+	// https://cloud.google.com/run/docs/configuring/max-instances
 	MaxInstanceCount int64 `json:"maxInstanceCount,omitempty"`
 	// MinInstanceCount: Optional. Minimum number of serving instances that this
 	// resource should have.
@@ -2360,10 +2362,12 @@ func (s GoogleCloudRunV2Service) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunV2ServiceMesh: Service mesh configuration.
+// GoogleCloudRunV2ServiceMesh: Settings for Cloud Service Mesh. For more
+// information see https://cloud.google.com/service-mesh/docs/overview.
 type GoogleCloudRunV2ServiceMesh struct {
-	// Mesh: The service mesh resource name. Format:
-	// projects/{project_number}/locations/global/meshes/{mesh}.
+	// Mesh: The Mesh resource name. Format:
+	// projects/{project}/locations/global/meshes/{mesh}, where {project} can be
+	// project id or number.
 	Mesh string `json:"mesh,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Mesh") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2487,6 +2491,8 @@ type GoogleCloudRunV2SubmitBuildResponse struct {
 	// BaseImageUri: URI of the base builder image in Artifact Registry being used
 	// in the build. Used to opt into automatic base image updates.
 	BaseImageUri string `json:"baseImageUri,omitempty"`
+	// BaseImageWarning: Warning message for the base image.
+	BaseImageWarning string `json:"baseImageWarning,omitempty"`
 	// BuildOperation: Cloud Build operation to be polled via CloudBuild API.
 	BuildOperation *GoogleLongrunningOperation `json:"buildOperation,omitempty"`
 

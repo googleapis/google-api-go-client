@@ -694,6 +694,28 @@ func (s CleanupPolicyMostRecentVersions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CommonRemoteRepository: Common remote repository settings type.
+type CommonRemoteRepository struct {
+	// Uri: Required. A common public repository base for Remote Repository.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Uri") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CommonRemoteRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod CommonRemoteRepository
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DockerImage: DockerImage represents a docker artifact. The following fields
 // are returned as untyped metadata in the Version resource, using camelcase
 // keys (i.e. metadata.imageSizeBytes): * imageSizeBytes * mediaType *
@@ -2374,6 +2396,10 @@ func (s PythonRepository) MarshalJSON() ([]byte, error) {
 type RemoteRepositoryConfig struct {
 	// AptRepository: Specific settings for an Apt remote repository.
 	AptRepository *AptRepository `json:"aptRepository,omitempty"`
+	// CommonRepository: Common remote repository settings. Used as the RR upstream
+	// URL instead of Predefined and Custom remote repositories. UI and Gcloud will
+	// map all the new remote repositories to this field.
+	CommonRepository *CommonRemoteRepository `json:"commonRepository,omitempty"`
 	// Description: The description of the remote source.
 	Description string `json:"description,omitempty"`
 	// DisableUpstreamValidation: Input only. A create/update remote repo option to
@@ -4493,6 +4519,30 @@ func (r *ProjectsLocationsRepositoriesService) List(parent string) *ProjectsLoca
 	return c
 }
 
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. Filter rules are case insensitive. The fields
+// eligible for filtering are: * `name` Examples of using a filter: To filter
+// the results of your request to repositories with the name `my-repo` in
+// project `my-project` in the `us-central` region, append the following filter
+// expression to your request: *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo" You
+// can also use wildcards to match any number of characters before or after the
+// value: *
+// `name="projects/my-project/locations/us-central1/repositories/my-*" *
+// `name="projects/my-project/locations/us-central1/repositories/*repo" *
+// `name="projects/my-project/locations/us-central1/repositories/*repo*"
+func (c *ProjectsLocationsRepositoriesListCall) Filter(filter string) *ProjectsLocationsRepositoriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The field to order the
+// results by.
+func (c *ProjectsLocationsRepositoriesListCall) OrderBy(orderBy string) *ProjectsLocationsRepositoriesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // repositories to return. Maximum page size is 1,000.
 func (c *ProjectsLocationsRepositoriesListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesListCall {
@@ -5826,8 +5876,9 @@ func (r *ProjectsLocationsRepositoriesFilesService) List(parent string) *Project
 // results of the request. Filter rules are case insensitive. The fields
 // eligible for filtering are: * `name` * `owner` * `annotations` Examples of
 // using a filter: To filter the results of your request to files with the name
-// "my_file.txt" in project my-project in the us-central region, in repository
-// my-repo, append the following filter expression to your request: *
+// `my_file.txt` in project `my-project` in the `us-central` region, in
+// repository `my-repo`, append the following filter expression to your
+// request: *
 // `name="projects/my-project/locations/us-central1/repositories/my-repo/files/m
 // y-file.txt" You can also use wildcards to match any number of characters
 // before or after the value: *
@@ -5841,19 +5892,19 @@ func (r *ProjectsLocationsRepositoriesFilesService) List(parent string) *Project
 // request: *
 // `owner="projects/my-project/locations/us-central1/repositories/my-repo/packag
 // es/my-package/versions/1.0" To filter the results of your request to files
-// with the annotation key-value pair [`external_link`:`external_link_value`],
+// with the annotation key-value pair [`external_link`: `external_link_value`],
 // append the following filter expression to your request: *
 // "annotations.external_link:external_link_value" To filter just for a
 // specific annotation key `external_link`, append the following filter
-// expression to your request: * "annotations.external_link" If the annotation
-// key or value contains special characters, you can escape them by surrounding
-// the value with backticks. For example, to filter the results of your request
-// to files with the annotation key-value pair
+// expression to your request: * "annotations.external_link" If the
+// annotation key or value contains special characters, you can escape them by
+// surrounding the value with backticks. For example, to filter the results of
+// your request to files with the annotation key-value pair
 // [`external.link`:`https://example.com/my-file`], append the following filter
-// expression to your request: *
-// "annotations.`external.link`:`https://example.com/my-file" You can also
+// expression to your request: * “
+// "annotations.`external.link`:`https://example.com/my-file" “ You can also
 // filter with annotations with a wildcard to match any number of characters
-// before or after the value: * "annotations.*_link:`*example.com*"
+// before or after the value: * “ "annotations.*_link:`*example.com*" “
 func (c *ProjectsLocationsRepositoriesFilesListCall) Filter(filter string) *ProjectsLocationsRepositoriesFilesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -7509,6 +7560,48 @@ func (r *ProjectsLocationsRepositoriesPackagesService) List(parent string) *Proj
 	return c
 }
 
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. Filter rules are case insensitive. The fields
+// eligible for filtering are: * `name` * `annotations` Examples of using a
+// filter: To filter the results of your request to packages with the name
+// `my-package` in project `my-project` in the `us-central` region, in
+// repository `my-repo`, append the following filter expression to your
+// request: *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/my-package" You can also use wildcards to match any number of characters
+// before or after the value: *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/my-*" *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/*package" *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/*pack*" To filter the results of your request to packages with the
+// annotation key-value pair [`external_link`: `external_link_value`], append
+// the following filter expression to your request": *
+// "annotations.external_link:external_link_value" To filter the results just
+// for a specific annotation key `external_link`, append the following filter
+// expression to your request: * "annotations.external_link" If the
+// annotation key or value contains special characters, you can escape them by
+// surrounding the value with backticks. For example, to filter the results of
+// your request to packages with the annotation key-value pair
+// [`external.link`:`https://example.com/my-package`], append the following
+// filter expression to your request: * “
+// "annotations.`external.link`:`https://example.com/my-package" “ You can
+// also filter with annotations with a wildcard to match any number of
+// characters before or after the value: * “
+// "annotations.*_link:`*example.com*" “
+func (c *ProjectsLocationsRepositoriesPackagesListCall) Filter(filter string) *ProjectsLocationsRepositoriesPackagesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The field to order the
+// results by.
+func (c *ProjectsLocationsRepositoriesPackagesListCall) OrderBy(orderBy string) *ProjectsLocationsRepositoriesPackagesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // packages to return. Maximum page size is 1,000.
 func (c *ProjectsLocationsRepositoriesPackagesListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesPackagesListCall {
@@ -8078,8 +8171,8 @@ func (r *ProjectsLocationsRepositoriesPackagesTagsService) List(parent string) *
 // Filter sets the optional parameter "filter": An expression for filtering the
 // results of the request. Filter rules are case insensitive. The fields
 // eligible for filtering are: * `name` * `version` Examples of using a filter:
-// To filter the results of your request to tags with the name "my-tag" in
-// package "my-package" in repository "my-repo" in project "my-project" in the
+// To filter the results of your request to tags with the name `my-tag` in
+// package `my-package` in repository `my-repo` in project "y-project` in the
 // us-central region, append the following filter expression to your request: *
 // `name="projects/my-project/locations/us-central1/repositories/my-repo/package
 // s/my-package/tags/my-tag" You can also use wildcards to match any number of
@@ -8684,6 +8777,41 @@ type ProjectsLocationsRepositoriesPackagesVersionsListCall struct {
 func (r *ProjectsLocationsRepositoriesPackagesVersionsService) List(parent string) *ProjectsLocationsRepositoriesPackagesVersionsListCall {
 	c := &ProjectsLocationsRepositoriesPackagesVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. Filter rules are case insensitive. The fields
+// eligible for filtering are: * `name` * `annotations` Examples of using a
+// filter: To filter the results of your request to versions with the name
+// `my-version` in project `my-project` in the `us-central` region, in
+// repository `my-repo`, append the following filter expression to your
+// request: *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/my-package/versions/my-version" You can also use wildcards to match any
+// number of characters before or after the value: *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/my-package/versions/*version" *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/my-package/versions/my*" *
+// `name="projects/my-project/locations/us-central1/repositories/my-repo/package
+// s/my-package/versions/*version*" To filter the results of your request to
+// versions with the annotation key-value pair [`external_link`:
+// `external_link_value`], append the following filter expression to your
+// request: * "annotations.external_link:external_link_value" To filter just
+// for a specific annotation key `external_link`, append the following filter
+// expression to your request: * "annotations.external_link" If the
+// annotation key or value contains special characters, you can escape them by
+// surrounding the value with backticks. For example, to filter the results of
+// your request to versions with the annotation key-value pair
+// [`external.link`:`https://example.com/my-version`], append the following
+// filter expression to your request: * “
+// "annotations.`external.link`:`https://example.com/my-version" “ You can
+// also filter with annotations with a wildcard to match any number of
+// characters before or after the value: * “
+// "annotations.*_link:`*example.com*" “
+func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) Filter(filter string) *ProjectsLocationsRepositoriesPackagesVersionsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 

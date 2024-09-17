@@ -716,7 +716,7 @@ type Asset struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Output only. The full name of the asset.
 	Name string `json:"name,omitempty"`
-	// PerformanceData: Output only. Performance data for the asset.
+	// PerformanceData: Performance data for the asset.
 	PerformanceData *AssetPerformanceData `json:"performanceData,omitempty"`
 	// Sources: Output only. The list of sources contributing to the asset.
 	Sources []string `json:"sources,omitempty"`
@@ -852,6 +852,8 @@ type AssetsExportJob struct {
 	Condition *AssetsExportJobExportCondition `json:"condition,omitempty"`
 	// CreateTime: Output only. Resource creation time.
 	CreateTime string `json:"createTime,omitempty"`
+	// Inventory: Export asset inventory details.
+	Inventory *AssetsExportJobInventory `json:"inventory,omitempty"`
 	// Labels: Optional. Labels as key value pairs. Labels must meet the following
 	// constraints: * Keys and values can contain only lowercase letters, numeric
 	// characters, underscores, and dashes. * All characters must use UTF-8
@@ -864,8 +866,13 @@ type AssetsExportJob struct {
 	Name string `json:"name,omitempty"`
 	// NetworkDependencies: Export data regarding asset network dependencies.
 	NetworkDependencies *AssetsExportJobNetworkDependencies `json:"networkDependencies,omitempty"`
+	// PerformanceData: Export asset with performance data.
+	PerformanceData *AssetsExportJobPerformanceData `json:"performanceData,omitempty"`
 	// RecentExecutions: Output only. Recent non expired executions of the job.
 	RecentExecutions []*AssetsExportJobExecution `json:"recentExecutions,omitempty"`
+	// ShowHidden: Optional. When this value is set to 'true' the response will
+	// include all assets, including those that are hidden.
+	ShowHidden bool `json:"showHidden,omitempty"`
 	// SignedUriDestination: Export to Cloud Storage files downloadable using
 	// signed URIs.
 	SignedUriDestination *SignedUriDestination `json:"signedUriDestination,omitempty"`
@@ -900,6 +907,9 @@ type AssetsExportJobExecution struct {
 	ExecutionId string `json:"executionId,omitempty"`
 	// ExpireTime: Output only. Expiration time for the export and artifacts.
 	ExpireTime string `json:"expireTime,omitempty"`
+	// RequestedAssetCount: Output only. Number of assets requested for export
+	// after resolving the requested filters.
+	RequestedAssetCount int64 `json:"requestedAssetCount,omitempty"`
 	// Result: Output only. Result of the export execution.
 	Result *AssetsExportJobExecutionResult `json:"result,omitempty"`
 	// StartTime: Output only. Execution timestamp.
@@ -926,6 +936,8 @@ func (s AssetsExportJobExecution) MarshalJSON() ([]byte, error) {
 type AssetsExportJobExecutionResult struct {
 	// Error: Output only. Error encountered during export.
 	Error *Status `json:"error,omitempty"`
+	// OutputFiles: Output only. List of output files.
+	OutputFiles *OutputFileList `json:"outputFiles,omitempty"`
 	// SignedUris: Output only. Signed URLs for downloading export artifacts.
 	SignedUris *SignedUris `json:"signedUris,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
@@ -968,6 +980,10 @@ func (s AssetsExportJobExportCondition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AssetsExportJobInventory: Configuration for asset inventory details exports.
+type AssetsExportJobInventory struct {
+}
+
 // AssetsExportJobNetworkDependencies: Configuration for network dependencies
 // exports.
 type AssetsExportJobNetworkDependencies struct {
@@ -991,6 +1007,32 @@ type AssetsExportJobNetworkDependencies struct {
 
 func (s AssetsExportJobNetworkDependencies) MarshalJSON() ([]byte, error) {
 	type NoMethod AssetsExportJobNetworkDependencies
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssetsExportJobPerformanceData: Configuration for performance data exports.
+type AssetsExportJobPerformanceData struct {
+	// MaxDays: Optional. When this value is set to a positive integer, performance
+	// data will be returned for the most recent days for which data is available.
+	// When this value is unset (or set to zero), all available data is returned.
+	// The maximum value is 420; values above 420 will be coerced to 420. If unset
+	// (0 value) a default value of 40 will be used.
+	MaxDays int64 `json:"maxDays,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxDays") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxDays") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssetsExportJobPerformanceData) MarshalJSON() ([]byte, error) {
+	type NoMethod AssetsExportJobPerformanceData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1189,7 +1231,7 @@ func (s CascadingRule) MarshalJSON() ([]byte, error) {
 type CloudDatabaseMigrationTarget struct {
 	// CloudSqlForMysqlShape: Cloud SQL for MySQL database shape.
 	CloudSqlForMysqlShape *CloudSqlForMySqlShape `json:"cloudSqlForMysqlShape,omitempty"`
-	// CloudSqlForPostgresqlShape: Cloud SQL for Postgres database shape.
+	// CloudSqlForPostgresqlShape: Cloud SQL for PostgreSQL database shape.
 	CloudSqlForPostgresqlShape *CloudSqlForPostgreSqlShape `json:"cloudSqlForPostgresqlShape,omitempty"`
 	// CloudSqlShape: Cloud SQL for SQL Server database shape.
 	CloudSqlShape *CloudSqlForSqlServerShape `json:"cloudSqlShape,omitempty"`
@@ -1555,7 +1597,7 @@ type ComputeEngineSoleTenantMigrationTarget struct {
 type ComputeStorageDescriptor struct {
 	// SizeGb: Disk size in GiB.
 	SizeGb int64 `json:"sizeGb,omitempty"`
-	// Type: Disk type backing the storage.
+	// Type: Output only. Disk type backing the storage.
 	//
 	// Possible values:
 	//   "PERSISTENT_DISK_TYPE_UNSPECIFIED" - Unspecified (default value).
@@ -1619,6 +1661,32 @@ func (s *CpuUsageSample) UnmarshalJSON(data []byte) error {
 	}
 	s.UtilizedPercentage = float64(s1.UtilizedPercentage)
 	return nil
+}
+
+// CsvOutputFile: Contains a single output file of type CSV.
+type CsvOutputFile struct {
+	// ColumnsCount: Output only. Number of columns in the file.
+	ColumnsCount int64 `json:"columnsCount,omitempty"`
+	// RowCount: Output only. Number of rows in the file.
+	RowCount int64 `json:"rowCount,omitempty"`
+	// SignedUri: Output only. Signed URI destination.
+	SignedUri *SignedUri `json:"signedUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ColumnsCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ColumnsCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CsvOutputFile) MarshalJSON() ([]byte, error) {
+	type NoMethod CsvOutputFile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DailyResourceUsageAggregation: Usage data aggregation for a single day.
@@ -2175,7 +2243,7 @@ func (s DatabasePreferencesCloudSqlCommon) MarshalJSON() ([]byte, error) {
 
 // DatabasePreferencesCloudSqlCommonBackup: Preferences for database backups.
 type DatabasePreferencesCloudSqlCommonBackup struct {
-	// BackupMode: Optional. Mode of automated backups.
+	// BackupMode: Optional. Automated backup mode.
 	//
 	// Possible values:
 	//   "BACKUP_MODE_UNSPECIFIED" - An unspecified database backup mode.
@@ -2791,7 +2859,7 @@ func (s FileValidationReport) MarshalJSON() ([]byte, error) {
 // FitDescriptor: Describes the fit level of an asset for migration to a
 // specific target.
 type FitDescriptor struct {
-	// FitLevel: Fit level.
+	// FitLevel: Output only. Fit level.
 	//
 	// Possible values:
 	//   "FIT_LEVEL_UNSPECIFIED" - Not enough information.
@@ -3064,7 +3132,7 @@ func (s Group) MarshalJSON() ([]byte, error) {
 type GuestConfigDetails struct {
 	// Fstab: Mount list (Linux fstab).
 	Fstab *FstabEntryList `json:"fstab,omitempty"`
-	// Hosts: Hosts file (/etc/hosts).
+	// Hosts: Output only. Hosts file (/etc/hosts).
 	Hosts *HostsEntryList `json:"hosts,omitempty"`
 	// Issue: OS issue (typically /etc/issue in Linux).
 	Issue string `json:"issue,omitempty"`
@@ -3230,7 +3298,7 @@ func (s HostsEntry) MarshalJSON() ([]byte, error) {
 
 // HostsEntryList: Hosts content.
 type HostsEntryList struct {
-	// Entries: Hosts entries.
+	// Entries: Output only. Hosts entries.
 	Entries []*HostsEntry `json:"entries,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Entries") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3413,8 +3481,6 @@ type ImportRowError struct {
 	CsvError *ImportRowErrorCsvErrorDetails `json:"csvError,omitempty"`
 	// Errors: The list of errors detected in the row.
 	Errors []*ImportError `json:"errors,omitempty"`
-	// JsonError: Error details for a JSON file.
-	JsonError *ImportRowErrorJsonErrorDetails `json:"jsonError,omitempty"`
 	// RowNumber: The row number where the error was detected.
 	RowNumber int64 `json:"rowNumber,omitempty"`
 	// VmName: The name of the VM in the row.
@@ -3485,10 +3551,6 @@ type ImportRowErrorCsvErrorDetails struct {
 func (s ImportRowErrorCsvErrorDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportRowErrorCsvErrorDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ImportRowErrorJsonErrorDetails: Error details for a JSON file.
-type ImportRowErrorJsonErrorDetails struct {
 }
 
 // ImportRowErrorXlsxErrorDetails: Error details for an XLSX file.
@@ -4908,6 +4970,52 @@ type OperationMetadata struct {
 
 func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OutputFile: Contains a single output file.
+type OutputFile struct {
+	// CsvOutputFile: Output only. CSV output file.
+	CsvOutputFile *CsvOutputFile `json:"csvOutputFile,omitempty"`
+	// FileSizeBytes: Output only. File size in bytes.
+	FileSizeBytes int64 `json:"fileSizeBytes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CsvOutputFile") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CsvOutputFile") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OutputFile) MarshalJSON() ([]byte, error) {
+	type NoMethod OutputFile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OutputFileList: Contains a list of output files.
+type OutputFileList struct {
+	// Entries: List of output files.
+	Entries []*OutputFile `json:"entries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Entries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Entries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OutputFileList) MarshalJSON() ([]byte, error) {
+	type NoMethod OutputFileList
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

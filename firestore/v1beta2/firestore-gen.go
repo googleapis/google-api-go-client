@@ -235,12 +235,12 @@ type Empty struct {
 // google.longrunning.Operation results from
 // FirestoreAdmin.BulkDeleteDocuments.
 type GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata struct {
-	// CollectionIds: The ids of the collection groups that are being deleted.
+	// CollectionIds: The IDs of the collection groups that are being deleted.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 	// EndTime: The time this operation completed. Will be unset if operation still
 	// in progress.
 	EndTime string `json:"endTime,omitempty"`
-	// NamespaceIds: Which namespace ids are being deleted.
+	// NamespaceIds: Which namespace IDs are being deleted.
 	NamespaceIds []string `json:"namespaceIds,omitempty"`
 	// OperationState: The state of the operation.
 	//

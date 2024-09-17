@@ -1175,7 +1175,9 @@ func (s GoogleCloudDialogflowCxV3EnvironmentTestCasesConfig) MarshalJSON() ([]by
 // GoogleCloudDialogflowCxV3EnvironmentVersionConfig: Configuration for the
 // version.
 type GoogleCloudDialogflowCxV3EnvironmentVersionConfig struct {
-	// Version: Required. Format: projects//locations//agents//flows//versions/.
+	// Version: Required. Both flow and playbook versions are supported. Format for
+	// flow version: projects//locations//agents//flows//versions/. Format for
+	// playbook version: projects//locations//agents//playbooks//versions/.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Version") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6146,7 +6148,9 @@ func (s GoogleCloudDialogflowCxV3beta1EnvironmentTestCasesConfig) MarshalJSON() 
 // GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig: Configuration for
 // the version.
 type GoogleCloudDialogflowCxV3beta1EnvironmentVersionConfig struct {
-	// Version: Required. Format: projects//locations//agents//flows//versions/.
+	// Version: Required. Both flow and playbook versions are supported. Format for
+	// flow version: projects//locations//agents//flows//versions/. Format for
+	// playbook version: projects//locations//agents//playbooks//versions/.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Version") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9712,7 +9716,9 @@ type GoogleCloudDialogflowCxV3beta1NluSettings struct {
 	// machine learning classification threshold. If the returned score value is
 	// less than the threshold value, then a no-match event will be triggered. The
 	// score values range from 0.0 (completely uncertain) to 1.0 (completely
-	// certain). If set to 0.0, the default of 0.3 is used.
+	// certain). If set to 0.0, the default of 0.3 is used. You can set a separate
+	// classification threshold for the flow in each language enabled for the
+	// agent.
 	ClassificationThreshold float64 `json:"classificationThreshold,omitempty"`
 	// ModelTrainingMode: Indicates NLU model training mode.
 	//

@@ -39,10 +39,14 @@ func TestDial(t *testing.T) {
 func TestDialPoolNewAuthDialOptions(t *testing.T) {
 	oldDialContextNewAuth := dialContextNewAuth
 	var wantNumOpts int
+	var universeDomain string
 	// Replace package var in order to assert DialContext args.
 	dialContextNewAuth = func(ctx context.Context, secure bool, opts *grpctransport.Options) (grpctransport.GRPCClientConnPool, error) {
 		if len(opts.GRPCDialOpts) != wantNumOpts {
 			t.Fatalf("got: %d, want: %d", len(opts.GRPCDialOpts), wantNumOpts)
+		}
+		if opts.UniverseDomain != universeDomain {
+			t.Fatalf("got: %q, want: %q", opts.UniverseDomain, universeDomain)
 		}
 		return nil, nil
 	}
@@ -67,9 +71,17 @@ func TestDialPoolNewAuthDialOptions(t *testing.T) {
 			},
 			wantNumOpts: 1,
 		},
+		{
+			name: "universe domain",
+			ds: &internal.DialSettings{
+				UniverseDomain: "example.com",
+			},
+			wantNumOpts: 0,
+		},
 	} {
 		t.Run(testcase.name, func(t *testing.T) {
 			wantNumOpts = testcase.wantNumOpts
+			universeDomain = testcase.ds.UniverseDomain
 			dialPoolNewAuth(context.Background(), false, 1, testcase.ds)
 		})
 	}

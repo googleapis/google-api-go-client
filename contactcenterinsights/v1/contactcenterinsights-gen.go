@@ -973,6 +973,10 @@ type GoogleCloudContactcenterinsightsV1Conversation struct {
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
 	Medium string `json:"medium,omitempty"`
+	// MetadataJson: Input only. JSON Metadata encoded as a string. This field is
+	// primarily used by Insights integrations with various telphony systems and
+	// must be in one of Insights' supported formats.
+	MetadataJson string `json:"metadataJson,omitempty"`
 	// Name: Immutable. The resource name of the conversation. Format:
 	// projects/{project}/locations/{location}/conversations/{conversation}
 	Name string `json:"name,omitempty"`
@@ -4368,6 +4372,10 @@ type GoogleCloudContactcenterinsightsV1alpha1Conversation struct {
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
 	Medium string `json:"medium,omitempty"`
+	// MetadataJson: Input only. JSON Metadata encoded as a string. This field is
+	// primarily used by Insights integrations with various telphony systems and
+	// must be in one of Insights' supported formats.
+	MetadataJson string `json:"metadataJson,omitempty"`
 	// Name: Immutable. The resource name of the conversation. Format:
 	// projects/{project}/locations/{location}/conversations/{conversation}
 	Name string `json:"name,omitempty"`

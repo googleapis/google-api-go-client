@@ -827,7 +827,7 @@ type InventoryItem struct {
 	// Type: The specific type of inventory, correlating to its specific details.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Invalid. An type must be specified.
+	//   "TYPE_UNSPECIFIED" - Invalid. A type must be specified.
 	//   "INSTALLED_PACKAGE" - This represents a package that is installed on the
 	// VM.
 	//   "AVAILABLE_PACKAGE" - This represents an update that is available for a
@@ -2045,7 +2045,7 @@ type OSPolicyResourceExecResourceExec struct {
 	// is created by this Exec) whose content will be recorded in
 	// OSPolicyResourceCompliance after a successful run. Absence or failure to
 	// read this file will result in this ExecResource being non-compliant. Output
-	// file size is limited to 100K bytes.
+	// file size is limited to 500K bytes.
 	OutputFilePath string `json:"outputFilePath,omitempty"`
 	// Script: An inline script. The size of the script is limited to 32KiB.
 	Script string `json:"script,omitempty"`

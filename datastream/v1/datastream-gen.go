@@ -1990,6 +1990,8 @@ type RunStreamRequest struct {
 	// CdcStrategy: Optional. The CDC strategy of the stream. If not set, the
 	// system's default value will be used.
 	CdcStrategy *CdcStrategy `json:"cdcStrategy,omitempty"`
+	// Force: Optional. Update the stream without validating it.
+	Force bool `json:"force,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CdcStrategy") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -702,6 +702,8 @@ type GoogleFirebaseAppdistroV1alphaDeviceExecution struct {
 	// app did not start).
 	//   "DEVICE_OUT_OF_MEMORY" - If the device ran out of memory during the test.
 	//   "FAILED_AI_STEP" - At least one AI step failed.
+	//   "TIMED_OUT" - The crawl reached the time limit before the test could be
+	// completed.
 	FailedReason string `json:"failedReason,omitempty"`
 	// InconclusiveReason: Output only. The reason why the test was inconclusive.
 	//

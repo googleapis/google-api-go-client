@@ -6,7 +6,7 @@
 
 // Package discoveryengine provides access to the Discovery Engine API.
 //
-// For product documentation, see: https://cloud.google.com/discovery-engine/docs
+// For product documentation, see: https://cloud.google.com/generative-ai-app-builder/docs/
 //
 // # Library status
 //
@@ -1151,7 +1151,7 @@ type GoogleCloudDiscoveryengineV1Answer struct {
 	// reason is not specified.
 	//   "ADVERSARIAL_QUERY_IGNORED" - The adversarial query ignored case.
 	//   "NON_ANSWER_SEEKING_QUERY_IGNORED" - The non-answer seeking query ignored
-	// case.
+	// case Google skips the answer if the query is chit chat.
 	//   "OUT_OF_DOMAIN_QUERY_IGNORED" - The out-of-domain query ignored case.
 	// Google skips the answer if there are no high-relevance search results.
 	//   "POTENTIAL_POLICY_VIOLATION" - The potential policy violation case. Google
@@ -1165,6 +1165,9 @@ type GoogleCloudDiscoveryengineV1Answer struct {
 	//   "CUSTOMER_POLICY_VIOLATION" - The customer policy violation case. Google
 	// skips the summary if there is a customer policy violation detected. The
 	// policy is defined by the customer.
+	//   "NON_ANSWER_SEEKING_QUERY_IGNORED_V2" - The non-answer seeking query
+	// ignored case. Google skips the answer if the query doesn't have clear
+	// intent.
 	AnswerSkippedReasons []string `json:"answerSkippedReasons,omitempty"`
 	// AnswerText: The textual answer.
 	AnswerText string `json:"answerText,omitempty"`
@@ -1269,7 +1272,8 @@ func (s GoogleCloudDiscoveryengineV1AnswerCitationSource) MarshalJSON() ([]byte,
 type GoogleCloudDiscoveryengineV1AnswerQueryRequest struct {
 	// AnswerGenerationSpec: Answer generation specification.
 	AnswerGenerationSpec *GoogleCloudDiscoveryengineV1AnswerQueryRequestAnswerGenerationSpec `json:"answerGenerationSpec,omitempty"`
-	// AsynchronousMode: Asynchronous mode control. If enabled, the response will
+	// AsynchronousMode: Deprecated: This field is deprecated. Streaming Answer API
+	// will be supported. Asynchronous mode control. If enabled, the response will
 	// be returned with answer/session resource name without final answer. The API
 	// users need to do the polling to get the latest status of answer/session by
 	// calling ConversationalSearchService.GetAnswer or
@@ -1345,6 +1349,16 @@ type GoogleCloudDiscoveryengineV1AnswerQueryRequestAnswerGenerationSpec struct {
 	// skip generating answers for adversarial queries and return fallback messages
 	// instead.
 	IgnoreAdversarialQuery bool `json:"ignoreAdversarialQuery,omitempty"`
+	// IgnoreJailBreakingQuery: Optional. Specifies whether to filter out
+	// jail-breaking queries. The default value is `false`. Google employs
+	// search-query classification to detect jail-breaking queries. No summary is
+	// returned if the search query is classified as a jail-breaking query. A user
+	// might add instructions to the query to change the tone, style, language,
+	// content of the answer, or ask the model to act as a different entity, e.g.
+	// "Reply in the tone of a competing company's CEO". If this field is set to
+	// `true`, we skip generating summaries for jail-breaking queries and return
+	// fallback messages instead.
+	IgnoreJailBreakingQuery bool `json:"ignoreJailBreakingQuery,omitempty"`
 	// IgnoreLowRelevantContent: Specifies whether to filter out queries that have
 	// low relevance. If this field is set to `false`, all search results are used
 	// regardless of relevance to generate answers. If set to `true` or unset, the
@@ -1463,8 +1477,11 @@ type GoogleCloudDiscoveryengineV1AnswerQueryRequestQueryUnderstandingSpecQueryCl
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified query classification type.
 	//   "ADVERSARIAL_QUERY" - Adversarial query classification type.
-	//   "NON_ANSWER_SEEKING_QUERY" - Non-answer-seeking query classification type.
+	//   "NON_ANSWER_SEEKING_QUERY" - Non-answer-seeking query classification type,
+	// for chit chat.
 	//   "JAIL_BREAKING_QUERY" - Jail-breaking query classification type.
+	//   "NON_ANSWER_SEEKING_QUERY_V2" - Non-answer-seeking query classification
+	// type, for no clear intent.
 	Types []string `json:"types,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Types") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1699,6 +1716,8 @@ type GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSea
 	Chunk string `json:"chunk,omitempty"`
 	// Content: Chunk textual content.
 	Content string `json:"content,omitempty"`
+	// DocumentMetadata: Metadata of the document from the current chunk.
+	DocumentMetadata *GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSearchResultChunkInfoDocumentMetadata `json:"documentMetadata,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Chunk") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1714,6 +1733,32 @@ type GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSea
 
 func (s GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSearchResultChunkInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSearchResultChunkInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSearc
+// hResultChunkInfoDocumentMetadata: Document metadata contains the information
+// of the document of the current chunk.
+type GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSearchResultChunkInfoDocumentMetadata struct {
+	// Title: Title of the document.
+	Title string `json:"title,omitempty"`
+	// Uri: Uri of the document.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Title") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Title") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSearchResultChunkInfoDocumentMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSearchResultChunkInfoDocumentMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1894,8 +1939,11 @@ type GoogleCloudDiscoveryengineV1AnswerQueryUnderstandingInfoQueryClassification
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified query classification type.
 	//   "ADVERSARIAL_QUERY" - Adversarial query classification type.
-	//   "NON_ANSWER_SEEKING_QUERY" - Non-answer-seeking query classification type.
+	//   "NON_ANSWER_SEEKING_QUERY" - Non-answer-seeking query classification type,
+	// for chit chat.
 	//   "JAIL_BREAKING_QUERY" - Jail-breaking query classification type.
+	//   "NON_ANSWER_SEEKING_QUERY_V2" - Non-answer-seeking query classification
+	// type, for no clear intent.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Positive") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2210,8 +2258,8 @@ type GoogleCloudDiscoveryengineV1AnswerStepActionObservationSearchResult struct 
 	// level snippets.
 	SnippetInfo []*GoogleCloudDiscoveryengineV1AnswerStepActionObservationSearchResultSnippetInfo `json:"snippetInfo,omitempty"`
 	// StructData: Data representation. The structured JSON data for the document.
-	// It's populated from the struct data from the Document , or the Chunk in
-	// search result .
+	// It's populated from the struct data from the Document, or the Chunk in
+	// search result. .
 	StructData googleapi.RawMessage `json:"structData,omitempty"`
 	// Title: Title.
 	Title string `json:"title,omitempty"`
@@ -2440,15 +2488,15 @@ type GoogleCloudDiscoveryengineV1BatchGetDocumentsMetadataResponseDocumentMetada
 	LastRefreshedTime string `json:"lastRefreshedTime,omitempty"`
 	// MatcherValue: The value of the matcher that was used to match the Document.
 	MatcherValue *GoogleCloudDiscoveryengineV1BatchGetDocumentsMetadataResponseDocumentMetadataMatcherValue `json:"matcherValue,omitempty"`
-	// Status: The status of the document.
+	// State: The state of the document.
 	//
 	// Possible values:
-	//   "STATUS_UNSPECIFIED" - Should never be set.
-	//   "STATUS_INDEXED" - The Document is indexed.
-	//   "STATUS_NOT_IN_TARGET_SITE" - The Document is not indexed because its URI
-	// is not in the TargetSite.
-	//   "STATUS_NOT_IN_INDEX" - The Document is not indexed.
-	Status string `json:"status,omitempty"`
+	//   "STATE_UNSPECIFIED" - Should never be set.
+	//   "INDEXED" - The Document is indexed.
+	//   "NOT_IN_TARGET_SITE" - The Document is not indexed because its URI is not
+	// in the TargetSite.
+	//   "NOT_IN_INDEX" - The Document is not indexed.
+	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataIngestionSource") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2826,12 +2874,9 @@ type GoogleCloudDiscoveryengineV1CheckGroundingResponseClaim struct {
 	// GroundingCheckRequired: Indicates that this claim required grounding check.
 	// When the system decided this claim doesn't require attribution/grounding
 	// check, this field will be set to false. In that case, no grounding check was
-	// done for the claim and therefore citation_indices, and anti_citation_indices
-	// should not be returned.
+	// done for the claim and therefore citation_indices, anti_citation_indices,
+	// and score should not be returned.
 	GroundingCheckRequired bool `json:"groundingCheckRequired,omitempty"`
-	// Score: Confidence score for the claim in the answer candidate, in the range
-	// of [0, 1].
-	Score float64 `json:"score,omitempty"`
 	// StartPos: Position indicating the start of the claim in the answer
 	// candidate, measured in bytes.
 	StartPos int64 `json:"startPos,omitempty"`
@@ -2851,20 +2896,6 @@ type GoogleCloudDiscoveryengineV1CheckGroundingResponseClaim struct {
 func (s GoogleCloudDiscoveryengineV1CheckGroundingResponseClaim) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1CheckGroundingResponseClaim
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudDiscoveryengineV1CheckGroundingResponseClaim) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudDiscoveryengineV1CheckGroundingResponseClaim
-	var s1 struct {
-		Score gensupport.JSONFloat64 `json:"score"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Score = float64(s1.Score)
-	return nil
 }
 
 // GoogleCloudDiscoveryengineV1CheckGroundingSpec: Specification for the
@@ -3644,9 +3675,9 @@ type GoogleCloudDiscoveryengineV1ConverseConversationRequest struct {
 	// SafeSearch: Whether to turn on safe search.
 	SafeSearch bool `json:"safeSearch,omitempty"`
 	// ServingConfig: The resource name of the Serving Config to use. Format:
-	// `projects/{project_number}/locations/{location_id}/collections/{collection}/d
-	// ataStores/{data_store_id}/servingConfigs/{serving_config_id}` If this is not
-	// set, the default serving config will be used.
+	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
+	// {data_store_id}/servingConfigs/{serving_config_id}` If this is not set, the
+	// default serving config will be used.
 	ServingConfig string `json:"servingConfig,omitempty"`
 	// SummarySpec: A specification for configuring the summary returned in the
 	// response.
@@ -3922,9 +3953,9 @@ type GoogleCloudDiscoveryengineV1CustomTuningModel struct {
 	// ModelVersion: The version of the model.
 	ModelVersion int64 `json:"modelVersion,omitempty,string"`
 	// Name: Required. The fully qualified resource name of the model. Format:
-	// `projects/{project_number}/locations/{location}/collections/{collection}/data
-	// Stores/{data_store}/customTuningModels/{custom_tuning_model}` model must be
-	// an alpha-numerical string with limit of 40 characters.
+	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
+	// {data_store}/customTuningModels/{custom_tuning_model}`. Model must be an
+	// alpha-numerical string with limit of 40 characters.
 	Name string `json:"name,omitempty"`
 	// TrainingStartTime: Timestamp the model training was initiated.
 	TrainingStartTime string `json:"trainingStartTime,omitempty"`
@@ -3987,6 +4018,8 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
 	// limit of 1024 characters.
 	Name string `json:"name,omitempty"`
+	// ServingConfigDataStore: Optional. Stores serving config at DataStore level.
+	ServingConfigDataStore *GoogleCloudDiscoveryengineV1ServingConfigDataStore `json:"servingConfigDataStore,omitempty"`
 	// SolutionTypes: The solutions that the data store enrolls. Available
 	// solutions for each industry_vertical: * `MEDIA`:
 	// `SOLUTION_TYPE_RECOMMENDATION` and `SOLUTION_TYPE_SEARCH`. * `SITE_SEARCH`:
@@ -4195,6 +4228,11 @@ type GoogleCloudDiscoveryengineV1Document struct {
 	// (https://tools.ietf.org/html/rfc1034) standard with a length limit of 63
 	// characters.
 	Id string `json:"id,omitempty"`
+	// IndexStatus: Output only. The index status of the document. * If document is
+	// indexed successfully, the index_time field is populated. * Otherwise, if
+	// document is not indexed due to errors, the error_samples field is populated.
+	// * Otherwise, index_status is unset.
+	IndexStatus *GoogleCloudDiscoveryengineV1DocumentIndexStatus `json:"indexStatus,omitempty"`
 	// IndexTime: Output only. The last time the document was indexed. If this
 	// field is set, the document could be returned in search results. This field
 	// is OUTPUT_ONLY. If this field is not populated, it means the document has
@@ -4279,6 +4317,33 @@ func (s GoogleCloudDiscoveryengineV1DocumentContent) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1DocumentIndexStatus: Index status of the
+// document.
+type GoogleCloudDiscoveryengineV1DocumentIndexStatus struct {
+	// ErrorSamples: A sample of errors encountered while indexing the document. If
+	// this field is populated, the document is not indexed due to errors.
+	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
+	// IndexTime: The time when the document was indexed. If this field is
+	// populated, it means the document has been indexed.
+	IndexTime string `json:"indexTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DocumentIndexStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DocumentIndexStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1DocumentInfo: Detailed document information
 // associated with a user event.
 type GoogleCloudDiscoveryengineV1DocumentInfo struct {
@@ -4288,8 +4353,8 @@ type GoogleCloudDiscoveryengineV1DocumentInfo struct {
 	// data store.
 	Joined bool `json:"joined,omitempty"`
 	// Name: The Document resource full name, of the form:
-	// `projects/{project_id}/locations/{location}/collections/{collection_id}/dataS
-	// tores/{data_store_id}/branches/{branch_id}/documents/{document_id}`
+	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
+	// es/{data_store_id}/branches/{branch_id}/documents/{document_id}`
 	Name string `json:"name,omitempty"`
 	// PromotionIds: The promotion IDs associated with this Document. Currently,
 	// this field is restricted to at most one ID.
@@ -4342,8 +4407,10 @@ type GoogleCloudDiscoveryengineV1DocumentProcessingConfig struct {
 	// digital parsing and layout parsing are supported. * `docx`: Override parsing
 	// config for DOCX files, only digital parsing and layout parsing are
 	// supported. * `pptx`: Override parsing config for PPTX files, only digital
-	// parsing and layout parsing are supported. * `xlsx`: Override parsing config
-	// for XLSX files, only digital parsing and layout parsing are supported.
+	// parsing and layout parsing are supported. * `xlsm`: Override parsing config
+	// for XLSM files, only digital parsing and layout parsing are supported. *
+	// `xlsx`: Override parsing config for XLSX files, only digital parsing and
+	// layout parsing are supported.
 	ParsingConfigOverrides map[string]GoogleCloudDiscoveryengineV1DocumentProcessingConfigParsingConfig `json:"parsingConfigOverrides,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChunkingConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4556,9 +4623,9 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// Name: Immutable. The fully qualified resource name of the engine. This field
 	// must be a UTF-8 encoded string with a length limit of 1024 characters.
 	// Format:
-	// `projects/{project_number}/locations/{location}/collections/{collection}/engi
-	// nes/{engine}` engine should be 1-63 characters, and valid characters are
-	// /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.
+	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
+	// gine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/.
+	// Otherwise, an INVALID_ARGUMENT error is returned.
 	Name string `json:"name,omitempty"`
 	// SearchEngineConfig: Configurations for the Search Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_SEARCH.
@@ -5935,8 +6002,8 @@ type GoogleCloudDiscoveryengineV1Project struct {
 	// CreateTime: Output only. The timestamp when this project is created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Name: Output only. Full resource name of the project, for example
-	// `projects/{project_number}`. Note that when making requests, project number
-	// and project id are both acceptable, but the server will always respond in
+	// `projects/{project}`. Note that when making requests, project number and
+	// project id are both acceptable, but the server will always respond in
 	// project number.
 	Name string `json:"name,omitempty"`
 	// ProvisionCompletionTime: Output only. The timestamp when this project is
@@ -6648,19 +6715,23 @@ func (s GoogleCloudDiscoveryengineV1RecommendResponseRecommendationResult) Marsh
 // GoogleCloudDiscoveryengineV1RecrawlUrisRequest: Request message for
 // SiteSearchEngineService.RecrawlUris method.
 type GoogleCloudDiscoveryengineV1RecrawlUrisRequest struct {
+	// SiteCredential: Optional. Full resource name of the SiteCredential, such as
+	// `projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine/siteCrede
+	// ntials/*`. Only set to crawl private URIs.
+	SiteCredential string `json:"siteCredential,omitempty"`
 	// Uris: Required. List of URIs to crawl. At most 10K URIs are supported,
 	// otherwise an INVALID_ARGUMENT error is thrown. Each URI should match at
 	// least one TargetSite in `site_search_engine`.
 	Uris []string `json:"uris,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Uris") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "SiteCredential") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Uris") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "SiteCredential") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -6979,6 +7050,9 @@ type GoogleCloudDiscoveryengineV1SearchRequestBoostSpecConditionBoostSpec struct
 	// If both are set then the global boost is ignored and the more fine-grained
 	// boost_control_spec is applied.
 	Boost float64 `json:"boost,omitempty"`
+	// BoostControlSpec: Complex specification for custom ranking based on customer
+	// defined attribute value.
+	BoostControlSpec *GoogleCloudDiscoveryengineV1SearchRequestBoostSpecConditionBoostSpecBoostControlSpec `json:"boostControlSpec,omitempty"`
 	// Condition: An expression which specifies a boost condition. The syntax and
 	// supported fields are the same as a filter expression. See
 	// SearchRequest.filter for detail syntax and limitations. Examples: * To boost
@@ -7014,6 +7088,107 @@ func (s *GoogleCloudDiscoveryengineV1SearchRequestBoostSpecConditionBoostSpec) U
 		return err
 	}
 	s.Boost = float64(s1.Boost)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1SearchRequestBoostSpecConditionBoostSpecBoostCont
+// rolSpec: Specification for custom ranking based on customer specified
+// attribute value. It provides more controls for customized ranking than the
+// simple (condition, boost) combination above.
+type GoogleCloudDiscoveryengineV1SearchRequestBoostSpecConditionBoostSpecBoostControlSpec struct {
+	// AttributeType: The attribute type to be used to determine the boost amount.
+	// The attribute value can be derived from the field value of the specified
+	// field_name. In the case of numerical it is straightforward i.e.
+	// attribute_value = numerical_field_value. In the case of freshness however,
+	// attribute_value = (time.now() - datetime_field_value).
+	//
+	// Possible values:
+	//   "ATTRIBUTE_TYPE_UNSPECIFIED" - Unspecified AttributeType.
+	//   "NUMERICAL" - The value of the numerical field will be used to dynamically
+	// update the boost amount. In this case, the attribute_value (the x value) of
+	// the control point will be the actual value of the numerical field for which
+	// the boost_amount is specified.
+	//   "FRESHNESS" - For the freshness use case the attribute value will be the
+	// duration between the current time and the date in the datetime field
+	// specified. The value must be formatted as an XSD `dayTimeDuration` value (a
+	// restricted subset of an ISO 8601 duration value). The pattern for this is:
+	// `nDnM]`. For example, `5D`, `3DT12H30M`, `T24H`.
+	AttributeType string `json:"attributeType,omitempty"`
+	// ControlPoints: The control points used to define the curve. The monotonic
+	// function (defined through the interpolation_type above) passes through the
+	// control points listed here.
+	ControlPoints []*GoogleCloudDiscoveryengineV1SearchRequestBoostSpecConditionBoostSpecBoostControlSpecControlPoint `json:"controlPoints,omitempty"`
+	// FieldName: The name of the field whose value will be used to determine the
+	// boost amount.
+	FieldName string `json:"fieldName,omitempty"`
+	// InterpolationType: The interpolation type to be applied to connect the
+	// control points listed below.
+	//
+	// Possible values:
+	//   "INTERPOLATION_TYPE_UNSPECIFIED" - Interpolation type is unspecified. In
+	// this case, it defaults to Linear.
+	//   "LINEAR" - Piecewise linear interpolation will be applied.
+	InterpolationType string `json:"interpolationType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttributeType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttributeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SearchRequestBoostSpecConditionBoostSpecBoostControlSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchRequestBoostSpecConditionBoostSpecBoostControlSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1SearchRequestBoostSpecConditionBoostSpecBoostCont
+// rolSpecControlPoint: The control points used to define the curve. The curve
+// defined through these control points can only be monotonically increasing or
+// decreasing(constant values are acceptable).
+type GoogleCloudDiscoveryengineV1SearchRequestBoostSpecConditionBoostSpecBoostControlSpecControlPoint struct {
+	// AttributeValue: Can be one of: 1. The numerical field value. 2. The duration
+	// spec for freshness: The value must be formatted as an XSD `dayTimeDuration`
+	// value (a restricted subset of an ISO 8601 duration value). The pattern for
+	// this is: `nDnM]`.
+	AttributeValue string `json:"attributeValue,omitempty"`
+	// BoostAmount: The value between -1 to 1 by which to boost the score if the
+	// attribute_value evaluates to the value specified above.
+	BoostAmount float64 `json:"boostAmount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttributeValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttributeValue") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SearchRequestBoostSpecConditionBoostSpecBoostControlSpecControlPoint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchRequestBoostSpecConditionBoostSpecBoostControlSpecControlPoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1SearchRequestBoostSpecConditionBoostSpecBoostControlSpecControlPoint) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchRequestBoostSpecConditionBoostSpecBoostControlSpecControlPoint
+	var s1 struct {
+		BoostAmount gensupport.JSONFloat64 `json:"boostAmount"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BoostAmount = float64(s1.BoostAmount)
 	return nil
 }
 
@@ -7188,6 +7363,16 @@ type GoogleCloudDiscoveryengineV1SearchRequestContentSearchSpecSummarySpec struc
 	// skip generating summaries for adversarial queries and return fallback
 	// messages instead.
 	IgnoreAdversarialQuery bool `json:"ignoreAdversarialQuery,omitempty"`
+	// IgnoreJailBreakingQuery: Optional. Specifies whether to filter out
+	// jail-breaking queries. The default value is `false`. Google employs
+	// search-query classification to detect jail-breaking queries. No summary is
+	// returned if the search query is classified as a jail-breaking query. A user
+	// might add instructions to the query to change the tone, style, language,
+	// content of the answer, or ask the model to act as a different entity, e.g.
+	// "Reply in the tone of a competing company's CEO". If this field is set to
+	// `true`, we skip generating summaries for jail-breaking queries and return
+	// fallback messages instead.
+	IgnoreJailBreakingQuery bool `json:"ignoreJailBreakingQuery,omitempty"`
 	// IgnoreLowRelevantContent: Specifies whether to filter out queries that have
 	// low relevance. The default value is `false`. If this field is set to
 	// `false`, all search results are used regardless of relevance to generate
@@ -7836,8 +8021,8 @@ type GoogleCloudDiscoveryengineV1SearchResponseSummary struct {
 	//   "ADVERSARIAL_QUERY_IGNORED" - The adversarial query ignored case. Only
 	// used when SummarySpec.ignore_adversarial_query is set to `true`.
 	//   "NON_SUMMARY_SEEKING_QUERY_IGNORED" - The non-summary seeking query
-	// ignored case. Only used when SummarySpec.ignore_non_summary_seeking_query is
-	// set to `true`.
+	// ignored case. Google skips the summary if the query is chit chat. Only used
+	// when SummarySpec.ignore_non_summary_seeking_query is set to `true`.
 	//   "OUT_OF_DOMAIN_QUERY_IGNORED" - The out-of-domain query ignored case.
 	// Google skips the summary if there are no high-relevance search results. For
 	// example, the data store contains facts about company A but the user query is
@@ -7856,6 +8041,11 @@ type GoogleCloudDiscoveryengineV1SearchResponseSummary struct {
 	//   "CUSTOMER_POLICY_VIOLATION" - The customer policy violation case. Google
 	// skips the summary if there is a customer policy violation detected. The
 	// policy is defined by the customer.
+	//   "NON_SUMMARY_SEEKING_QUERY_IGNORED_V2" - The non-answer seeking query
+	// ignored case. Google skips the summary if the query doesn't have clear
+	// intent. Only used when
+	// [SearchRequest.ContentSearchSpec.SummarySpec.ignore_non_answer_seeking_query]
+	//  is set to `true`.
 	SummarySkippedReasons []string `json:"summarySkippedReasons,omitempty"`
 	// SummaryText: The summary content.
 	SummaryText string `json:"summaryText,omitempty"`
@@ -8079,6 +8269,30 @@ type GoogleCloudDiscoveryengineV1SearchResponseSummarySummaryWithMetadata struct
 
 func (s GoogleCloudDiscoveryengineV1SearchResponseSummarySummaryWithMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1SearchResponseSummarySummaryWithMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ServingConfigDataStore: Stores information
+// regarding the serving configurations at DataStore level.
+type GoogleCloudDiscoveryengineV1ServingConfigDataStore struct {
+	// DisabledForServing: If set true, the DataStore will not be available for
+	// serving search requests.
+	DisabledForServing bool `json:"disabledForServing,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisabledForServing") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ServingConfigDataStore) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ServingConfigDataStore
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8881,16 +9095,14 @@ type GoogleCloudDiscoveryengineV1WorkspaceConfig struct {
 	// Type: The Google Workspace data source.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value.
-	//   "GOOGLE_DRIVE" - The data store is used to store content from Google
-	// Drive.
-	//   "GOOGLE_MAIL" - The data store is used to store content from Gmail.
-	//   "GOOGLE_SITES" - The data store is used to store content from Google
-	// Sites.
-	//   "GOOGLE_CALENDAR" - The data store is used to store content from Google
-	// Calendar.
-	//   "GOOGLE_GROUPS" - The data store is used to store content from Google
-	// Groups.
+	//   "TYPE_UNSPECIFIED" - Defaults to an unspecified Workspace type.
+	//   "GOOGLE_DRIVE" - Workspace Data Store contains Drive data
+	//   "GOOGLE_MAIL" - Workspace Data Store contains Mail data
+	//   "GOOGLE_SITES" - Workspace Data Store contains Sites data
+	//   "GOOGLE_CALENDAR" - Workspace Data Store contains Calendar data
+	//   "GOOGLE_CHAT" - Workspace Data Store contains Chat data
+	//   "GOOGLE_GROUPS" - Workspace Data Store contains Groups data
+	//   "GOOGLE_KEEP" - Workspace Data Store contains Keep data
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DasherCustomerId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8946,7 +9158,7 @@ type GoogleCloudDiscoveryengineV1alphaAnswer struct {
 	// reason is not specified.
 	//   "ADVERSARIAL_QUERY_IGNORED" - The adversarial query ignored case.
 	//   "NON_ANSWER_SEEKING_QUERY_IGNORED" - The non-answer seeking query ignored
-	// case.
+	// case Google skips the answer if the query is chit chat.
 	//   "OUT_OF_DOMAIN_QUERY_IGNORED" - The out-of-domain query ignored case.
 	// Google skips the answer if there are no high-relevance search results.
 	//   "POTENTIAL_POLICY_VIOLATION" - The potential policy violation case. Google
@@ -8960,6 +9172,9 @@ type GoogleCloudDiscoveryengineV1alphaAnswer struct {
 	//   "CUSTOMER_POLICY_VIOLATION" - The customer policy violation case. Google
 	// skips the summary if there is a customer policy violation detected. The
 	// policy is defined by the customer.
+	//   "NON_ANSWER_SEEKING_QUERY_IGNORED_V2" - The non-answer seeking query
+	// ignored case. Google skips the answer if the query doesn't have clear
+	// intent.
 	AnswerSkippedReasons []string `json:"answerSkippedReasons,omitempty"`
 	// AnswerText: The textual answer.
 	AnswerText string `json:"answerText,omitempty"`
@@ -9090,8 +9305,11 @@ type GoogleCloudDiscoveryengineV1alphaAnswerQueryUnderstandingInfoQueryClassific
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified query classification type.
 	//   "ADVERSARIAL_QUERY" - Adversarial query classification type.
-	//   "NON_ANSWER_SEEKING_QUERY" - Non-answer-seeking query classification type.
+	//   "NON_ANSWER_SEEKING_QUERY" - Non-answer-seeking query classification type,
+	// for chit chat.
 	//   "JAIL_BREAKING_QUERY" - Jail-breaking query classification type.
+	//   "NON_ANSWER_SEEKING_QUERY_V2" - Non-answer-seeking query classification
+	// type, for no clear intent.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Positive") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9407,8 +9625,8 @@ type GoogleCloudDiscoveryengineV1alphaAnswerStepActionObservationSearchResult st
 	// level snippets.
 	SnippetInfo []*GoogleCloudDiscoveryengineV1alphaAnswerStepActionObservationSearchResultSnippetInfo `json:"snippetInfo,omitempty"`
 	// StructData: Data representation. The structured JSON data for the document.
-	// It's populated from the struct data from the Document , or the Chunk in
-	// search result .
+	// It's populated from the struct data from the Document, or the Chunk in
+	// search result. .
 	StructData googleapi.RawMessage `json:"structData,omitempty"`
 	// Title: Title.
 	Title string `json:"title,omitempty"`
@@ -10018,9 +10236,9 @@ type GoogleCloudDiscoveryengineV1alphaCustomTuningModel struct {
 	// ModelVersion: The version of the model.
 	ModelVersion int64 `json:"modelVersion,omitempty,string"`
 	// Name: Required. The fully qualified resource name of the model. Format:
-	// `projects/{project_number}/locations/{location}/collections/{collection}/data
-	// Stores/{data_store}/customTuningModels/{custom_tuning_model}` model must be
-	// an alpha-numerical string with limit of 40 characters.
+	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
+	// {data_store}/customTuningModels/{custom_tuning_model}`. Model must be an
+	// alpha-numerical string with limit of 40 characters.
 	Name string `json:"name,omitempty"`
 	// TrainingStartTime: Timestamp the model training was initiated.
 	TrainingStartTime string `json:"trainingStartTime,omitempty"`
@@ -10095,6 +10313,11 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
 	// limit of 1024 characters.
 	Name string `json:"name,omitempty"`
+	// NaturalLanguageQueryUnderstandingConfig: Optional. Configuration for Natural
+	// Language Query Understanding.
+	NaturalLanguageQueryUnderstandingConfig *GoogleCloudDiscoveryengineV1alphaNaturalLanguageQueryUnderstandingConfig `json:"naturalLanguageQueryUnderstandingConfig,omitempty"`
+	// ServingConfigDataStore: Optional. Stores serving config at DataStore level.
+	ServingConfigDataStore *GoogleCloudDiscoveryengineV1alphaServingConfigDataStore `json:"servingConfigDataStore,omitempty"`
 	// SolutionTypes: The solutions that the data store enrolls. Available
 	// solutions for each industry_vertical: * `MEDIA`:
 	// `SOLUTION_TYPE_RECOMMENDATION` and `SOLUTION_TYPE_SEARCH`. * `SITE_SEARCH`:
@@ -10305,8 +10528,10 @@ type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig struct {
 	// digital parsing and layout parsing are supported. * `docx`: Override parsing
 	// config for DOCX files, only digital parsing and layout parsing are
 	// supported. * `pptx`: Override parsing config for PPTX files, only digital
-	// parsing and layout parsing are supported. * `xlsx`: Override parsing config
-	// for XLSX files, only digital parsing and layout parsing are supported.
+	// parsing and layout parsing are supported. * `xlsm`: Override parsing config
+	// for XLSM files, only digital parsing and layout parsing are supported. *
+	// `xlsx`: Override parsing config for XLSX files, only digital parsing and
+	// layout parsing are supported.
 	ParsingConfigOverrides map[string]GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfig `json:"parsingConfigOverrides,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChunkingConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10518,9 +10743,9 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// Name: Immutable. The fully qualified resource name of the engine. This field
 	// must be a UTF-8 encoded string with a length limit of 1024 characters.
 	// Format:
-	// `projects/{project_number}/locations/{location}/collections/{collection}/engi
-	// nes/{engine}` engine should be 1-63 characters, and valid characters are
-	// /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.
+	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
+	// gine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/.
+	// Otherwise, an INVALID_ARGUMENT error is returned.
 	Name string `json:"name,omitempty"`
 	// RecommendationMetadata: Output only. Additional information of a
 	// recommendation engine. Only applicable if solution_type is
@@ -11716,14 +11941,44 @@ func (s GoogleCloudDiscoveryengineV1alphaListCustomModelsResponse) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaNaturalLanguageQueryUnderstandingConfig:
+// Configuration for Natural Language Query Understanding.
+type GoogleCloudDiscoveryengineV1alphaNaturalLanguageQueryUnderstandingConfig struct {
+	// Mode: Mode of Natural Language Query Understanding. If this field is unset,
+	// the behavior defaults to
+	// NaturalLanguageQueryUnderstandingConfig.Mode.DISABLED.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default value.
+	//   "DISABLED" - Natural Language Query Understanding is disabled.
+	//   "ENABLED" - Natural Language Query Understanding is enabled.
+	Mode string `json:"mode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Mode") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaNaturalLanguageQueryUnderstandingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaNaturalLanguageQueryUnderstandingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaProject: Metadata and configurations for a
 // Google Cloud project in the service.
 type GoogleCloudDiscoveryengineV1alphaProject struct {
 	// CreateTime: Output only. The timestamp when this project is created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Name: Output only. Full resource name of the project, for example
-	// `projects/{project_number}`. Note that when making requests, project number
-	// and project id are both acceptable, but the server will always respond in
+	// `projects/{project}`. Note that when making requests, project number and
+	// project id are both acceptable, but the server will always respond in
 	// project number.
 	Name string `json:"name,omitempty"`
 	// ProvisionCompletionTime: Output only. The timestamp when this project is
@@ -12894,6 +13149,16 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSummarySpec 
 	// skip generating summaries for adversarial queries and return fallback
 	// messages instead.
 	IgnoreAdversarialQuery bool `json:"ignoreAdversarialQuery,omitempty"`
+	// IgnoreJailBreakingQuery: Optional. Specifies whether to filter out
+	// jail-breaking queries. The default value is `false`. Google employs
+	// search-query classification to detect jail-breaking queries. No summary is
+	// returned if the search query is classified as a jail-breaking query. A user
+	// might add instructions to the query to change the tone, style, language,
+	// content of the answer, or ask the model to act as a different entity, e.g.
+	// "Reply in the tone of a competing company's CEO". If this field is set to
+	// `true`, we skip generating summaries for jail-breaking queries and return
+	// fallback messages instead.
+	IgnoreJailBreakingQuery bool `json:"ignoreJailBreakingQuery,omitempty"`
 	// IgnoreLowRelevantContent: Specifies whether to filter out queries that have
 	// low relevance. The default value is `false`. If this field is set to
 	// `false`, all search results are used regardless of relevance to generate
@@ -13432,6 +13697,30 @@ func (s GoogleCloudDiscoveryengineV1alphaSearchRequestSpellCorrectionSpec) Marsh
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaServingConfigDataStore: Stores information
+// regarding the serving configurations at DataStore level.
+type GoogleCloudDiscoveryengineV1alphaServingConfigDataStore struct {
+	// DisabledForServing: If set true, the DataStore will not be available for
+	// serving search requests.
+	DisabledForServing bool `json:"disabledForServing,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisabledForServing") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaServingConfigDataStore) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaServingConfigDataStore
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaSession: External session proto definition.
 type GoogleCloudDiscoveryengineV1alphaSession struct {
 	// EndTime: Output only. The time the session finished.
@@ -13750,8 +14039,8 @@ func (s GoogleCloudDiscoveryengineV1alphaTrainCustomModelResponse) MarshalJSON()
 type GoogleCloudDiscoveryengineV1alphaTuneEngineMetadata struct {
 	// Engine: Required. The resource name of the engine that this tune applies to.
 	// Format:
-	// `projects/{project_number}/locations/{location_id}/collections/{collection_id
-	// }/engines/{engine_id}`
+	// `projects/{project}/locations/{location}/collections/{collection_id}/engines/
+	// {engine_id}`
 	Engine string `json:"engine,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Engine") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -13872,16 +14161,14 @@ type GoogleCloudDiscoveryengineV1alphaWorkspaceConfig struct {
 	// Type: The Google Workspace data source.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value.
-	//   "GOOGLE_DRIVE" - The data store is used to store content from Google
-	// Drive.
-	//   "GOOGLE_MAIL" - The data store is used to store content from Gmail.
-	//   "GOOGLE_SITES" - The data store is used to store content from Google
-	// Sites.
-	//   "GOOGLE_CALENDAR" - The data store is used to store content from Google
-	// Calendar.
-	//   "GOOGLE_GROUPS" - The data store is used to store content from Google
-	// Groups.
+	//   "TYPE_UNSPECIFIED" - Defaults to an unspecified Workspace type.
+	//   "GOOGLE_DRIVE" - Workspace Data Store contains Drive data
+	//   "GOOGLE_MAIL" - Workspace Data Store contains Mail data
+	//   "GOOGLE_SITES" - Workspace Data Store contains Sites data
+	//   "GOOGLE_CALENDAR" - Workspace Data Store contains Calendar data
+	//   "GOOGLE_CHAT" - Workspace Data Store contains Chat data
+	//   "GOOGLE_GROUPS" - Workspace Data Store contains Groups data
+	//   "GOOGLE_KEEP" - Workspace Data Store contains Keep data
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DasherCustomerId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14371,9 +14658,9 @@ type GoogleCloudDiscoveryengineV1betaCustomTuningModel struct {
 	// ModelVersion: The version of the model.
 	ModelVersion int64 `json:"modelVersion,omitempty,string"`
 	// Name: Required. The fully qualified resource name of the model. Format:
-	// `projects/{project_number}/locations/{location}/collections/{collection}/data
-	// Stores/{data_store}/customTuningModels/{custom_tuning_model}` model must be
-	// an alpha-numerical string with limit of 40 characters.
+	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
+	// {data_store}/customTuningModels/{custom_tuning_model}`. Model must be an
+	// alpha-numerical string with limit of 40 characters.
 	Name string `json:"name,omitempty"`
 	// TrainingStartTime: Timestamp the model training was initiated.
 	TrainingStartTime string `json:"trainingStartTime,omitempty"`
@@ -14438,6 +14725,11 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
 	// limit of 1024 characters.
 	Name string `json:"name,omitempty"`
+	// NaturalLanguageQueryUnderstandingConfig: Optional. Configuration for Natural
+	// Language Query Understanding.
+	NaturalLanguageQueryUnderstandingConfig *GoogleCloudDiscoveryengineV1betaNaturalLanguageQueryUnderstandingConfig `json:"naturalLanguageQueryUnderstandingConfig,omitempty"`
+	// ServingConfigDataStore: Optional. Stores serving config at DataStore level.
+	ServingConfigDataStore *GoogleCloudDiscoveryengineV1betaServingConfigDataStore `json:"servingConfigDataStore,omitempty"`
 	// SolutionTypes: The solutions that the data store enrolls. Available
 	// solutions for each industry_vertical: * `MEDIA`:
 	// `SOLUTION_TYPE_RECOMMENDATION` and `SOLUTION_TYPE_SEARCH`. * `SITE_SEARCH`:
@@ -14648,8 +14940,10 @@ type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfig struct {
 	// digital parsing and layout parsing are supported. * `docx`: Override parsing
 	// config for DOCX files, only digital parsing and layout parsing are
 	// supported. * `pptx`: Override parsing config for PPTX files, only digital
-	// parsing and layout parsing are supported. * `xlsx`: Override parsing config
-	// for XLSX files, only digital parsing and layout parsing are supported.
+	// parsing and layout parsing are supported. * `xlsm`: Override parsing config
+	// for XLSM files, only digital parsing and layout parsing are supported. *
+	// `xlsx`: Override parsing config for XLSX files, only digital parsing and
+	// layout parsing are supported.
 	ParsingConfigOverrides map[string]GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigParsingConfig `json:"parsingConfigOverrides,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChunkingConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14857,9 +15151,9 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// Name: Immutable. The fully qualified resource name of the engine. This field
 	// must be a UTF-8 encoded string with a length limit of 1024 characters.
 	// Format:
-	// `projects/{project_number}/locations/{location}/collections/{collection}/engi
-	// nes/{engine}` engine should be 1-63 characters, and valid characters are
-	// /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.
+	// `projects/{project}/locations/{location}/collections/{collection}/engines/{en
+	// gine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/.
+	// Otherwise, an INVALID_ARGUMENT error is returned.
 	Name string `json:"name,omitempty"`
 	// SearchEngineConfig: Configurations for the Search Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_SEARCH.
@@ -15597,14 +15891,44 @@ func (s GoogleCloudDiscoveryengineV1betaListCustomModelsResponse) MarshalJSON() 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaNaturalLanguageQueryUnderstandingConfig:
+// Configuration for Natural Language Query Understanding.
+type GoogleCloudDiscoveryengineV1betaNaturalLanguageQueryUnderstandingConfig struct {
+	// Mode: Mode of Natural Language Query Understanding. If this field is unset,
+	// the behavior defaults to
+	// NaturalLanguageQueryUnderstandingConfig.Mode.DISABLED.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default value.
+	//   "DISABLED" - Natural Language Query Understanding is disabled.
+	//   "ENABLED" - Natural Language Query Understanding is enabled.
+	Mode string `json:"mode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Mode") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaNaturalLanguageQueryUnderstandingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaNaturalLanguageQueryUnderstandingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaProject: Metadata and configurations for a
 // Google Cloud project in the service.
 type GoogleCloudDiscoveryengineV1betaProject struct {
 	// CreateTime: Output only. The timestamp when this project is created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Name: Output only. Full resource name of the project, for example
-	// `projects/{project_number}`. Note that when making requests, project number
-	// and project id are both acceptable, but the server will always respond in
+	// `projects/{project}`. Note that when making requests, project number and
+	// project id are both acceptable, but the server will always respond in
 	// project number.
 	Name string `json:"name,omitempty"`
 	// ProvisionCompletionTime: Output only. The timestamp when this project is
@@ -16511,6 +16835,16 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpec s
 	// skip generating summaries for adversarial queries and return fallback
 	// messages instead.
 	IgnoreAdversarialQuery bool `json:"ignoreAdversarialQuery,omitempty"`
+	// IgnoreJailBreakingQuery: Optional. Specifies whether to filter out
+	// jail-breaking queries. The default value is `false`. Google employs
+	// search-query classification to detect jail-breaking queries. No summary is
+	// returned if the search query is classified as a jail-breaking query. A user
+	// might add instructions to the query to change the tone, style, language,
+	// content of the answer, or ask the model to act as a different entity, e.g.
+	// "Reply in the tone of a competing company's CEO". If this field is set to
+	// `true`, we skip generating summaries for jail-breaking queries and return
+	// fallback messages instead.
+	IgnoreJailBreakingQuery bool `json:"ignoreJailBreakingQuery,omitempty"`
 	// IgnoreLowRelevantContent: Specifies whether to filter out queries that have
 	// low relevance. The default value is `false`. If this field is set to
 	// `false`, all search results are used regardless of relevance to generate
@@ -17049,6 +17383,30 @@ func (s GoogleCloudDiscoveryengineV1betaSearchRequestSpellCorrectionSpec) Marsha
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaServingConfigDataStore: Stores information
+// regarding the serving configurations at DataStore level.
+type GoogleCloudDiscoveryengineV1betaServingConfigDataStore struct {
+	// DisabledForServing: If set true, the DataStore will not be available for
+	// serving search requests.
+	DisabledForServing bool `json:"disabledForServing,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisabledForServing") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaServingConfigDataStore) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaServingConfigDataStore
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaSiteVerificationInfo: Verification
 // information for target sites in advanced site search.
 type GoogleCloudDiscoveryengineV1betaSiteVerificationInfo struct {
@@ -17270,8 +17628,8 @@ func (s GoogleCloudDiscoveryengineV1betaTrainCustomModelResponse) MarshalJSON() 
 type GoogleCloudDiscoveryengineV1betaTuneEngineMetadata struct {
 	// Engine: Required. The resource name of the engine that this tune applies to.
 	// Format:
-	// `projects/{project_number}/locations/{location_id}/collections/{collection_id
-	// }/engines/{engine_id}`
+	// `projects/{project}/locations/{location}/collections/{collection_id}/engines/
+	// {engine_id}`
 	Engine string `json:"engine,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Engine") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -17392,16 +17750,14 @@ type GoogleCloudDiscoveryengineV1betaWorkspaceConfig struct {
 	// Type: The Google Workspace data source.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default value.
-	//   "GOOGLE_DRIVE" - The data store is used to store content from Google
-	// Drive.
-	//   "GOOGLE_MAIL" - The data store is used to store content from Gmail.
-	//   "GOOGLE_SITES" - The data store is used to store content from Google
-	// Sites.
-	//   "GOOGLE_CALENDAR" - The data store is used to store content from Google
-	// Calendar.
-	//   "GOOGLE_GROUPS" - The data store is used to store content from Google
-	// Groups.
+	//   "TYPE_UNSPECIFIED" - Defaults to an unspecified Workspace type.
+	//   "GOOGLE_DRIVE" - Workspace Data Store contains Drive data
+	//   "GOOGLE_MAIL" - Workspace Data Store contains Mail data
+	//   "GOOGLE_SITES" - Workspace Data Store contains Sites data
+	//   "GOOGLE_CALENDAR" - Workspace Data Store contains Calendar data
+	//   "GOOGLE_CHAT" - Workspace Data Store contains Chat data
+	//   "GOOGLE_GROUPS" - Workspace Data Store contains Groups data
+	//   "GOOGLE_KEEP" - Workspace Data Store contains Keep data
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DasherCustomerId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -20490,10 +20846,10 @@ type ProjectsLocationsCollectionsDataStoresControlsCreateCall struct {
 // create already exists, an ALREADY_EXISTS error is returned.
 //
 //   - parent: Full resource name of parent data store. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}` or
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/engines/{engine_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}` or
+//     `projects/{project}/locations/{location}/collections/{collection_id}/engine
+//     s/{engine_id}`.
 func (r *ProjectsLocationsCollectionsDataStoresControlsService) Create(parent string, googleclouddiscoveryenginev1control *GoogleCloudDiscoveryengineV1Control) *ProjectsLocationsCollectionsDataStoresControlsCreateCall {
 	c := &ProjectsLocationsCollectionsDataStoresControlsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -20605,8 +20961,8 @@ type ProjectsLocationsCollectionsDataStoresControlsDeleteCall struct {
 // NOT_FOUND error is returned.
 //
 //   - name: The resource name of the Control to delete. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}/controls/{control_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}/controls/{control_id}`.
 func (r *ProjectsLocationsCollectionsDataStoresControlsService) Delete(name string) *ProjectsLocationsCollectionsDataStoresControlsDeleteCall {
 	c := &ProjectsLocationsCollectionsDataStoresControlsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20704,8 +21060,8 @@ type ProjectsLocationsCollectionsDataStoresControlsGetCall struct {
 // Get: Gets a Control.
 //
 //   - name: The resource name of the Control to get. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}/controls/{control_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}/controls/{control_id}`.
 func (r *ProjectsLocationsCollectionsDataStoresControlsService) Get(name string) *ProjectsLocationsCollectionsDataStoresControlsGetCall {
 	c := &ProjectsLocationsCollectionsDataStoresControlsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -20814,10 +21170,10 @@ type ProjectsLocationsCollectionsDataStoresControlsListCall struct {
 // List: Lists all Controls by their parent DataStore.
 //
 //   - parent: The data store resource name. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}` or
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/engines/{engine_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}` or
+//     `projects/{project}/locations/{location}/collections/{collection_id}/engine
+//     s/{engine_id}`.
 func (r *ProjectsLocationsCollectionsDataStoresControlsService) List(parent string) *ProjectsLocationsCollectionsDataStoresControlsListCall {
 	c := &ProjectsLocationsCollectionsDataStoresControlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21083,12 +21439,12 @@ type ProjectsLocationsCollectionsDataStoresConversationsConverseCall struct {
 // Converse: Converses a conversation.
 //
 //   - name: The resource name of the Conversation to get. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/conversations/{conversation_id}`. Use
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/conversations/-` to activate auto session
-//     mode, which automatically creates a new conversation inside a
-//     ConverseConversation session.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/conversations/{conversation_id}`. Use
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/conversations/-` to activate auto session mode, which
+//     automatically creates a new conversation inside a ConverseConversation
+//     session.
 func (r *ProjectsLocationsCollectionsDataStoresConversationsService) Converse(name string, googleclouddiscoveryenginev1converseconversationrequest *GoogleCloudDiscoveryengineV1ConverseConversationRequest) *ProjectsLocationsCollectionsDataStoresConversationsConverseCall {
 	c := &ProjectsLocationsCollectionsDataStoresConversationsConverseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21192,8 +21548,8 @@ type ProjectsLocationsCollectionsDataStoresConversationsCreateCall struct {
 // exists, an ALREADY_EXISTS error is returned.
 //
 //   - parent: Full resource name of parent data store. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}`.
 func (r *ProjectsLocationsCollectionsDataStoresConversationsService) Create(parent string, googleclouddiscoveryenginev1conversation *GoogleCloudDiscoveryengineV1Conversation) *ProjectsLocationsCollectionsDataStoresConversationsCreateCall {
 	c := &ProjectsLocationsCollectionsDataStoresConversationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -21296,8 +21652,8 @@ type ProjectsLocationsCollectionsDataStoresConversationsDeleteCall struct {
 // exist, a NOT_FOUND error is returned.
 //
 //   - name: The resource name of the Conversation to delete. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/conversations/{conversation_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/conversations/{conversation_id}`.
 func (r *ProjectsLocationsCollectionsDataStoresConversationsService) Delete(name string) *ProjectsLocationsCollectionsDataStoresConversationsDeleteCall {
 	c := &ProjectsLocationsCollectionsDataStoresConversationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21395,8 +21751,8 @@ type ProjectsLocationsCollectionsDataStoresConversationsGetCall struct {
 // Get: Gets a Conversation.
 //
 //   - name: The resource name of the Conversation to get. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/conversations/{conversation_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/conversations/{conversation_id}`.
 func (r *ProjectsLocationsCollectionsDataStoresConversationsService) Get(name string) *ProjectsLocationsCollectionsDataStoresConversationsGetCall {
 	c := &ProjectsLocationsCollectionsDataStoresConversationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -21505,8 +21861,8 @@ type ProjectsLocationsCollectionsDataStoresConversationsListCall struct {
 // List: Lists all Conversations by their parent DataStore.
 //
 //   - parent: The data store resource name. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}`.
 func (r *ProjectsLocationsCollectionsDataStoresConversationsService) List(parent string) *ProjectsLocationsCollectionsDataStoresConversationsListCall {
 	c := &ProjectsLocationsCollectionsDataStoresConversationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23604,8 +23960,8 @@ type ProjectsLocationsCollectionsDataStoresSessionsCreateCall struct {
 // ALREADY_EXISTS error is returned.
 //
 //   - parent: Full resource name of parent data store. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}`.
 func (r *ProjectsLocationsCollectionsDataStoresSessionsService) Create(parent string, googleclouddiscoveryenginev1session *GoogleCloudDiscoveryengineV1Session) *ProjectsLocationsCollectionsDataStoresSessionsCreateCall {
 	c := &ProjectsLocationsCollectionsDataStoresSessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -23708,8 +24064,8 @@ type ProjectsLocationsCollectionsDataStoresSessionsDeleteCall struct {
 // NOT_FOUND error is returned.
 //
 //   - name: The resource name of the Session to delete. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/sessions/{session_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/sessions/{session_id}`.
 func (r *ProjectsLocationsCollectionsDataStoresSessionsService) Delete(name string) *ProjectsLocationsCollectionsDataStoresSessionsDeleteCall {
 	c := &ProjectsLocationsCollectionsDataStoresSessionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23807,8 +24163,8 @@ type ProjectsLocationsCollectionsDataStoresSessionsGetCall struct {
 // Get: Gets a Session.
 //
 //   - name: The resource name of the Session to get. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/sessions/{session_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/sessions/{session_id}`.
 func (r *ProjectsLocationsCollectionsDataStoresSessionsService) Get(name string) *ProjectsLocationsCollectionsDataStoresSessionsGetCall {
 	c := &ProjectsLocationsCollectionsDataStoresSessionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23917,8 +24273,8 @@ type ProjectsLocationsCollectionsDataStoresSessionsListCall struct {
 // List: Lists all Sessions by their parent DataStore.
 //
 //   - parent: The data store resource name. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}`.
 func (r *ProjectsLocationsCollectionsDataStoresSessionsService) List(parent string) *ProjectsLocationsCollectionsDataStoresSessionsListCall {
 	c := &ProjectsLocationsCollectionsDataStoresSessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24193,8 +24549,8 @@ type ProjectsLocationsCollectionsDataStoresSessionsAnswersGetCall struct {
 // Get: Gets a Answer.
 //
 //   - name: The resource name of the Answer to get. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /engines/{engine_id}/sessions/{session_id}/answers/{answer_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine_id}/sessions/{session_id}/answers/{answer_id}`.
 func (r *ProjectsLocationsCollectionsDataStoresSessionsAnswersService) Get(name string) *ProjectsLocationsCollectionsDataStoresSessionsAnswersGetCall {
 	c := &ProjectsLocationsCollectionsDataStoresSessionsAnswersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -26532,8 +26888,8 @@ type ProjectsLocationsCollectionsDataStoresUserEventsPurgeCall struct {
 //
 //   - parent: The resource name of the catalog under which the events are
 //     created. The format is
-//     `projects/${projectId}/locations/global/collections/{$collectionId}/dataSto
-//     res/${dataStoreId}`.
+//     `projects/{project}/locations/global/collections/{collection}/dataStores/{d
+//     ataStore}`.
 func (r *ProjectsLocationsCollectionsDataStoresUserEventsService) Purge(parent string, googleclouddiscoveryenginev1purgeusereventsrequest *GoogleCloudDiscoveryengineV1PurgeUserEventsRequest) *ProjectsLocationsCollectionsDataStoresUserEventsPurgeCall {
 	c := &ProjectsLocationsCollectionsDataStoresUserEventsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27226,8 +27582,8 @@ type ProjectsLocationsCollectionsEnginesPatchCall struct {
 //   - name: Immutable. The fully qualified resource name of the engine. This
 //     field must be a UTF-8 encoded string with a length limit of 1024
 //     characters. Format:
-//     `projects/{project_number}/locations/{location}/collections/{collection}/en
-//     gines/{engine}` engine should be 1-63 characters, and valid characters are
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine}` engine should be 1-63 characters, and valid characters are
 //     /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.
 func (r *ProjectsLocationsCollectionsEnginesService) Patch(name string, googleclouddiscoveryenginev1engine *GoogleCloudDiscoveryengineV1Engine) *ProjectsLocationsCollectionsEnginesPatchCall {
 	c := &ProjectsLocationsCollectionsEnginesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -27341,10 +27697,10 @@ type ProjectsLocationsCollectionsEnginesControlsCreateCall struct {
 // create already exists, an ALREADY_EXISTS error is returned.
 //
 //   - parent: Full resource name of parent data store. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}` or
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/engines/{engine_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}` or
+//     `projects/{project}/locations/{location}/collections/{collection_id}/engine
+//     s/{engine_id}`.
 func (r *ProjectsLocationsCollectionsEnginesControlsService) Create(parent string, googleclouddiscoveryenginev1control *GoogleCloudDiscoveryengineV1Control) *ProjectsLocationsCollectionsEnginesControlsCreateCall {
 	c := &ProjectsLocationsCollectionsEnginesControlsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27456,8 +27812,8 @@ type ProjectsLocationsCollectionsEnginesControlsDeleteCall struct {
 // NOT_FOUND error is returned.
 //
 //   - name: The resource name of the Control to delete. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}/controls/{control_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}/controls/{control_id}`.
 func (r *ProjectsLocationsCollectionsEnginesControlsService) Delete(name string) *ProjectsLocationsCollectionsEnginesControlsDeleteCall {
 	c := &ProjectsLocationsCollectionsEnginesControlsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27555,8 +27911,8 @@ type ProjectsLocationsCollectionsEnginesControlsGetCall struct {
 // Get: Gets a Control.
 //
 //   - name: The resource name of the Control to get. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}/controls/{control_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}/controls/{control_id}`.
 func (r *ProjectsLocationsCollectionsEnginesControlsService) Get(name string) *ProjectsLocationsCollectionsEnginesControlsGetCall {
 	c := &ProjectsLocationsCollectionsEnginesControlsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -27665,10 +28021,10 @@ type ProjectsLocationsCollectionsEnginesControlsListCall struct {
 // List: Lists all Controls by their parent DataStore.
 //
 //   - parent: The data store resource name. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}` or
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/engines/{engine_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}` or
+//     `projects/{project}/locations/{location}/collections/{collection_id}/engine
+//     s/{engine_id}`.
 func (r *ProjectsLocationsCollectionsEnginesControlsService) List(parent string) *ProjectsLocationsCollectionsEnginesControlsListCall {
 	c := &ProjectsLocationsCollectionsEnginesControlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -27934,12 +28290,12 @@ type ProjectsLocationsCollectionsEnginesConversationsConverseCall struct {
 // Converse: Converses a conversation.
 //
 //   - name: The resource name of the Conversation to get. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/conversations/{conversation_id}`. Use
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/conversations/-` to activate auto session
-//     mode, which automatically creates a new conversation inside a
-//     ConverseConversation session.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/conversations/{conversation_id}`. Use
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/conversations/-` to activate auto session mode, which
+//     automatically creates a new conversation inside a ConverseConversation
+//     session.
 func (r *ProjectsLocationsCollectionsEnginesConversationsService) Converse(name string, googleclouddiscoveryenginev1converseconversationrequest *GoogleCloudDiscoveryengineV1ConverseConversationRequest) *ProjectsLocationsCollectionsEnginesConversationsConverseCall {
 	c := &ProjectsLocationsCollectionsEnginesConversationsConverseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28043,8 +28399,8 @@ type ProjectsLocationsCollectionsEnginesConversationsCreateCall struct {
 // exists, an ALREADY_EXISTS error is returned.
 //
 //   - parent: Full resource name of parent data store. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}`.
 func (r *ProjectsLocationsCollectionsEnginesConversationsService) Create(parent string, googleclouddiscoveryenginev1conversation *GoogleCloudDiscoveryengineV1Conversation) *ProjectsLocationsCollectionsEnginesConversationsCreateCall {
 	c := &ProjectsLocationsCollectionsEnginesConversationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -28147,8 +28503,8 @@ type ProjectsLocationsCollectionsEnginesConversationsDeleteCall struct {
 // exist, a NOT_FOUND error is returned.
 //
 //   - name: The resource name of the Conversation to delete. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/conversations/{conversation_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/conversations/{conversation_id}`.
 func (r *ProjectsLocationsCollectionsEnginesConversationsService) Delete(name string) *ProjectsLocationsCollectionsEnginesConversationsDeleteCall {
 	c := &ProjectsLocationsCollectionsEnginesConversationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28246,8 +28602,8 @@ type ProjectsLocationsCollectionsEnginesConversationsGetCall struct {
 // Get: Gets a Conversation.
 //
 //   - name: The resource name of the Conversation to get. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/conversations/{conversation_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/conversations/{conversation_id}`.
 func (r *ProjectsLocationsCollectionsEnginesConversationsService) Get(name string) *ProjectsLocationsCollectionsEnginesConversationsGetCall {
 	c := &ProjectsLocationsCollectionsEnginesConversationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -28356,8 +28712,8 @@ type ProjectsLocationsCollectionsEnginesConversationsListCall struct {
 // List: Lists all Conversations by their parent DataStore.
 //
 //   - parent: The data store resource name. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}`.
 func (r *ProjectsLocationsCollectionsEnginesConversationsService) List(parent string) *ProjectsLocationsCollectionsEnginesConversationsListCall {
 	c := &ProjectsLocationsCollectionsEnginesConversationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29241,8 +29597,8 @@ type ProjectsLocationsCollectionsEnginesSessionsCreateCall struct {
 // ALREADY_EXISTS error is returned.
 //
 //   - parent: Full resource name of parent data store. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}`.
 func (r *ProjectsLocationsCollectionsEnginesSessionsService) Create(parent string, googleclouddiscoveryenginev1session *GoogleCloudDiscoveryengineV1Session) *ProjectsLocationsCollectionsEnginesSessionsCreateCall {
 	c := &ProjectsLocationsCollectionsEnginesSessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29345,8 +29701,8 @@ type ProjectsLocationsCollectionsEnginesSessionsDeleteCall struct {
 // NOT_FOUND error is returned.
 //
 //   - name: The resource name of the Session to delete. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/sessions/{session_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/sessions/{session_id}`.
 func (r *ProjectsLocationsCollectionsEnginesSessionsService) Delete(name string) *ProjectsLocationsCollectionsEnginesSessionsDeleteCall {
 	c := &ProjectsLocationsCollectionsEnginesSessionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29444,8 +29800,8 @@ type ProjectsLocationsCollectionsEnginesSessionsGetCall struct {
 // Get: Gets a Session.
 //
 //   - name: The resource name of the Session to get. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/sessions/{session_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/sessions/{session_id}`.
 func (r *ProjectsLocationsCollectionsEnginesSessionsService) Get(name string) *ProjectsLocationsCollectionsEnginesSessionsGetCall {
 	c := &ProjectsLocationsCollectionsEnginesSessionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -29554,8 +29910,8 @@ type ProjectsLocationsCollectionsEnginesSessionsListCall struct {
 // List: Lists all Sessions by their parent DataStore.
 //
 //   - parent: The data store resource name. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}`.
 func (r *ProjectsLocationsCollectionsEnginesSessionsService) List(parent string) *ProjectsLocationsCollectionsEnginesSessionsListCall {
 	c := &ProjectsLocationsCollectionsEnginesSessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -29830,8 +30186,8 @@ type ProjectsLocationsCollectionsEnginesSessionsAnswersGetCall struct {
 // Get: Gets a Answer.
 //
 //   - name: The resource name of the Answer to get. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /engines/{engine_id}/sessions/{session_id}/answers/{answer_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine_id}/sessions/{session_id}/answers/{answer_id}`.
 func (r *ProjectsLocationsCollectionsEnginesSessionsAnswersService) Get(name string) *ProjectsLocationsCollectionsEnginesSessionsAnswersGetCall {
 	c := &ProjectsLocationsCollectionsEnginesSessionsAnswersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32623,10 +32979,10 @@ type ProjectsLocationsDataStoresControlsCreateCall struct {
 // create already exists, an ALREADY_EXISTS error is returned.
 //
 //   - parent: Full resource name of parent data store. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}` or
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/engines/{engine_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}` or
+//     `projects/{project}/locations/{location}/collections/{collection_id}/engine
+//     s/{engine_id}`.
 func (r *ProjectsLocationsDataStoresControlsService) Create(parent string, googleclouddiscoveryenginev1control *GoogleCloudDiscoveryengineV1Control) *ProjectsLocationsDataStoresControlsCreateCall {
 	c := &ProjectsLocationsDataStoresControlsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -32738,8 +33094,8 @@ type ProjectsLocationsDataStoresControlsDeleteCall struct {
 // NOT_FOUND error is returned.
 //
 //   - name: The resource name of the Control to delete. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}/controls/{control_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}/controls/{control_id}`.
 func (r *ProjectsLocationsDataStoresControlsService) Delete(name string) *ProjectsLocationsDataStoresControlsDeleteCall {
 	c := &ProjectsLocationsDataStoresControlsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32837,8 +33193,8 @@ type ProjectsLocationsDataStoresControlsGetCall struct {
 // Get: Gets a Control.
 //
 //   - name: The resource name of the Control to get. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}/controls/{control_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}/controls/{control_id}`.
 func (r *ProjectsLocationsDataStoresControlsService) Get(name string) *ProjectsLocationsDataStoresControlsGetCall {
 	c := &ProjectsLocationsDataStoresControlsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -32947,10 +33303,10 @@ type ProjectsLocationsDataStoresControlsListCall struct {
 // List: Lists all Controls by their parent DataStore.
 //
 //   - parent: The data store resource name. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/dataStores/{data_store_id}` or
-//     `projects/{project_number}/locations/{location_id}/collections/{collection_
-//     id}/engines/{engine_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection_id}/dataSt
+//     ores/{data_store_id}` or
+//     `projects/{project}/locations/{location}/collections/{collection_id}/engine
+//     s/{engine_id}`.
 func (r *ProjectsLocationsDataStoresControlsService) List(parent string) *ProjectsLocationsDataStoresControlsListCall {
 	c := &ProjectsLocationsDataStoresControlsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -33216,12 +33572,12 @@ type ProjectsLocationsDataStoresConversationsConverseCall struct {
 // Converse: Converses a conversation.
 //
 //   - name: The resource name of the Conversation to get. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/conversations/{conversation_id}`. Use
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/conversations/-` to activate auto session
-//     mode, which automatically creates a new conversation inside a
-//     ConverseConversation session.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/conversations/{conversation_id}`. Use
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/conversations/-` to activate auto session mode, which
+//     automatically creates a new conversation inside a ConverseConversation
+//     session.
 func (r *ProjectsLocationsDataStoresConversationsService) Converse(name string, googleclouddiscoveryenginev1converseconversationrequest *GoogleCloudDiscoveryengineV1ConverseConversationRequest) *ProjectsLocationsDataStoresConversationsConverseCall {
 	c := &ProjectsLocationsDataStoresConversationsConverseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33325,8 +33681,8 @@ type ProjectsLocationsDataStoresConversationsCreateCall struct {
 // exists, an ALREADY_EXISTS error is returned.
 //
 //   - parent: Full resource name of parent data store. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}`.
 func (r *ProjectsLocationsDataStoresConversationsService) Create(parent string, googleclouddiscoveryenginev1conversation *GoogleCloudDiscoveryengineV1Conversation) *ProjectsLocationsDataStoresConversationsCreateCall {
 	c := &ProjectsLocationsDataStoresConversationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -33429,8 +33785,8 @@ type ProjectsLocationsDataStoresConversationsDeleteCall struct {
 // exist, a NOT_FOUND error is returned.
 //
 //   - name: The resource name of the Conversation to delete. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/conversations/{conversation_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/conversations/{conversation_id}`.
 func (r *ProjectsLocationsDataStoresConversationsService) Delete(name string) *ProjectsLocationsDataStoresConversationsDeleteCall {
 	c := &ProjectsLocationsDataStoresConversationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33528,8 +33884,8 @@ type ProjectsLocationsDataStoresConversationsGetCall struct {
 // Get: Gets a Conversation.
 //
 //   - name: The resource name of the Conversation to get. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/conversations/{conversation_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/conversations/{conversation_id}`.
 func (r *ProjectsLocationsDataStoresConversationsService) Get(name string) *ProjectsLocationsDataStoresConversationsGetCall {
 	c := &ProjectsLocationsDataStoresConversationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33638,8 +33994,8 @@ type ProjectsLocationsDataStoresConversationsListCall struct {
 // List: Lists all Conversations by their parent DataStore.
 //
 //   - parent: The data store resource name. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}`.
 func (r *ProjectsLocationsDataStoresConversationsService) List(parent string) *ProjectsLocationsDataStoresConversationsListCall {
 	c := &ProjectsLocationsDataStoresConversationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -35366,8 +35722,8 @@ type ProjectsLocationsDataStoresSessionsCreateCall struct {
 // ALREADY_EXISTS error is returned.
 //
 //   - parent: Full resource name of parent data store. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}`.
 func (r *ProjectsLocationsDataStoresSessionsService) Create(parent string, googleclouddiscoveryenginev1session *GoogleCloudDiscoveryengineV1Session) *ProjectsLocationsDataStoresSessionsCreateCall {
 	c := &ProjectsLocationsDataStoresSessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -35470,8 +35826,8 @@ type ProjectsLocationsDataStoresSessionsDeleteCall struct {
 // NOT_FOUND error is returned.
 //
 //   - name: The resource name of the Session to delete. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/sessions/{session_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/sessions/{session_id}`.
 func (r *ProjectsLocationsDataStoresSessionsService) Delete(name string) *ProjectsLocationsDataStoresSessionsDeleteCall {
 	c := &ProjectsLocationsDataStoresSessionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -35569,8 +35925,8 @@ type ProjectsLocationsDataStoresSessionsGetCall struct {
 // Get: Gets a Session.
 //
 //   - name: The resource name of the Session to get. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}/sessions/{session_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}/sessions/{session_id}`.
 func (r *ProjectsLocationsDataStoresSessionsService) Get(name string) *ProjectsLocationsDataStoresSessionsGetCall {
 	c := &ProjectsLocationsDataStoresSessionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -35679,8 +36035,8 @@ type ProjectsLocationsDataStoresSessionsListCall struct {
 // List: Lists all Sessions by their parent DataStore.
 //
 //   - parent: The data store resource name. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /dataStores/{data_store_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store_id}`.
 func (r *ProjectsLocationsDataStoresSessionsService) List(parent string) *ProjectsLocationsDataStoresSessionsListCall {
 	c := &ProjectsLocationsDataStoresSessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -35955,8 +36311,8 @@ type ProjectsLocationsDataStoresSessionsAnswersGetCall struct {
 // Get: Gets a Answer.
 //
 //   - name: The resource name of the Answer to get. Format:
-//     `projects/{project_number}/locations/{location_id}/collections/{collection}
-//     /engines/{engine_id}/sessions/{session_id}/answers/{answer_id}`.
+//     `projects/{project}/locations/{location}/collections/{collection}/engines/{
+//     engine_id}/sessions/{session_id}/answers/{answer_id}`.
 func (r *ProjectsLocationsDataStoresSessionsAnswersService) Get(name string) *ProjectsLocationsDataStoresSessionsAnswersGetCall {
 	c := &ProjectsLocationsDataStoresSessionsAnswersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -37515,8 +37871,8 @@ type ProjectsLocationsDataStoresUserEventsPurgeCall struct {
 //
 //   - parent: The resource name of the catalog under which the events are
 //     created. The format is
-//     `projects/${projectId}/locations/global/collections/{$collectionId}/dataSto
-//     res/${dataStoreId}`.
+//     `projects/{project}/locations/global/collections/{collection}/dataStores/{d
+//     ataStore}`.
 func (r *ProjectsLocationsDataStoresUserEventsService) Purge(parent string, googleclouddiscoveryenginev1purgeusereventsrequest *GoogleCloudDiscoveryengineV1PurgeUserEventsRequest) *ProjectsLocationsDataStoresUserEventsPurgeCall {
 	c := &ProjectsLocationsDataStoresUserEventsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -38357,8 +38713,8 @@ type ProjectsLocationsRankingConfigsRankCall struct {
 // Rank: Ranks a list of text records based on the given input query.
 //
 //   - rankingConfig: The resource name of the rank service config, such as
-//     `projects/{project_num}/locations/{location_id}/rankingConfigs/default_rank
-//     ing_config`.
+//     `projects/{project_num}/locations/{location}/rankingConfigs/default_ranking
+//     _config`.
 func (r *ProjectsLocationsRankingConfigsService) Rank(rankingConfig string, googleclouddiscoveryenginev1rankrequest *GoogleCloudDiscoveryengineV1RankRequest) *ProjectsLocationsRankingConfigsRankCall {
 	c := &ProjectsLocationsRankingConfigsRankCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.rankingConfig = rankingConfig

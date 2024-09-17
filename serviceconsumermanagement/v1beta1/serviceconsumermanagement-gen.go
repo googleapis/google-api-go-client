@@ -1243,6 +1243,33 @@ func (s EnumValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExperimentalFeatures: Experimental features to be included during client
+// library generation. These fields will be deprecated once the feature
+// graduates and is enabled by default.
+type ExperimentalFeatures struct {
+	// RestAsyncIoEnabled: Enables generation of asynchronous REST clients if
+	// `rest` transport is enabled. By default, asynchronous REST clients will not
+	// be generated. This feature will be enabled by default 1 month after
+	// launching the feature in preview packages.
+	RestAsyncIoEnabled bool `json:"restAsyncIoEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RestAsyncIoEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RestAsyncIoEnabled") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExperimentalFeatures) MarshalJSON() ([]byte, error) {
+	type NoMethod ExperimentalFeatures
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Field: A single field of a message type.
 type Field struct {
 	// Cardinality: The field cardinality.
@@ -2174,6 +2201,16 @@ type MetricDescriptorMetadata struct {
 	// interval, excluding data loss due to errors. Metrics with a higher
 	// granularity have a smaller sampling period.
 	SamplePeriod string `json:"samplePeriod,omitempty"`
+	// TimeSeriesResourceHierarchyLevel: The scope of the timeseries data of the
+	// metric.
+	//
+	// Possible values:
+	//   "TIME_SERIES_RESOURCE_HIERARCHY_LEVEL_UNSPECIFIED" - Do not use this
+	// default value.
+	//   "PROJECT" - Scopes a metric to a project.
+	//   "ORGANIZATION" - Scopes a metric to an organization.
+	//   "FOLDER" - Scopes a metric to a folder.
+	TimeSeriesResourceHierarchyLevel []string `json:"timeSeriesResourceHierarchyLevel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IngestDelay") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2720,6 +2757,9 @@ func (s Publishing) MarshalJSON() ([]byte, error) {
 type PythonSettings struct {
 	// Common: Some settings.
 	Common *CommonLanguageSettings `json:"common,omitempty"`
+	// ExperimentalFeatures: Experimental features to be included during client
+	// library generation.
+	ExperimentalFeatures *ExperimentalFeatures `json:"experimentalFeatures,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Common") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

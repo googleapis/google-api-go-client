@@ -815,6 +815,7 @@ type StepEntry struct {
 	//   "STATE_IN_PROGRESS" - The step entry is in progress.
 	//   "STATE_SUCCEEDED" - The step entry finished successfully.
 	//   "STATE_FAILED" - The step entry failed with an error.
+	//   "STATE_CANCELLED" - The step entry is cancelled.
 	State string `json:"state,omitempty"`
 	// Step: Output only. The name of the step this step entry belongs to.
 	Step string `json:"step,omitempty"`

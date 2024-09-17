@@ -419,11 +419,11 @@ type Subscription struct {
 	// of other fields, and might be sent on update requests to ensure the client
 	// has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-	// EventTypes: Required. Immutable. Unordered list. Input for creating a
-	// subscription. Otherwise, output only. One or more types of events to receive
-	// about the target resource. Formatted according to the CloudEvents
-	// specification. The supported event types depend on the target resource of
-	// your subscription. For details, see Supported Google Workspace events
+	// EventTypes: Required. Unordered list. Input for creating a subscription.
+	// Otherwise, output only. One or more types of events to receive about the
+	// target resource. Formatted according to the CloudEvents specification. The
+	// supported event types depend on the target resource of your subscription.
+	// For details, see Supported Google Workspace events
 	// (https://developers.google.com/workspace/events/guides#supported-events). By
 	// default, you also receive events about the lifecycle of your subscription
 	// (https://developers.google.com/workspace/events/guides/events-lifecycle).
@@ -1158,8 +1158,9 @@ func (r *SubscriptionsService) Patch(name string, subscription *Subscription) *S
 // omitted, updates any fields included in the request. You can update one of
 // the following fields in a subscription: * `expire_time`: The timestamp when
 // the subscription expires. * `ttl`: The time-to-live (TTL) or duration of the
-// subscription. To fully replace the subscription (the equivalent of `PUT`),
-// use `*`. Any omitted fields are updated with empty values.
+// subscription. * `event_types`: The list of event types to receive about the
+// target resource. To fully replace the subscription (the equivalent of
+// `PUT`), use `*`. Any omitted fields are updated with empty values.
 func (c *SubscriptionsPatchCall) UpdateMask(updateMask string) *SubscriptionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

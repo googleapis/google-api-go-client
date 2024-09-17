@@ -100,6 +100,9 @@ const mtlsBasePath = "https://dataportability.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// Move a copy of the Google Alerts subscriptions you created.
+	DataportabilityAlertsSubscriptionsScope = "https://www.googleapis.com/auth/dataportability.alerts.subscriptions"
+
 	// Move a copy of messages between you and the businesses you have
 	// conversations with across Google services.
 	DataportabilityBusinessmessagingConversationsScope = "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations"
@@ -260,6 +263,9 @@ const (
 	// Move a copy of information about your YouTube channel.
 	DataportabilityYoutubeChannelScope = "https://www.googleapis.com/auth/dataportability.youtube.channel"
 
+	// Move a copy of your YouTube clips metadata.
+	DataportabilityYoutubeClipsScope = "https://www.googleapis.com/auth/dataportability.youtube.clips"
+
 	// Move a copy of your YouTube comments.
 	DataportabilityYoutubeCommentsScope = "https://www.googleapis.com/auth/dataportability.youtube.comments"
 
@@ -304,6 +310,7 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 		"https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 		"https://www.googleapis.com/auth/dataportability.chrome.autofill",
 		"https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
@@ -354,6 +361,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/dataportability.shopping.reviews",
 		"https://www.googleapis.com/auth/dataportability.streetview.imagery",
 		"https://www.googleapis.com/auth/dataportability.youtube.channel",
+		"https://www.googleapis.com/auth/dataportability.youtube.clips",
 		"https://www.googleapis.com/auth/dataportability.youtube.comments",
 		"https://www.googleapis.com/auth/dataportability.youtube.live_chat",
 		"https://www.googleapis.com/auth/dataportability.youtube.music",

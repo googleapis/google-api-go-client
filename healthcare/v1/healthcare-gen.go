@@ -324,10 +324,22 @@ type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesService struct {
 
 func NewProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesService(s *Service) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesService {
 	rs := &ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesService{s: s}
+	rs.Instances = NewProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService(s)
 	return rs
 }
 
 type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesService struct {
+	s *Service
+
+	Instances *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService
+}
+
+func NewProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService(s *Service) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService {
+	rs := &ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService struct {
 	s *Service
 }
 
@@ -825,6 +837,83 @@ type Binding struct {
 
 func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BlobStorageInfo: BlobStorageInfo contains details about the data stored in
+// Blob Storage for the referenced resource. Note: Storage class is only valid
+// for DICOM and hence will only be populated for DICOM resources.
+type BlobStorageInfo struct {
+	// SizeBytes: Size in bytes of data stored in Blob Storage.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
+	// StorageClass: The storage class in which the Blob data is stored.
+	//
+	// Possible values:
+	//   "BLOB_STORAGE_CLASS_UNSPECIFIED" - If unspecified in CreateDataset, the
+	// StorageClass defaults to STANDARD. If unspecified in UpdateDataset and the
+	// StorageClass is set in the field mask, an InvalidRequest error is thrown.
+	//   "STANDARD" - This stores the Object in Blob Standard Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#standard
+	//   "NEARLINE" - This stores the Object in Blob Nearline Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#nearline
+	//   "COLDLINE" - This stores the Object in Blob Coldline Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#coldline
+	//   "ARCHIVE" - This stores the Object in Blob Archive Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#archive
+	StorageClass string `json:"storageClass,omitempty"`
+	// StorageClassUpdateTime: The time at which the storage class was updated.
+	// This is used to compute early deletion fees of the resource.
+	StorageClassUpdateTime string `json:"storageClassUpdateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SizeBytes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SizeBytes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BlobStorageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod BlobStorageInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BlobStorageSettings: Settings for data stored in Blob storage.
+type BlobStorageSettings struct {
+	// BlobStorageClass: The Storage class in which the Blob data is stored.
+	//
+	// Possible values:
+	//   "BLOB_STORAGE_CLASS_UNSPECIFIED" - If unspecified in CreateDataset, the
+	// StorageClass defaults to STANDARD. If unspecified in UpdateDataset and the
+	// StorageClass is set in the field mask, an InvalidRequest error is thrown.
+	//   "STANDARD" - This stores the Object in Blob Standard Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#standard
+	//   "NEARLINE" - This stores the Object in Blob Nearline Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#nearline
+	//   "COLDLINE" - This stores the Object in Blob Coldline Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#coldline
+	//   "ARCHIVE" - This stores the Object in Blob Archive Storage:
+	// https://cloud.google.com/storage/docs/storage-classes#archive
+	BlobStorageClass string `json:"blobStorageClass,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BlobStorageClass") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BlobStorageClass") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BlobStorageSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod BlobStorageSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3331,19 +3420,22 @@ func (s ImageConfig) MarshalJSON() ([]byte, error) {
 // duplicate DICOM instances by ignoring the newly-pushed instance. It does not
 // overwrite.
 type ImportDicomDataRequest struct {
+	// BlobStorageSettings: Optional. The blob storage settings for the data
+	// imported by this operation.
+	BlobStorageSettings *BlobStorageSettings `json:"blobStorageSettings,omitempty"`
 	// GcsSource: Cloud Storage source data location and import configuration. The
 	// Cloud Healthcare Service Agent requires the `roles/storage.objectViewer`
 	// Cloud IAM roles on the Cloud Storage location.
 	GcsSource *GoogleCloudHealthcareV1DicomGcsSource `json:"gcsSource,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GcsSource") to
+	// ForceSendFields is a list of field names (e.g. "BlobStorageSettings") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GcsSource") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BlobStorageSettings") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4697,7 +4789,7 @@ func (s RollbackFhirResourcesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RollbackHL7MessagesFilteringFields: Filtering fields for an HL7 rollback.
+// RollbackHL7MessagesFilteringFields: Filtering fields for an HL7v2 rollback.
 // Currently only supports a list of operation ids to roll back.
 type RollbackHL7MessagesFilteringFields struct {
 	// OperationIds: Optional. A list of operation IDs to roll back.
@@ -4767,7 +4859,7 @@ func (s RollbackHl7V2MessagesRequest) MarshalJSON() ([]byte, error) {
 // RollbackHl7V2MessagesResponse: Final response of rollback HL7v2 messages
 // request.
 type RollbackHl7V2MessagesResponse struct {
-	// Hl7v2Store: The name of the HL7 store to rollback, in the format of
+	// Hl7v2Store: The name of the HL7v2 store to rollback, in the format of
 	// "projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
 	// /hl7v2Stores/{hl7v2_store_id}".
 	Hl7v2Store string `json:"hl7v2Store,omitempty"`
@@ -5084,6 +5176,41 @@ func (s SeriesMetrics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SetBlobStorageSettingsRequest: Request message for `SetBlobStorageSettings`
+// method.
+type SetBlobStorageSettingsRequest struct {
+	// BlobStorageSettings: The blob storage settings to update for the specified
+	// resources. Only fields listed in `update_mask` are applied.
+	BlobStorageSettings *BlobStorageSettings `json:"blobStorageSettings,omitempty"`
+	// FilterConfig: Optional. A filter configuration. If `filter_config` is
+	// specified, set the value of `resource` to the resource name of a DICOM store
+	// in the format
+	// `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStores
+	// /{dicomStoreID}`.
+	FilterConfig *DicomFilterConfig `json:"filterConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BlobStorageSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BlobStorageSettings") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SetBlobStorageSettingsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SetBlobStorageSettingsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SetBlobStorageSettingsResponse: Returns additional info in regards to a
+// completed set blob storage settings API.
+type SetBlobStorageSettingsResponse struct {
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the `resource`. The
@@ -5176,6 +5303,41 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// StorageInfo: StorageInfo encapsulates all the storage info of a resource.
+type StorageInfo struct {
+	// BlobStorageInfo: Info about the data stored in blob storage for the
+	// resource.
+	BlobStorageInfo *BlobStorageInfo `json:"blobStorageInfo,omitempty"`
+	// ReferencedResource: The resource whose storage info is returned. For
+	// example:
+	// `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStores
+	// /{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/{ins
+	// tanceUID}`
+	ReferencedResource string `json:"referencedResource,omitempty"`
+	// StructuredStorageInfo: Info about the data stored in structured storage for
+	// the resource.
+	StructuredStorageInfo *StructuredStorageInfo `json:"structuredStorageInfo,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BlobStorageInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BlobStorageInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StorageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // StreamConfig: Contains configuration for streaming FHIR export.
 type StreamConfig struct {
 	// BigqueryDestination: The destination BigQuery structure that contains both
@@ -5247,6 +5409,29 @@ type StreamConfig struct {
 
 func (s StreamConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod StreamConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StructuredStorageInfo: StructuredStorageInfo contains details about the data
+// stored in Structured Storage for the referenced resource.
+type StructuredStorageInfo struct {
+	// SizeBytes: Size in bytes of data stored in structured storage.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "SizeBytes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SizeBytes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StructuredStorageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod StructuredStorageInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12925,6 +13110,119 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) Do(opts ...go
 	return c.doRequest("")
 }
 
+type ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall struct {
+	s                             *Service
+	resource                      string
+	setblobstoragesettingsrequest *SetBlobStorageSettingsRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// SetBlobStorageSettings: SetBlobStorageSettings sets the blob storage
+// settings of the specified resources.
+//
+//   - resource: The path of the resource to update the blob storage settings in
+//     the format of
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStor
+//     es/{dicomStoreID}/dicomWeb/studies/{studyUID}`,
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStor
+//     es/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/`, or
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStor
+//     es/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/
+//     {instanceUID}`. If `filter_config` is specified, set the value of
+//     `resource` to the resource name of a DICOM store in the format
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStor
+//     es/{dicomStoreID}`.
+func (r *ProjectsLocationsDatasetsDicomStoresService) SetBlobStorageSettings(resource string, setblobstoragesettingsrequest *SetBlobStorageSettingsRequest) *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall {
+	c := &ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setblobstoragesettingsrequest = setblobstoragesettingsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setblobstoragesettingsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setBlobStorageSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.setBlobStorageSettings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall struct {
 	s                   *Service
 	resource            string
@@ -13327,6 +13625,119 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesGetStudyMetricsCall)
 	return ret, nil
 }
 
+type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall struct {
+	s                             *Service
+	resource                      string
+	setblobstoragesettingsrequest *SetBlobStorageSettingsRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// SetBlobStorageSettings: SetBlobStorageSettings sets the blob storage
+// settings of the specified resources.
+//
+//   - resource: The path of the resource to update the blob storage settings in
+//     the format of
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStor
+//     es/{dicomStoreID}/dicomWeb/studies/{studyUID}`,
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStor
+//     es/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/`, or
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStor
+//     es/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/
+//     {instanceUID}`. If `filter_config` is specified, set the value of
+//     `resource` to the resource name of a DICOM store in the format
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStor
+//     es/{dicomStoreID}`.
+func (r *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesService) SetBlobStorageSettings(resource string, setblobstoragesettingsrequest *SetBlobStorageSettingsRequest) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall {
+	c := &ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setblobstoragesettingsrequest = setblobstoragesettingsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setblobstoragesettingsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setBlobStorageSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.setBlobStorageSettings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetricsCall struct {
 	s            *Service
 	series       string
@@ -13424,6 +13835,118 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesGetSeriesMetri
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &SeriesMetrics{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetStorageInfo: GetStorageInfo returns the storage info of the specified
+// resource.
+//
+//   - resource: The path of the instance to return storage info for, in the
+//     form:
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStor
+//     es/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/
+//     {instanceUID}`.
+func (r *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService) GetStorageInfo(resource string) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall {
+	c := &ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getStorageInfo")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.series.instances.getStorageInfo" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *StorageInfo.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall) Do(opts ...googleapi.CallOption) (*StorageInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &StorageInfo{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -16478,6 +17001,368 @@ func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) Do(opts ...g
 	return ret, nil
 }
 
+type ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall struct {
+	s          *Service
+	parent     string
+	body_      io.Reader
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// BinaryCreate: Creates a FHIR Binary resource. This method can be used to
+// create a Binary resource either by using one of the accepted FHIR JSON
+// content types, or as a raw data stream. If a resource is created with this
+// method using the FHIR content type this method's behavior is the same as
+// `fhir.create`
+// (https://cloud.google.com/healthcare-api/docs/reference/rest/v1/projects.locations.datasets.fhirStores.fhir/create).
+// If a resource type other than Binary is used in the request it's treated in
+// the same way as non-FHIR data (e.g., images, zip archives, pdf files,
+// documents). When a non-FHIR content type is used in the request, a Binary
+// resource will be generated, and the uploaded data will be stored in the
+// `content` field (`DSTU2` and `STU3`), or the `data` field (`R4`). The Binary
+// resource's `contentType` will be filled in using the value of the
+// `Content-Type` header, and the `securityContext` field (not present in
+// `DSTU2`) will be populated from the `X-Security-Context` header if it
+// exists. At this time `securityContext` has no special behavior in the Cloud
+// Healthcare API. Note: the limit on data ingested through this method is 2
+// GB. For best performance, use a non-FHIR data type instead of wrapping the
+// data in a Binary resource. Some of the Healthcare API features, such as
+// exporting to BigQuery
+// (https://cloud.google.com/healthcare-api/docs/how-tos/fhir-export-bigquery)
+// or Pub/Sub notifications
+// (https://cloud.google.com/healthcare-api/docs/fhir-pubsub#behavior_when_a_fhir_resource_is_too_large_or_traffic_is_high)
+// with full resource content, do not support Binary resources that are larger
+// than 10 MB. In these cases the resource's `data` field will be omitted.
+// Instead, the "http://hl7.org/fhir/StructureDefinition/data-absent-reason"
+// extension will be present to indicate that including the data is
+// `unsupported`. On success, an empty `201 Created` response is returned. The
+// newly created resource's ID and version are returned in the Location header.
+// Using `Prefer: representation=resource` is not allowed for this method. The
+// definition of the Binary REST API can be found at
+// https://hl7.org/fhir/binary.html#rest.
+//
+// - parent: The name of the FHIR store this resource belongs to.
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) BinaryCreate(parent string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.body_ = body_
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	body = c.body_
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/fhir/Binary")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.Binary-create" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
+type ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BinaryRead: Gets the contents of a FHIR Binary resource. This method can be
+// used to retrieve a Binary resource either by using the FHIR JSON mimetype as
+// the value for the Accept header, or as a raw data stream. If the FHIR Accept
+// type is used this method will return a Binary resource with the data
+// base64-encoded, regardless of how the resource was created. The resource
+// data can be retrieved in base64-decoded form if the Accept type of the
+// request matches the value of the resource's `contentType` field. The
+// definition of the Binary REST API can be found at
+// https://hl7.org/fhir/binary.html#rest.
+//
+// - name: The name of the Binary resource to retrieve.
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) BinaryRead(name string) *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.Binary-read" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
+type ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall struct {
+	s          *Service
+	name       string
+	body_      io.Reader
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// BinaryUpdate: Updates the entire contents of a Binary resource. If the
+// specified resource does not exist and the FHIR store has
+// enable_update_create set, creates the resource with the client-specified ID.
+// It is strongly advised not to include or encode any sensitive data such as
+// patient identifiers in client-specified resource IDs. Those IDs are part of
+// the FHIR resource path recorded in Cloud Audit Logs and Pub/Sub
+// notifications. Those IDs can also be contained in reference fields within
+// other resources. This method can be used to update a Binary resource either
+// by using one of the accepted FHIR JSON content types, or as a raw data
+// stream. If a resource is updated with this method using the FHIR content
+// type this method's behavior is the same as `update`. If a resource type
+// other than Binary is used in the request it will be treated in the same way
+// as non-FHIR data. When a non-FHIR content type is used in the request, a
+// Binary resource will be generated using the ID from the resource path, and
+// the uploaded data will be stored in the `content` field (`DSTU2` and
+// `STU3`), or the `data` field (`R4`). The Binary resource's `contentType`
+// will be filled in using the value of the `Content-Type` header, and the
+// `securityContext` field (not present in `DSTU2`) will be populated from the
+// `X-Security-Context` header if it exists. At this time `securityContext` has
+// no special behavior in the Cloud Healthcare API. Note: the limit on data
+// ingested through this method is 2 GB. For best performance, use a non-FHIR
+// data type instead of wrapping the data in a Binary resource. Some of the
+// Healthcare API features, such as exporting to BigQuery
+// (https://cloud.google.com/healthcare-api/docs/how-tos/fhir-export-bigquery)
+// or Pub/Sub notifications
+// (https://cloud.google.com/healthcare-api/docs/fhir-pubsub#behavior_when_a_fhir_resource_is_too_large_or_traffic_is_high)
+// with full resource content, do not support Binary resources that are larger
+// than 10 MB. In these cases the resource's `data` field will be omitted.
+// Instead, the "http://hl7.org/fhir/StructureDefinition/data-absent-reason"
+// extension will be present to indicate that including the data is
+// `unsupported`. On success, an empty 200 OK response will be returned, or a
+// 201 Created if the resource did not exit. The resource's ID and version are
+// returned in the Location header. Using `Prefer: representation=resource` is
+// not allowed for this method. The definition of the Binary REST API can be
+// found at https://hl7.org/fhir/binary.html#rest.
+//
+// - name: The name of the resource to update.
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) BinaryUpdate(name string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.body_ = body_
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	body = c.body_
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.Binary-update" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
+type ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BinaryVread: Gets the contents of a version (current or historical) of a
+// FHIR Binary resource by version ID. This method can be used to retrieve a
+// Binary resource version either by using the FHIR JSON mimetype as the value
+// for the Accept header, or as a raw data stream. If the FHIR Accept type is
+// used this method will return a Binary resource with the data base64-encoded,
+// regardless of how the resource version was created. The resource data can be
+// retrieved in base64-decoded form if the Accept type of the request matches
+// the value of the resource version's `contentType` field. The definition of
+// the Binary REST API can be found at https://hl7.org/fhir/binary.html#rest.
+//
+// - name: The name of the Binary resource version to retrieve.
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) BinaryVread(name string) *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.Binary-vread" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
 type ProjectsLocationsDatasetsFhirStoresFhirPatientEverythingCall struct {
 	s            *Service
 	name         string
@@ -19336,8 +20221,8 @@ type ProjectsLocationsDatasetsHl7V2StoresRollbackCall struct {
 	header_                      http.Header
 }
 
-// Rollback: Rolls back messages from the HL7 store to the specified time. This
-// method returns an Operation that can be used to track the status of the
+// Rollback: Rolls back messages from the HL7v2 store to the specified time.
+// This method returns an Operation that can be used to track the status of the
 // rollback by calling GetOperation. Immediate fatal errors appear in the error
 // field, errors are also logged to Cloud Logging (see Viewing error logs in
 // Cloud Logging (https://cloud.google.com/healthcare/docs/how-tos/logging)).

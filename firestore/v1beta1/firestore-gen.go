@@ -1303,6 +1303,17 @@ type FindNearest struct {
 	// learn more. The resulting distance increases the more similar two vectors
 	// are.
 	DistanceMeasure string `json:"distanceMeasure,omitempty"`
+	// DistanceResultField: Optional. Optional name of the field to output the
+	// result of the vector distance calculation. Must conform to document field
+	// name limitations.
+	DistanceResultField string `json:"distanceResultField,omitempty"`
+	// DistanceThreshold: Optional. Option to specify a threshold for which no less
+	// similar documents will be returned. The behavior of the specified
+	// `distance_measure` will affect the meaning of the distance threshold. Since
+	// DOT_PRODUCT distances increase when the vectors are more similar, the
+	// comparison is inverted. For EUCLIDEAN, COSINE: WHERE distance <=
+	// distance_threshold For DOT_PRODUCT: WHERE distance >= distance_threshold
+	DistanceThreshold float64 `json:"distanceThreshold,omitempty"`
 	// Limit: Required. The number of nearest neighbors to return. Must be a
 	// positive integer of no more than 1000.
 	Limit int64 `json:"limit,omitempty"`
@@ -1331,16 +1342,30 @@ func (s FindNearest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+func (s *FindNearest) UnmarshalJSON(data []byte) error {
+	type NoMethod FindNearest
+	var s1 struct {
+		DistanceThreshold gensupport.JSONFloat64 `json:"distanceThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DistanceThreshold = float64(s1.DistanceThreshold)
+	return nil
+}
+
 // GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata: Metadata for
 // google.longrunning.Operation results from
 // FirestoreAdmin.BulkDeleteDocuments.
 type GoogleFirestoreAdminV1BulkDeleteDocumentsMetadata struct {
-	// CollectionIds: The ids of the collection groups that are being deleted.
+	// CollectionIds: The IDs of the collection groups that are being deleted.
 	CollectionIds []string `json:"collectionIds,omitempty"`
 	// EndTime: The time this operation completed. Will be unset if operation still
 	// in progress.
 	EndTime string `json:"endTime,omitempty"`
-	// NamespaceIds: Which namespace ids are being deleted.
+	// NamespaceIds: Which namespace IDs are being deleted.
 	NamespaceIds []string `json:"namespaceIds,omitempty"`
 	// OperationState: The state of the operation.
 	//

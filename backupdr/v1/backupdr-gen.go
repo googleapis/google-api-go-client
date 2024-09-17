@@ -944,7 +944,7 @@ func (s BackupLock) MarshalJSON() ([]byte, error) {
 }
 
 // BackupPlan: A `BackupPlan` specifies some common fields, such as
-// `display_name` as well as one or more `BackupRule` messages. Each
+// `description` as well as one or more `BackupRule` messages. Each
 // `BackupRule` has a retention policy and defines a schedule by which the
 // system is to perform backup workloads.
 type BackupPlan struct {
@@ -1406,6 +1406,8 @@ type ComputeInstanceBackupProperties struct {
 	//   "NONE" - Indicates user chose no operation.
 	//   "STOP" - Indicates user chose to opt for VM shutdown on key revocation.
 	KeyRevocationActionType string `json:"keyRevocationActionType,omitempty"`
+	// Labels: Labels to apply to instances that are created from these properties.
+	Labels map[string]string `json:"labels,omitempty"`
 	// MachineType: The machine type to use for instances that are created from
 	// these properties.
 	MachineType string `json:"machineType,omitempty"`

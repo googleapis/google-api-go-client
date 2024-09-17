@@ -479,6 +479,10 @@ type DestinationStatus struct {
 	// retail](https://cloud.google.com/solutions/retail).
 	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
 	// retail](https://cloud.google.com/solutions/retail).
+	//   "PRODUCT_REVIEWS" - [Product
+	// Reviews](https://support.google.com/merchants/answer/14620732).
+	//   "MERCHANT_REVIEWS" - [Merchant
+	// Reviews](https://developers.google.com/merchant-review-feeds).
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// Status: Output only. The status for the specified destination.
 	//
@@ -616,6 +620,10 @@ type ItemLevelIssue struct {
 	// retail](https://cloud.google.com/solutions/retail).
 	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
 	// retail](https://cloud.google.com/solutions/retail).
+	//   "PRODUCT_REVIEWS" - [Product
+	// Reviews](https://support.google.com/merchants/answer/14620732).
+	//   "MERCHANT_REVIEWS" - [Merchant
+	// Reviews](https://developers.google.com/merchant-review-feeds).
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// Resolution: Output only. Whether the issue can be resolved by the merchant.
 	Resolution string `json:"resolution,omitempty"`
@@ -743,6 +751,10 @@ type ProductChange struct {
 	// retail](https://cloud.google.com/solutions/retail).
 	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
 	// retail](https://cloud.google.com/solutions/retail).
+	//   "PRODUCT_REVIEWS" - [Product
+	// Reviews](https://support.google.com/merchants/answer/14620732).
+	//   "MERCHANT_REVIEWS" - [Merchant
+	// Reviews](https://developers.google.com/merchant-review-feeds).
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or

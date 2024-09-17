@@ -315,9 +315,9 @@ type Backup struct {
 	// backups share storage, this number is expected to change with backup
 	// creation/deletion.
 	StorageBytes int64 `json:"storageBytes,omitempty,string"`
-	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
-	// this resource. For example: "123/environment": "production",
-	// "123/costCenter": "marketing"
+	// Tags: Optional. Input only. Immutable. Tag key-value pairs are bound to this
+	// resource. For example: "123/environment": "production", "123/costCenter":
+	// "marketing"
 	Tags map[string]string `json:"tags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -506,6 +506,28 @@ type FileShareConfig struct {
 
 func (s FileShareConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod FileShareConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FixedIOPS: Fixed IOPS (input/output operations per second) parameters.
+type FixedIOPS struct {
+	// MaxReadIops: Required. Maximum raw read IOPS.
+	MaxReadIops int64 `json:"maxReadIops,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "MaxReadIops") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxReadIops") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FixedIOPS) MarshalJSON() ([]byte, error) {
+	type NoMethod FixedIOPS
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -887,6 +909,28 @@ func (s GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// IOPSPerTB: IOPS per TB. Filestore defines TB as 1024^4 bytes (TiB).
+type IOPSPerTB struct {
+	// MaxReadIopsPerTb: Required. Maximum read IOPS per TiB.
+	MaxReadIopsPerTb int64 `json:"maxReadIopsPerTb,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "MaxReadIopsPerTb") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxReadIopsPerTb") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IOPSPerTB) MarshalJSON() ([]byte, error) {
+	type NoMethod IOPSPerTB
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Instance: A Filestore instance.
 type Instance struct {
 	// CapacityGb: The storage capacity of the instance in gigabytes (GB = 1024^3
@@ -895,8 +939,18 @@ type Instance struct {
 	CapacityGb int64 `json:"capacityGb,omitempty,string"`
 	// CapacityStepSizeGb: Output only. The increase/decrease capacity step size.
 	CapacityStepSizeGb int64 `json:"capacityStepSizeGb,omitempty,string"`
+	// ConfigurablePerformanceEnabled: Output only. Indicates whether this
+	// instance's performance is configurable. If enabled, adjust it using the
+	// 'performance_config' field.
+	ConfigurablePerformanceEnabled bool `json:"configurablePerformanceEnabled,omitempty"`
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DeletionProtectionEnabled: Optional. Indicates whether the instance is
+	// protected against deletion.
+	DeletionProtectionEnabled bool `json:"deletionProtectionEnabled,omitempty"`
+	// DeletionProtectionReason: Optional. The reason for enabling deletion
+	// protection.
+	DeletionProtectionReason string `json:"deletionProtectionReason,omitempty"`
 	// Description: The description of the instance (2048 characters or less).
 	Description string `json:"description,omitempty"`
 	// DirectoryServices: Optional. Directory Services configuration for
@@ -927,6 +981,10 @@ type Instance struct {
 	// Networks: VPC networks to which the instance is connected. For this version,
 	// only a single network is supported.
 	Networks []*NetworkConfig `json:"networks,omitempty"`
+	// PerformanceConfig: Optional. Used to configure performance.
+	PerformanceConfig *PerformanceConfig `json:"performanceConfig,omitempty"`
+	// PerformanceLimits: Output only. Used for getting performance limits.
+	PerformanceLimits *PerformanceLimits `json:"performanceLimits,omitempty"`
 	// Protocol: Immutable. The protocol indicates the access protocol for all
 	// shares in the instance. This field is immutable and it cannot be changed
 	// after the instance has been created. Default value: `NFS_V3`.
@@ -937,7 +995,7 @@ type Instance struct {
 	//   "NFS_V3" - NFS 3.0.
 	//   "NFS_V4_1" - NFS 4.1.
 	Protocol string `json:"protocol,omitempty"`
-	// Replication: Optional. Replicaition configuration.
+	// Replication: Optional. Replication configuration.
 	Replication *Replication `json:"replication,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
@@ -975,9 +1033,9 @@ type Instance struct {
 	//   "KMS_KEY_ISSUE" - The KMS key used by the instance is either revoked or
 	// denied access to.
 	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
-	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
-	// this resource. For example: "123/environment": "production",
-	// "123/costCenter": "marketing"
+	// Tags: Optional. Input only. Immutable. Tag key-value pairs are bound to this
+	// resource. For example: "123/environment": "production", "123/costCenter":
+	// "marketing"
 	Tags map[string]string `json:"tags,omitempty"`
 	// Tier: The service tier of the instance.
 	//
@@ -1317,11 +1375,13 @@ func (s MaintenanceWindow) MarshalJSON() ([]byte, error) {
 }
 
 // ManagedActiveDirectoryConfig: ManagedActiveDirectoryConfig contains all the
-// parameters for connecting to Managed Active Directory.
+// parameters for connecting to Managed Service for Microsoft Active Directory
+// (Managed Microsoft AD).
 type ManagedActiveDirectoryConfig struct {
-	// Computer: Required. The computer name is used as a prefix to the mount
-	// remote target. Example: if the computer is `my-computer`, the mount command
-	// will look like: `$mount -o vers=4.1,sec=krb5 my-computer.filestore.: `.
+	// Computer: Required. The computer name is used as a prefix in the command to
+	// mount the remote target. For example: if the computer is `my-computer`, the
+	// mount command will look like: `$mount -o vers=4.1,sec=krb5
+	// my-computer.filestore.: `.
 	Computer string `json:"computer,omitempty"`
 	// Domain: Required. The domain resource name, in the format
 	// `projects/{project_id}/locations/global/domains/{domain}`.
@@ -1557,6 +1617,81 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PerformanceConfig: Used for setting the performance configuration. If the
+// user doesn't specify PerformanceConfig, automatically provision the default
+// performance settings as described in
+// https://cloud.google.com/filestore/docs/performance. Larger instances will
+// be linearly set to more IOPS. If the instance's capacity is increased or
+// decreased, its performance will be automatically adjusted upwards or
+// downwards accordingly (respectively).
+type PerformanceConfig struct {
+	// FixedIops: Choose a fixed provisioned IOPS value for the instance, which
+	// will remain constant regardless of instance capacity. Value must be a
+	// multiple of 1000. If the chosen value is outside the supported range for the
+	// instance's capacity during instance creation, instance creation will fail
+	// with an `InvalidArgument` error. Similarly, if an instance capacity update
+	// would result in a value outside the supported range, the update will fail
+	// with an `InvalidArgument` error.
+	FixedIops *FixedIOPS `json:"fixedIops,omitempty"`
+	// IopsPerTb: Provision IOPS dynamically based on the capacity of the instance.
+	// Provisioned read IOPS will be calculated by multiplying the capacity of the
+	// instance in TiB by the `iops_per_tb` value. For example, for a 2 TiB
+	// instance with an `iops_per_tb` value of 17000 the provisioned read IOPS will
+	// be 34000. If the calculated value is outside the supported range for the
+	// instance's capacity during instance creation, instance creation will fail
+	// with an `InvalidArgument` error. Similarly, if an instance capacity update
+	// would result in a value outside the supported range, the update will fail
+	// with an `InvalidArgument` error.
+	IopsPerTb *IOPSPerTB `json:"iopsPerTb,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FixedIops") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FixedIops") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PerformanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PerformanceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PerformanceLimits: The enforced performance limits, calculated from the
+// instance's performance configuration.
+type PerformanceLimits struct {
+	// MaxReadIops: Output only. The max read IOPS.
+	MaxReadIops int64 `json:"maxReadIops,omitempty,string"`
+	// MaxReadThroughputBps: Output only. The max read throughput in bytes per
+	// second.
+	MaxReadThroughputBps int64 `json:"maxReadThroughputBps,omitempty,string"`
+	// MaxWriteIops: Output only. The max write IOPS.
+	MaxWriteIops int64 `json:"maxWriteIops,omitempty,string"`
+	// MaxWriteThroughputBps: Output only. The max write throughput in bytes per
+	// second.
+	MaxWriteThroughputBps int64 `json:"maxWriteThroughputBps,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "MaxReadIops") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxReadIops") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PerformanceLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod PerformanceLimits
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PromoteReplicaRequest: PromoteReplicaRequest promotes a Filestore standby
 // instance (replica).
 type PromoteReplicaRequest struct {
@@ -1607,17 +1742,17 @@ func (s ReplicaConfig) MarshalJSON() ([]byte, error) {
 
 // Replication: Replication specifications.
 type Replication struct {
-	// Replicas: Replicas configuration on the instance. For now, only a single
-	// replica config is supported.
+	// Replicas: Replication configuration for the replica instance associated with
+	// this instance. Only a single replica is supported.
 	Replicas []*ReplicaConfig `json:"replicas,omitempty"`
 	// Role: Output only. The replication role.
 	//
 	// Possible values:
 	//   "ROLE_UNSPECIFIED" - Role not set.
-	//   "ACTIVE" - The instance is a Active replication member, functions as the
-	// replication source instance.
-	//   "STANDBY" - The instance is a Standby replication member, functions as the
-	// replication destination instance.
+	//   "ACTIVE" - The instance is the `ACTIVE` replication member, functions as
+	// the replication source instance.
+	//   "STANDBY" - The instance is the `STANDBY` replication member, functions as
+	// the replication destination instance.
 	Role string `json:"role,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Replicas") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1810,9 +1945,9 @@ type Snapshot struct {
 	//   "READY" - Snapshot is available for use.
 	//   "DELETING" - Snapshot is being deleted.
 	State string `json:"state,omitempty"`
-	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
-	// this resource. For example: "123/environment": "production",
-	// "123/costCenter": "marketing"
+	// Tags: Optional. Input only. Immutable. Tag key-value pairs are bound to this
+	// resource. For example: "123/environment": "production", "123/costCenter":
+	// "marketing"
 	Tags map[string]string `json:"tags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3336,7 +3471,9 @@ func (r *ProjectsLocationsInstancesService) Patch(name string, instance *Instanc
 // UpdateMask sets the optional parameter "updateMask": Required. Mask of
 // fields to update. At least one path must be supplied in this field. The
 // elements of the repeated paths field may only include these fields: *
-// "description" * "directory_services" * "file_shares" * "labels"
+// "description" * "directory_services" * "file_shares" * "labels" *
+// "performance_config" * "deletion_protection_enabled" *
+// "deletion_protection_reason"
 func (c *ProjectsLocationsInstancesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsInstancesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3433,7 +3570,7 @@ type ProjectsLocationsInstancesPromoteReplicaCall struct {
 	header_               http.Header
 }
 
-// PromoteReplica: Promote an standby instance (replica).
+// PromoteReplica: Promote the standby instance (replica).
 //
 //   - name: The resource name of the instance, in the format
 //     `projects/{project_id}/locations/{location_id}/instances/{instance_id}`.

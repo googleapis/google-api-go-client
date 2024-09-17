@@ -586,6 +586,30 @@ func (s AgentTaskInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AgentTaskLoggingOption: AgentTaskLoggingOption contains the options for the
+// logging of the task.
+type AgentTaskLoggingOption struct {
+	// Labels: Labels to be added to the log entry. Now only cloud logging is
+	// supported.
+	Labels map[string]string `json:"labels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentTaskLoggingOption) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentTaskLoggingOption
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AgentTaskRunnable: AgentTaskRunnable is the Runnable representation between
 // Agent and CLH communication.
 type AgentTaskRunnable struct {
@@ -636,6 +660,8 @@ func (s AgentTaskRunnable) MarshalJSON() ([]byte, error) {
 type AgentTaskSpec struct {
 	// Environment: Environment variables to set before running the Task.
 	Environment *AgentEnvironment `json:"environment,omitempty"`
+	// LoggingOption: Logging option for the task.
+	LoggingOption *AgentTaskLoggingOption `json:"loggingOption,omitempty"`
 	// MaxRunDuration: Maximum duration the task should run before being
 	// automatically retried (if enabled) or automatically failed. Format the value
 	// of this field as a time limit in seconds followed by `s`—for example,

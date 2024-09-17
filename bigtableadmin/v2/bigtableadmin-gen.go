@@ -2755,6 +2755,9 @@ type MultiClusterRoutingUseAny struct {
 	// will be tried in order of distance. If left empty, all clusters are
 	// eligible.
 	ClusterIds []string `json:"clusterIds,omitempty"`
+	// RowAffinity: Row affinity sticky routing based on the row key of the
+	// request. Requests that span multiple rows are routed non-deterministically.
+	RowAffinity *RowAffinity `json:"rowAffinity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterIds") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3144,6 +3147,14 @@ type RestoreTableRequest struct {
 func (s RestoreTableRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RestoreTableRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RowAffinity: If enabled, the AFE will route the request based on the row key
+// of the request, rather than randomly. Instead, each row key will be assigned
+// to a cluster, and will stick to that cluster. If clusters are added or
+// removed, then this may affect which row keys stick to which clusters. To
+// avoid this, users can specify a group cluster.
+type RowAffinity struct {
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.

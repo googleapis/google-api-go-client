@@ -6657,7 +6657,7 @@ func (s RollbackFhirResourcesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RollbackHL7MessagesFilteringFields: Filtering fields for an HL7 rollback.
+// RollbackHL7MessagesFilteringFields: Filtering fields for an HL7v2 rollback.
 // Currently only supports a list of operation ids to roll back.
 type RollbackHL7MessagesFilteringFields struct {
 	// OperationIds: Optional. A list of operation IDs to roll back.
@@ -6727,7 +6727,7 @@ func (s RollbackHl7V2MessagesRequest) MarshalJSON() ([]byte, error) {
 // RollbackHl7V2MessagesResponse: Final response of rollback FHIR resources
 // request.
 type RollbackHl7V2MessagesResponse struct {
-	// Hl7v2Store: The name of the HL7 store to rollback, in the format of
+	// Hl7v2Store: The name of the HL7v2 store to rollback, in the format of
 	// "projects/{project_id}/locations/{location_id}/datasets/{dataset_id}
 	// /hl7v2Stores/{fhir_store_id}".
 	Hl7v2Store string `json:"hl7v2Store,omitempty"`
@@ -21710,6 +21710,368 @@ func (c *ProjectsLocationsDatasetsFhirStoresTestIamPermissionsCall) Do(opts ...g
 	return ret, nil
 }
 
+type ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall struct {
+	s          *Service
+	parent     string
+	body_      io.Reader
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// BinaryCreate: Creates a FHIR Binary resource. This method can be used to
+// create a Binary resource either by using one of the accepted FHIR JSON
+// content types, or as a raw data stream. If a resource is created with this
+// method using the FHIR content type this method's behavior is the same as
+// `fhir.create`
+// (https://cloud.google.com/healthcare-api/docs/reference/rest/v1/projects.locations.datasets.fhirStores.fhir/create).
+// If a resource type other than Binary is used in the request it's treated in
+// the same way as non-FHIR data (e.g., images, zip archives, pdf files,
+// documents). When a non-FHIR content type is used in the request, a Binary
+// resource will be generated, and the uploaded data will be stored in the
+// `content` field (`DSTU2` and `STU3`), or the `data` field (`R4`). The Binary
+// resource's `contentType` will be filled in using the value of the
+// `Content-Type` header, and the `securityContext` field (not present in
+// `DSTU2`) will be populated from the `X-Security-Context` header if it
+// exists. At this time `securityContext` has no special behavior in the Cloud
+// Healthcare API. Note: the limit on data ingested through this method is 2
+// GB. For best performance, use a non-FHIR data type instead of wrapping the
+// data in a Binary resource. Some of the Healthcare API features, such as
+// exporting to BigQuery
+// (https://cloud.google.com/healthcare-api/docs/how-tos/fhir-export-bigquery)
+// or Pub/Sub notifications
+// (https://cloud.google.com/healthcare-api/docs/fhir-pubsub#behavior_when_a_fhir_resource_is_too_large_or_traffic_is_high)
+// with full resource content, do not support Binary resources that are larger
+// than 10 MB. In these cases the resource's `data` field will be omitted.
+// Instead, the "http://hl7.org/fhir/StructureDefinition/data-absent-reason"
+// extension will be present to indicate that including the data is
+// `unsupported`. On success, an empty `201 Created` response is returned. The
+// newly created resource's ID and version are returned in the Location header.
+// Using `Prefer: representation=resource` is not allowed for this method. The
+// definition of the Binary REST API can be found at
+// https://hl7.org/fhir/binary.html#rest.
+//
+// - parent: The name of the FHIR store this resource belongs to.
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) BinaryCreate(parent string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.body_ = body_
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	body = c.body_
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/fhir/Binary")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.Binary-create" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
+type ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BinaryRead: Gets the contents of a FHIR Binary resource. This method can be
+// used to retrieve a Binary resource either by using the FHIR JSON mimetype as
+// the value for the Accept header, or as a raw data stream. If the FHIR Accept
+// type is used this method will return a Binary resource with the data
+// base64-encoded, regardless of how the resource was created. The resource
+// data can be retrieved in base64-decoded form if the Accept type of the
+// request matches the value of the resource's `contentType` field. The
+// definition of the Binary REST API can be found at
+// https://hl7.org/fhir/binary.html#rest.
+//
+// - name: The name of the Binary resource to retrieve.
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) BinaryRead(name string) *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.Binary-read" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryReadCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
+type ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall struct {
+	s          *Service
+	name       string
+	body_      io.Reader
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// BinaryUpdate: Updates the entire contents of a Binary resource. If the
+// specified resource does not exist and the FHIR store has
+// enable_update_create set, creates the resource with the client-specified ID.
+// It is strongly advised not to include or encode any sensitive data such as
+// patient identifiers in client-specified resource IDs. Those IDs are part of
+// the FHIR resource path recorded in Cloud Audit Logs and Pub/Sub
+// notifications. Those IDs can also be contained in reference fields within
+// other resources. This method can be used to update a Binary resource either
+// by using one of the accepted FHIR JSON content types, or as a raw data
+// stream. If a resource is updated with this method using the FHIR content
+// type this method's behavior is the same as `update`. If a resource type
+// other than Binary is used in the request it will be treated in the same way
+// as non-FHIR data. When a non-FHIR content type is used in the request, a
+// Binary resource will be generated using the ID from the resource path, and
+// the uploaded data will be stored in the `content` field (`DSTU2` and
+// `STU3`), or the `data` field (`R4`). The Binary resource's `contentType`
+// will be filled in using the value of the `Content-Type` header, and the
+// `securityContext` field (not present in `DSTU2`) will be populated from the
+// `X-Security-Context` header if it exists. At this time `securityContext` has
+// no special behavior in the Cloud Healthcare API. Note: the limit on data
+// ingested through this method is 2 GB. For best performance, use a non-FHIR
+// data type instead of wrapping the data in a Binary resource. Some of the
+// Healthcare API features, such as exporting to BigQuery
+// (https://cloud.google.com/healthcare-api/docs/how-tos/fhir-export-bigquery)
+// or Pub/Sub notifications
+// (https://cloud.google.com/healthcare-api/docs/fhir-pubsub#behavior_when_a_fhir_resource_is_too_large_or_traffic_is_high)
+// with full resource content, do not support Binary resources that are larger
+// than 10 MB. In these cases the resource's `data` field will be omitted.
+// Instead, the "http://hl7.org/fhir/StructureDefinition/data-absent-reason"
+// extension will be present to indicate that including the data is
+// `unsupported`. On success, an empty 200 OK response will be returned, or a
+// 201 Created if the resource did not exit. The resource's ID and version are
+// returned in the Location header. Using `Prefer: representation=resource` is
+// not allowed for this method. The definition of the Binary REST API can be
+// found at https://hl7.org/fhir/binary.html#rest.
+//
+// - name: The name of the resource to update.
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) BinaryUpdate(name string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.body_ = body_
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	body = c.body_
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.Binary-update" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryUpdateCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
+type ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BinaryVread: Gets the contents of a version (current or historical) of a
+// FHIR Binary resource by version ID. This method can be used to retrieve a
+// Binary resource version either by using the FHIR JSON mimetype as the value
+// for the Accept header, or as a raw data stream. If the FHIR Accept type is
+// used this method will return a Binary resource with the data base64-encoded,
+// regardless of how the resource version was created. The resource data can be
+// retrieved in base64-decoded form if the Accept type of the request matches
+// the value of the resource version's `contentType` field. The definition of
+// the Binary REST API can be found at https://hl7.org/fhir/binary.html#rest.
+//
+// - name: The name of the Binary resource version to retrieve.
+func (r *ProjectsLocationsDatasetsFhirStoresFhirService) BinaryVread(name string) *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall {
+	c := &ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.Binary-vread" call.
+func (c *ProjectsLocationsDatasetsFhirStoresFhirBinaryVreadCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
 type ProjectsLocationsDatasetsFhirStoresFhirConceptMapSearchTranslateCall struct {
 	s            *Service
 	parent       string
@@ -25373,8 +25735,8 @@ type ProjectsLocationsDatasetsHl7V2StoresRollbackCall struct {
 	header_                      http.Header
 }
 
-// Rollback: Rolls back messages from the HL7 store to the specified time. This
-// method returns an Operation that can be used to track the status of the
+// Rollback: Rolls back messages from the HL7v2 store to the specified time.
+// This method returns an Operation that can be used to track the status of the
 // rollback by calling GetOperation. Immediate fatal errors appear in the error
 // field, errors are also logged to Cloud Logging (see Viewing error logs in
 // Cloud Logging (https://cloud.google.com/healthcare/docs/how-tos/logging)).

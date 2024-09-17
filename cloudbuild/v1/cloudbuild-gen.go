@@ -1510,8 +1510,9 @@ type BuildTrigger struct {
 	ResourceName string `json:"resourceName,omitempty"`
 	// ServiceAccount: The service account used for all user-controlled operations
 	// including UpdateBuildTrigger, RunBuildTrigger, CreateBuild, and CancelBuild.
-	// If no service account is set, then the standard Cloud Build service account
-	// ([PROJECT_NUM]@system.gserviceaccount.com) will be used instead. Format:
+	// If no service account is set and the legacy Cloud Build service account
+	// ([PROJECT_NUM]@cloudbuild.gserviceaccount.com) is the default for the
+	// project then it will be used instead. Format:
 	// `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT_ID_OR_EMAIL}`
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// SourceToBuild: The repo and ref of the repository from which to build. This

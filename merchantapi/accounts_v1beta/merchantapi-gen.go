@@ -158,9 +158,10 @@ func (s *APIService) userAgent() string {
 
 func NewAccountsService(s *APIService) *AccountsService {
 	rs := &AccountsService{s: s}
+	rs.AutofeedSettings = NewAccountsAutofeedSettingsService(s)
 	rs.BusinessIdentity = NewAccountsBusinessIdentityService(s)
 	rs.BusinessInfo = NewAccountsBusinessInfoService(s)
-	rs.Emailpreferences = NewAccountsEmailpreferencesService(s)
+	rs.EmailPreferences = NewAccountsEmailPreferencesService(s)
 	rs.Homepage = NewAccountsHomepageService(s)
 	rs.Issues = NewAccountsIssuesService(s)
 	rs.OnlineReturnPolicies = NewAccountsOnlineReturnPoliciesService(s)
@@ -175,11 +176,13 @@ func NewAccountsService(s *APIService) *AccountsService {
 type AccountsService struct {
 	s *APIService
 
+	AutofeedSettings *AccountsAutofeedSettingsService
+
 	BusinessIdentity *AccountsBusinessIdentityService
 
 	BusinessInfo *AccountsBusinessInfoService
 
-	Emailpreferences *AccountsEmailpreferencesService
+	EmailPreferences *AccountsEmailPreferencesService
 
 	Homepage *AccountsHomepageService
 
@@ -196,6 +199,15 @@ type AccountsService struct {
 	TermsOfServiceAgreementStates *AccountsTermsOfServiceAgreementStatesService
 
 	Users *AccountsUsersService
+}
+
+func NewAccountsAutofeedSettingsService(s *APIService) *AccountsAutofeedSettingsService {
+	rs := &AccountsAutofeedSettingsService{s: s}
+	return rs
+}
+
+type AccountsAutofeedSettingsService struct {
+	s *APIService
 }
 
 func NewAccountsBusinessIdentityService(s *APIService) *AccountsBusinessIdentityService {
@@ -216,12 +228,12 @@ type AccountsBusinessInfoService struct {
 	s *APIService
 }
 
-func NewAccountsEmailpreferencesService(s *APIService) *AccountsEmailpreferencesService {
-	rs := &AccountsEmailpreferencesService{s: s}
+func NewAccountsEmailPreferencesService(s *APIService) *AccountsEmailPreferencesService {
+	rs := &AccountsEmailPreferencesService{s: s}
 	return rs
 }
 
-type AccountsEmailpreferencesService struct {
+type AccountsEmailPreferencesService struct {
 	s *APIService
 }
 
@@ -510,6 +522,45 @@ type Address struct {
 
 func (s Address) MarshalJSON() ([]byte, error) {
 	type NoMethod Address
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AutofeedSettings: Collection of information related to the autofeed
+// (https://support.google.com/merchants/answer/7538732) settings.
+type AutofeedSettings struct {
+	// Eligible: Output only. Determines whether merchant is eligible for being
+	// enrolled into an autofeed.
+	Eligible bool `json:"eligible,omitempty"`
+	// EnableProducts: Required. Enables or disables product crawling through the
+	// autofeed for the given account. Autofeed accounts must meet certain
+	// conditions
+	// (https://support.google.com/merchants/answer/7538732#Configure_automated_feeds_Standard_Experience),
+	// which can be checked through the `eligible` field. The account must **not**
+	// be a marketplace. When the autofeed is enabled for the first time, the
+	// products usually appear instantly. When re-enabling, it might take up to 24
+	// hours for products to appear.
+	EnableProducts bool `json:"enableProducts,omitempty"`
+	// Name: Identifier. The resource name of the autofeed settings. Format:
+	// `accounts/{account}/autofeedSettings`.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Eligible") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Eligible") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutofeedSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod AutofeedSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1233,6 +1284,10 @@ type ImpactedDestination struct {
 	// retail](https://cloud.google.com/solutions/retail).
 	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
 	// retail](https://cloud.google.com/solutions/retail).
+	//   "PRODUCT_REVIEWS" - [Product
+	// Reviews](https://support.google.com/merchants/answer/14620732).
+	//   "MERCHANT_REVIEWS" - [Merchant
+	// Reviews](https://developers.google.com/merchant-review-feeds).
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Impacts") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1979,6 +2034,10 @@ type ProductChange struct {
 	// retail](https://cloud.google.com/solutions/retail).
 	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
 	// retail](https://cloud.google.com/solutions/retail).
+	//   "PRODUCT_REVIEWS" - [Product
+	// Reviews](https://support.google.com/merchants/answer/14620732).
+	//   "MERCHANT_REVIEWS" - [Merchant
+	// Reviews](https://developers.google.com/merchant-review-feeds).
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2395,7 +2454,7 @@ func (s Service) MarshalJSON() ([]byte, error) {
 }
 
 // ShippingSettings: The merchant account's shipping setting
-// ((https://support.google.com/merchants/answer/6069284).
+// (https://support.google.com/merchants/answer/6069284).
 type ShippingSettings struct {
 	// Etag: Required. This field is used for avoid async issue. Make sure shipping
 	// setting data didn't change between get call and insert call. The user should
@@ -3719,6 +3778,225 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	return ret, nil
 }
 
+type AccountsAutofeedSettingsGetAutofeedSettingsCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetAutofeedSettings: Retrieves the autofeed settings of an account.
+//
+//   - name: The resource name of the autofeed settings. Format:
+//     `accounts/{account}/autofeedSettings`.
+func (r *AccountsAutofeedSettingsService) GetAutofeedSettings(name string) *AccountsAutofeedSettingsGetAutofeedSettingsCall {
+	c := &AccountsAutofeedSettingsGetAutofeedSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsAutofeedSettingsGetAutofeedSettingsCall) Fields(s ...googleapi.Field) *AccountsAutofeedSettingsGetAutofeedSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsAutofeedSettingsGetAutofeedSettingsCall) IfNoneMatch(entityTag string) *AccountsAutofeedSettingsGetAutofeedSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsAutofeedSettingsGetAutofeedSettingsCall) Context(ctx context.Context) *AccountsAutofeedSettingsGetAutofeedSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsAutofeedSettingsGetAutofeedSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAutofeedSettingsGetAutofeedSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.autofeedSettings.getAutofeedSettings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AutofeedSettings.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsAutofeedSettingsGetAutofeedSettingsCall) Do(opts ...googleapi.CallOption) (*AutofeedSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AutofeedSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type AccountsAutofeedSettingsUpdateAutofeedSettingsCall struct {
+	s                *APIService
+	name             string
+	autofeedsettings *AutofeedSettings
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// UpdateAutofeedSettings: Updates the autofeed settings of an account.
+//
+//   - name: Identifier. The resource name of the autofeed settings. Format:
+//     `accounts/{account}/autofeedSettings`.
+func (r *AccountsAutofeedSettingsService) UpdateAutofeedSettings(name string, autofeedsettings *AutofeedSettings) *AccountsAutofeedSettingsUpdateAutofeedSettingsCall {
+	c := &AccountsAutofeedSettingsUpdateAutofeedSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.autofeedsettings = autofeedsettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. List of
+// fields being updated.
+func (c *AccountsAutofeedSettingsUpdateAutofeedSettingsCall) UpdateMask(updateMask string) *AccountsAutofeedSettingsUpdateAutofeedSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsAutofeedSettingsUpdateAutofeedSettingsCall) Fields(s ...googleapi.Field) *AccountsAutofeedSettingsUpdateAutofeedSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsAutofeedSettingsUpdateAutofeedSettingsCall) Context(ctx context.Context) *AccountsAutofeedSettingsUpdateAutofeedSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsAutofeedSettingsUpdateAutofeedSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAutofeedSettingsUpdateAutofeedSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.autofeedsettings)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "accounts/v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "merchantapi.accounts.autofeedSettings.updateAutofeedSettings" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AutofeedSettings.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsAutofeedSettingsUpdateAutofeedSettingsCall) Do(opts ...googleapi.CallOption) (*AutofeedSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AutofeedSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type AccountsBusinessIdentityGetBusinessIdentityCall struct {
 	s            *APIService
 	name         string
@@ -4157,7 +4435,7 @@ func (c *AccountsBusinessInfoUpdateBusinessInfoCall) Do(opts ...googleapi.CallOp
 	return ret, nil
 }
 
-type AccountsEmailpreferencesGetEmailPreferencesCall struct {
+type AccountsEmailPreferencesGetEmailPreferencesCall struct {
 	s            *APIService
 	name         string
 	urlParams_   gensupport.URLParams
@@ -4172,8 +4450,8 @@ type AccountsEmailpreferencesGetEmailPreferencesCall struct {
 //
 //   - name: The name of the `EmailPreferences` resource. Format:
 //     `accounts/{account}/users/{email}/emailPreferences`.
-func (r *AccountsEmailpreferencesService) GetEmailPreferences(name string) *AccountsEmailpreferencesGetEmailPreferencesCall {
-	c := &AccountsEmailpreferencesGetEmailPreferencesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *AccountsEmailPreferencesService) GetEmailPreferences(name string) *AccountsEmailPreferencesGetEmailPreferencesCall {
+	c := &AccountsEmailPreferencesGetEmailPreferencesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -4181,7 +4459,7 @@ func (r *AccountsEmailpreferencesService) GetEmailPreferences(name string) *Acco
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *AccountsEmailpreferencesGetEmailPreferencesCall) Fields(s ...googleapi.Field) *AccountsEmailpreferencesGetEmailPreferencesCall {
+func (c *AccountsEmailPreferencesGetEmailPreferencesCall) Fields(s ...googleapi.Field) *AccountsEmailPreferencesGetEmailPreferencesCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4189,27 +4467,27 @@ func (c *AccountsEmailpreferencesGetEmailPreferencesCall) Fields(s ...googleapi.
 // IfNoneMatch sets an optional parameter which makes the operation fail if the
 // object's ETag matches the given value. This is useful for getting updates
 // only after the object has changed since the last request.
-func (c *AccountsEmailpreferencesGetEmailPreferencesCall) IfNoneMatch(entityTag string) *AccountsEmailpreferencesGetEmailPreferencesCall {
+func (c *AccountsEmailPreferencesGetEmailPreferencesCall) IfNoneMatch(entityTag string) *AccountsEmailPreferencesGetEmailPreferencesCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *AccountsEmailpreferencesGetEmailPreferencesCall) Context(ctx context.Context) *AccountsEmailpreferencesGetEmailPreferencesCall {
+func (c *AccountsEmailPreferencesGetEmailPreferencesCall) Context(ctx context.Context) *AccountsEmailPreferencesGetEmailPreferencesCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *AccountsEmailpreferencesGetEmailPreferencesCall) Header() http.Header {
+func (c *AccountsEmailPreferencesGetEmailPreferencesCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *AccountsEmailpreferencesGetEmailPreferencesCall) doRequest(alt string) (*http.Response, error) {
+func (c *AccountsEmailPreferencesGetEmailPreferencesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4230,13 +4508,13 @@ func (c *AccountsEmailpreferencesGetEmailPreferencesCall) doRequest(alt string) 
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "merchantapi.accounts.emailpreferences.getEmailPreferences" call.
+// Do executes the "merchantapi.accounts.emailPreferences.getEmailPreferences" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *EmailPreferences.ServerResponse.Header or (if a response was returned at
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *AccountsEmailpreferencesGetEmailPreferencesCall) Do(opts ...googleapi.CallOption) (*EmailPreferences, error) {
+func (c *AccountsEmailPreferencesGetEmailPreferencesCall) Do(opts ...googleapi.CallOption) (*EmailPreferences, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4268,7 +4546,7 @@ func (c *AccountsEmailpreferencesGetEmailPreferencesCall) Do(opts ...googleapi.C
 	return ret, nil
 }
 
-type AccountsEmailpreferencesUpdateEmailPreferencesCall struct {
+type AccountsEmailPreferencesUpdateEmailPreferencesCall struct {
 	s                *APIService
 	name             string
 	emailpreferences *EmailPreferences
@@ -4287,8 +4565,8 @@ type AccountsEmailpreferencesUpdateEmailPreferencesCall struct {
 //
 //   - name: Identifier. The name of the EmailPreferences. The endpoint is only
 //     supported for the authenticated user.
-func (r *AccountsEmailpreferencesService) UpdateEmailPreferences(name string, emailpreferences *EmailPreferences) *AccountsEmailpreferencesUpdateEmailPreferencesCall {
-	c := &AccountsEmailpreferencesUpdateEmailPreferencesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *AccountsEmailPreferencesService) UpdateEmailPreferences(name string, emailpreferences *EmailPreferences) *AccountsEmailPreferencesUpdateEmailPreferencesCall {
+	c := &AccountsEmailPreferencesUpdateEmailPreferencesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.emailpreferences = emailpreferences
 	return c
@@ -4296,7 +4574,7 @@ func (r *AccountsEmailpreferencesService) UpdateEmailPreferences(name string, em
 
 // UpdateMask sets the optional parameter "updateMask": Required. List of
 // fields being updated.
-func (c *AccountsEmailpreferencesUpdateEmailPreferencesCall) UpdateMask(updateMask string) *AccountsEmailpreferencesUpdateEmailPreferencesCall {
+func (c *AccountsEmailPreferencesUpdateEmailPreferencesCall) UpdateMask(updateMask string) *AccountsEmailPreferencesUpdateEmailPreferencesCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
@@ -4304,27 +4582,27 @@ func (c *AccountsEmailpreferencesUpdateEmailPreferencesCall) UpdateMask(updateMa
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *AccountsEmailpreferencesUpdateEmailPreferencesCall) Fields(s ...googleapi.Field) *AccountsEmailpreferencesUpdateEmailPreferencesCall {
+func (c *AccountsEmailPreferencesUpdateEmailPreferencesCall) Fields(s ...googleapi.Field) *AccountsEmailPreferencesUpdateEmailPreferencesCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *AccountsEmailpreferencesUpdateEmailPreferencesCall) Context(ctx context.Context) *AccountsEmailpreferencesUpdateEmailPreferencesCall {
+func (c *AccountsEmailPreferencesUpdateEmailPreferencesCall) Context(ctx context.Context) *AccountsEmailPreferencesUpdateEmailPreferencesCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *AccountsEmailpreferencesUpdateEmailPreferencesCall) Header() http.Header {
+func (c *AccountsEmailPreferencesUpdateEmailPreferencesCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *AccountsEmailpreferencesUpdateEmailPreferencesCall) doRequest(alt string) (*http.Response, error) {
+func (c *AccountsEmailPreferencesUpdateEmailPreferencesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.emailpreferences)
@@ -4346,13 +4624,13 @@ func (c *AccountsEmailpreferencesUpdateEmailPreferencesCall) doRequest(alt strin
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "merchantapi.accounts.emailpreferences.updateEmailPreferences" call.
+// Do executes the "merchantapi.accounts.emailPreferences.updateEmailPreferences" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *EmailPreferences.ServerResponse.Header or (if a response was returned at
 // all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *AccountsEmailpreferencesUpdateEmailPreferencesCall) Do(opts ...googleapi.CallOption) (*EmailPreferences, error) {
+func (c *AccountsEmailPreferencesUpdateEmailPreferencesCall) Do(opts ...googleapi.CallOption) (*EmailPreferences, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {

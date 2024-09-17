@@ -906,7 +906,7 @@ func (s GoogleAnalyticsAdminV1betaAccount) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAnalyticsAdminV1betaAccountSummary: A virtual resource representing an
-// overview of an account and all its child GA4 properties.
+// overview of an account and all its child Google Analytics properties.
 type GoogleAnalyticsAdminV1betaAccountSummary struct {
 	// Account: Resource name of account referred to by this account summary
 	// Format: accounts/{account_id} Example: "accounts/1000"
@@ -1559,8 +1559,8 @@ func (s GoogleAnalyticsAdminV1betaDataStreamWebStreamData) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaFirebaseLink: A link between a GA4 property and a
-// Firebase project.
+// GoogleAnalyticsAdminV1betaFirebaseLink: A link between a Google Analytics
+// property and a Firebase project.
 type GoogleAnalyticsAdminV1betaFirebaseLink struct {
 	// CreateTime: Output only. Time when this FirebaseLink was originally created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1593,8 +1593,8 @@ func (s GoogleAnalyticsAdminV1betaFirebaseLink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAnalyticsAdminV1betaGoogleAdsLink: A link between a GA4 property and a
-// Google Ads account.
+// GoogleAnalyticsAdminV1betaGoogleAdsLink: A link between a Google Analytics
+// property and a Google Ads account.
 type GoogleAnalyticsAdminV1betaGoogleAdsLink struct {
 	// AdsPersonalizationEnabled: Enable personalized advertising features with
 	// this integration. Automatically publish my Google Analytics audience lists
@@ -2135,7 +2135,7 @@ func (s *GoogleAnalyticsAdminV1betaNumericValue) UnmarshalJSON(data []byte) erro
 }
 
 // GoogleAnalyticsAdminV1betaProperty: A resource message representing a Google
-// Analytics GA4 property.
+// Analytics property.
 type GoogleAnalyticsAdminV1betaProperty struct {
 	// Account: Immutable. The resource name of the parent account Format:
 	// accounts/{account_id} Example: "accounts/123"
@@ -2201,9 +2201,9 @@ type GoogleAnalyticsAdminV1betaProperty struct {
 	//
 	// Possible values:
 	//   "PROPERTY_TYPE_UNSPECIFIED" - Unknown or unspecified property type
-	//   "PROPERTY_TYPE_ORDINARY" - Ordinary GA4 property
-	//   "PROPERTY_TYPE_SUBPROPERTY" - GA4 subproperty
-	//   "PROPERTY_TYPE_ROLLUP" - GA4 rollup property
+	//   "PROPERTY_TYPE_ORDINARY" - Ordinary Google Analytics property
+	//   "PROPERTY_TYPE_SUBPROPERTY" - Google Analytics subproperty
+	//   "PROPERTY_TYPE_ROLLUP" - Google Analytics rollup property
 	PropertyType string `json:"propertyType,omitempty"`
 	// ServiceLevel: Output only. The Google Analytics service level that applies
 	// to this property.
@@ -2243,7 +2243,7 @@ func (s GoogleAnalyticsAdminV1betaProperty) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAnalyticsAdminV1betaPropertySummary: A virtual resource representing
-// metadata for a GA4 property.
+// metadata for a Google Analytics property.
 type GoogleAnalyticsAdminV1betaPropertySummary struct {
 	// DisplayName: Display name for the property referred to in this property
 	// summary.
@@ -2260,9 +2260,9 @@ type GoogleAnalyticsAdminV1betaPropertySummary struct {
 	//
 	// Possible values:
 	//   "PROPERTY_TYPE_UNSPECIFIED" - Unknown or unspecified property type
-	//   "PROPERTY_TYPE_ORDINARY" - Ordinary GA4 property
-	//   "PROPERTY_TYPE_SUBPROPERTY" - GA4 subproperty
-	//   "PROPERTY_TYPE_ROLLUP" - GA4 rollup property
+	//   "PROPERTY_TYPE_ORDINARY" - Ordinary Google Analytics property
+	//   "PROPERTY_TYPE_SUBPROPERTY" - Google Analytics subproperty
+	//   "PROPERTY_TYPE_ROLLUP" - Google Analytics rollup property
 	PropertyType string `json:"propertyType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3052,7 +3052,7 @@ type AccountsListCall struct {
 }
 
 // List: Returns all accounts accessible by the caller. Note that these
-// accounts might not currently have GA4 properties. Soft-deleted (ie:
+// accounts might not currently have GA properties. Soft-deleted (ie:
 // "trashed") accounts are excluded by default. Returns an empty list if no
 // relevant accounts are found.
 func (r *AccountsService) List() *AccountsListCall {
@@ -3417,7 +3417,7 @@ type AccountsRunAccessReportCall struct {
 // be requested for a property. Reports may be requested for any property, but
 // dimensions that aren't related to quota can only be requested on Google
 // Analytics 360 properties. This method is only available to Administrators.
-// These data access records include GA4 UI Reporting, GA4 UI Explorations, GA4
+// These data access records include GA UI Reporting, GA UI Explorations, GA
 // Data API, and other products like Firebase & Admob that can retrieve data
 // from Google Analytics through a linkage. These records don't include
 // property configuration changes like adding a stream or changing a property's
@@ -3428,8 +3428,9 @@ type AccountsRunAccessReportCall struct {
 //     or account level. If requested at the account level, Data Access Reports
 //     include all access for all properties under that account. To request at
 //     the property level, entity should be for example 'properties/123' if "123"
-//     is your GA4 property ID. To request at the account level, entity should be
-//     for example 'accounts/1234' if "1234" is your GA4 Account ID.
+//     is your Google Analytics property ID. To request at the account level,
+//     entity should be for example 'accounts/1234' if "1234" is your Google
+//     Analytics Account ID.
 func (r *AccountsService) RunAccessReport(entity string, googleanalyticsadminv1betarunaccessreportrequest *GoogleAnalyticsAdminV1betaRunAccessReportRequest) *AccountsRunAccessReportCall {
 	c := &AccountsRunAccessReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entity = entity
@@ -3758,7 +3759,7 @@ type PropertiesCreateCall struct {
 	header_                            http.Header
 }
 
-// Create: Creates an "GA4" property with the specified location and
+// Create: Creates a Google Analytics property with the specified location and
 // attributes.
 func (r *PropertiesService) Create(googleanalyticsadminv1betaproperty *GoogleAnalyticsAdminV1betaProperty) *PropertiesCreateCall {
 	c := &PropertiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3860,7 +3861,7 @@ type PropertiesDeleteCall struct {
 // not restored before the expiration time, the Property and all child
 // resources (eg: GoogleAdsLinks, Streams, AccessBindings) will be permanently
 // purged. https://support.google.com/analytics/answer/6154772 Returns an error
-// if the target is not found, or is not a GA4 Property.
+// if the target is not found.
 //
 //   - name: The name of the Property to soft-delete. Format:
 //     properties/{property_id} Example: "properties/1000".
@@ -3958,7 +3959,7 @@ type PropertiesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Lookup for a single "GA4" Property.
+// Get: Lookup for a single GA Property.
 //
 //   - name: The name of the property to lookup. Format: properties/{property_id}
 //     Example: "properties/1000".
@@ -4177,10 +4178,10 @@ type PropertiesListCall struct {
 	header_      http.Header
 }
 
-// List: Returns child Properties under the specified parent Account. Only
-// "GA4" properties will be returned. Properties will be excluded if the caller
-// does not have access. Soft-deleted (ie: "trashed") properties are excluded
-// by default. Returns an empty list if no relevant properties are found.
+// List: Returns child Properties under the specified parent Account.
+// Properties will be excluded if the caller does not have access. Soft-deleted
+// (ie: "trashed") properties are excluded by default. Returns an empty list if
+// no relevant properties are found.
 func (r *PropertiesService) List() *PropertiesListCall {
 	c := &PropertiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -4465,7 +4466,7 @@ type PropertiesRunAccessReportCall struct {
 // be requested for a property. Reports may be requested for any property, but
 // dimensions that aren't related to quota can only be requested on Google
 // Analytics 360 properties. This method is only available to Administrators.
-// These data access records include GA4 UI Reporting, GA4 UI Explorations, GA4
+// These data access records include GA UI Reporting, GA UI Explorations, GA
 // Data API, and other products like Firebase & Admob that can retrieve data
 // from Google Analytics through a linkage. These records don't include
 // property configuration changes like adding a stream or changing a property's
@@ -4476,8 +4477,9 @@ type PropertiesRunAccessReportCall struct {
 //     or account level. If requested at the account level, Data Access Reports
 //     include all access for all properties under that account. To request at
 //     the property level, entity should be for example 'properties/123' if "123"
-//     is your GA4 property ID. To request at the account level, entity should be
-//     for example 'accounts/1234' if "1234" is your GA4 Account ID.
+//     is your Google Analytics property ID. To request at the account level,
+//     entity should be for example 'accounts/1234' if "1234" is your Google
+//     Analytics Account ID.
 func (r *PropertiesService) RunAccessReport(entity string, googleanalyticsadminv1betarunaccessreportrequest *GoogleAnalyticsAdminV1betaRunAccessReportRequest) *PropertiesRunAccessReportCall {
 	c := &PropertiesRunAccessReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entity = entity
@@ -7179,7 +7181,7 @@ type PropertiesDataStreamsMeasurementProtocolSecretsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Lookup for a single "GA4" MeasurementProtocolSecret.
+// Get: Lookup for a single MeasurementProtocolSecret.
 //
 //   - name: The name of the measurement protocol secret to lookup. Format:
 //     properties/{property}/dataStreams/{dataStream}/measurementProtocolSecrets/{

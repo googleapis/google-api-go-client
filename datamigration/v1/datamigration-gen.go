@@ -296,6 +296,7 @@ type AlloyDbSettings struct {
 	//   "DATABASE_VERSION_UNSPECIFIED" - This is an unknown database version.
 	//   "POSTGRES_14" - The database version is Postgres 14.
 	//   "POSTGRES_15" - The database version is Postgres 15.
+	//   "POSTGRES_16" - The database version is Postgres 16.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// EncryptionConfig: Optional. The encryption config can be specified to
 	// encrypt the data disks and other persistent data resources of a cluster with
@@ -1021,7 +1022,7 @@ type ConnectionProfile struct {
 	//
 	// Possible values:
 	//   "DATABASE_PROVIDER_UNSPECIFIED" - Use this value for on-premise source
-	// database instances.
+	// database instances and ORACLE.
 	//   "CLOUDSQL" - Cloud SQL is the source instance provider.
 	//   "RDS" - Amazon RDS is the source instance provider.
 	//   "AURORA" - Amazon Aurora is the source instance provider.
@@ -1456,7 +1457,7 @@ type DatabaseType struct {
 	//
 	// Possible values:
 	//   "DATABASE_PROVIDER_UNSPECIFIED" - Use this value for on-premise source
-	// database instances.
+	// database instances and ORACLE.
 	//   "CLOUDSQL" - Cloud SQL is the source instance provider.
 	//   "RDS" - Amazon RDS is the source instance provider.
 	//   "AURORA" - Amazon Aurora is the source instance provider.

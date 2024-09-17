@@ -2218,7 +2218,7 @@
       }
     }
   },
-  "revision": "20240812",
+  "revision": "20240902",
   "rootUrl": "https://datamigration.googleapis.com/",
   "schemas": {
     "AlloyDbConnectionProfile": {
@@ -2245,12 +2245,14 @@
           "enum": [
             "DATABASE_VERSION_UNSPECIFIED",
             "POSTGRES_14",
-            "POSTGRES_15"
+            "POSTGRES_15",
+            "POSTGRES_16"
           ],
           "enumDescriptions": [
             "This is an unknown database version.",
             "The database version is Postgres 14.",
-            "The database version is Postgres 15."
+            "The database version is Postgres 15.",
+            "The database version is Postgres 16."
           ],
           "type": "string"
         },
@@ -2912,7 +2914,7 @@
             "ALLOYDB"
           ],
           "enumDescriptions": [
-            "Use this value for on-premise source database instances.",
+            "Use this value for on-premise source database instances and ORACLE.",
             "Cloud SQL is the source instance provider.",
             "Amazon RDS is the source instance provider.",
             "Amazon Aurora is the source instance provider.",
@@ -3340,7 +3342,7 @@
             "ALLOYDB"
           ],
           "enumDescriptions": [
-            "Use this value for on-premise source database instances.",
+            "Use this value for on-premise source database instances and ORACLE.",
             "Cloud SQL is the source instance provider.",
             "Amazon RDS is the source instance provider.",
             "Amazon Aurora is the source instance provider.",

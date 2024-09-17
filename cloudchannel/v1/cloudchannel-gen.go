@@ -144,7 +144,6 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Accounts = NewAccountsService(s)
-	s.Integrators = NewIntegratorsService(s)
 	s.Operations = NewOperationsService(s)
 	s.Products = NewProductsService(s)
 	return s, nil
@@ -156,8 +155,6 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Accounts *AccountsService
-
-	Integrators *IntegratorsService
 
 	Operations *OperationsService
 
@@ -309,15 +306,6 @@ func NewAccountsSkuGroupsBillableSkusService(s *Service) *AccountsSkuGroupsBilla
 }
 
 type AccountsSkuGroupsBillableSkusService struct {
-	s *Service
-}
-
-func NewIntegratorsService(s *Service) *IntegratorsService {
-	rs := &IntegratorsService{s: s}
-	return rs
-}
-
-type IntegratorsService struct {
 	s *Service
 }
 
@@ -754,8 +742,12 @@ func (s GoogleCloudChannelV1ChannelPartnerRepricingConfig) MarshalJSON() ([]byte
 // for CloudChannelService.CheckCloudIdentityAccountsExist.
 type GoogleCloudChannelV1CheckCloudIdentityAccountsExistRequest struct {
 	// Domain: Required. Domain to fetch for Cloud Identity account customers,
-	// including domained and domainless.
+	// including domain and team customers. For team customers, please use the
+	// domain for their emails.
 	Domain string `json:"domain,omitempty"`
+	// PrimaryAdminEmail: Optional. Primary admin email to fetch for Cloud Identity
+	// account team customer.
+	PrimaryAdminEmail string `json:"primaryAdminEmail,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -805,6 +797,9 @@ func (s GoogleCloudChannelV1CheckCloudIdentityAccountsExistResponse) MarshalJSON
 // Cloud Identity account that may be associated with a Channel Services API
 // partner.
 type GoogleCloudChannelV1CloudIdentityCustomerAccount struct {
+	// ChannelPartnerCloudIdentityId: If existing = true, and is 2-tier customer,
+	// the channel partner of the customer.
+	ChannelPartnerCloudIdentityId string `json:"channelPartnerCloudIdentityId,omitempty"`
 	// CustomerCloudIdentityId: If existing = true, the Cloud Identity ID of the
 	// customer.
 	CustomerCloudIdentityId string `json:"customerCloudIdentityId,omitempty"`
@@ -812,20 +807,28 @@ type GoogleCloudChannelV1CloudIdentityCustomerAccount struct {
 	// Identity account. Customer_name uses the format:
 	// accounts/{account_id}/customers/{customer_id}
 	CustomerName string `json:"customerName,omitempty"`
+	// CustomerType: If existing = true, the type of the customer.
+	//
+	// Possible values:
+	//   "CUSTOMER_TYPE_UNSPECIFIED" - Not used.
+	//   "DOMAIN" - Domain-owning customer which needs domain verification to use
+	// services.
+	//   "TEAM" - Team customer which needs email verification to use services.
+	CustomerType string `json:"customerType,omitempty"`
 	// Existing: Returns true if a Cloud Identity account exists for a specific
 	// domain.
 	Existing bool `json:"existing,omitempty"`
 	// Owned: Returns true if the Cloud Identity account is associated with a
 	// customer of the Channel Services partner.
 	Owned bool `json:"owned,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CustomerCloudIdentityId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "ChannelPartnerCloudIdentityId") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CustomerCloudIdentityId") to
-	// include in API requests with the JSON null value. By default, fields with
+	// NullFields is a list of field names (e.g. "ChannelPartnerCloudIdentityId")
+	// to include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
@@ -1668,6 +1671,8 @@ type GoogleCloudChannelV1ImportCustomerRequest struct {
 	// found. This must be set to true if there is an existing customer with a
 	// conflicting region code or domain.
 	OverwriteIfExists bool `json:"overwriteIfExists,omitempty"`
+	// PrimaryAdminEmail: Required. Customer's primary admin email.
+	PrimaryAdminEmail string `json:"primaryAdminEmail,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthToken") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2909,20 +2914,18 @@ func (s GoogleCloudChannelV1QueryEligibleBillingAccountsResponse) MarshalJSON() 
 // GoogleCloudChannelV1RegisterSubscriberRequest: Request Message for
 // RegisterSubscriber.
 type GoogleCloudChannelV1RegisterSubscriberRequest struct {
-	// Integrator: Optional. Resource name of the integrator.
-	Integrator string `json:"integrator,omitempty"`
 	// ServiceAccount: Required. Service account that provides subscriber access to
 	// the registered topic.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Integrator") to
+	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Integrator") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ServiceAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3790,20 +3793,18 @@ func (s GoogleCloudChannelV1TrialSettings) MarshalJSON() ([]byte, error) {
 // GoogleCloudChannelV1UnregisterSubscriberRequest: Request Message for
 // UnregisterSubscriber.
 type GoogleCloudChannelV1UnregisterSubscriberRequest struct {
-	// Integrator: Optional. Resource name of the integrator.
-	Integrator string `json:"integrator,omitempty"`
 	// ServiceAccount: Required. Service account to unregister from subscriber
 	// access to the topic.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Integrator") to
+	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Integrator") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ServiceAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5322,13 +5323,6 @@ type AccountsListSubscribersCall struct {
 func (r *AccountsService) ListSubscribers(account string) *AccountsListSubscribersCall {
 	c := &AccountsListSubscribersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
-	return c
-}
-
-// Integrator sets the optional parameter "integrator": Resource name of the
-// integrator.
-func (c *AccountsListSubscribersCall) Integrator(integrator string) *AccountsListSubscribersCall {
-	c.urlParams_.Set("integrator", integrator)
 	return c
 }
 
@@ -12452,407 +12446,6 @@ func (c *AccountsSkuGroupsBillableSkusListCall) Pages(ctx context.Context, f fun
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-type IntegratorsListSubscribersCall struct {
-	s            *Service
-	integrator   string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// ListSubscribers: Lists service accounts with subscriber privileges on the
-// Cloud Pub/Sub topic created for this Channel Services account. Possible
-// error codes: * PERMISSION_DENIED: The reseller account making the request
-// and the provided reseller account are different, or the impersonated user is
-// not a super admin. * INVALID_ARGUMENT: Required request parameters are
-// missing or invalid. * NOT_FOUND: The topic resource doesn't exist. *
-// INTERNAL: Any non-user error related to a technical issue in the backend.
-// Contact Cloud Channel support. * UNKNOWN: Any non-user error related to a
-// technical issue in the backend. Contact Cloud Channel support. Return value:
-// A list of service email addresses.
-//
-// - integrator: Optional. Resource name of the integrator.
-func (r *IntegratorsService) ListSubscribers(integrator string) *IntegratorsListSubscribersCall {
-	c := &IntegratorsListSubscribersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.integrator = integrator
-	return c
-}
-
-// Account sets the optional parameter "account": Resource name of the account.
-func (c *IntegratorsListSubscribersCall) Account(account string) *IntegratorsListSubscribersCall {
-	c.urlParams_.Set("account", account)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number of
-// service accounts to return. The service may return fewer than this value. If
-// unspecified, returns at most 100 service accounts. The maximum value is
-// 1000; the server will coerce values above 1000.
-func (c *IntegratorsListSubscribersCall) PageSize(pageSize int64) *IntegratorsListSubscribersCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A page token, received
-// from a previous `ListSubscribers` call. Provide this to retrieve the
-// subsequent page. When paginating, all other parameters provided to
-// `ListSubscribers` must match the call that provided the page token.
-func (c *IntegratorsListSubscribersCall) PageToken(pageToken string) *IntegratorsListSubscribersCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *IntegratorsListSubscribersCall) Fields(s ...googleapi.Field) *IntegratorsListSubscribersCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *IntegratorsListSubscribersCall) IfNoneMatch(entityTag string) *IntegratorsListSubscribersCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *IntegratorsListSubscribersCall) Context(ctx context.Context) *IntegratorsListSubscribersCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *IntegratorsListSubscribersCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *IntegratorsListSubscribersCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+integrator}:listSubscribers")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"integrator": c.integrator,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "cloudchannel.integrators.listSubscribers" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudChannelV1ListSubscribersResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *IntegratorsListSubscribersCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1ListSubscribersResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudChannelV1ListSubscribersResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *IntegratorsListSubscribersCall) Pages(ctx context.Context, f func(*GoogleCloudChannelV1ListSubscribersResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken"))
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-type IntegratorsRegisterCall struct {
-	s          *Service
-	integrator string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Register: Registers a service account with subscriber privileges on the
-// Cloud Pub/Sub topic for this Channel Services account. After you create a
-// subscriber, you get the events through SubscriberEvent Possible error codes:
-// * PERMISSION_DENIED: The reseller account making the request and the
-// provided reseller account are different, or the impersonated user is not a
-// super admin. * INVALID_ARGUMENT: Required request parameters are missing or
-// invalid. * INTERNAL: Any non-user error related to a technical issue in the
-// backend. Contact Cloud Channel support. * UNKNOWN: Any non-user error
-// related to a technical issue in the backend. Contact Cloud Channel support.
-// Return value: The topic name with the registered service email address.
-//
-// - integrator: Optional. Resource name of the integrator.
-func (r *IntegratorsService) Register(integrator string) *IntegratorsRegisterCall {
-	c := &IntegratorsRegisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.integrator = integrator
-	return c
-}
-
-// Account sets the optional parameter "account": Resource name of the account.
-func (c *IntegratorsRegisterCall) Account(account string) *IntegratorsRegisterCall {
-	c.urlParams_.Set("account", account)
-	return c
-}
-
-// ServiceAccount sets the optional parameter "serviceAccount": Required.
-// Service account that provides subscriber access to the registered topic.
-func (c *IntegratorsRegisterCall) ServiceAccount(serviceAccount string) *IntegratorsRegisterCall {
-	c.urlParams_.Set("serviceAccount", serviceAccount)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *IntegratorsRegisterCall) Fields(s ...googleapi.Field) *IntegratorsRegisterCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *IntegratorsRegisterCall) Context(ctx context.Context) *IntegratorsRegisterCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *IntegratorsRegisterCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *IntegratorsRegisterCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+integrator}:register")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"integrator": c.integrator,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "cloudchannel.integrators.register" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudChannelV1RegisterSubscriberResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *IntegratorsRegisterCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1RegisterSubscriberResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudChannelV1RegisterSubscriberResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type IntegratorsUnregisterCall struct {
-	s          *Service
-	integrator string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Unregister: Unregisters a service account with subscriber privileges on the
-// Cloud Pub/Sub topic created for this Channel Services account. If there are
-// no service accounts left with subscriber privileges, this deletes the topic.
-// You can call ListSubscribers to check for these accounts. Possible error
-// codes: * PERMISSION_DENIED: The reseller account making the request and the
-// provided reseller account are different, or the impersonated user is not a
-// super admin. * INVALID_ARGUMENT: Required request parameters are missing or
-// invalid. * NOT_FOUND: The topic resource doesn't exist. * INTERNAL: Any
-// non-user error related to a technical issue in the backend. Contact Cloud
-// Channel support. * UNKNOWN: Any non-user error related to a technical issue
-// in the backend. Contact Cloud Channel support. Return value: The topic name
-// that unregistered the service email address. Returns a success response if
-// the service email address wasn't registered with the topic.
-//
-// - integrator: Optional. Resource name of the integrator.
-func (r *IntegratorsService) Unregister(integrator string) *IntegratorsUnregisterCall {
-	c := &IntegratorsUnregisterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.integrator = integrator
-	return c
-}
-
-// Account sets the optional parameter "account": Resource name of the account.
-func (c *IntegratorsUnregisterCall) Account(account string) *IntegratorsUnregisterCall {
-	c.urlParams_.Set("account", account)
-	return c
-}
-
-// ServiceAccount sets the optional parameter "serviceAccount": Required.
-// Service account to unregister from subscriber access to the topic.
-func (c *IntegratorsUnregisterCall) ServiceAccount(serviceAccount string) *IntegratorsUnregisterCall {
-	c.urlParams_.Set("serviceAccount", serviceAccount)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *IntegratorsUnregisterCall) Fields(s ...googleapi.Field) *IntegratorsUnregisterCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *IntegratorsUnregisterCall) Context(ctx context.Context) *IntegratorsUnregisterCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *IntegratorsUnregisterCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *IntegratorsUnregisterCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+integrator}:unregister")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"integrator": c.integrator,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "cloudchannel.integrators.unregister" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudChannelV1UnregisterSubscriberResponse.ServerResponse.Header or
-// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *IntegratorsUnregisterCall) Do(opts ...googleapi.CallOption) (*GoogleCloudChannelV1UnregisterSubscriberResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudChannelV1UnregisterSubscriberResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
 }
 
 type OperationsCancelCall struct {

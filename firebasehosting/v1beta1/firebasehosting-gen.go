@@ -2251,7 +2251,7 @@ func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.operations.get" call.
@@ -2374,7 +2374,7 @@ func (c *ProjectsSitesCreateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.create" call.
@@ -2473,7 +2473,7 @@ func (c *ProjectsSitesDeleteCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.delete" call.
@@ -2585,7 +2585,7 @@ func (c *ProjectsSitesGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.nameid,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.get" call.
@@ -2693,7 +2693,7 @@ func (c *ProjectsSitesGetConfigCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.getConfig" call.
@@ -2819,7 +2819,7 @@ func (c *ProjectsSitesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.list" call.
@@ -2956,7 +2956,7 @@ func (c *ProjectsSitesPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.nameid,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.patch" call.
@@ -3068,7 +3068,7 @@ func (c *ProjectsSitesUpdateConfigCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.updateConfig" call.
@@ -3177,7 +3177,7 @@ func (c *ProjectsSitesChannelsCreateCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.channels.create" call.
@@ -3274,7 +3274,7 @@ func (c *ProjectsSitesChannelsDeleteCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.channels.delete" call.
@@ -3382,7 +3382,7 @@ func (c *ProjectsSitesChannelsGetCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.channels.get" call.
@@ -3506,7 +3506,7 @@ func (c *ProjectsSitesChannelsListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.channels.list" call.
@@ -3638,7 +3638,7 @@ func (c *ProjectsSitesChannelsPatchCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.channels.patch" call.
@@ -3751,7 +3751,7 @@ func (c *ProjectsSitesChannelsReleasesCreateCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.channels.releases.create" call.
@@ -3863,7 +3863,7 @@ func (c *ProjectsSitesChannelsReleasesGetCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.channels.releases.get" call.
@@ -3990,7 +3990,7 @@ func (c *ProjectsSitesChannelsReleasesListCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.channels.releases.list" call.
@@ -4130,7 +4130,7 @@ func (c *ProjectsSitesCustomDomainsCreateCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.customDomains.create" call.
@@ -4248,7 +4248,7 @@ func (c *ProjectsSitesCustomDomainsDeleteCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.customDomains.delete" call.
@@ -4355,7 +4355,7 @@ func (c *ProjectsSitesCustomDomainsGetCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.customDomains.get" call.
@@ -4487,7 +4487,7 @@ func (c *ProjectsSitesCustomDomainsListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.customDomains.list" call.
@@ -4634,7 +4634,7 @@ func (c *ProjectsSitesCustomDomainsPatchCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.customDomains.patch" call.
@@ -4737,7 +4737,7 @@ func (c *ProjectsSitesCustomDomainsUndeleteCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.customDomains.undelete" call.
@@ -4845,7 +4845,7 @@ func (c *ProjectsSitesCustomDomainsOperationsGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.customDomains.operations.get" call.
@@ -4972,7 +4972,7 @@ func (c *ProjectsSitesCustomDomainsOperationsListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.customDomains.operations.list" call.
@@ -5096,7 +5096,7 @@ func (c *ProjectsSitesDomainsCreateCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.domains.create" call.
@@ -5191,7 +5191,7 @@ func (c *ProjectsSitesDomainsDeleteCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.domains.delete" call.
@@ -5298,7 +5298,7 @@ func (c *ProjectsSitesDomainsGetCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.domains.get" call.
@@ -5420,7 +5420,7 @@ func (c *ProjectsSitesDomainsListCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.domains.list" call.
@@ -5545,7 +5545,7 @@ func (c *ProjectsSitesDomainsUpdateCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.domains.update" call.
@@ -5658,7 +5658,7 @@ func (c *ProjectsSitesReleasesCreateCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.releases.create" call.
@@ -5770,7 +5770,7 @@ func (c *ProjectsSitesReleasesGetCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.releases.get" call.
@@ -5897,7 +5897,7 @@ func (c *ProjectsSitesReleasesListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.releases.list" call.
@@ -6022,7 +6022,7 @@ func (c *ProjectsSitesVersionsCloneCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.versions.clone" call.
@@ -6140,7 +6140,7 @@ func (c *ProjectsSitesVersionsCreateCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.versions.create" call.
@@ -6236,7 +6236,7 @@ func (c *ProjectsSitesVersionsDeleteCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.versions.delete" call.
@@ -6346,7 +6346,7 @@ func (c *ProjectsSitesVersionsGetCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.versions.get" call.
@@ -6481,7 +6481,7 @@ func (c *ProjectsSitesVersionsListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.versions.list" call.
@@ -6620,7 +6620,7 @@ func (c *ProjectsSitesVersionsPatchCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.versions.patch" call.
@@ -6723,7 +6723,7 @@ func (c *ProjectsSitesVersionsPopulateFilesCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.versions.populateFiles" call.
@@ -6867,7 +6867,7 @@ func (c *ProjectsSitesVersionsFilesListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.projects.sites.versions.files.list" call.
@@ -6997,7 +6997,7 @@ func (c *SitesGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.getConfig" call.
@@ -7109,7 +7109,7 @@ func (c *SitesUpdateConfigCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.updateConfig" call.
@@ -7218,7 +7218,7 @@ func (c *SitesChannelsCreateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.channels.create" call.
@@ -7315,7 +7315,7 @@ func (c *SitesChannelsDeleteCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.channels.delete" call.
@@ -7423,7 +7423,7 @@ func (c *SitesChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.channels.get" call.
@@ -7547,7 +7547,7 @@ func (c *SitesChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.channels.list" call.
@@ -7679,7 +7679,7 @@ func (c *SitesChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.channels.patch" call.
@@ -7792,7 +7792,7 @@ func (c *SitesChannelsReleasesCreateCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.channels.releases.create" call.
@@ -7904,7 +7904,7 @@ func (c *SitesChannelsReleasesGetCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.channels.releases.get" call.
@@ -8031,7 +8031,7 @@ func (c *SitesChannelsReleasesListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.channels.releases.list" call.
@@ -8155,7 +8155,7 @@ func (c *SitesDomainsCreateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.domains.create" call.
@@ -8250,7 +8250,7 @@ func (c *SitesDomainsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.domains.delete" call.
@@ -8357,7 +8357,7 @@ func (c *SitesDomainsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.domains.get" call.
@@ -8479,7 +8479,7 @@ func (c *SitesDomainsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.domains.list" call.
@@ -8604,7 +8604,7 @@ func (c *SitesDomainsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.domains.update" call.
@@ -8717,7 +8717,7 @@ func (c *SitesReleasesCreateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.releases.create" call.
@@ -8829,7 +8829,7 @@ func (c *SitesReleasesGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.releases.get" call.
@@ -8956,7 +8956,7 @@ func (c *SitesReleasesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.releases.list" call.
@@ -9081,7 +9081,7 @@ func (c *SitesVersionsCloneCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.versions.clone" call.
@@ -9199,7 +9199,7 @@ func (c *SitesVersionsCreateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.versions.create" call.
@@ -9295,7 +9295,7 @@ func (c *SitesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.versions.delete" call.
@@ -9405,7 +9405,7 @@ func (c *SitesVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.versions.get" call.
@@ -9540,7 +9540,7 @@ func (c *SitesVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.versions.list" call.
@@ -9679,7 +9679,7 @@ func (c *SitesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.versions.patch" call.
@@ -9782,7 +9782,7 @@ func (c *SitesVersionsPopulateFilesCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.versions.populateFiles" call.
@@ -9926,7 +9926,7 @@ func (c *SitesVersionsFilesListCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasehosting.sites.versions.files.list" call.

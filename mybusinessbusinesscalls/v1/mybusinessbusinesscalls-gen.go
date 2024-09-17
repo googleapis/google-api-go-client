@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package mybusinessbusinesscalls provides access to the My Business Business Calls API.
 //
 // For product documentation, see: https://developers.google.com/my-business/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	mybusinessbusinesscallsService, err := mybusinessbusinesscalls.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	mybusinessbusinesscallsService, err := mybusinessbusinesscalls.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	mybusinessbusinesscallsService, err := mybusinessbusinesscalls.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package mybusinessbusinesscalls // import "google.golang.org/api/mybusinessbusinesscalls/v1"
 
 import (
@@ -77,12 +90,15 @@ const apiId = "mybusinessbusinesscalls:v1"
 const apiName = "mybusinessbusinesscalls"
 const apiVersion = "v1"
 const basePath = "https://mybusinessbusinesscalls.googleapis.com/"
+const basePathTemplate = "https://mybusinessbusinesscalls.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://mybusinessbusinesscalls.mtls.googleapis.com/"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -151,45 +167,33 @@ type LocationsBusinesscallsinsightsService struct {
 type AggregateMetrics struct {
 	// AnsweredCallsCount: Total count of answered calls.
 	AnsweredCallsCount int64 `json:"answeredCallsCount,omitempty"`
-
 	// EndDate: End date for this metric.
 	EndDate *Date `json:"endDate,omitempty"`
-
 	// HourlyMetrics: A list of metrics by hour of day.
 	HourlyMetrics []*HourlyMetrics `json:"hourlyMetrics,omitempty"`
-
 	// MissedCallsCount: Total count of missed calls.
 	MissedCallsCount int64 `json:"missedCallsCount,omitempty"`
-
-	// StartDate: Date for this metric. If metric is monthly, only year and
-	// month are used.
+	// StartDate: Date for this metric. If metric is monthly, only year and month
+	// are used.
 	StartDate *Date `json:"startDate,omitempty"`
-
 	// WeekdayMetrics: A list of metrics by day of week.
 	WeekdayMetrics []*WeekDayMetrics `json:"weekdayMetrics,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AnsweredCallsCount")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AnsweredCallsCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnsweredCallsCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AnsweredCallsCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *AggregateMetrics) MarshalJSON() ([]byte, error) {
+func (s AggregateMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod AggregateMetrics
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BusinessCallsInsights: Insights for calls made to a location.
@@ -197,207 +201,163 @@ type BusinessCallsInsights struct {
 	// AggregateMetrics: Metric for the time range based on start_date and
 	// end_date.
 	AggregateMetrics *AggregateMetrics `json:"aggregateMetrics,omitempty"`
-
 	// MetricType: The metric for which the value applies.
 	//
 	// Possible values:
 	//   "METRIC_TYPE_UNSPECIFIED" - Type of metric is unspecified.
-	//   "AGGREGATE_COUNT" - The metrics provided are counts aggregated over
-	// the input time_range.
+	//   "AGGREGATE_COUNT" - The metrics provided are counts aggregated over the
+	// input time_range.
 	MetricType string `json:"metricType,omitempty"`
-
 	// Name: Required. The resource name of the calls insights. Format:
 	// locations/{location}/businesscallsinsights
 	Name string `json:"name,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AggregateMetrics") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AggregateMetrics") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AggregateMetrics") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *BusinessCallsInsights) MarshalJSON() ([]byte, error) {
+func (s BusinessCallsInsights) MarshalJSON() ([]byte, error) {
 	type NoMethod BusinessCallsInsights
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // BusinessCallsSettings: Business calls settings for a location.
 type BusinessCallsSettings struct {
-	// CallsState: Required. The state of this location's enrollment in
-	// Business calls.
+	// CallsState: Required. The state of this location's enrollment in Business
+	// calls.
 	//
 	// Possible values:
 	//   "CALLS_STATE_UNSPECIFIED" - Unspecified.
 	//   "ENABLED" - Business calls is enabled for the location.
 	//   "DISABLED" - Business calls is disabled for the location.
 	CallsState string `json:"callsState,omitempty"`
-
-	// ConsentTime: Input only. Time when the end user provided consent to
-	// the API user to enable business calls.
+	// ConsentTime: Input only. Time when the end user provided consent to the API
+	// user to enable business calls.
 	ConsentTime string `json:"consentTime,omitempty"`
-
 	// Name: Required. The resource name of the calls settings. Format:
 	// locations/{location}/businesscallssettings
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CallsState") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CallsState") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CallsState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *BusinessCallsSettings) MarshalJSON() ([]byte, error) {
+func (s BusinessCallsSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod BusinessCallsSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Date: Represents a whole or partial calendar date, such as a
-// birthday. The time of day and time zone are either specified
-// elsewhere or are insignificant. The date is relative to the Gregorian
-// Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values. * A month and day, with a
-// zero year (for example, an anniversary). * A year on its own, with a
-// zero month and a zero day. * A year and month, with a zero day (for
-// example, a credit card expiration date). Related types: *
-// google.type.TimeOfDay * google.type.DateTime *
+// Date: Represents a whole or partial calendar date, such as a birthday. The
+// time of day and time zone are either specified elsewhere or are
+// insignificant. The date is relative to the Gregorian Calendar. This can
+// represent one of the following: * A full date, with non-zero year, month,
+// and day values. * A month and day, with a zero year (for example, an
+// anniversary). * A year on its own, with a zero month and a zero day. * A
+// year and month, with a zero day (for example, a credit card expiration
+// date). Related types: * google.type.TimeOfDay * google.type.DateTime *
 // google.protobuf.Timestamp
 type Date struct {
-	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
-	// month, or 0 to specify a year by itself or a year and month where the
-	// day isn't significant.
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and month,
+	// or 0 to specify a year by itself or a year and month where the day isn't
+	// significant.
 	Day int64 `json:"day,omitempty"`
-
-	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
-	// without a month and day.
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year without
+	// a month and day.
 	Month int64 `json:"month,omitempty"`
-
-	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
-	// date without a year.
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a date
+	// without a year.
 	Year int64 `json:"year,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Day") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Day") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Date) MarshalJSON() ([]byte, error) {
+func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // HourlyMetrics: Metrics for an hour.
 type HourlyMetrics struct {
 	// Hour: Hour of the day. Allowed values are 0-23.
 	Hour int64 `json:"hour,omitempty"`
-
 	// MissedCallsCount: Total count of missed calls for this hour.
 	MissedCallsCount int64 `json:"missedCallsCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Hour") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Hour") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Hour") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Hour") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *HourlyMetrics) MarshalJSON() ([]byte, error) {
+func (s HourlyMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod HourlyMetrics
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListBusinessCallsInsightsResponse: Response message for
 // ListBusinessCallsInsights.
 type ListBusinessCallsInsightsResponse struct {
-	// BusinessCallsInsights: A collection of business calls insights for
-	// the location.
+	// BusinessCallsInsights: A collection of business calls insights for the
+	// location.
 	BusinessCallsInsights []*BusinessCallsInsights `json:"businessCallsInsights,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages. Some of the metric_types (e.g, AGGREGATE_COUNT) returns a
-	// single page. For these metrics, the next_page_token will be empty.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages. Some of
+	// the metric_types (e.g, AGGREGATE_COUNT) returns a single page. For these
+	// metrics, the next_page_token will be empty.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "BusinessCallsInsights") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BusinessCallsInsights") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "BusinessCallsInsights") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ListBusinessCallsInsightsResponse) MarshalJSON() ([]byte, error) {
+func (s ListBusinessCallsInsightsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBusinessCallsInsightsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // WeekDayMetrics: Metrics for a week day.
@@ -414,34 +374,25 @@ type WeekDayMetrics struct {
 	//   "SATURDAY" - Saturday
 	//   "SUNDAY" - Sunday
 	Day string `json:"day,omitempty"`
-
 	// MissedCallsCount: Total count of missed calls for this hour.
 	MissedCallsCount int64 `json:"missedCallsCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Day") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Day") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *WeekDayMetrics) MarshalJSON() ([]byte, error) {
+func (s WeekDayMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod WeekDayMetrics
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "mybusinessbusinesscalls.locations.getBusinesscallssettings":
 
 type LocationsGetBusinesscallssettingsCall struct {
 	s            *Service
@@ -452,8 +403,8 @@ type LocationsGetBusinesscallssettingsCall struct {
 	header_      http.Header
 }
 
-// GetBusinesscallssettings: Returns the Business calls settings
-// resource for the given location.
+// GetBusinesscallssettings: Returns the Business calls settings resource for
+// the given location.
 //
 //   - name: The BusinessCallsSettings to get. The `name` field is used to
 //     identify the business call settings to get. Format:
@@ -465,33 +416,29 @@ func (r *LocationsService) GetBusinesscallssettings(name string) *LocationsGetBu
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsGetBusinesscallssettingsCall) Fields(s ...googleapi.Field) *LocationsGetBusinesscallssettingsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *LocationsGetBusinesscallssettingsCall) IfNoneMatch(entityTag string) *LocationsGetBusinesscallssettingsCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsGetBusinesscallssettingsCall) Context(ctx context.Context) *LocationsGetBusinesscallssettingsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsGetBusinesscallssettingsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -500,12 +447,7 @@ func (c *LocationsGetBusinesscallssettingsCall) Header() http.Header {
 }
 
 func (c *LocationsGetBusinesscallssettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -522,16 +464,15 @@ func (c *LocationsGetBusinesscallssettingsCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "mybusinessbusinesscalls.locations.getBusinesscallssettings" call.
-// Exactly one of *BusinessCallsSettings or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *BusinessCallsSettings.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BusinessCallsSettings.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *LocationsGetBusinesscallssettingsCall) Do(opts ...googleapi.CallOption) (*BusinessCallsSettings, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -562,32 +503,7 @@ func (c *LocationsGetBusinesscallssettingsCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the Business calls settings resource for the given location.",
-	//   "flatPath": "v1/locations/{locationsId}/businesscallssettings",
-	//   "httpMethod": "GET",
-	//   "id": "mybusinessbusinesscalls.locations.getBusinesscallssettings",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The BusinessCallsSettings to get. The `name` field is used to identify the business call settings to get. Format: locations/{location_id}/businesscallssettings.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/businesscallssettings$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "BusinessCallsSettings"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessbusinesscalls.locations.updateBusinesscallssettings":
 
 type LocationsUpdateBusinesscallssettingsCall struct {
 	s                     *Service
@@ -598,8 +514,8 @@ type LocationsUpdateBusinesscallssettingsCall struct {
 	header_               http.Header
 }
 
-// UpdateBusinesscallssettings: Updates the Business call settings for
-// the specified location.
+// UpdateBusinesscallssettings: Updates the Business call settings for the
+// specified location.
 //
 //   - name: The resource name of the calls settings. Format:
 //     locations/{location}/businesscallssettings.
@@ -610,31 +526,29 @@ func (r *LocationsService) UpdateBusinesscallssettings(name string, businesscall
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// list of fields to update.
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to update.
 func (c *LocationsUpdateBusinesscallssettingsCall) UpdateMask(updateMask string) *LocationsUpdateBusinesscallssettingsCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsUpdateBusinesscallssettingsCall) Fields(s ...googleapi.Field) *LocationsUpdateBusinesscallssettingsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsUpdateBusinesscallssettingsCall) Context(ctx context.Context) *LocationsUpdateBusinesscallssettingsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsUpdateBusinesscallssettingsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -643,18 +557,12 @@ func (c *LocationsUpdateBusinesscallssettingsCall) Header() http.Header {
 }
 
 func (c *LocationsUpdateBusinesscallssettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.businesscallssettings)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -667,16 +575,15 @@ func (c *LocationsUpdateBusinesscallssettingsCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "mybusinessbusinesscalls.locations.updateBusinesscallssettings" call.
-// Exactly one of *BusinessCallsSettings or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *BusinessCallsSettings.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BusinessCallsSettings.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *LocationsUpdateBusinesscallssettingsCall) Do(opts ...googleapi.CallOption) (*BusinessCallsSettings, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -707,41 +614,7 @@ func (c *LocationsUpdateBusinesscallssettingsCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the Business call settings for the specified location.",
-	//   "flatPath": "v1/locations/{locationsId}/businesscallssettings",
-	//   "httpMethod": "PATCH",
-	//   "id": "mybusinessbusinesscalls.locations.updateBusinesscallssettings",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the calls settings. Format: locations/{location}/businesscallssettings",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/businesscallssettings$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The list of fields to update.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "BusinessCallsSettings"
-	//   },
-	//   "response": {
-	//     "$ref": "BusinessCallsSettings"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessbusinesscalls.locations.businesscallsinsights.list":
 
 type LocationsBusinesscallsinsightsListCall struct {
 	s            *Service
@@ -762,74 +635,69 @@ func (r *LocationsBusinesscallsinsightsService) List(parent string) *LocationsBu
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter constraining
-// the calls insights to return. The response includes only entries that
-// match the filter. If the MetricType is not provided, AGGREGATE_COUNT
-// is returned. If no end_date is provided, the last date for which data
-// is available is used. If no start_date is provided, we will default
-// to the first date for which data is available, which is currently 6
-// months. If start_date is before the date when data is available, data
-// is returned starting from the date when it is available. At this time
-// we support following filters. 1. start_date="DATE" where date is in
-// YYYY-MM-DD format. 2. end_date="DATE" where date is in YYYY-MM-DD
-// format. 3. metric_type=XYZ where XYZ is a valid MetricType. 4.
-// Conjunctions(AND) of all of the above. e.g., "start_date=2021-08-01
-// AND end_date=2021-08-10 AND metric_type=AGGREGATE_COUNT" The
-// AGGREGATE_COUNT metric_type ignores the DD part of the date.
+// Filter sets the optional parameter "filter": A filter constraining the calls
+// insights to return. The response includes only entries that match the
+// filter. If the MetricType is not provided, AGGREGATE_COUNT is returned. If
+// no end_date is provided, the last date for which data is available is used.
+// If no start_date is provided, we will default to the first date for which
+// data is available, which is currently 6 months. If start_date is before the
+// date when data is available, data is returned starting from the date when it
+// is available. At this time we support following filters. 1.
+// start_date="DATE" where date is in YYYY-MM-DD format. 2. end_date="DATE"
+// where date is in YYYY-MM-DD format. 3. metric_type=XYZ where XYZ is a valid
+// MetricType. 4. Conjunctions(AND) of all of the above. e.g.,
+// "start_date=2021-08-01 AND end_date=2021-08-10 AND
+// metric_type=AGGREGATE_COUNT" The AGGREGATE_COUNT metric_type ignores the DD
+// part of the date.
 func (c *LocationsBusinesscallsinsightsListCall) Filter(filter string) *LocationsBusinesscallsinsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of BusinessCallsInsights to return. If unspecified, at most 20 will
-// be returned. Some of the metric_types(e.g, AGGREGATE_COUNT) returns a
-// single page. For these metrics, the page_size is ignored.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// BusinessCallsInsights to return. If unspecified, at most 20 will be
+// returned. Some of the metric_types(e.g, AGGREGATE_COUNT) returns a single
+// page. For these metrics, the page_size is ignored.
 func (c *LocationsBusinesscallsinsightsListCall) PageSize(pageSize int64) *LocationsBusinesscallsinsightsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListBusinessCallsInsights` call. Provide
-// this to retrieve the subsequent page. When paginating, all other
-// parameters provided to `ListBusinessCallsInsights` must match the
-// call that provided the page token. Some of the metric_types (e.g,
-// AGGREGATE_COUNT) returns a single page. For these metrics, the
-// pake_token is ignored.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListBusinessCallsInsights` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListBusinessCallsInsights` must match the call that provided the page
+// token. Some of the metric_types (e.g, AGGREGATE_COUNT) returns a single
+// page. For these metrics, the pake_token is ignored.
 func (c *LocationsBusinesscallsinsightsListCall) PageToken(pageToken string) *LocationsBusinesscallsinsightsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsBusinesscallsinsightsListCall) Fields(s ...googleapi.Field) *LocationsBusinesscallsinsightsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *LocationsBusinesscallsinsightsListCall) IfNoneMatch(entityTag string) *LocationsBusinesscallsinsightsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsBusinesscallsinsightsListCall) Context(ctx context.Context) *LocationsBusinesscallsinsightsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsBusinesscallsinsightsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -838,12 +706,7 @@ func (c *LocationsBusinesscallsinsightsListCall) Header() http.Header {
 }
 
 func (c *LocationsBusinesscallsinsightsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -860,17 +723,15 @@ func (c *LocationsBusinesscallsinsightsListCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "mybusinessbusinesscalls.locations.businesscallsinsights.list" call.
-// Exactly one of *ListBusinessCallsInsightsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListBusinessCallsInsightsResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBusinessCallsInsightsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *LocationsBusinesscallsinsightsListCall) Do(opts ...googleapi.CallOption) (*ListBusinessCallsInsightsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -901,45 +762,6 @@ func (c *LocationsBusinesscallsinsightsListCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns insights for Business calls for a location.",
-	//   "flatPath": "v1/locations/{locationsId}/businesscallsinsights",
-	//   "httpMethod": "GET",
-	//   "id": "mybusinessbusinesscalls.locations.businesscallsinsights.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. A filter constraining the calls insights to return. The response includes only entries that match the filter. If the MetricType is not provided, AGGREGATE_COUNT is returned. If no end_date is provided, the last date for which data is available is used. If no start_date is provided, we will default to the first date for which data is available, which is currently 6 months. If start_date is before the date when data is available, data is returned starting from the date when it is available. At this time we support following filters. 1. start_date=\"DATE\" where date is in YYYY-MM-DD format. 2. end_date=\"DATE\" where date is in YYYY-MM-DD format. 3. metric_type=XYZ where XYZ is a valid MetricType. 4. Conjunctions(AND) of all of the above. e.g., \"start_date=2021-08-01 AND end_date=2021-08-10 AND metric_type=AGGREGATE_COUNT\" The AGGREGATE_COUNT metric_type ignores the DD part of the date.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of BusinessCallsInsights to return. If unspecified, at most 20 will be returned. Some of the metric_types(e.g, AGGREGATE_COUNT) returns a single page. For these metrics, the page_size is ignored.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous `ListBusinessCallsInsights` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListBusinessCallsInsights` must match the call that provided the page token. Some of the metric_types (e.g, AGGREGATE_COUNT) returns a single page. For these metrics, the pake_token is ignored.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent location to fetch calls insights for. Format: locations/{location_id}",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/businesscallsinsights",
-	//   "response": {
-	//     "$ref": "ListBusinessCallsInsightsResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -947,7 +769,7 @@ func (c *LocationsBusinesscallsinsightsListCall) Do(opts ...googleapi.CallOption
 // The provided context supersedes any context provided to the Context method.
 func (c *LocationsBusinesscallsinsightsListCall) Pages(ctx context.Context, f func(*ListBusinessCallsInsightsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

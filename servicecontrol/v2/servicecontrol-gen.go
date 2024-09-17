@@ -1615,7 +1615,7 @@ func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"serviceName": c.serviceName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicecontrol.services.check" call.
@@ -1731,7 +1731,7 @@ func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"serviceName": c.serviceName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicecontrol.services.report" call.

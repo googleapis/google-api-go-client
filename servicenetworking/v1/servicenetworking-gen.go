@@ -1137,6 +1137,9 @@ type CommonLanguageSettings struct {
 	// ReferenceDocsUri: Link to automatically generated reference documentation.
 	// Example: https://cloud.google.com/nodejs/docs/reference/asset/latest
 	ReferenceDocsUri string `json:"referenceDocsUri,omitempty"`
+	// SelectiveGapicGeneration: Configuration for which RPCs should be generated
+	// in the GAPIC client.
+	SelectiveGapicGeneration *SelectiveGapicGeneration `json:"selectiveGapicGeneration,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Destinations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4242,6 +4245,30 @@ func (s SecondaryIpRangeSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SelectiveGapicGeneration: This message is used to configure the generation
+// of a subset of the RPCs in a service for client libraries.
+type SelectiveGapicGeneration struct {
+	// Methods: An allowlist of the fully qualified names of RPCs that should be
+	// included on public client surfaces.
+	Methods []string `json:"methods,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Methods") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Methods") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SelectiveGapicGeneration) MarshalJSON() ([]byte, error) {
+	type NoMethod SelectiveGapicGeneration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Service: `Service` is the root object of Google API service configuration
 // (service config). It describes the basic information about a logical
 // service, such as the service name and the user-facing title, and delegates
@@ -4958,7 +4985,7 @@ func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.operations.cancel" call.
@@ -5056,7 +5083,7 @@ func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.operations.delete" call.
@@ -5165,7 +5192,7 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.operations.get" call.
@@ -5293,7 +5320,7 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.operations.list" call.
@@ -5429,7 +5456,7 @@ func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.addSubnetwork" call.
@@ -5532,7 +5559,7 @@ func (c *ServicesDisableVpcServiceControlsCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.disableVpcServiceControls" call.
@@ -5635,7 +5662,7 @@ func (c *ServicesEnableVpcServiceControlsCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.enableVpcServiceControls" call.
@@ -5743,7 +5770,7 @@ func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.searchRange" call.
@@ -5849,7 +5876,7 @@ func (c *ServicesValidateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.validate" call.
@@ -5959,7 +5986,7 @@ func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.connections.create" call.
@@ -6066,7 +6093,7 @@ func (c *ServicesConnectionsDeleteConnectionCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.connections.deleteConnection" call.
@@ -6189,7 +6216,7 @@ func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.connections.list" call.
@@ -6312,7 +6339,7 @@ func (c *ServicesConnectionsPatchCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.connections.patch" call.
@@ -6416,7 +6443,7 @@ func (c *ServicesDnsRecordSetsAddCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.dnsRecordSets.add" call.
@@ -6556,7 +6583,7 @@ func (c *ServicesDnsRecordSetsGetCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.dnsRecordSets.get" call.
@@ -6684,7 +6711,7 @@ func (c *ServicesDnsRecordSetsListCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.dnsRecordSets.list" call.
@@ -6789,7 +6816,7 @@ func (c *ServicesDnsRecordSetsRemoveCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.dnsRecordSets.remove" call.
@@ -6893,7 +6920,7 @@ func (c *ServicesDnsRecordSetsUpdateCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.dnsRecordSets.update" call.
@@ -6998,7 +7025,7 @@ func (c *ServicesDnsZonesAddCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.dnsZones.add" call.
@@ -7103,7 +7130,7 @@ func (c *ServicesDnsZonesRemoveCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.dnsZones.remove" call.
@@ -7228,7 +7255,7 @@ func (c *ServicesProjectsGlobalNetworksGetCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.projects.global.networks.get" call.
@@ -7343,7 +7370,7 @@ func (c *ServicesProjectsGlobalNetworksGetVpcServiceControlsCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.projects.global.networks.getVpcServiceControls" call.
@@ -7455,7 +7482,7 @@ func (c *ServicesProjectsGlobalNetworksUpdateConsumerConfigCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.projects.global.networks.updateConsumerConfig" call.
@@ -7570,7 +7597,7 @@ func (c *ServicesProjectsGlobalNetworksDnsZonesGetCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.projects.global.networks.dnsZones.get" call.
@@ -7687,7 +7714,7 @@ func (c *ServicesProjectsGlobalNetworksDnsZonesListCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.projects.global.networks.dnsZones.list" call.
@@ -7799,7 +7826,7 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsCreateCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.projects.global.networks.peeredDnsDomains.create" call.
@@ -7902,7 +7929,7 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsDeleteCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.projects.global.networks.peeredDnsDomains.delete" call.
@@ -8016,7 +8043,7 @@ func (c *ServicesProjectsGlobalNetworksPeeredDnsDomainsListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.projects.global.networks.peeredDnsDomains.list" call.
@@ -8123,7 +8150,7 @@ func (c *ServicesRolesAddCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicenetworking.services.roles.add" call.

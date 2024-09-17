@@ -662,7 +662,7 @@ func (c *ArchiveJobsGetPortabilityArchiveStateCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "dataportability.archiveJobs.getPortabilityArchiveState" call.
@@ -766,7 +766,7 @@ func (c *ArchiveJobsRetryCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "dataportability.archiveJobs.retry" call.
@@ -865,7 +865,7 @@ func (c *AuthorizationResetCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "dataportability.authorization.reset" call.
@@ -959,7 +959,7 @@ func (c *PortabilityArchiveInitiateCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "dataportability.portabilityArchive.initiate" call.

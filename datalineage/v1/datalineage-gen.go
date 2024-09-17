@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package datalineage provides access to the Data Lineage API.
 //
 // For product documentation, see: https://cloud.google.com/data-catalog
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	datalineageService, err := datalineage.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	datalineageService, err := datalineage.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	datalineageService, err := datalineage.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package datalineage // import "google.golang.org/api/datalineage/v1"
 
 import (
@@ -77,12 +90,13 @@ const apiId = "datalineage:v1"
 const apiName = "datalineage"
 const apiVersion = "v1"
 const basePath = "https://datalineage.googleapis.com/"
+const basePathTemplate = "https://datalineage.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://datalineage.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -94,7 +108,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -207,396 +223,304 @@ type ProjectsLocationsProcessesRunsLineageEventsService struct {
 	s *Service
 }
 
-// GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesRequest:
-// Request message for BatchSearchLinkProcesses.
+// GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesRequest: Request
+// message for BatchSearchLinkProcesses.
 type GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesRequest struct {
 	// Links: Required. An array of links to check for their associated
-	// LineageProcesses. The maximum number of items in this array is 100.
-	// If the request contains more than 100 links, it returns the
-	// `INVALID_ARGUMENT` error. Format:
-	// `projects/{project}/locations/{location}/links/{link}`.
+	// LineageProcesses. The maximum number of items in this array is 100. If the
+	// request contains more than 100 links, it returns the `INVALID_ARGUMENT`
+	// error. Format: `projects/{project}/locations/{location}/links/{link}`.
 	Links []string `json:"links,omitempty"`
-
-	// PageSize: The maximum number of processes to return in a single page
-	// of the response. A page may contain fewer results than this value.
+	// PageSize: The maximum number of processes to return in a single page of the
+	// response. A page may contain fewer results than this value.
 	PageSize int64 `json:"pageSize,omitempty"`
-
 	// PageToken: The page token received from a previous
 	// `BatchSearchLinkProcesses` call. Use it to get the next page. When
-	// requesting subsequent pages of a response, remember that all
-	// parameters must match the values you provided in the original
-	// request.
+	// requesting subsequent pages of a response, remember that all parameters must
+	// match the values you provided in the original request.
 	PageToken string `json:"pageToken,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Links") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Links") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Links") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesResponse:
-// Response message for BatchSearchLinkProcesses.
+// GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesResponse: Response
+// message for BatchSearchLinkProcesses.
 type GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesResponse struct {
-	// NextPageToken: The token to specify as `page_token` in the subsequent
-	// call to get the next page. Omitted if there are no more pages in the
-	// response.
+	// NextPageToken: The token to specify as `page_token` in the subsequent call
+	// to get the next page. Omitted if there are no more pages in the response.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ProcessLinks: An array of processes associated with the specified
-	// links.
+	// ProcessLinks: An array of processes associated with the specified links.
 	ProcessLinks []*GoogleCloudDatacatalogLineageV1ProcessLinks `json:"processLinks,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogLineageV1EntityReference: The soft reference to
 // everything you can attach a lineage event to.
 type GoogleCloudDatacatalogLineageV1EntityReference struct {
 	// FullyQualifiedName: Required. Fully Qualified Name (FQN)
-	// (https://cloud.google.com/data-catalog/docs/fully-qualified-names) of
-	// the entity.
+	// (https://cloud.google.com/data-catalog/docs/fully-qualified-names) of the
+	// entity.
 	FullyQualifiedName string `json:"fullyQualifiedName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "FullyQualifiedName")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "FullyQualifiedName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FullyQualifiedName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "FullyQualifiedName") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1EntityReference) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1EntityReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1EntityReference
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogLineageV1EventLink: A lineage between source
-// and target entities.
+// GoogleCloudDatacatalogLineageV1EventLink: A lineage between source and
+// target entities.
 type GoogleCloudDatacatalogLineageV1EventLink struct {
 	// Source: Required. Reference to the source entity
 	Source *GoogleCloudDatacatalogLineageV1EntityReference `json:"source,omitempty"`
-
 	// Target: Required. Reference to the target entity
 	Target *GoogleCloudDatacatalogLineageV1EntityReference `json:"target,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Source") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Source") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Source") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1EventLink) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1EventLink) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1EventLink
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogLineageV1LineageEvent: A lineage event
-// represents an operation on assets. Within the operation, the data
-// flows from the source to the target defined in the links field.
+// GoogleCloudDatacatalogLineageV1LineageEvent: A lineage event represents an
+// operation on assets. Within the operation, the data flows from the source to
+// the target defined in the links field.
 type GoogleCloudDatacatalogLineageV1LineageEvent struct {
-	// EndTime: Optional. The end of the transformation which resulted in
-	// this lineage event. For streaming scenarios, it should be the end of
-	// the period from which the lineage is being reported.
+	// EndTime: Optional. The end of the transformation which resulted in this
+	// lineage event. For streaming scenarios, it should be the end of the period
+	// from which the lineage is being reported.
 	EndTime string `json:"endTime,omitempty"`
-
-	// Links: Optional. List of source-target pairs. Can't contain more than
-	// 100 tuples.
+	// Links: Optional. List of source-target pairs. Can't contain more than 100
+	// tuples.
 	Links []*GoogleCloudDatacatalogLineageV1EventLink `json:"links,omitempty"`
-
 	// Name: Immutable. The resource name of the lineage event. Format:
-	// `projects/{project}/locations/{location}/processes/{process}/runs/{run
-	// }/lineageEvents/{lineage_event}`. Can be specified or auto-assigned.
-	// {lineage_event} must be not longer than 200 characters and only
-	// contain characters in a set: `a-zA-Z0-9_-:.`
+	// `projects/{project}/locations/{location}/processes/{process}/runs/{run}/linea
+	// geEvents/{lineage_event}`. Can be specified or auto-assigned.
+	// {lineage_event} must be not longer than 200 characters and only contain
+	// characters in a set: `a-zA-Z0-9_-:.`
 	Name string `json:"name,omitempty"`
-
-	// StartTime: Required. The beginning of the transformation which
-	// resulted in this lineage event. For streaming scenarios, it should be
-	// the beginning of the period from which the lineage is being reported.
+	// StartTime: Required. The beginning of the transformation which resulted in
+	// this lineage event. For streaming scenarios, it should be the beginning of
+	// the period from which the lineage is being reported.
 	StartTime string `json:"startTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1LineageEvent) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1LineageEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1LineageEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogLineageV1Link: Links represent the data flow
-// between **source** (upstream) and **target** (downstream) assets in
-// transformation pipelines. Links are created when LineageEvents record
-// data transformation between related assets.
+// GoogleCloudDatacatalogLineageV1Link: Links represent the data flow between
+// **source** (upstream) and **target** (downstream) assets in transformation
+// pipelines. Links are created when LineageEvents record data transformation
+// between related assets.
 type GoogleCloudDatacatalogLineageV1Link struct {
 	// EndTime: The end of the last event establishing this link.
 	EndTime string `json:"endTime,omitempty"`
-
 	// Name: Output only. Immutable. The name of the link. Format:
 	// `projects/{project}/locations/{location}/links/{link}`.
 	Name string `json:"name,omitempty"`
-
-	// Source: The pointer to the entity that is the **source** of this
-	// link.
+	// Source: The pointer to the entity that is the **source** of this link.
 	Source *GoogleCloudDatacatalogLineageV1EntityReference `json:"source,omitempty"`
-
 	// StartTime: The start of the first event establishing this link.
 	StartTime string `json:"startTime,omitempty"`
-
-	// Target: The pointer to the entity that is the **target** of this
-	// link.
+	// Target: The pointer to the entity that is the **target** of this link.
 	Target *GoogleCloudDatacatalogLineageV1EntityReference `json:"target,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1Link) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1Link) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1Link
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogLineageV1ListLineageEventsResponse: Response
-// message for ListLineageEvents.
+// GoogleCloudDatacatalogLineageV1ListLineageEventsResponse: Response message
+// for ListLineageEvents.
 type GoogleCloudDatacatalogLineageV1ListLineageEventsResponse struct {
-	// LineageEvents: Lineage events from the specified project and
-	// location.
+	// LineageEvents: Lineage events from the specified project and location.
 	LineageEvents []*GoogleCloudDatacatalogLineageV1LineageEvent `json:"lineageEvents,omitempty"`
-
-	// NextPageToken: The token to specify as `page_token` in the next call
-	// to get the next page. If this field is omitted, there are no
-	// subsequent pages.
+	// NextPageToken: The token to specify as `page_token` in the next call to get
+	// the next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "LineageEvents") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LineageEvents") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LineageEvents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1ListLineageEventsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1ListLineageEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1ListLineageEventsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogLineageV1ListProcessesResponse: Response
-// message for ListProcesses.
+// GoogleCloudDatacatalogLineageV1ListProcessesResponse: Response message for
+// ListProcesses.
 type GoogleCloudDatacatalogLineageV1ListProcessesResponse struct {
-	// NextPageToken: The token to specify as `page_token` in the next call
-	// to get the next page. If this field is omitted, there are no
-	// subsequent pages.
+	// NextPageToken: The token to specify as `page_token` in the next call to get
+	// the next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Processes: The processes from the specified project and location.
 	Processes []*GoogleCloudDatacatalogLineageV1Process `json:"processes,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1ListProcessesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1ListProcessesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1ListProcessesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogLineageV1ListRunsResponse: Response message for
 // ListRuns.
 type GoogleCloudDatacatalogLineageV1ListRunsResponse struct {
-	// NextPageToken: The token to specify as `page_token` in the next call
-	// to get the next page. If this field is omitted, there are no
-	// subsequent pages.
+	// NextPageToken: The token to specify as `page_token` in the next call to get
+	// the next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Runs: The runs from the specified project and location.
 	Runs []*GoogleCloudDatacatalogLineageV1Run `json:"runs,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1ListRunsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1ListRunsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1ListRunsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogLineageV1OperationMetadata: Metadata describing
-// the operation.
+// GoogleCloudDatacatalogLineageV1OperationMetadata: Metadata describing the
+// operation.
 type GoogleCloudDatacatalogLineageV1OperationMetadata struct {
-	// CreateTime: Output only. The timestamp of the operation submission to
-	// the server.
+	// CreateTime: Output only. The timestamp of the operation submission to the
+	// server.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// EndTime: Output only. The timestamp of the operation termination,
-	// regardless of its success. This field is unset if the operation is
-	// still ongoing.
+	// EndTime: Output only. The timestamp of the operation termination, regardless
+	// of its success. This field is unset if the operation is still ongoing.
 	EndTime string `json:"endTime,omitempty"`
-
-	// OperationType: Output only. The type of the operation being
-	// performed.
+	// OperationType: Output only. The type of the operation being performed.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unused.
 	//   "DELETE" - The resource deletion operation.
 	//   "CREATE" - The resource creation operation.
 	OperationType string `json:"operationType,omitempty"`
-
 	// Resource: Output only. The [relative name]
 	// (https://cloud.google.com//apis/design/resource_names#relative_resource_name)
 	// of the resource being operated on.
 	Resource string `json:"resource,omitempty"`
-
-	// ResourceUuid: Output only. The UUID of the resource being operated
-	// on.
+	// ResourceUuid: Output only. The UUID of the resource being operated on.
 	ResourceUuid string `json:"resourceUuid,omitempty"`
-
 	// State: Output only. The current operation state.
 	//
 	// Possible values:
@@ -606,45 +530,37 @@ type GoogleCloudDatacatalogLineageV1OperationMetadata struct {
 	//   "SUCCEEDED" - The operation completed successfully.
 	//   "FAILED" - The operation is no longer running and did not succeed.
 	State string `json:"state,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1OperationMetadata) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1OperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogLineageV1Origin: Origin of a process.
 type GoogleCloudDatacatalogLineageV1Origin struct {
-	// Name: If the source_type isn't CUSTOM, the value of this field should
-	// be a GCP resource name of the system, which reports lineage. The
-	// project and location parts of the resource name must match the
-	// project and location of the lineage resource being created. Examples:
-	// - `{source_type: COMPOSER, name:
-	// "projects/foo/locations/us/environments/bar"}` - `{source_type:
-	// BIGQUERY, name: "projects/foo/locations/eu"}` - `{source_type:
-	// CUSTOM, name: "myCustomIntegration"}`
+	// Name: If the source_type isn't CUSTOM, the value of this field should be a
+	// GCP resource name of the system, which reports lineage. The project and
+	// location parts of the resource name must match the project and location of
+	// the lineage resource being created. Examples: - `{source_type: COMPOSER,
+	// name: "projects/foo/locations/us/environments/bar"}` - `{source_type:
+	// BIGQUERY, name: "projects/foo/locations/eu"}` - `{source_type: CUSTOM, name:
+	// "myCustomIntegration"}`
 	Name string `json:"name,omitempty"`
-
-	// SourceType: Type of the source. Use of a source_type other than
-	// `CUSTOM` for process creation or updating is highly discouraged, and
-	// may be restricted in the future without notice.
+	// SourceType: Type of the source. Use of a source_type other than `CUSTOM` for
+	// process creation or updating is highly discouraged, and may be restricted in
+	// the future without notice.
 	//
 	// Possible values:
 	//   "SOURCE_TYPE_UNSPECIFIED" - Source is Unspecified
@@ -655,303 +571,237 @@ type GoogleCloudDatacatalogLineageV1Origin struct {
 	//   "LOOKER_STUDIO" - Looker Studio
 	//   "DATAPROC" - Dataproc
 	SourceType string `json:"sourceType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1Origin) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1Origin) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1Origin
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogLineageV1Process: A process is the definition
-// of a data transformation operation.
+// GoogleCloudDatacatalogLineageV1Process: A process is the definition of a
+// data transformation operation.
 type GoogleCloudDatacatalogLineageV1Process struct {
-	// Attributes: Optional. The attributes of the process. Should only be
-	// used for the purpose of non-semantic management (classifying,
-	// describing or labeling the process). Up to 100 attributes are
-	// allowed.
+	// Attributes: Optional. The attributes of the process. Should only be used for
+	// the purpose of non-semantic management (classifying, describing or labeling
+	// the process). Up to 100 attributes are allowed.
 	Attributes googleapi.RawMessage `json:"attributes,omitempty"`
-
-	// DisplayName: Optional. A human-readable name you can set to display
-	// in a user interface. Must be not longer than 200 characters and only
-	// contain UTF-8 letters or numbers, spaces or characters like `_-:&.`
+	// DisplayName: Optional. A human-readable name you can set to display in a
+	// user interface. Must be not longer than 200 characters and only contain
+	// UTF-8 letters or numbers, spaces or characters like `_-:&.`
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Name: Immutable. The resource name of the lineage process. Format:
 	// `projects/{project}/locations/{location}/processes/{process}`. Can be
-	// specified or auto-assigned. {process} must be not longer than 200
-	// characters and only contain characters in a set: `a-zA-Z0-9_-:.`
+	// specified or auto-assigned. {process} must be not longer than 200 characters
+	// and only contain characters in a set: `a-zA-Z0-9_-:.`
 	Name string `json:"name,omitempty"`
-
 	// Origin: Optional. The origin of this process and its runs and lineage
 	// events.
 	Origin *GoogleCloudDatacatalogLineageV1Origin `json:"origin,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attributes") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1Process) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1Process) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1Process
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogLineageV1ProcessLinkInfo: Link details.
 type GoogleCloudDatacatalogLineageV1ProcessLinkInfo struct {
-	// EndTime: The end of the last event establishing this link-process
-	// tuple.
+	// EndTime: The end of the last event establishing this link-process tuple.
 	EndTime string `json:"endTime,omitempty"`
-
 	// Link: The name of the link in the format of
 	// `projects/{project}/locations/{location}/links/{link}`.
 	Link string `json:"link,omitempty"`
-
-	// StartTime: The start of the first event establishing this
-	// link-process tuple.
+	// StartTime: The start of the first event establishing this link-process
+	// tuple.
 	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1ProcessLinkInfo) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1ProcessLinkInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1ProcessLinkInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDatacatalogLineageV1ProcessLinks: Links associated with a
 // specific process.
 type GoogleCloudDatacatalogLineageV1ProcessLinks struct {
-	// Links: An array containing link details objects of the links provided
-	// in the original request. A single process can result in creating
-	// multiple links. If any of the links you provide in the request are
-	// created by the same process, they all are included in this array.
+	// Links: An array containing link details objects of the links provided in the
+	// original request. A single process can result in creating multiple links. If
+	// any of the links you provide in the request are created by the same process,
+	// they all are included in this array.
 	Links []*GoogleCloudDatacatalogLineageV1ProcessLinkInfo `json:"links,omitempty"`
-
 	// Process: The process name in the format of
 	// `projects/{project}/locations/{location}/processes/{process}`.
 	Process string `json:"process,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Links") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Links") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Links") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1ProcessLinks) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1ProcessLinks) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1ProcessLinks
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogLineageV1Run: A lineage run represents an
-// execution of a process that creates lineage events.
+// GoogleCloudDatacatalogLineageV1Run: A lineage run represents an execution of
+// a process that creates lineage events.
 type GoogleCloudDatacatalogLineageV1Run struct {
-	// Attributes: Optional. The attributes of the run. Should only be used
-	// for the purpose of non-semantic management (classifying, describing
-	// or labeling the run). Up to 100 attributes are allowed.
+	// Attributes: Optional. The attributes of the run. Should only be used for the
+	// purpose of non-semantic management (classifying, describing or labeling the
+	// run). Up to 100 attributes are allowed.
 	Attributes googleapi.RawMessage `json:"attributes,omitempty"`
-
-	// DisplayName: Optional. A human-readable name you can set to display
-	// in a user interface. Must be not longer than 1024 characters and only
-	// contain UTF-8 letters or numbers, spaces or characters like `_-:&.`
+	// DisplayName: Optional. A human-readable name you can set to display in a
+	// user interface. Must be not longer than 1024 characters and only contain
+	// UTF-8 letters or numbers, spaces or characters like `_-:&.`
 	DisplayName string `json:"displayName,omitempty"`
-
 	// EndTime: Optional. The timestamp of the end of the run.
 	EndTime string `json:"endTime,omitempty"`
-
 	// Name: Immutable. The resource name of the run. Format:
-	// `projects/{project}/locations/{location}/processes/{process}/runs/{run
-	// }`. Can be specified or auto-assigned. {run} must be not longer than
-	// 200 characters and only contain characters in a set: `a-zA-Z0-9_-:.`
+	// `projects/{project}/locations/{location}/processes/{process}/runs/{run}`.
+	// Can be specified or auto-assigned. {run} must be not longer than 200
+	// characters and only contain characters in a set: `a-zA-Z0-9_-:.`
 	Name string `json:"name,omitempty"`
-
 	// StartTime: Required. The timestamp of the start of the run.
 	StartTime string `json:"startTime,omitempty"`
-
 	// State: Required. The state of the run.
 	//
 	// Possible values:
-	//   "UNKNOWN" - The state is unknown. The true state may be any of the
-	// below or a different state that is not supported here explicitly.
+	//   "UNKNOWN" - The state is unknown. The true state may be any of the below
+	// or a different state that is not supported here explicitly.
 	//   "STARTED" - The run is still executing.
 	//   "COMPLETED" - The run completed.
 	//   "FAILED" - The run failed.
 	//   "ABORTED" - The run aborted.
 	State string `json:"state,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attributes") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1Run) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1Run) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1Run
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogLineageV1SearchLinksRequest: Request message
-// for SearchLinks.
+// GoogleCloudDatacatalogLineageV1SearchLinksRequest: Request message for
+// SearchLinks.
 type GoogleCloudDatacatalogLineageV1SearchLinksRequest struct {
-	// PageSize: Optional. The maximum number of links to return in a single
-	// page of the response. A page may contain fewer links than this value.
-	// If unspecified, at most 10 links are returned. Maximum value is 100;
-	// values greater than 100 are reduced to 100.
+	// PageSize: Optional. The maximum number of links to return in a single page
+	// of the response. A page may contain fewer links than this value. If
+	// unspecified, at most 10 links are returned. Maximum value is 100; values
+	// greater than 100 are reduced to 100.
 	PageSize int64 `json:"pageSize,omitempty"`
-
 	// PageToken: Optional. The page token received from a previous
-	// `SearchLinksRequest` call. Use it to get the next page. When
-	// requesting subsequent pages of a response, remember that all
-	// parameters must match the values you provided in the original
-	// request.
+	// `SearchLinksRequest` call. Use it to get the next page. When requesting
+	// subsequent pages of a response, remember that all parameters must match the
+	// values you provided in the original request.
 	PageToken string `json:"pageToken,omitempty"`
-
-	// Source: Optional. Send asset information in the **source** field to
-	// retrieve all links that lead from the specified asset to downstream
-	// assets.
+	// Source: Optional. Send asset information in the **source** field to retrieve
+	// all links that lead from the specified asset to downstream assets.
 	Source *GoogleCloudDatacatalogLineageV1EntityReference `json:"source,omitempty"`
-
-	// Target: Optional. Send asset information in the **target** field to
-	// retrieve all links that lead from upstream assets to the specified
-	// asset.
+	// Target: Optional. Send asset information in the **target** field to retrieve
+	// all links that lead from upstream assets to the specified asset.
 	Target *GoogleCloudDatacatalogLineageV1EntityReference `json:"target,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PageSize") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PageSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1SearchLinksRequest) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1SearchLinksRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1SearchLinksRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDatacatalogLineageV1SearchLinksResponse: Response message
-// for SearchLinks.
+// GoogleCloudDatacatalogLineageV1SearchLinksResponse: Response message for
+// SearchLinks.
 type GoogleCloudDatacatalogLineageV1SearchLinksResponse struct {
-	// Links: The list of links for a given asset. Can be empty if the asset
-	// has no relations of requested type (source or target).
+	// Links: The list of links for a given asset. Can be empty if the asset has no
+	// relations of requested type (source or target).
 	Links []*GoogleCloudDatacatalogLineageV1Link `json:"links,omitempty"`
-
-	// NextPageToken: The token to specify as `page_token` in the subsequent
-	// call to get the next page. Omitted if there are no more pages in the
-	// response.
+	// NextPageToken: The token to specify as `page_token` in the subsequent call
+	// to get the next page. Omitted if there are no more pages in the response.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Links") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Links") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Links") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDatacatalogLineageV1SearchLinksResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudDatacatalogLineageV1SearchLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogLineageV1SearchLinksResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningCancelOperationRequest: The request message for
@@ -964,156 +814,120 @@ type GoogleLongrunningCancelOperationRequest struct {
 type GoogleLongrunningListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Operations: A list of operations that matches the specified filter in
-	// the request.
+	// Operations: A list of operations that matches the specified filter in the
+	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
 // operation that is the result of a network API call.
 type GoogleLongrunningOperation struct {
-	// Done: If the value is `false`, it means the operation is still in
-	// progress. If `true`, the operation is completed, and either `error`
-	// or `response` is available.
+	// Done: If the value is `false`, it means the operation is still in progress.
+	// If `true`, the operation is completed, and either `error` or `response` is
+	// available.
 	Done bool `json:"done,omitempty"`
-
-	// Error: The error result of the operation in case of failure or
-	// cancellation.
+	// Error: The error result of the operation in case of failure or cancellation.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
-
 	// Metadata: Service-specific metadata associated with the operation. It
-	// typically contains progress information and common metadata such as
-	// create time. Some services might not provide such metadata. Any
-	// method that returns a long-running operation should document the
-	// metadata type, if any.
+	// typically contains progress information and common metadata such as create
+	// time. Some services might not provide such metadata. Any method that returns
+	// a long-running operation should document the metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// Name: The server-assigned name, which is only unique within the same
-	// service that originally returns it. If you use the default HTTP
-	// mapping, the `name` should be a resource name ending with
-	// `operations/{unique_id}`.
+	// Name: The server-assigned name, which is only unique within the same service
+	// that originally returns it. If you use the default HTTP mapping, the `name`
+	// should be a resource name ending with `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
-
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
-	// response is `google.protobuf.Empty`. If the original method is
-	// standard `Get`/`Create`/`Update`, the response should be the
-	// resource. For other methods, the response should have the type
-	// `XxxResponse`, where `Xxx` is the original method name. For example,
-	// if the original method name is `TakeSnapshot()`, the inferred
-	// response type is `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If the
+	// original method returns no data on success, such as `Delete`, the response
+	// is `google.protobuf.Empty`. If the original method is standard
+	// `Get`/`Create`/`Update`, the response should be the resource. For other
+	// methods, the response should have the type `XxxResponse`, where `Xxx` is the
+	// original method name. For example, if the original method name is
+	// `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Done") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Done") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Done") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleProtobufEmpty: A generic empty message that you can re-use to
-// avoid defining duplicated empty messages in your APIs. A typical
-// example is to use it as the request or the response type of an API
-// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); }
+// GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
+// defining duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For instance:
+// service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleRpcStatus: The `Status` type defines a logical error model that
-// is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the API Design Guide
-// (https://cloud.google.com/apis/design/errors).
+// GoogleRpcStatus: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs and RPC
+// APIs. It is used by gRPC (https://github.com/grpc). Each `Status` message
+// contains three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it in the
+// API Design Guide (https://cloud.google.com/apis/design/errors).
 type GoogleRpcStatus struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "datalineage.projects.locations.batchSearchLinkProcesses":
 
 type ProjectsLocationsBatchSearchLinkProcessesCall struct {
 	s                                                              *Service
@@ -1126,14 +940,13 @@ type ProjectsLocationsBatchSearchLinkProcessesCall struct {
 
 // BatchSearchLinkProcesses: Retrieve information about LineageProcesses
 // associated with specific links. LineageProcesses are transformation
-// pipelines that result in data flowing from **source** to **target**
-// assets. Links between assets represent this operation. If you have
-// specific link names, you can use this method to verify which
-// LineageProcesses contribute to creating those links. See the
-// SearchLinks method for more information on how to retrieve link name.
-// You can retrieve the LineageProcess information in every project
-// where you have the `datalineage.events.get` permission. The project
-// provided in the URL is used for Billing and Quota.
+// pipelines that result in data flowing from **source** to **target** assets.
+// Links between assets represent this operation. If you have specific link
+// names, you can use this method to verify which LineageProcesses contribute
+// to creating those links. See the SearchLinks method for more information on
+// how to retrieve link name. You can retrieve the LineageProcess information
+// in every project where you have the `datalineage.events.get` permission. The
+// project provided in the URL is used for Billing and Quota.
 //
 // - parent: The project and location where you want to search.
 func (r *ProjectsLocationsService) BatchSearchLinkProcesses(parent string, googleclouddatacataloglineagev1batchsearchlinkprocessesrequest *GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesRequest) *ProjectsLocationsBatchSearchLinkProcessesCall {
@@ -1144,23 +957,21 @@ func (r *ProjectsLocationsService) BatchSearchLinkProcesses(parent string, googl
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsBatchSearchLinkProcessesCall) Fields(s ...googleapi.Field) *ProjectsLocationsBatchSearchLinkProcessesCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsBatchSearchLinkProcessesCall) Context(ctx context.Context) *ProjectsLocationsBatchSearchLinkProcessesCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsBatchSearchLinkProcessesCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1169,18 +980,12 @@ func (c *ProjectsLocationsBatchSearchLinkProcessesCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsBatchSearchLinkProcessesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatacataloglineagev1batchsearchlinkprocessesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:batchSearchLinkProcesses")
@@ -1193,19 +998,15 @@ func (c *ProjectsLocationsBatchSearchLinkProcessesCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.batchSearchLinkProcesses" call.
-// Exactly one of
-// *GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesResponse.Serve
-// rResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsBatchSearchLinkProcessesCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1236,35 +1037,6 @@ func (c *ProjectsLocationsBatchSearchLinkProcessesCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieve information about LineageProcesses associated with specific links. LineageProcesses are transformation pipelines that result in data flowing from **source** to **target** assets. Links between assets represent this operation. If you have specific link names, you can use this method to verify which LineageProcesses contribute to creating those links. See the SearchLinks method for more information on how to retrieve link name. You can retrieve the LineageProcess information in every project where you have the `datalineage.events.get` permission. The project provided in the URL is used for Billing and Quota.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:batchSearchLinkProcesses",
-	//   "httpMethod": "POST",
-	//   "id": "datalineage.projects.locations.batchSearchLinkProcesses",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The project and location where you want to search.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}:batchSearchLinkProcesses",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1272,7 +1044,7 @@ func (c *ProjectsLocationsBatchSearchLinkProcessesCall) Do(opts ...googleapi.Cal
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsBatchSearchLinkProcessesCall) Pages(ctx context.Context, f func(*GoogleCloudDatacatalogLineageV1BatchSearchLinkProcessesResponse) error) error {
 	c.ctx_ = ctx
-	defer func(pt string) { c.googleclouddatacataloglineagev1batchsearchlinkprocessesrequest.PageToken = pt }(c.googleclouddatacataloglineagev1batchsearchlinkprocessesrequest.PageToken) // reset paging to original point
+	defer func(pt string) { c.googleclouddatacataloglineagev1batchsearchlinkprocessesrequest.PageToken = pt }(c.googleclouddatacataloglineagev1batchsearchlinkprocessesrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1288,8 +1060,6 @@ func (c *ProjectsLocationsBatchSearchLinkProcessesCall) Pages(ctx context.Contex
 	}
 }
 
-// method id "datalineage.projects.locations.searchLinks":
-
 type ProjectsLocationsSearchLinksCall struct {
 	s                                                 *Service
 	parent                                            string
@@ -1299,13 +1069,12 @@ type ProjectsLocationsSearchLinksCall struct {
 	header_                                           http.Header
 }
 
-// SearchLinks: Retrieve a list of links connected to a specific asset.
-// Links represent the data flow between **source** (upstream) and
-// **target** (downstream) assets in transformation pipelines. Links are
-// stored in the same project as the Lineage Events that create them.
-// You can retrieve links in every project where you have the
-// `datalineage.events.get` permission. The project provided in the URL
-// is used for Billing and Quota.
+// SearchLinks: Retrieve a list of links connected to a specific asset. Links
+// represent the data flow between **source** (upstream) and **target**
+// (downstream) assets in transformation pipelines. Links are stored in the
+// same project as the Lineage Events that create them. You can retrieve links
+// in every project where you have the `datalineage.events.get` permission. The
+// project provided in the URL is used for Billing and Quota.
 //
 // - parent: The project and location you want search in.
 func (r *ProjectsLocationsService) SearchLinks(parent string, googleclouddatacataloglineagev1searchlinksrequest *GoogleCloudDatacatalogLineageV1SearchLinksRequest) *ProjectsLocationsSearchLinksCall {
@@ -1316,23 +1085,21 @@ func (r *ProjectsLocationsService) SearchLinks(parent string, googleclouddatacat
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsSearchLinksCall) Fields(s ...googleapi.Field) *ProjectsLocationsSearchLinksCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsSearchLinksCall) Context(ctx context.Context) *ProjectsLocationsSearchLinksCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsSearchLinksCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1341,18 +1108,12 @@ func (c *ProjectsLocationsSearchLinksCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsSearchLinksCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatacataloglineagev1searchlinksrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:searchLinks")
@@ -1365,18 +1126,15 @@ func (c *ProjectsLocationsSearchLinksCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.searchLinks" call.
-// Exactly one of *GoogleCloudDatacatalogLineageV1SearchLinksResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatacatalogLineageV1SearchLinksResponse.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogLineageV1SearchLinksResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsSearchLinksCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogLineageV1SearchLinksResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1407,35 +1165,6 @@ func (c *ProjectsLocationsSearchLinksCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieve a list of links connected to a specific asset. Links represent the data flow between **source** (upstream) and **target** (downstream) assets in transformation pipelines. Links are stored in the same project as the Lineage Events that create them. You can retrieve links in every project where you have the `datalineage.events.get` permission. The project provided in the URL is used for Billing and Quota.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:searchLinks",
-	//   "httpMethod": "POST",
-	//   "id": "datalineage.projects.locations.searchLinks",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The project and location you want search in.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}:searchLinks",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1SearchLinksRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1SearchLinksResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1443,7 +1172,7 @@ func (c *ProjectsLocationsSearchLinksCall) Do(opts ...googleapi.CallOption) (*Go
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsSearchLinksCall) Pages(ctx context.Context, f func(*GoogleCloudDatacatalogLineageV1SearchLinksResponse) error) error {
 	c.ctx_ = ctx
-	defer func(pt string) { c.googleclouddatacataloglineagev1searchlinksrequest.PageToken = pt }(c.googleclouddatacataloglineagev1searchlinksrequest.PageToken) // reset paging to original point
+	defer func(pt string) { c.googleclouddatacataloglineagev1searchlinksrequest.PageToken = pt }(c.googleclouddatacataloglineagev1searchlinksrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1459,8 +1188,6 @@ func (c *ProjectsLocationsSearchLinksCall) Pages(ctx context.Context, f func(*Go
 	}
 }
 
-// method id "datalineage.projects.locations.operations.cancel":
-
 type ProjectsLocationsOperationsCancelCall struct {
 	s                                       *Service
 	name                                    string
@@ -1470,15 +1197,14 @@ type ProjectsLocationsOperationsCancelCall struct {
 	header_                                 http.Header
 }
 
-// Cancel: Starts asynchronous cancellation on a long-running operation.
-// The server makes a best effort to cancel the operation, but success
-// is not guaranteed. If the server doesn't support this method, it
-// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
-// Operations.GetOperation or other methods to check whether the
-// cancellation succeeded or whether the operation completed despite
-// cancellation. On successful cancellation, the operation is not
-// deleted; instead, it becomes an operation with an Operation.error
-// value with a google.rpc.Status.code of 1, corresponding to
+// Cancel: Starts asynchronous cancellation on a long-running operation. The
+// server makes a best effort to cancel the operation, but success is not
+// guaranteed. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether the
+// operation completed despite cancellation. On successful cancellation, the
+// operation is not deleted; instead, it becomes an operation with an
+// Operation.error value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -1490,23 +1216,21 @@ func (r *ProjectsLocationsOperationsService) Cancel(name string, googlelongrunni
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsCancelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsCancelCall) Context(ctx context.Context) *ProjectsLocationsOperationsCancelCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1515,18 +1239,12 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlelongrunningcanceloperationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
@@ -1539,16 +1257,15 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.operations.cancel" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1579,38 +1296,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
-	//   "httpMethod": "POST",
-	//   "id": "datalineage.projects.locations.operations.cancel",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be cancelled.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:cancel",
-	//   "request": {
-	//     "$ref": "GoogleLongrunningCancelOperationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalineage.projects.locations.operations.delete":
 
 type ProjectsLocationsOperationsDeleteCall struct {
 	s          *Service
@@ -1620,10 +1306,10 @@ type ProjectsLocationsOperationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a long-running operation. This method indicates that
-// the client is no longer interested in the operation result. It does
-// not cancel the operation. If the server doesn't support this method,
-// it returns `google.rpc.Code.UNIMPLEMENTED`.
+// Delete: Deletes a long-running operation. This method indicates that the
+// client is no longer interested in the operation result. It does not cancel
+// the operation. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`.
 //
 // - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
@@ -1633,23 +1319,21 @@ func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocati
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsOperationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1658,12 +1342,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1677,16 +1356,15 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.operations.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1717,35 +1395,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "datalineage.projects.locations.operations.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be deleted.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalineage.projects.locations.operations.get":
 
 type ProjectsLocationsOperationsGetCall struct {
 	s            *Service
@@ -1756,9 +1406,9 @@ type ProjectsLocationsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation. Clients can
-// use this method to poll the operation result at intervals as
-// recommended by the API service.
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
 //
 // - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
@@ -1768,33 +1418,29 @@ func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocations
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1803,12 +1449,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1825,16 +1466,15 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.operations.get" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1865,35 +1505,7 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalineage.projects.locations.operations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalineage.projects.locations.operations.list":
 
 type ProjectsLocationsOperationsListCall struct {
 	s            *Service
@@ -1904,9 +1516,8 @@ type ProjectsLocationsOperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists operations that match the specified filter in the
-// request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -1915,55 +1526,50 @@ func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocation
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": The standard list filter.
 func (c *ProjectsLocationsOperationsListCall) Filter(filter string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
 func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsListCall) Context(ctx context.Context) *ProjectsLocationsOperationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1972,12 +1578,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1994,17 +1595,15 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.operations.list" call.
-// Exactly one of *GoogleLongrunningListOperationsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2035,48 +1634,6 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations",
-	//   "httpMethod": "GET",
-	//   "id": "datalineage.projects.locations.operations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The standard list filter.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The name of the operation's parent resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The standard list page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The standard list page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}/operations",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningListOperationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2084,7 +1641,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2100,8 +1657,6 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
-// method id "datalineage.projects.locations.processes.create":
-
 type ProjectsLocationsProcessesCreateCall struct {
 	s                                      *Service
 	parent                                 string
@@ -2113,8 +1668,8 @@ type ProjectsLocationsProcessesCreateCall struct {
 
 // Create: Creates a new process.
 //
-//   - parent: The name of the project and its location that should own
-//     the process.
+//   - parent: The name of the project and its location that should own the
+//     process.
 func (r *ProjectsLocationsProcessesService) Create(parent string, googleclouddatacataloglineagev1process *GoogleCloudDatacatalogLineageV1Process) *ProjectsLocationsProcessesCreateCall {
 	c := &ProjectsLocationsProcessesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2122,33 +1677,30 @@ func (r *ProjectsLocationsProcessesService) Create(parent string, googleclouddat
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A unique
-// identifier for this request. Restricted to 36 ASCII characters. A
-// random UUID is recommended. This request is idempotent only if a
-// `request_id` is provided.
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Restricted to 36 ASCII characters. A random UUID is
+// recommended. This request is idempotent only if a `request_id` is provided.
 func (c *ProjectsLocationsProcessesCreateCall) RequestId(requestId string) *ProjectsLocationsProcessesCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsProcessesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsProcessesCreateCall) Context(ctx context.Context) *ProjectsLocationsProcessesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsProcessesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2157,18 +1709,12 @@ func (c *ProjectsLocationsProcessesCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsProcessesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatacataloglineagev1process)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/processes")
@@ -2181,17 +1727,15 @@ func (c *ProjectsLocationsProcessesCreateCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.processes.create" call.
-// Exactly one of *GoogleCloudDatacatalogLineageV1Process or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudDatacatalogLineageV1Process.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogLineageV1Process.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsProcessesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogLineageV1Process, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2222,43 +1766,7 @@ func (c *ProjectsLocationsProcessesCreateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new process.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processes",
-	//   "httpMethod": "POST",
-	//   "id": "datalineage.projects.locations.processes.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the project and its location that should own the process.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "A unique identifier for this request. Restricted to 36 ASCII characters. A random UUID is recommended. This request is idempotent only if a `request_id` is provided.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/processes",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1Process"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1Process"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalineage.projects.locations.processes.delete":
 
 type ProjectsLocationsProcessesDeleteCall struct {
 	s          *Service
@@ -2277,32 +1785,30 @@ func (r *ProjectsLocationsProcessesService) Delete(name string) *ProjectsLocatio
 	return c
 }
 
-// AllowMissing sets the optional parameter "allowMissing": If set to
-// true and the process is not found, the request succeeds but the
-// server doesn't perform any actions.
+// AllowMissing sets the optional parameter "allowMissing": If set to true and
+// the process is not found, the request succeeds but the server doesn't
+// perform any actions.
 func (c *ProjectsLocationsProcessesDeleteCall) AllowMissing(allowMissing bool) *ProjectsLocationsProcessesDeleteCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsProcessesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsProcessesDeleteCall) Context(ctx context.Context) *ProjectsLocationsProcessesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsProcessesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2311,12 +1817,7 @@ func (c *ProjectsLocationsProcessesDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsProcessesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2330,16 +1831,15 @@ func (c *ProjectsLocationsProcessesDeleteCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.processes.delete" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsProcessesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2370,40 +1870,7 @@ func (c *ProjectsLocationsProcessesDeleteCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes the process with the specified name.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processes/{processesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "datalineage.projects.locations.processes.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "allowMissing": {
-	//       "description": "If set to true and the process is not found, the request succeeds but the server doesn't perform any actions.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "name": {
-	//       "description": "Required. The name of the process to delete.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/processes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalineage.projects.locations.processes.get":
 
 type ProjectsLocationsProcessesGetCall struct {
 	s            *Service
@@ -2424,33 +1891,29 @@ func (r *ProjectsLocationsProcessesService) Get(name string) *ProjectsLocationsP
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsProcessesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsProcessesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsProcessesGetCall) Context(ctx context.Context) *ProjectsLocationsProcessesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsProcessesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2459,12 +1922,7 @@ func (c *ProjectsLocationsProcessesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsProcessesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2481,17 +1939,15 @@ func (c *ProjectsLocationsProcessesGetCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.processes.get" call.
-// Exactly one of *GoogleCloudDatacatalogLineageV1Process or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudDatacatalogLineageV1Process.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogLineageV1Process.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsProcessesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogLineageV1Process, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2522,35 +1978,7 @@ func (c *ProjectsLocationsProcessesGetCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the details of the specified process.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processes/{processesId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalineage.projects.locations.processes.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the process to get.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/processes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1Process"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalineage.projects.locations.processes.list":
 
 type ProjectsLocationsProcessesListCall struct {
 	s            *Service
@@ -2564,61 +1992,56 @@ type ProjectsLocationsProcessesListCall struct {
 // List: List processes in the given project and location. List order is
 // descending by insertion time.
 //
-//   - parent: The name of the project and its location that owns this
-//     collection of processes.
+//   - parent: The name of the project and its location that owns this collection
+//     of processes.
 func (r *ProjectsLocationsProcessesService) List(parent string) *ProjectsLocationsProcessesListCall {
 	c := &ProjectsLocationsProcessesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of processes to return. The service may return fewer than this value.
-// If unspecified, at most 50 processes are returned. The maximum value
-// is 100; values greater than 100 are cut to 100.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// processes to return. The service may return fewer than this value. If
+// unspecified, at most 50 processes are returned. The maximum value is 100;
+// values greater than 100 are cut to 100.
 func (c *ProjectsLocationsProcessesListCall) PageSize(pageSize int64) *ProjectsLocationsProcessesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The page token
-// received from a previous `ListProcesses` call. Specify it to get the
-// next page. When paginating, all other parameters specified in this
-// call must match the parameters of the call that provided the page
-// token.
+// PageToken sets the optional parameter "pageToken": The page token received
+// from a previous `ListProcesses` call. Specify it to get the next page. When
+// paginating, all other parameters specified in this call must match the
+// parameters of the call that provided the page token.
 func (c *ProjectsLocationsProcessesListCall) PageToken(pageToken string) *ProjectsLocationsProcessesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsProcessesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsProcessesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsProcessesListCall) Context(ctx context.Context) *ProjectsLocationsProcessesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsProcessesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2627,12 +2050,7 @@ func (c *ProjectsLocationsProcessesListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsProcessesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2649,18 +2067,15 @@ func (c *ProjectsLocationsProcessesListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.processes.list" call.
-// Exactly one of *GoogleCloudDatacatalogLineageV1ListProcessesResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudDatacatalogLineageV1ListProcessesResponse.ServerResponse.H
-// eader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogLineageV1ListProcessesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsProcessesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogLineageV1ListProcessesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2691,43 +2106,6 @@ func (c *ProjectsLocationsProcessesListCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List processes in the given project and location. List order is descending by insertion time.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processes",
-	//   "httpMethod": "GET",
-	//   "id": "datalineage.projects.locations.processes.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of processes to return. The service may return fewer than this value. If unspecified, at most 50 processes are returned. The maximum value is 100; values greater than 100 are cut to 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The page token received from a previous `ListProcesses` call. Specify it to get the next page. When paginating, all other parameters specified in this call must match the parameters of the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The name of the project and its location that owns this collection of processes.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/processes",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1ListProcessesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2735,7 +2113,7 @@ func (c *ProjectsLocationsProcessesListCall) Do(opts ...googleapi.CallOption) (*
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsProcessesListCall) Pages(ctx context.Context, f func(*GoogleCloudDatacatalogLineageV1ListProcessesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2751,8 +2129,6 @@ func (c *ProjectsLocationsProcessesListCall) Pages(ctx context.Context, f func(*
 	}
 }
 
-// method id "datalineage.projects.locations.processes.patch":
-
 type ProjectsLocationsProcessesPatchCall struct {
 	s                                      *Service
 	name                                   string
@@ -2765,10 +2141,9 @@ type ProjectsLocationsProcessesPatchCall struct {
 // Patch: Updates a process.
 //
 //   - name: Immutable. The resource name of the lineage process. Format:
-//     `projects/{project}/locations/{location}/processes/{process}`. Can
-//     be specified or auto-assigned. {process} must be not longer than
-//     200 characters and only contain characters in a set:
-//     `a-zA-Z0-9_-:.`.
+//     `projects/{project}/locations/{location}/processes/{process}`. Can be
+//     specified or auto-assigned. {process} must be not longer than 200
+//     characters and only contain characters in a set: `a-zA-Z0-9_-:.`.
 func (r *ProjectsLocationsProcessesService) Patch(name string, googleclouddatacataloglineagev1process *GoogleCloudDatacatalogLineageV1Process) *ProjectsLocationsProcessesPatchCall {
 	c := &ProjectsLocationsProcessesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2776,38 +2151,36 @@ func (r *ProjectsLocationsProcessesService) Patch(name string, googleclouddataca
 	return c
 }
 
-// AllowMissing sets the optional parameter "allowMissing": If set to
-// true and the process is not found, the request inserts it.
+// AllowMissing sets the optional parameter "allowMissing": If set to true and
+// the process is not found, the request inserts it.
 func (c *ProjectsLocationsProcessesPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsProcessesPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to update. Currently not used. The whole message is updated.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Currently not used. The whole message is updated.
 func (c *ProjectsLocationsProcessesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsProcessesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsProcessesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsProcessesPatchCall) Context(ctx context.Context) *ProjectsLocationsProcessesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsProcessesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2816,18 +2189,12 @@ func (c *ProjectsLocationsProcessesPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsProcessesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatacataloglineagev1process)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -2840,17 +2207,15 @@ func (c *ProjectsLocationsProcessesPatchCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.processes.patch" call.
-// Exactly one of *GoogleCloudDatacatalogLineageV1Process or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudDatacatalogLineageV1Process.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogLineageV1Process.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsProcessesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogLineageV1Process, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2881,49 +2246,7 @@ func (c *ProjectsLocationsProcessesPatchCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a process.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processes/{processesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "datalineage.projects.locations.processes.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "allowMissing": {
-	//       "description": "If set to true and the process is not found, the request inserts it.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "name": {
-	//       "description": "Immutable. The resource name of the lineage process. Format: `projects/{project}/locations/{location}/processes/{process}`. Can be specified or auto-assigned. {process} must be not longer than 200 characters and only contain characters in a set: `a-zA-Z0-9_-:.`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/processes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to update. Currently not used. The whole message is updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1Process"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1Process"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalineage.projects.locations.processes.runs.create":
 
 type ProjectsLocationsProcessesRunsCreateCall struct {
 	s                                  *Service
@@ -2944,33 +2267,30 @@ func (r *ProjectsLocationsProcessesRunsService) Create(parent string, googleclou
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A unique
-// identifier for this request. Restricted to 36 ASCII characters. A
-// random UUID is recommended. This request is idempotent only if a
-// `request_id` is provided.
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Restricted to 36 ASCII characters. A random UUID is
+// recommended. This request is idempotent only if a `request_id` is provided.
 func (c *ProjectsLocationsProcessesRunsCreateCall) RequestId(requestId string) *ProjectsLocationsProcessesRunsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsProcessesRunsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessesRunsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsProcessesRunsCreateCall) Context(ctx context.Context) *ProjectsLocationsProcessesRunsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsProcessesRunsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2979,18 +2299,12 @@ func (c *ProjectsLocationsProcessesRunsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsProcessesRunsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatacataloglineagev1run)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/runs")
@@ -3003,17 +2317,15 @@ func (c *ProjectsLocationsProcessesRunsCreateCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.processes.runs.create" call.
-// Exactly one of *GoogleCloudDatacatalogLineageV1Run or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudDatacatalogLineageV1Run.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogLineageV1Run.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsProcessesRunsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogLineageV1Run, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3044,43 +2356,7 @@ func (c *ProjectsLocationsProcessesRunsCreateCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new run.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processes/{processesId}/runs",
-	//   "httpMethod": "POST",
-	//   "id": "datalineage.projects.locations.processes.runs.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the process that should own the run.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/processes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "A unique identifier for this request. Restricted to 36 ASCII characters. A random UUID is recommended. This request is idempotent only if a `request_id` is provided.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/runs",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1Run"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1Run"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalineage.projects.locations.processes.runs.delete":
 
 type ProjectsLocationsProcessesRunsDeleteCall struct {
 	s          *Service
@@ -3099,32 +2375,30 @@ func (r *ProjectsLocationsProcessesRunsService) Delete(name string) *ProjectsLoc
 	return c
 }
 
-// AllowMissing sets the optional parameter "allowMissing": If set to
-// true and the run is not found, the request succeeds but the server
-// doesn't perform any actions.
+// AllowMissing sets the optional parameter "allowMissing": If set to true and
+// the run is not found, the request succeeds but the server doesn't perform
+// any actions.
 func (c *ProjectsLocationsProcessesRunsDeleteCall) AllowMissing(allowMissing bool) *ProjectsLocationsProcessesRunsDeleteCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsProcessesRunsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessesRunsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsProcessesRunsDeleteCall) Context(ctx context.Context) *ProjectsLocationsProcessesRunsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsProcessesRunsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3133,12 +2407,7 @@ func (c *ProjectsLocationsProcessesRunsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsProcessesRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3152,16 +2421,15 @@ func (c *ProjectsLocationsProcessesRunsDeleteCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.processes.runs.delete" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsProcessesRunsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3192,40 +2460,7 @@ func (c *ProjectsLocationsProcessesRunsDeleteCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes the run with the specified name.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processes/{processesId}/runs/{runsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "datalineage.projects.locations.processes.runs.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "allowMissing": {
-	//       "description": "If set to true and the run is not found, the request succeeds but the server doesn't perform any actions.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "name": {
-	//       "description": "Required. The name of the run to delete.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/processes/[^/]+/runs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalineage.projects.locations.processes.runs.get":
 
 type ProjectsLocationsProcessesRunsGetCall struct {
 	s            *Service
@@ -3246,33 +2481,29 @@ func (r *ProjectsLocationsProcessesRunsService) Get(name string) *ProjectsLocati
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsProcessesRunsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessesRunsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsProcessesRunsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessesRunsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsProcessesRunsGetCall) Context(ctx context.Context) *ProjectsLocationsProcessesRunsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsProcessesRunsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3281,12 +2512,7 @@ func (c *ProjectsLocationsProcessesRunsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsProcessesRunsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3303,17 +2529,15 @@ func (c *ProjectsLocationsProcessesRunsGetCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.processes.runs.get" call.
-// Exactly one of *GoogleCloudDatacatalogLineageV1Run or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudDatacatalogLineageV1Run.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogLineageV1Run.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsProcessesRunsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogLineageV1Run, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3344,35 +2568,7 @@ func (c *ProjectsLocationsProcessesRunsGetCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the details of the specified run.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processes/{processesId}/runs/{runsId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalineage.projects.locations.processes.runs.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the run to get.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/processes/[^/]+/runs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1Run"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalineage.projects.locations.processes.runs.list":
 
 type ProjectsLocationsProcessesRunsListCall struct {
 	s            *Service
@@ -3383,8 +2579,8 @@ type ProjectsLocationsProcessesRunsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists runs in the given project and location. List order is
-// descending by `start_time`.
+// List: Lists runs in the given project and location. List order is descending
+// by `start_time`.
 //
 // - parent: The name of process that owns this collection of runs.
 func (r *ProjectsLocationsProcessesRunsService) List(parent string) *ProjectsLocationsProcessesRunsListCall {
@@ -3393,52 +2589,48 @@ func (r *ProjectsLocationsProcessesRunsService) List(parent string) *ProjectsLoc
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of runs to return. The service may return fewer than this value. If
-// unspecified, at most 50 runs are returned. The maximum value is 100;
-// values greater than 100 are cut to 100.
+// PageSize sets the optional parameter "pageSize": The maximum number of runs
+// to return. The service may return fewer than this value. If unspecified, at
+// most 50 runs are returned. The maximum value is 100; values greater than 100
+// are cut to 100.
 func (c *ProjectsLocationsProcessesRunsListCall) PageSize(pageSize int64) *ProjectsLocationsProcessesRunsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The page token
-// received from a previous `ListRuns` call. Specify it to get the next
-// page. When paginating, all other parameters specified in this call
-// must match the parameters of the call that provided the page token.
+// PageToken sets the optional parameter "pageToken": The page token received
+// from a previous `ListRuns` call. Specify it to get the next page. When
+// paginating, all other parameters specified in this call must match the
+// parameters of the call that provided the page token.
 func (c *ProjectsLocationsProcessesRunsListCall) PageToken(pageToken string) *ProjectsLocationsProcessesRunsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsProcessesRunsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessesRunsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsProcessesRunsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessesRunsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsProcessesRunsListCall) Context(ctx context.Context) *ProjectsLocationsProcessesRunsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsProcessesRunsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3447,12 +2639,7 @@ func (c *ProjectsLocationsProcessesRunsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsProcessesRunsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3469,20 +2656,15 @@ func (c *ProjectsLocationsProcessesRunsListCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.processes.runs.list" call.
-// Exactly one of *GoogleCloudDatacatalogLineageV1ListRunsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatacatalogLineageV1ListRunsResponse.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogLineageV1ListRunsResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsProcessesRunsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogLineageV1ListRunsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3513,43 +2695,6 @@ func (c *ProjectsLocationsProcessesRunsListCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists runs in the given project and location. List order is descending by `start_time`.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processes/{processesId}/runs",
-	//   "httpMethod": "GET",
-	//   "id": "datalineage.projects.locations.processes.runs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of runs to return. The service may return fewer than this value. If unspecified, at most 50 runs are returned. The maximum value is 100; values greater than 100 are cut to 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The page token received from a previous `ListRuns` call. Specify it to get the next page. When paginating, all other parameters specified in this call must match the parameters of the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The name of process that owns this collection of runs.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/processes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/runs",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1ListRunsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3557,7 +2702,7 @@ func (c *ProjectsLocationsProcessesRunsListCall) Do(opts ...googleapi.CallOption
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsProcessesRunsListCall) Pages(ctx context.Context, f func(*GoogleCloudDatacatalogLineageV1ListRunsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3573,8 +2718,6 @@ func (c *ProjectsLocationsProcessesRunsListCall) Pages(ctx context.Context, f fu
 	}
 }
 
-// method id "datalineage.projects.locations.processes.runs.patch":
-
 type ProjectsLocationsProcessesRunsPatchCall struct {
 	s                                  *Service
 	name                               string
@@ -3587,10 +2730,9 @@ type ProjectsLocationsProcessesRunsPatchCall struct {
 // Patch: Updates a run.
 //
 //   - name: Immutable. The resource name of the run. Format:
-//     `projects/{project}/locations/{location}/processes/{process}/runs/{r
-//     un}`. Can be specified or auto-assigned. {run} must be not longer
-//     than 200 characters and only contain characters in a set:
-//     `a-zA-Z0-9_-:.`.
+//     `projects/{project}/locations/{location}/processes/{process}/runs/{run}`.
+//     Can be specified or auto-assigned. {run} must be not longer than 200
+//     characters and only contain characters in a set: `a-zA-Z0-9_-:.`.
 func (r *ProjectsLocationsProcessesRunsService) Patch(name string, googleclouddatacataloglineagev1run *GoogleCloudDatacatalogLineageV1Run) *ProjectsLocationsProcessesRunsPatchCall {
 	c := &ProjectsLocationsProcessesRunsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3598,38 +2740,36 @@ func (r *ProjectsLocationsProcessesRunsService) Patch(name string, googlecloudda
 	return c
 }
 
-// AllowMissing sets the optional parameter "allowMissing": If set to
-// true and the run is not found, the request creates it.
+// AllowMissing sets the optional parameter "allowMissing": If set to true and
+// the run is not found, the request creates it.
 func (c *ProjectsLocationsProcessesRunsPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsProcessesRunsPatchCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to update. Currently not used. The whole message is updated.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Currently not used. The whole message is updated.
 func (c *ProjectsLocationsProcessesRunsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsProcessesRunsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsProcessesRunsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessesRunsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsProcessesRunsPatchCall) Context(ctx context.Context) *ProjectsLocationsProcessesRunsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsProcessesRunsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3638,18 +2778,12 @@ func (c *ProjectsLocationsProcessesRunsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsProcessesRunsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatacataloglineagev1run)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -3662,17 +2796,15 @@ func (c *ProjectsLocationsProcessesRunsPatchCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.processes.runs.patch" call.
-// Exactly one of *GoogleCloudDatacatalogLineageV1Run or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudDatacatalogLineageV1Run.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogLineageV1Run.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsProcessesRunsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogLineageV1Run, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3703,49 +2835,7 @@ func (c *ProjectsLocationsProcessesRunsPatchCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a run.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processes/{processesId}/runs/{runsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "datalineage.projects.locations.processes.runs.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "allowMissing": {
-	//       "description": "If set to true and the run is not found, the request creates it.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "name": {
-	//       "description": "Immutable. The resource name of the run. Format: `projects/{project}/locations/{location}/processes/{process}/runs/{run}`. Can be specified or auto-assigned. {run} must be not longer than 200 characters and only contain characters in a set: `a-zA-Z0-9_-:.`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/processes/[^/]+/runs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to update. Currently not used. The whole message is updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1Run"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1Run"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalineage.projects.locations.processes.runs.lineageEvents.create":
 
 type ProjectsLocationsProcessesRunsLineageEventsCreateCall struct {
 	s                                           *Service
@@ -3766,33 +2856,30 @@ func (r *ProjectsLocationsProcessesRunsLineageEventsService) Create(parent strin
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A unique
-// identifier for this request. Restricted to 36 ASCII characters. A
-// random UUID is recommended. This request is idempotent only if a
-// `request_id` is provided.
+// RequestId sets the optional parameter "requestId": A unique identifier for
+// this request. Restricted to 36 ASCII characters. A random UUID is
+// recommended. This request is idempotent only if a `request_id` is provided.
 func (c *ProjectsLocationsProcessesRunsLineageEventsCreateCall) RequestId(requestId string) *ProjectsLocationsProcessesRunsLineageEventsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsProcessesRunsLineageEventsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessesRunsLineageEventsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsProcessesRunsLineageEventsCreateCall) Context(ctx context.Context) *ProjectsLocationsProcessesRunsLineageEventsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsProcessesRunsLineageEventsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3801,18 +2888,12 @@ func (c *ProjectsLocationsProcessesRunsLineageEventsCreateCall) Header() http.He
 }
 
 func (c *ProjectsLocationsProcessesRunsLineageEventsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatacataloglineagev1lineageevent)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/lineageEvents")
@@ -3825,18 +2906,15 @@ func (c *ProjectsLocationsProcessesRunsLineageEventsCreateCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.processes.runs.lineageEvents.create" call.
-// Exactly one of *GoogleCloudDatacatalogLineageV1LineageEvent or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatacatalogLineageV1LineageEvent.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogLineageV1LineageEvent.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsProcessesRunsLineageEventsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogLineageV1LineageEvent, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3867,43 +2945,7 @@ func (c *ProjectsLocationsProcessesRunsLineageEventsCreateCall) Do(opts ...googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new lineage event.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processes/{processesId}/runs/{runsId}/lineageEvents",
-	//   "httpMethod": "POST",
-	//   "id": "datalineage.projects.locations.processes.runs.lineageEvents.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the run that should own the lineage event.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/processes/[^/]+/runs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "A unique identifier for this request. Restricted to 36 ASCII characters. A random UUID is recommended. This request is idempotent only if a `request_id` is provided.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/lineageEvents",
-	//   "request": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1LineageEvent"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1LineageEvent"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalineage.projects.locations.processes.runs.lineageEvents.delete":
 
 type ProjectsLocationsProcessesRunsLineageEventsDeleteCall struct {
 	s          *Service
@@ -3922,32 +2964,30 @@ func (r *ProjectsLocationsProcessesRunsLineageEventsService) Delete(name string)
 	return c
 }
 
-// AllowMissing sets the optional parameter "allowMissing": If set to
-// true and the lineage event is not found, the request succeeds but the
-// server doesn't perform any actions.
+// AllowMissing sets the optional parameter "allowMissing": If set to true and
+// the lineage event is not found, the request succeeds but the server doesn't
+// perform any actions.
 func (c *ProjectsLocationsProcessesRunsLineageEventsDeleteCall) AllowMissing(allowMissing bool) *ProjectsLocationsProcessesRunsLineageEventsDeleteCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsProcessesRunsLineageEventsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessesRunsLineageEventsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsProcessesRunsLineageEventsDeleteCall) Context(ctx context.Context) *ProjectsLocationsProcessesRunsLineageEventsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsProcessesRunsLineageEventsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3956,12 +2996,7 @@ func (c *ProjectsLocationsProcessesRunsLineageEventsDeleteCall) Header() http.He
 }
 
 func (c *ProjectsLocationsProcessesRunsLineageEventsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3975,16 +3010,15 @@ func (c *ProjectsLocationsProcessesRunsLineageEventsDeleteCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.processes.runs.lineageEvents.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsProcessesRunsLineageEventsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4015,40 +3049,7 @@ func (c *ProjectsLocationsProcessesRunsLineageEventsDeleteCall) Do(opts ...googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes the lineage event with the specified name.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processes/{processesId}/runs/{runsId}/lineageEvents/{lineageEventsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "datalineage.projects.locations.processes.runs.lineageEvents.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "allowMissing": {
-	//       "description": "If set to true and the lineage event is not found, the request succeeds but the server doesn't perform any actions.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "name": {
-	//       "description": "Required. The name of the lineage event to delete.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/processes/[^/]+/runs/[^/]+/lineageEvents/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalineage.projects.locations.processes.runs.lineageEvents.get":
 
 type ProjectsLocationsProcessesRunsLineageEventsGetCall struct {
 	s            *Service
@@ -4069,33 +3070,29 @@ func (r *ProjectsLocationsProcessesRunsLineageEventsService) Get(name string) *P
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsProcessesRunsLineageEventsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessesRunsLineageEventsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsProcessesRunsLineageEventsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessesRunsLineageEventsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsProcessesRunsLineageEventsGetCall) Context(ctx context.Context) *ProjectsLocationsProcessesRunsLineageEventsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsProcessesRunsLineageEventsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4104,12 +3101,7 @@ func (c *ProjectsLocationsProcessesRunsLineageEventsGetCall) Header() http.Heade
 }
 
 func (c *ProjectsLocationsProcessesRunsLineageEventsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4126,18 +3118,15 @@ func (c *ProjectsLocationsProcessesRunsLineageEventsGetCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.processes.runs.lineageEvents.get" call.
-// Exactly one of *GoogleCloudDatacatalogLineageV1LineageEvent or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatacatalogLineageV1LineageEvent.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogLineageV1LineageEvent.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsProcessesRunsLineageEventsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogLineageV1LineageEvent, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4168,35 +3157,7 @@ func (c *ProjectsLocationsProcessesRunsLineageEventsGetCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets details of a specified lineage event.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processes/{processesId}/runs/{runsId}/lineageEvents/{lineageEventsId}",
-	//   "httpMethod": "GET",
-	//   "id": "datalineage.projects.locations.processes.runs.lineageEvents.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the lineage event to get.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/processes/[^/]+/runs/[^/]+/lineageEvents/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1LineageEvent"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "datalineage.projects.locations.processes.runs.lineageEvents.list":
 
 type ProjectsLocationsProcessesRunsLineageEventsListCall struct {
 	s            *Service
@@ -4207,64 +3168,59 @@ type ProjectsLocationsProcessesRunsLineageEventsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists lineage events in the given project and location. The
-// list order is not defined.
+// List: Lists lineage events in the given project and location. The list order
+// is not defined.
 //
-//   - parent: The name of the run that owns the collection of lineage
-//     events to get.
+//   - parent: The name of the run that owns the collection of lineage events to
+//     get.
 func (r *ProjectsLocationsProcessesRunsLineageEventsService) List(parent string) *ProjectsLocationsProcessesRunsLineageEventsListCall {
 	c := &ProjectsLocationsProcessesRunsLineageEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of lineage events to return. The service may return fewer events than
-// this value. If unspecified, at most 50 events are returned. The
-// maximum value is 100; values greater than 100 are cut to 100.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// lineage events to return. The service may return fewer events than this
+// value. If unspecified, at most 50 events are returned. The maximum value is
+// 100; values greater than 100 are cut to 100.
 func (c *ProjectsLocationsProcessesRunsLineageEventsListCall) PageSize(pageSize int64) *ProjectsLocationsProcessesRunsLineageEventsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The page token
-// received from a previous `ListLineageEvents` call. Specify it to get
-// the next page. When paginating, all other parameters specified in
-// this call must match the parameters of the call that provided the
-// page token.
+// PageToken sets the optional parameter "pageToken": The page token received
+// from a previous `ListLineageEvents` call. Specify it to get the next page.
+// When paginating, all other parameters specified in this call must match the
+// parameters of the call that provided the page token.
 func (c *ProjectsLocationsProcessesRunsLineageEventsListCall) PageToken(pageToken string) *ProjectsLocationsProcessesRunsLineageEventsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsProcessesRunsLineageEventsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessesRunsLineageEventsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsProcessesRunsLineageEventsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessesRunsLineageEventsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsProcessesRunsLineageEventsListCall) Context(ctx context.Context) *ProjectsLocationsProcessesRunsLineageEventsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsProcessesRunsLineageEventsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4273,12 +3229,7 @@ func (c *ProjectsLocationsProcessesRunsLineageEventsListCall) Header() http.Head
 }
 
 func (c *ProjectsLocationsProcessesRunsLineageEventsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4295,19 +3246,15 @@ func (c *ProjectsLocationsProcessesRunsLineageEventsListCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datalineage.projects.locations.processes.runs.lineageEvents.list" call.
-// Exactly one of
-// *GoogleCloudDatacatalogLineageV1ListLineageEventsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudDatacatalogLineageV1ListLineageEventsResponse.ServerRespon
-// se.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogLineageV1ListLineageEventsResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsProcessesRunsLineageEventsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogLineageV1ListLineageEventsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4338,43 +3285,6 @@ func (c *ProjectsLocationsProcessesRunsLineageEventsListCall) Do(opts ...googlea
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists lineage events in the given project and location. The list order is not defined.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processes/{processesId}/runs/{runsId}/lineageEvents",
-	//   "httpMethod": "GET",
-	//   "id": "datalineage.projects.locations.processes.runs.lineageEvents.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of lineage events to return. The service may return fewer events than this value. If unspecified, at most 50 events are returned. The maximum value is 100; values greater than 100 are cut to 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The page token received from a previous `ListLineageEvents` call. Specify it to get the next page. When paginating, all other parameters specified in this call must match the parameters of the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The name of the run that owns the collection of lineage events to get.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/processes/[^/]+/runs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/lineageEvents",
-	//   "response": {
-	//     "$ref": "GoogleCloudDatacatalogLineageV1ListLineageEventsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4382,7 +3292,7 @@ func (c *ProjectsLocationsProcessesRunsLineageEventsListCall) Do(opts ...googlea
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsProcessesRunsLineageEventsListCall) Pages(ctx context.Context, f func(*GoogleCloudDatacatalogLineageV1ListLineageEventsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

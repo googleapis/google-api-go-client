@@ -1047,7 +1047,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.get" call.
@@ -1178,7 +1178,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.list" call.
@@ -1314,7 +1314,7 @@ func (c *ProjectsLocationsNamespacesCreateCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.create" call.
@@ -1410,7 +1410,7 @@ func (c *ProjectsLocationsNamespacesDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.delete" call.
@@ -1517,7 +1517,7 @@ func (c *ProjectsLocationsNamespacesGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.get" call.
@@ -1620,7 +1620,7 @@ func (c *ProjectsLocationsNamespacesGetIamPolicyCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.getIamPolicy" call.
@@ -1775,7 +1775,7 @@ func (c *ProjectsLocationsNamespacesListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.list" call.
@@ -1906,7 +1906,7 @@ func (c *ProjectsLocationsNamespacesPatchCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.patch" call.
@@ -2009,7 +2009,7 @@ func (c *ProjectsLocationsNamespacesSetIamPolicyCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.setIamPolicy" call.
@@ -2114,7 +2114,7 @@ func (c *ProjectsLocationsNamespacesTestIamPermissionsCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.testIamPermissions" call.
@@ -2227,7 +2227,7 @@ func (c *ProjectsLocationsNamespacesServicesCreateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.services.create" call.
@@ -2323,7 +2323,7 @@ func (c *ProjectsLocationsNamespacesServicesDeleteCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.services.delete" call.
@@ -2430,7 +2430,7 @@ func (c *ProjectsLocationsNamespacesServicesGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.services.get" call.
@@ -2533,7 +2533,7 @@ func (c *ProjectsLocationsNamespacesServicesGetIamPolicyCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.services.getIamPolicy" call.
@@ -2688,7 +2688,7 @@ func (c *ProjectsLocationsNamespacesServicesListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.services.list" call.
@@ -2819,7 +2819,7 @@ func (c *ProjectsLocationsNamespacesServicesPatchCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.services.patch" call.
@@ -2921,7 +2921,7 @@ func (c *ProjectsLocationsNamespacesServicesResolveCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.services.resolve" call.
@@ -3025,7 +3025,7 @@ func (c *ProjectsLocationsNamespacesServicesSetIamPolicyCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.services.setIamPolicy" call.
@@ -3130,7 +3130,7 @@ func (c *ProjectsLocationsNamespacesServicesTestIamPermissionsCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.services.testIamPermissions" call.
@@ -3243,7 +3243,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsCreateCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.services.endpoints.create" call.
@@ -3338,7 +3338,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsDeleteCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.services.endpoints.delete" call.
@@ -3445,7 +3445,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsGetCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.services.endpoints.get" call.
@@ -3604,7 +3604,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsListCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.services.endpoints.list" call.
@@ -3735,7 +3735,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsPatchCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.services.endpoints.patch" call.
@@ -3838,7 +3838,7 @@ func (c *ProjectsLocationsNamespacesWorkloadsGetIamPolicyCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.workloads.getIamPolicy" call.
@@ -3941,7 +3941,7 @@ func (c *ProjectsLocationsNamespacesWorkloadsSetIamPolicyCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.workloads.setIamPolicy" call.
@@ -4046,7 +4046,7 @@ func (c *ProjectsLocationsNamespacesWorkloadsTestIamPermissionsCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "servicedirectory.projects.locations.namespaces.workloads.testIamPermissions" call.

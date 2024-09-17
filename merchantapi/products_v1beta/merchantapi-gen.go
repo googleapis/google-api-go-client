@@ -293,9 +293,10 @@ type Attributes struct {
 	// currently no way to get back the auto assigned google product categories
 	// through the API.
 	GoogleProductCategory string `json:"googleProductCategory,omitempty"`
-	// Gtin: Global Trade Item Number (GTIN
-	// (https://support.google.com/merchants/answer/188494#gtin)) of the item.
-	Gtin string `json:"gtin,omitempty"`
+	// Gtin: Global Trade Item Numbers (GTIN
+	// (https://support.google.com/merchants/answer/188494#gtin)) of the item. You
+	// can provide up to 10 GTINs.
+	Gtin []string `json:"gtin,omitempty"`
 	// IdentifierExists: Set this value to false when the item does not have unique
 	// product identifiers appropriate to its category, such as GTIN, MPN, and
 	// brand. Defaults to true, if not provided.
@@ -1831,7 +1832,7 @@ func (c *AccountsProductInputsDeleteCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.productInputs.delete" call.
@@ -1946,7 +1947,7 @@ func (c *AccountsProductInputsInsertCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.productInputs.insert" call.
@@ -2056,7 +2057,7 @@ func (c *AccountsProductsGetCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.products.get" call.
@@ -2186,7 +2187,7 @@ func (c *AccountsProductsListCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.products.list" call.

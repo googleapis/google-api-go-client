@@ -54,6 +54,7 @@ cloud.google.com/go/bigquery v1.59.1/go.mod h1:VP1UJYgevyTwsV7desjzNzDND5p6hZB+Z
 cloud.google.com/go/bigquery v1.62.0/go.mod h1:5ee+ZkF1x/ntgCsFQJAQTM3QkAZOecfCmvxhkJsWRSA=
 cloud.google.com/go/bigtable v1.27.2-0.20240730134218-123c88616251/go.mod h1:avmXcmxVbLJAo9moICRYMgDyTTPoV0MA0lHKnyqV4fQ=
 cloud.google.com/go/bigtable v1.29.0/go.mod h1:5p909nNdWaNUcWs6KGZO8mI5HUovstlmrIi7+eA5PTQ=
+cloud.google.com/go/bigtable v1.31.0/go.mod h1:N/mwZO+4TSHOeyiE1JxO+sRPnW4bnR7WLn9AEaiJqew=
 cloud.google.com/go/billing v1.18.2/go.mod h1:PPIwVsOOQ7xzbADCwNe8nvK776QpfrOAUkvKjCUcpSE=
 cloud.google.com/go/billing v1.18.9/go.mod h1:bKTnh8MBfCMUT1fzZ936CPN9rZG7ZEiHB2J3SjIjByc=
 cloud.google.com/go/billing v1.19.0/go.mod h1:bGvChbZguyaWRGmu5pQHfFN1VxTDPFmabnCVA/dNdRM=
@@ -169,6 +170,7 @@ cloud.google.com/go/gkebackup v1.6.0/go.mod h1:1rskt7NgawoMDHTdLASX8caXXYG3MvDso
 cloud.google.com/go/gkeconnect v0.8.5/go.mod h1:LC/rS7+CuJ5fgIbXv8tCD/mdfnlAadTaUufgOkmijuk=
 cloud.google.com/go/gkeconnect v0.8.11/go.mod h1:ejHv5ehbceIglu1GsMwlH0nZpTftjxEY6DX7tvaM8gA=
 cloud.google.com/go/gkeconnect v0.10.0/go.mod h1:d8TE+YAlX7mvq8pWy1Q4yOnmxbN0SimmcQdtJwBdUHk=
+cloud.google.com/go/gkeconnect v0.11.0/go.mod h1:l3iPZl1OfT+DUQ+QkmH1PC5RTLqxKQSVnboLiQGAcCA=
 cloud.google.com/go/gkehub v0.14.5/go.mod h1:6bzqxM+a+vEH/h8W8ec4OJl4r36laxTs3A/fMNHJ0wA=
 cloud.google.com/go/gkehub v0.14.11/go.mod h1:CsmDJ4qbBnSPkoBltEubK6qGOjG0xNfeeT5jI5gCnRQ=
 cloud.google.com/go/gkehub v0.15.0/go.mod h1:obpeROly2mjxZJbRkFfHEflcH54XhJI+g2QgfHphL0I=
@@ -271,6 +273,7 @@ cloud.google.com/go/pubsublite v1.8.2/go.mod h1:4r8GSa9NznExjuLPEJlF1VjOPOpgf3IT
 cloud.google.com/go/recaptchaenterprise/v2 v2.9.2/go.mod h1:trwwGkfhCmp05Ll5MSJPXY7yvnO0p4v3orGANAFHAuU=
 cloud.google.com/go/recaptchaenterprise/v2 v2.14.2/go.mod h1:MwPgdgvBkE46aWuuXeBTCB8hQJ88p+CpXInROZYCTkc=
 cloud.google.com/go/recaptchaenterprise/v2 v2.16.0/go.mod h1:iq7s8lR3dXv4mDXE3/qyPtZEXOK7wHC1r3bX2fQyU9s=
+cloud.google.com/go/recaptchaenterprise/v2 v2.17.0/go.mod h1:SS4QDdlmJ3NvbOMCXQxaFhVGRjvNMfoKCoCdxqXadqs=
 cloud.google.com/go/recommendationengine v0.8.5/go.mod h1:A38rIXHGFvoPvmy6pZLozr0g59NRNREz4cx7F58HAsQ=
 cloud.google.com/go/recommendationengine v0.8.11/go.mod h1:cEkU4tCXAF88a4boMFZym7U7uyxvVwcQtKzS85IbQio=
 cloud.google.com/go/recommendationengine v0.9.0/go.mod h1:59ydKXFyXO4Y8S0Bk224sKfj6YvIyzgcpG6w8kXIMm4=

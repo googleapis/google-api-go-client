@@ -5147,7 +5147,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.get" call.
@@ -5254,7 +5254,7 @@ func (c *ProjectsLocationsGetConfigCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.getConfig" call.
@@ -5385,7 +5385,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.list" call.
@@ -5540,7 +5540,7 @@ func (c *ProjectsLocationsCustomTargetTypesCreateCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.customTargetTypes.create" call.
@@ -5677,7 +5677,7 @@ func (c *ProjectsLocationsCustomTargetTypesDeleteCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.customTargetTypes.delete" call.
@@ -5786,7 +5786,7 @@ func (c *ProjectsLocationsCustomTargetTypesGetCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.customTargetTypes.get" call.
@@ -5914,7 +5914,7 @@ func (c *ProjectsLocationsCustomTargetTypesGetIamPolicyCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.customTargetTypes.getIamPolicy" call.
@@ -6054,7 +6054,7 @@ func (c *ProjectsLocationsCustomTargetTypesListCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.customTargetTypes.list" call.
@@ -6223,7 +6223,7 @@ func (c *ProjectsLocationsCustomTargetTypesPatchCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.customTargetTypes.patch" call.
@@ -6328,7 +6328,7 @@ func (c *ProjectsLocationsCustomTargetTypesSetIamPolicyCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.customTargetTypes.setIamPolicy" call.
@@ -6461,7 +6461,7 @@ func (c *ProjectsLocationsDeliveryPipelinesCreateCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.create" call.
@@ -6606,7 +6606,7 @@ func (c *ProjectsLocationsDeliveryPipelinesDeleteCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.delete" call.
@@ -6715,7 +6715,7 @@ func (c *ProjectsLocationsDeliveryPipelinesGetCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.get" call.
@@ -6843,7 +6843,7 @@ func (c *ProjectsLocationsDeliveryPipelinesGetIamPolicyCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.getIamPolicy" call.
@@ -6983,7 +6983,7 @@ func (c *ProjectsLocationsDeliveryPipelinesListCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.list" call.
@@ -7152,7 +7152,7 @@ func (c *ProjectsLocationsDeliveryPipelinesPatchCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.patch" call.
@@ -7256,7 +7256,7 @@ func (c *ProjectsLocationsDeliveryPipelinesRollbackTargetCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.rollbackTarget" call.
@@ -7362,7 +7362,7 @@ func (c *ProjectsLocationsDeliveryPipelinesSetIamPolicyCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.setIamPolicy" call.
@@ -7470,7 +7470,7 @@ func (c *ProjectsLocationsDeliveryPipelinesTestIamPermissionsCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.testIamPermissions" call.
@@ -7577,7 +7577,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.automationRuns.cancel" call.
@@ -7687,7 +7687,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.automationRuns.get" call.
@@ -7828,7 +7828,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.automationRuns.list" call.
@@ -7985,7 +7985,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.automations.create" call.
@@ -8122,7 +8122,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.automations.delete" call.
@@ -8231,7 +8231,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsGetCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.automations.get" call.
@@ -8372,7 +8372,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsListCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.automations.list" call.
@@ -8540,7 +8540,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.automations.patch" call.
@@ -8643,7 +8643,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesAbandonCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.abandon" call.
@@ -8779,7 +8779,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesCreateCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.create" call.
@@ -8888,7 +8888,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesGetCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.get" call.
@@ -9028,7 +9028,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesListCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.list" call.
@@ -9153,7 +9153,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsAdvanceCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.advance" call.
@@ -9257,7 +9257,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsApproveCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.approve" call.
@@ -9361,7 +9361,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCancelCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.cancel" call.
@@ -9505,7 +9505,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.create" call.
@@ -9614,7 +9614,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsGetCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.get" call.
@@ -9717,7 +9717,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsIgnoreJobCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"rollout": c.rollout,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.ignoreJob" call.
@@ -9857,7 +9857,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsListCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.list" call.
@@ -9982,7 +9982,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"rollout": c.rollout,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.retryJob" call.
@@ -10093,7 +10093,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.jobRuns.get" call.
@@ -10232,7 +10232,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsListCall) doRe
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.jobRuns.list" call.
@@ -10357,7 +10357,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsTerminateCall)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.deliveryPipelines.releases.rollouts.jobRuns.terminate" call.
@@ -10467,7 +10467,7 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.operations.cancel" call.
@@ -10565,7 +10565,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.operations.delete" call.
@@ -10674,7 +10674,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.operations.get" call.
@@ -10802,7 +10802,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.operations.list" call.
@@ -10957,7 +10957,7 @@ func (c *ProjectsLocationsTargetsCreateCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.targets.create" call.
@@ -11092,7 +11092,7 @@ func (c *ProjectsLocationsTargetsDeleteCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.targets.delete" call.
@@ -11200,7 +11200,7 @@ func (c *ProjectsLocationsTargetsGetCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.targets.get" call.
@@ -11327,7 +11327,7 @@ func (c *ProjectsLocationsTargetsGetIamPolicyCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.targets.getIamPolicy" call.
@@ -11467,7 +11467,7 @@ func (c *ProjectsLocationsTargetsListCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.targets.list" call.
@@ -11634,7 +11634,7 @@ func (c *ProjectsLocationsTargetsPatchCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.targets.patch" call.
@@ -11739,7 +11739,7 @@ func (c *ProjectsLocationsTargetsSetIamPolicyCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.targets.setIamPolicy" call.
@@ -11847,7 +11847,7 @@ func (c *ProjectsLocationsTargetsTestIamPermissionsCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "clouddeploy.projects.locations.targets.testIamPermissions" call.

@@ -3483,7 +3483,7 @@ func (c *FoldersGetAutokeyConfigCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.folders.getAutokeyConfig" call.
@@ -3596,7 +3596,7 @@ func (c *FoldersUpdateAutokeyConfigCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.folders.updateAutokeyConfig" call.
@@ -3706,7 +3706,7 @@ func (c *ProjectsShowEffectiveAutokeyConfigCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.showEffectiveAutokeyConfig" call.
@@ -3810,7 +3810,7 @@ func (c *ProjectsLocationsGenerateRandomBytesCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"location": c.location,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.generateRandomBytes" call.
@@ -3918,7 +3918,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.get" call.
@@ -4026,7 +4026,7 @@ func (c *ProjectsLocationsGetEkmConfigCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.getEkmConfig" call.
@@ -4157,7 +4157,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.list" call.
@@ -4289,7 +4289,7 @@ func (c *ProjectsLocationsUpdateEkmConfigCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.updateEkmConfig" call.
@@ -4416,7 +4416,7 @@ func (c *ProjectsLocationsEkmConfigGetIamPolicyCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.ekmConfig.getIamPolicy" call.
@@ -4521,7 +4521,7 @@ func (c *ProjectsLocationsEkmConfigSetIamPolicyCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.ekmConfig.setIamPolicy" call.
@@ -4629,7 +4629,7 @@ func (c *ProjectsLocationsEkmConfigTestIamPermissionsCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.ekmConfig.testIamPermissions" call.
@@ -4740,7 +4740,7 @@ func (c *ProjectsLocationsEkmConnectionsCreateCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.ekmConnections.create" call.
@@ -4847,7 +4847,7 @@ func (c *ProjectsLocationsEkmConnectionsGetCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.ekmConnections.get" call.
@@ -4974,7 +4974,7 @@ func (c *ProjectsLocationsEkmConnectionsGetIamPolicyCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.ekmConnections.getIamPolicy" call.
@@ -5117,7 +5117,7 @@ func (c *ProjectsLocationsEkmConnectionsListCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.ekmConnections.list" call.
@@ -5248,7 +5248,7 @@ func (c *ProjectsLocationsEkmConnectionsPatchCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.ekmConnections.patch" call.
@@ -5353,7 +5353,7 @@ func (c *ProjectsLocationsEkmConnectionsSetIamPolicyCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.ekmConnections.setIamPolicy" call.
@@ -5461,7 +5461,7 @@ func (c *ProjectsLocationsEkmConnectionsTestIamPermissionsCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.ekmConnections.testIamPermissions" call.
@@ -5573,7 +5573,7 @@ func (c *ProjectsLocationsEkmConnectionsVerifyConnectivityCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.ekmConnections.verifyConnectivity" call.
@@ -5688,7 +5688,7 @@ func (c *ProjectsLocationsKeyHandlesCreateCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyHandles.create" call.
@@ -5796,7 +5796,7 @@ func (c *ProjectsLocationsKeyHandlesGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyHandles.get" call.
@@ -5928,7 +5928,7 @@ func (c *ProjectsLocationsKeyHandlesListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyHandles.list" call.
@@ -6060,7 +6060,7 @@ func (c *ProjectsLocationsKeyRingsCreateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.create" call.
@@ -6167,7 +6167,7 @@ func (c *ProjectsLocationsKeyRingsGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.get" call.
@@ -6294,7 +6294,7 @@ func (c *ProjectsLocationsKeyRingsGetIamPolicyCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.getIamPolicy" call.
@@ -6437,7 +6437,7 @@ func (c *ProjectsLocationsKeyRingsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.list" call.
@@ -6564,7 +6564,7 @@ func (c *ProjectsLocationsKeyRingsSetIamPolicyCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.setIamPolicy" call.
@@ -6672,7 +6672,7 @@ func (c *ProjectsLocationsKeyRingsTestIamPermissionsCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.testIamPermissions" call.
@@ -6793,7 +6793,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCreateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.create" call.
@@ -6896,7 +6896,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysDecryptCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.decrypt" call.
@@ -7001,7 +7001,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysEncryptCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.encrypt" call.
@@ -7110,7 +7110,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.get" call.
@@ -7237,7 +7237,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.getIamPolicy" call.
@@ -7397,7 +7397,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.list" call.
@@ -7528,7 +7528,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysPatchCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.patch" call.
@@ -7633,7 +7633,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.setIamPolicy" call.
@@ -7741,7 +7741,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.testIamPermissions" call.
@@ -7845,7 +7845,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysUpdatePrimaryVersionCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.updatePrimaryVersion" call.
@@ -7948,7 +7948,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCa
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.asymmetricDecrypt" call.
@@ -8052,7 +8052,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricSignCall)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.asymmetricSign" call.
@@ -8155,7 +8155,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.create" call.
@@ -8262,7 +8262,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.destroy" call.
@@ -8370,7 +8370,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.get" call.
@@ -8479,7 +8479,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.getPublicKey" call.
@@ -8586,7 +8586,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.import" call.
@@ -8747,7 +8747,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.list" call.
@@ -8871,7 +8871,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsMacSignCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.macSign" call.
@@ -8975,7 +8975,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsMacVerifyCall) doRe
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.macVerify" call.
@@ -9088,7 +9088,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.patch" call.
@@ -9191,7 +9191,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawDecryptCall) doR
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.rawDecrypt" call.
@@ -9295,7 +9295,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRawEncryptCall) doR
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.rawEncrypt" call.
@@ -9399,7 +9399,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRestoreCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.restore" call.
@@ -9510,7 +9510,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsCreateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.importJobs.create" call.
@@ -9617,7 +9617,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.importJobs.get" call.
@@ -9744,7 +9744,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.importJobs.getIamPolicy" call.
@@ -9887,7 +9887,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.importJobs.list" call.
@@ -10014,7 +10014,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.importJobs.setIamPolicy" call.
@@ -10122,7 +10122,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.keyRings.importJobs.testIamPermissions" call.
@@ -10232,7 +10232,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudkms.projects.locations.operations.get" call.

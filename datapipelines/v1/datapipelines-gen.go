@@ -997,7 +997,7 @@ func (c *ProjectsLocationsPipelinesCreateCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.create" call.
@@ -1095,7 +1095,7 @@ func (c *ProjectsLocationsPipelinesDeleteCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.delete" call.
@@ -1206,7 +1206,7 @@ func (c *ProjectsLocationsPipelinesGetCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.get" call.
@@ -1347,7 +1347,7 @@ func (c *ProjectsLocationsPipelinesListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.list" call.
@@ -1493,7 +1493,7 @@ func (c *ProjectsLocationsPipelinesPatchCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.patch" call.
@@ -1600,7 +1600,7 @@ func (c *ProjectsLocationsPipelinesRunCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.run" call.
@@ -1705,7 +1705,7 @@ func (c *ProjectsLocationsPipelinesStopCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.stop" call.
@@ -1833,7 +1833,7 @@ func (c *ProjectsLocationsPipelinesJobsListCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datapipelines.projects.locations.pipelines.jobs.list" call.

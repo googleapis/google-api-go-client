@@ -7459,7 +7459,7 @@ func (c *EventticketclassAddmessageCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.eventticketclass.addmessage" call.
@@ -7571,7 +7571,7 @@ func (c *EventticketclassGetCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.eventticketclass.get" call.
@@ -7666,7 +7666,7 @@ func (c *EventticketclassInsertCall) doRequest(alt string) (*http.Response, erro
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.eventticketclass.insert" call.
@@ -7793,7 +7793,7 @@ func (c *EventticketclassListCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.eventticketclass.list" call.
@@ -7900,7 +7900,7 @@ func (c *EventticketclassPatchCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.eventticketclass.patch" call.
@@ -8006,7 +8006,7 @@ func (c *EventticketclassUpdateCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.eventticketclass.update" call.
@@ -8113,7 +8113,7 @@ func (c *EventticketobjectAddmessageCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.eventticketobject.addmessage" call.
@@ -8225,7 +8225,7 @@ func (c *EventticketobjectGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.eventticketobject.get" call.
@@ -8320,7 +8320,7 @@ func (c *EventticketobjectInsertCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.eventticketobject.insert" call.
@@ -8447,7 +8447,7 @@ func (c *EventticketobjectListCall) doRequest(alt string) (*http.Response, error
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.eventticketobject.list" call.
@@ -8554,7 +8554,7 @@ func (c *EventticketobjectModifylinkedofferobjectsCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.eventticketobject.modifylinkedofferobjects" call.
@@ -8661,7 +8661,7 @@ func (c *EventticketobjectPatchCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.eventticketobject.patch" call.
@@ -8767,7 +8767,7 @@ func (c *EventticketobjectUpdateCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.eventticketobject.update" call.
@@ -8874,7 +8874,7 @@ func (c *FlightclassAddmessageCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.flightclass.addmessage" call.
@@ -8986,7 +8986,7 @@ func (c *FlightclassGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.flightclass.get" call.
@@ -9080,7 +9080,7 @@ func (c *FlightclassInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.flightclass.insert" call.
@@ -9206,7 +9206,7 @@ func (c *FlightclassListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.flightclass.list" call.
@@ -9313,7 +9313,7 @@ func (c *FlightclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.flightclass.patch" call.
@@ -9418,7 +9418,7 @@ func (c *FlightclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.flightclass.update" call.
@@ -9524,7 +9524,7 @@ func (c *FlightobjectAddmessageCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.flightobject.addmessage" call.
@@ -9636,7 +9636,7 @@ func (c *FlightobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.flightobject.get" call.
@@ -9730,7 +9730,7 @@ func (c *FlightobjectInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.flightobject.insert" call.
@@ -9856,7 +9856,7 @@ func (c *FlightobjectListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.flightobject.list" call.
@@ -9963,7 +9963,7 @@ func (c *FlightobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.flightobject.patch" call.
@@ -10068,7 +10068,7 @@ func (c *FlightobjectUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.flightobject.update" call.
@@ -10174,7 +10174,7 @@ func (c *GenericclassAddmessageCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.genericclass.addmessage" call.
@@ -10286,7 +10286,7 @@ func (c *GenericclassGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.genericclass.get" call.
@@ -10380,7 +10380,7 @@ func (c *GenericclassInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.genericclass.insert" call.
@@ -10506,7 +10506,7 @@ func (c *GenericclassListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.genericclass.list" call.
@@ -10613,7 +10613,7 @@ func (c *GenericclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.genericclass.patch" call.
@@ -10718,7 +10718,7 @@ func (c *GenericclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.genericclass.update" call.
@@ -10824,7 +10824,7 @@ func (c *GenericobjectAddmessageCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.genericobject.addmessage" call.
@@ -10936,7 +10936,7 @@ func (c *GenericobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.genericobject.get" call.
@@ -11030,7 +11030,7 @@ func (c *GenericobjectInsertCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.genericobject.insert" call.
@@ -11156,7 +11156,7 @@ func (c *GenericobjectListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.genericobject.list" call.
@@ -11263,7 +11263,7 @@ func (c *GenericobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.genericobject.patch" call.
@@ -11368,7 +11368,7 @@ func (c *GenericobjectUpdateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.genericobject.update" call.
@@ -11474,7 +11474,7 @@ func (c *GiftcardclassAddmessageCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.giftcardclass.addmessage" call.
@@ -11586,7 +11586,7 @@ func (c *GiftcardclassGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.giftcardclass.get" call.
@@ -11680,7 +11680,7 @@ func (c *GiftcardclassInsertCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.giftcardclass.insert" call.
@@ -11806,7 +11806,7 @@ func (c *GiftcardclassListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.giftcardclass.list" call.
@@ -11913,7 +11913,7 @@ func (c *GiftcardclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.giftcardclass.patch" call.
@@ -12018,7 +12018,7 @@ func (c *GiftcardclassUpdateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.giftcardclass.update" call.
@@ -12124,7 +12124,7 @@ func (c *GiftcardobjectAddmessageCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.giftcardobject.addmessage" call.
@@ -12236,7 +12236,7 @@ func (c *GiftcardobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.giftcardobject.get" call.
@@ -12330,7 +12330,7 @@ func (c *GiftcardobjectInsertCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.giftcardobject.insert" call.
@@ -12456,7 +12456,7 @@ func (c *GiftcardobjectListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.giftcardobject.list" call.
@@ -12563,7 +12563,7 @@ func (c *GiftcardobjectPatchCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.giftcardobject.patch" call.
@@ -12668,7 +12668,7 @@ func (c *GiftcardobjectUpdateCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.giftcardobject.update" call.
@@ -12775,7 +12775,7 @@ func (c *IssuerGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": strconv.FormatInt(c.resourceId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.issuer.get" call.
@@ -12869,7 +12869,7 @@ func (c *IssuerInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.issuer.insert" call.
@@ -12969,7 +12969,7 @@ func (c *IssuerListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.issuer.list" call.
@@ -13072,7 +13072,7 @@ func (c *IssuerPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": strconv.FormatInt(c.resourceId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.issuer.patch" call.
@@ -13173,7 +13173,7 @@ func (c *IssuerUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": strconv.FormatInt(c.resourceId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.issuer.update" call.
@@ -13267,7 +13267,7 @@ func (c *JwtInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.jwt.insert" call.
@@ -13374,7 +13374,7 @@ func (c *LoyaltyclassAddmessageCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.loyaltyclass.addmessage" call.
@@ -13486,7 +13486,7 @@ func (c *LoyaltyclassGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.loyaltyclass.get" call.
@@ -13580,7 +13580,7 @@ func (c *LoyaltyclassInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.loyaltyclass.insert" call.
@@ -13706,7 +13706,7 @@ func (c *LoyaltyclassListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.loyaltyclass.list" call.
@@ -13813,7 +13813,7 @@ func (c *LoyaltyclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.loyaltyclass.patch" call.
@@ -13918,7 +13918,7 @@ func (c *LoyaltyclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.loyaltyclass.update" call.
@@ -14024,7 +14024,7 @@ func (c *LoyaltyobjectAddmessageCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.loyaltyobject.addmessage" call.
@@ -14136,7 +14136,7 @@ func (c *LoyaltyobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.loyaltyobject.get" call.
@@ -14230,7 +14230,7 @@ func (c *LoyaltyobjectInsertCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.loyaltyobject.insert" call.
@@ -14356,7 +14356,7 @@ func (c *LoyaltyobjectListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.loyaltyobject.list" call.
@@ -14463,7 +14463,7 @@ func (c *LoyaltyobjectModifylinkedofferobjectsCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.loyaltyobject.modifylinkedofferobjects" call.
@@ -14569,7 +14569,7 @@ func (c *LoyaltyobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.loyaltyobject.patch" call.
@@ -14674,7 +14674,7 @@ func (c *LoyaltyobjectUpdateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.loyaltyobject.update" call.
@@ -14786,7 +14786,7 @@ func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Download fetches the API endpoint's "media" value, instead of the normal
@@ -14960,7 +14960,7 @@ func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.media.upload" call.
@@ -15084,7 +15084,7 @@ func (c *OfferclassAddmessageCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.offerclass.addmessage" call.
@@ -15196,7 +15196,7 @@ func (c *OfferclassGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.offerclass.get" call.
@@ -15290,7 +15290,7 @@ func (c *OfferclassInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.offerclass.insert" call.
@@ -15416,7 +15416,7 @@ func (c *OfferclassListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.offerclass.list" call.
@@ -15523,7 +15523,7 @@ func (c *OfferclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.offerclass.patch" call.
@@ -15628,7 +15628,7 @@ func (c *OfferclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.offerclass.update" call.
@@ -15734,7 +15734,7 @@ func (c *OfferobjectAddmessageCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.offerobject.addmessage" call.
@@ -15846,7 +15846,7 @@ func (c *OfferobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.offerobject.get" call.
@@ -15940,7 +15940,7 @@ func (c *OfferobjectInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.offerobject.insert" call.
@@ -16066,7 +16066,7 @@ func (c *OfferobjectListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.offerobject.list" call.
@@ -16173,7 +16173,7 @@ func (c *OfferobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.offerobject.patch" call.
@@ -16278,7 +16278,7 @@ func (c *OfferobjectUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.offerobject.update" call.
@@ -16386,7 +16386,7 @@ func (c *PermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": strconv.FormatInt(c.resourceId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.permissions.get" call.
@@ -16488,7 +16488,7 @@ func (c *PermissionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": strconv.FormatInt(c.resourceId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.permissions.update" call.
@@ -16582,7 +16582,7 @@ func (c *SmarttapInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.smarttap.insert" call.
@@ -16688,7 +16688,7 @@ func (c *TransitclassAddmessageCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.transitclass.addmessage" call.
@@ -16800,7 +16800,7 @@ func (c *TransitclassGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.transitclass.get" call.
@@ -16894,7 +16894,7 @@ func (c *TransitclassInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.transitclass.insert" call.
@@ -17020,7 +17020,7 @@ func (c *TransitclassListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.transitclass.list" call.
@@ -17127,7 +17127,7 @@ func (c *TransitclassPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.transitclass.patch" call.
@@ -17232,7 +17232,7 @@ func (c *TransitclassUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.transitclass.update" call.
@@ -17338,7 +17338,7 @@ func (c *TransitobjectAddmessageCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.transitobject.addmessage" call.
@@ -17450,7 +17450,7 @@ func (c *TransitobjectGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.transitobject.get" call.
@@ -17544,7 +17544,7 @@ func (c *TransitobjectInsertCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.transitobject.insert" call.
@@ -17670,7 +17670,7 @@ func (c *TransitobjectListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.transitobject.list" call.
@@ -17777,7 +17777,7 @@ func (c *TransitobjectPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.transitobject.patch" call.
@@ -17882,7 +17882,7 @@ func (c *TransitobjectUpdateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceId": c.resourceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "walletobjects.transitobject.update" call.

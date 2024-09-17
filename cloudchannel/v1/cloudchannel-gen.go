@@ -5258,7 +5258,7 @@ func (c *AccountsCheckCloudIdentityAccountsExistCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.checkCloudIdentityAccountsExist" call.
@@ -5393,7 +5393,7 @@ func (c *AccountsListSubscribersCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"account": c.account,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.listSubscribers" call.
@@ -5527,7 +5527,7 @@ func (c *AccountsListTransferableOffersCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.listTransferableOffers" call.
@@ -5659,7 +5659,7 @@ func (c *AccountsListTransferableSkusCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.listTransferableSkus" call.
@@ -5791,7 +5791,7 @@ func (c *AccountsRegisterCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"account": c.account,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.register" call.
@@ -5905,7 +5905,7 @@ func (c *AccountsUnregisterCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"account": c.account,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.unregister" call.
@@ -6021,7 +6021,7 @@ func (c *AccountsChannelPartnerLinksCreateCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.create" call.
@@ -6156,7 +6156,7 @@ func (c *AccountsChannelPartnerLinksGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.get" call.
@@ -6307,7 +6307,7 @@ func (c *AccountsChannelPartnerLinksListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.list" call.
@@ -6443,7 +6443,7 @@ func (c *AccountsChannelPartnerLinksPatchCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.patch" call.
@@ -6571,7 +6571,7 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsCreateCall) do
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.create" call.
@@ -6675,7 +6675,7 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsDeleteCall) do
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.delete" call.
@@ -6791,7 +6791,7 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsGetCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.get" call.
@@ -6943,7 +6943,7 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsListCall) doRe
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.list" call.
@@ -7084,7 +7084,7 @@ func (c *AccountsChannelPartnerLinksChannelPartnerRepricingConfigsPatchCall) doR
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.channelPartnerRepricingConfigs.patch" call.
@@ -7194,7 +7194,7 @@ func (c *AccountsChannelPartnerLinksCustomersCreateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.create" call.
@@ -7294,7 +7294,7 @@ func (c *AccountsChannelPartnerLinksCustomersDeleteCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.delete" call.
@@ -7408,7 +7408,7 @@ func (c *AccountsChannelPartnerLinksCustomersGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.get" call.
@@ -7522,7 +7522,7 @@ func (c *AccountsChannelPartnerLinksCustomersImportCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.import" call.
@@ -7661,7 +7661,7 @@ func (c *AccountsChannelPartnerLinksCustomersListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.list" call.
@@ -7797,7 +7797,7 @@ func (c *AccountsChannelPartnerLinksCustomersPatchCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.channelPartnerLinks.customers.patch" call.
@@ -7907,7 +7907,7 @@ func (c *AccountsCustomersCreateCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.create" call.
@@ -8007,7 +8007,7 @@ func (c *AccountsCustomersDeleteCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.delete" call.
@@ -8121,7 +8121,7 @@ func (c *AccountsCustomersGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.get" call.
@@ -8235,7 +8235,7 @@ func (c *AccountsCustomersImportCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.import" call.
@@ -8374,7 +8374,7 @@ func (c *AccountsCustomersListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.list" call.
@@ -8580,7 +8580,7 @@ func (c *AccountsCustomersListPurchasableOffersCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.listPurchasableOffers" call.
@@ -8769,7 +8769,7 @@ func (c *AccountsCustomersListPurchasableSkusCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.listPurchasableSkus" call.
@@ -8905,7 +8905,7 @@ func (c *AccountsCustomersPatchCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.patch" call.
@@ -9021,7 +9021,7 @@ func (c *AccountsCustomersProvisionCloudIdentityCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.provisionCloudIdentity" call.
@@ -9144,7 +9144,7 @@ func (c *AccountsCustomersQueryEligibleBillingAccountsCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"customer": c.customer,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.queryEligibleBillingAccounts" call.
@@ -9266,7 +9266,7 @@ func (c *AccountsCustomersTransferEntitlementsCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.transferEntitlements" call.
@@ -9387,7 +9387,7 @@ func (c *AccountsCustomersTransferEntitlementsToGoogleCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.transferEntitlementsToGoogle" call.
@@ -9514,7 +9514,7 @@ func (c *AccountsCustomersCustomerRepricingConfigsCreateCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.customerRepricingConfigs.create" call.
@@ -9619,7 +9619,7 @@ func (c *AccountsCustomersCustomerRepricingConfigsDeleteCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.customerRepricingConfigs.delete" call.
@@ -9735,7 +9735,7 @@ func (c *AccountsCustomersCustomerRepricingConfigsGetCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.customerRepricingConfigs.get" call.
@@ -9884,7 +9884,7 @@ func (c *AccountsCustomersCustomerRepricingConfigsListCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.customerRepricingConfigs.list" call.
@@ -10024,7 +10024,7 @@ func (c *AccountsCustomersCustomerRepricingConfigsPatchCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.customerRepricingConfigs.patch" call.
@@ -10143,7 +10143,7 @@ func (c *AccountsCustomersEntitlementsActivateCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.activate" call.
@@ -10262,7 +10262,7 @@ func (c *AccountsCustomersEntitlementsCancelCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.cancel" call.
@@ -10377,7 +10377,7 @@ func (c *AccountsCustomersEntitlementsChangeOfferCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.changeOffer" call.
@@ -10492,7 +10492,7 @@ func (c *AccountsCustomersEntitlementsChangeParametersCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.changeParameters" call.
@@ -10608,7 +10608,7 @@ func (c *AccountsCustomersEntitlementsChangeRenewalSettingsCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.changeRenewalSettings" call.
@@ -10734,7 +10734,7 @@ func (c *AccountsCustomersEntitlementsCreateCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.create" call.
@@ -10848,7 +10848,7 @@ func (c *AccountsCustomersEntitlementsGetCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.get" call.
@@ -10979,7 +10979,7 @@ func (c *AccountsCustomersEntitlementsListCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.list" call.
@@ -11146,7 +11146,7 @@ func (c *AccountsCustomersEntitlementsListEntitlementChangesCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.listEntitlementChanges" call.
@@ -11281,7 +11281,7 @@ func (c *AccountsCustomersEntitlementsLookupOfferCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"entitlement": c.entitlement,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.lookupOffer" call.
@@ -11397,7 +11397,7 @@ func (c *AccountsCustomersEntitlementsStartPaidServiceCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.startPaidService" call.
@@ -11511,7 +11511,7 @@ func (c *AccountsCustomersEntitlementsSuspendCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.customers.entitlements.suspend" call.
@@ -11664,7 +11664,7 @@ func (c *AccountsOffersListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.offers.list" call.
@@ -11793,7 +11793,7 @@ func (c *AccountsReportJobsFetchReportResultsCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"reportJob": c.reportJob,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.reportJobs.fetchReportResults" call.
@@ -11953,7 +11953,7 @@ func (c *AccountsReportsListCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.reports.list" call.
@@ -12094,7 +12094,7 @@ func (c *AccountsReportsRunCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.nameid,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.reports.run" call.
@@ -12230,7 +12230,7 @@ func (c *AccountsSkuGroupsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.skuGroups.list" call.
@@ -12386,7 +12386,7 @@ func (c *AccountsSkuGroupsBillableSkusListCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.accounts.skuGroups.billableSkus.list" call.
@@ -12517,7 +12517,7 @@ func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.operations.cancel" call.
@@ -12616,7 +12616,7 @@ func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.operations.delete" call.
@@ -12726,7 +12726,7 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.operations.get" call.
@@ -12855,7 +12855,7 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.operations.list" call.
@@ -13010,7 +13010,7 @@ func (c *ProductsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.products.list" call.
@@ -13174,7 +13174,7 @@ func (c *ProductsSkusListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudchannel.products.skus.list" call.

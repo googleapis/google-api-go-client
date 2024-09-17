@@ -320,7 +320,11 @@ type TermsOfServiceService struct {
 
 // AcceptTermsOfService: Reference to a Terms of Service resource.
 type AcceptTermsOfService struct {
-	// Name: Required. The resource name of the terms of service version.
+	// Name: Required. The resource name of the terms of service version in the
+	// format `termsOfService/{version}`. To retrieve the latest version, use the
+	// termsOfService.retrieveLatest
+	// (/merchant/api/reference/rest/accounts_v1beta/termsOfService/retrieveLatest)
+	// method.
 	Name string `json:"name,omitempty"`
 	// RegionCode: Required. Region code as defined by CLDR
 	// (https://cldr.unicode.org/). This is either a country when the ToS applies
@@ -947,7 +951,8 @@ type DeliveryTime struct {
 	HandlingBusinessDayConfig *BusinessDayConfig `json:"handlingBusinessDayConfig,omitempty"`
 	// MaxHandlingDays: Maximum number of business days spent before an order is
 	// shipped. 0 means same day shipped, 1 means next day shipped. Must be greater
-	// than or equal to `min_handling_days`.
+	// than or equal to `min_handling_days`. 'min_handling_days' and
+	// 'max_handling_days' should be either set or not set at the same time.
 	MaxHandlingDays int64 `json:"maxHandlingDays,omitempty"`
 	// MaxTransitDays: Maximum number of business days that is spent in transit. 0
 	// means same day delivery, 1 means next day delivery. Must be greater than or
@@ -955,6 +960,8 @@ type DeliveryTime struct {
 	MaxTransitDays int64 `json:"maxTransitDays,omitempty"`
 	// MinHandlingDays: Minimum number of business days spent before an order is
 	// shipped. 0 means same day shipped, 1 means next day shipped.
+	// 'min_handling_days' and 'max_handling_days' should be either set or not set
+	// at the same time.
 	MinHandlingDays int64 `json:"minHandlingDays,omitempty"`
 	// MinTransitDays: Minimum number of business days that is spent in transit. 0
 	// means same day delivery, 1 means next day delivery. Either
@@ -3118,7 +3125,7 @@ func (c *AccountsCreateAndConfigureCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.createAndConfigure" call.
@@ -3215,7 +3222,7 @@ func (c *AccountsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.delete" call.
@@ -3324,7 +3331,7 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.get" call.
@@ -3455,7 +3462,7 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.list" call.
@@ -3606,7 +3613,7 @@ func (c *AccountsListSubaccountsCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"provider": c.provider,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.listSubaccounts" call.
@@ -3738,7 +3745,7 @@ func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.patch" call.
@@ -3846,7 +3853,7 @@ func (c *AccountsAutofeedSettingsGetAutofeedSettingsCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.autofeedSettings.getAutofeedSettings" call.
@@ -3956,7 +3963,7 @@ func (c *AccountsAutofeedSettingsUpdateAutofeedSettingsCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.autofeedSettings.updateAutofeedSettings" call.
@@ -4065,7 +4072,7 @@ func (c *AccountsBusinessIdentityGetBusinessIdentityCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.businessIdentity.getBusinessIdentity" call.
@@ -4176,7 +4183,7 @@ func (c *AccountsBusinessIdentityUpdateBusinessIdentityCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.businessIdentity.updateBusinessIdentity" call.
@@ -4285,7 +4292,7 @@ func (c *AccountsBusinessInfoGetBusinessInfoCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.businessInfo.getBusinessInfo" call.
@@ -4395,7 +4402,7 @@ func (c *AccountsBusinessInfoUpdateBusinessInfoCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.businessInfo.updateBusinessInfo" call.
@@ -4505,7 +4512,7 @@ func (c *AccountsEmailPreferencesGetEmailPreferencesCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.emailPreferences.getEmailPreferences" call.
@@ -4621,7 +4628,7 @@ func (c *AccountsEmailPreferencesUpdateEmailPreferencesCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.emailPreferences.updateEmailPreferences" call.
@@ -4733,7 +4740,7 @@ func (c *AccountsHomepageClaimCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.homepage.claim" call.
@@ -4841,7 +4848,7 @@ func (c *AccountsHomepageGetHomepageCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.homepage.getHomepage" call.
@@ -4944,7 +4951,7 @@ func (c *AccountsHomepageUnclaimCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.homepage.unclaim" call.
@@ -5054,7 +5061,7 @@ func (c *AccountsHomepageUpdateHomepageCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.homepage.updateHomepage" call.
@@ -5203,7 +5210,7 @@ func (c *AccountsIssuesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.issues.list" call.
@@ -5333,7 +5340,7 @@ func (c *AccountsOnlineReturnPoliciesGetCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.onlineReturnPolicies.get" call.
@@ -5464,7 +5471,7 @@ func (c *AccountsOnlineReturnPoliciesListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.onlineReturnPolicies.list" call.
@@ -5589,7 +5596,7 @@ func (c *AccountsProgramsDisableCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.programs.disable" call.
@@ -5692,7 +5699,7 @@ func (c *AccountsProgramsEnableCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.programs.enable" call.
@@ -5800,7 +5807,7 @@ func (c *AccountsProgramsGetCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.programs.get" call.
@@ -5925,7 +5932,7 @@ func (c *AccountsProgramsListCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.programs.list" call.
@@ -6056,7 +6063,7 @@ func (c *AccountsRegionsCreateCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.regions.create" call.
@@ -6153,7 +6160,7 @@ func (c *AccountsRegionsDeleteCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.regions.delete" call.
@@ -6261,7 +6268,7 @@ func (c *AccountsRegionsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.regions.get" call.
@@ -6386,7 +6393,7 @@ func (c *AccountsRegionsListCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.regions.list" call.
@@ -6519,7 +6526,7 @@ func (c *AccountsRegionsPatchCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.regions.patch" call.
@@ -6627,7 +6634,7 @@ func (c *AccountsShippingSettingsGetShippingSettingsCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.shippingSettings.getShippingSettings" call.
@@ -6731,7 +6738,7 @@ func (c *AccountsShippingSettingsInsertCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.shippingSettings.insert" call.
@@ -6841,7 +6848,7 @@ func (c *AccountsTermsOfServiceAgreementStatesGetCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.nameid,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.termsOfServiceAgreementStates.get" call.
@@ -6951,7 +6958,7 @@ func (c *AccountsTermsOfServiceAgreementStatesRetrieveForApplicationCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.termsOfServiceAgreementStates.retrieveForApplication" call.
@@ -7062,7 +7069,7 @@ func (c *AccountsUsersCreateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.users.create" call.
@@ -7161,7 +7168,7 @@ func (c *AccountsUsersDeleteCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.users.delete" call.
@@ -7271,7 +7278,7 @@ func (c *AccountsUsersGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.users.get" call.
@@ -7397,7 +7404,7 @@ func (c *AccountsUsersListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.users.list" call.
@@ -7530,7 +7537,7 @@ func (c *AccountsUsersPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.users.patch" call.
@@ -7655,7 +7662,7 @@ func (c *TermsOfServiceAcceptCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.termsOfService.accept" call.
@@ -7763,7 +7770,7 @@ func (c *TermsOfServiceGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.termsOfService.get" call.
@@ -7884,7 +7891,7 @@ func (c *TermsOfServiceRetrieveLatestCall) doRequest(alt string) (*http.Response
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.termsOfService.retrieveLatest" call.

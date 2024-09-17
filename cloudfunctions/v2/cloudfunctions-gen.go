@@ -2063,7 +2063,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.list" call.
@@ -2188,7 +2188,7 @@ func (c *ProjectsLocationsFunctionsAbortFunctionUpgradeCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.functions.abortFunctionUpgrade" call.
@@ -2292,7 +2292,7 @@ func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.functions.commitFunctionUpgrade" call.
@@ -2404,7 +2404,7 @@ func (c *ProjectsLocationsFunctionsCreateCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.functions.create" call.
@@ -2501,7 +2501,7 @@ func (c *ProjectsLocationsFunctionsDeleteCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.functions.delete" call.
@@ -2606,7 +2606,7 @@ func (c *ProjectsLocationsFunctionsGenerateDownloadUrlCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.functions.generateDownloadUrl" call.
@@ -2721,7 +2721,7 @@ func (c *ProjectsLocationsFunctionsGenerateUploadUrlCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.functions.generateUploadUrl" call.
@@ -2840,7 +2840,7 @@ func (c *ProjectsLocationsFunctionsGetCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.functions.get" call.
@@ -2967,7 +2967,7 @@ func (c *ProjectsLocationsFunctionsGetIamPolicyCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.functions.getIamPolicy" call.
@@ -3114,7 +3114,7 @@ func (c *ProjectsLocationsFunctionsListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.functions.list" call.
@@ -3245,7 +3245,7 @@ func (c *ProjectsLocationsFunctionsPatchCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.functions.patch" call.
@@ -3350,7 +3350,7 @@ func (c *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.functions.redirectFunctionUpgradeTraffic" call.
@@ -3454,7 +3454,7 @@ func (c *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.functions.rollbackFunctionUpgradeTraffic" call.
@@ -3559,7 +3559,7 @@ func (c *ProjectsLocationsFunctionsSetIamPolicyCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.functions.setIamPolicy" call.
@@ -3665,7 +3665,7 @@ func (c *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.functions.setupFunctionUpgradeConfig" call.
@@ -3773,7 +3773,7 @@ func (c *ProjectsLocationsFunctionsTestIamPermissionsCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.functions.testIamPermissions" call.
@@ -3883,7 +3883,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.operations.get" call.
@@ -4011,7 +4011,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.operations.list" call.
@@ -4150,7 +4150,7 @@ func (c *ProjectsLocationsRuntimesListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudfunctions.projects.locations.runtimes.list" call.

@@ -1428,7 +1428,7 @@ func (c *AdminProjectsLocationsOperationsCancelCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.operations.cancel" call.
@@ -1526,7 +1526,7 @@ func (c *AdminProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.operations.delete" call.
@@ -1635,7 +1635,7 @@ func (c *AdminProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.operations.get" call.
@@ -1763,7 +1763,7 @@ func (c *AdminProjectsLocationsOperationsListCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.operations.list" call.
@@ -1895,7 +1895,7 @@ func (c *AdminProjectsLocationsReservationsCreateCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.reservations.create" call.
@@ -1992,7 +1992,7 @@ func (c *AdminProjectsLocationsReservationsDeleteCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.reservations.delete" call.
@@ -2102,7 +2102,7 @@ func (c *AdminProjectsLocationsReservationsGetCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.reservations.get" call.
@@ -2227,7 +2227,7 @@ func (c *AdminProjectsLocationsReservationsListCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.reservations.list" call.
@@ -2359,7 +2359,7 @@ func (c *AdminProjectsLocationsReservationsPatchCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.reservations.patch" call.
@@ -2485,7 +2485,7 @@ func (c *AdminProjectsLocationsReservationsTopicsListCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.reservations.topics.list" call.
@@ -2626,7 +2626,7 @@ func (c *AdminProjectsLocationsSubscriptionsCreateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.subscriptions.create" call.
@@ -2721,7 +2721,7 @@ func (c *AdminProjectsLocationsSubscriptionsDeleteCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.subscriptions.delete" call.
@@ -2828,7 +2828,7 @@ func (c *AdminProjectsLocationsSubscriptionsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.subscriptions.get" call.
@@ -2953,7 +2953,7 @@ func (c *AdminProjectsLocationsSubscriptionsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.subscriptions.list" call.
@@ -3085,7 +3085,7 @@ func (c *AdminProjectsLocationsSubscriptionsPatchCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.subscriptions.patch" call.
@@ -3201,7 +3201,7 @@ func (c *AdminProjectsLocationsSubscriptionsSeekCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.subscriptions.seek" call.
@@ -3311,7 +3311,7 @@ func (c *AdminProjectsLocationsTopicsCreateCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.topics.create" call.
@@ -3406,7 +3406,7 @@ func (c *AdminProjectsLocationsTopicsDeleteCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.topics.delete" call.
@@ -3513,7 +3513,7 @@ func (c *AdminProjectsLocationsTopicsGetCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.topics.get" call.
@@ -3620,7 +3620,7 @@ func (c *AdminProjectsLocationsTopicsGetPartitionsCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.topics.getPartitions" call.
@@ -3746,7 +3746,7 @@ func (c *AdminProjectsLocationsTopicsListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.topics.list" call.
@@ -3877,7 +3877,7 @@ func (c *AdminProjectsLocationsTopicsPatchCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.topics.patch" call.
@@ -4001,7 +4001,7 @@ func (c *AdminProjectsLocationsTopicsSubscriptionsListCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.admin.projects.locations.topics.subscriptions.list" call.
@@ -4124,7 +4124,7 @@ func (c *CursorProjectsLocationsSubscriptionsCommitCursorCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"subscription": c.subscription,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.cursor.projects.locations.subscriptions.commitCursor" call.
@@ -4251,7 +4251,7 @@ func (c *CursorProjectsLocationsSubscriptionsCursorsListCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.cursor.projects.locations.subscriptions.cursors.list" call.
@@ -4378,7 +4378,7 @@ func (c *TopicStatsProjectsLocationsTopicsComputeHeadCursorCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"topic": c.topic,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.topicStats.projects.locations.topics.computeHeadCursor" call.
@@ -4481,7 +4481,7 @@ func (c *TopicStatsProjectsLocationsTopicsComputeMessageStatsCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"topic": c.topic,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.topicStats.projects.locations.topics.computeMessageStats" call.
@@ -4584,7 +4584,7 @@ func (c *TopicStatsProjectsLocationsTopicsComputeTimeCursorCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"topic": c.topic,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "pubsublite.topicStats.projects.locations.topics.computeTimeCursor" call.

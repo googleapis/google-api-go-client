@@ -350,7 +350,7 @@ func (c *AppsTokensVerifyCall) doRequest(alt string) (*http.Response, error) {
 		"appPackage": c.appPackage,
 		"token":      c.token,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playgrouping.apps.tokens.verify" call.
@@ -459,7 +459,7 @@ func (c *AppsTokensTagsCreateOrUpdateCall) doRequest(alt string) (*http.Response
 		"appPackage": c.appPackage,
 		"token":      c.token,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playgrouping.apps.tokens.tags.createOrUpdate" call.

@@ -99,7 +99,7 @@ func (rx *ResumableUpload) doUploadRequest(ctx context.Context, data io.Reader, 
 	// 308" response header.
 	req.Header.Set("X-GUploader-No-308", "yes")
 
-	return SendRequest(ctx, rx.Client, req)
+	return SendRequest(ctx, rx.Client, req, false)
 }
 
 func statusResumeIncomplete(resp *http.Response) bool {

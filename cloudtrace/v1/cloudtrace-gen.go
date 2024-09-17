@@ -405,7 +405,7 @@ func (c *ProjectsPatchTracesCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudtrace.projects.patchTraces" call.
@@ -516,7 +516,7 @@ func (c *ProjectsTracesGetCall) doRequest(alt string) (*http.Response, error) {
 		"projectId": c.projectId,
 		"traceId":   c.traceId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudtrace.projects.traces.get" call.
@@ -715,7 +715,7 @@ func (c *ProjectsTracesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudtrace.projects.traces.list" call.

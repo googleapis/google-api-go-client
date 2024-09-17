@@ -1164,7 +1164,7 @@ func (c *OrganizationsLocationsGetPartnerCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcontrolspartner.organizations.locations.getPartner" call.
@@ -1272,7 +1272,7 @@ func (c *OrganizationsLocationsCustomersGetCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcontrolspartner.organizations.locations.customers.get" call.
@@ -1410,7 +1410,7 @@ func (c *OrganizationsLocationsCustomersListCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcontrolspartner.organizations.locations.customers.list" call.
@@ -1541,7 +1541,7 @@ func (c *OrganizationsLocationsCustomersWorkloadsGetCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcontrolspartner.organizations.locations.customers.workloads.get" call.
@@ -1650,7 +1650,7 @@ func (c *OrganizationsLocationsCustomersWorkloadsGetEkmConnectionsCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcontrolspartner.organizations.locations.customers.workloads.getEkmConnections" call.
@@ -1759,7 +1759,7 @@ func (c *OrganizationsLocationsCustomersWorkloadsGetPartnerPermissionsCall) doRe
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcontrolspartner.organizations.locations.customers.workloads.getPartnerPermissions" call.
@@ -1897,7 +1897,7 @@ func (c *OrganizationsLocationsCustomersWorkloadsListCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcontrolspartner.organizations.locations.customers.workloads.list" call.
@@ -2058,7 +2058,7 @@ func (c *OrganizationsLocationsCustomersWorkloadsAccessApprovalRequestsListCall)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcontrolspartner.organizations.locations.customers.workloads.accessApprovalRequests.list" call.
@@ -2189,7 +2189,7 @@ func (c *OrganizationsLocationsCustomersWorkloadsViolationsGetCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcontrolspartner.organizations.locations.customers.workloads.violations.get" call.
@@ -2348,7 +2348,7 @@ func (c *OrganizationsLocationsCustomersWorkloadsViolationsListCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudcontrolspartner.organizations.locations.customers.workloads.violations.list" call.

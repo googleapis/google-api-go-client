@@ -1696,7 +1696,7 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "speech.operations.get" call.
@@ -1824,7 +1824,7 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "speech.operations.list" call.
@@ -1954,7 +1954,7 @@ func (c *ProjectsLocationsCustomClassesCreateCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "speech.projects.locations.customClasses.create" call.
@@ -2056,7 +2056,7 @@ func (c *ProjectsLocationsCustomClassesDeleteCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "speech.projects.locations.customClasses.delete" call.
@@ -2164,7 +2164,7 @@ func (c *ProjectsLocationsCustomClassesGetCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "speech.projects.locations.customClasses.get" call.
@@ -2295,7 +2295,7 @@ func (c *ProjectsLocationsCustomClassesListCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "speech.projects.locations.customClasses.list" call.
@@ -2425,7 +2425,7 @@ func (c *ProjectsLocationsCustomClassesPatchCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "speech.projects.locations.customClasses.patch" call.
@@ -2534,7 +2534,7 @@ func (c *ProjectsLocationsPhraseSetsCreateCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "speech.projects.locations.phraseSets.create" call.
@@ -2630,7 +2630,7 @@ func (c *ProjectsLocationsPhraseSetsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "speech.projects.locations.phraseSets.delete" call.
@@ -2744,7 +2744,7 @@ func (c *ProjectsLocationsPhraseSetsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "speech.projects.locations.phraseSets.get" call.
@@ -2875,7 +2875,7 @@ func (c *ProjectsLocationsPhraseSetsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "speech.projects.locations.phraseSets.list" call.
@@ -3005,7 +3005,7 @@ func (c *ProjectsLocationsPhraseSetsPatchCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "speech.projects.locations.phraseSets.patch" call.
@@ -3104,7 +3104,7 @@ func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, 
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "speech.speech.longrunningrecognize" call.
@@ -3199,7 +3199,7 @@ func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "speech.speech.recognize" call.

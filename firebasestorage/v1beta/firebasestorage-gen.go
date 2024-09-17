@@ -424,7 +424,7 @@ func (c *ProjectsBucketsAddFirebaseCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasestorage.projects.buckets.addFirebase" call.
@@ -533,7 +533,7 @@ func (c *ProjectsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasestorage.projects.buckets.get" call.
@@ -657,7 +657,7 @@ func (c *ProjectsBucketsListCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasestorage.projects.buckets.list" call.
@@ -783,7 +783,7 @@ func (c *ProjectsBucketsRemoveFirebaseCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firebasestorage.projects.buckets.removeFirebase" call.

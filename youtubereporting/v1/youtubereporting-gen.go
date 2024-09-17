@@ -860,7 +860,7 @@ func (c *JobsCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "youtubereporting.jobs.create" call.
@@ -963,7 +963,7 @@ func (c *JobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"jobId": c.jobId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "youtubereporting.jobs.delete" call.
@@ -1078,7 +1078,7 @@ func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"jobId": c.jobId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "youtubereporting.jobs.get" call.
@@ -1212,7 +1212,7 @@ func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "youtubereporting.jobs.list" call.
@@ -1353,7 +1353,7 @@ func (c *JobsReportsGetCall) doRequest(alt string) (*http.Response, error) {
 		"jobId":    c.jobId,
 		"reportId": c.reportId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "youtubereporting.jobs.reports.get" call.
@@ -1509,7 +1509,7 @@ func (c *JobsReportsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"jobId": c.jobId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "youtubereporting.jobs.reports.list" call.
@@ -1639,7 +1639,7 @@ func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Download fetches the API endpoint's "media" value, instead of the normal
@@ -1789,7 +1789,7 @@ func (c *ReportTypesListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "youtubereporting.reportTypes.list" call.

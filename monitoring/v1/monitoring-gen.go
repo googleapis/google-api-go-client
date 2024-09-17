@@ -3205,7 +3205,7 @@ func (c *LocationsGlobalMetricsScopesGetCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.locations.global.metricsScopes.get" call.
@@ -3316,7 +3316,7 @@ func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) do
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.locations.global.metricsScopes.listMetricsScopesByMonitoredProject" call.
@@ -3421,7 +3421,7 @@ func (c *LocationsGlobalMetricsScopesProjectsCreateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.locations.global.metricsScopes.projects.create" call.
@@ -3520,7 +3520,7 @@ func (c *LocationsGlobalMetricsScopesProjectsDeleteCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.locations.global.metricsScopes.projects.delete" call.
@@ -3629,7 +3629,7 @@ func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.operations.get" call.
@@ -3744,7 +3744,7 @@ func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.projects.dashboards.create" call.
@@ -3843,7 +3843,7 @@ func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.projects.dashboards.delete" call.
@@ -3956,7 +3956,7 @@ func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.projects.dashboards.get" call.
@@ -4084,7 +4084,7 @@ func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.projects.dashboards.list" call.
@@ -4217,7 +4217,7 @@ func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.projects.dashboards.patch" call.
@@ -4325,7 +4325,7 @@ func (c *ProjectsLocationPrometheusApiV1LabelsCall) doRequest(alt string) (*http
 		"name":     c.name,
 		"location": c.location,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.projects.location.prometheus.api.v1.labels" call.
@@ -4434,7 +4434,7 @@ func (c *ProjectsLocationPrometheusApiV1QueryCall) doRequest(alt string) (*http.
 		"name":     c.name,
 		"location": c.location,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.projects.location.prometheus.api.v1.query" call.
@@ -4543,7 +4543,7 @@ func (c *ProjectsLocationPrometheusApiV1QueryExemplarsCall) doRequest(alt string
 		"name":     c.name,
 		"location": c.location,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.projects.location.prometheus.api.v1.query_exemplars" call.
@@ -4652,7 +4652,7 @@ func (c *ProjectsLocationPrometheusApiV1QueryRangeCall) doRequest(alt string) (*
 		"name":     c.name,
 		"location": c.location,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.projects.location.prometheus.api.v1.query_range" call.
@@ -4761,7 +4761,7 @@ func (c *ProjectsLocationPrometheusApiV1SeriesCall) doRequest(alt string) (*http
 		"name":     c.name,
 		"location": c.location,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.projects.location.prometheus.api.v1.series" call.
@@ -4902,7 +4902,7 @@ func (c *ProjectsLocationPrometheusApiV1LabelValuesCall) doRequest(alt string) (
 		"location": c.location,
 		"label":    c.label,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.projects.location.prometheus.api.v1.label.values" call.
@@ -5031,7 +5031,7 @@ func (c *ProjectsLocationPrometheusApiV1MetadataListCall) doRequest(alt string) 
 		"name":     c.name,
 		"location": c.location,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "monitoring.projects.location.prometheus.api.v1.metadata.list" call.

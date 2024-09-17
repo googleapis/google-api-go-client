@@ -3064,7 +3064,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.get" call.
@@ -3195,7 +3195,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.list" call.
@@ -3328,7 +3328,7 @@ func (c *ProjectsLocationsConnectionsCreateCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.create" call.
@@ -3439,7 +3439,7 @@ func (c *ProjectsLocationsConnectionsDeleteCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.delete" call.
@@ -3561,7 +3561,7 @@ func (c *ProjectsLocationsConnectionsFetchLinkableRepositoriesCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"connection": c.connection,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.fetchLinkableRepositories" call.
@@ -3691,7 +3691,7 @@ func (c *ProjectsLocationsConnectionsGetCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.get" call.
@@ -3818,7 +3818,7 @@ func (c *ProjectsLocationsConnectionsGetIamPolicyCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.getIamPolicy" call.
@@ -3939,7 +3939,7 @@ func (c *ProjectsLocationsConnectionsListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.list" call.
@@ -4088,7 +4088,7 @@ func (c *ProjectsLocationsConnectionsPatchCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.patch" call.
@@ -4198,7 +4198,7 @@ func (c *ProjectsLocationsConnectionsProcessWebhookCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.processWebhook" call.
@@ -4303,7 +4303,7 @@ func (c *ProjectsLocationsConnectionsSetIamPolicyCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.setIamPolicy" call.
@@ -4411,7 +4411,7 @@ func (c *ProjectsLocationsConnectionsTestIamPermissionsCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.testIamPermissions" call.
@@ -4514,7 +4514,7 @@ func (c *ProjectsLocationsConnectionsRepositoriesAccessReadTokenCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"repository": c.repository,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.repositories.accessReadToken" call.
@@ -4617,7 +4617,7 @@ func (c *ProjectsLocationsConnectionsRepositoriesAccessReadWriteTokenCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"repository": c.repository,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.repositories.accessReadWriteToken" call.
@@ -4721,7 +4721,7 @@ func (c *ProjectsLocationsConnectionsRepositoriesBatchCreateCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.repositories.batchCreate" call.
@@ -4833,7 +4833,7 @@ func (c *ProjectsLocationsConnectionsRepositoriesCreateCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.repositories.create" call.
@@ -4944,7 +4944,7 @@ func (c *ProjectsLocationsConnectionsRepositoriesDeleteCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.repositories.delete" call.
@@ -5077,7 +5077,7 @@ func (c *ProjectsLocationsConnectionsRepositoriesFetchGitRefsCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"repository": c.repository,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.repositories.fetchGitRefs" call.
@@ -5207,7 +5207,7 @@ func (c *ProjectsLocationsConnectionsRepositoriesGetCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.repositories.get" call.
@@ -5337,7 +5337,7 @@ func (c *ProjectsLocationsConnectionsRepositoriesListCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.connections.repositories.list" call.
@@ -5468,7 +5468,7 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.operations.cancel" call.
@@ -5577,7 +5577,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudbuild.projects.locations.operations.get" call.

@@ -3716,7 +3716,7 @@ func (c *ProjectsGetSettingsCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.getSettings" call.
@@ -3830,7 +3830,7 @@ func (c *ProjectsInitializeSettingsCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.initializeSettings" call.
@@ -3943,7 +3943,7 @@ func (c *ProjectsHistoriesCreateCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.create" call.
@@ -4057,7 +4057,7 @@ func (c *ProjectsHistoriesGetCall) doRequest(alt string) (*http.Response, error)
 		"projectId": c.projectId,
 		"historyId": c.historyId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.get" call.
@@ -4192,7 +4192,7 @@ func (c *ProjectsHistoriesListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"projectId": c.projectId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.list" call.
@@ -4331,7 +4331,7 @@ func (c *ProjectsHistoriesExecutionsCreateCall) doRequest(alt string) (*http.Res
 		"projectId": c.projectId,
 		"historyId": c.historyId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.create" call.
@@ -4449,7 +4449,7 @@ func (c *ProjectsHistoriesExecutionsGetCall) doRequest(alt string) (*http.Respon
 		"historyId":   c.historyId,
 		"executionId": c.executionId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.get" call.
@@ -4580,7 +4580,7 @@ func (c *ProjectsHistoriesExecutionsListCall) doRequest(alt string) (*http.Respo
 		"projectId": c.projectId,
 		"historyId": c.historyId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.list" call.
@@ -4723,7 +4723,7 @@ func (c *ProjectsHistoriesExecutionsPatchCall) doRequest(alt string) (*http.Resp
 		"historyId":   c.historyId,
 		"executionId": c.executionId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.patch" call.
@@ -4842,7 +4842,7 @@ func (c *ProjectsHistoriesExecutionsClustersGetCall) doRequest(alt string) (*htt
 		"executionId": c.executionId,
 		"clusterId":   c.clusterId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.clusters.get" call.
@@ -4963,7 +4963,7 @@ func (c *ProjectsHistoriesExecutionsClustersListCall) doRequest(alt string) (*ht
 		"historyId":   c.historyId,
 		"executionId": c.executionId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.clusters.list" call.
@@ -5086,7 +5086,7 @@ func (c *ProjectsHistoriesExecutionsEnvironmentsGetCall) doRequest(alt string) (
 		"executionId":   c.executionId,
 		"environmentId": c.environmentId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.environments.get" call.
@@ -5220,7 +5220,7 @@ func (c *ProjectsHistoriesExecutionsEnvironmentsListCall) doRequest(alt string) 
 		"historyId":   c.historyId,
 		"executionId": c.executionId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.environments.list" call.
@@ -5366,7 +5366,7 @@ func (c *ProjectsHistoriesExecutionsStepsAccessibilityClustersCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.accessibilityClusters" call.
@@ -5488,7 +5488,7 @@ func (c *ProjectsHistoriesExecutionsStepsCreateCall) doRequest(alt string) (*htt
 		"historyId":   c.historyId,
 		"executionId": c.executionId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.create" call.
@@ -5610,7 +5610,7 @@ func (c *ProjectsHistoriesExecutionsStepsGetCall) doRequest(alt string) (*http.R
 		"executionId": c.executionId,
 		"stepId":      c.stepId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.get" call.
@@ -5731,7 +5731,7 @@ func (c *ProjectsHistoriesExecutionsStepsGetPerfMetricsSummaryCall) doRequest(al
 		"executionId": c.executionId,
 		"stepId":      c.stepId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.getPerfMetricsSummary" call.
@@ -5869,7 +5869,7 @@ func (c *ProjectsHistoriesExecutionsStepsListCall) doRequest(alt string) (*http.
 		"historyId":   c.historyId,
 		"executionId": c.executionId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.list" call.
@@ -6018,7 +6018,7 @@ func (c *ProjectsHistoriesExecutionsStepsPatchCall) doRequest(alt string) (*http
 		"executionId": c.executionId,
 		"stepId":      c.stepId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.patch" call.
@@ -6136,7 +6136,7 @@ func (c *ProjectsHistoriesExecutionsStepsPublishXunitXmlFilesCall) doRequest(alt
 		"executionId": c.executionId,
 		"stepId":      c.stepId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.publishXunitXmlFiles" call.
@@ -6251,7 +6251,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfMetricsSummaryCreateCall) doRequest
 		"executionId": c.executionId,
 		"stepId":      c.stepId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.perfMetricsSummary.create" call.
@@ -6367,7 +6367,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesCreateCall) doRequest(a
 		"executionId": c.executionId,
 		"stepId":      c.stepId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.perfSampleSeries.create" call.
@@ -6492,7 +6492,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesGetCall) doRequest(alt 
 		"stepId":         c.stepId,
 		"sampleSeriesId": c.sampleSeriesId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.perfSampleSeries.get" call.
@@ -6631,7 +6631,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesListCall) doRequest(alt
 		"executionId": c.executionId,
 		"stepId":      c.stepId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.perfSampleSeries.list" call.
@@ -6756,7 +6756,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesBatchCreateCall)
 		"stepId":         c.stepId,
 		"sampleSeriesId": c.sampleSeriesId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.perfSampleSeries.samples.batchCreate" call.
@@ -6903,7 +6903,7 @@ func (c *ProjectsHistoriesExecutionsStepsPerfSampleSeriesSamplesListCall) doRequ
 		"stepId":         c.stepId,
 		"sampleSeriesId": c.sampleSeriesId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.perfSampleSeries.samples.list" call.
@@ -7052,7 +7052,7 @@ func (c *ProjectsHistoriesExecutionsStepsTestCasesGetCall) doRequest(alt string)
 		"stepId":      c.stepId,
 		"testCaseId":  c.testCaseId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.testCases.get" call.
@@ -7190,7 +7190,7 @@ func (c *ProjectsHistoriesExecutionsStepsTestCasesListCall) doRequest(alt string
 		"executionId": c.executionId,
 		"stepId":      c.stepId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.testCases.list" call.
@@ -7350,7 +7350,7 @@ func (c *ProjectsHistoriesExecutionsStepsThumbnailsListCall) doRequest(alt strin
 		"executionId": c.executionId,
 		"stepId":      c.stepId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "toolresults.projects.histories.executions.steps.thumbnails.list" call.

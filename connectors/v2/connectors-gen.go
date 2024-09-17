@@ -2007,7 +2007,7 @@ func (c *ProjectsLocationsConnectionsCheckReadinessCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.checkReadiness" call.
@@ -2119,7 +2119,7 @@ func (c *ProjectsLocationsConnectionsCheckStatusCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.checkStatus" call.
@@ -2222,7 +2222,7 @@ func (c *ProjectsLocationsConnectionsExchangeAuthCodeCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.exchangeAuthCode" call.
@@ -2328,7 +2328,7 @@ func (c *ProjectsLocationsConnectionsExecuteSqlQueryCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"connection": c.connection,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.executeSqlQuery" call.
@@ -2432,7 +2432,7 @@ func (c *ProjectsLocationsConnectionsRefreshAccessTokenCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.refreshAccessToken" call.
@@ -2538,7 +2538,7 @@ func (c *ProjectsLocationsConnectionsActionsExecuteCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.actions.execute" call.
@@ -2648,7 +2648,7 @@ func (c *ProjectsLocationsConnectionsActionsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.actions.get" call.
@@ -2787,7 +2787,7 @@ func (c *ProjectsLocationsConnectionsActionsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.actions.list" call.
@@ -2918,7 +2918,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesGetCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.entityTypes.get" call.
@@ -3058,7 +3058,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesListCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.entityTypes.list" call.
@@ -3186,7 +3186,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesCreateCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.entityTypes.entities.create" call.
@@ -3284,7 +3284,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesDeleteCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.entityTypes.entities.delete" call.
@@ -3395,7 +3395,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesDeleteEntitiesWithCondit
 	googleapi.Expand(req.URL, map[string]string{
 		"entityType": c.entityType,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.entityTypes.entities.deleteEntitiesWithConditions" call.
@@ -3505,7 +3505,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesGetCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.entityTypes.entities.get" call.
@@ -3653,7 +3653,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesListCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.entityTypes.entities.list" call.
@@ -3782,7 +3782,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesPatchCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.entityTypes.entities.patch" call.
@@ -3899,7 +3899,7 @@ func (c *ProjectsLocationsConnectionsEntityTypesEntitiesUpdateEntitiesWithCondit
 	googleapi.Expand(req.URL, map[string]string{
 		"entityType": c.entityType,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "connectors.projects.locations.connections.entityTypes.entities.updateEntitiesWithConditions" call.

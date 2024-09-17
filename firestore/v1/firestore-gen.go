@@ -4355,7 +4355,7 @@ func (c *ProjectsDatabasesBulkDeleteDocumentsCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.bulkDeleteDocuments" call.
@@ -4468,7 +4468,7 @@ func (c *ProjectsDatabasesCreateCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.create" call.
@@ -4572,7 +4572,7 @@ func (c *ProjectsDatabasesDeleteCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.delete" call.
@@ -4683,7 +4683,7 @@ func (c *ProjectsDatabasesExportDocumentsCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.exportDocuments" call.
@@ -4791,7 +4791,7 @@ func (c *ProjectsDatabasesGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.get" call.
@@ -4899,7 +4899,7 @@ func (c *ProjectsDatabasesImportDocumentsCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.importDocuments" call.
@@ -5014,7 +5014,7 @@ func (c *ProjectsDatabasesListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.list" call.
@@ -5124,7 +5124,7 @@ func (c *ProjectsDatabasesPatchCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.patch" call.
@@ -5236,7 +5236,7 @@ func (c *ProjectsDatabasesRestoreCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.restore" call.
@@ -5341,7 +5341,7 @@ func (c *ProjectsDatabasesBackupSchedulesCreateCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.backupSchedules.create" call.
@@ -5438,7 +5438,7 @@ func (c *ProjectsDatabasesBackupSchedulesDeleteCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.backupSchedules.delete" call.
@@ -5546,7 +5546,7 @@ func (c *ProjectsDatabasesBackupSchedulesGetCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.backupSchedules.get" call.
@@ -5655,7 +5655,7 @@ func (c *ProjectsDatabasesBackupSchedulesListCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.backupSchedules.list" call.
@@ -5767,7 +5767,7 @@ func (c *ProjectsDatabasesBackupSchedulesPatchCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.nameid,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.backupSchedules.patch" call.
@@ -5877,7 +5877,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.collectionGroups.fields.get" call.
@@ -6016,7 +6016,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.collectionGroups.fields.list" call.
@@ -6173,7 +6173,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.collectionGroups.fields.patch" call.
@@ -6280,7 +6280,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.collectionGroups.indexes.create" call.
@@ -6378,7 +6378,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.collectionGroups.indexes.delete" call.
@@ -6487,7 +6487,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.collectionGroups.indexes.get" call.
@@ -6619,7 +6619,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.collectionGroups.indexes.list" call.
@@ -6744,7 +6744,7 @@ func (c *ProjectsDatabasesDocumentsBatchGetCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"database": c.database,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.batchGet" call.
@@ -6852,7 +6852,7 @@ func (c *ProjectsDatabasesDocumentsBatchWriteCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"database": c.database,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.batchWrite" call.
@@ -6955,7 +6955,7 @@ func (c *ProjectsDatabasesDocumentsBeginTransactionCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"database": c.database,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.beginTransaction" call.
@@ -7058,7 +7058,7 @@ func (c *ProjectsDatabasesDocumentsCommitCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"database": c.database,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.commit" call.
@@ -7183,7 +7183,7 @@ func (c *ProjectsDatabasesDocumentsCreateDocumentCall) doRequest(alt string) (*h
 		"parent":       c.parent,
 		"collectionId": c.collectionId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.createDocument" call.
@@ -7295,7 +7295,7 @@ func (c *ProjectsDatabasesDocumentsDeleteCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.delete" call.
@@ -7427,7 +7427,7 @@ func (c *ProjectsDatabasesDocumentsGetCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.get" call.
@@ -7607,7 +7607,7 @@ func (c *ProjectsDatabasesDocumentsListCall) doRequest(alt string) (*http.Respon
 		"parent":       c.parent,
 		"collectionId": c.collectionId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.list" call.
@@ -7733,7 +7733,7 @@ func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.listCollectionIds" call.
@@ -7935,7 +7935,7 @@ func (c *ProjectsDatabasesDocumentsListDocumentsCall) doRequest(alt string) (*ht
 		"parent":       c.parent,
 		"collectionId": c.collectionId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.listDocuments" call.
@@ -8060,7 +8060,7 @@ func (c *ProjectsDatabasesDocumentsListenCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"database": c.database,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.listen" call.
@@ -8167,7 +8167,7 @@ func (c *ProjectsDatabasesDocumentsPartitionQueryCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.partitionQuery" call.
@@ -8323,7 +8323,7 @@ func (c *ProjectsDatabasesDocumentsPatchCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.patch" call.
@@ -8425,7 +8425,7 @@ func (c *ProjectsDatabasesDocumentsRollbackCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"database": c.database,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.rollback" call.
@@ -8534,7 +8534,7 @@ func (c *ProjectsDatabasesDocumentsRunAggregationQueryCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.runAggregationQuery" call.
@@ -8640,7 +8640,7 @@ func (c *ProjectsDatabasesDocumentsRunQueryCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.runQuery" call.
@@ -8745,7 +8745,7 @@ func (c *ProjectsDatabasesDocumentsWriteCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"database": c.database,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.documents.write" call.
@@ -8854,7 +8854,7 @@ func (c *ProjectsDatabasesOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.operations.cancel" call.
@@ -8952,7 +8952,7 @@ func (c *ProjectsDatabasesOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.operations.delete" call.
@@ -9061,7 +9061,7 @@ func (c *ProjectsDatabasesOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.operations.get" call.
@@ -9190,7 +9190,7 @@ func (c *ProjectsDatabasesOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.databases.operations.list" call.
@@ -9319,7 +9319,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.locations.get" call.
@@ -9450,7 +9450,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.locations.list" call.
@@ -9568,7 +9568,7 @@ func (c *ProjectsLocationsBackupsDeleteCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.locations.backups.delete" call.
@@ -9676,7 +9676,7 @@ func (c *ProjectsLocationsBackupsGetCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.locations.backups.get" call.
@@ -9799,7 +9799,7 @@ func (c *ProjectsLocationsBackupsListCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "firestore.projects.locations.backups.list" call.

@@ -1366,7 +1366,7 @@ func (c *EncodedFullHashesGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"encodedRequest": c.encodedRequest,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "safebrowsing.encodedFullHashes.get" call.
@@ -1488,7 +1488,7 @@ func (c *EncodedUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"encodedRequest": c.encodedRequest,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "safebrowsing.encodedUpdates.get" call.
@@ -1583,7 +1583,7 @@ func (c *FullHashesFindCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "safebrowsing.fullHashes.find" call.
@@ -1679,7 +1679,7 @@ func (c *ThreatHitsCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "safebrowsing.threatHits.create" call.
@@ -1775,7 +1775,7 @@ func (c *ThreatListUpdatesFetchCall) doRequest(alt string) (*http.Response, erro
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "safebrowsing.threatListUpdates.fetch" call.
@@ -1876,7 +1876,7 @@ func (c *ThreatListsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "safebrowsing.threatLists.list" call.
@@ -1971,7 +1971,7 @@ func (c *ThreatMatchesFindCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "safebrowsing.threatMatches.find" call.

@@ -1369,7 +1369,7 @@ func (c *ProjectsLocationsConnectionsCreateCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryconnection.projects.locations.connections.create" call.
@@ -1465,7 +1465,7 @@ func (c *ProjectsLocationsConnectionsDeleteCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryconnection.projects.locations.connections.delete" call.
@@ -1573,7 +1573,7 @@ func (c *ProjectsLocationsConnectionsGetCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryconnection.projects.locations.connections.get" call.
@@ -1677,7 +1677,7 @@ func (c *ProjectsLocationsConnectionsGetIamPolicyCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryconnection.projects.locations.connections.getIamPolicy" call.
@@ -1797,7 +1797,7 @@ func (c *ProjectsLocationsConnectionsListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryconnection.projects.locations.connections.list" call.
@@ -1929,7 +1929,7 @@ func (c *ProjectsLocationsConnectionsPatchCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryconnection.projects.locations.connections.patch" call.
@@ -2034,7 +2034,7 @@ func (c *ProjectsLocationsConnectionsSetIamPolicyCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryconnection.projects.locations.connections.setIamPolicy" call.
@@ -2142,7 +2142,7 @@ func (c *ProjectsLocationsConnectionsTestIamPermissionsCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryconnection.projects.locations.connections.testIamPermissions" call.

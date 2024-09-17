@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package youtubeanalytics provides access to the YouTube Analytics API.
 //
 // For product documentation, see: http://developers.google.com/youtube/analytics/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	youtubeanalyticsService, err := youtubeanalytics.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	youtubeanalyticsService, err := youtubeanalytics.NewService(ctx, option.WithScopes(youtubeanalytics.YtAnalyticsReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	youtubeanalyticsService, err := youtubeanalytics.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	youtubeanalyticsService, err := youtubeanalytics.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package youtubeanalytics // import "google.golang.org/api/youtubeanalytics/v1beta1"
 
 import (
@@ -54,8 +68,10 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
+	internaloption "google.golang.org/api/option/internaloption"
 	htransport "google.golang.org/api/transport/http"
 )
 
@@ -72,11 +88,14 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
+var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "youtubeAnalytics:v1beta1"
 const apiName = "youtubeAnalytics"
 const apiVersion = "v1beta1"
 const basePath = "https://www.googleapis.com/youtube/analytics/v1beta1/"
+const basePathTemplate = "https://www.UNIVERSE_DOMAIN/youtube/analytics/v1beta1/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -89,8 +108,8 @@ const (
 	// View and manage your assets and associated content on YouTube
 	YoutubepartnerScope = "https://www.googleapis.com/auth/youtubepartner"
 
-	// View monetary and non-monetary YouTube Analytics reports for your
-	// YouTube content
+	// View monetary and non-monetary YouTube Analytics reports for your YouTube
+	// content
 	YtAnalyticsMonetaryReadonlyScope = "https://www.googleapis.com/auth/yt-analytics-monetary.readonly"
 
 	// View YouTube Analytics reports for your YouTube content
@@ -99,7 +118,7 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/youtube",
 		"https://www.googleapis.com/auth/youtube.readonly",
 		"https://www.googleapis.com/auth/youtubepartner",
@@ -108,6 +127,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
+	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -186,333 +208,248 @@ type ReportsService struct {
 
 type Group struct {
 	ContentDetails *GroupContentDetails `json:"contentDetails,omitempty"`
+	Etag           string               `json:"etag,omitempty"`
+	Id             string               `json:"id,omitempty"`
+	Kind           string               `json:"kind,omitempty"`
+	Snippet        *GroupSnippet        `json:"snippet,omitempty"`
 
-	Etag string `json:"etag,omitempty"`
-
-	Id string `json:"id,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
-
-	Snippet *GroupSnippet `json:"snippet,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ContentDetails") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContentDetails") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ContentDetails") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Group) MarshalJSON() ([]byte, error) {
+func (s Group) MarshalJSON() ([]byte, error) {
 	type NoMethod Group
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GroupContentDetails struct {
 	ItemCount uint64 `json:"itemCount,omitempty,string"`
-
-	ItemType string `json:"itemType,omitempty"`
-
+	ItemType  string `json:"itemType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ItemCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ItemCount") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ItemCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupContentDetails) MarshalJSON() ([]byte, error) {
+func (s GroupContentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupContentDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GroupSnippet struct {
 	PublishedAt string `json:"publishedAt,omitempty"`
-
-	Title string `json:"title,omitempty"`
-
+	Title       string `json:"title,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PublishedAt") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PublishedAt") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PublishedAt") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupSnippet) MarshalJSON() ([]byte, error) {
+func (s GroupSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupSnippet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GroupItem struct {
-	Etag string `json:"etag,omitempty"`
-
-	GroupId string `json:"groupId,omitempty"`
-
-	Id string `json:"id,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
-
+	Etag     string             `json:"etag,omitempty"`
+	GroupId  string             `json:"groupId,omitempty"`
+	Id       string             `json:"id,omitempty"`
+	Kind     string             `json:"kind,omitempty"`
 	Resource *GroupItemResource `json:"resource,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupItem) MarshalJSON() ([]byte, error) {
+func (s GroupItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GroupItemResource struct {
-	Id string `json:"id,omitempty"`
-
+	Id   string `json:"id,omitempty"`
 	Kind string `json:"kind,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupItemResource) MarshalJSON() ([]byte, error) {
+func (s GroupItemResource) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupItemResource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GroupItemListResponse: A paginated list of grouList resources
-// returned in response to a youtubeAnalytics.groupApi.list request.
+// GroupItemListResponse: A paginated list of grouList resources returned in
+// response to a youtubeAnalytics.groupApi.list request.
 type GroupItemListResponse struct {
-	Etag string `json:"etag,omitempty"`
-
+	Etag  string       `json:"etag,omitempty"`
 	Items []*GroupItem `json:"items,omitempty"`
+	Kind  string       `json:"kind,omitempty"`
 
-	Kind string `json:"kind,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupItemListResponse) MarshalJSON() ([]byte, error) {
+func (s GroupItemListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupItemListResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GroupListResponse: A paginated list of grouList resources returned in
 // response to a youtubeAnalytics.groupApi.list request.
 type GroupListResponse struct {
-	Etag string `json:"etag,omitempty"`
+	Etag          string   `json:"etag,omitempty"`
+	Items         []*Group `json:"items,omitempty"`
+	Kind          string   `json:"kind,omitempty"`
+	NextPageToken string   `json:"nextPageToken,omitempty"`
 
-	Items []*Group `json:"items,omitempty"`
-
-	Kind string `json:"kind,omitempty"`
-
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GroupListResponse) MarshalJSON() ([]byte, error) {
+func (s GroupListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupListResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ResultTable: Contains a single result table. The table is returned as
-// an array of rows that contain the values for the cells of the table.
-// Depending on the metric or dimension, the cell can contain a string
-// (video ID, country code) or a number (number of views or number of
-// likes).
+// ResultTable: Contains a single result table. The table is returned as an
+// array of rows that contain the values for the cells of the table. Depending
+// on the metric or dimension, the cell can contain a string (video ID, country
+// code) or a number (number of views or number of likes).
 type ResultTable struct {
-	// ColumnHeaders: This value specifies information about the data
-	// returned in the rows fields. Each item in the columnHeaders list
-	// identifies a field returned in the rows value, which contains a list
-	// of comma-delimited data. The columnHeaders list will begin with the
-	// dimensions specified in the API request, which will be followed by
-	// the metrics specified in the API request. The order of both
-	// dimensions and metrics will match the ordering in the API request.
-	// For example, if the API request contains the parameters
-	// dimensions=ageGroup,gender&metrics=viewerPercentage, the API response
-	// will return columns in this order: ageGroup,gender,viewerPercentage.
+	// ColumnHeaders: This value specifies information about the data returned in
+	// the rows fields. Each item in the columnHeaders list identifies a field
+	// returned in the rows value, which contains a list of comma-delimited data.
+	// The columnHeaders list will begin with the dimensions specified in the API
+	// request, which will be followed by the metrics specified in the API request.
+	// The order of both dimensions and metrics will match the ordering in the API
+	// request. For example, if the API request contains the parameters
+	// dimensions=ageGroup,gender&metrics=viewerPercentage, the API response will
+	// return columns in this order: ageGroup,gender,viewerPercentage.
 	ColumnHeaders []*ResultTableColumnHeaders `json:"columnHeaders,omitempty"`
-
-	// Kind: This value specifies the type of data included in the API
-	// response. For the query method, the kind property value will be
+	// Kind: This value specifies the type of data included in the API response.
+	// For the query method, the kind property value will be
 	// youtubeAnalytics#resultTable.
 	Kind string `json:"kind,omitempty"`
-
-	// Rows: The list contains all rows of the result table. Each item in
-	// the list is an array that contains comma-delimited data corresponding
-	// to a single row of data. The order of the comma-delimited data fields
-	// will match the order of the columns listed in the columnHeaders
-	// field. If no data is available for the given query, the rows element
-	// will be omitted from the response. The response for a query with the
-	// day dimension will not contain rows for the most recent days.
+	// Rows: The list contains all rows of the result table. Each item in the list
+	// is an array that contains comma-delimited data corresponding to a single row
+	// of data. The order of the comma-delimited data fields will match the order
+	// of the columns listed in the columnHeaders field. If no data is available
+	// for the given query, the rows element will be omitted from the response. The
+	// response for a query with the day dimension will not contain rows for the
+	// most recent days.
 	Rows [][]interface{} `json:"rows,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ColumnHeaders") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ColumnHeaders") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ColumnHeaders") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ResultTable) MarshalJSON() ([]byte, error) {
+func (s ResultTable) MarshalJSON() ([]byte, error) {
 	type NoMethod ResultTable
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ResultTableColumnHeaders struct {
 	// ColumnType: The type of the column (DIMENSION or METRIC).
 	ColumnType string `json:"columnType,omitempty"`
-
-	// DataType: The type of the data in the column (STRING, INTEGER, FLOAT,
-	// etc.).
+	// DataType: The type of the data in the column (STRING, INTEGER, FLOAT, etc.).
 	DataType string `json:"dataType,omitempty"`
-
 	// Name: The name of the dimension or metric.
 	Name string `json:"name,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ColumnType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ColumnType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ColumnType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ResultTableColumnHeaders) MarshalJSON() ([]byte, error) {
+func (s ResultTableColumnHeaders) MarshalJSON() ([]byte, error) {
 	type NoMethod ResultTableColumnHeaders
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "youtubeAnalytics.groupItems.delete":
 
 type GroupItemsDeleteCall struct {
 	s          *Service
@@ -522,48 +459,49 @@ type GroupItemsDeleteCall struct {
 }
 
 // Delete: Removes an item from a group.
+//
+//   - id: The id parameter specifies the YouTube group item ID for the group
+//     that is being deleted.
 func (r *GroupItemsService) Delete(id string) *GroupItemsDeleteCall {
 	c := &GroupItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
 	return c
 }
 
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": Note: This parameter is intended
-// exclusively for YouTube content partners.
+// OnBehalfOfContentOwner sets the optional parameter "onBehalfOfContentOwner":
+// Note: This parameter is intended exclusively for YouTube content
+// partners.
 //
 // The onBehalfOfContentOwner parameter indicates that the request's
-// authorization credentials identify a YouTube CMS user who is acting
-// on behalf of the content owner specified in the parameter value. This
-// parameter is intended for YouTube content partners that own and
-// manage many different YouTube channels. It allows content owners to
-// authenticate once and get access to all their video and channel data,
-// without having to provide authentication credentials for each
-// individual channel. The CMS account that the user authenticates with
-// must be linked to the specified YouTube content owner.
+// authorization credentials identify a YouTube CMS user who is acting on
+// behalf of the content owner specified in the parameter value. This parameter
+// is intended for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and get
+// access to all their video and channel data, without having to provide
+// authentication credentials for each individual channel. The CMS account that
+// the user authenticates with must be linked to the specified YouTube content
+// owner.
 func (c *GroupItemsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupItemsDeleteCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *GroupItemsDeleteCall) Fields(s ...googleapi.Field) *GroupItemsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *GroupItemsDeleteCall) Context(ctx context.Context) *GroupItemsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *GroupItemsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -572,12 +510,7 @@ func (c *GroupItemsDeleteCall) Header() http.Header {
 }
 
 func (c *GroupItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -588,7 +521,7 @@ func (c *GroupItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "youtubeAnalytics.groupItems.delete" call.
@@ -600,39 +533,10 @@ func (c *GroupItemsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Removes an item from a group.",
-	//   "httpMethod": "DELETE",
-	//   "id": "youtubeAnalytics.groupItems.delete",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The id parameter specifies the YouTube group item ID for the group that is being deleted.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "groupItems",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube",
-	//     "https://www.googleapis.com/auth/youtubepartner"
-	//   ]
-	// }
-
 }
-
-// method id "youtubeAnalytics.groupItems.insert":
 
 type GroupItemsInsertCall struct {
 	s          *Service
@@ -649,42 +553,40 @@ func (r *GroupItemsService) Insert(groupitem *GroupItem) *GroupItemsInsertCall {
 	return c
 }
 
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": Note: This parameter is intended
-// exclusively for YouTube content partners.
+// OnBehalfOfContentOwner sets the optional parameter "onBehalfOfContentOwner":
+// Note: This parameter is intended exclusively for YouTube content
+// partners.
 //
 // The onBehalfOfContentOwner parameter indicates that the request's
-// authorization credentials identify a YouTube CMS user who is acting
-// on behalf of the content owner specified in the parameter value. This
-// parameter is intended for YouTube content partners that own and
-// manage many different YouTube channels. It allows content owners to
-// authenticate once and get access to all their video and channel data,
-// without having to provide authentication credentials for each
-// individual channel. The CMS account that the user authenticates with
-// must be linked to the specified YouTube content owner.
+// authorization credentials identify a YouTube CMS user who is acting on
+// behalf of the content owner specified in the parameter value. This parameter
+// is intended for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and get
+// access to all their video and channel data, without having to provide
+// authentication credentials for each individual channel. The CMS account that
+// the user authenticates with must be linked to the specified YouTube content
+// owner.
 func (c *GroupItemsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupItemsInsertCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *GroupItemsInsertCall) Fields(s ...googleapi.Field) *GroupItemsInsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *GroupItemsInsertCall) Context(ctx context.Context) *GroupItemsInsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *GroupItemsInsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -693,18 +595,12 @@ func (c *GroupItemsInsertCall) Header() http.Header {
 }
 
 func (c *GroupItemsInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.groupitem)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groupItems")
@@ -714,16 +610,14 @@ func (c *GroupItemsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "youtubeAnalytics.groupItems.insert" call.
-// Exactly one of *GroupItem or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *GroupItem.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GroupItem.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *GroupItemsInsertCall) Do(opts ...googleapi.CallOption) (*GroupItem, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -731,17 +625,17 @@ func (c *GroupItemsInsertCall) Do(opts ...googleapi.CallOption) (*GroupItem, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GroupItem{
 		ServerResponse: googleapi.ServerResponse{
@@ -754,33 +648,7 @@ func (c *GroupItemsInsertCall) Do(opts ...googleapi.CallOption) (*GroupItem, err
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a group item.",
-	//   "httpMethod": "POST",
-	//   "id": "youtubeAnalytics.groupItems.insert",
-	//   "parameters": {
-	//     "onBehalfOfContentOwner": {
-	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "groupItems",
-	//   "request": {
-	//     "$ref": "GroupItem"
-	//   },
-	//   "response": {
-	//     "$ref": "GroupItem"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube",
-	//     "https://www.googleapis.com/auth/youtubepartner"
-	//   ]
-	// }
-
 }
-
-// method id "youtubeAnalytics.groupItems.list":
 
 type GroupItemsListCall struct {
 	s            *Service
@@ -792,58 +660,57 @@ type GroupItemsListCall struct {
 
 // List: Returns a collection of group items that match the API request
 // parameters.
+//
+//   - groupId: The id parameter specifies the unique ID of the group for which
+//     you want to retrieve group items.
 func (r *GroupItemsService) List(groupId string) *GroupItemsListCall {
 	c := &GroupItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("groupId", groupId)
 	return c
 }
 
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": Note: This parameter is intended
-// exclusively for YouTube content partners.
+// OnBehalfOfContentOwner sets the optional parameter "onBehalfOfContentOwner":
+// Note: This parameter is intended exclusively for YouTube content
+// partners.
 //
 // The onBehalfOfContentOwner parameter indicates that the request's
-// authorization credentials identify a YouTube CMS user who is acting
-// on behalf of the content owner specified in the parameter value. This
-// parameter is intended for YouTube content partners that own and
-// manage many different YouTube channels. It allows content owners to
-// authenticate once and get access to all their video and channel data,
-// without having to provide authentication credentials for each
-// individual channel. The CMS account that the user authenticates with
-// must be linked to the specified YouTube content owner.
+// authorization credentials identify a YouTube CMS user who is acting on
+// behalf of the content owner specified in the parameter value. This parameter
+// is intended for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and get
+// access to all their video and channel data, without having to provide
+// authentication credentials for each individual channel. The CMS account that
+// the user authenticates with must be linked to the specified YouTube content
+// owner.
 func (c *GroupItemsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupItemsListCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *GroupItemsListCall) Fields(s ...googleapi.Field) *GroupItemsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *GroupItemsListCall) IfNoneMatch(entityTag string) *GroupItemsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *GroupItemsListCall) Context(ctx context.Context) *GroupItemsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *GroupItemsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -852,12 +719,7 @@ func (c *GroupItemsListCall) Header() http.Header {
 }
 
 func (c *GroupItemsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -871,16 +733,15 @@ func (c *GroupItemsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "youtubeAnalytics.groupItems.list" call.
-// Exactly one of *GroupItemListResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GroupItemListResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GroupItemListResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *GroupItemsListCall) Do(opts ...googleapi.CallOption) (*GroupItemListResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -888,17 +749,17 @@ func (c *GroupItemsListCall) Do(opts ...googleapi.CallOption) (*GroupItemListRes
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GroupItemListResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -911,41 +772,7 @@ func (c *GroupItemsListCall) Do(opts ...googleapi.CallOption) (*GroupItemListRes
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a collection of group items that match the API request parameters.",
-	//   "httpMethod": "GET",
-	//   "id": "youtubeAnalytics.groupItems.list",
-	//   "parameterOrder": [
-	//     "groupId"
-	//   ],
-	//   "parameters": {
-	//     "groupId": {
-	//       "description": "The id parameter specifies the unique ID of the group for which you want to retrieve group items.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "groupItems",
-	//   "response": {
-	//     "$ref": "GroupItemListResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube",
-	//     "https://www.googleapis.com/auth/youtube.readonly",
-	//     "https://www.googleapis.com/auth/youtubepartner",
-	//     "https://www.googleapis.com/auth/yt-analytics.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "youtubeAnalytics.groups.delete":
 
 type GroupsDeleteCall struct {
 	s          *Service
@@ -955,48 +782,49 @@ type GroupsDeleteCall struct {
 }
 
 // Delete: Deletes a group.
+//
+//   - id: The id parameter specifies the YouTube group ID for the group that is
+//     being deleted.
 func (r *GroupsService) Delete(id string) *GroupsDeleteCall {
 	c := &GroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
 	return c
 }
 
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": Note: This parameter is intended
-// exclusively for YouTube content partners.
+// OnBehalfOfContentOwner sets the optional parameter "onBehalfOfContentOwner":
+// Note: This parameter is intended exclusively for YouTube content
+// partners.
 //
 // The onBehalfOfContentOwner parameter indicates that the request's
-// authorization credentials identify a YouTube CMS user who is acting
-// on behalf of the content owner specified in the parameter value. This
-// parameter is intended for YouTube content partners that own and
-// manage many different YouTube channels. It allows content owners to
-// authenticate once and get access to all their video and channel data,
-// without having to provide authentication credentials for each
-// individual channel. The CMS account that the user authenticates with
-// must be linked to the specified YouTube content owner.
+// authorization credentials identify a YouTube CMS user who is acting on
+// behalf of the content owner specified in the parameter value. This parameter
+// is intended for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and get
+// access to all their video and channel data, without having to provide
+// authentication credentials for each individual channel. The CMS account that
+// the user authenticates with must be linked to the specified YouTube content
+// owner.
 func (c *GroupsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupsDeleteCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *GroupsDeleteCall) Fields(s ...googleapi.Field) *GroupsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *GroupsDeleteCall) Context(ctx context.Context) *GroupsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *GroupsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1005,12 +833,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 }
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1021,7 +844,7 @@ func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "youtubeAnalytics.groups.delete" call.
@@ -1033,39 +856,10 @@ func (c *GroupsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a group.",
-	//   "httpMethod": "DELETE",
-	//   "id": "youtubeAnalytics.groups.delete",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The id parameter specifies the YouTube group ID for the group that is being deleted.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "groups",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube",
-	//     "https://www.googleapis.com/auth/youtubepartner"
-	//   ]
-	// }
-
 }
-
-// method id "youtubeAnalytics.groups.insert":
 
 type GroupsInsertCall struct {
 	s          *Service
@@ -1082,42 +876,40 @@ func (r *GroupsService) Insert(group *Group) *GroupsInsertCall {
 	return c
 }
 
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": Note: This parameter is intended
-// exclusively for YouTube content partners.
+// OnBehalfOfContentOwner sets the optional parameter "onBehalfOfContentOwner":
+// Note: This parameter is intended exclusively for YouTube content
+// partners.
 //
 // The onBehalfOfContentOwner parameter indicates that the request's
-// authorization credentials identify a YouTube CMS user who is acting
-// on behalf of the content owner specified in the parameter value. This
-// parameter is intended for YouTube content partners that own and
-// manage many different YouTube channels. It allows content owners to
-// authenticate once and get access to all their video and channel data,
-// without having to provide authentication credentials for each
-// individual channel. The CMS account that the user authenticates with
-// must be linked to the specified YouTube content owner.
+// authorization credentials identify a YouTube CMS user who is acting on
+// behalf of the content owner specified in the parameter value. This parameter
+// is intended for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and get
+// access to all their video and channel data, without having to provide
+// authentication credentials for each individual channel. The CMS account that
+// the user authenticates with must be linked to the specified YouTube content
+// owner.
 func (c *GroupsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupsInsertCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *GroupsInsertCall) Fields(s ...googleapi.Field) *GroupsInsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *GroupsInsertCall) Context(ctx context.Context) *GroupsInsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *GroupsInsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1126,18 +918,12 @@ func (c *GroupsInsertCall) Header() http.Header {
 }
 
 func (c *GroupsInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups")
@@ -1147,16 +933,14 @@ func (c *GroupsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "youtubeAnalytics.groups.insert" call.
-// Exactly one of *Group or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Group.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Group.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *GroupsInsertCall) Do(opts ...googleapi.CallOption) (*Group, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1164,17 +948,17 @@ func (c *GroupsInsertCall) Do(opts ...googleapi.CallOption) (*Group, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Group{
 		ServerResponse: googleapi.ServerResponse{
@@ -1187,33 +971,7 @@ func (c *GroupsInsertCall) Do(opts ...googleapi.CallOption) (*Group, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a group.",
-	//   "httpMethod": "POST",
-	//   "id": "youtubeAnalytics.groups.insert",
-	//   "parameters": {
-	//     "onBehalfOfContentOwner": {
-	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "groups",
-	//   "request": {
-	//     "$ref": "Group"
-	//   },
-	//   "response": {
-	//     "$ref": "Group"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube",
-	//     "https://www.googleapis.com/auth/youtubepartner"
-	//   ]
-	// }
-
 }
-
-// method id "youtubeAnalytics.groups.list":
 
 type GroupsListCall struct {
 	s            *Service
@@ -1223,87 +981,81 @@ type GroupsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a collection of groups that match the API request
-// parameters. For example, you can retrieve all groups that the
-// authenticated user owns, or you can retrieve one or more groups by
-// their unique IDs.
+// List: Returns a collection of groups that match the API request parameters.
+// For example, you can retrieve all groups that the authenticated user owns,
+// or you can retrieve one or more groups by their unique IDs.
 func (r *GroupsService) List() *GroupsListCall {
 	c := &GroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // Id sets the optional parameter "id": The id parameter specifies a
-// comma-separated list of the YouTube group ID(s) for the resource(s)
-// that are being retrieved. In a group resource, the id property
-// specifies the group's YouTube group ID.
+// comma-separated list of the YouTube group ID(s) for the resource(s) that are
+// being retrieved. In a group resource, the id property specifies the group's
+// YouTube group ID.
 func (c *GroupsListCall) Id(id string) *GroupsListCall {
 	c.urlParams_.Set("id", id)
 	return c
 }
 
-// Mine sets the optional parameter "mine": Set this parameter's value
-// to true to instruct the API to only return groups owned by the
-// authenticated user.
+// Mine sets the optional parameter "mine": Set this parameter's value to true
+// to instruct the API to only return groups owned by the authenticated user.
 func (c *GroupsListCall) Mine(mine bool) *GroupsListCall {
 	c.urlParams_.Set("mine", fmt.Sprint(mine))
 	return c
 }
 
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": Note: This parameter is intended
-// exclusively for YouTube content partners.
+// OnBehalfOfContentOwner sets the optional parameter "onBehalfOfContentOwner":
+// Note: This parameter is intended exclusively for YouTube content
+// partners.
 //
 // The onBehalfOfContentOwner parameter indicates that the request's
-// authorization credentials identify a YouTube CMS user who is acting
-// on behalf of the content owner specified in the parameter value. This
-// parameter is intended for YouTube content partners that own and
-// manage many different YouTube channels. It allows content owners to
-// authenticate once and get access to all their video and channel data,
-// without having to provide authentication credentials for each
-// individual channel. The CMS account that the user authenticates with
-// must be linked to the specified YouTube content owner.
+// authorization credentials identify a YouTube CMS user who is acting on
+// behalf of the content owner specified in the parameter value. This parameter
+// is intended for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and get
+// access to all their video and channel data, without having to provide
+// authentication credentials for each individual channel. The CMS account that
+// the user authenticates with must be linked to the specified YouTube content
+// owner.
 func (c *GroupsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupsListCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The pageToken
-// parameter identifies a specific page in the result set that should be
-// returned. In an API response, the nextPageToken property identifies
-// the next page that can be retrieved.
+// PageToken sets the optional parameter "pageToken": The pageToken parameter
+// identifies a specific page in the result set that should be returned. In an
+// API response, the nextPageToken property identifies the next page that can
+// be retrieved.
 func (c *GroupsListCall) PageToken(pageToken string) *GroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *GroupsListCall) Fields(s ...googleapi.Field) *GroupsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *GroupsListCall) IfNoneMatch(entityTag string) *GroupsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *GroupsListCall) Context(ctx context.Context) *GroupsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *GroupsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1312,12 +1064,7 @@ func (c *GroupsListCall) Header() http.Header {
 }
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1331,16 +1078,15 @@ func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "youtubeAnalytics.groups.list" call.
-// Exactly one of *GroupListResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GroupListResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GroupListResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*GroupListResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1348,17 +1094,17 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*GroupListResponse, e
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GroupListResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1371,44 +1117,6 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*GroupListResponse, e
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a collection of groups that match the API request parameters. For example, you can retrieve all groups that the authenticated user owns, or you can retrieve one or more groups by their unique IDs.",
-	//   "httpMethod": "GET",
-	//   "id": "youtubeAnalytics.groups.list",
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The id parameter specifies a comma-separated list of the YouTube group ID(s) for the resource(s) that are being retrieved. In a group resource, the id property specifies the group's YouTube group ID.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "mine": {
-	//       "description": "Set this parameter's value to true to instruct the API to only return groups owned by the authenticated user.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageToken": {
-	//       "description": "The pageToken parameter identifies a specific page in the result set that should be returned. In an API response, the nextPageToken property identifies the next page that can be retrieved.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "groups",
-	//   "response": {
-	//     "$ref": "GroupListResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube",
-	//     "https://www.googleapis.com/auth/youtube.readonly",
-	//     "https://www.googleapis.com/auth/youtubepartner",
-	//     "https://www.googleapis.com/auth/yt-analytics.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1416,7 +1124,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*GroupListResponse, e
 // The provided context supersedes any context provided to the Context method.
 func (c *GroupsListCall) Pages(ctx context.Context, f func(*GroupListResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1432,8 +1140,6 @@ func (c *GroupsListCall) Pages(ctx context.Context, f func(*GroupListResponse) e
 	}
 }
 
-// method id "youtubeAnalytics.groups.update":
-
 type GroupsUpdateCall struct {
 	s          *Service
 	group      *Group
@@ -1442,50 +1148,47 @@ type GroupsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Modifies a group. For example, you could change a group's
-// title.
+// Update: Modifies a group. For example, you could change a group's title.
 func (r *GroupsService) Update(group *Group) *GroupsUpdateCall {
 	c := &GroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.group = group
 	return c
 }
 
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": Note: This parameter is intended
-// exclusively for YouTube content partners.
+// OnBehalfOfContentOwner sets the optional parameter "onBehalfOfContentOwner":
+// Note: This parameter is intended exclusively for YouTube content
+// partners.
 //
 // The onBehalfOfContentOwner parameter indicates that the request's
-// authorization credentials identify a YouTube CMS user who is acting
-// on behalf of the content owner specified in the parameter value. This
-// parameter is intended for YouTube content partners that own and
-// manage many different YouTube channels. It allows content owners to
-// authenticate once and get access to all their video and channel data,
-// without having to provide authentication credentials for each
-// individual channel. The CMS account that the user authenticates with
-// must be linked to the specified YouTube content owner.
+// authorization credentials identify a YouTube CMS user who is acting on
+// behalf of the content owner specified in the parameter value. This parameter
+// is intended for YouTube content partners that own and manage many different
+// YouTube channels. It allows content owners to authenticate once and get
+// access to all their video and channel data, without having to provide
+// authentication credentials for each individual channel. The CMS account that
+// the user authenticates with must be linked to the specified YouTube content
+// owner.
 func (c *GroupsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *GroupsUpdateCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *GroupsUpdateCall) Fields(s ...googleapi.Field) *GroupsUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *GroupsUpdateCall) Context(ctx context.Context) *GroupsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *GroupsUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1494,18 +1197,12 @@ func (c *GroupsUpdateCall) Header() http.Header {
 }
 
 func (c *GroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.group)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "groups")
@@ -1515,16 +1212,14 @@ func (c *GroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "youtubeAnalytics.groups.update" call.
-// Exactly one of *Group or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Group.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Group.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *GroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Group, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1532,17 +1227,17 @@ func (c *GroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Group, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Group{
 		ServerResponse: googleapi.ServerResponse{
@@ -1555,33 +1250,7 @@ func (c *GroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Group, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Modifies a group. For example, you could change a group's title.",
-	//   "httpMethod": "PUT",
-	//   "id": "youtubeAnalytics.groups.update",
-	//   "parameters": {
-	//     "onBehalfOfContentOwner": {
-	//       "description": "Note: This parameter is intended exclusively for YouTube content partners.\n\nThe onBehalfOfContentOwner parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "groups",
-	//   "request": {
-	//     "$ref": "Group"
-	//   },
-	//   "response": {
-	//     "$ref": "Group"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube",
-	//     "https://www.googleapis.com/auth/youtubepartner"
-	//   ]
-	// }
-
 }
-
-// method id "youtubeAnalytics.reports.query":
 
 type ReportsQueryCall struct {
 	s            *Service
@@ -1592,6 +1261,23 @@ type ReportsQueryCall struct {
 }
 
 // Query: Retrieve your YouTube Analytics reports.
+//
+//   - endDate: The end date for fetching YouTube Analytics data. The value
+//     should be in YYYY-MM-DD format.
+//   - ids: Identifies the YouTube channel or content owner for which you are
+//     retrieving YouTube Analytics data.
+//   - To request data for a YouTube user, set the ids parameter value to
+//     channel==CHANNEL_ID, where CHANNEL_ID specifies the unique YouTube channel
+//     ID.
+//   - To request data for a YouTube CMS content owner, set the ids parameter
+//     value to contentOwner==OWNER_NAME, where OWNER_NAME is the CMS name of the
+//     content owner.
+//   - metrics: A comma-separated list of YouTube Analytics metrics, such as
+//     views or likes,dislikes. See the Available Reports document for a list of
+//     the reports that you can retrieve and the metrics available in each
+//     report, and see the Metrics document for definitions of those metrics.
+//   - startDate: The start date for fetching YouTube Analytics data. The value
+//     should be in YYYY-MM-DD format.
 func (r *ReportsService) Query(ids string, startDate string, endDate string, metrics string) *ReportsQueryCall {
 	c := &ReportsQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("ids", ids)
@@ -1601,35 +1287,32 @@ func (r *ReportsService) Query(ids string, startDate string, endDate string, met
 	return c
 }
 
-// Currency sets the optional parameter "currency": The currency to
-// which financial metrics should be converted. The default is US Dollar
-// (USD). If the result contains no financial metrics, this flag will be
-// ignored. Responds with an error if the specified currency is not
-// recognized.
+// Currency sets the optional parameter "currency": The currency to which
+// financial metrics should be converted. The default is US Dollar (USD). If
+// the result contains no financial metrics, this flag will be ignored.
+// Responds with an error if the specified currency is not recognized.
 func (c *ReportsQueryCall) Currency(currency string) *ReportsQueryCall {
 	c.urlParams_.Set("currency", currency)
 	return c
 }
 
-// Dimensions sets the optional parameter "dimensions": A
-// comma-separated list of YouTube Analytics dimensions, such as views
-// or ageGroup,gender. See the Available Reports document for a list of
-// the reports that you can retrieve and the dimensions used for those
-// reports. Also see the Dimensions document for definitions of those
-// dimensions.
+// Dimensions sets the optional parameter "dimensions": A comma-separated list
+// of YouTube Analytics dimensions, such as views or ageGroup,gender. See the
+// Available Reports document for a list of the reports that you can retrieve
+// and the dimensions used for those reports. Also see the Dimensions document
+// for definitions of those dimensions.
 func (c *ReportsQueryCall) Dimensions(dimensions string) *ReportsQueryCall {
 	c.urlParams_.Set("dimensions", dimensions)
 	return c
 }
 
-// Filters sets the optional parameter "filters": A list of filters that
-// should be applied when retrieving YouTube Analytics data. The
-// Available Reports document identifies the dimensions that can be used
-// to filter each report, and the Dimensions document defines those
-// dimensions. If a request uses multiple filters, join them together
-// with a semicolon (;), and the returned result table will satisfy both
-// filters. For example, a filters parameter value of
-// video==dMH0bHeiRNg;country==IT restricts the result set to include
+// Filters sets the optional parameter "filters": A list of filters that should
+// be applied when retrieving YouTube Analytics data. The Available Reports
+// document identifies the dimensions that can be used to filter each report,
+// and the Dimensions document defines those dimensions. If a request uses
+// multiple filters, join them together with a semicolon (;), and the returned
+// result table will satisfy both filters. For example, a filters parameter
+// value of video==dMH0bHeiRNg;country==IT restricts the result set to include
 // data for the given video in Italy.
 func (c *ReportsQueryCall) Filters(filters string) *ReportsQueryCall {
 	c.urlParams_.Set("filters", filters)
@@ -1637,67 +1320,62 @@ func (c *ReportsQueryCall) Filters(filters string) *ReportsQueryCall {
 }
 
 // IncludeHistoricalChannelData sets the optional parameter
-// "include-historical-channel-data": If set to true historical data
-// (i.e. channel data from before the linking of the channel to the
-// content owner) will be retrieved.
+// "include-historical-channel-data": If set to true historical data (i.e.
+// channel data from before the linking of the channel to the content owner)
+// will be retrieved.
 func (c *ReportsQueryCall) IncludeHistoricalChannelData(includeHistoricalChannelData bool) *ReportsQueryCall {
 	c.urlParams_.Set("include-historical-channel-data", fmt.Sprint(includeHistoricalChannelData))
 	return c
 }
 
-// MaxResults sets the optional parameter "max-results": The maximum
-// number of rows to include in the response.
+// MaxResults sets the optional parameter "max-results": The maximum number of
+// rows to include in the response.
 func (c *ReportsQueryCall) MaxResults(maxResults int64) *ReportsQueryCall {
 	c.urlParams_.Set("max-results", fmt.Sprint(maxResults))
 	return c
 }
 
 // Sort sets the optional parameter "sort": A comma-separated list of
-// dimensions or metrics that determine the sort order for YouTube
-// Analytics data. By default the sort order is ascending. The '-'
-// prefix causes descending sort order.
+// dimensions or metrics that determine the sort order for YouTube Analytics
+// data. By default the sort order is ascending. The '-' prefix causes
+// descending sort order.
 func (c *ReportsQueryCall) Sort(sort string) *ReportsQueryCall {
 	c.urlParams_.Set("sort", sort)
 	return c
 }
 
-// StartIndex sets the optional parameter "start-index": An index of the
-// first entity to retrieve. Use this parameter as a pagination
-// mechanism along with the max-results parameter (one-based,
-// inclusive).
+// StartIndex sets the optional parameter "start-index": An index of the first
+// entity to retrieve. Use this parameter as a pagination mechanism along with
+// the max-results parameter (one-based, inclusive).
 func (c *ReportsQueryCall) StartIndex(startIndex int64) *ReportsQueryCall {
 	c.urlParams_.Set("start-index", fmt.Sprint(startIndex))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ReportsQueryCall) Fields(s ...googleapi.Field) *ReportsQueryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ReportsQueryCall) IfNoneMatch(entityTag string) *ReportsQueryCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ReportsQueryCall) Context(ctx context.Context) *ReportsQueryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ReportsQueryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1706,12 +1384,7 @@ func (c *ReportsQueryCall) Header() http.Header {
 }
 
 func (c *ReportsQueryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1725,16 +1398,14 @@ func (c *ReportsQueryCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "youtubeAnalytics.reports.query" call.
-// Exactly one of *ResultTable or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *ResultTable.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ResultTable.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ReportsQueryCall) Do(opts ...googleapi.CallOption) (*ResultTable, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1742,17 +1413,17 @@ func (c *ReportsQueryCall) Do(opts ...googleapi.CallOption) (*ResultTable, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ResultTable{
 		ServerResponse: googleapi.ServerResponse{
@@ -1765,98 +1436,4 @@ func (c *ReportsQueryCall) Do(opts ...googleapi.CallOption) (*ResultTable, error
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieve your YouTube Analytics reports.",
-	//   "httpMethod": "GET",
-	//   "id": "youtubeAnalytics.reports.query",
-	//   "parameterOrder": [
-	//     "ids",
-	//     "start-date",
-	//     "end-date",
-	//     "metrics"
-	//   ],
-	//   "parameters": {
-	//     "currency": {
-	//       "description": "The currency to which financial metrics should be converted. The default is US Dollar (USD). If the result contains no financial metrics, this flag will be ignored. Responds with an error if the specified currency is not recognized.",
-	//       "location": "query",
-	//       "pattern": "[A-Z]{3}",
-	//       "type": "string"
-	//     },
-	//     "dimensions": {
-	//       "description": "A comma-separated list of YouTube Analytics dimensions, such as views or ageGroup,gender. See the Available Reports document for a list of the reports that you can retrieve and the dimensions used for those reports. Also see the Dimensions document for definitions of those dimensions.",
-	//       "location": "query",
-	//       "pattern": "[0-9a-zA-Z,]+",
-	//       "type": "string"
-	//     },
-	//     "end-date": {
-	//       "description": "The end date for fetching YouTube Analytics data. The value should be in YYYY-MM-DD format.",
-	//       "location": "query",
-	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "filters": {
-	//       "description": "A list of filters that should be applied when retrieving YouTube Analytics data. The Available Reports document identifies the dimensions that can be used to filter each report, and the Dimensions document defines those dimensions. If a request uses multiple filters, join them together with a semicolon (;), and the returned result table will satisfy both filters. For example, a filters parameter value of video==dMH0bHeiRNg;country==IT restricts the result set to include data for the given video in Italy.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "ids": {
-	//       "description": "Identifies the YouTube channel or content owner for which you are retrieving YouTube Analytics data.\n- To request data for a YouTube user, set the ids parameter value to channel==CHANNEL_ID, where CHANNEL_ID specifies the unique YouTube channel ID.\n- To request data for a YouTube CMS content owner, set the ids parameter value to contentOwner==OWNER_NAME, where OWNER_NAME is the CMS name of the content owner.",
-	//       "location": "query",
-	//       "pattern": "[a-zA-Z]+==[a-zA-Z0-9_+-]+",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "include-historical-channel-data": {
-	//       "description": "If set to true historical data (i.e. channel data from before the linking of the channel to the content owner) will be retrieved.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "max-results": {
-	//       "description": "The maximum number of rows to include in the response.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "metrics": {
-	//       "description": "A comma-separated list of YouTube Analytics metrics, such as views or likes,dislikes. See the Available Reports document for a list of the reports that you can retrieve and the metrics available in each report, and see the Metrics document for definitions of those metrics.",
-	//       "location": "query",
-	//       "pattern": "[0-9a-zA-Z,]+",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "sort": {
-	//       "description": "A comma-separated list of dimensions or metrics that determine the sort order for YouTube Analytics data. By default the sort order is ascending. The '-' prefix causes descending sort order.",
-	//       "location": "query",
-	//       "pattern": "[-0-9a-zA-Z,]+",
-	//       "type": "string"
-	//     },
-	//     "start-date": {
-	//       "description": "The start date for fetching YouTube Analytics data. The value should be in YYYY-MM-DD format.",
-	//       "location": "query",
-	//       "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "start-index": {
-	//       "description": "An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter (one-based, inclusive).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     }
-	//   },
-	//   "path": "reports",
-	//   "response": {
-	//     "$ref": "ResultTable"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube",
-	//     "https://www.googleapis.com/auth/youtube.readonly",
-	//     "https://www.googleapis.com/auth/yt-analytics-monetary.readonly",
-	//     "https://www.googleapis.com/auth/yt-analytics.readonly"
-	//   ]
-	// }
-
 }

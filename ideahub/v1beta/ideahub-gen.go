@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package ideahub provides access to the Idea Hub API.
 //
 // For product documentation, see: https://console.cloud.google.com/apis/library/ideahub.googleapis.com
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	ideahubService, err := ideahub.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	ideahubService, err := ideahub.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	ideahubService, err := ideahub.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package ideahub // import "google.golang.org/api/ideahub/v1beta"
 
 import (
@@ -71,17 +84,21 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "ideahub:v1beta"
 const apiName = "ideahub"
 const apiVersion = "v1beta"
 const basePath = "https://ideahub.googleapis.com/"
+const basePathTemplate = "https://ideahub.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://ideahub.mtls.googleapis.com/"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -211,320 +228,245 @@ type PlatformsPropertiesTopicStatesService struct {
 type GoogleSearchIdeahubV1betaAvailableLocale struct {
 	// Locale: A string in BCP 47 format, without a resource prefix.
 	Locale string `json:"locale,omitempty"`
-
-	// Name: A string in BCP 47 format, prefixed with the platform and
-	// property name, and "locales/". Format:
+	// Name: A string in BCP 47 format, prefixed with the platform and property
+	// name, and "locales/". Format:
 	// platforms/{platform}/properties/{property}/locales/{locale}
 	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Locale") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Locale") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Locale") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSearchIdeahubV1betaAvailableLocale) MarshalJSON() ([]byte, error) {
+func (s GoogleSearchIdeahubV1betaAvailableLocale) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSearchIdeahubV1betaAvailableLocale
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSearchIdeahubV1betaIdea: A single Idea that we want to show the
-// end user.
+// GoogleSearchIdeahubV1betaIdea: A single Idea that we want to show the end
+// user.
 type GoogleSearchIdeahubV1betaIdea struct {
 	// Name: Unique identifier for the idea. Format: ideas/{ideaId}
 	Name string `json:"name,omitempty"`
-
 	// Text: The idea’s text.
 	Text string `json:"text,omitempty"`
-
 	// Topics: The Topics that match the idea.
 	Topics []*GoogleSearchIdeahubV1betaTopic `json:"topics,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSearchIdeahubV1betaIdea) MarshalJSON() ([]byte, error) {
+func (s GoogleSearchIdeahubV1betaIdea) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSearchIdeahubV1betaIdea
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleSearchIdeahubV1betaIdeaActivity: An idea activity entry.
 type GoogleSearchIdeahubV1betaIdeaActivity struct {
 	// Ideas: The Idea IDs for this entry. If empty, topics should be set.
 	Ideas []string `json:"ideas,omitempty"`
-
-	// Name: Unique identifier for the idea activity. The name is ignored
-	// when creating an idea activity. Format:
-	// platforms/{platform}/properties/{property}/ideaActivities/{idea_activi
-	// ty}
+	// Name: Unique identifier for the idea activity. The name is ignored when
+	// creating an idea activity. Format:
+	// platforms/{platform}/properties/{property}/ideaActivities/{idea_activity}
 	Name string `json:"name,omitempty"`
-
 	// Topics: The Topic IDs for this entry. If empty, ideas should be set.
 	Topics []string `json:"topics,omitempty"`
-
 	// Type: The type of activity performed.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - An unspecified, unknown type of idea activity.
-	//   "POST_DRAFTED" - An idea activity type indicating a post has been
-	// drafted.
+	//   "POST_DRAFTED" - An idea activity type indicating a post has been drafted.
 	//   "POST_PUBLISHED" - An idea activity type indicating a post has been
 	// published.
-	//   "POST_DELETED" - An idea activity type indicating a post has been
-	// deleted.
-	//   "POST_UNPUBLISHED" - An idea activity type indicating a post has
-	// been unpublished.
+	//   "POST_DELETED" - An idea activity type indicating a post has been deleted.
+	//   "POST_UNPUBLISHED" - An idea activity type indicating a post has been
+	// unpublished.
 	Type string `json:"type,omitempty"`
-
 	// Uri: The uri the activity relates to.
 	Uri string `json:"uri,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Ideas") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Ideas") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Ideas") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSearchIdeahubV1betaIdeaActivity) MarshalJSON() ([]byte, error) {
+func (s GoogleSearchIdeahubV1betaIdeaActivity) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSearchIdeahubV1betaIdeaActivity
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSearchIdeahubV1betaIdeaState: Represents idea state specific to
-// a web property.
+// GoogleSearchIdeahubV1betaIdeaState: Represents idea state specific to a web
+// property.
 type GoogleSearchIdeahubV1betaIdeaState struct {
 	// Dismissed: Whether the idea is dismissed.
 	Dismissed bool `json:"dismissed,omitempty"`
-
 	// Name: Unique identifier for the idea state. Format:
 	// platforms/{platform}/properties/{property}/ideaStates/{idea_state}
 	Name string `json:"name,omitempty"`
-
 	// Saved: Whether the idea is saved.
 	Saved bool `json:"saved,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Dismissed") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dismissed") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dismissed") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSearchIdeahubV1betaIdeaState) MarshalJSON() ([]byte, error) {
+func (s GoogleSearchIdeahubV1betaIdeaState) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSearchIdeahubV1betaIdeaState
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSearchIdeahubV1betaListAvailableLocalesResponse: Response for
-// whether ideas are available for a given web property on a platform,
-// for the currently logged-in user.
+// GoogleSearchIdeahubV1betaListAvailableLocalesResponse: Response for whether
+// ideas are available for a given web property on a platform, for the
+// currently logged-in user.
 type GoogleSearchIdeahubV1betaListAvailableLocalesResponse struct {
 	// AvailableLocales: Locales for which ideas are available for the given
 	// Creator.
 	AvailableLocales []*GoogleSearchIdeahubV1betaAvailableLocale `json:"availableLocales,omitempty"`
-
-	// NextPageToken: A token that can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AvailableLocales") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AvailableLocales") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AvailableLocales") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSearchIdeahubV1betaListAvailableLocalesResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleSearchIdeahubV1betaListAvailableLocalesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSearchIdeahubV1betaListAvailableLocalesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleSearchIdeahubV1betaListIdeasResponse struct {
 	// Ideas: Results for the ListIdeasRequest.
 	Ideas []*GoogleSearchIdeahubV1betaIdea `json:"ideas,omitempty"`
-
 	// NextPageToken: Used to fetch the next page in a subsequent request.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Ideas") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Ideas") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Ideas") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSearchIdeahubV1betaListIdeasResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleSearchIdeahubV1betaListIdeasResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSearchIdeahubV1betaListIdeasResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSearchIdeahubV1betaTopic: Represents a Topic umbrella for a
-// list of questions that a Creator may want to respond to.
+// GoogleSearchIdeahubV1betaTopic: Represents a Topic umbrella for a list of
+// questions that a Creator may want to respond to.
 type GoogleSearchIdeahubV1betaTopic struct {
-	// DisplayName: String displayed to the creator indicating the name of
-	// the Topic.
+	// DisplayName: String displayed to the creator indicating the name of the
+	// Topic.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Mid: The mID of the topic.
 	Mid string `json:"mid,omitempty"`
-
 	// Name: Unique identifier for the topic. Format: topics/{topic}
 	Name string `json:"name,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSearchIdeahubV1betaTopic) MarshalJSON() ([]byte, error) {
+func (s GoogleSearchIdeahubV1betaTopic) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSearchIdeahubV1betaTopic
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSearchIdeahubV1betaTopicState: Represents topic state specific
-// to a web property.
+// GoogleSearchIdeahubV1betaTopicState: Represents topic state specific to a
+// web property.
 type GoogleSearchIdeahubV1betaTopicState struct {
 	// Dismissed: Whether the topic is dismissed.
 	Dismissed bool `json:"dismissed,omitempty"`
-
 	// Name: Unique identifier for the topic state. Format:
 	// platforms/{platform}/properties/{property}/topicStates/{topic_state}
 	Name string `json:"name,omitempty"`
-
 	// Saved: Whether the topic is saved.
 	Saved bool `json:"saved,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Dismissed") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dismissed") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dismissed") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleSearchIdeahubV1betaTopicState) MarshalJSON() ([]byte, error) {
+func (s GoogleSearchIdeahubV1betaTopicState) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSearchIdeahubV1betaTopicState
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "ideahub.platforms.properties.ideaActivities.create":
 
 type PlatformsPropertiesIdeaActivitiesCreateCall struct {
 	s                                     *Service
@@ -537,8 +479,8 @@ type PlatformsPropertiesIdeaActivitiesCreateCall struct {
 
 // Create: Creates an idea activity entry.
 //
-//   - parent: The parent resource where this idea activity will be
-//     created. Format: platforms/{platform}/property/{property}.
+//   - parent: The parent resource where this idea activity will be created.
+//     Format: platforms/{platform}/property/{property}.
 func (r *PlatformsPropertiesIdeaActivitiesService) Create(parent string, googlesearchideahubv1betaideaactivity *GoogleSearchIdeahubV1betaIdeaActivity) *PlatformsPropertiesIdeaActivitiesCreateCall {
 	c := &PlatformsPropertiesIdeaActivitiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -547,23 +489,21 @@ func (r *PlatformsPropertiesIdeaActivitiesService) Create(parent string, googles
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PlatformsPropertiesIdeaActivitiesCreateCall) Fields(s ...googleapi.Field) *PlatformsPropertiesIdeaActivitiesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PlatformsPropertiesIdeaActivitiesCreateCall) Context(ctx context.Context) *PlatformsPropertiesIdeaActivitiesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PlatformsPropertiesIdeaActivitiesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -572,18 +512,12 @@ func (c *PlatformsPropertiesIdeaActivitiesCreateCall) Header() http.Header {
 }
 
 func (c *PlatformsPropertiesIdeaActivitiesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlesearchideahubv1betaideaactivity)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/ideaActivities")
@@ -596,17 +530,15 @@ func (c *PlatformsPropertiesIdeaActivitiesCreateCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "ideahub.platforms.properties.ideaActivities.create" call.
-// Exactly one of *GoogleSearchIdeahubV1betaIdeaActivity or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *GoogleSearchIdeahubV1betaIdeaActivity.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PlatformsPropertiesIdeaActivitiesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleSearchIdeahubV1betaIdeaActivity, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -637,35 +569,7 @@ func (c *PlatformsPropertiesIdeaActivitiesCreateCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an idea activity entry.",
-	//   "flatPath": "v1beta/platforms/{platformsId}/properties/{propertiesId}/ideaActivities",
-	//   "httpMethod": "POST",
-	//   "id": "ideahub.platforms.properties.ideaActivities.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource where this idea activity will be created. Format: platforms/{platform}/property/{property}",
-	//       "location": "path",
-	//       "pattern": "^platforms/[^/]+/properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/ideaActivities",
-	//   "request": {
-	//     "$ref": "GoogleSearchIdeahubV1betaIdeaActivity"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleSearchIdeahubV1betaIdeaActivity"
-	//   }
-	// }
-
 }
-
-// method id "ideahub.platforms.properties.ideaStates.patch":
 
 type PlatformsPropertiesIdeaStatesPatchCall struct {
 	s                                  *Service
@@ -687,31 +591,29 @@ func (r *PlatformsPropertiesIdeaStatesService) Patch(nameid string, googlesearch
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to be updated.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// be updated.
 func (c *PlatformsPropertiesIdeaStatesPatchCall) UpdateMask(updateMask string) *PlatformsPropertiesIdeaStatesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PlatformsPropertiesIdeaStatesPatchCall) Fields(s ...googleapi.Field) *PlatformsPropertiesIdeaStatesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PlatformsPropertiesIdeaStatesPatchCall) Context(ctx context.Context) *PlatformsPropertiesIdeaStatesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PlatformsPropertiesIdeaStatesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -720,18 +622,12 @@ func (c *PlatformsPropertiesIdeaStatesPatchCall) Header() http.Header {
 }
 
 func (c *PlatformsPropertiesIdeaStatesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlesearchideahubv1betaideastate)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
@@ -744,17 +640,15 @@ func (c *PlatformsPropertiesIdeaStatesPatchCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.nameid,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "ideahub.platforms.properties.ideaStates.patch" call.
-// Exactly one of *GoogleSearchIdeahubV1betaIdeaState or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleSearchIdeahubV1betaIdeaState.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleSearchIdeahubV1betaIdeaState.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PlatformsPropertiesIdeaStatesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleSearchIdeahubV1betaIdeaState, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -785,41 +679,7 @@ func (c *PlatformsPropertiesIdeaStatesPatchCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update an idea state resource.",
-	//   "flatPath": "v1beta/platforms/{platformsId}/properties/{propertiesId}/ideaStates/{ideaStatesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "ideahub.platforms.properties.ideaStates.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Unique identifier for the idea state. Format: platforms/{platform}/properties/{property}/ideaStates/{idea_state}",
-	//       "location": "path",
-	//       "pattern": "^platforms/[^/]+/properties/[^/]+/ideaStates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to be updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleSearchIdeahubV1betaIdeaState"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleSearchIdeahubV1betaIdeaState"
-	//   }
-	// }
-
 }
-
-// method id "ideahub.platforms.properties.ideas.list":
 
 type PlatformsPropertiesIdeasListCall struct {
 	s            *Service
@@ -832,80 +692,75 @@ type PlatformsPropertiesIdeasListCall struct {
 
 // List: List ideas for a given Creator and filter and sort options.
 //
-//   - parent: If defined, specifies the creator for which to filter by.
-//     Format: publishers/{publisher}/properties/{property}.
+//   - parent: If defined, specifies the creator for which to filter by. Format:
+//     publishers/{publisher}/properties/{property}.
 func (r *PlatformsPropertiesIdeasService) List(parent string) *PlatformsPropertiesIdeasListCall {
 	c := &PlatformsPropertiesIdeasListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Allows filtering.
-// Supported syntax: * Filter expressions are made up of one or more
-// restrictions. * Restrictions are implicitly combined, as if the `AND`
-// operator was always used. The `OR` operator is currently unsupported.
-// * Supported functions: - `saved(bool)`: If set to true, fetches only
-// saved ideas. If set to false, fetches all except saved ideas. Can't
-// be simultaneously used with `dismissed(bool)`. - `dismissed(bool)`:
-// If set to true, fetches only dismissed ideas. Can't be simultaneously
-// used with `saved(bool)`. The `false` value is currently unsupported.
-// Examples: * `saved(true)` * `saved(false)` * `dismissed(true)` The
-// length of this field should be no more than 500 characters.
+// Filter sets the optional parameter "filter": Allows filtering. Supported
+// syntax: * Filter expressions are made up of one or more restrictions. *
+// Restrictions are implicitly combined, as if the `AND` operator was always
+// used. The `OR` operator is currently unsupported. * Supported functions: -
+// `saved(bool)`: If set to true, fetches only saved ideas. If set to false,
+// fetches all except saved ideas. Can't be simultaneously used with
+// `dismissed(bool)`. - `dismissed(bool)`: If set to true, fetches only
+// dismissed ideas. Can't be simultaneously used with `saved(bool)`. The
+// `false` value is currently unsupported. Examples: * `saved(true)` *
+// `saved(false)` * `dismissed(true)` The length of this field should be no
+// more than 500 characters.
 func (c *PlatformsPropertiesIdeasListCall) Filter(filter string) *PlatformsPropertiesIdeasListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Order semantics
-// described below.
+// OrderBy sets the optional parameter "orderBy": Order semantics described
+// below.
 func (c *PlatformsPropertiesIdeasListCall) OrderBy(orderBy string) *PlatformsPropertiesIdeasListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of ideas per page. If unspecified, at most 10 ideas will be returned.
-// The maximum value is 2000; values above 2000 will be coerced to 2000.
+// PageSize sets the optional parameter "pageSize": The maximum number of ideas
+// per page. If unspecified, at most 10 ideas will be returned. The maximum
+// value is 2000; values above 2000 will be coerced to 2000.
 func (c *PlatformsPropertiesIdeasListCall) PageSize(pageSize int64) *PlatformsPropertiesIdeasListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Used to fetch next
-// page.
+// PageToken sets the optional parameter "pageToken": Used to fetch next page.
 func (c *PlatformsPropertiesIdeasListCall) PageToken(pageToken string) *PlatformsPropertiesIdeasListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PlatformsPropertiesIdeasListCall) Fields(s ...googleapi.Field) *PlatformsPropertiesIdeasListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PlatformsPropertiesIdeasListCall) IfNoneMatch(entityTag string) *PlatformsPropertiesIdeasListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PlatformsPropertiesIdeasListCall) Context(ctx context.Context) *PlatformsPropertiesIdeasListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PlatformsPropertiesIdeasListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -914,12 +769,7 @@ func (c *PlatformsPropertiesIdeasListCall) Header() http.Header {
 }
 
 func (c *PlatformsPropertiesIdeasListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -936,18 +786,15 @@ func (c *PlatformsPropertiesIdeasListCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "ideahub.platforms.properties.ideas.list" call.
-// Exactly one of *GoogleSearchIdeahubV1betaListIdeasResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleSearchIdeahubV1betaListIdeasResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleSearchIdeahubV1betaListIdeasResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PlatformsPropertiesIdeasListCall) Do(opts ...googleapi.CallOption) (*GoogleSearchIdeahubV1betaListIdeasResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -978,50 +825,6 @@ func (c *PlatformsPropertiesIdeasListCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List ideas for a given Creator and filter and sort options.",
-	//   "flatPath": "v1beta/platforms/{platformsId}/properties/{propertiesId}/ideas",
-	//   "httpMethod": "GET",
-	//   "id": "ideahub.platforms.properties.ideas.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions are implicitly combined, as if the `AND` operator was always used. The `OR` operator is currently unsupported. * Supported functions: - `saved(bool)`: If set to true, fetches only saved ideas. If set to false, fetches all except saved ideas. Can't be simultaneously used with `dismissed(bool)`. - `dismissed(bool)`: If set to true, fetches only dismissed ideas. Can't be simultaneously used with `saved(bool)`. The `false` value is currently unsupported. Examples: * `saved(true)` * `saved(false)` * `dismissed(true)` The length of this field should be no more than 500 characters.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Order semantics described below.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of ideas per page. If unspecified, at most 10 ideas will be returned. The maximum value is 2000; values above 2000 will be coerced to 2000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Used to fetch next page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. If defined, specifies the creator for which to filter by. Format: publishers/{publisher}/properties/{property}",
-	//       "location": "path",
-	//       "pattern": "^platforms/[^/]+/properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/ideas",
-	//   "response": {
-	//     "$ref": "GoogleSearchIdeahubV1betaListIdeasResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1029,7 +832,7 @@ func (c *PlatformsPropertiesIdeasListCall) Do(opts ...googleapi.CallOption) (*Go
 // The provided context supersedes any context provided to the Context method.
 func (c *PlatformsPropertiesIdeasListCall) Pages(ctx context.Context, f func(*GoogleSearchIdeahubV1betaListIdeasResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1045,8 +848,6 @@ func (c *PlatformsPropertiesIdeasListCall) Pages(ctx context.Context, f func(*Go
 	}
 }
 
-// method id "ideahub.platforms.properties.locales.list":
-
 type PlatformsPropertiesLocalesListCall struct {
 	s            *Service
 	parent       string
@@ -1056,8 +857,7 @@ type PlatformsPropertiesLocalesListCall struct {
 	header_      http.Header
 }
 
-// List: Returns which locales ideas are available in for a given
-// Creator.
+// List: Returns which locales ideas are available in for a given Creator.
 //
 //   - parent: The web property to check idea availability for Format:
 //     platforms/{platform}/property/{property}.
@@ -1067,53 +867,48 @@ func (r *PlatformsPropertiesLocalesService) List(parent string) *PlatformsProper
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of locales to return. The service may return fewer than this value.
-// If unspecified, at most 100 locales will be returned. The maximum
-// value is 100; values above 100 will be coerced to 100.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// locales to return. The service may return fewer than this value. If
+// unspecified, at most 100 locales will be returned. The maximum value is 100;
+// values above 100 will be coerced to 100.
 func (c *PlatformsPropertiesLocalesListCall) PageSize(pageSize int64) *PlatformsPropertiesLocalesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListAvailableLocales` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListAvailableLocales` must match the call that provided
-// the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAvailableLocales` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListAvailableLocales` must match the call that provided the page token.
 func (c *PlatformsPropertiesLocalesListCall) PageToken(pageToken string) *PlatformsPropertiesLocalesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PlatformsPropertiesLocalesListCall) Fields(s ...googleapi.Field) *PlatformsPropertiesLocalesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PlatformsPropertiesLocalesListCall) IfNoneMatch(entityTag string) *PlatformsPropertiesLocalesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PlatformsPropertiesLocalesListCall) Context(ctx context.Context) *PlatformsPropertiesLocalesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PlatformsPropertiesLocalesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1122,12 +917,7 @@ func (c *PlatformsPropertiesLocalesListCall) Header() http.Header {
 }
 
 func (c *PlatformsPropertiesLocalesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1144,18 +934,15 @@ func (c *PlatformsPropertiesLocalesListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "ideahub.platforms.properties.locales.list" call.
-// Exactly one of *GoogleSearchIdeahubV1betaListAvailableLocalesResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleSearchIdeahubV1betaListAvailableLocalesResponse.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleSearchIdeahubV1betaListAvailableLocalesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PlatformsPropertiesLocalesListCall) Do(opts ...googleapi.CallOption) (*GoogleSearchIdeahubV1betaListAvailableLocalesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1186,40 +973,6 @@ func (c *PlatformsPropertiesLocalesListCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns which locales ideas are available in for a given Creator.",
-	//   "flatPath": "v1beta/platforms/{platformsId}/properties/{propertiesId}/locales",
-	//   "httpMethod": "GET",
-	//   "id": "ideahub.platforms.properties.locales.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of locales to return. The service may return fewer than this value. If unspecified, at most 100 locales will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListAvailableLocales` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAvailableLocales` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The web property to check idea availability for Format: platforms/{platform}/property/{property}",
-	//       "location": "path",
-	//       "pattern": "^platforms/[^/]+/properties/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/locales",
-	//   "response": {
-	//     "$ref": "GoogleSearchIdeahubV1betaListAvailableLocalesResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1227,7 +980,7 @@ func (c *PlatformsPropertiesLocalesListCall) Do(opts ...googleapi.CallOption) (*
 // The provided context supersedes any context provided to the Context method.
 func (c *PlatformsPropertiesLocalesListCall) Pages(ctx context.Context, f func(*GoogleSearchIdeahubV1betaListAvailableLocalesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1242,8 +995,6 @@ func (c *PlatformsPropertiesLocalesListCall) Pages(ctx context.Context, f func(*
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "ideahub.platforms.properties.topicStates.patch":
 
 type PlatformsPropertiesTopicStatesPatchCall struct {
 	s                                   *Service
@@ -1265,31 +1016,29 @@ func (r *PlatformsPropertiesTopicStatesService) Patch(nameid string, googlesearc
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to be updated.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// be updated.
 func (c *PlatformsPropertiesTopicStatesPatchCall) UpdateMask(updateMask string) *PlatformsPropertiesTopicStatesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PlatformsPropertiesTopicStatesPatchCall) Fields(s ...googleapi.Field) *PlatformsPropertiesTopicStatesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PlatformsPropertiesTopicStatesPatchCall) Context(ctx context.Context) *PlatformsPropertiesTopicStatesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PlatformsPropertiesTopicStatesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1298,18 +1047,12 @@ func (c *PlatformsPropertiesTopicStatesPatchCall) Header() http.Header {
 }
 
 func (c *PlatformsPropertiesTopicStatesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlesearchideahubv1betatopicstate)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
@@ -1322,17 +1065,15 @@ func (c *PlatformsPropertiesTopicStatesPatchCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.nameid,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "ideahub.platforms.properties.topicStates.patch" call.
-// Exactly one of *GoogleSearchIdeahubV1betaTopicState or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleSearchIdeahubV1betaTopicState.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleSearchIdeahubV1betaTopicState.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PlatformsPropertiesTopicStatesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleSearchIdeahubV1betaTopicState, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1363,36 +1104,4 @@ func (c *PlatformsPropertiesTopicStatesPatchCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update a topic state resource.",
-	//   "flatPath": "v1beta/platforms/{platformsId}/properties/{propertiesId}/topicStates/{topicStatesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "ideahub.platforms.properties.topicStates.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Unique identifier for the topic state. Format: platforms/{platform}/properties/{property}/topicStates/{topic_state}",
-	//       "location": "path",
-	//       "pattern": "^platforms/[^/]+/properties/[^/]+/topicStates/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to be updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleSearchIdeahubV1betaTopicState"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleSearchIdeahubV1betaTopicState"
-	//   }
-	// }
-
 }

@@ -3796,7 +3796,7 @@ func (c *ProjectsLocationsGlobalGetProjectFeatureSettingsCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.global.getProjectFeatureSettings" call.
@@ -3907,7 +3907,7 @@ func (c *ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.global.updateProjectFeatureSettings" call.
@@ -4037,7 +4037,7 @@ func (c *ProjectsLocationsInstancesInventoriesGetCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.instances.inventories.get" call.
@@ -4186,7 +4186,7 @@ func (c *ProjectsLocationsInstancesInventoriesListCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.instances.inventories.list" call.
@@ -4321,7 +4321,7 @@ func (c *ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.instances.osPolicyAssignments.reports.get" call.
@@ -4470,7 +4470,7 @@ func (c *ProjectsLocationsInstancesOsPolicyAssignmentsReportsListCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.instances.osPolicyAssignments.reports.list" call.
@@ -4604,7 +4604,7 @@ func (c *ProjectsLocationsInstancesVulnerabilityReportsGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.instances.vulnerabilityReports.get" call.
@@ -4747,7 +4747,7 @@ func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.instances.vulnerabilityReports.list" call.
@@ -4895,7 +4895,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsCreateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.create" call.
@@ -5004,7 +5004,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsDeleteCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.delete" call.
@@ -5115,7 +5115,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.get" call.
@@ -5239,7 +5239,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.list" call.
@@ -5384,7 +5384,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsListRevisionsCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.listRevisions" call.
@@ -5538,7 +5538,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsPatchCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.patch" call.
@@ -5647,7 +5647,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsOperationsCancelCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.operations.cancel" call.
@@ -5756,7 +5756,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsOperationsGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.operations.get" call.
@@ -5868,7 +5868,7 @@ func (c *ProjectsPatchDeploymentsCreateCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.patchDeployments.create" call.
@@ -5965,7 +5965,7 @@ func (c *ProjectsPatchDeploymentsDeleteCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.patchDeployments.delete" call.
@@ -6073,7 +6073,7 @@ func (c *ProjectsPatchDeploymentsGetCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.patchDeployments.get" call.
@@ -6196,7 +6196,7 @@ func (c *ProjectsPatchDeploymentsListCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.patchDeployments.list" call.
@@ -6329,7 +6329,7 @@ func (c *ProjectsPatchDeploymentsPatchCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.patchDeployments.patch" call.
@@ -6433,7 +6433,7 @@ func (c *ProjectsPatchDeploymentsPauseCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.patchDeployments.pause" call.
@@ -6537,7 +6537,7 @@ func (c *ProjectsPatchDeploymentsResumeCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.patchDeployments.resume" call.
@@ -6640,7 +6640,7 @@ func (c *ProjectsPatchJobsCancelCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.patchJobs.cancel" call.
@@ -6741,7 +6741,7 @@ func (c *ProjectsPatchJobsExecuteCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.patchJobs.execute" call.
@@ -6849,7 +6849,7 @@ func (c *ProjectsPatchJobsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.patchJobs.get" call.
@@ -6980,7 +6980,7 @@ func (c *ProjectsPatchJobsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.patchJobs.list" call.
@@ -7133,7 +7133,7 @@ func (c *ProjectsPatchJobsInstanceDetailsListCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.patchJobs.instanceDetails.list" call.

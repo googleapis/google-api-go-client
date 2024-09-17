@@ -488,7 +488,7 @@ func (c *FoldersLocationsActivityTypesActivitiesQueryCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "policyanalyzer.folders.locations.activityTypes.activities.query" call.
@@ -654,7 +654,7 @@ func (c *OrganizationsLocationsActivityTypesActivitiesQueryCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "policyanalyzer.organizations.locations.activityTypes.activities.query" call.
@@ -820,7 +820,7 @@ func (c *ProjectsLocationsActivityTypesActivitiesQueryCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "policyanalyzer.projects.locations.activityTypes.activities.query" call.

@@ -3499,7 +3499,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.get" call.
@@ -3630,7 +3630,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.list" call.
@@ -3763,7 +3763,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.environments.create" call.
@@ -3859,7 +3859,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.environments.delete" call.
@@ -3967,7 +3967,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.environments.get" call.
@@ -4088,7 +4088,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.environments.list" call.
@@ -4218,7 +4218,7 @@ func (c *ProjectsLocationsExecutionsCreateCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.executions.create" call.
@@ -4314,7 +4314,7 @@ func (c *ProjectsLocationsExecutionsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.executions.delete" call.
@@ -4422,7 +4422,7 @@ func (c *ProjectsLocationsExecutionsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.executions.get" call.
@@ -4557,7 +4557,7 @@ func (c *ProjectsLocationsExecutionsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.executions.list" call.
@@ -4687,7 +4687,7 @@ func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.create" call.
@@ -4783,7 +4783,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.delete" call.
@@ -4886,7 +4886,7 @@ func (c *ProjectsLocationsInstancesDiagnoseCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.diagnose" call.
@@ -4994,7 +4994,7 @@ func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.get" call.
@@ -5121,7 +5121,7 @@ func (c *ProjectsLocationsInstancesGetIamPolicyCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.getIamPolicy" call.
@@ -5229,7 +5229,7 @@ func (c *ProjectsLocationsInstancesGetInstanceHealthCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.getInstanceHealth" call.
@@ -5354,7 +5354,7 @@ func (c *ProjectsLocationsInstancesIsUpgradeableCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"notebookInstance": c.notebookInstance,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.isUpgradeable" call.
@@ -5489,7 +5489,7 @@ func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.list" call.
@@ -5613,7 +5613,7 @@ func (c *ProjectsLocationsInstancesMigrateCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.migrate" call.
@@ -5717,7 +5717,7 @@ func (c *ProjectsLocationsInstancesRegisterCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.register" call.
@@ -5821,7 +5821,7 @@ func (c *ProjectsLocationsInstancesReportCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.report" call.
@@ -5923,7 +5923,7 @@ func (c *ProjectsLocationsInstancesReportEventCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.reportEvent" call.
@@ -6025,7 +6025,7 @@ func (c *ProjectsLocationsInstancesResetCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.reset" call.
@@ -6127,7 +6127,7 @@ func (c *ProjectsLocationsInstancesRollbackCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.rollback" call.
@@ -6229,7 +6229,7 @@ func (c *ProjectsLocationsInstancesSetAcceleratorCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.setAccelerator" call.
@@ -6334,7 +6334,7 @@ func (c *ProjectsLocationsInstancesSetIamPolicyCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.setIamPolicy" call.
@@ -6436,7 +6436,7 @@ func (c *ProjectsLocationsInstancesSetLabelsCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.setLabels" call.
@@ -6538,7 +6538,7 @@ func (c *ProjectsLocationsInstancesSetMachineTypeCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.setMachineType" call.
@@ -6640,7 +6640,7 @@ func (c *ProjectsLocationsInstancesStartCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.start" call.
@@ -6742,7 +6742,7 @@ func (c *ProjectsLocationsInstancesStopCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.stop" call.
@@ -6850,7 +6850,7 @@ func (c *ProjectsLocationsInstancesTestIamPermissionsCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.testIamPermissions" call.
@@ -6953,7 +6953,7 @@ func (c *ProjectsLocationsInstancesUpdateConfigCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.updateConfig" call.
@@ -7055,7 +7055,7 @@ func (c *ProjectsLocationsInstancesUpdateMetadataItemsCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.updateMetadataItems" call.
@@ -7159,7 +7159,7 @@ func (c *ProjectsLocationsInstancesUpdateShieldedInstanceConfigCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.updateShieldedInstanceConfig" call.
@@ -7261,7 +7261,7 @@ func (c *ProjectsLocationsInstancesUpgradeCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.upgrade" call.
@@ -7364,7 +7364,7 @@ func (c *ProjectsLocationsInstancesUpgradeInternalCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.instances.upgradeInternal" call.
@@ -7473,7 +7473,7 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.operations.cancel" call.
@@ -7571,7 +7571,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.operations.delete" call.
@@ -7680,7 +7680,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.operations.get" call.
@@ -7808,7 +7808,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.operations.list" call.
@@ -7944,7 +7944,7 @@ func (c *ProjectsLocationsRuntimesCreateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.create" call.
@@ -8046,7 +8046,7 @@ func (c *ProjectsLocationsRuntimesDeleteCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.delete" call.
@@ -8149,7 +8149,7 @@ func (c *ProjectsLocationsRuntimesDiagnoseCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.diagnose" call.
@@ -8258,7 +8258,7 @@ func (c *ProjectsLocationsRuntimesGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.get" call.
@@ -8385,7 +8385,7 @@ func (c *ProjectsLocationsRuntimesGetIamPolicyCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.getIamPolicy" call.
@@ -8519,7 +8519,7 @@ func (c *ProjectsLocationsRuntimesListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.list" call.
@@ -8643,7 +8643,7 @@ func (c *ProjectsLocationsRuntimesMigrateCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.migrate" call.
@@ -8767,7 +8767,7 @@ func (c *ProjectsLocationsRuntimesPatchCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.patch" call.
@@ -8871,7 +8871,7 @@ func (c *ProjectsLocationsRuntimesRefreshRuntimeTokenInternalCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.refreshRuntimeTokenInternal" call.
@@ -8974,7 +8974,7 @@ func (c *ProjectsLocationsRuntimesReportEventCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.reportEvent" call.
@@ -9076,7 +9076,7 @@ func (c *ProjectsLocationsRuntimesResetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.reset" call.
@@ -9181,7 +9181,7 @@ func (c *ProjectsLocationsRuntimesSetIamPolicyCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.setIamPolicy" call.
@@ -9286,7 +9286,7 @@ func (c *ProjectsLocationsRuntimesStartCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.start" call.
@@ -9391,7 +9391,7 @@ func (c *ProjectsLocationsRuntimesStopCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.stop" call.
@@ -9493,7 +9493,7 @@ func (c *ProjectsLocationsRuntimesSwitchCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.switch" call.
@@ -9601,7 +9601,7 @@ func (c *ProjectsLocationsRuntimesTestIamPermissionsCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.testIamPermissions" call.
@@ -9704,7 +9704,7 @@ func (c *ProjectsLocationsRuntimesUpgradeCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.runtimes.upgrade" call.
@@ -9812,7 +9812,7 @@ func (c *ProjectsLocationsSchedulesCreateCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.schedules.create" call.
@@ -9908,7 +9908,7 @@ func (c *ProjectsLocationsSchedulesDeleteCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.schedules.delete" call.
@@ -10016,7 +10016,7 @@ func (c *ProjectsLocationsSchedulesGetCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.schedules.get" call.
@@ -10150,7 +10150,7 @@ func (c *ProjectsLocationsSchedulesListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.schedules.list" call.
@@ -10274,7 +10274,7 @@ func (c *ProjectsLocationsSchedulesTriggerCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "notebooks.projects.locations.schedules.trigger" call.

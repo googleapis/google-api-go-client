@@ -5428,7 +5428,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.get" call.
@@ -5559,7 +5559,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.list" call.
@@ -5712,7 +5712,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersCreateCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalAdminClusters.create" call.
@@ -5818,7 +5818,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersEnrollCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalAdminClusters.enroll" call.
@@ -5958,7 +5958,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersGetCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalAdminClusters.get" call.
@@ -6086,7 +6086,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersGetIamPolicyCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalAdminClusters.getIamPolicy" call.
@@ -6242,7 +6242,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersListCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalAdminClusters.list" call.
@@ -6384,7 +6384,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersPatchCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalAdminClusters.patch" call.
@@ -6490,7 +6490,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersQueryVersionConfigCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalAdminClusters.queryVersionConfig" call.
@@ -6596,7 +6596,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersSetIamPolicyCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalAdminClusters.setIamPolicy" call.
@@ -6704,7 +6704,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersTestIamPermissionsCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalAdminClusters.testIamPermissions" call.
@@ -6840,7 +6840,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersUnenrollCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalAdminClusters.unenroll" call.
@@ -6949,7 +6949,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersOperationsGetCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalAdminClusters.operations.get" call.
@@ -7077,7 +7077,7 @@ func (c *ProjectsLocationsBareMetalAdminClustersOperationsListCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalAdminClusters.operations.list" call.
@@ -7227,7 +7227,7 @@ func (c *ProjectsLocationsBareMetalClustersCreateCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.create" call.
@@ -7366,7 +7366,7 @@ func (c *ProjectsLocationsBareMetalClustersDeleteCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.delete" call.
@@ -7473,7 +7473,7 @@ func (c *ProjectsLocationsBareMetalClustersEnrollCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.enroll" call.
@@ -7613,7 +7613,7 @@ func (c *ProjectsLocationsBareMetalClustersGetCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.get" call.
@@ -7741,7 +7741,7 @@ func (c *ProjectsLocationsBareMetalClustersGetIamPolicyCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.getIamPolicy" call.
@@ -7904,7 +7904,7 @@ func (c *ProjectsLocationsBareMetalClustersListCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.list" call.
@@ -8055,7 +8055,7 @@ func (c *ProjectsLocationsBareMetalClustersPatchCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.patch" call.
@@ -8180,7 +8180,7 @@ func (c *ProjectsLocationsBareMetalClustersQueryVersionConfigCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.queryVersionConfig" call.
@@ -8286,7 +8286,7 @@ func (c *ProjectsLocationsBareMetalClustersSetIamPolicyCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.setIamPolicy" call.
@@ -8394,7 +8394,7 @@ func (c *ProjectsLocationsBareMetalClustersTestIamPermissionsCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.testIamPermissions" call.
@@ -8527,7 +8527,7 @@ func (c *ProjectsLocationsBareMetalClustersUnenrollCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.unenroll" call.
@@ -8648,7 +8648,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsCreateCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.create" call.
@@ -8781,7 +8781,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsDeleteCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.delete" call.
@@ -8886,7 +8886,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsEnrollCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.enroll" call.
@@ -9018,7 +9018,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsGetCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.get" call.
@@ -9146,7 +9146,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsGetIamPolicyCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.getIamPolicy" call.
@@ -9298,7 +9298,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsListCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.list" call.
@@ -9449,7 +9449,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsPatchCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.patch" call.
@@ -9554,7 +9554,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsSetIamPolicyCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.setIamPolicy" call.
@@ -9662,7 +9662,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsTestIamPermissionsC
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.testIamPermissions" call.
@@ -9783,7 +9783,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsUnenrollCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.unenroll" call.
@@ -9892,7 +9892,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsOperationsGetCall) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.operations.get" call.
@@ -10020,7 +10020,7 @@ func (c *ProjectsLocationsBareMetalClustersBareMetalNodePoolsOperationsListCall)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.bareMetalNodePools.operations.list" call.
@@ -10151,7 +10151,7 @@ func (c *ProjectsLocationsBareMetalClustersOperationsGetCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.operations.get" call.
@@ -10279,7 +10279,7 @@ func (c *ProjectsLocationsBareMetalClustersOperationsListCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.bareMetalClusters.operations.list" call.
@@ -10410,7 +10410,7 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.operations.cancel" call.
@@ -10508,7 +10508,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.operations.delete" call.
@@ -10617,7 +10617,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.operations.get" call.
@@ -10745,7 +10745,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.operations.list" call.
@@ -10873,7 +10873,7 @@ func (c *ProjectsLocationsVmwareAdminClustersEnrollCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareAdminClusters.enroll" call.
@@ -11012,7 +11012,7 @@ func (c *ProjectsLocationsVmwareAdminClustersGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareAdminClusters.get" call.
@@ -11140,7 +11140,7 @@ func (c *ProjectsLocationsVmwareAdminClustersGetIamPolicyCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareAdminClusters.getIamPolicy" call.
@@ -11296,7 +11296,7 @@ func (c *ProjectsLocationsVmwareAdminClustersListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareAdminClusters.list" call.
@@ -11438,7 +11438,7 @@ func (c *ProjectsLocationsVmwareAdminClustersPatchCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareAdminClusters.patch" call.
@@ -11543,7 +11543,7 @@ func (c *ProjectsLocationsVmwareAdminClustersSetIamPolicyCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareAdminClusters.setIamPolicy" call.
@@ -11651,7 +11651,7 @@ func (c *ProjectsLocationsVmwareAdminClustersTestIamPermissionsCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareAdminClusters.testIamPermissions" call.
@@ -11775,7 +11775,7 @@ func (c *ProjectsLocationsVmwareAdminClustersUnenrollCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareAdminClusters.unenroll" call.
@@ -11884,7 +11884,7 @@ func (c *ProjectsLocationsVmwareAdminClustersOperationsGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareAdminClusters.operations.get" call.
@@ -12012,7 +12012,7 @@ func (c *ProjectsLocationsVmwareAdminClustersOperationsListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareAdminClusters.operations.list" call.
@@ -12162,7 +12162,7 @@ func (c *ProjectsLocationsVmwareClustersCreateCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.create" call.
@@ -12300,7 +12300,7 @@ func (c *ProjectsLocationsVmwareClustersDeleteCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.delete" call.
@@ -12407,7 +12407,7 @@ func (c *ProjectsLocationsVmwareClustersEnrollCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.enroll" call.
@@ -12546,7 +12546,7 @@ func (c *ProjectsLocationsVmwareClustersGetCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.get" call.
@@ -12673,7 +12673,7 @@ func (c *ProjectsLocationsVmwareClustersGetIamPolicyCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.getIamPolicy" call.
@@ -12836,7 +12836,7 @@ func (c *ProjectsLocationsVmwareClustersListCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.list" call.
@@ -12978,7 +12978,7 @@ func (c *ProjectsLocationsVmwareClustersPatchCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.patch" call.
@@ -13102,7 +13102,7 @@ func (c *ProjectsLocationsVmwareClustersQueryVersionConfigCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.queryVersionConfig" call.
@@ -13208,7 +13208,7 @@ func (c *ProjectsLocationsVmwareClustersSetIamPolicyCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.setIamPolicy" call.
@@ -13316,7 +13316,7 @@ func (c *ProjectsLocationsVmwareClustersTestIamPermissionsCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.testIamPermissions" call.
@@ -13448,7 +13448,7 @@ func (c *ProjectsLocationsVmwareClustersUnenrollCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.unenroll" call.
@@ -13557,7 +13557,7 @@ func (c *ProjectsLocationsVmwareClustersOperationsGetCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.operations.get" call.
@@ -13685,7 +13685,7 @@ func (c *ProjectsLocationsVmwareClustersOperationsListCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.operations.list" call.
@@ -13828,7 +13828,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsCreateCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.create" call.
@@ -13961,7 +13961,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsDeleteCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.delete" call.
@@ -14062,7 +14062,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsEnrollCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.enroll" call.
@@ -14194,7 +14194,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.get" call.
@@ -14321,7 +14321,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsGetIamPolicyCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.getIamPolicy" call.
@@ -14471,7 +14471,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.list" call.
@@ -14613,7 +14613,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsPatchCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.patch" call.
@@ -14718,7 +14718,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsSetIamPolicyCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.setIamPolicy" call.
@@ -14826,7 +14826,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsTestIamPermissionsCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.testIamPermissions" call.
@@ -14947,7 +14947,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsUnenrollCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.unenroll" call.
@@ -15056,7 +15056,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsOperationsGetCall) doRequ
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.operations.get" call.
@@ -15184,7 +15184,7 @@ func (c *ProjectsLocationsVmwareClustersVmwareNodePoolsOperationsListCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkeonprem.projects.locations.vmwareClusters.vmwareNodePools.operations.list" call.

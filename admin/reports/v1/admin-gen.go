@@ -971,7 +971,7 @@ func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 		"userKey":         c.userKey,
 		"applicationName": c.applicationName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "reports.activities.list" call.
@@ -1242,7 +1242,7 @@ func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
 		"userKey":         c.userKey,
 		"applicationName": c.applicationName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "reports.activities.watch" call.
@@ -1336,7 +1336,7 @@ func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "admin.channels.stop" call.
@@ -1461,7 +1461,7 @@ func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"date": c.date,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "reports.customerUsageReports.get" call.
@@ -1672,7 +1672,7 @@ func (c *EntityUsageReportsGetCall) doRequest(alt string) (*http.Response, error
 		"entityKey":  c.entityKey,
 		"date":       c.date,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "reports.entityUsageReports.get" call.
@@ -1900,7 +1900,7 @@ func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
 		"userKey": c.userKey,
 		"date":    c.date,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "reports.userUsageReport.get" call.

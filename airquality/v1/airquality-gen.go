@@ -1198,7 +1198,7 @@ func (c *CurrentConditionsLookupCall) doRequest(alt string) (*http.Response, err
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "airquality.currentConditions.lookup" call.
@@ -1294,7 +1294,7 @@ func (c *ForecastLookupCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "airquality.forecast.lookup" call.
@@ -1411,7 +1411,7 @@ func (c *HistoryLookupCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "airquality.history.lookup" call.
@@ -1561,7 +1561,7 @@ func (c *MapTypesHeatmapTilesLookupHeatmapTileCall) doRequest(alt string) (*http
 		"x":       strconv.FormatInt(c.x, 10),
 		"y":       strconv.FormatInt(c.y, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "airquality.mapTypes.heatmapTiles.lookupHeatmapTile" call.

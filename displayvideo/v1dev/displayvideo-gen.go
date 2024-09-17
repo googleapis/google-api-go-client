@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package displayvideo provides access to the Display & Video 360 API.
 //
 // For product documentation, see: https://developers.google.com/display-video/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	displayvideoService, err := displayvideo.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	displayvideoService, err := displayvideo.NewService(ctx, option.WithScopes(displayvideo.DoubleclickbidmanagerScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	displayvideoService, err := displayvideo.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	displayvideoService, err := displayvideo.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package displayvideo // import "google.golang.org/api/displayvideo/v1dev"
 
 import (
@@ -54,6 +68,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -74,17 +89,19 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "displayvideo:v1dev"
 const apiName = "displayvideo"
 const apiVersion = "v1dev"
 const basePath = "https://displayvideo.googleapis.com/"
+const basePathTemplate = "https://displayvideo.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://displayvideo.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Create, see, edit, and permanently delete your Display & Video 360
-	// entities and reports
+	// Create, see, edit, and permanently delete your Display & Video 360 entities
+	// and reports
 	DisplayVideoScope = "https://www.googleapis.com/auth/display-video"
 
 	// View and manage your reports in DoubleClick Bid Manager
@@ -93,14 +110,16 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/display-video",
 		"https://www.googleapis.com/auth/doubleclickbidmanager",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -182,140 +201,106 @@ type GoogleBytestreamMedia struct {
 	// ResourceName: Name of the media resource.
 	ResourceName string `json:"resourceName,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ResourceName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ResourceName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ResourceName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleBytestreamMedia) MarshalJSON() ([]byte, error) {
+func (s GoogleBytestreamMedia) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleBytestreamMedia
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Operation: This resource represents a long-running operation that is
-// the result of a network API call.
+// Operation: This resource represents a long-running operation that is the
+// result of a network API call.
 type Operation struct {
-	// Done: If the value is `false`, it means the operation is still in
-	// progress. If `true`, the operation is completed, and either `error`
-	// or `response` is available.
+	// Done: If the value is `false`, it means the operation is still in progress.
+	// If `true`, the operation is completed, and either `error` or `response` is
+	// available.
 	Done bool `json:"done,omitempty"`
-
-	// Error: The error result of the operation in case of failure or
-	// cancellation.
+	// Error: The error result of the operation in case of failure or cancellation.
 	Error *Status `json:"error,omitempty"`
-
 	// Metadata: Service-specific metadata associated with the operation. It
-	// typically contains progress information and common metadata such as
-	// create time. Some services might not provide such metadata. Any
-	// method that returns a long-running operation should document the
-	// metadata type, if any.
+	// typically contains progress information and common metadata such as create
+	// time. Some services might not provide such metadata. Any method that returns
+	// a long-running operation should document the metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// Name: The server-assigned name, which is only unique within the same
-	// service that originally returns it. If you use the default HTTP
-	// mapping, the `name` should be a resource name ending with
-	// `operations/{unique_id}`.
+	// Name: The server-assigned name, which is only unique within the same service
+	// that originally returns it. If you use the default HTTP mapping, the `name`
+	// should be a resource name ending with `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
-
-	// Response: The normal response of the operation in case of success. If
-	// the original method returns no data on success, such as `Delete`, the
-	// response is `google.protobuf.Empty`. If the original method is
-	// standard `Get`/`Create`/`Update`, the response should be the
-	// resource. For other methods, the response should have the type
-	// `XxxResponse`, where `Xxx` is the original method name. For example,
-	// if the original method name is `TakeSnapshot()`, the inferred
-	// response type is `TakeSnapshotResponse`.
+	// Response: The normal response of the operation in case of success. If the
+	// original method returns no data on success, such as `Delete`, the response
+	// is `google.protobuf.Empty`. If the original method is standard
+	// `Get`/`Create`/`Update`, the response should be the resource. For other
+	// methods, the response should have the type `XxxResponse`, where `Xxx` is the
+	// original method name. For example, if the original method name is
+	// `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Done") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Done") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Done") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Status: The `Status` type defines a logical error model that is
-// suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the [API Design
-// Guide](https://cloud.google.com/apis/design/errors).
+// Status: The `Status` type defines a logical error model that is suitable for
+// different programming environments, including REST APIs and RPC APIs. It is
+// used by gRPC (https://github.com/grpc). Each `Status` message contains three
+// pieces of data: error code, error message, and error details. You can find
+// out more about this error model and how to work with it in the API Design
+// Guide (https://cloud.google.com/apis/design/errors).
 type Status struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "displayvideo.media.download":
 
 type MediaDownloadCall struct {
 	s            *Service
@@ -327,8 +312,11 @@ type MediaDownloadCall struct {
 }
 
 // Download: Downloads media. Download is supported on the URI
-// `/download/{resource_name=**}?alt=media.` **Note**: Download requests
-// will not be successful without including `alt=media` query string.
+// `/download/{resource_name=**}?alt=media.` **Note**: Download requests will
+// not be successful without including `alt=media` query string.
+//
+//   - resourceName: Name of the media that is being downloaded. See
+//     ReadRequest.resource_name.
 func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -336,33 +324,29 @@ func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *MediaDownloadCall) Fields(s ...googleapi.Field) *MediaDownloadCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *MediaDownloadCall) IfNoneMatch(entityTag string) *MediaDownloadCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download
-// methods. Any pending HTTP request will be aborted if the provided
-// context is canceled.
+// Context sets the context to be used in this call's Do and Download methods.
 func (c *MediaDownloadCall) Context(ctx context.Context) *MediaDownloadCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *MediaDownloadCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -371,12 +355,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 }
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -393,7 +372,7 @@ func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"resourceName": c.resourceName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Download fetches the API endpoint's "media" value, instead of the normal
@@ -405,20 +384,19 @@ func (c *MediaDownloadCall) Download(opts ...googleapi.CallOption) (*http.Respon
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	return res, nil
 }
 
 // Do executes the "displayvideo.media.download" call.
-// Exactly one of *GoogleBytestreamMedia or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleBytestreamMedia.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleBytestreamMedia.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GoogleBytestreamMedia, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -426,17 +404,17 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GoogleBytestreamM
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleBytestreamMedia{
 		ServerResponse: googleapi.ServerResponse{
@@ -449,37 +427,7 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GoogleBytestreamM
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Downloads media. Download is supported on the URI `/download/{resource_name=**}?alt=media.` **Note**: Download requests will not be successful without including `alt=media` query string.",
-	//   "flatPath": "download/{downloadId}",
-	//   "httpMethod": "GET",
-	//   "id": "displayvideo.media.download",
-	//   "parameterOrder": [
-	//     "resourceName"
-	//   ],
-	//   "parameters": {
-	//     "resourceName": {
-	//       "description": "Name of the media that is being downloaded. See ReadRequest.resource_name.",
-	//       "location": "path",
-	//       "pattern": "^.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "download/{+resourceName}",
-	//   "response": {
-	//     "$ref": "GoogleBytestreamMedia"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/display-video",
-	//     "https://www.googleapis.com/auth/doubleclickbidmanager"
-	//   ],
-	//   "supportsMediaDownload": true
-	// }
-
 }
-
-// method id "displayvideo.sdfdownloadtasks.operations.get":
 
 type SdfdownloadtasksOperationsGetCall struct {
 	s            *Service
@@ -490,9 +438,10 @@ type SdfdownloadtasksOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of an asynchronous SDF download task
-// operation. Clients should poll this method at intervals of 30
-// seconds.
+// Get: Gets the latest state of an asynchronous SDF download task operation.
+// Clients should poll this method at intervals of 30 seconds.
+//
+// - name: The name of the operation resource.
 func (r *SdfdownloadtasksOperationsService) Get(name string) *SdfdownloadtasksOperationsGetCall {
 	c := &SdfdownloadtasksOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -500,33 +449,29 @@ func (r *SdfdownloadtasksOperationsService) Get(name string) *SdfdownloadtasksOp
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SdfdownloadtasksOperationsGetCall) Fields(s ...googleapi.Field) *SdfdownloadtasksOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SdfdownloadtasksOperationsGetCall) IfNoneMatch(entityTag string) *SdfdownloadtasksOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SdfdownloadtasksOperationsGetCall) Context(ctx context.Context) *SdfdownloadtasksOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SdfdownloadtasksOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -535,12 +480,7 @@ func (c *SdfdownloadtasksOperationsGetCall) Header() http.Header {
 }
 
 func (c *SdfdownloadtasksOperationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20201104")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -557,16 +497,14 @@ func (c *SdfdownloadtasksOperationsGetCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "displayvideo.sdfdownloadtasks.operations.get" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SdfdownloadtasksOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -574,17 +512,17 @@ func (c *SdfdownloadtasksOperationsGetCall) Do(opts ...googleapi.CallOption) (*O
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
@@ -597,31 +535,4 @@ func (c *SdfdownloadtasksOperationsGetCall) Do(opts ...googleapi.CallOption) (*O
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the latest state of an asynchronous SDF download task operation. Clients should poll this method at intervals of 30 seconds.",
-	//   "flatPath": "v1dev/sdfdownloadtasks/operations/{operationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "displayvideo.sdfdownloadtasks.operations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource.",
-	//       "location": "path",
-	//       "pattern": "^sdfdownloadtasks/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1dev/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/display-video",
-	//     "https://www.googleapis.com/auth/doubleclickbidmanager"
-	//   ]
-	// }
-
 }

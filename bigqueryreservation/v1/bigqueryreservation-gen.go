@@ -975,7 +975,7 @@ func (c *ProjectsLocationsGetBiReservationCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.getBiReservation" call.
@@ -1116,7 +1116,7 @@ func (c *ProjectsLocationsSearchAllAssignmentsCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.searchAllAssignments" call.
@@ -1280,7 +1280,7 @@ func (c *ProjectsLocationsSearchAssignmentsCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.searchAssignments" call.
@@ -1416,7 +1416,7 @@ func (c *ProjectsLocationsUpdateBiReservationCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.updateBiReservation" call.
@@ -1537,7 +1537,7 @@ func (c *ProjectsLocationsCapacityCommitmentsCreateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.capacityCommitments.create" call.
@@ -1644,7 +1644,7 @@ func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.capacityCommitments.delete" call.
@@ -1752,7 +1752,7 @@ func (c *ProjectsLocationsCapacityCommitmentsGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.capacityCommitments.get" call.
@@ -1875,7 +1875,7 @@ func (c *ProjectsLocationsCapacityCommitmentsListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.capacityCommitments.list" call.
@@ -2003,7 +2003,7 @@ func (c *ProjectsLocationsCapacityCommitmentsMergeCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.capacityCommitments.merge" call.
@@ -2120,7 +2120,7 @@ func (c *ProjectsLocationsCapacityCommitmentsPatchCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.capacityCommitments.patch" call.
@@ -2227,7 +2227,7 @@ func (c *ProjectsLocationsCapacityCommitmentsSplitCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.capacityCommitments.split" call.
@@ -2338,7 +2338,7 @@ func (c *ProjectsLocationsReservationsCreateCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.reservations.create" call.
@@ -2435,7 +2435,7 @@ func (c *ProjectsLocationsReservationsDeleteCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.reservations.delete" call.
@@ -2541,7 +2541,7 @@ func (c *ProjectsLocationsReservationsFailoverReservationCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.reservations.failoverReservation" call.
@@ -2649,7 +2649,7 @@ func (c *ProjectsLocationsReservationsGetCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.reservations.get" call.
@@ -2771,7 +2771,7 @@ func (c *ProjectsLocationsReservationsListCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.reservations.list" call.
@@ -2905,7 +2905,7 @@ func (c *ProjectsLocationsReservationsPatchCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.reservations.patch" call.
@@ -3036,7 +3036,7 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.reservations.assignments.create" call.
@@ -3139,7 +3139,7 @@ func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.reservations.assignments.delete" call.
@@ -3271,7 +3271,7 @@ func (c *ProjectsLocationsReservationsAssignmentsListCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.reservations.assignments.list" call.
@@ -3398,7 +3398,7 @@ func (c *ProjectsLocationsReservationsAssignmentsMoveCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.reservations.assignments.move" call.
@@ -3510,7 +3510,7 @@ func (c *ProjectsLocationsReservationsAssignmentsPatchCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "bigqueryreservation.projects.locations.reservations.assignments.patch" call.

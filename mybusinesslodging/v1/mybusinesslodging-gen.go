@@ -5429,7 +5429,7 @@ func (c *LocationsGetLodgingCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.nameid,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "mybusinesslodging.locations.getLodging" call.
@@ -5540,7 +5540,7 @@ func (c *LocationsUpdateLodgingCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.nameid,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "mybusinesslodging.locations.updateLodging" call.
@@ -5656,7 +5656,7 @@ func (c *LocationsLodgingGetGoogleUpdatedCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.nameid,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "mybusinesslodging.locations.lodging.getGoogleUpdated" call.

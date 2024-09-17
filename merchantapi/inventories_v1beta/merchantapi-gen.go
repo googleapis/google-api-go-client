@@ -651,7 +651,7 @@ func (c *AccountsProductsLocalInventoriesDeleteCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.products.localInventories.delete" call.
@@ -757,7 +757,7 @@ func (c *AccountsProductsLocalInventoriesInsertCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.products.localInventories.insert" call.
@@ -890,7 +890,7 @@ func (c *AccountsProductsLocalInventoriesListCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.products.localInventories.list" call.
@@ -1012,7 +1012,7 @@ func (c *AccountsProductsRegionalInventoriesDeleteCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.products.regionalInventories.delete" call.
@@ -1117,7 +1117,7 @@ func (c *AccountsProductsRegionalInventoriesInsertCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.products.regionalInventories.insert" call.
@@ -1252,7 +1252,7 @@ func (c *AccountsProductsRegionalInventoriesListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "merchantapi.accounts.products.regionalInventories.list" call.

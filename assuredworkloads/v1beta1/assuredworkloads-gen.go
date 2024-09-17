@@ -353,6 +353,7 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	// Controls
 	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT" - Healthcare and Life
 	// Science Controls with US Support
+	//   "IRS_1075" - Internal Revenue Service 1075 controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// CreateTime: Optional. Time when the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -876,6 +877,7 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// Controls
 	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT" - Healthcare and Life
 	// Science Controls with US Support
+	//   "IRS_1075" - Internal Revenue Service 1075 controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// ComplianceStatus: Output only. Count of active Violations in the Workload.
 	ComplianceStatus *GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus `json:"complianceStatus,omitempty"`
@@ -1565,7 +1567,7 @@ func (c *OrganizationsLocationsOperationsGetCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "assuredworkloads.organizations.locations.operations.get" call.
@@ -1694,7 +1696,7 @@ func (c *OrganizationsLocationsOperationsListCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "assuredworkloads.organizations.locations.operations.list" call.
@@ -1864,7 +1866,7 @@ func (c *OrganizationsLocationsWorkloadsAnalyzeWorkloadMoveCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"target": c.target,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "assuredworkloads.organizations.locations.workloads.analyzeWorkloadMove" call.
@@ -1998,7 +2000,7 @@ func (c *OrganizationsLocationsWorkloadsCreateCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "assuredworkloads.organizations.locations.workloads.create" call.
@@ -2106,7 +2108,7 @@ func (c *OrganizationsLocationsWorkloadsDeleteCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "assuredworkloads.organizations.locations.workloads.delete" call.
@@ -2209,7 +2211,7 @@ func (c *OrganizationsLocationsWorkloadsEnableComplianceUpdatesCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "assuredworkloads.organizations.locations.workloads.enableComplianceUpdates" call.
@@ -2307,7 +2309,7 @@ func (c *OrganizationsLocationsWorkloadsEnableResourceMonitoringCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "assuredworkloads.organizations.locations.workloads.enableResourceMonitoring" call.
@@ -2419,7 +2421,7 @@ func (c *OrganizationsLocationsWorkloadsGetCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "assuredworkloads.organizations.locations.workloads.get" call.
@@ -2550,7 +2552,7 @@ func (c *OrganizationsLocationsWorkloadsListCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "assuredworkloads.organizations.locations.workloads.list" call.
@@ -2684,7 +2686,7 @@ func (c *OrganizationsLocationsWorkloadsPatchCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "assuredworkloads.organizations.locations.workloads.patch" call.
@@ -2795,7 +2797,7 @@ func (c *OrganizationsLocationsWorkloadsRestrictAllowedResourcesCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "assuredworkloads.organizations.locations.workloads.restrictAllowedResources" call.
@@ -2903,7 +2905,7 @@ func (c *OrganizationsLocationsWorkloadsViolationsAcknowledgeCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "assuredworkloads.organizations.locations.workloads.violations.acknowledge" call.
@@ -3014,7 +3016,7 @@ func (c *OrganizationsLocationsWorkloadsViolationsGetCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "assuredworkloads.organizations.locations.workloads.violations.get" call.
@@ -3161,7 +3163,7 @@ func (c *OrganizationsLocationsWorkloadsViolationsListCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "assuredworkloads.organizations.locations.workloads.violations.list" call.

@@ -294,7 +294,7 @@ func (c *AccountsGetNotificationSettingCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "mybusinessnotifications.accounts.getNotificationSetting" call.
@@ -410,7 +410,7 @@ func (c *AccountsUpdateNotificationSettingCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "mybusinessnotifications.accounts.updateNotificationSetting" call.

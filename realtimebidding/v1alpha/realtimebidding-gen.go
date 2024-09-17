@@ -416,7 +416,7 @@ func (c *BiddersBiddingFunctionsActivateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "realtimebidding.bidders.biddingFunctions.activate" call.
@@ -521,7 +521,7 @@ func (c *BiddersBiddingFunctionsArchiveCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "realtimebidding.bidders.biddingFunctions.archive" call.
@@ -624,7 +624,7 @@ func (c *BiddersBiddingFunctionsCreateCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "realtimebidding.bidders.biddingFunctions.create" call.
@@ -749,7 +749,7 @@ func (c *BiddersBiddingFunctionsListCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "realtimebidding.bidders.biddingFunctions.list" call.

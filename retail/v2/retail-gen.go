@@ -3498,6 +3498,58 @@ func (s GoogleCloudRetailV2Product) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2ProductAttributeInterval: Product attribute name and
+// numeric interval.
+type GoogleCloudRetailV2ProductAttributeInterval struct {
+	// Interval: The numeric interval (e.g. [10, 20))
+	Interval *GoogleCloudRetailV2Interval `json:"interval,omitempty"`
+	// Name: The attribute name (e.g. "length")
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Interval") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Interval") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2ProductAttributeInterval) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2ProductAttributeInterval
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2ProductAttributeValue: Product attribute which structured
+// by an attribute name and value. This structure is used in conversational
+// search filters and answers. For example, if we have `name=color` and
+// `value=red`, this means that the color is `red`.
+type GoogleCloudRetailV2ProductAttributeValue struct {
+	// Name: The attribute name.
+	Name string `json:"name,omitempty"`
+	// Value: The attribute value.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2ProductAttributeValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2ProductAttributeValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2ProductDetail: Detailed product information associated
 // with a user event.
 type GoogleCloudRetailV2ProductDetail struct {
@@ -4602,6 +4654,9 @@ type GoogleCloudRetailV2SearchRequest struct {
 	// expanded search. This field is strongly recommended to achieve high search
 	// quality. For more information about filter syntax, see SearchRequest.filter.
 	CanonicalFilter string `json:"canonicalFilter,omitempty"`
+	// ConversationalSearchSpec: Optional. This field specifies all conversational
+	// related parameters addition to traditional retail search.
+	ConversationalSearchSpec *GoogleCloudRetailV2SearchRequestConversationalSearchSpec `json:"conversationalSearchSpec,omitempty"`
 	// DynamicFacetSpec: Deprecated. Refer to
 	// https://cloud.google.com/retail/docs/configs#dynamic to enable dynamic
 	// facets. Do not set this field. The specification for dynamically generated
@@ -4703,6 +4758,9 @@ type GoogleCloudRetailV2SearchRequest struct {
 	// SpellCorrectionSpec: The spell correction specification that specifies the
 	// mode under which spell correction will take effect.
 	SpellCorrectionSpec *GoogleCloudRetailV2SearchRequestSpellCorrectionSpec `json:"spellCorrectionSpec,omitempty"`
+	// TileNavigationSpec: Optional. This field specifies tile navigation related
+	// parameters.
+	TileNavigationSpec *GoogleCloudRetailV2SearchRequestTileNavigationSpec `json:"tileNavigationSpec,omitempty"`
 	// UserInfo: User information.
 	UserInfo *GoogleCloudRetailV2UserInfo `json:"userInfo,omitempty"`
 	// VariantRollupKeys: The keys to fetch and rollup the matching variant
@@ -4842,6 +4900,99 @@ func (s *GoogleCloudRetailV2SearchRequestBoostSpecConditionBoostSpec) UnmarshalJ
 	}
 	s.Boost = float64(s1.Boost)
 	return nil
+}
+
+// GoogleCloudRetailV2SearchRequestConversationalSearchSpec: This field
+// specifies all conversational related parameters addition to traditional
+// retail search.
+type GoogleCloudRetailV2SearchRequestConversationalSearchSpec struct {
+	// ConversationId: This field specifies the conversation id, which maintains
+	// the state of the conversation between client side and server side. Use the
+	// value from the previous ConversationalSearchResult.conversation_id. For the
+	// initial request, this should be empty.
+	ConversationId string `json:"conversationId,omitempty"`
+	// FollowupConversationRequested: This field specifies whether the customer
+	// would like to do conversational search. If this field is set to true,
+	// conversational related extra information will be returned from server side,
+	// including follow-up question, answer options, etc.
+	FollowupConversationRequested bool `json:"followupConversationRequested,omitempty"`
+	// UserAnswer: This field specifies the current user answer during the
+	// conversational search. This can be either user selected from suggested
+	// answers or user input plain text.
+	UserAnswer *GoogleCloudRetailV2SearchRequestConversationalSearchSpecUserAnswer `json:"userAnswer,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConversationId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversationId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2SearchRequestConversationalSearchSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2SearchRequestConversationalSearchSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2SearchRequestConversationalSearchSpecUserAnswer: This
+// field specifies the current user answer during the conversational search.
+// This can be either user selected from suggested answers or user input plain
+// text.
+type GoogleCloudRetailV2SearchRequestConversationalSearchSpecUserAnswer struct {
+	// SelectedAnswer: This field specifies the selected attributes during the
+	// conversational search. This should be a subset of
+	// ConversationalSearchResult.suggested_answers.
+	SelectedAnswer *GoogleCloudRetailV2SearchRequestConversationalSearchSpecUserAnswerSelectedAnswer `json:"selectedAnswer,omitempty"`
+	// TextAnswer: This field specifies the incremental input text from the user
+	// during the conversational search.
+	TextAnswer string `json:"textAnswer,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SelectedAnswer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SelectedAnswer") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2SearchRequestConversationalSearchSpecUserAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2SearchRequestConversationalSearchSpecUserAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2SearchRequestConversationalSearchSpecUserAnswerSelectedAns
+// wer: This field specifies the selected answers during the conversational
+// search.
+type GoogleCloudRetailV2SearchRequestConversationalSearchSpecUserAnswerSelectedAnswer struct {
+	// ProductAttributeValue: This field specifies the selected answer which is a
+	// attribute key-value.
+	ProductAttributeValue *GoogleCloudRetailV2ProductAttributeValue `json:"productAttributeValue,omitempty"`
+	// ProductAttributeValues: This field is deprecated and should not be set.
+	ProductAttributeValues []*GoogleCloudRetailV2ProductAttributeValue `json:"productAttributeValues,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductAttributeValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductAttributeValue") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2SearchRequestConversationalSearchSpecUserAnswerSelectedAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2SearchRequestConversationalSearchSpecUserAnswerSelectedAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2SearchRequestDynamicFacetSpec: The specifications of
@@ -5131,6 +5282,35 @@ func (s GoogleCloudRetailV2SearchRequestSpellCorrectionSpec) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2SearchRequestTileNavigationSpec: This field specifies
+// tile navigation related parameters.
+type GoogleCloudRetailV2SearchRequestTileNavigationSpec struct {
+	// AppliedTiles: This field specifies the tiles which are already clicked in
+	// client side. NOTE: This field is not being used for filtering search
+	// products. Client side should also put all the applied tiles in
+	// SearchRequest.filter.
+	AppliedTiles []*GoogleCloudRetailV2Tile `json:"appliedTiles,omitempty"`
+	// TileNavigationRequested: This field specifies whether the customer would
+	// like to request tile navigation.
+	TileNavigationRequested bool `json:"tileNavigationRequested,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppliedTiles") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppliedTiles") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2SearchRequestTileNavigationSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2SearchRequestTileNavigationSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2SearchResponse: Response message for SearchService.Search
 // method.
 type GoogleCloudRetailV2SearchResponse struct {
@@ -5141,6 +5321,10 @@ type GoogleCloudRetailV2SearchResponse struct {
 	// UserEvent logs resulting from this search, which enables accurate
 	// attribution of search model performance.
 	AttributionToken string `json:"attributionToken,omitempty"`
+	// ConversationalSearchResult: This field specifies all related information
+	// that is needed on client side for UI rendering of conversational retail
+	// search.
+	ConversationalSearchResult *GoogleCloudRetailV2SearchResponseConversationalSearchResult `json:"conversationalSearchResult,omitempty"`
 	// CorrectedQuery: Contains the spell corrected query, if found. If the spell
 	// correction type is AUTOMATIC, then the search results are based on
 	// corrected_query. Otherwise the original query is used for search.
@@ -5166,6 +5350,9 @@ type GoogleCloudRetailV2SearchResponse struct {
 	RedirectUri string `json:"redirectUri,omitempty"`
 	// Results: A list of matched items. The order represents the ranking.
 	Results []*GoogleCloudRetailV2SearchResponseSearchResult `json:"results,omitempty"`
+	// TileNavigationResult: This field specifies all related information for tile
+	// navigation that will be used in client side.
+	TileNavigationResult *GoogleCloudRetailV2SearchResponseTileNavigationResult `json:"tileNavigationResult,omitempty"`
 	// TotalSize: The estimated total count of matched items irrespective of
 	// pagination. The count of results returned by pagination may be less than the
 	// total_size that matches.
@@ -5188,6 +5375,104 @@ type GoogleCloudRetailV2SearchResponse struct {
 
 func (s GoogleCloudRetailV2SearchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2SearchResponseConversationalSearchResult: This field
+// specifies all related information that is needed on client side for UI
+// rendering of conversational retail search.
+type GoogleCloudRetailV2SearchResponseConversationalSearchResult struct {
+	// AdditionalFilter: This is the incremental additional filters implied from
+	// the current user answer. User should add the suggested addition filters to
+	// the previous SearchRequest.filter, and use the merged filter in the follow
+	// up search request.
+	AdditionalFilter *GoogleCloudRetailV2SearchResponseConversationalSearchResultAdditionalFilter `json:"additionalFilter,omitempty"`
+	// AdditionalFilters: This field is deprecated but will be kept for backward
+	// compatibility. There is expected to have only one additional filter and the
+	// value will be the same to the same as field `additional_filter`.
+	AdditionalFilters []*GoogleCloudRetailV2SearchResponseConversationalSearchResultAdditionalFilter `json:"additionalFilters,omitempty"`
+	// ConversationId: Conversation UUID. This field will be stored in client side
+	// storage to maintain the conversation session with server and will be used
+	// for next search request's
+	// SearchRequest.ConversationalSearchSpec.conversation_id to restore
+	// conversation state in server.
+	ConversationId string `json:"conversationId,omitempty"`
+	// FollowupQuestion: The follow-up question. e.g., `What is the color?`
+	FollowupQuestion string `json:"followupQuestion,omitempty"`
+	// RefinedQuery: The current refined query for the conversational search. This
+	// field will be used in customer UI that the query in the search bar should be
+	// replaced with the refined query. For example, if SearchRequest.query is
+	// `dress` and next
+	// SearchRequest.ConversationalSearchSpec.UserAnswer.text_answer is `red
+	// color`, which does not match any product attribute value filters, the
+	// refined query will be `dress, red color`.
+	RefinedQuery string `json:"refinedQuery,omitempty"`
+	// SuggestedAnswers: The answer options provided to client for the follow-up
+	// question.
+	SuggestedAnswers []*GoogleCloudRetailV2SearchResponseConversationalSearchResultSuggestedAnswer `json:"suggestedAnswers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalFilter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalFilter") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2SearchResponseConversationalSearchResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2SearchResponseConversationalSearchResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2SearchResponseConversationalSearchResultAdditionalFilter:
+// Additional filter that client side need to apply.
+type GoogleCloudRetailV2SearchResponseConversationalSearchResultAdditionalFilter struct {
+	// ProductAttributeValue: Product attribute value, including an attribute key
+	// and an attribute value. Other types can be added here in the future.
+	ProductAttributeValue *GoogleCloudRetailV2ProductAttributeValue `json:"productAttributeValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductAttributeValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductAttributeValue") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2SearchResponseConversationalSearchResultAdditionalFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2SearchResponseConversationalSearchResultAdditionalFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2SearchResponseConversationalSearchResultSuggestedAnswer:
+// Suggested answers to the follow-up question.
+type GoogleCloudRetailV2SearchResponseConversationalSearchResultSuggestedAnswer struct {
+	// ProductAttributeValue: Product attribute value, including an attribute key
+	// and an attribute value. Other types can be added here in the future.
+	ProductAttributeValue *GoogleCloudRetailV2ProductAttributeValue `json:"productAttributeValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductAttributeValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductAttributeValue") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2SearchResponseConversationalSearchResultSuggestedAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2SearchResponseConversationalSearchResultSuggestedAnswer
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5356,6 +5641,31 @@ type GoogleCloudRetailV2SearchResponseSearchResult struct {
 
 func (s GoogleCloudRetailV2SearchResponseSearchResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2SearchResponseSearchResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2SearchResponseTileNavigationResult: This field specifies
+// all related information for tile navigation that will be used in client
+// side.
+type GoogleCloudRetailV2SearchResponseTileNavigationResult struct {
+	// Tiles: The current tiles that are used for tile navigation, sorted by
+	// engagement.
+	Tiles []*GoogleCloudRetailV2Tile `json:"tiles,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Tiles") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Tiles") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2SearchResponseTileNavigationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2SearchResponseTileNavigationResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5617,6 +5927,34 @@ func (s GoogleCloudRetailV2SetInventoryRequest) MarshalJSON() ([]byte, error) {
 // SetInventoryRequest. Currently empty because there is no meaningful response
 // populated from the ProductService.SetInventory method.
 type GoogleCloudRetailV2SetInventoryResponse struct {
+}
+
+// GoogleCloudRetailV2Tile: This field specifies the tile information including
+// an attribute key, attribute value. More fields will be added in the future,
+// eg: product id or product counts, etc.
+type GoogleCloudRetailV2Tile struct {
+	// ProductAttributeInterval: The product attribute key-numeric interval.
+	ProductAttributeInterval *GoogleCloudRetailV2ProductAttributeInterval `json:"productAttributeInterval,omitempty"`
+	// ProductAttributeValue: The product attribute key-value.
+	ProductAttributeValue *GoogleCloudRetailV2ProductAttributeValue `json:"productAttributeValue,omitempty"`
+	// RepresentativeProductId: The representative product id for this tile.
+	RepresentativeProductId string `json:"representativeProductId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductAttributeInterval")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductAttributeInterval") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2Tile) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2Tile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2TuneModelMetadata: Metadata associated with a tune
@@ -8304,7 +8642,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"catalog": c.catalog,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.completeQuery" call.
@@ -8409,7 +8747,7 @@ func (c *ProjectsLocationsCatalogsExportAnalyticsMetricsCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"catalog": c.catalog,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.exportAnalyticsMetrics" call.
@@ -8519,7 +8857,7 @@ func (c *ProjectsLocationsCatalogsGetAttributesConfigCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.getAttributesConfig" call.
@@ -8629,7 +8967,7 @@ func (c *ProjectsLocationsCatalogsGetCompletionConfigCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.getCompletionConfig" call.
@@ -8739,7 +9077,7 @@ func (c *ProjectsLocationsCatalogsGetDefaultBranchCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"catalog": c.catalog,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.getDefaultBranch" call.
@@ -8870,7 +9208,7 @@ func (c *ProjectsLocationsCatalogsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.list" call.
@@ -9001,7 +9339,7 @@ func (c *ProjectsLocationsCatalogsPatchCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.patch" call.
@@ -9124,7 +9462,7 @@ func (c *ProjectsLocationsCatalogsSetDefaultBranchCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"catalog": c.catalog,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.setDefaultBranch" call.
@@ -9242,7 +9580,7 @@ func (c *ProjectsLocationsCatalogsUpdateAttributesConfigCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.updateAttributesConfig" call.
@@ -9355,7 +9693,7 @@ func (c *ProjectsLocationsCatalogsUpdateCompletionConfigCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.updateCompletionConfig" call.
@@ -9461,7 +9799,7 @@ func (c *ProjectsLocationsCatalogsAttributesConfigAddCatalogAttributeCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"attributesConfig": c.attributesConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.attributesConfig.addCatalogAttribute" call.
@@ -9567,7 +9905,7 @@ func (c *ProjectsLocationsCatalogsAttributesConfigRemoveCatalogAttributeCall) do
 	googleapi.Expand(req.URL, map[string]string{
 		"attributesConfig": c.attributesConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.attributesConfig.removeCatalogAttribute" call.
@@ -9674,7 +10012,7 @@ func (c *ProjectsLocationsCatalogsAttributesConfigReplaceCatalogAttributeCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"attributesConfig": c.attributesConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.attributesConfig.replaceCatalogAttribute" call.
@@ -9784,7 +10122,7 @@ func (c *ProjectsLocationsCatalogsBranchesOperationsGetCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.branches.operations.get" call.
@@ -9904,7 +10242,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) doRe
 	googleapi.Expand(req.URL, map[string]string{
 		"product": c.product,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.branches.products.addFulfillmentPlaces" call.
@@ -10023,7 +10361,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddLocalInventoriesCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"product": c.product,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.branches.products.addLocalInventories" call.
@@ -10140,7 +10478,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsCreateCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.branches.products.create" call.
@@ -10245,7 +10583,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.branches.products.delete" call.
@@ -10358,7 +10696,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsGetCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.branches.products.get" call.
@@ -10465,7 +10803,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsImportCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.branches.products.import" call.
@@ -10626,7 +10964,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsListCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.branches.products.list" call.
@@ -10772,7 +11110,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.branches.products.patch" call.
@@ -10884,7 +11222,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsPurgeCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.branches.products.purge" call.
@@ -11004,7 +11342,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) d
 	googleapi.Expand(req.URL, map[string]string{
 		"product": c.product,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.branches.products.removeFulfillmentPlaces" call.
@@ -11121,7 +11459,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveLocalInventoriesCall) do
 	googleapi.Expand(req.URL, map[string]string{
 		"product": c.product,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.branches.products.removeLocalInventories" call.
@@ -11246,7 +11584,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.branches.products.setInventory" call.
@@ -11354,7 +11692,7 @@ func (c *ProjectsLocationsCatalogsCompletionDataImportCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.completionData.import" call.
@@ -11467,7 +11805,7 @@ func (c *ProjectsLocationsCatalogsControlsCreateCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.controls.create" call.
@@ -11566,7 +11904,7 @@ func (c *ProjectsLocationsCatalogsControlsDeleteCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.controls.delete" call.
@@ -11676,7 +12014,7 @@ func (c *ProjectsLocationsCatalogsControlsGetCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.controls.get" call.
@@ -11809,7 +12147,7 @@ func (c *ProjectsLocationsCatalogsControlsListCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.controls.list" call.
@@ -11943,7 +12281,7 @@ func (c *ProjectsLocationsCatalogsControlsPatchCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.controls.patch" call.
@@ -12053,7 +12391,7 @@ func (c *ProjectsLocationsCatalogsModelsCreateCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.models.create" call.
@@ -12151,7 +12489,7 @@ func (c *ProjectsLocationsCatalogsModelsDeleteCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.models.delete" call.
@@ -12261,7 +12599,7 @@ func (c *ProjectsLocationsCatalogsModelsGetCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.models.get" call.
@@ -12385,7 +12723,7 @@ func (c *ProjectsLocationsCatalogsModelsListCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.models.list" call.
@@ -12521,7 +12859,7 @@ func (c *ProjectsLocationsCatalogsModelsPatchCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.models.patch" call.
@@ -12625,7 +12963,7 @@ func (c *ProjectsLocationsCatalogsModelsPauseCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.models.pause" call.
@@ -12729,7 +13067,7 @@ func (c *ProjectsLocationsCatalogsModelsResumeCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.models.resume" call.
@@ -12833,7 +13171,7 @@ func (c *ProjectsLocationsCatalogsModelsTuneCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.models.tune" call.
@@ -12943,7 +13281,7 @@ func (c *ProjectsLocationsCatalogsOperationsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.operations.get" call.
@@ -13072,7 +13410,7 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.operations.list" call.
@@ -13206,7 +13544,7 @@ func (c *ProjectsLocationsCatalogsPlacementsPredictCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"placement": c.placement,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.placements.predict" call.
@@ -13315,7 +13653,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"placement": c.placement,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.placements.search" call.
@@ -13446,7 +13784,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsAddControlCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"servingConfig": c.servingConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.servingConfigs.addControl" call.
@@ -13559,7 +13897,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsCreateCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.servingConfigs.create" call.
@@ -13658,7 +13996,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsDeleteCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.servingConfigs.delete" call.
@@ -13769,7 +14107,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsGetCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.servingConfigs.get" call.
@@ -13894,7 +14232,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsListCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.servingConfigs.list" call.
@@ -14026,7 +14364,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsPatchCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.servingConfigs.patch" call.
@@ -14139,7 +14477,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsPredictCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"placement": c.placement,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.servingConfigs.predict" call.
@@ -14245,7 +14583,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsRemoveControlCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"servingConfig": c.servingConfig,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.servingConfigs.removeControl" call.
@@ -14354,7 +14692,7 @@ func (c *ProjectsLocationsCatalogsServingConfigsSearchCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"placement": c.placement,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.servingConfigs.search" call.
@@ -14528,7 +14866,7 @@ func (c *ProjectsLocationsCatalogsUserEventsCollectCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.userEvents.collect" call.
@@ -14634,7 +14972,7 @@ func (c *ProjectsLocationsCatalogsUserEventsImportCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.userEvents.import" call.
@@ -14741,7 +15079,7 @@ func (c *ProjectsLocationsCatalogsUserEventsPurgeCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.userEvents.purge" call.
@@ -14851,7 +15189,7 @@ func (c *ProjectsLocationsCatalogsUserEventsRejoinCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.userEvents.rejoin" call.
@@ -14964,7 +15302,7 @@ func (c *ProjectsLocationsCatalogsUserEventsWriteCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.catalogs.userEvents.write" call.
@@ -15074,7 +15412,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.operations.get" call.
@@ -15203,7 +15541,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.locations.operations.list" call.
@@ -15334,7 +15672,7 @@ func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.operations.get" call.
@@ -15463,7 +15801,7 @@ func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "retail.projects.operations.list" call.

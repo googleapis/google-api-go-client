@@ -5984,7 +5984,7 @@ func (c *PresentationsBatchUpdateCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"presentationId": c.presentationId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "slides.presentations.batchUpdate" call.
@@ -6083,7 +6083,7 @@ func (c *PresentationsCreateCall) doRequest(alt string) (*http.Response, error) 
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "slides.presentations.create" call.
@@ -6190,7 +6190,7 @@ func (c *PresentationsGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"presentationId": c.presentationId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "slides.presentations.get" call.
@@ -6301,7 +6301,7 @@ func (c *PresentationsPagesGetCall) doRequest(alt string) (*http.Response, error
 		"presentationId": c.presentationId,
 		"pageObjectId":   c.pageObjectId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "slides.presentations.pages.get" call.
@@ -6446,7 +6446,7 @@ func (c *PresentationsPagesGetThumbnailCall) doRequest(alt string) (*http.Respon
 		"presentationId": c.presentationId,
 		"pageObjectId":   c.pageObjectId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "slides.presentations.pages.getThumbnail" call.

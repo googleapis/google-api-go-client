@@ -2911,7 +2911,7 @@ func (c *ProjectsLocationsInstanceOSPoliciesCompliancesGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.instanceOSPoliciesCompliances.get" call.
@@ -3045,7 +3045,7 @@ func (c *ProjectsLocationsInstanceOSPoliciesCompliancesListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.instanceOSPoliciesCompliances.list" call.
@@ -3196,7 +3196,7 @@ func (c *ProjectsLocationsInstancesInventoriesGetCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.instances.inventories.get" call.
@@ -3345,7 +3345,7 @@ func (c *ProjectsLocationsInstancesInventoriesListCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.instances.inventories.list" call.
@@ -3480,7 +3480,7 @@ func (c *ProjectsLocationsInstancesOsPolicyAssignmentsReportsGetCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.instances.osPolicyAssignments.reports.get" call.
@@ -3629,7 +3629,7 @@ func (c *ProjectsLocationsInstancesOsPolicyAssignmentsReportsListCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.instances.osPolicyAssignments.reports.list" call.
@@ -3763,7 +3763,7 @@ func (c *ProjectsLocationsInstancesVulnerabilityReportsGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.instances.vulnerabilityReports.get" call.
@@ -3906,7 +3906,7 @@ func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.instances.vulnerabilityReports.list" call.
@@ -4053,7 +4053,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsCreateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.create" call.
@@ -4162,7 +4162,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsDeleteCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.delete" call.
@@ -4273,7 +4273,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.get" call.
@@ -4397,7 +4397,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.list" call.
@@ -4542,7 +4542,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsListRevisionsCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.listRevisions" call.
@@ -4696,7 +4696,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsPatchCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.patch" call.
@@ -4805,7 +4805,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsOperationsCancelCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.operations.cancel" call.
@@ -4914,7 +4914,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsOperationsGetCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "osconfig.projects.locations.osPolicyAssignments.operations.get" call.

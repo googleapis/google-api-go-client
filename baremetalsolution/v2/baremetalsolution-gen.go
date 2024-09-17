@@ -2591,7 +2591,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.get" call.
@@ -2722,7 +2722,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.list" call.
@@ -2845,7 +2845,7 @@ func (c *ProjectsLocationsInstancesDetachLunCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"instance": c.instance,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.instances.detachLun" call.
@@ -2948,7 +2948,7 @@ func (c *ProjectsLocationsInstancesDisableHyperthreadingCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.instances.disableHyperthreading" call.
@@ -3050,7 +3050,7 @@ func (c *ProjectsLocationsInstancesDisableInteractiveSerialConsoleCall) doReques
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.instances.disableInteractiveSerialConsole" call.
@@ -3153,7 +3153,7 @@ func (c *ProjectsLocationsInstancesEnableHyperthreadingCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.instances.enableHyperthreading" call.
@@ -3255,7 +3255,7 @@ func (c *ProjectsLocationsInstancesEnableInteractiveSerialConsoleCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.instances.enableInteractiveSerialConsole" call.
@@ -3362,7 +3362,7 @@ func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.instances.get" call.
@@ -3490,7 +3490,7 @@ func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.instances.list" call.
@@ -3619,7 +3619,7 @@ func (c *ProjectsLocationsInstancesLoadAuthInfoCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.instances.loadAuthInfo" call.
@@ -3732,7 +3732,7 @@ func (c *ProjectsLocationsInstancesPatchCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.instances.patch" call.
@@ -3834,7 +3834,7 @@ func (c *ProjectsLocationsInstancesReimageCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.instances.reimage" call.
@@ -3937,7 +3937,7 @@ func (c *ProjectsLocationsInstancesRenameCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.instances.rename" call.
@@ -4039,7 +4039,7 @@ func (c *ProjectsLocationsInstancesResetCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.instances.reset" call.
@@ -4140,7 +4140,7 @@ func (c *ProjectsLocationsInstancesStartCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.instances.start" call.
@@ -4241,7 +4241,7 @@ func (c *ProjectsLocationsInstancesStopCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.instances.stop" call.
@@ -4348,7 +4348,7 @@ func (c *ProjectsLocationsNetworksGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.networks.get" call.
@@ -4476,7 +4476,7 @@ func (c *ProjectsLocationsNetworksListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.networks.list" call.
@@ -4606,7 +4606,7 @@ func (c *ProjectsLocationsNetworksListNetworkUsageCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"location": c.location,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.networks.listNetworkUsage" call.
@@ -4719,7 +4719,7 @@ func (c *ProjectsLocationsNetworksPatchCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.networks.patch" call.
@@ -4822,7 +4822,7 @@ func (c *ProjectsLocationsNetworksRenameCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.networks.rename" call.
@@ -4923,7 +4923,7 @@ func (c *ProjectsLocationsNfsSharesCreateCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.nfsShares.create" call.
@@ -5018,7 +5018,7 @@ func (c *ProjectsLocationsNfsSharesDeleteCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.nfsShares.delete" call.
@@ -5125,7 +5125,7 @@ func (c *ProjectsLocationsNfsSharesGetCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.nfsShares.get" call.
@@ -5253,7 +5253,7 @@ func (c *ProjectsLocationsNfsSharesListCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.nfsShares.list" call.
@@ -5383,7 +5383,7 @@ func (c *ProjectsLocationsNfsSharesPatchCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.nfsShares.patch" call.
@@ -5486,7 +5486,7 @@ func (c *ProjectsLocationsNfsSharesRenameCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.nfsShares.rename" call.
@@ -5593,7 +5593,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.operations.get" call.
@@ -5700,7 +5700,7 @@ func (c *ProjectsLocationsOsImagesGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.osImages.get" call.
@@ -5824,7 +5824,7 @@ func (c *ProjectsLocationsOsImagesListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.osImages.list" call.
@@ -5954,7 +5954,7 @@ func (c *ProjectsLocationsProvisioningConfigsCreateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.provisioningConfigs.create" call.
@@ -6062,7 +6062,7 @@ func (c *ProjectsLocationsProvisioningConfigsGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.provisioningConfigs.get" call.
@@ -6179,7 +6179,7 @@ func (c *ProjectsLocationsProvisioningConfigsPatchCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.provisioningConfigs.patch" call.
@@ -6281,7 +6281,7 @@ func (c *ProjectsLocationsProvisioningConfigsSubmitCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.provisioningConfigs.submit" call.
@@ -6406,7 +6406,7 @@ func (c *ProjectsLocationsProvisioningQuotasListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.provisioningQuotas.list" call.
@@ -6538,7 +6538,7 @@ func (c *ProjectsLocationsSshKeysCreateCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.sshKeys.create" call.
@@ -6634,7 +6634,7 @@ func (c *ProjectsLocationsSshKeysDeleteCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.sshKeys.delete" call.
@@ -6757,7 +6757,7 @@ func (c *ProjectsLocationsSshKeysListCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.sshKeys.list" call.
@@ -6881,7 +6881,7 @@ func (c *ProjectsLocationsVolumesEvictCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.volumes.evict" call.
@@ -6988,7 +6988,7 @@ func (c *ProjectsLocationsVolumesGetCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.volumes.get" call.
@@ -7116,7 +7116,7 @@ func (c *ProjectsLocationsVolumesListCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.volumes.list" call.
@@ -7249,7 +7249,7 @@ func (c *ProjectsLocationsVolumesPatchCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.volumes.patch" call.
@@ -7352,7 +7352,7 @@ func (c *ProjectsLocationsVolumesRenameCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.volumes.rename" call.
@@ -7453,7 +7453,7 @@ func (c *ProjectsLocationsVolumesResizeCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"volume": c.volume,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.volumes.resize" call.
@@ -7554,7 +7554,7 @@ func (c *ProjectsLocationsVolumesLunsEvictCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.volumes.luns.evict" call.
@@ -7661,7 +7661,7 @@ func (c *ProjectsLocationsVolumesLunsGetCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.volumes.luns.get" call.
@@ -7783,7 +7783,7 @@ func (c *ProjectsLocationsVolumesLunsListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.volumes.luns.list" call.
@@ -7907,7 +7907,7 @@ func (c *ProjectsLocationsVolumesSnapshotsCreateCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.volumes.snapshots.create" call.
@@ -8003,7 +8003,7 @@ func (c *ProjectsLocationsVolumesSnapshotsDeleteCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.volumes.snapshots.delete" call.
@@ -8111,7 +8111,7 @@ func (c *ProjectsLocationsVolumesSnapshotsGetCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.volumes.snapshots.get" call.
@@ -8234,7 +8234,7 @@ func (c *ProjectsLocationsVolumesSnapshotsListCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.volumes.snapshots.list" call.
@@ -8359,7 +8359,7 @@ func (c *ProjectsLocationsVolumesSnapshotsRestoreVolumeSnapshotCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"volumeSnapshot": c.volumeSnapshot,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "baremetalsolution.projects.locations.volumes.snapshots.restoreVolumeSnapshot" call.

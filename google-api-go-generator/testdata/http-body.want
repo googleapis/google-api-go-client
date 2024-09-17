@@ -346,7 +346,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall) doRequest(al
 		"parent": c.parent,
 		"type":   c.type_,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.createResource" call.
@@ -443,7 +443,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "healthcare.projects.locations.datasets.fhirStores.fhir.read" call.

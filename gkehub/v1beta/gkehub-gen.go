@@ -6050,7 +6050,7 @@ func (c *OrganizationsLocationsFleetsListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.organizations.locations.fleets.list" call.
@@ -6179,7 +6179,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.get" call.
@@ -6310,7 +6310,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.list" call.
@@ -6457,7 +6457,7 @@ func (c *ProjectsLocationsFeaturesCreateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.features.create" call.
@@ -6578,7 +6578,7 @@ func (c *ProjectsLocationsFeaturesDeleteCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.features.delete" call.
@@ -6695,7 +6695,7 @@ func (c *ProjectsLocationsFeaturesGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.features.get" call.
@@ -6822,7 +6822,7 @@ func (c *ProjectsLocationsFeaturesGetIamPolicyCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.features.getIamPolicy" call.
@@ -6974,7 +6974,7 @@ func (c *ProjectsLocationsFeaturesListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.features.list" call.
@@ -7121,7 +7121,7 @@ func (c *ProjectsLocationsFeaturesPatchCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.features.patch" call.
@@ -7226,7 +7226,7 @@ func (c *ProjectsLocationsFeaturesSetIamPolicyCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.features.setIamPolicy" call.
@@ -7334,7 +7334,7 @@ func (c *ProjectsLocationsFeaturesTestIamPermissionsCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.features.testIamPermissions" call.
@@ -7437,7 +7437,7 @@ func (c *ProjectsLocationsFleetsCreateCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.fleets.create" call.
@@ -7534,7 +7534,7 @@ func (c *ProjectsLocationsFleetsDeleteCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.fleets.delete" call.
@@ -7642,7 +7642,7 @@ func (c *ProjectsLocationsFleetsGetCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.fleets.get" call.
@@ -7769,7 +7769,7 @@ func (c *ProjectsLocationsFleetsListCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.fleets.list" call.
@@ -7901,7 +7901,7 @@ func (c *ProjectsLocationsFleetsPatchCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.fleets.patch" call.
@@ -8033,7 +8033,7 @@ func (c *ProjectsLocationsMembershipsCreateCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.create" call.
@@ -8156,7 +8156,7 @@ func (c *ProjectsLocationsMembershipsDeleteCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.delete" call.
@@ -8314,7 +8314,7 @@ func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.generateConnectManifest" call.
@@ -8423,7 +8423,7 @@ func (c *ProjectsLocationsMembershipsGetCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.get" call.
@@ -8550,7 +8550,7 @@ func (c *ProjectsLocationsMembershipsGetIamPolicyCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.getIamPolicy" call.
@@ -8695,7 +8695,7 @@ func (c *ProjectsLocationsMembershipsListCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.list" call.
@@ -8842,7 +8842,7 @@ func (c *ProjectsLocationsMembershipsPatchCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.patch" call.
@@ -8947,7 +8947,7 @@ func (c *ProjectsLocationsMembershipsSetIamPolicyCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.setIamPolicy" call.
@@ -9055,7 +9055,7 @@ func (c *ProjectsLocationsMembershipsTestIamPermissionsCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.testIamPermissions" call.
@@ -9166,7 +9166,7 @@ func (c *ProjectsLocationsMembershipsBindingsCreateCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.bindings.create" call.
@@ -9262,7 +9262,7 @@ func (c *ProjectsLocationsMembershipsBindingsDeleteCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.bindings.delete" call.
@@ -9370,7 +9370,7 @@ func (c *ProjectsLocationsMembershipsBindingsGetCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.bindings.get" call.
@@ -9503,7 +9503,7 @@ func (c *ProjectsLocationsMembershipsBindingsListCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.bindings.list" call.
@@ -9635,7 +9635,7 @@ func (c *ProjectsLocationsMembershipsBindingsPatchCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.bindings.patch" call.
@@ -9749,7 +9749,7 @@ func (c *ProjectsLocationsMembershipsRbacrolebindingsCreateCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.rbacrolebindings.create" call.
@@ -9845,7 +9845,7 @@ func (c *ProjectsLocationsMembershipsRbacrolebindingsDeleteCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.rbacrolebindings.delete" call.
@@ -9960,7 +9960,7 @@ func (c *ProjectsLocationsMembershipsRbacrolebindingsGenerateMembershipRBACRoleB
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.rbacrolebindings.generateMembershipRBACRoleBindingYAML" call.
@@ -10069,7 +10069,7 @@ func (c *ProjectsLocationsMembershipsRbacrolebindingsGetCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.rbacrolebindings.get" call.
@@ -10194,7 +10194,7 @@ func (c *ProjectsLocationsMembershipsRbacrolebindingsListCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.rbacrolebindings.list" call.
@@ -10328,7 +10328,7 @@ func (c *ProjectsLocationsMembershipsRbacrolebindingsPatchCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.memberships.rbacrolebindings.patch" call.
@@ -10437,7 +10437,7 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.operations.cancel" call.
@@ -10535,7 +10535,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.operations.delete" call.
@@ -10644,7 +10644,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.operations.get" call.
@@ -10772,7 +10772,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.operations.list" call.
@@ -10903,7 +10903,7 @@ func (c *ProjectsLocationsScopesCreateCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.create" call.
@@ -10999,7 +10999,7 @@ func (c *ProjectsLocationsScopesDeleteCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.delete" call.
@@ -11107,7 +11107,7 @@ func (c *ProjectsLocationsScopesGetCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.get" call.
@@ -11234,7 +11234,7 @@ func (c *ProjectsLocationsScopesGetIamPolicyCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.getIamPolicy" call.
@@ -11358,7 +11358,7 @@ func (c *ProjectsLocationsScopesListCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.list" call.
@@ -11518,7 +11518,7 @@ func (c *ProjectsLocationsScopesListMembershipsCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"scopeName": c.scopeName,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.listMemberships" call.
@@ -11664,7 +11664,7 @@ func (c *ProjectsLocationsScopesListPermittedCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.listPermitted" call.
@@ -11795,7 +11795,7 @@ func (c *ProjectsLocationsScopesPatchCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.patch" call.
@@ -11900,7 +11900,7 @@ func (c *ProjectsLocationsScopesSetIamPolicyCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.setIamPolicy" call.
@@ -12008,7 +12008,7 @@ func (c *ProjectsLocationsScopesTestIamPermissionsCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.testIamPermissions" call.
@@ -12122,7 +12122,7 @@ func (c *ProjectsLocationsScopesNamespacesCreateCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.namespaces.create" call.
@@ -12218,7 +12218,7 @@ func (c *ProjectsLocationsScopesNamespacesDeleteCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.namespaces.delete" call.
@@ -12326,7 +12326,7 @@ func (c *ProjectsLocationsScopesNamespacesGetCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.namespaces.get" call.
@@ -12450,7 +12450,7 @@ func (c *ProjectsLocationsScopesNamespacesListCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.namespaces.list" call.
@@ -12581,7 +12581,7 @@ func (c *ProjectsLocationsScopesNamespacesPatchCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.namespaces.patch" call.
@@ -12694,7 +12694,7 @@ func (c *ProjectsLocationsScopesRbacrolebindingsCreateCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.rbacrolebindings.create" call.
@@ -12790,7 +12790,7 @@ func (c *ProjectsLocationsScopesRbacrolebindingsDeleteCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.rbacrolebindings.delete" call.
@@ -12898,7 +12898,7 @@ func (c *ProjectsLocationsScopesRbacrolebindingsGetCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.rbacrolebindings.get" call.
@@ -13023,7 +13023,7 @@ func (c *ProjectsLocationsScopesRbacrolebindingsListCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.rbacrolebindings.list" call.
@@ -13157,7 +13157,7 @@ func (c *ProjectsLocationsScopesRbacrolebindingsPatchCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "gkehub.projects.locations.scopes.rbacrolebindings.patch" call.

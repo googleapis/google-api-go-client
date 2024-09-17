@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package fusiontables provides access to the Fusion Tables API.
 //
 // For product documentation, see: https://developers.google.com/fusiontables
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,28 +28,31 @@
 //	ctx := context.Background()
 //	fusiontablesService, err := fusiontables.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
 //	fusiontablesService, err := fusiontables.NewService(ctx, option.WithScopes(fusiontables.FusiontablesReadonlyScope))
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	fusiontablesService, err := fusiontables.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	fusiontablesService, err := fusiontables.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package fusiontables // import "google.golang.org/api/fusiontables/v2"
 
 import (
@@ -54,8 +68,10 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
+	internaloption "google.golang.org/api/option/internaloption"
 	htransport "google.golang.org/api/transport/http"
 )
 
@@ -72,11 +88,14 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
+var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "fusiontables:v2"
 const apiName = "fusiontables"
 const apiVersion = "v2"
 const basePath = "https://www.googleapis.com/fusiontables/v2/"
+const basePathTemplate = "https://www.UNIVERSE_DOMAIN/fusiontables/v2/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -89,12 +108,15 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/fusiontables",
 		"https://www.googleapis.com/auth/fusiontables.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
+	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -207,50 +229,39 @@ type TemplateService struct {
 	s *Service
 }
 
-// Bucket: Specifies the minimum and maximum values, the color, opacity,
-// icon and weight of a bucket within a StyleSetting.
+// Bucket: Specifies the minimum and maximum values, the color, opacity, icon
+// and weight of a bucket within a StyleSetting.
 type Bucket struct {
 	// Color: Color of line or the interior of a polygon in #RRGGBB format.
 	Color string `json:"color,omitempty"`
-
 	// Icon: Icon name used for a point.
 	Icon string `json:"icon,omitempty"`
-
-	// Max: Maximum value in the selected column for a row to be styled
-	// according to the bucket color, opacity, icon, or weight.
+	// Max: Maximum value in the selected column for a row to be styled according
+	// to the bucket color, opacity, icon, or weight.
 	Max float64 `json:"max,omitempty"`
-
-	// Min: Minimum value in the selected column for a row to be styled
-	// according to the bucket color, opacity, icon, or weight.
+	// Min: Minimum value in the selected column for a row to be styled according
+	// to the bucket color, opacity, icon, or weight.
 	Min float64 `json:"min,omitempty"`
-
 	// Opacity: Opacity of the color: 0.0 (transparent) to 1.0 (opaque).
 	Opacity float64 `json:"opacity,omitempty"`
-
 	// Weight: Width of a line (in pixels).
 	Weight int64 `json:"weight,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Color") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Color") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Color") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Bucket) MarshalJSON() ([]byte, error) {
+func (s Bucket) MarshalJSON() ([]byte, error) {
 	type NoMethod Bucket
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Bucket) UnmarshalJSON(data []byte) error {
@@ -276,207 +287,159 @@ type Column struct {
 	// BaseColumn: Identifier of the base column. If present, this column is
 	// derived from the specified base column.
 	BaseColumn *ColumnBaseColumn `json:"baseColumn,omitempty"`
-
 	// ColumnId: Identifier for the column.
 	ColumnId int64 `json:"columnId,omitempty"`
-
 	// ColumnJsonSchema: JSON schema for interpreting JSON in this column.
 	ColumnJsonSchema string `json:"columnJsonSchema,omitempty"`
-
-	// ColumnPropertiesJson: JSON object containing custom column
-	// properties.
+	// ColumnPropertiesJson: JSON object containing custom column properties.
 	ColumnPropertiesJson string `json:"columnPropertiesJson,omitempty"`
-
 	// Description: Column description.
 	Description string `json:"description,omitempty"`
-
 	// FormatPattern: Format pattern.
 	// Acceptable values are DT_DATE_MEDIUMe.g Dec 24, 2008 DT_DATE_SHORTfor
-	// example 12/24/08 DT_DATE_TIME_MEDIUMfor example Dec 24, 2008 8:30:45
-	// PM DT_DATE_TIME_SHORTfor example 12/24/08 8:30 PM
-	// DT_DAY_MONTH_2_DIGIT_YEARfor example 24/12/08
-	// DT_DAY_MONTH_2_DIGIT_YEAR_TIMEfor example 24/12/08 20:30
+	// example 12/24/08 DT_DATE_TIME_MEDIUMfor example Dec 24, 2008 8:30:45 PM
+	// DT_DATE_TIME_SHORTfor example 12/24/08 8:30 PM DT_DAY_MONTH_2_DIGIT_YEARfor
+	// example 24/12/08 DT_DAY_MONTH_2_DIGIT_YEAR_TIMEfor example 24/12/08 20:30
 	// DT_DAY_MONTH_2_DIGIT_YEAR_TIME_MERIDIANfor example 24/12/08 8:30 PM
 	// DT_DAY_MONTH_4_DIGIT_YEARfor example 24/12/2008
 	// DT_DAY_MONTH_4_DIGIT_YEAR_TIMEfor example 24/12/2008 20:30
 	// DT_DAY_MONTH_4_DIGIT_YEAR_TIME_MERIDIANfor example 24/12/2008 8:30 PM
-	// DT_ISO_YEAR_MONTH_DAYfor example 2008-12-24
-	// DT_ISO_YEAR_MONTH_DAY_TIMEfor example 2008-12-24 20:30:45
-	// DT_MONTH_DAY_4_DIGIT_YEARfor example 12/24/2008 DT_TIME_LONGfor
-	// example 8:30:45 PM UTC-6 DT_TIME_MEDIUMfor example 8:30:45 PM
-	// DT_TIME_SHORTfor example 8:30 PM DT_YEAR_ONLYfor example 2008
-	// HIGHLIGHT_UNTYPED_CELLSHighlight cell data that does not match the
-	// data type NONENo formatting (default) NUMBER_CURRENCYfor example
-	// $1234.56 NUMBER_DEFAULTfor example 1,234.56 NUMBER_INTEGERfor example
-	// 1235 NUMBER_NO_SEPARATORfor example 1234.56 NUMBER_PERCENTfor example
-	// 123,456% NUMBER_SCIENTIFICfor example 1E3
-	// STRING_EIGHT_LINE_IMAGEDisplays thumbnail images as tall as eight
-	// lines of text STRING_FOUR_LINE_IMAGEDisplays thumbnail images as tall
-	// as four lines of text STRING_JSON_TEXTAllows editing of text as JSON
-	// in UI STRING_JSON_LISTAllows editing of text as a JSON list in UI
-	// STRING_LINKTreats cell as a link (must start with http:// or
-	// https://) STRING_ONE_LINE_IMAGEDisplays thumbnail images as tall as
-	// one line of text STRING_VIDEO_OR_MAPDisplay a video or map thumbnail
+	// DT_ISO_YEAR_MONTH_DAYfor example 2008-12-24 DT_ISO_YEAR_MONTH_DAY_TIMEfor
+	// example 2008-12-24 20:30:45 DT_MONTH_DAY_4_DIGIT_YEARfor example 12/24/2008
+	// DT_TIME_LONGfor example 8:30:45 PM UTC-6 DT_TIME_MEDIUMfor example 8:30:45
+	// PM DT_TIME_SHORTfor example 8:30 PM DT_YEAR_ONLYfor example 2008
+	// HIGHLIGHT_UNTYPED_CELLSHighlight cell data that does not match the data type
+	// NONENo formatting (default) NUMBER_CURRENCYfor example $1234.56
+	// NUMBER_DEFAULTfor example 1,234.56 NUMBER_INTEGERfor example 1235
+	// NUMBER_NO_SEPARATORfor example 1234.56 NUMBER_PERCENTfor example 123,456%
+	// NUMBER_SCIENTIFICfor example 1E3 STRING_EIGHT_LINE_IMAGEDisplays thumbnail
+	// images as tall as eight lines of text STRING_FOUR_LINE_IMAGEDisplays
+	// thumbnail images as tall as four lines of text STRING_JSON_TEXTAllows
+	// editing of text as JSON in UI STRING_JSON_LISTAllows editing of text as a
+	// JSON list in UI STRING_LINKTreats cell as a link (must start with http:// or
+	// https://) STRING_ONE_LINE_IMAGEDisplays thumbnail images as tall as one line
+	// of text STRING_VIDEO_OR_MAPDisplay a video or map thumbnail
 	FormatPattern string `json:"formatPattern,omitempty"`
-
 	// GraphPredicate: Column graph predicate.
 	// Used to map table to graph data model (subject,predicate,object)
 	// See W3C Graph-based Data Model.
 	GraphPredicate string `json:"graphPredicate,omitempty"`
-
 	// Kind: The kind of item this is. For a column, this is always
 	// fusiontables#column.
 	Kind string `json:"kind,omitempty"`
-
 	// Name: Name of the column.
 	Name string `json:"name,omitempty"`
-
 	// Type: Type of the column.
 	Type string `json:"type,omitempty"`
-
 	// ValidValues: List of valid values used to validate data and supply a
 	// drop-down list of values in the web application.
 	ValidValues []string `json:"validValues,omitempty"`
-
-	// ValidateData: If true, data entered via the web application is
-	// validated.
+	// ValidateData: If true, data entered via the web application is validated.
 	ValidateData bool `json:"validateData,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "BaseColumn") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BaseColumn") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BaseColumn") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Column) MarshalJSON() ([]byte, error) {
+func (s Column) MarshalJSON() ([]byte, error) {
 	type NoMethod Column
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ColumnBaseColumn: Identifier of the base column. If present, this
-// column is derived from the specified base column.
+// ColumnBaseColumn: Identifier of the base column. If present, this column is
+// derived from the specified base column.
 type ColumnBaseColumn struct {
-	// ColumnId: The id of the column in the base table from which this
-	// column is derived.
+	// ColumnId: The id of the column in the base table from which this column is
+	// derived.
 	ColumnId int64 `json:"columnId,omitempty"`
-
-	// TableIndex: Offset to the entry in the list of base tables in the
-	// table definition.
+	// TableIndex: Offset to the entry in the list of base tables in the table
+	// definition.
 	TableIndex int64 `json:"tableIndex,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ColumnId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ColumnId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ColumnId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ColumnBaseColumn) MarshalJSON() ([]byte, error) {
+func (s ColumnBaseColumn) MarshalJSON() ([]byte, error) {
 	type NoMethod ColumnBaseColumn
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ColumnList: Represents a list of columns in a table.
 type ColumnList struct {
 	// Items: List of all requested columns.
 	Items []*Column `json:"items,omitempty"`
-
 	// Kind: The kind of item this is. For a column list, this is always
 	// fusiontables#columnList.
 	Kind string `json:"kind,omitempty"`
-
-	// NextPageToken: Token used to access the next page of this result. No
-	// token is displayed if there are no more pages left.
+	// NextPageToken: Token used to access the next page of this result. No token
+	// is displayed if there are no more pages left.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// TotalItems: Total number of columns for the table.
 	TotalItems int64 `json:"totalItems,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ColumnList) MarshalJSON() ([]byte, error) {
+func (s ColumnList) MarshalJSON() ([]byte, error) {
 	type NoMethod ColumnList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Geometry: Represents a Geometry object.
 type Geometry struct {
 	// Geometries: The list of geometries in this geometry collection.
 	Geometries []interface{} `json:"geometries,omitempty"`
-
-	Geometry interface{} `json:"geometry,omitempty"`
-
+	Geometry   interface{}   `json:"geometry,omitempty"`
 	// Type: Type: A collection of geometries.
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Geometries") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Geometries") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Geometries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Geometry) MarshalJSON() ([]byte, error) {
+func (s Geometry) MarshalJSON() ([]byte, error) {
 	type NoMethod Geometry
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Import: Represents an import request.
@@ -484,109 +447,83 @@ type Import struct {
 	// Kind: The kind of item this is. For an import, this is always
 	// fusiontables#import.
 	Kind string `json:"kind,omitempty"`
-
 	// NumRowsReceived: The number of rows received from the import request.
 	NumRowsReceived int64 `json:"numRowsReceived,omitempty,string"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Import) MarshalJSON() ([]byte, error) {
+func (s Import) MarshalJSON() ([]byte, error) {
 	type NoMethod Import
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Line: Represents a line geometry.
 type Line struct {
 	// Coordinates: The coordinates that define the line.
 	Coordinates [][]float64 `json:"coordinates,omitempty"`
-
 	// Type: Type: A line geometry.
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Coordinates") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Coordinates") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Coordinates") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Line) MarshalJSON() ([]byte, error) {
+func (s Line) MarshalJSON() ([]byte, error) {
 	type NoMethod Line
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // LineStyle: Represents a LineStyle within a StyleSetting
 type LineStyle struct {
 	// StrokeColor: Color of the line in #RRGGBB format.
 	StrokeColor string `json:"strokeColor,omitempty"`
-
-	// StrokeColorStyler: Column-value, gradient or buckets styler that is
-	// used to determine the line color and opacity.
+	// StrokeColorStyler: Column-value, gradient or buckets styler that is used to
+	// determine the line color and opacity.
 	StrokeColorStyler *StyleFunction `json:"strokeColorStyler,omitempty"`
-
-	// StrokeOpacity: Opacity of the line : 0.0 (transparent) to 1.0
-	// (opaque).
+	// StrokeOpacity: Opacity of the line : 0.0 (transparent) to 1.0 (opaque).
 	StrokeOpacity float64 `json:"strokeOpacity,omitempty"`
-
 	// StrokeWeight: Width of the line in pixels.
 	StrokeWeight int64 `json:"strokeWeight,omitempty"`
-
-	// StrokeWeightStyler: Column-value or bucket styler that is used to
-	// determine the width of the line.
+	// StrokeWeightStyler: Column-value or bucket styler that is used to determine
+	// the width of the line.
 	StrokeWeightStyler *StyleFunction `json:"strokeWeightStyler,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "StrokeColor") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "StrokeColor") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "StrokeColor") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *LineStyle) MarshalJSON() ([]byte, error) {
+func (s LineStyle) MarshalJSON() ([]byte, error) {
 	type NoMethod LineStyle
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LineStyle) UnmarshalJSON(data []byte) error {
@@ -607,31 +544,41 @@ func (s *LineStyle) UnmarshalJSON(data []byte) error {
 type Point struct {
 	// Coordinates: The coordinates that define the point.
 	Coordinates []float64 `json:"coordinates,omitempty"`
-
 	// Type: Point: A point geometry.
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Coordinates") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Coordinates") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Coordinates") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Point) MarshalJSON() ([]byte, error) {
+func (s Point) MarshalJSON() ([]byte, error) {
 	type NoMethod Point
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *Point) UnmarshalJSON(data []byte) error {
+	type NoMethod Point
+	var s1 struct {
+		Coordinates []gensupport.JSONFloat64 `json:"coordinates"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Coordinates = make([]float64, len(s1.Coordinates))
+	for i := range s1.Coordinates {
+		s.Coordinates[i] = float64(s1.Coordinates[i])
+	}
+	return nil
 }
 
 // PointStyle: Represents a PointStyle within a StyleSetting
@@ -639,117 +586,90 @@ type PointStyle struct {
 	// IconName: Name of the icon. Use values defined in
 	// http://www.google.com/fusiontables/DataSource?dsrcid=308519
 	IconName string `json:"iconName,omitempty"`
-
-	// IconStyler: Column or a bucket value from which the icon name is to
-	// be determined.
+	// IconStyler: Column or a bucket value from which the icon name is to be
+	// determined.
 	IconStyler *StyleFunction `json:"iconStyler,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "IconName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IconName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IconName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *PointStyle) MarshalJSON() ([]byte, error) {
+func (s PointStyle) MarshalJSON() ([]byte, error) {
 	type NoMethod PointStyle
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Polygon: Represents a polygon object.
 type Polygon struct {
 	// Coordinates: The coordinates that define the polygon.
 	Coordinates [][][]float64 `json:"coordinates,omitempty"`
-
 	// Type: Type: A polygon geometry.
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Coordinates") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Coordinates") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Coordinates") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Polygon) MarshalJSON() ([]byte, error) {
+func (s Polygon) MarshalJSON() ([]byte, error) {
 	type NoMethod Polygon
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PolygonStyle: Represents a PolygonStyle within a StyleSetting
 type PolygonStyle struct {
 	// FillColor: Color of the interior of the polygon in #RRGGBB format.
 	FillColor string `json:"fillColor,omitempty"`
-
-	// FillColorStyler: Column-value, gradient, or bucket styler that is
-	// used to determine the interior color and opacity of the polygon.
+	// FillColorStyler: Column-value, gradient, or bucket styler that is used to
+	// determine the interior color and opacity of the polygon.
 	FillColorStyler *StyleFunction `json:"fillColorStyler,omitempty"`
-
-	// FillOpacity: Opacity of the interior of the polygon: 0.0
-	// (transparent) to 1.0 (opaque).
+	// FillOpacity: Opacity of the interior of the polygon: 0.0 (transparent) to
+	// 1.0 (opaque).
 	FillOpacity float64 `json:"fillOpacity,omitempty"`
-
 	// StrokeColor: Color of the polygon border in #RRGGBB format.
 	StrokeColor string `json:"strokeColor,omitempty"`
-
-	// StrokeColorStyler: Column-value, gradient or buckets styler that is
-	// used to determine the border color and opacity.
+	// StrokeColorStyler: Column-value, gradient or buckets styler that is used to
+	// determine the border color and opacity.
 	StrokeColorStyler *StyleFunction `json:"strokeColorStyler,omitempty"`
-
-	// StrokeOpacity: Opacity of the polygon border: 0.0 (transparent) to
-	// 1.0 (opaque).
+	// StrokeOpacity: Opacity of the polygon border: 0.0 (transparent) to 1.0
+	// (opaque).
 	StrokeOpacity float64 `json:"strokeOpacity,omitempty"`
-
 	// StrokeWeight: Width of the polyon border in pixels.
 	StrokeWeight int64 `json:"strokeWeight,omitempty"`
-
-	// StrokeWeightStyler: Column-value or bucket styler that is used to
-	// determine the width of the polygon border.
+	// StrokeWeightStyler: Column-value or bucket styler that is used to determine
+	// the width of the polygon border.
 	StrokeWeightStyler *StyleFunction `json:"strokeWeightStyler,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FillColor") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FillColor") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FillColor") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *PolygonStyle) MarshalJSON() ([]byte, error) {
+func (s PolygonStyle) MarshalJSON() ([]byte, error) {
 	type NoMethod PolygonStyle
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PolygonStyle) UnmarshalJSON(data []byte) error {
@@ -772,123 +692,96 @@ func (s *PolygonStyle) UnmarshalJSON(data []byte) error {
 type Sqlresponse struct {
 	// Columns: Columns in the table.
 	Columns []string `json:"columns,omitempty"`
-
-	// Kind: The kind of item this is. For responses to SQL queries, this is
-	// always fusiontables#sqlresponse.
+	// Kind: The kind of item this is. For responses to SQL queries, this is always
+	// fusiontables#sqlresponse.
 	Kind string `json:"kind,omitempty"`
-
-	// Rows: The rows in the table. For each cell we print out whatever cell
-	// value (e.g., numeric, string) exists. Thus it is important that each
-	// cell contains only one value.
+	// Rows: The rows in the table. For each cell we print out whatever cell value
+	// (e.g., numeric, string) exists. Thus it is important that each cell contains
+	// only one value.
 	Rows [][]interface{} `json:"rows,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Columns") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Columns") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Columns") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Columns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Sqlresponse) MarshalJSON() ([]byte, error) {
+func (s Sqlresponse) MarshalJSON() ([]byte, error) {
 	type NoMethod Sqlresponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StyleFunction: Represents a StyleFunction within a StyleSetting
 type StyleFunction struct {
-	// Buckets: Bucket function that assigns a style based on the range a
-	// column value falls into.
+	// Buckets: Bucket function that assigns a style based on the range a column
+	// value falls into.
 	Buckets []*Bucket `json:"buckets,omitempty"`
-
 	// ColumnName: Name of the column whose value is used in the style.
 	ColumnName string `json:"columnName,omitempty"`
-
-	// Gradient: Gradient function that interpolates a range of colors based
-	// on column value.
+	// Gradient: Gradient function that interpolates a range of colors based on
+	// column value.
 	Gradient *StyleFunctionGradient `json:"gradient,omitempty"`
-
-	// Kind: Stylers can be one of three kinds: "fusiontables#fromColumn if
-	// the column value is to be used as is, i.e., the column values can
-	// have colors in #RRGGBBAA format or integer line widths or icon names;
-	// fusiontables#gradient if the styling of the row is to be based on
-	// applying the gradient function on the column value; or
-	// fusiontables#buckets if the styling is to based on the bucket into
-	// which the the column value falls.
+	// Kind: Stylers can be one of three kinds: "fusiontables#fromColumn if the
+	// column value is to be used as is, i.e., the column values can have colors in
+	// #RRGGBBAA format or integer line widths or icon names; fusiontables#gradient
+	// if the styling of the row is to be based on applying the gradient function
+	// on the column value; or fusiontables#buckets if the styling is to based on
+	// the bucket into which the the column value falls.
 	Kind string `json:"kind,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Buckets") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Buckets") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Buckets") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Buckets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *StyleFunction) MarshalJSON() ([]byte, error) {
+func (s StyleFunction) MarshalJSON() ([]byte, error) {
 	type NoMethod StyleFunction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StyleFunctionGradient: Gradient function that interpolates a range of
-// colors based on column value.
+// StyleFunctionGradient: Gradient function that interpolates a range of colors
+// based on column value.
 type StyleFunctionGradient struct {
 	// Colors: Array with two or more colors.
 	Colors []*StyleFunctionGradientColors `json:"colors,omitempty"`
-
-	// Max: Higher-end of the interpolation range: rows with this value will
-	// be assigned to colors[n-1].
+	// Max: Higher-end of the interpolation range: rows with this value will be
+	// assigned to colors[n-1].
 	Max float64 `json:"max,omitempty"`
-
-	// Min: Lower-end of the interpolation range: rows with this value will
-	// be assigned to colors[0].
+	// Min: Lower-end of the interpolation range: rows with this value will be
+	// assigned to colors[0].
 	Min float64 `json:"min,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Colors") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Colors") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Colors") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *StyleFunctionGradient) MarshalJSON() ([]byte, error) {
+func (s StyleFunctionGradient) MarshalJSON() ([]byte, error) {
 	type NoMethod StyleFunctionGradient
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *StyleFunctionGradient) UnmarshalJSON(data []byte) error {
@@ -910,31 +803,24 @@ func (s *StyleFunctionGradient) UnmarshalJSON(data []byte) error {
 type StyleFunctionGradientColors struct {
 	// Color: Color in #RRGGBB format.
 	Color string `json:"color,omitempty"`
-
 	// Opacity: Opacity of the color: 0.0 (transparent) to 1.0 (opaque).
 	Opacity float64 `json:"opacity,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Color") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Color") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Color") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *StyleFunctionGradientColors) MarshalJSON() ([]byte, error) {
+func (s StyleFunctionGradientColors) MarshalJSON() ([]byte, error) {
 	type NoMethod StyleFunctionGradientColors
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *StyleFunctionGradientColors) UnmarshalJSON(data []byte) error {
@@ -951,405 +837,304 @@ func (s *StyleFunctionGradientColors) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// StyleSetting: Represents a complete StyleSettings object. The primary
-// key is a combination of the tableId and a styleId.
+// StyleSetting: Represents a complete StyleSettings object. The primary key is
+// a combination of the tableId and a styleId.
 type StyleSetting struct {
 	// Kind: The kind of item this is. A StyleSetting contains the style
-	// definitions for points, lines, and polygons in a table. Since a table
-	// can have any one or all of them, a style definition can have point,
-	// line and polygon style definitions.
+	// definitions for points, lines, and polygons in a table. Since a table can
+	// have any one or all of them, a style definition can have point, line and
+	// polygon style definitions.
 	Kind string `json:"kind,omitempty"`
-
 	// MarkerOptions: Style definition for points in the table.
 	MarkerOptions *PointStyle `json:"markerOptions,omitempty"`
-
 	// Name: Optional name for the style setting.
 	Name string `json:"name,omitempty"`
-
 	// PolygonOptions: Style definition for polygons in the table.
 	PolygonOptions *PolygonStyle `json:"polygonOptions,omitempty"`
-
 	// PolylineOptions: Style definition for lines in the table.
 	PolylineOptions *LineStyle `json:"polylineOptions,omitempty"`
-
-	// StyleId: Identifier for the style setting (unique only within
-	// tables).
+	// StyleId: Identifier for the style setting (unique only within tables).
 	StyleId int64 `json:"styleId,omitempty"`
-
 	// TableId: Identifier for the table.
 	TableId string `json:"tableId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *StyleSetting) MarshalJSON() ([]byte, error) {
+func (s StyleSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod StyleSetting
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StyleSettingList: Represents a list of styles for a given table.
 type StyleSettingList struct {
 	// Items: All requested style settings.
 	Items []*StyleSetting `json:"items,omitempty"`
-
 	// Kind: The kind of item this is. For a style list, this is always
 	// fusiontables#styleSettingList .
 	Kind string `json:"kind,omitempty"`
-
-	// NextPageToken: Token used to access the next page of this result. No
-	// token is displayed if there are no more styles left.
+	// NextPageToken: Token used to access the next page of this result. No token
+	// is displayed if there are no more styles left.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// TotalItems: Total number of styles for the table.
 	TotalItems int64 `json:"totalItems,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *StyleSettingList) MarshalJSON() ([]byte, error) {
+func (s StyleSettingList) MarshalJSON() ([]byte, error) {
 	type NoMethod StyleSettingList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Table: Represents a table.
 type Table struct {
 	// Attribution: Attribution assigned to the table.
 	Attribution string `json:"attribution,omitempty"`
-
 	// AttributionLink: Optional link for attribution.
 	AttributionLink string `json:"attributionLink,omitempty"`
-
-	// BaseTableIds: Base table identifier if this table is a view or merged
-	// table.
+	// BaseTableIds: Base table identifier if this table is a view or merged table.
 	BaseTableIds []string `json:"baseTableIds,omitempty"`
-
-	// ColumnPropertiesJsonSchema: Default JSON schema for validating all
-	// JSON column properties.
+	// ColumnPropertiesJsonSchema: Default JSON schema for validating all JSON
+	// column properties.
 	ColumnPropertiesJsonSchema string `json:"columnPropertiesJsonSchema,omitempty"`
-
 	// Columns: Columns in the table.
 	Columns []*Column `json:"columns,omitempty"`
-
 	// Description: Description assigned to the table.
 	Description string `json:"description,omitempty"`
-
 	// IsExportable: Variable for whether table is exportable.
 	IsExportable bool `json:"isExportable,omitempty"`
-
 	// Kind: The kind of item this is. For a table, this is always
 	// fusiontables#table.
 	Kind string `json:"kind,omitempty"`
-
 	// Name: Name assigned to a table.
 	Name string `json:"name,omitempty"`
-
 	// Sql: SQL that encodes the table definition for derived tables.
 	Sql string `json:"sql,omitempty"`
-
 	// TableId: Encrypted unique alphanumeric identifier for the table.
 	TableId string `json:"tableId,omitempty"`
-
 	// TablePropertiesJson: JSON object containing custom table properties.
 	TablePropertiesJson string `json:"tablePropertiesJson,omitempty"`
-
 	// TablePropertiesJsonSchema: JSON schema for validating the JSON table
 	// properties.
 	TablePropertiesJsonSchema string `json:"tablePropertiesJsonSchema,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Attribution") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attribution") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Attribution") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Table) MarshalJSON() ([]byte, error) {
+func (s Table) MarshalJSON() ([]byte, error) {
 	type NoMethod Table
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TableList: Represents a list of tables.
 type TableList struct {
 	// Items: List of all requested tables.
 	Items []*Table `json:"items,omitempty"`
-
 	// Kind: The kind of item this is. For table list, this is always
 	// fusiontables#tableList.
 	Kind string `json:"kind,omitempty"`
-
-	// NextPageToken: Token used to access the next page of this result. No
-	// token is displayed if there are no more pages left.
+	// NextPageToken: Token used to access the next page of this result. No token
+	// is displayed if there are no more pages left.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *TableList) MarshalJSON() ([]byte, error) {
+func (s TableList) MarshalJSON() ([]byte, error) {
 	type NoMethod TableList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Task: A background task on a table, initiated for time- or
-// resource-consuming operations such as changing column types or
-// deleting all rows.
+// resource-consuming operations such as changing column types or deleting all
+// rows.
 type Task struct {
 	// Kind: Type of the resource. This is always "fusiontables#task".
 	Kind string `json:"kind,omitempty"`
-
 	// Progress: Task percentage completion.
 	Progress string `json:"progress,omitempty"`
-
-	// Started: false while the table is busy with some other task. true if
-	// this background task is currently running.
+	// Started: false while the table is busy with some other task. true if this
+	// background task is currently running.
 	Started bool `json:"started,omitempty"`
-
 	// TaskId: Identifier for the task.
 	TaskId int64 `json:"taskId,omitempty,string"`
-
 	// Type: Type of background task.
 	Type string `json:"type,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Task) MarshalJSON() ([]byte, error) {
+func (s Task) MarshalJSON() ([]byte, error) {
 	type NoMethod Task
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TaskList: Represents a list of tasks for a table.
 type TaskList struct {
 	// Items: List of all requested tasks.
 	Items []*Task `json:"items,omitempty"`
-
 	// Kind: Type of the resource. This is always "fusiontables#taskList".
 	Kind string `json:"kind,omitempty"`
-
-	// NextPageToken: Token used to access the next page of this result. No
-	// token is displayed if there are no more pages left.
+	// NextPageToken: Token used to access the next page of this result. No token
+	// is displayed if there are no more pages left.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// TotalItems: Total number of tasks for the table.
 	TotalItems int64 `json:"totalItems,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *TaskList) MarshalJSON() ([]byte, error) {
+func (s TaskList) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Template: Represents the contents of InfoWindow templates.
 type Template struct {
-	// AutomaticColumnNames: List of columns from which the template is to
-	// be automatically constructed. Only one of body or automaticColumns
-	// can be specified.
+	// AutomaticColumnNames: List of columns from which the template is to be
+	// automatically constructed. Only one of body or automaticColumns can be
+	// specified.
 	AutomaticColumnNames []string `json:"automaticColumnNames,omitempty"`
-
-	// Body: Body of the template. It contains HTML with {column_name} to
-	// insert values from a particular column. The body is sanitized to
-	// remove certain tags, e.g., script. Only one of body or
-	// automaticColumns can be specified.
+	// Body: Body of the template. It contains HTML with {column_name} to insert
+	// values from a particular column. The body is sanitized to remove certain
+	// tags, e.g., script. Only one of body or automaticColumns can be specified.
 	Body string `json:"body,omitempty"`
-
 	// Kind: The kind of item this is. For a template, this is always
 	// fusiontables#template.
 	Kind string `json:"kind,omitempty"`
-
 	// Name: Optional name assigned to a template.
 	Name string `json:"name,omitempty"`
-
 	// TableId: Identifier for the table for which the template is defined.
 	TableId string `json:"tableId,omitempty"`
-
-	// TemplateId: Identifier for the template, unique within the context of
-	// a particular table.
+	// TemplateId: Identifier for the template, unique within the context of a
+	// particular table.
 	TemplateId int64 `json:"templateId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AutomaticColumnNames") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AutomaticColumnNames") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AutomaticColumnNames") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AutomaticColumnNames") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Template) MarshalJSON() ([]byte, error) {
+func (s Template) MarshalJSON() ([]byte, error) {
 	type NoMethod Template
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TemplateList: Represents a list of templates for a given table.
 type TemplateList struct {
 	// Items: List of all requested templates.
 	Items []*Template `json:"items,omitempty"`
-
 	// Kind: The kind of item this is. For a template list, this is always
 	// fusiontables#templateList .
 	Kind string `json:"kind,omitempty"`
-
-	// NextPageToken: Token used to access the next page of this result. No
-	// token is displayed if there are no more pages left.
+	// NextPageToken: Token used to access the next page of this result. No token
+	// is displayed if there are no more pages left.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// TotalItems: Total number of templates for the table.
 	TotalItems int64 `json:"totalItems,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *TemplateList) MarshalJSON() ([]byte, error) {
+func (s TemplateList) MarshalJSON() ([]byte, error) {
 	type NoMethod TemplateList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "fusiontables.column.delete":
 
 type ColumnDeleteCall struct {
 	s          *Service
@@ -1361,6 +1146,9 @@ type ColumnDeleteCall struct {
 }
 
 // Delete: Deletes the specified column.
+//
+// - columnId: Name or identifier for the column being deleted.
+// - tableId: Table from which the column is being deleted.
 func (r *ColumnService) Delete(tableId string, columnId string) *ColumnDeleteCall {
 	c := &ColumnDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -1369,23 +1157,21 @@ func (r *ColumnService) Delete(tableId string, columnId string) *ColumnDeleteCal
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ColumnDeleteCall) Fields(s ...googleapi.Field) *ColumnDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ColumnDeleteCall) Context(ctx context.Context) *ColumnDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ColumnDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1394,12 +1180,7 @@ func (c *ColumnDeleteCall) Header() http.Header {
 }
 
 func (c *ColumnDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1414,7 +1195,7 @@ func (c *ColumnDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"tableId":  c.tableId,
 		"columnId": c.columnId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.column.delete" call.
@@ -1426,40 +1207,10 @@ func (c *ColumnDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes the specified column.",
-	//   "httpMethod": "DELETE",
-	//   "id": "fusiontables.column.delete",
-	//   "parameterOrder": [
-	//     "tableId",
-	//     "columnId"
-	//   ],
-	//   "parameters": {
-	//     "columnId": {
-	//       "description": "Name or identifier for the column being deleted.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "tableId": {
-	//       "description": "Table from which the column is being deleted.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/columns/{columnId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.column.get":
 
 type ColumnGetCall struct {
 	s            *Service
@@ -1472,6 +1223,9 @@ type ColumnGetCall struct {
 }
 
 // Get: Retrieves a specific column by its ID.
+//
+// - columnId: Name or identifier for the column that is being requested.
+// - tableId: Table to which the column belongs.
 func (r *ColumnService) Get(tableId string, columnId string) *ColumnGetCall {
 	c := &ColumnGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -1480,33 +1234,29 @@ func (r *ColumnService) Get(tableId string, columnId string) *ColumnGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ColumnGetCall) Fields(s ...googleapi.Field) *ColumnGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ColumnGetCall) IfNoneMatch(entityTag string) *ColumnGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ColumnGetCall) Context(ctx context.Context) *ColumnGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ColumnGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1515,12 +1265,7 @@ func (c *ColumnGetCall) Header() http.Header {
 }
 
 func (c *ColumnGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1538,16 +1283,14 @@ func (c *ColumnGetCall) doRequest(alt string) (*http.Response, error) {
 		"tableId":  c.tableId,
 		"columnId": c.columnId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.column.get" call.
-// Exactly one of *Column or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Column.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Column.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ColumnGetCall) Do(opts ...googleapi.CallOption) (*Column, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1555,17 +1298,17 @@ func (c *ColumnGetCall) Do(opts ...googleapi.CallOption) (*Column, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Column{
 		ServerResponse: googleapi.ServerResponse{
@@ -1578,41 +1321,7 @@ func (c *ColumnGetCall) Do(opts ...googleapi.CallOption) (*Column, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a specific column by its ID.",
-	//   "httpMethod": "GET",
-	//   "id": "fusiontables.column.get",
-	//   "parameterOrder": [
-	//     "tableId",
-	//     "columnId"
-	//   ],
-	//   "parameters": {
-	//     "columnId": {
-	//       "description": "Name or identifier for the column that is being requested.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "tableId": {
-	//       "description": "Table to which the column belongs.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/columns/{columnId}",
-	//   "response": {
-	//     "$ref": "Column"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables",
-	//     "https://www.googleapis.com/auth/fusiontables.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.column.insert":
 
 type ColumnInsertCall struct {
 	s          *Service
@@ -1624,6 +1333,8 @@ type ColumnInsertCall struct {
 }
 
 // Insert: Adds a new column to the table.
+//
+// - tableId: Table for which a new column is being added.
 func (r *ColumnService) Insert(tableId string, column *Column) *ColumnInsertCall {
 	c := &ColumnInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -1632,23 +1343,21 @@ func (r *ColumnService) Insert(tableId string, column *Column) *ColumnInsertCall
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ColumnInsertCall) Fields(s ...googleapi.Field) *ColumnInsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ColumnInsertCall) Context(ctx context.Context) *ColumnInsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ColumnInsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1657,18 +1366,12 @@ func (c *ColumnInsertCall) Header() http.Header {
 }
 
 func (c *ColumnInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.column)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/columns")
@@ -1681,16 +1384,14 @@ func (c *ColumnInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.column.insert" call.
-// Exactly one of *Column or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Column.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Column.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ColumnInsertCall) Do(opts ...googleapi.CallOption) (*Column, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1698,17 +1399,17 @@ func (c *ColumnInsertCall) Do(opts ...googleapi.CallOption) (*Column, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Column{
 		ServerResponse: googleapi.ServerResponse{
@@ -1721,36 +1422,7 @@ func (c *ColumnInsertCall) Do(opts ...googleapi.CallOption) (*Column, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Adds a new column to the table.",
-	//   "httpMethod": "POST",
-	//   "id": "fusiontables.column.insert",
-	//   "parameterOrder": [
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "tableId": {
-	//       "description": "Table for which a new column is being added.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/columns",
-	//   "request": {
-	//     "$ref": "Column"
-	//   },
-	//   "response": {
-	//     "$ref": "Column"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.column.list":
 
 type ColumnListCall struct {
 	s            *Service
@@ -1762,14 +1434,16 @@ type ColumnListCall struct {
 }
 
 // List: Retrieves a list of columns.
+//
+// - tableId: Table whose columns are being listed.
 func (r *ColumnService) List(tableId string) *ColumnListCall {
 	c := &ColumnListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of columns to return. Default is 5.
+// MaxResults sets the optional parameter "maxResults": Maximum number of
+// columns to return. Default is 5.
 func (c *ColumnListCall) MaxResults(maxResults int64) *ColumnListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -1783,33 +1457,29 @@ func (c *ColumnListCall) PageToken(pageToken string) *ColumnListCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ColumnListCall) Fields(s ...googleapi.Field) *ColumnListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ColumnListCall) IfNoneMatch(entityTag string) *ColumnListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ColumnListCall) Context(ctx context.Context) *ColumnListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ColumnListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1818,12 +1488,7 @@ func (c *ColumnListCall) Header() http.Header {
 }
 
 func (c *ColumnListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1840,16 +1505,14 @@ func (c *ColumnListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.column.list" call.
-// Exactly one of *ColumnList or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *ColumnList.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ColumnList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ColumnListCall) Do(opts ...googleapi.CallOption) (*ColumnList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1857,17 +1520,17 @@ func (c *ColumnListCall) Do(opts ...googleapi.CallOption) (*ColumnList, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &ColumnList{
 		ServerResponse: googleapi.ServerResponse{
@@ -1880,43 +1543,6 @@ func (c *ColumnListCall) Do(opts ...googleapi.CallOption) (*ColumnList, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a list of columns.",
-	//   "httpMethod": "GET",
-	//   "id": "fusiontables.column.list",
-	//   "parameterOrder": [
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "maxResults": {
-	//       "description": "Maximum number of columns to return. Default is 5.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "minimum": "0",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Continuation token specifying which result page to return.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "tableId": {
-	//       "description": "Table whose columns are being listed.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/columns",
-	//   "response": {
-	//     "$ref": "ColumnList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables",
-	//     "https://www.googleapis.com/auth/fusiontables.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1924,7 +1550,7 @@ func (c *ColumnListCall) Do(opts ...googleapi.CallOption) (*ColumnList, error) {
 // The provided context supersedes any context provided to the Context method.
 func (c *ColumnListCall) Pages(ctx context.Context, f func(*ColumnList) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1940,8 +1566,6 @@ func (c *ColumnListCall) Pages(ctx context.Context, f func(*ColumnList) error) e
 	}
 }
 
-// method id "fusiontables.column.patch":
-
 type ColumnPatchCall struct {
 	s          *Service
 	tableId    string
@@ -1952,8 +1576,11 @@ type ColumnPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates the name or type of an existing column. This method
-// supports patch semantics.
+// Patch: Updates the name or type of an existing column. This method supports
+// patch semantics.
+//
+// - columnId: Name or identifier for the column that is being updated.
+// - tableId: Table for which the column is being updated.
 func (r *ColumnService) Patch(tableId string, columnId string, column *Column) *ColumnPatchCall {
 	c := &ColumnPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -1963,23 +1590,21 @@ func (r *ColumnService) Patch(tableId string, columnId string, column *Column) *
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ColumnPatchCall) Fields(s ...googleapi.Field) *ColumnPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ColumnPatchCall) Context(ctx context.Context) *ColumnPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ColumnPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1988,18 +1613,12 @@ func (c *ColumnPatchCall) Header() http.Header {
 }
 
 func (c *ColumnPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.column)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/columns/{columnId}")
@@ -2013,16 +1632,14 @@ func (c *ColumnPatchCall) doRequest(alt string) (*http.Response, error) {
 		"tableId":  c.tableId,
 		"columnId": c.columnId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.column.patch" call.
-// Exactly one of *Column or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Column.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Column.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ColumnPatchCall) Do(opts ...googleapi.CallOption) (*Column, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2030,17 +1647,17 @@ func (c *ColumnPatchCall) Do(opts ...googleapi.CallOption) (*Column, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Column{
 		ServerResponse: googleapi.ServerResponse{
@@ -2053,43 +1670,7 @@ func (c *ColumnPatchCall) Do(opts ...googleapi.CallOption) (*Column, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the name or type of an existing column. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "fusiontables.column.patch",
-	//   "parameterOrder": [
-	//     "tableId",
-	//     "columnId"
-	//   ],
-	//   "parameters": {
-	//     "columnId": {
-	//       "description": "Name or identifier for the column that is being updated.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "tableId": {
-	//       "description": "Table for which the column is being updated.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/columns/{columnId}",
-	//   "request": {
-	//     "$ref": "Column"
-	//   },
-	//   "response": {
-	//     "$ref": "Column"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.column.update":
 
 type ColumnUpdateCall struct {
 	s          *Service
@@ -2102,6 +1683,9 @@ type ColumnUpdateCall struct {
 }
 
 // Update: Updates the name or type of an existing column.
+//
+// - columnId: Name or identifier for the column that is being updated.
+// - tableId: Table for which the column is being updated.
 func (r *ColumnService) Update(tableId string, columnId string, column *Column) *ColumnUpdateCall {
 	c := &ColumnUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -2111,23 +1695,21 @@ func (r *ColumnService) Update(tableId string, columnId string, column *Column) 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ColumnUpdateCall) Fields(s ...googleapi.Field) *ColumnUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ColumnUpdateCall) Context(ctx context.Context) *ColumnUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ColumnUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2136,18 +1718,12 @@ func (c *ColumnUpdateCall) Header() http.Header {
 }
 
 func (c *ColumnUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.column)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/columns/{columnId}")
@@ -2161,16 +1737,14 @@ func (c *ColumnUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"tableId":  c.tableId,
 		"columnId": c.columnId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.column.update" call.
-// Exactly one of *Column or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Column.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Column.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ColumnUpdateCall) Do(opts ...googleapi.CallOption) (*Column, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2178,17 +1752,17 @@ func (c *ColumnUpdateCall) Do(opts ...googleapi.CallOption) (*Column, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Column{
 		ServerResponse: googleapi.ServerResponse{
@@ -2201,43 +1775,7 @@ func (c *ColumnUpdateCall) Do(opts ...googleapi.CallOption) (*Column, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the name or type of an existing column.",
-	//   "httpMethod": "PUT",
-	//   "id": "fusiontables.column.update",
-	//   "parameterOrder": [
-	//     "tableId",
-	//     "columnId"
-	//   ],
-	//   "parameters": {
-	//     "columnId": {
-	//       "description": "Name or identifier for the column that is being updated.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "tableId": {
-	//       "description": "Table for which the column is being updated.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/columns/{columnId}",
-	//   "request": {
-	//     "$ref": "Column"
-	//   },
-	//   "response": {
-	//     "$ref": "Column"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.query.sql":
 
 type QuerySqlCall struct {
 	s          *Service
@@ -2254,45 +1792,53 @@ type QuerySqlCall struct {
 // - SHOW
 // - DESCRIBE
 // - CREATE statement.
+//
+// - sql: A Fusion Tables SQL statement, which can be any of
+//   - SELECT
+//
+// - INSERT
+// - UPDATE
+// - DELETE
+// - SHOW
+// - DESCRIBE
+// - CREATE.
 func (r *QueryService) Sql(sql string) *QuerySqlCall {
 	c := &QuerySqlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("sql", sql)
 	return c
 }
 
-// Hdrs sets the optional parameter "hdrs": Whether column names are
-// included in the first row. Default is true.
+// Hdrs sets the optional parameter "hdrs": Whether column names are included
+// in the first row. Default is true.
 func (c *QuerySqlCall) Hdrs(hdrs bool) *QuerySqlCall {
 	c.urlParams_.Set("hdrs", fmt.Sprint(hdrs))
 	return c
 }
 
-// Typed sets the optional parameter "typed": Whether typed values are
-// returned in the (JSON) response: numbers for numeric values and
-// parsed geometries for KML values. Default is true.
+// Typed sets the optional parameter "typed": Whether typed values are returned
+// in the (JSON) response: numbers for numeric values and parsed geometries for
+// KML values. Default is true.
 func (c *QuerySqlCall) Typed(typed bool) *QuerySqlCall {
 	c.urlParams_.Set("typed", fmt.Sprint(typed))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *QuerySqlCall) Fields(s ...googleapi.Field) *QuerySqlCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download
-// methods. Any pending HTTP request will be aborted if the provided
-// context is canceled.
+// Context sets the context to be used in this call's Do and Download methods.
 func (c *QuerySqlCall) Context(ctx context.Context) *QuerySqlCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *QuerySqlCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2301,12 +1847,7 @@ func (c *QuerySqlCall) Header() http.Header {
 }
 
 func (c *QuerySqlCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2317,7 +1858,7 @@ func (c *QuerySqlCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Download fetches the API endpoint's "media" value, instead of the normal
@@ -2329,20 +1870,18 @@ func (c *QuerySqlCall) Download(opts ...googleapi.CallOption) (*http.Response, e
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	return res, nil
 }
 
 // Do executes the "fusiontables.query.sql" call.
-// Exactly one of *Sqlresponse or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Sqlresponse.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Sqlresponse.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *QuerySqlCall) Do(opts ...googleapi.CallOption) (*Sqlresponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2350,17 +1889,17 @@ func (c *QuerySqlCall) Do(opts ...googleapi.CallOption) (*Sqlresponse, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Sqlresponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2373,46 +1912,7 @@ func (c *QuerySqlCall) Do(opts ...googleapi.CallOption) (*Sqlresponse, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Executes a Fusion Tables SQL statement, which can be any of \n- SELECT\n- INSERT\n- UPDATE\n- DELETE\n- SHOW\n- DESCRIBE\n- CREATE statement.",
-	//   "httpMethod": "POST",
-	//   "id": "fusiontables.query.sql",
-	//   "parameterOrder": [
-	//     "sql"
-	//   ],
-	//   "parameters": {
-	//     "hdrs": {
-	//       "description": "Whether column names are included in the first row. Default is true.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "sql": {
-	//       "description": "A Fusion Tables SQL statement, which can be any of \n- SELECT\n- INSERT\n- UPDATE\n- DELETE\n- SHOW\n- DESCRIBE\n- CREATE",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "typed": {
-	//       "description": "Whether typed values are returned in the (JSON) response: numbers for numeric values and parsed geometries for KML values. Default is true.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "query",
-	//   "response": {
-	//     "$ref": "Sqlresponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables",
-	//     "https://www.googleapis.com/auth/fusiontables.readonly"
-	//   ],
-	//   "supportsMediaDownload": true,
-	//   "useMediaDownloadService": true
-	// }
-
 }
-
-// method id "fusiontables.query.sqlGet":
 
 type QuerySqlGetCall struct {
 	s            *Service
@@ -2426,55 +1926,56 @@ type QuerySqlGetCall struct {
 // - SELECT
 // - SHOW
 // - DESCRIBE
+//
+// - sql: A SQL statement which can be any of
+// - SELECT
+// - SHOW
+// - DESCRIBE.
 func (r *QueryService) SqlGet(sql string) *QuerySqlGetCall {
 	c := &QuerySqlGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("sql", sql)
 	return c
 }
 
-// Hdrs sets the optional parameter "hdrs": Whether column names are
-// included (in the first row). Default is true.
+// Hdrs sets the optional parameter "hdrs": Whether column names are included
+// (in the first row). Default is true.
 func (c *QuerySqlGetCall) Hdrs(hdrs bool) *QuerySqlGetCall {
 	c.urlParams_.Set("hdrs", fmt.Sprint(hdrs))
 	return c
 }
 
-// Typed sets the optional parameter "typed": Whether typed values are
-// returned in the (JSON) response: numbers for numeric values and
-// parsed geometries for KML values. Default is true.
+// Typed sets the optional parameter "typed": Whether typed values are returned
+// in the (JSON) response: numbers for numeric values and parsed geometries for
+// KML values. Default is true.
 func (c *QuerySqlGetCall) Typed(typed bool) *QuerySqlGetCall {
 	c.urlParams_.Set("typed", fmt.Sprint(typed))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *QuerySqlGetCall) Fields(s ...googleapi.Field) *QuerySqlGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *QuerySqlGetCall) IfNoneMatch(entityTag string) *QuerySqlGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download
-// methods. Any pending HTTP request will be aborted if the provided
-// context is canceled.
+// Context sets the context to be used in this call's Do and Download methods.
 func (c *QuerySqlGetCall) Context(ctx context.Context) *QuerySqlGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *QuerySqlGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2483,12 +1984,7 @@ func (c *QuerySqlGetCall) Header() http.Header {
 }
 
 func (c *QuerySqlGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2502,7 +1998,7 @@ func (c *QuerySqlGetCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Download fetches the API endpoint's "media" value, instead of the normal
@@ -2514,20 +2010,18 @@ func (c *QuerySqlGetCall) Download(opts ...googleapi.CallOption) (*http.Response
 	if err != nil {
 		return nil, err
 	}
-	if err := googleapi.CheckMediaResponse(res); err != nil {
+	if err := googleapi.CheckResponse(res); err != nil {
 		res.Body.Close()
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	return res, nil
 }
 
 // Do executes the "fusiontables.query.sqlGet" call.
-// Exactly one of *Sqlresponse or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Sqlresponse.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Sqlresponse.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *QuerySqlGetCall) Do(opts ...googleapi.CallOption) (*Sqlresponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2535,17 +2029,17 @@ func (c *QuerySqlGetCall) Do(opts ...googleapi.CallOption) (*Sqlresponse, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Sqlresponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2558,46 +2052,7 @@ func (c *QuerySqlGetCall) Do(opts ...googleapi.CallOption) (*Sqlresponse, error)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Executes a SQL statement which can be any of \n- SELECT\n- SHOW\n- DESCRIBE",
-	//   "httpMethod": "GET",
-	//   "id": "fusiontables.query.sqlGet",
-	//   "parameterOrder": [
-	//     "sql"
-	//   ],
-	//   "parameters": {
-	//     "hdrs": {
-	//       "description": "Whether column names are included (in the first row). Default is true.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "sql": {
-	//       "description": "A SQL statement which can be any of \n- SELECT\n- SHOW\n- DESCRIBE",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "typed": {
-	//       "description": "Whether typed values are returned in the (JSON) response: numbers for numeric values and parsed geometries for KML values. Default is true.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "query",
-	//   "response": {
-	//     "$ref": "Sqlresponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables",
-	//     "https://www.googleapis.com/auth/fusiontables.readonly"
-	//   ],
-	//   "supportsMediaDownload": true,
-	//   "useMediaDownloadService": true
-	// }
-
 }
-
-// method id "fusiontables.style.delete":
 
 type StyleDeleteCall struct {
 	s          *Service
@@ -2609,6 +2064,9 @@ type StyleDeleteCall struct {
 }
 
 // Delete: Deletes a style.
+//
+// - styleId: Identifier (within a table) for the style being deleted.
+// - tableId: Table from which the style is being deleted.
 func (r *StyleService) Delete(tableId string, styleId int64) *StyleDeleteCall {
 	c := &StyleDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -2617,23 +2075,21 @@ func (r *StyleService) Delete(tableId string, styleId int64) *StyleDeleteCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *StyleDeleteCall) Fields(s ...googleapi.Field) *StyleDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *StyleDeleteCall) Context(ctx context.Context) *StyleDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *StyleDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2642,12 +2098,7 @@ func (c *StyleDeleteCall) Header() http.Header {
 }
 
 func (c *StyleDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2662,7 +2113,7 @@ func (c *StyleDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 		"styleId": strconv.FormatInt(c.styleId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.style.delete" call.
@@ -2674,41 +2125,10 @@ func (c *StyleDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a style.",
-	//   "httpMethod": "DELETE",
-	//   "id": "fusiontables.style.delete",
-	//   "parameterOrder": [
-	//     "tableId",
-	//     "styleId"
-	//   ],
-	//   "parameters": {
-	//     "styleId": {
-	//       "description": "Identifier (within a table) for the style being deleted",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "tableId": {
-	//       "description": "Table from which the style is being deleted",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/styles/{styleId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.style.get":
 
 type StyleGetCall struct {
 	s            *Service
@@ -2721,6 +2141,9 @@ type StyleGetCall struct {
 }
 
 // Get: Gets a specific style.
+//
+// - styleId: Identifier (integer) for a specific style in a table.
+// - tableId: Table to which the requested style belongs.
 func (r *StyleService) Get(tableId string, styleId int64) *StyleGetCall {
 	c := &StyleGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -2729,33 +2152,29 @@ func (r *StyleService) Get(tableId string, styleId int64) *StyleGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *StyleGetCall) Fields(s ...googleapi.Field) *StyleGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *StyleGetCall) IfNoneMatch(entityTag string) *StyleGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *StyleGetCall) Context(ctx context.Context) *StyleGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *StyleGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2764,12 +2183,7 @@ func (c *StyleGetCall) Header() http.Header {
 }
 
 func (c *StyleGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2787,16 +2201,14 @@ func (c *StyleGetCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 		"styleId": strconv.FormatInt(c.styleId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.style.get" call.
-// Exactly one of *StyleSetting or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *StyleSetting.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *StyleSetting.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *StyleGetCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2804,17 +2216,17 @@ func (c *StyleGetCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &StyleSetting{
 		ServerResponse: googleapi.ServerResponse{
@@ -2827,42 +2239,7 @@ func (c *StyleGetCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a specific style.",
-	//   "httpMethod": "GET",
-	//   "id": "fusiontables.style.get",
-	//   "parameterOrder": [
-	//     "tableId",
-	//     "styleId"
-	//   ],
-	//   "parameters": {
-	//     "styleId": {
-	//       "description": "Identifier (integer) for a specific style in a table",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "tableId": {
-	//       "description": "Table to which the requested style belongs",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/styles/{styleId}",
-	//   "response": {
-	//     "$ref": "StyleSetting"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables",
-	//     "https://www.googleapis.com/auth/fusiontables.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.style.insert":
 
 type StyleInsertCall struct {
 	s            *Service
@@ -2874,6 +2251,8 @@ type StyleInsertCall struct {
 }
 
 // Insert: Adds a new style for the table.
+//
+// - tableId: Table for which a new style is being added.
 func (r *StyleService) Insert(tableId string, stylesetting *StyleSetting) *StyleInsertCall {
 	c := &StyleInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -2882,23 +2261,21 @@ func (r *StyleService) Insert(tableId string, stylesetting *StyleSetting) *Style
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *StyleInsertCall) Fields(s ...googleapi.Field) *StyleInsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *StyleInsertCall) Context(ctx context.Context) *StyleInsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *StyleInsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2907,18 +2284,12 @@ func (c *StyleInsertCall) Header() http.Header {
 }
 
 func (c *StyleInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.stylesetting)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/styles")
@@ -2931,16 +2302,14 @@ func (c *StyleInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.style.insert" call.
-// Exactly one of *StyleSetting or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *StyleSetting.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *StyleSetting.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *StyleInsertCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2948,17 +2317,17 @@ func (c *StyleInsertCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &StyleSetting{
 		ServerResponse: googleapi.ServerResponse{
@@ -2971,36 +2340,7 @@ func (c *StyleInsertCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Adds a new style for the table.",
-	//   "httpMethod": "POST",
-	//   "id": "fusiontables.style.insert",
-	//   "parameterOrder": [
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "tableId": {
-	//       "description": "Table for which a new style is being added",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/styles",
-	//   "request": {
-	//     "$ref": "StyleSetting"
-	//   },
-	//   "response": {
-	//     "$ref": "StyleSetting"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.style.list":
 
 type StyleListCall struct {
 	s            *Service
@@ -3012,14 +2352,16 @@ type StyleListCall struct {
 }
 
 // List: Retrieves a list of styles.
+//
+// - tableId: Table whose styles are being listed.
 func (r *StyleService) List(tableId string) *StyleListCall {
 	c := &StyleListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of styles to return.  Default is 5.
+// MaxResults sets the optional parameter "maxResults": Maximum number of
+// styles to return.  Default is 5.
 func (c *StyleListCall) MaxResults(maxResults int64) *StyleListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -3033,33 +2375,29 @@ func (c *StyleListCall) PageToken(pageToken string) *StyleListCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *StyleListCall) Fields(s ...googleapi.Field) *StyleListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *StyleListCall) IfNoneMatch(entityTag string) *StyleListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *StyleListCall) Context(ctx context.Context) *StyleListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *StyleListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3068,12 +2406,7 @@ func (c *StyleListCall) Header() http.Header {
 }
 
 func (c *StyleListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3090,16 +2423,15 @@ func (c *StyleListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.style.list" call.
-// Exactly one of *StyleSettingList or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *StyleSettingList.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *StyleSettingList.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *StyleListCall) Do(opts ...googleapi.CallOption) (*StyleSettingList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3107,17 +2439,17 @@ func (c *StyleListCall) Do(opts ...googleapi.CallOption) (*StyleSettingList, err
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &StyleSettingList{
 		ServerResponse: googleapi.ServerResponse{
@@ -3130,43 +2462,6 @@ func (c *StyleListCall) Do(opts ...googleapi.CallOption) (*StyleSettingList, err
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a list of styles.",
-	//   "httpMethod": "GET",
-	//   "id": "fusiontables.style.list",
-	//   "parameterOrder": [
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "maxResults": {
-	//       "description": "Maximum number of styles to return. Optional. Default is 5.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "minimum": "0",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Continuation token specifying which result page to return. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "tableId": {
-	//       "description": "Table whose styles are being listed",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/styles",
-	//   "response": {
-	//     "$ref": "StyleSettingList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables",
-	//     "https://www.googleapis.com/auth/fusiontables.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3174,7 +2469,7 @@ func (c *StyleListCall) Do(opts ...googleapi.CallOption) (*StyleSettingList, err
 // The provided context supersedes any context provided to the Context method.
 func (c *StyleListCall) Pages(ctx context.Context, f func(*StyleSettingList) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3190,8 +2485,6 @@ func (c *StyleListCall) Pages(ctx context.Context, f func(*StyleSettingList) err
 	}
 }
 
-// method id "fusiontables.style.patch":
-
 type StylePatchCall struct {
 	s            *Service
 	tableId      string
@@ -3202,8 +2495,10 @@ type StylePatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Updates an existing style. This method supports patch
-// semantics.
+// Patch: Updates an existing style. This method supports patch semantics.
+//
+// - styleId: Identifier (within a table) for the style being updated.
+// - tableId: Table whose style is being updated.
 func (r *StyleService) Patch(tableId string, styleId int64, stylesetting *StyleSetting) *StylePatchCall {
 	c := &StylePatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -3213,23 +2508,21 @@ func (r *StyleService) Patch(tableId string, styleId int64, stylesetting *StyleS
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *StylePatchCall) Fields(s ...googleapi.Field) *StylePatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *StylePatchCall) Context(ctx context.Context) *StylePatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *StylePatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3238,18 +2531,12 @@ func (c *StylePatchCall) Header() http.Header {
 }
 
 func (c *StylePatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.stylesetting)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/styles/{styleId}")
@@ -3263,16 +2550,14 @@ func (c *StylePatchCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 		"styleId": strconv.FormatInt(c.styleId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.style.patch" call.
-// Exactly one of *StyleSetting or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *StyleSetting.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *StyleSetting.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *StylePatchCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3280,17 +2565,17 @@ func (c *StylePatchCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &StyleSetting{
 		ServerResponse: googleapi.ServerResponse{
@@ -3303,44 +2588,7 @@ func (c *StylePatchCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates an existing style. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "fusiontables.style.patch",
-	//   "parameterOrder": [
-	//     "tableId",
-	//     "styleId"
-	//   ],
-	//   "parameters": {
-	//     "styleId": {
-	//       "description": "Identifier (within a table) for the style being updated.",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "tableId": {
-	//       "description": "Table whose style is being updated.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/styles/{styleId}",
-	//   "request": {
-	//     "$ref": "StyleSetting"
-	//   },
-	//   "response": {
-	//     "$ref": "StyleSetting"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.style.update":
 
 type StyleUpdateCall struct {
 	s            *Service
@@ -3353,6 +2601,9 @@ type StyleUpdateCall struct {
 }
 
 // Update: Updates an existing style.
+//
+// - styleId: Identifier (within a table) for the style being updated.
+// - tableId: Table whose style is being updated.
 func (r *StyleService) Update(tableId string, styleId int64, stylesetting *StyleSetting) *StyleUpdateCall {
 	c := &StyleUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -3362,23 +2613,21 @@ func (r *StyleService) Update(tableId string, styleId int64, stylesetting *Style
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *StyleUpdateCall) Fields(s ...googleapi.Field) *StyleUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *StyleUpdateCall) Context(ctx context.Context) *StyleUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *StyleUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3387,18 +2636,12 @@ func (c *StyleUpdateCall) Header() http.Header {
 }
 
 func (c *StyleUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.stylesetting)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/styles/{styleId}")
@@ -3412,16 +2655,14 @@ func (c *StyleUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 		"styleId": strconv.FormatInt(c.styleId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.style.update" call.
-// Exactly one of *StyleSetting or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *StyleSetting.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *StyleSetting.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *StyleUpdateCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3429,17 +2670,17 @@ func (c *StyleUpdateCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &StyleSetting{
 		ServerResponse: googleapi.ServerResponse{
@@ -3452,44 +2693,7 @@ func (c *StyleUpdateCall) Do(opts ...googleapi.CallOption) (*StyleSetting, error
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates an existing style.",
-	//   "httpMethod": "PUT",
-	//   "id": "fusiontables.style.update",
-	//   "parameterOrder": [
-	//     "tableId",
-	//     "styleId"
-	//   ],
-	//   "parameters": {
-	//     "styleId": {
-	//       "description": "Identifier (within a table) for the style being updated.",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     },
-	//     "tableId": {
-	//       "description": "Table whose style is being updated.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/styles/{styleId}",
-	//   "request": {
-	//     "$ref": "StyleSetting"
-	//   },
-	//   "response": {
-	//     "$ref": "StyleSetting"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.table.copy":
 
 type TableCopyCall struct {
 	s          *Service
@@ -3500,37 +2704,37 @@ type TableCopyCall struct {
 }
 
 // Copy: Copies a table.
+//
+// - tableId: ID of the table that is being copied.
 func (r *TableService) Copy(tableId string) *TableCopyCall {
 	c := &TableCopyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
 	return c
 }
 
-// CopyPresentation sets the optional parameter "copyPresentation":
-// Whether to also copy tabs, styles, and templates. Default is false.
+// CopyPresentation sets the optional parameter "copyPresentation": Whether to
+// also copy tabs, styles, and templates. Default is false.
 func (c *TableCopyCall) CopyPresentation(copyPresentation bool) *TableCopyCall {
 	c.urlParams_.Set("copyPresentation", fmt.Sprint(copyPresentation))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TableCopyCall) Fields(s ...googleapi.Field) *TableCopyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TableCopyCall) Context(ctx context.Context) *TableCopyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TableCopyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3539,12 +2743,7 @@ func (c *TableCopyCall) Header() http.Header {
 }
 
 func (c *TableCopyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3558,16 +2757,14 @@ func (c *TableCopyCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.table.copy" call.
-// Exactly one of *Table or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Table.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Table.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TableCopyCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3575,17 +2772,17 @@ func (c *TableCopyCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Table{
 		ServerResponse: googleapi.ServerResponse{
@@ -3598,39 +2795,7 @@ func (c *TableCopyCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Copies a table.",
-	//   "httpMethod": "POST",
-	//   "id": "fusiontables.table.copy",
-	//   "parameterOrder": [
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "copyPresentation": {
-	//       "description": "Whether to also copy tabs, styles, and templates. Default is false.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "tableId": {
-	//       "description": "ID of the table that is being copied.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/copy",
-	//   "response": {
-	//     "$ref": "Table"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables",
-	//     "https://www.googleapis.com/auth/fusiontables.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.table.delete":
 
 type TableDeleteCall struct {
 	s          *Service
@@ -3641,6 +2806,8 @@ type TableDeleteCall struct {
 }
 
 // Delete: Deletes a table.
+//
+// - tableId: ID of the table to be deleted.
 func (r *TableService) Delete(tableId string) *TableDeleteCall {
 	c := &TableDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -3648,23 +2815,21 @@ func (r *TableService) Delete(tableId string) *TableDeleteCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TableDeleteCall) Fields(s ...googleapi.Field) *TableDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TableDeleteCall) Context(ctx context.Context) *TableDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TableDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3673,12 +2838,7 @@ func (c *TableDeleteCall) Header() http.Header {
 }
 
 func (c *TableDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3692,7 +2852,7 @@ func (c *TableDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.table.delete" call.
@@ -3704,33 +2864,10 @@ func (c *TableDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a table.",
-	//   "httpMethod": "DELETE",
-	//   "id": "fusiontables.table.delete",
-	//   "parameterOrder": [
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "tableId": {
-	//       "description": "ID of the table to be deleted.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.table.get":
 
 type TableGetCall struct {
 	s            *Service
@@ -3742,6 +2879,8 @@ type TableGetCall struct {
 }
 
 // Get: Retrieves a specific table by its ID.
+//
+// - tableId: Identifier for the table being requested.
 func (r *TableService) Get(tableId string) *TableGetCall {
 	c := &TableGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -3749,33 +2888,29 @@ func (r *TableService) Get(tableId string) *TableGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TableGetCall) Fields(s ...googleapi.Field) *TableGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *TableGetCall) IfNoneMatch(entityTag string) *TableGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TableGetCall) Context(ctx context.Context) *TableGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TableGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3784,12 +2919,7 @@ func (c *TableGetCall) Header() http.Header {
 }
 
 func (c *TableGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3806,16 +2936,14 @@ func (c *TableGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.table.get" call.
-// Exactly one of *Table or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Table.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Table.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TableGetCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3823,17 +2951,17 @@ func (c *TableGetCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Table{
 		ServerResponse: googleapi.ServerResponse{
@@ -3846,34 +2974,7 @@ func (c *TableGetCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a specific table by its ID.",
-	//   "httpMethod": "GET",
-	//   "id": "fusiontables.table.get",
-	//   "parameterOrder": [
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "tableId": {
-	//       "description": "Identifier for the table being requested.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}",
-	//   "response": {
-	//     "$ref": "Table"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables",
-	//     "https://www.googleapis.com/auth/fusiontables.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.table.importRows":
 
 type TableImportRowsCall struct {
 	s          *Service
@@ -3885,15 +2986,17 @@ type TableImportRowsCall struct {
 }
 
 // ImportRows: Imports more rows into a table.
+//
+// - tableId: The table into which new rows are being imported.
 func (r *TableService) ImportRows(tableId string) *TableImportRowsCall {
 	c := &TableImportRowsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
 	return c
 }
 
-// Delimiter sets the optional parameter "delimiter": The delimiter used
-// to separate cell values. This can only consist of a single character.
-// Default is ,.
+// Delimiter sets the optional parameter "delimiter": The delimiter used to
+// separate cell values. This can only consist of a single character. Default
+// is ,.
 func (c *TableImportRowsCall) Delimiter(delimiter string) *TableImportRowsCall {
 	c.urlParams_.Set("delimiter", delimiter)
 	return c
@@ -3907,78 +3010,75 @@ func (c *TableImportRowsCall) Encoding(encoding string) *TableImportRowsCall {
 	return c
 }
 
-// EndLine sets the optional parameter "endLine": The index of the line
-// up to which data will be imported. Default is to import the entire
-// file. If endLine is negative, it is an offset from the end of the
-// file; the imported content will exclude the last endLine lines.
+// EndLine sets the optional parameter "endLine": The index of the line up to
+// which data will be imported. Default is to import the entire file. If
+// endLine is negative, it is an offset from the end of the file; the imported
+// content will exclude the last endLine lines.
 func (c *TableImportRowsCall) EndLine(endLine int64) *TableImportRowsCall {
 	c.urlParams_.Set("endLine", fmt.Sprint(endLine))
 	return c
 }
 
-// IsStrict sets the optional parameter "isStrict": Whether the imported
-// CSV must have the same number of values for each row. If false, rows
-// with fewer values will be padded with empty values. Default is true.
+// IsStrict sets the optional parameter "isStrict": Whether the imported CSV
+// must have the same number of values for each row. If false, rows with fewer
+// values will be padded with empty values. Default is true.
 func (c *TableImportRowsCall) IsStrict(isStrict bool) *TableImportRowsCall {
 	c.urlParams_.Set("isStrict", fmt.Sprint(isStrict))
 	return c
 }
 
-// StartLine sets the optional parameter "startLine": The index of the
-// first line from which to start importing, inclusive. Default is 0.
+// StartLine sets the optional parameter "startLine": The index of the first
+// line from which to start importing, inclusive. Default is 0.
 func (c *TableImportRowsCall) StartLine(startLine int64) *TableImportRowsCall {
 	c.urlParams_.Set("startLine", fmt.Sprint(startLine))
 	return c
 }
 
-// Media specifies the media to upload in one or more chunks. The chunk
-// size may be controlled by supplying a MediaOption generated by
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
 // googleapi.ChunkSize. The chunk size defaults to
-// googleapi.DefaultUploadChunkSize.The Content-Type header used in the
-// upload request will be determined by sniffing the contents of r,
-// unless a MediaOption generated by googleapi.ContentType is
-// supplied.
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
 // At most one of Media and ResumableMedia may be set.
 func (c *TableImportRowsCall) Media(r io.Reader, options ...googleapi.MediaOption) *TableImportRowsCall {
 	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
 //
 // Deprecated: use Media instead.
 //
-// At most one of Media and ResumableMedia may be set. mediaType
-// identifies the MIME media type of the upload, such as "image/png". If
-// mediaType is "", it will be auto-detected. The provided ctx will
-// supersede any context previously provided to the Context method.
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
 func (c *TableImportRowsCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TableImportRowsCall {
 	c.ctx_ = ctx
 	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
 func (c *TableImportRowsCall) ProgressUpdater(pu googleapi.ProgressUpdater) *TableImportRowsCall {
 	c.mediaInfo_.SetProgressUpdater(pu)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TableImportRowsCall) Fields(s ...googleapi.Field) *TableImportRowsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 // This context will supersede any context previously provided to the
 // ResumableMedia method.
 func (c *TableImportRowsCall) Context(ctx context.Context) *TableImportRowsCall {
@@ -3986,8 +3086,8 @@ func (c *TableImportRowsCall) Context(ctx context.Context) *TableImportRowsCall 
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TableImportRowsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3996,12 +3096,7 @@ func (c *TableImportRowsCall) Header() http.Header {
 }
 
 func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -4026,16 +3121,14 @@ func (c *TableImportRowsCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.table.importRows" call.
-// Exactly one of *Import or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Import.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Import.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TableImportRowsCall) Do(opts ...googleapi.CallOption) (*Import, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4043,17 +3136,17 @@ func (c *TableImportRowsCall) Do(opts ...googleapi.CallOption) (*Import, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -4069,7 +3162,7 @@ func (c *TableImportRowsCall) Do(opts ...googleapi.CallOption) (*Import, error) 
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &Import{
@@ -4083,77 +3176,7 @@ func (c *TableImportRowsCall) Do(opts ...googleapi.CallOption) (*Import, error) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Imports more rows into a table.",
-	//   "httpMethod": "POST",
-	//   "id": "fusiontables.table.importRows",
-	//   "mediaUpload": {
-	//     "accept": [
-	//       "application/octet-stream"
-	//     ],
-	//     "maxSize": "250MB",
-	//     "protocols": {
-	//       "resumable": {
-	//         "multipart": true,
-	//         "path": "/resumable/upload/fusiontables/v2/tables/{tableId}/import"
-	//       },
-	//       "simple": {
-	//         "multipart": true,
-	//         "path": "/upload/fusiontables/v2/tables/{tableId}/import"
-	//       }
-	//     }
-	//   },
-	//   "parameterOrder": [
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "delimiter": {
-	//       "description": "The delimiter used to separate cell values. This can only consist of a single character. Default is ,.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encoding": {
-	//       "description": "The encoding of the content. Default is UTF-8. Use auto-detect if you are unsure of the encoding.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "endLine": {
-	//       "description": "The index of the line up to which data will be imported. Default is to import the entire file. If endLine is negative, it is an offset from the end of the file; the imported content will exclude the last endLine lines.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "isStrict": {
-	//       "description": "Whether the imported CSV must have the same number of values for each row. If false, rows with fewer values will be padded with empty values. Default is true.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "startLine": {
-	//       "description": "The index of the first line from which to start importing, inclusive. Default is 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "tableId": {
-	//       "description": "The table into which new rows are being imported.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/import",
-	//   "response": {
-	//     "$ref": "Import"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ],
-	//   "supportsMediaUpload": true
-	// }
-
 }
-
-// method id "fusiontables.table.importTable":
 
 type TableImportTableCall struct {
 	s          *Service
@@ -4164,15 +3187,17 @@ type TableImportTableCall struct {
 }
 
 // ImportTable: Imports a new table.
+//
+// - name: The name to be assigned to the new table.
 func (r *TableService) ImportTable(name string) *TableImportTableCall {
 	c := &TableImportTableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("name", name)
 	return c
 }
 
-// Delimiter sets the optional parameter "delimiter": The delimiter used
-// to separate cell values. This can only consist of a single character.
-// Default is ,.
+// Delimiter sets the optional parameter "delimiter": The delimiter used to
+// separate cell values. This can only consist of a single character. Default
+// is ,.
 func (c *TableImportTableCall) Delimiter(delimiter string) *TableImportTableCall {
 	c.urlParams_.Set("delimiter", delimiter)
 	return c
@@ -4186,54 +3211,51 @@ func (c *TableImportTableCall) Encoding(encoding string) *TableImportTableCall {
 	return c
 }
 
-// Media specifies the media to upload in one or more chunks. The chunk
-// size may be controlled by supplying a MediaOption generated by
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
 // googleapi.ChunkSize. The chunk size defaults to
-// googleapi.DefaultUploadChunkSize.The Content-Type header used in the
-// upload request will be determined by sniffing the contents of r,
-// unless a MediaOption generated by googleapi.ContentType is
-// supplied.
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
 // At most one of Media and ResumableMedia may be set.
 func (c *TableImportTableCall) Media(r io.Reader, options ...googleapi.MediaOption) *TableImportTableCall {
 	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
 //
 // Deprecated: use Media instead.
 //
-// At most one of Media and ResumableMedia may be set. mediaType
-// identifies the MIME media type of the upload, such as "image/png". If
-// mediaType is "", it will be auto-detected. The provided ctx will
-// supersede any context previously provided to the Context method.
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
 func (c *TableImportTableCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TableImportTableCall {
 	c.ctx_ = ctx
 	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
 func (c *TableImportTableCall) ProgressUpdater(pu googleapi.ProgressUpdater) *TableImportTableCall {
 	c.mediaInfo_.SetProgressUpdater(pu)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TableImportTableCall) Fields(s ...googleapi.Field) *TableImportTableCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 // This context will supersede any context previously provided to the
 // ResumableMedia method.
 func (c *TableImportTableCall) Context(ctx context.Context) *TableImportTableCall {
@@ -4241,8 +3263,8 @@ func (c *TableImportTableCall) Context(ctx context.Context) *TableImportTableCal
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TableImportTableCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4251,12 +3273,7 @@ func (c *TableImportTableCall) Header() http.Header {
 }
 
 func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -4278,16 +3295,14 @@ func (c *TableImportTableCall) doRequest(alt string) (*http.Response, error) {
 	}
 	req.Header = reqHeaders
 	req.GetBody = getBody
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.table.importTable" call.
-// Exactly one of *Table or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Table.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Table.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TableImportTableCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4295,17 +3310,17 @@ func (c *TableImportTableCall) Do(opts ...googleapi.CallOption) (*Table, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -4321,7 +3336,7 @@ func (c *TableImportTableCall) Do(opts ...googleapi.CallOption) (*Table, error) 
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &Table{
@@ -4335,60 +3350,7 @@ func (c *TableImportTableCall) Do(opts ...googleapi.CallOption) (*Table, error) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Imports a new table.",
-	//   "httpMethod": "POST",
-	//   "id": "fusiontables.table.importTable",
-	//   "mediaUpload": {
-	//     "accept": [
-	//       "application/octet-stream"
-	//     ],
-	//     "maxSize": "250MB",
-	//     "protocols": {
-	//       "resumable": {
-	//         "multipart": true,
-	//         "path": "/resumable/upload/fusiontables/v2/tables/import"
-	//       },
-	//       "simple": {
-	//         "multipart": true,
-	//         "path": "/upload/fusiontables/v2/tables/import"
-	//       }
-	//     }
-	//   },
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "delimiter": {
-	//       "description": "The delimiter used to separate cell values. This can only consist of a single character. Default is ,.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encoding": {
-	//       "description": "The encoding of the content. Default is UTF-8. Use auto-detect if you are unsure of the encoding.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The name to be assigned to the new table.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/import",
-	//   "response": {
-	//     "$ref": "Table"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ],
-	//   "supportsMediaUpload": true
-	// }
-
 }
-
-// method id "fusiontables.table.insert":
 
 type TableInsertCall struct {
 	s          *Service
@@ -4406,23 +3368,21 @@ func (r *TableService) Insert(table *Table) *TableInsertCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TableInsertCall) Fields(s ...googleapi.Field) *TableInsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TableInsertCall) Context(ctx context.Context) *TableInsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TableInsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4431,18 +3391,12 @@ func (c *TableInsertCall) Header() http.Header {
 }
 
 func (c *TableInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables")
@@ -4452,16 +3406,14 @@ func (c *TableInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.table.insert" call.
-// Exactly one of *Table or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Table.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Table.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TableInsertCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4469,17 +3421,17 @@ func (c *TableInsertCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Table{
 		ServerResponse: googleapi.ServerResponse{
@@ -4492,25 +3444,7 @@ func (c *TableInsertCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new table.",
-	//   "httpMethod": "POST",
-	//   "id": "fusiontables.table.insert",
-	//   "path": "tables",
-	//   "request": {
-	//     "$ref": "Table"
-	//   },
-	//   "response": {
-	//     "$ref": "Table"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.table.list":
 
 type TableListCall struct {
 	s            *Service
@@ -4526,8 +3460,8 @@ func (r *TableService) List() *TableListCall {
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of tables to return. Default is 5.
+// MaxResults sets the optional parameter "maxResults": Maximum number of
+// tables to return. Default is 5.
 func (c *TableListCall) MaxResults(maxResults int64) *TableListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -4541,33 +3475,29 @@ func (c *TableListCall) PageToken(pageToken string) *TableListCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TableListCall) Fields(s ...googleapi.Field) *TableListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *TableListCall) IfNoneMatch(entityTag string) *TableListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TableListCall) Context(ctx context.Context) *TableListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TableListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4576,12 +3506,7 @@ func (c *TableListCall) Header() http.Header {
 }
 
 func (c *TableListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4595,16 +3520,14 @@ func (c *TableListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.table.list" call.
-// Exactly one of *TableList or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TableList.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TableList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TableListCall) Do(opts ...googleapi.CallOption) (*TableList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4612,17 +3535,17 @@ func (c *TableListCall) Do(opts ...googleapi.CallOption) (*TableList, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TableList{
 		ServerResponse: googleapi.ServerResponse{
@@ -4635,34 +3558,6 @@ func (c *TableListCall) Do(opts ...googleapi.CallOption) (*TableList, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a list of tables a user owns.",
-	//   "httpMethod": "GET",
-	//   "id": "fusiontables.table.list",
-	//   "parameters": {
-	//     "maxResults": {
-	//       "description": "Maximum number of tables to return. Default is 5.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "minimum": "0",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Continuation token specifying which result page to return.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables",
-	//   "response": {
-	//     "$ref": "TableList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables",
-	//     "https://www.googleapis.com/auth/fusiontables.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4670,7 +3565,7 @@ func (c *TableListCall) Do(opts ...googleapi.CallOption) (*TableList, error) {
 // The provided context supersedes any context provided to the Context method.
 func (c *TableListCall) Pages(ctx context.Context, f func(*TableList) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4686,8 +3581,6 @@ func (c *TableListCall) Pages(ctx context.Context, f func(*TableList) error) err
 	}
 }
 
-// method id "fusiontables.table.patch":
-
 type TablePatchCall struct {
 	s          *Service
 	tableId    string
@@ -4697,9 +3590,11 @@ type TablePatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates an existing table. Unless explicitly requested, only
-// the name, description, and attribution will be updated. This method
-// supports patch semantics.
+// Patch: Updates an existing table. Unless explicitly requested, only the
+// name, description, and attribution will be updated. This method supports
+// patch semantics.
+//
+// - tableId: ID of the table that is being updated.
 func (r *TableService) Patch(tableId string, table *Table) *TablePatchCall {
 	c := &TablePatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -4707,33 +3602,30 @@ func (r *TableService) Patch(tableId string, table *Table) *TablePatchCall {
 	return c
 }
 
-// ReplaceViewDefinition sets the optional parameter
-// "replaceViewDefinition": Whether the view definition is also updated.
-// The specified view definition replaces the existing one. Only a view
-// can be updated with a new definition.
+// ReplaceViewDefinition sets the optional parameter "replaceViewDefinition":
+// Whether the view definition is also updated. The specified view definition
+// replaces the existing one. Only a view can be updated with a new definition.
 func (c *TablePatchCall) ReplaceViewDefinition(replaceViewDefinition bool) *TablePatchCall {
 	c.urlParams_.Set("replaceViewDefinition", fmt.Sprint(replaceViewDefinition))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TablePatchCall) Fields(s ...googleapi.Field) *TablePatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TablePatchCall) Context(ctx context.Context) *TablePatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TablePatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4742,18 +3634,12 @@ func (c *TablePatchCall) Header() http.Header {
 }
 
 func (c *TablePatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}")
@@ -4766,16 +3652,14 @@ func (c *TablePatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.table.patch" call.
-// Exactly one of *Table or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Table.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Table.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TablePatchCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4783,17 +3667,17 @@ func (c *TablePatchCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Table{
 		ServerResponse: googleapi.ServerResponse{
@@ -4806,41 +3690,7 @@ func (c *TablePatchCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates an existing table. Unless explicitly requested, only the name, description, and attribution will be updated. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "fusiontables.table.patch",
-	//   "parameterOrder": [
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "replaceViewDefinition": {
-	//       "description": "Whether the view definition is also updated. The specified view definition replaces the existing one. Only a view can be updated with a new definition.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "tableId": {
-	//       "description": "ID of the table that is being updated.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}",
-	//   "request": {
-	//     "$ref": "Table"
-	//   },
-	//   "response": {
-	//     "$ref": "Table"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.table.refetchSheet":
 
 type TableRefetchSheetCall struct {
 	s          *Service
@@ -4850,9 +3700,11 @@ type TableRefetchSheetCall struct {
 	header_    http.Header
 }
 
-// RefetchSheet: Replaces rows of the table with the rows of the
-// spreadsheet that is first imported from. Current rows remain visible
-// until all replacement rows are ready.
+// RefetchSheet: Replaces rows of the table with the rows of the spreadsheet
+// that is first imported from. Current rows remain visible until all
+// replacement rows are ready.
+//
+// - tableId: Table whose rows will be replaced from the spreadsheet.
 func (r *TableService) RefetchSheet(tableId string) *TableRefetchSheetCall {
 	c := &TableRefetchSheetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -4860,23 +3712,21 @@ func (r *TableService) RefetchSheet(tableId string) *TableRefetchSheetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TableRefetchSheetCall) Fields(s ...googleapi.Field) *TableRefetchSheetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TableRefetchSheetCall) Context(ctx context.Context) *TableRefetchSheetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TableRefetchSheetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4885,12 +3735,7 @@ func (c *TableRefetchSheetCall) Header() http.Header {
 }
 
 func (c *TableRefetchSheetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -4904,16 +3749,14 @@ func (c *TableRefetchSheetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.table.refetchSheet" call.
-// Exactly one of *Task or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Task.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TableRefetchSheetCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4921,17 +3764,17 @@ func (c *TableRefetchSheetCall) Do(opts ...googleapi.CallOption) (*Task, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Task{
 		ServerResponse: googleapi.ServerResponse{
@@ -4944,33 +3787,7 @@ func (c *TableRefetchSheetCall) Do(opts ...googleapi.CallOption) (*Task, error) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Replaces rows of the table with the rows of the spreadsheet that is first imported from. Current rows remain visible until all replacement rows are ready.",
-	//   "httpMethod": "POST",
-	//   "id": "fusiontables.table.refetchSheet",
-	//   "parameterOrder": [
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "tableId": {
-	//       "description": "Table whose rows will be replaced from the spreadsheet.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/refetch",
-	//   "response": {
-	//     "$ref": "Task"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.table.replaceRows":
 
 type TableReplaceRowsCall struct {
 	s          *Service
@@ -4981,17 +3798,19 @@ type TableReplaceRowsCall struct {
 	header_    http.Header
 }
 
-// ReplaceRows: Replaces rows of an existing table. Current rows remain
-// visible until all replacement rows are ready.
+// ReplaceRows: Replaces rows of an existing table. Current rows remain visible
+// until all replacement rows are ready.
+//
+// - tableId: Table whose rows will be replaced.
 func (r *TableService) ReplaceRows(tableId string) *TableReplaceRowsCall {
 	c := &TableReplaceRowsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
 	return c
 }
 
-// Delimiter sets the optional parameter "delimiter": The delimiter used
-// to separate cell values. This can only consist of a single character.
-// Default is ,.
+// Delimiter sets the optional parameter "delimiter": The delimiter used to
+// separate cell values. This can only consist of a single character. Default
+// is ,.
 func (c *TableReplaceRowsCall) Delimiter(delimiter string) *TableReplaceRowsCall {
 	c.urlParams_.Set("delimiter", delimiter)
 	return c
@@ -5005,80 +3824,77 @@ func (c *TableReplaceRowsCall) Encoding(encoding string) *TableReplaceRowsCall {
 	return c
 }
 
-// EndLine sets the optional parameter "endLine": The index of the line
-// up to which data will be imported. Default is to import the entire
-// file. If endLine is negative, it is an offset from the end of the
-// file; the imported content will exclude the last endLine lines.
+// EndLine sets the optional parameter "endLine": The index of the line up to
+// which data will be imported. Default is to import the entire file. If
+// endLine is negative, it is an offset from the end of the file; the imported
+// content will exclude the last endLine lines.
 func (c *TableReplaceRowsCall) EndLine(endLine int64) *TableReplaceRowsCall {
 	c.urlParams_.Set("endLine", fmt.Sprint(endLine))
 	return c
 }
 
-// IsStrict sets the optional parameter "isStrict": Whether the imported
-// CSV must have the same number of column values for each row. If true,
-// throws an exception if the CSV does not have the same number of
-// columns. If false, rows with fewer column values will be padded with
-// empty values. Default is true.
+// IsStrict sets the optional parameter "isStrict": Whether the imported CSV
+// must have the same number of column values for each row. If true, throws an
+// exception if the CSV does not have the same number of columns. If false,
+// rows with fewer column values will be padded with empty values. Default is
+// true.
 func (c *TableReplaceRowsCall) IsStrict(isStrict bool) *TableReplaceRowsCall {
 	c.urlParams_.Set("isStrict", fmt.Sprint(isStrict))
 	return c
 }
 
-// StartLine sets the optional parameter "startLine": The index of the
-// first line from which to start importing, inclusive. Default is 0.
+// StartLine sets the optional parameter "startLine": The index of the first
+// line from which to start importing, inclusive. Default is 0.
 func (c *TableReplaceRowsCall) StartLine(startLine int64) *TableReplaceRowsCall {
 	c.urlParams_.Set("startLine", fmt.Sprint(startLine))
 	return c
 }
 
-// Media specifies the media to upload in one or more chunks. The chunk
-// size may be controlled by supplying a MediaOption generated by
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
 // googleapi.ChunkSize. The chunk size defaults to
-// googleapi.DefaultUploadChunkSize.The Content-Type header used in the
-// upload request will be determined by sniffing the contents of r,
-// unless a MediaOption generated by googleapi.ContentType is
-// supplied.
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
 // At most one of Media and ResumableMedia may be set.
 func (c *TableReplaceRowsCall) Media(r io.Reader, options ...googleapi.MediaOption) *TableReplaceRowsCall {
 	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
 //
 // Deprecated: use Media instead.
 //
-// At most one of Media and ResumableMedia may be set. mediaType
-// identifies the MIME media type of the upload, such as "image/png". If
-// mediaType is "", it will be auto-detected. The provided ctx will
-// supersede any context previously provided to the Context method.
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
 func (c *TableReplaceRowsCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *TableReplaceRowsCall {
 	c.ctx_ = ctx
 	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
 func (c *TableReplaceRowsCall) ProgressUpdater(pu googleapi.ProgressUpdater) *TableReplaceRowsCall {
 	c.mediaInfo_.SetProgressUpdater(pu)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TableReplaceRowsCall) Fields(s ...googleapi.Field) *TableReplaceRowsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 // This context will supersede any context previously provided to the
 // ResumableMedia method.
 func (c *TableReplaceRowsCall) Context(ctx context.Context) *TableReplaceRowsCall {
@@ -5086,8 +3902,8 @@ func (c *TableReplaceRowsCall) Context(ctx context.Context) *TableReplaceRowsCal
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TableReplaceRowsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5096,12 +3912,7 @@ func (c *TableReplaceRowsCall) Header() http.Header {
 }
 
 func (c *TableReplaceRowsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -5126,16 +3937,14 @@ func (c *TableReplaceRowsCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.table.replaceRows" call.
-// Exactly one of *Task or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Task.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TableReplaceRowsCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5143,17 +3952,17 @@ func (c *TableReplaceRowsCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
 	if rx != nil {
@@ -5169,7 +3978,7 @@ func (c *TableReplaceRowsCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 		}
 		defer res.Body.Close()
 		if err := googleapi.CheckResponse(res); err != nil {
-			return nil, err
+			return nil, gensupport.WrapError(err)
 		}
 	}
 	ret := &Task{
@@ -5183,77 +3992,7 @@ func (c *TableReplaceRowsCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Replaces rows of an existing table. Current rows remain visible until all replacement rows are ready.",
-	//   "httpMethod": "POST",
-	//   "id": "fusiontables.table.replaceRows",
-	//   "mediaUpload": {
-	//     "accept": [
-	//       "application/octet-stream"
-	//     ],
-	//     "maxSize": "250MB",
-	//     "protocols": {
-	//       "resumable": {
-	//         "multipart": true,
-	//         "path": "/resumable/upload/fusiontables/v2/tables/{tableId}/replace"
-	//       },
-	//       "simple": {
-	//         "multipart": true,
-	//         "path": "/upload/fusiontables/v2/tables/{tableId}/replace"
-	//       }
-	//     }
-	//   },
-	//   "parameterOrder": [
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "delimiter": {
-	//       "description": "The delimiter used to separate cell values. This can only consist of a single character. Default is ,.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encoding": {
-	//       "description": "The encoding of the content. Default is UTF-8. Use 'auto-detect' if you are unsure of the encoding.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "endLine": {
-	//       "description": "The index of the line up to which data will be imported. Default is to import the entire file. If endLine is negative, it is an offset from the end of the file; the imported content will exclude the last endLine lines.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "isStrict": {
-	//       "description": "Whether the imported CSV must have the same number of column values for each row. If true, throws an exception if the CSV does not have the same number of columns. If false, rows with fewer column values will be padded with empty values. Default is true.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "startLine": {
-	//       "description": "The index of the first line from which to start importing, inclusive. Default is 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "tableId": {
-	//       "description": "Table whose rows will be replaced.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/replace",
-	//   "response": {
-	//     "$ref": "Task"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ],
-	//   "supportsMediaUpload": true
-	// }
-
 }
-
-// method id "fusiontables.table.update":
 
 type TableUpdateCall struct {
 	s          *Service
@@ -5264,8 +4003,10 @@ type TableUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates an existing table. Unless explicitly requested, only
-// the name, description, and attribution will be updated.
+// Update: Updates an existing table. Unless explicitly requested, only the
+// name, description, and attribution will be updated.
+//
+// - tableId: ID of the table that is being updated.
 func (r *TableService) Update(tableId string, table *Table) *TableUpdateCall {
 	c := &TableUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -5273,33 +4014,30 @@ func (r *TableService) Update(tableId string, table *Table) *TableUpdateCall {
 	return c
 }
 
-// ReplaceViewDefinition sets the optional parameter
-// "replaceViewDefinition": Whether the view definition is also updated.
-// The specified view definition replaces the existing one. Only a view
-// can be updated with a new definition.
+// ReplaceViewDefinition sets the optional parameter "replaceViewDefinition":
+// Whether the view definition is also updated. The specified view definition
+// replaces the existing one. Only a view can be updated with a new definition.
 func (c *TableUpdateCall) ReplaceViewDefinition(replaceViewDefinition bool) *TableUpdateCall {
 	c.urlParams_.Set("replaceViewDefinition", fmt.Sprint(replaceViewDefinition))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TableUpdateCall) Fields(s ...googleapi.Field) *TableUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TableUpdateCall) Context(ctx context.Context) *TableUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TableUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5308,18 +4046,12 @@ func (c *TableUpdateCall) Header() http.Header {
 }
 
 func (c *TableUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.table)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}")
@@ -5332,16 +4064,14 @@ func (c *TableUpdateCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.table.update" call.
-// Exactly one of *Table or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Table.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Table.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TableUpdateCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5349,17 +4079,17 @@ func (c *TableUpdateCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Table{
 		ServerResponse: googleapi.ServerResponse{
@@ -5372,41 +4102,7 @@ func (c *TableUpdateCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates an existing table. Unless explicitly requested, only the name, description, and attribution will be updated.",
-	//   "httpMethod": "PUT",
-	//   "id": "fusiontables.table.update",
-	//   "parameterOrder": [
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "replaceViewDefinition": {
-	//       "description": "Whether the view definition is also updated. The specified view definition replaces the existing one. Only a view can be updated with a new definition.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "tableId": {
-	//       "description": "ID of the table that is being updated.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}",
-	//   "request": {
-	//     "$ref": "Table"
-	//   },
-	//   "response": {
-	//     "$ref": "Table"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.task.delete":
 
 type TaskDeleteCall struct {
 	s          *Service
@@ -5417,8 +4113,11 @@ type TaskDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a specific task by its ID, unless that task has
-// already started running.
+// Delete: Deletes a specific task by its ID, unless that task has already
+// started running.
+//
+// - tableId: Table from which the task is being deleted.
+// - taskId: The identifier of the task to delete.
 func (r *TaskService) Delete(tableId string, taskId string) *TaskDeleteCall {
 	c := &TaskDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -5427,23 +4126,21 @@ func (r *TaskService) Delete(tableId string, taskId string) *TaskDeleteCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TaskDeleteCall) Fields(s ...googleapi.Field) *TaskDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TaskDeleteCall) Context(ctx context.Context) *TaskDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TaskDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5452,12 +4149,7 @@ func (c *TaskDeleteCall) Header() http.Header {
 }
 
 func (c *TaskDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -5472,7 +4164,7 @@ func (c *TaskDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 		"taskId":  c.taskId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.task.delete" call.
@@ -5484,40 +4176,10 @@ func (c *TaskDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a specific task by its ID, unless that task has already started running.",
-	//   "httpMethod": "DELETE",
-	//   "id": "fusiontables.task.delete",
-	//   "parameterOrder": [
-	//     "tableId",
-	//     "taskId"
-	//   ],
-	//   "parameters": {
-	//     "tableId": {
-	//       "description": "Table from which the task is being deleted.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "taskId": {
-	//       "description": "The identifier of the task to delete.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/tasks/{taskId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.task.get":
 
 type TaskGetCall struct {
 	s            *Service
@@ -5530,6 +4192,9 @@ type TaskGetCall struct {
 }
 
 // Get: Retrieves a specific task by its ID.
+//
+// - tableId: Table to which the task belongs.
+// - taskId: The identifier of the task to get.
 func (r *TaskService) Get(tableId string, taskId string) *TaskGetCall {
 	c := &TaskGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -5538,33 +4203,29 @@ func (r *TaskService) Get(tableId string, taskId string) *TaskGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TaskGetCall) Fields(s ...googleapi.Field) *TaskGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *TaskGetCall) IfNoneMatch(entityTag string) *TaskGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TaskGetCall) Context(ctx context.Context) *TaskGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TaskGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5573,12 +4234,7 @@ func (c *TaskGetCall) Header() http.Header {
 }
 
 func (c *TaskGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5596,16 +4252,14 @@ func (c *TaskGetCall) doRequest(alt string) (*http.Response, error) {
 		"tableId": c.tableId,
 		"taskId":  c.taskId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.task.get" call.
-// Exactly one of *Task or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Task.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TaskGetCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5613,17 +4267,17 @@ func (c *TaskGetCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Task{
 		ServerResponse: googleapi.ServerResponse{
@@ -5636,41 +4290,7 @@ func (c *TaskGetCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a specific task by its ID.",
-	//   "httpMethod": "GET",
-	//   "id": "fusiontables.task.get",
-	//   "parameterOrder": [
-	//     "tableId",
-	//     "taskId"
-	//   ],
-	//   "parameters": {
-	//     "tableId": {
-	//       "description": "Table to which the task belongs.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "taskId": {
-	//       "description": "The identifier of the task to get.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/tasks/{taskId}",
-	//   "response": {
-	//     "$ref": "Task"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables",
-	//     "https://www.googleapis.com/auth/fusiontables.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.task.list":
 
 type TaskListCall struct {
 	s            *Service
@@ -5682,14 +4302,16 @@ type TaskListCall struct {
 }
 
 // List: Retrieves a list of tasks.
+//
+// - tableId: Table whose tasks are being listed.
 func (r *TaskService) List(tableId string) *TaskListCall {
 	c := &TaskListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of tasks to return. Default is 5.
+// MaxResults sets the optional parameter "maxResults": Maximum number of tasks
+// to return. Default is 5.
 func (c *TaskListCall) MaxResults(maxResults int64) *TaskListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -5702,41 +4324,37 @@ func (c *TaskListCall) PageToken(pageToken string) *TaskListCall {
 	return c
 }
 
-// StartIndex sets the optional parameter "startIndex": Index of the
-// first result returned in the current page.
+// StartIndex sets the optional parameter "startIndex": Index of the first
+// result returned in the current page.
 func (c *TaskListCall) StartIndex(startIndex int64) *TaskListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TaskListCall) Fields(s ...googleapi.Field) *TaskListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *TaskListCall) IfNoneMatch(entityTag string) *TaskListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TaskListCall) Context(ctx context.Context) *TaskListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TaskListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5745,12 +4363,7 @@ func (c *TaskListCall) Header() http.Header {
 }
 
 func (c *TaskListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5767,16 +4380,14 @@ func (c *TaskListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.task.list" call.
-// Exactly one of *TaskList or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *TaskList.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TaskList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TaskListCall) Do(opts ...googleapi.CallOption) (*TaskList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5784,17 +4395,17 @@ func (c *TaskListCall) Do(opts ...googleapi.CallOption) (*TaskList, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TaskList{
 		ServerResponse: googleapi.ServerResponse{
@@ -5807,49 +4418,6 @@ func (c *TaskListCall) Do(opts ...googleapi.CallOption) (*TaskList, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a list of tasks.",
-	//   "httpMethod": "GET",
-	//   "id": "fusiontables.task.list",
-	//   "parameterOrder": [
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "maxResults": {
-	//       "description": "Maximum number of tasks to return. Default is 5.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "minimum": "0",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Continuation token specifying which result page to return.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "startIndex": {
-	//       "description": "Index of the first result returned in the current page.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "tableId": {
-	//       "description": "Table whose tasks are being listed.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/tasks",
-	//   "response": {
-	//     "$ref": "TaskList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables",
-	//     "https://www.googleapis.com/auth/fusiontables.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5857,7 +4425,7 @@ func (c *TaskListCall) Do(opts ...googleapi.CallOption) (*TaskList, error) {
 // The provided context supersedes any context provided to the Context method.
 func (c *TaskListCall) Pages(ctx context.Context, f func(*TaskList) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5873,8 +4441,6 @@ func (c *TaskListCall) Pages(ctx context.Context, f func(*TaskList) error) error
 	}
 }
 
-// method id "fusiontables.template.delete":
-
 type TemplateDeleteCall struct {
 	s          *Service
 	tableId    string
@@ -5885,6 +4451,9 @@ type TemplateDeleteCall struct {
 }
 
 // Delete: Deletes a template
+//
+// - tableId: Table from which the template is being deleted.
+// - templateId: Identifier for the template which is being deleted.
 func (r *TemplateService) Delete(tableId string, templateId int64) *TemplateDeleteCall {
 	c := &TemplateDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -5893,23 +4462,21 @@ func (r *TemplateService) Delete(tableId string, templateId int64) *TemplateDele
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TemplateDeleteCall) Fields(s ...googleapi.Field) *TemplateDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TemplateDeleteCall) Context(ctx context.Context) *TemplateDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TemplateDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5918,12 +4485,7 @@ func (c *TemplateDeleteCall) Header() http.Header {
 }
 
 func (c *TemplateDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -5938,7 +4500,7 @@ func (c *TemplateDeleteCall) doRequest(alt string) (*http.Response, error) {
 		"tableId":    c.tableId,
 		"templateId": strconv.FormatInt(c.templateId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.template.delete" call.
@@ -5950,41 +4512,10 @@ func (c *TemplateDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return err
+		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a template",
-	//   "httpMethod": "DELETE",
-	//   "id": "fusiontables.template.delete",
-	//   "parameterOrder": [
-	//     "tableId",
-	//     "templateId"
-	//   ],
-	//   "parameters": {
-	//     "tableId": {
-	//       "description": "Table from which the template is being deleted",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "templateId": {
-	//       "description": "Identifier for the template which is being deleted",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/templates/{templateId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.template.get":
 
 type TemplateGetCall struct {
 	s            *Service
@@ -5997,6 +4528,9 @@ type TemplateGetCall struct {
 }
 
 // Get: Retrieves a specific template by its id
+//
+// - tableId: Table to which the template belongs.
+// - templateId: Identifier for the template that is being requested.
 func (r *TemplateService) Get(tableId string, templateId int64) *TemplateGetCall {
 	c := &TemplateGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -6005,33 +4539,29 @@ func (r *TemplateService) Get(tableId string, templateId int64) *TemplateGetCall
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TemplateGetCall) Fields(s ...googleapi.Field) *TemplateGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *TemplateGetCall) IfNoneMatch(entityTag string) *TemplateGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TemplateGetCall) Context(ctx context.Context) *TemplateGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TemplateGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6040,12 +4570,7 @@ func (c *TemplateGetCall) Header() http.Header {
 }
 
 func (c *TemplateGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6063,16 +4588,14 @@ func (c *TemplateGetCall) doRequest(alt string) (*http.Response, error) {
 		"tableId":    c.tableId,
 		"templateId": strconv.FormatInt(c.templateId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.template.get" call.
-// Exactly one of *Template or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Template.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Template.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TemplateGetCall) Do(opts ...googleapi.CallOption) (*Template, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6080,17 +4603,17 @@ func (c *TemplateGetCall) Do(opts ...googleapi.CallOption) (*Template, error) {
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Template{
 		ServerResponse: googleapi.ServerResponse{
@@ -6103,42 +4626,7 @@ func (c *TemplateGetCall) Do(opts ...googleapi.CallOption) (*Template, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a specific template by its id",
-	//   "httpMethod": "GET",
-	//   "id": "fusiontables.template.get",
-	//   "parameterOrder": [
-	//     "tableId",
-	//     "templateId"
-	//   ],
-	//   "parameters": {
-	//     "tableId": {
-	//       "description": "Table to which the template belongs",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "templateId": {
-	//       "description": "Identifier for the template that is being requested",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/templates/{templateId}",
-	//   "response": {
-	//     "$ref": "Template"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables",
-	//     "https://www.googleapis.com/auth/fusiontables.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.template.insert":
 
 type TemplateInsertCall struct {
 	s          *Service
@@ -6150,6 +4638,8 @@ type TemplateInsertCall struct {
 }
 
 // Insert: Creates a new template for the table.
+//
+// - tableId: Table for which a new template is being created.
 func (r *TemplateService) Insert(tableId string, template *Template) *TemplateInsertCall {
 	c := &TemplateInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -6158,23 +4648,21 @@ func (r *TemplateService) Insert(tableId string, template *Template) *TemplateIn
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TemplateInsertCall) Fields(s ...googleapi.Field) *TemplateInsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TemplateInsertCall) Context(ctx context.Context) *TemplateInsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TemplateInsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6183,18 +4671,12 @@ func (c *TemplateInsertCall) Header() http.Header {
 }
 
 func (c *TemplateInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.template)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/templates")
@@ -6207,16 +4689,14 @@ func (c *TemplateInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.template.insert" call.
-// Exactly one of *Template or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Template.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Template.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TemplateInsertCall) Do(opts ...googleapi.CallOption) (*Template, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6224,17 +4704,17 @@ func (c *TemplateInsertCall) Do(opts ...googleapi.CallOption) (*Template, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Template{
 		ServerResponse: googleapi.ServerResponse{
@@ -6247,36 +4727,7 @@ func (c *TemplateInsertCall) Do(opts ...googleapi.CallOption) (*Template, error)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new template for the table.",
-	//   "httpMethod": "POST",
-	//   "id": "fusiontables.template.insert",
-	//   "parameterOrder": [
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "tableId": {
-	//       "description": "Table for which a new template is being created",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/templates",
-	//   "request": {
-	//     "$ref": "Template"
-	//   },
-	//   "response": {
-	//     "$ref": "Template"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.template.list":
 
 type TemplateListCall struct {
 	s            *Service
@@ -6288,14 +4739,16 @@ type TemplateListCall struct {
 }
 
 // List: Retrieves a list of templates.
+//
+// - tableId: Identifier for the table whose templates are being requested.
 func (r *TemplateService) List(tableId string) *TemplateListCall {
 	c := &TemplateListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of templates to return.  Default is 5.
+// MaxResults sets the optional parameter "maxResults": Maximum number of
+// templates to return.  Default is 5.
 func (c *TemplateListCall) MaxResults(maxResults int64) *TemplateListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -6309,33 +4762,29 @@ func (c *TemplateListCall) PageToken(pageToken string) *TemplateListCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TemplateListCall) Fields(s ...googleapi.Field) *TemplateListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *TemplateListCall) IfNoneMatch(entityTag string) *TemplateListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TemplateListCall) Context(ctx context.Context) *TemplateListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TemplateListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6344,12 +4793,7 @@ func (c *TemplateListCall) Header() http.Header {
 }
 
 func (c *TemplateListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6366,16 +4810,14 @@ func (c *TemplateListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"tableId": c.tableId,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.template.list" call.
-// Exactly one of *TemplateList or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TemplateList.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TemplateList.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TemplateListCall) Do(opts ...googleapi.CallOption) (*TemplateList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6383,17 +4825,17 @@ func (c *TemplateListCall) Do(opts ...googleapi.CallOption) (*TemplateList, erro
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &TemplateList{
 		ServerResponse: googleapi.ServerResponse{
@@ -6406,43 +4848,6 @@ func (c *TemplateListCall) Do(opts ...googleapi.CallOption) (*TemplateList, erro
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a list of templates.",
-	//   "httpMethod": "GET",
-	//   "id": "fusiontables.template.list",
-	//   "parameterOrder": [
-	//     "tableId"
-	//   ],
-	//   "parameters": {
-	//     "maxResults": {
-	//       "description": "Maximum number of templates to return. Optional. Default is 5.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "minimum": "0",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Continuation token specifying which results page to return. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "tableId": {
-	//       "description": "Identifier for the table whose templates are being requested",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/templates",
-	//   "response": {
-	//     "$ref": "TemplateList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables",
-	//     "https://www.googleapis.com/auth/fusiontables.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6450,7 +4855,7 @@ func (c *TemplateListCall) Do(opts ...googleapi.CallOption) (*TemplateList, erro
 // The provided context supersedes any context provided to the Context method.
 func (c *TemplateListCall) Pages(ctx context.Context, f func(*TemplateList) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6466,8 +4871,6 @@ func (c *TemplateListCall) Pages(ctx context.Context, f func(*TemplateList) erro
 	}
 }
 
-// method id "fusiontables.template.patch":
-
 type TemplatePatchCall struct {
 	s          *Service
 	tableId    string
@@ -6478,8 +4881,10 @@ type TemplatePatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates an existing template. This method supports patch
-// semantics.
+// Patch: Updates an existing template. This method supports patch semantics.
+//
+// - tableId: Table to which the updated template belongs.
+// - templateId: Identifier for the template that is being updated.
 func (r *TemplateService) Patch(tableId string, templateId int64, template *Template) *TemplatePatchCall {
 	c := &TemplatePatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -6489,23 +4894,21 @@ func (r *TemplateService) Patch(tableId string, templateId int64, template *Temp
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TemplatePatchCall) Fields(s ...googleapi.Field) *TemplatePatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TemplatePatchCall) Context(ctx context.Context) *TemplatePatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TemplatePatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6514,18 +4917,12 @@ func (c *TemplatePatchCall) Header() http.Header {
 }
 
 func (c *TemplatePatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.template)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/templates/{templateId}")
@@ -6539,16 +4936,14 @@ func (c *TemplatePatchCall) doRequest(alt string) (*http.Response, error) {
 		"tableId":    c.tableId,
 		"templateId": strconv.FormatInt(c.templateId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.template.patch" call.
-// Exactly one of *Template or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Template.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Template.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TemplatePatchCall) Do(opts ...googleapi.CallOption) (*Template, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6556,17 +4951,17 @@ func (c *TemplatePatchCall) Do(opts ...googleapi.CallOption) (*Template, error) 
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Template{
 		ServerResponse: googleapi.ServerResponse{
@@ -6579,44 +4974,7 @@ func (c *TemplatePatchCall) Do(opts ...googleapi.CallOption) (*Template, error) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates an existing template. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "fusiontables.template.patch",
-	//   "parameterOrder": [
-	//     "tableId",
-	//     "templateId"
-	//   ],
-	//   "parameters": {
-	//     "tableId": {
-	//       "description": "Table to which the updated template belongs",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "templateId": {
-	//       "description": "Identifier for the template that is being updated",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/templates/{templateId}",
-	//   "request": {
-	//     "$ref": "Template"
-	//   },
-	//   "response": {
-	//     "$ref": "Template"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }
-
-// method id "fusiontables.template.update":
 
 type TemplateUpdateCall struct {
 	s          *Service
@@ -6629,6 +4987,9 @@ type TemplateUpdateCall struct {
 }
 
 // Update: Updates an existing template
+//
+// - tableId: Table to which the updated template belongs.
+// - templateId: Identifier for the template that is being updated.
 func (r *TemplateService) Update(tableId string, templateId int64, template *Template) *TemplateUpdateCall {
 	c := &TemplateUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tableId = tableId
@@ -6638,23 +4999,21 @@ func (r *TemplateService) Update(tableId string, templateId int64, template *Tem
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TemplateUpdateCall) Fields(s ...googleapi.Field) *TemplateUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TemplateUpdateCall) Context(ctx context.Context) *TemplateUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TemplateUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6663,18 +5022,12 @@ func (c *TemplateUpdateCall) Header() http.Header {
 }
 
 func (c *TemplateUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.template)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/templates/{templateId}")
@@ -6688,16 +5041,14 @@ func (c *TemplateUpdateCall) doRequest(alt string) (*http.Response, error) {
 		"tableId":    c.tableId,
 		"templateId": strconv.FormatInt(c.templateId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "fusiontables.template.update" call.
-// Exactly one of *Template or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Template.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Template.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TemplateUpdateCall) Do(opts ...googleapi.CallOption) (*Template, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6705,17 +5056,17 @@ func (c *TemplateUpdateCall) Do(opts ...googleapi.CallOption) (*Template, error)
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &Template{
 		ServerResponse: googleapi.ServerResponse{
@@ -6728,39 +5079,4 @@ func (c *TemplateUpdateCall) Do(opts ...googleapi.CallOption) (*Template, error)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates an existing template",
-	//   "httpMethod": "PUT",
-	//   "id": "fusiontables.template.update",
-	//   "parameterOrder": [
-	//     "tableId",
-	//     "templateId"
-	//   ],
-	//   "parameters": {
-	//     "tableId": {
-	//       "description": "Table to which the updated template belongs",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "templateId": {
-	//       "description": "Identifier for the template that is being updated",
-	//       "format": "int32",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "integer"
-	//     }
-	//   },
-	//   "path": "tables/{tableId}/templates/{templateId}",
-	//   "request": {
-	//     "$ref": "Template"
-	//   },
-	//   "response": {
-	//     "$ref": "Template"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/fusiontables"
-	//   ]
-	// }
-
 }

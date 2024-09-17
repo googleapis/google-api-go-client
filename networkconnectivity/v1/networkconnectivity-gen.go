@@ -3493,7 +3493,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.get" call.
@@ -3624,7 +3624,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.list" call.
@@ -3748,7 +3748,7 @@ func (c *ProjectsLocationsGlobalHubsAcceptSpokeCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.acceptSpoke" call.
@@ -3875,7 +3875,7 @@ func (c *ProjectsLocationsGlobalHubsCreateCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.create" call.
@@ -3988,7 +3988,7 @@ func (c *ProjectsLocationsGlobalHubsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.delete" call.
@@ -4096,7 +4096,7 @@ func (c *ProjectsLocationsGlobalHubsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.get" call.
@@ -4223,7 +4223,7 @@ func (c *ProjectsLocationsGlobalHubsGetIamPolicyCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.getIamPolicy" call.
@@ -4358,7 +4358,7 @@ func (c *ProjectsLocationsGlobalHubsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.list" call.
@@ -4550,7 +4550,7 @@ func (c *ProjectsLocationsGlobalHubsListSpokesCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.listSpokes" call.
@@ -4703,7 +4703,7 @@ func (c *ProjectsLocationsGlobalHubsPatchCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.patch" call.
@@ -4808,7 +4808,7 @@ func (c *ProjectsLocationsGlobalHubsRejectSpokeCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.rejectSpoke" call.
@@ -4914,7 +4914,7 @@ func (c *ProjectsLocationsGlobalHubsSetIamPolicyCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.setIamPolicy" call.
@@ -5022,7 +5022,7 @@ func (c *ProjectsLocationsGlobalHubsTestIamPermissionsCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.testIamPermissions" call.
@@ -5130,7 +5130,7 @@ func (c *ProjectsLocationsGlobalHubsGroupsGetCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.groups.get" call.
@@ -5257,7 +5257,7 @@ func (c *ProjectsLocationsGlobalHubsGroupsGetIamPolicyCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.groups.getIamPolicy" call.
@@ -5391,7 +5391,7 @@ func (c *ProjectsLocationsGlobalHubsGroupsListCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.groups.list" call.
@@ -5543,7 +5543,7 @@ func (c *ProjectsLocationsGlobalHubsGroupsPatchCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.groups.patch" call.
@@ -5649,7 +5649,7 @@ func (c *ProjectsLocationsGlobalHubsGroupsSetIamPolicyCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.groups.setIamPolicy" call.
@@ -5757,7 +5757,7 @@ func (c *ProjectsLocationsGlobalHubsGroupsTestIamPermissionsCall) doRequest(alt 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.groups.testIamPermissions" call.
@@ -5865,7 +5865,7 @@ func (c *ProjectsLocationsGlobalHubsRouteTablesGetCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.routeTables.get" call.
@@ -5999,7 +5999,7 @@ func (c *ProjectsLocationsGlobalHubsRouteTablesListCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.routeTables.list" call.
@@ -6128,7 +6128,7 @@ func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesGetCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.routeTables.routes.get" call.
@@ -6262,7 +6262,7 @@ func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.hubs.routeTables.routes.list" call.
@@ -6408,7 +6408,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesCreateCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.policyBasedRoutes.create" call.
@@ -6520,7 +6520,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesDeleteCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.policyBasedRoutes.delete" call.
@@ -6628,7 +6628,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesGetCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.policyBasedRoutes.get" call.
@@ -6756,7 +6756,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesGetIamPolicyCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.policyBasedRoutes.getIamPolicy" call.
@@ -6890,7 +6890,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesListCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.policyBasedRoutes.list" call.
@@ -7017,7 +7017,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesSetIamPolicyCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.policyBasedRoutes.setIamPolicy" call.
@@ -7125,7 +7125,7 @@ func (c *ProjectsLocationsGlobalPolicyBasedRoutesTestIamPermissionsCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.global.policyBasedRoutes.testIamPermissions" call.
@@ -7251,7 +7251,7 @@ func (c *ProjectsLocationsInternalRangesCreateCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.internalRanges.create" call.
@@ -7363,7 +7363,7 @@ func (c *ProjectsLocationsInternalRangesDeleteCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.internalRanges.delete" call.
@@ -7471,7 +7471,7 @@ func (c *ProjectsLocationsInternalRangesGetCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.internalRanges.get" call.
@@ -7605,7 +7605,7 @@ func (c *ProjectsLocationsInternalRangesListCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.internalRanges.list" call.
@@ -7757,7 +7757,7 @@ func (c *ProjectsLocationsInternalRangesPatchCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.internalRanges.patch" call.
@@ -7867,7 +7867,7 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.operations.cancel" call.
@@ -7965,7 +7965,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.operations.delete" call.
@@ -8074,7 +8074,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.operations.get" call.
@@ -8203,7 +8203,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.operations.list" call.
@@ -8349,7 +8349,7 @@ func (c *ProjectsLocationsRegionalEndpointsCreateCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.regionalEndpoints.create" call.
@@ -8461,7 +8461,7 @@ func (c *ProjectsLocationsRegionalEndpointsDeleteCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.regionalEndpoints.delete" call.
@@ -8571,7 +8571,7 @@ func (c *ProjectsLocationsRegionalEndpointsGetCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.regionalEndpoints.get" call.
@@ -8707,7 +8707,7 @@ func (c *ProjectsLocationsRegionalEndpointsListCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.regionalEndpoints.list" call.
@@ -8848,7 +8848,7 @@ func (c *ProjectsLocationsServiceClassesDeleteCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceClasses.delete" call.
@@ -8956,7 +8956,7 @@ func (c *ProjectsLocationsServiceClassesGetCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceClasses.get" call.
@@ -9083,7 +9083,7 @@ func (c *ProjectsLocationsServiceClassesGetIamPolicyCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceClasses.getIamPolicy" call.
@@ -9217,7 +9217,7 @@ func (c *ProjectsLocationsServiceClassesListCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceClasses.list" call.
@@ -9369,7 +9369,7 @@ func (c *ProjectsLocationsServiceClassesPatchCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceClasses.patch" call.
@@ -9475,7 +9475,7 @@ func (c *ProjectsLocationsServiceClassesSetIamPolicyCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceClasses.setIamPolicy" call.
@@ -9583,7 +9583,7 @@ func (c *ProjectsLocationsServiceClassesTestIamPermissionsCall) doRequest(alt st
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceClasses.testIamPermissions" call.
@@ -9712,7 +9712,7 @@ func (c *ProjectsLocationsServiceConnectionMapsCreateCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionMaps.create" call.
@@ -9832,7 +9832,7 @@ func (c *ProjectsLocationsServiceConnectionMapsDeleteCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionMaps.delete" call.
@@ -9940,7 +9940,7 @@ func (c *ProjectsLocationsServiceConnectionMapsGetCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionMaps.get" call.
@@ -10068,7 +10068,7 @@ func (c *ProjectsLocationsServiceConnectionMapsGetIamPolicyCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionMaps.getIamPolicy" call.
@@ -10202,7 +10202,7 @@ func (c *ProjectsLocationsServiceConnectionMapsListCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionMaps.list" call.
@@ -10355,7 +10355,7 @@ func (c *ProjectsLocationsServiceConnectionMapsPatchCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionMaps.patch" call.
@@ -10461,7 +10461,7 @@ func (c *ProjectsLocationsServiceConnectionMapsSetIamPolicyCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionMaps.setIamPolicy" call.
@@ -10569,7 +10569,7 @@ func (c *ProjectsLocationsServiceConnectionMapsTestIamPermissionsCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionMaps.testIamPermissions" call.
@@ -10698,7 +10698,7 @@ func (c *ProjectsLocationsServiceConnectionPoliciesCreateCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionPolicies.create" call.
@@ -10818,7 +10818,7 @@ func (c *ProjectsLocationsServiceConnectionPoliciesDeleteCall) doRequest(alt str
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionPolicies.delete" call.
@@ -10926,7 +10926,7 @@ func (c *ProjectsLocationsServiceConnectionPoliciesGetCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionPolicies.get" call.
@@ -11054,7 +11054,7 @@ func (c *ProjectsLocationsServiceConnectionPoliciesGetIamPolicyCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionPolicies.getIamPolicy" call.
@@ -11188,7 +11188,7 @@ func (c *ProjectsLocationsServiceConnectionPoliciesListCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionPolicies.list" call.
@@ -11341,7 +11341,7 @@ func (c *ProjectsLocationsServiceConnectionPoliciesPatchCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionPolicies.patch" call.
@@ -11447,7 +11447,7 @@ func (c *ProjectsLocationsServiceConnectionPoliciesSetIamPolicyCall) doRequest(a
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionPolicies.setIamPolicy" call.
@@ -11555,7 +11555,7 @@ func (c *ProjectsLocationsServiceConnectionPoliciesTestIamPermissionsCall) doReq
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionPolicies.testIamPermissions" call.
@@ -11685,7 +11685,7 @@ func (c *ProjectsLocationsServiceConnectionTokensCreateCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionTokens.create" call.
@@ -11805,7 +11805,7 @@ func (c *ProjectsLocationsServiceConnectionTokensDeleteCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionTokens.delete" call.
@@ -11913,7 +11913,7 @@ func (c *ProjectsLocationsServiceConnectionTokensGetCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionTokens.get" call.
@@ -12048,7 +12048,7 @@ func (c *ProjectsLocationsServiceConnectionTokensListCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.serviceConnectionTokens.list" call.
@@ -12195,7 +12195,7 @@ func (c *ProjectsLocationsSpokesCreateCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.spokes.create" call.
@@ -12308,7 +12308,7 @@ func (c *ProjectsLocationsSpokesDeleteCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.spokes.delete" call.
@@ -12416,7 +12416,7 @@ func (c *ProjectsLocationsSpokesGetCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.spokes.get" call.
@@ -12543,7 +12543,7 @@ func (c *ProjectsLocationsSpokesGetIamPolicyCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.spokes.getIamPolicy" call.
@@ -12678,7 +12678,7 @@ func (c *ProjectsLocationsSpokesListCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.spokes.list" call.
@@ -12830,7 +12830,7 @@ func (c *ProjectsLocationsSpokesPatchCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.spokes.patch" call.
@@ -12936,7 +12936,7 @@ func (c *ProjectsLocationsSpokesSetIamPolicyCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.spokes.setIamPolicy" call.
@@ -13044,7 +13044,7 @@ func (c *ProjectsLocationsSpokesTestIamPermissionsCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "networkconnectivity.projects.locations.spokes.testIamPermissions" call.

@@ -750,7 +750,7 @@ func (c *QueriesCreateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "doubleclickbidmanager.queries.create" call.
@@ -845,7 +845,7 @@ func (c *QueriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "doubleclickbidmanager.queries.delete" call.
@@ -929,7 +929,7 @@ func (c *QueriesGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "doubleclickbidmanager.queries.get" call.
@@ -1054,7 +1054,7 @@ func (c *QueriesListCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "doubleclickbidmanager.queries.list" call.
@@ -1186,7 +1186,7 @@ func (c *QueriesRunCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "doubleclickbidmanager.queries.run" call.
@@ -1297,7 +1297,7 @@ func (c *QueriesReportsGetCall) doRequest(alt string) (*http.Response, error) {
 		"queryId":  strconv.FormatInt(c.queryId, 10),
 		"reportId": strconv.FormatInt(c.reportId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "doubleclickbidmanager.queries.reports.get" call.
@@ -1429,7 +1429,7 @@ func (c *QueriesReportsListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "doubleclickbidmanager.queries.reports.list" call.

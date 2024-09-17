@@ -2551,7 +2551,7 @@ func (c *ProjectsLocationsEnvironmentsCheckUpgradeCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"environment": c.environment,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.checkUpgrade" call.
@@ -2653,7 +2653,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.create" call.
@@ -2756,7 +2756,7 @@ func (c *ProjectsLocationsEnvironmentsDatabaseFailoverCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"environment": c.environment,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.databaseFailover" call.
@@ -2852,7 +2852,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.delete" call.
@@ -2954,7 +2954,7 @@ func (c *ProjectsLocationsEnvironmentsExecuteAirflowCommandCall) doRequest(alt s
 	googleapi.Expand(req.URL, map[string]string{
 		"environment": c.environment,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.executeAirflowCommand" call.
@@ -3063,7 +3063,7 @@ func (c *ProjectsLocationsEnvironmentsFetchDatabasePropertiesCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"environment": c.environment,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.fetchDatabaseProperties" call.
@@ -3172,7 +3172,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.get" call.
@@ -3294,7 +3294,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.list" call.
@@ -3420,7 +3420,7 @@ func (c *ProjectsLocationsEnvironmentsLoadSnapshotCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"environment": c.environment,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.loadSnapshot" call.
@@ -3604,7 +3604,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.patch" call.
@@ -3706,7 +3706,7 @@ func (c *ProjectsLocationsEnvironmentsPollAirflowCommandCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"environment": c.environment,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.pollAirflowCommand" call.
@@ -3811,7 +3811,7 @@ func (c *ProjectsLocationsEnvironmentsSaveSnapshotCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"environment": c.environment,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.saveSnapshot" call.
@@ -3913,7 +3913,7 @@ func (c *ProjectsLocationsEnvironmentsStopAirflowCommandCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"environment": c.environment,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.stopAirflowCommand" call.
@@ -4018,7 +4018,7 @@ func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsCreateCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.userWorkloadsConfigMaps.create" call.
@@ -4118,7 +4118,7 @@ func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsDeleteCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.userWorkloadsConfigMaps.delete" call.
@@ -4229,7 +4229,7 @@ func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsGetCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.userWorkloadsConfigMaps.get" call.
@@ -4353,7 +4353,7 @@ func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsListCall) doRequest
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.userWorkloadsConfigMaps.list" call.
@@ -4480,7 +4480,7 @@ func (c *ProjectsLocationsEnvironmentsUserWorkloadsConfigMapsUpdateCall) doReque
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.userWorkloadsConfigMaps.update" call.
@@ -4584,7 +4584,7 @@ func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsCreateCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.userWorkloadsSecrets.create" call.
@@ -4683,7 +4683,7 @@ func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsDeleteCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.userWorkloadsSecrets.delete" call.
@@ -4794,7 +4794,7 @@ func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsGetCall) doRequest(alt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.userWorkloadsSecrets.get" call.
@@ -4918,7 +4918,7 @@ func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsListCall) doRequest(al
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.userWorkloadsSecrets.list" call.
@@ -5044,7 +5044,7 @@ func (c *ProjectsLocationsEnvironmentsUserWorkloadsSecretsUpdateCall) doRequest(
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.userWorkloadsSecrets.update" call.
@@ -5179,7 +5179,7 @@ func (c *ProjectsLocationsEnvironmentsWorkloadsListCall) doRequest(alt string) (
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.environments.workloads.list" call.
@@ -5330,7 +5330,7 @@ func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.imageVersions.list" call.
@@ -5450,7 +5450,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.operations.delete" call.
@@ -5559,7 +5559,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.operations.get" call.
@@ -5687,7 +5687,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "composer.projects.locations.operations.list" call.

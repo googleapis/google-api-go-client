@@ -1992,7 +1992,7 @@ func (c *ProjectsLocationsFetchStaticIpsCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.fetchStaticIps" call.
@@ -2121,7 +2121,7 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.get" call.
@@ -2252,7 +2252,7 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.list" call.
@@ -2399,7 +2399,7 @@ func (c *ProjectsLocationsConnectionProfilesCreateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.connectionProfiles.create" call.
@@ -2510,7 +2510,7 @@ func (c *ProjectsLocationsConnectionProfilesDeleteCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.connectionProfiles.delete" call.
@@ -2615,7 +2615,7 @@ func (c *ProjectsLocationsConnectionProfilesDiscoverCall) doRequest(alt string) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.connectionProfiles.discover" call.
@@ -2723,7 +2723,7 @@ func (c *ProjectsLocationsConnectionProfilesGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.connectionProfiles.get" call.
@@ -2863,7 +2863,7 @@ func (c *ProjectsLocationsConnectionProfilesListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.connectionProfiles.list" call.
@@ -3020,7 +3020,7 @@ func (c *ProjectsLocationsConnectionProfilesPatchCall) doRequest(alt string) (*h
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.connectionProfiles.patch" call.
@@ -3129,7 +3129,7 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.operations.cancel" call.
@@ -3227,7 +3227,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.operations.delete" call.
@@ -3336,7 +3336,7 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.operations.get" call.
@@ -3464,7 +3464,7 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.operations.list" call.
@@ -3610,7 +3610,7 @@ func (c *ProjectsLocationsPrivateConnectionsCreateCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.privateConnections.create" call.
@@ -3728,7 +3728,7 @@ func (c *ProjectsLocationsPrivateConnectionsDeleteCall) doRequest(alt string) (*
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.privateConnections.delete" call.
@@ -3836,7 +3836,7 @@ func (c *ProjectsLocationsPrivateConnectionsGetCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.privateConnections.get" call.
@@ -3977,7 +3977,7 @@ func (c *ProjectsLocationsPrivateConnectionsListCall) doRequest(alt string) (*ht
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.privateConnections.list" call.
@@ -4124,7 +4124,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesCreateCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.privateConnections.routes.create" call.
@@ -4235,7 +4235,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesDeleteCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.privateConnections.routes.delete" call.
@@ -4342,7 +4342,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesGetCall) doRequest(alt string)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.privateConnections.routes.get" call.
@@ -4481,7 +4481,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) doRequest(alt string
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.privateConnections.routes.list" call.
@@ -4641,7 +4641,7 @@ func (c *ProjectsLocationsStreamsCreateCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.streams.create" call.
@@ -4752,7 +4752,7 @@ func (c *ProjectsLocationsStreamsDeleteCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.streams.delete" call.
@@ -4853,7 +4853,7 @@ func (c *ProjectsLocationsStreamsFetchErrorsCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"stream": c.stream,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.streams.fetchErrors" call.
@@ -4960,7 +4960,7 @@ func (c *ProjectsLocationsStreamsGetCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.streams.get" call.
@@ -5097,7 +5097,7 @@ func (c *ProjectsLocationsStreamsListCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.streams.list" call.
@@ -5260,7 +5260,7 @@ func (c *ProjectsLocationsStreamsPatchCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.streams.patch" call.
@@ -5367,7 +5367,7 @@ func (c *ProjectsLocationsStreamsObjectsGetCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.streams.objects.get" call.
@@ -5491,7 +5491,7 @@ func (c *ProjectsLocationsStreamsObjectsListCall) doRequest(alt string) (*http.R
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.streams.objects.list" call.
@@ -5609,7 +5609,7 @@ func (c *ProjectsLocationsStreamsObjectsStartBackfillJobCall) doRequest(alt stri
 	googleapi.Expand(req.URL, map[string]string{
 		"object": c.object,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.streams.objects.startBackfillJob" call.
@@ -5706,7 +5706,7 @@ func (c *ProjectsLocationsStreamsObjectsStopBackfillJobCall) doRequest(alt strin
 	googleapi.Expand(req.URL, map[string]string{
 		"object": c.object,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "datastream.projects.locations.streams.objects.stopBackfillJob" call.

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package doubleclickbidmanager provides access to the DoubleClick Bid Manager API.
 //
 // For product documentation, see: https://developers.google.com/bid-manager/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	doubleclickbidmanagerService, err := doubleclickbidmanager.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	doubleclickbidmanagerService, err := doubleclickbidmanager.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	doubleclickbidmanagerService, err := doubleclickbidmanager.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package doubleclickbidmanager // import "google.golang.org/api/doubleclickbidmanager/v1.1"
 
 import (
@@ -77,6 +90,7 @@ const apiId = "doubleclickbidmanager:v1.1"
 const apiName = "doubleclickbidmanager"
 const apiVersion = "v1.1"
 const basePath = "https://doubleclickbidmanager.googleapis.com/doubleclickbidmanager/v1.1/"
+const basePathTemplate = "https://doubleclickbidmanager.UNIVERSE_DOMAIN/doubleclickbidmanager/v1.1/"
 const mtlsBasePath = "https://doubleclickbidmanager.mtls.googleapis.com/doubleclickbidmanager/v1.1/"
 
 // OAuth2 scopes used by this API.
@@ -93,7 +107,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -158,101 +174,80 @@ type ReportsService struct {
 	s *Service
 }
 
-// ChannelGrouping: A channel grouping defines a set of rules that can
-// be used to categorize events in a path report.
+// ChannelGrouping: A channel grouping defines a set of rules that can be used
+// to categorize events in a path report.
 type ChannelGrouping struct {
-	// FallbackName: The name to apply to an event that does not match any
-	// of the rules in the channel grouping.
+	// FallbackName: The name to apply to an event that does not match any of the
+	// rules in the channel grouping.
 	FallbackName string `json:"fallbackName,omitempty"`
-
 	// Name: Channel Grouping name.
 	Name string `json:"name,omitempty"`
-
-	// Rules: Rules within Channel Grouping. There is a limit of 100 rules
-	// that can be set per channel grouping.
+	// Rules: Rules within Channel Grouping. There is a limit of 100 rules that can
+	// be set per channel grouping.
 	Rules []*Rule `json:"rules,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FallbackName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FallbackName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FallbackName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ChannelGrouping) MarshalJSON() ([]byte, error) {
+func (s ChannelGrouping) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelGrouping
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DisjunctiveMatchStatement: DisjunctiveMatchStatement that OR's all
-// contained filters.
+// DisjunctiveMatchStatement: DisjunctiveMatchStatement that OR's all contained
+// filters.
 type DisjunctiveMatchStatement struct {
-	// EventFilters: Filters. There is a limit of 100 filters that can be
-	// set per disjunctive match statement.
+	// EventFilters: Filters. There is a limit of 100 filters that can be set per
+	// disjunctive match statement.
 	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EventFilters") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EventFilters") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EventFilters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *DisjunctiveMatchStatement) MarshalJSON() ([]byte, error) {
+func (s DisjunctiveMatchStatement) MarshalJSON() ([]byte, error) {
 	type NoMethod DisjunctiveMatchStatement
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// EventFilter: Defines the type of filter to be applied to the path, a
-// DV360 event dimension filter.
+// EventFilter: Defines the type of filter to be applied to the path, a DV360
+// event dimension filter.
 type EventFilter struct {
 	// DimensionFilter: Filter on a dimension.
 	DimensionFilter *PathQueryOptionsFilter `json:"dimensionFilter,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionFilter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionFilter") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DimensionFilter") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *EventFilter) MarshalJSON() ([]byte, error) {
+func (s EventFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod EventFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // FilterPair: Filter used to match traffic data in your report.
@@ -555,152 +550,117 @@ type FilterPair struct {
 	//   "FILTER_TRUEVIEW_TARGETING_EXPANSION"
 	//   "FILTER_PUBLISHER_TRAFFIC_SOURCE"
 	Type string `json:"type,omitempty"`
-
 	// Value: Filter value.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Type") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Type") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *FilterPair) MarshalJSON() ([]byte, error) {
+func (s FilterPair) MarshalJSON() ([]byte, error) {
 	type NoMethod FilterPair
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListQueriesResponse: List queries response.
 type ListQueriesResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "doubleclickbidmanager#listQueriesResponse".
+	// Kind: Identifies what kind of resource this is. Value: the fixed string
+	// "doubleclickbidmanager#listQueriesResponse".
 	Kind string `json:"kind,omitempty"`
-
 	// NextPageToken: Next page's pagination token if one exists.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Queries: Retrieved queries.
 	Queries []*Query `json:"queries,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ListQueriesResponse) MarshalJSON() ([]byte, error) {
+func (s ListQueriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListQueriesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListReportsResponse: List reports response.
 type ListReportsResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "doubleclickbidmanager#listReportsResponse".
+	// Kind: Identifies what kind of resource this is. Value: the fixed string
+	// "doubleclickbidmanager#listReportsResponse".
 	Kind string `json:"kind,omitempty"`
-
 	// NextPageToken: Next page's pagination token if one exists.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Reports: Retrieved reports.
 	Reports []*Report `json:"reports,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ListReportsResponse) MarshalJSON() ([]byte, error) {
+func (s ListReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReportsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Options: Additional query options.
 type Options struct {
 	// IncludeOnlyTargetedUserLists: Set to true and filter your report by
-	// `FILTER_INSERTION_ORDER` or `FILTER_LINE_ITEM` to include data for
-	// audience lists specifically targeted by those items.
+	// `FILTER_INSERTION_ORDER` or `FILTER_LINE_ITEM` to include data for audience
+	// lists specifically targeted by those items.
 	IncludeOnlyTargetedUserLists bool `json:"includeOnlyTargetedUserLists,omitempty"`
-
-	// PathQueryOptions: Options that contain Path Filters and Custom
-	// Channel Groupings.
+	// PathQueryOptions: Options that contain Path Filters and Custom Channel
+	// Groupings.
 	PathQueryOptions *PathQueryOptions `json:"pathQueryOptions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "IncludeOnlyTargetedUserLists") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "IncludeOnlyTargetedUserLists") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "IncludeOnlyTargetedUserLists") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IncludeOnlyTargetedUserLists") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Options) MarshalJSON() ([]byte, error) {
+func (s Options) MarshalJSON() ([]byte, error) {
 	type NoMethod Options
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Parameters: Parameters of a query or report.
 type Parameters struct {
 	// Filters: Filters used to match traffic data in your report.
 	Filters []*FilterPair `json:"filters,omitempty"`
-
 	// GroupBys: Data is grouped by the filters listed in this field.
 	//
 	// Possible values:
@@ -999,10 +959,8 @@ type Parameters struct {
 	//   "FILTER_TRUEVIEW_TARGETING_EXPANSION"
 	//   "FILTER_PUBLISHER_TRAFFIC_SOURCE"
 	GroupBys []string `json:"groupBys,omitempty"`
-
 	// IncludeInviteData: Deprecated. This field is no longer in use.
 	IncludeInviteData bool `json:"includeInviteData,omitempty"`
-
 	// Metrics: Metrics to include as columns in your report.
 	//
 	// Possible values:
@@ -1288,22 +1246,19 @@ type Parameters struct {
 	//   "METRIC_NIELSEN_POPULATION_SHARE"
 	//   "METRIC_NIELSEN_REACH_INDEX"
 	//   "METRIC_NIELSEN_REACH_SHARE"
+	//   "METRIC_ACTIVE_VIEW_AUDIBLE_FULLY_ON_SCREEN_HALF_OF_DURATION_IMPRESSIONS"
 	//
-	// "METRIC_ACTIVE_VIEW_AUDIBLE_FULLY_ON_SCREEN_HALF_OF_DURATION_IMPRESSIO
-	// NS"
-	//
-	// "METRIC_ACTIVE_VIEW_AUDIBLE_FULLY_ON_SCREEN_HALF_OF_DURATION_MEASURABL
-	// E_IMPRESSIONS"
+	// "METRIC_ACTIVE_VIEW_AUDIBLE_FULLY_ON_SCREEN_HALF_OF_DURATION_MEASURABLE_IMPRE
+	// SSIONS"
 	//   "METRIC_ACTIVE_VIEW_AUDIBLE_FULLY_ON_SCREEN_HALF_OF_DURATION_RATE"
 	//
-	// "METRIC_ACTIVE_VIEW_AUDIBLE_FULLY_ON_SCREEN_HALF_OF_DURATION_TRUEVIEW_
-	// IMPRESSIONS"
+	// "METRIC_ACTIVE_VIEW_AUDIBLE_FULLY_ON_SCREEN_HALF_OF_DURATION_TRUEVIEW_IMPRESS
+	// IONS"
 	//
-	// "METRIC_ACTIVE_VIEW_AUDIBLE_FULLY_ON_SCREEN_HALF_OF_DURATION_TRUEVIEW_
-	// MEASURABLE_IMPRESSIONS"
+	// "METRIC_ACTIVE_VIEW_AUDIBLE_FULLY_ON_SCREEN_HALF_OF_DURATION_TRUEVIEW_MEASURA
+	// BLE_IMPRESSIONS"
 	//
-	// "METRIC_ACTIVE_VIEW_AUDIBLE_FULLY_ON_SCREEN_HALF_OF_DURATION_TRUEVIEW_
-	// RATE"
+	// "METRIC_ACTIVE_VIEW_AUDIBLE_FULLY_ON_SCREEN_HALF_OF_DURATION_TRUEVIEW_RATE"
 	//   "METRIC_ACTIVE_VIEW_CUSTOM_METRIC_MEASURABLE_IMPRESSIONS"
 	//   "METRIC_ACTIVE_VIEW_CUSTOM_METRIC_VIEWABLE_IMPRESSIONS"
 	//   "METRIC_ACTIVE_VIEW_CUSTOM_METRIC_VIEWABLE_RATE"
@@ -1312,21 +1267,17 @@ type Parameters struct {
 	//   "METRIC_ACTIVE_VIEW_PERCENT_FULL_SCREEN"
 	//   "METRIC_ACTIVE_VIEW_PERCENT_IN_BACKGROUND"
 	//   "METRIC_ACTIVE_VIEW_PERCENT_OF_AD_PLAYED"
-	//
-	// "METRIC_ACTIVE_VIEW_PERCENT_OF_COMPLETED_IMPRESSIONS_AUDIBLE_AND_VISIB
-	// LE"
+	//   "METRIC_ACTIVE_VIEW_PERCENT_OF_COMPLETED_IMPRESSIONS_AUDIBLE_AND_VISIBLE"
 	//   "METRIC_ACTIVE_VIEW_PERCENT_OF_COMPLETED_IMPRESSIONS_VISIBLE"
 	//
-	// "METRIC_ACTIVE_VIEW_PERCENT_OF_FIRST_QUARTILE_IMPRESSIONS_AUDIBLE_AND_
-	// VISIBLE"
+	// "METRIC_ACTIVE_VIEW_PERCENT_OF_FIRST_QUARTILE_IMPRESSIONS_AUDIBLE_AND_VISIBLE
+	// "
 	//   "METRIC_ACTIVE_VIEW_PERCENT_OF_FIRST_QUARTILE_IMPRESSIONS_VISIBLE"
-	//
-	// "METRIC_ACTIVE_VIEW_PERCENT_OF_MIDPOINT_IMPRESSIONS_AUDIBLE_AND_VISIBL
-	// E"
+	//   "METRIC_ACTIVE_VIEW_PERCENT_OF_MIDPOINT_IMPRESSIONS_AUDIBLE_AND_VISIBLE"
 	//   "METRIC_ACTIVE_VIEW_PERCENT_OF_MIDPOINT_IMPRESSIONS_VISIBLE"
 	//
-	// "METRIC_ACTIVE_VIEW_PERCENT_OF_THIRD_QUARTILE_IMPRESSIONS_AUDIBLE_AND_
-	// VISIBLE"
+	// "METRIC_ACTIVE_VIEW_PERCENT_OF_THIRD_QUARTILE_IMPRESSIONS_AUDIBLE_AND_VISIBLE
+	// "
 	//   "METRIC_ACTIVE_VIEW_PERCENT_OF_THIRD_QUARTILE_IMPRESSIONS_VISIBLE"
 	//   "METRIC_ACTIVE_VIEW_PERCENT_PLAY_TIME_AUDIBLE"
 	//   "METRIC_ACTIVE_VIEW_PERCENT_PLAY_TIME_AUDIBLE_AND_VISIBLE"
@@ -1378,11 +1329,10 @@ type Parameters struct {
 	//   "METRIC_CUSTOM_VALUE_PER_1000_IMPRESSIONS"
 	//   "METRIC_ENGAGEMENTS"
 	//
-	// "METRIC_ESTIMATED_CPM_FOR_IMPRESSIONS_WITH_CUSTOM_VALUE_ADVERTISER_CUR
-	// RENCY"
+	// "METRIC_ESTIMATED_CPM_FOR_IMPRESSIONS_WITH_CUSTOM_VALUE_ADVERTISER_CURRENCY"
 	//
-	// "METRIC_ESTIMATED_TOTAL_COST_FOR_IMPRESSIONS_WITH_CUSTOM_VALUE_ADVERTI
-	// SER_CURRENCY"
+	// "METRIC_ESTIMATED_TOTAL_COST_FOR_IMPRESSIONS_WITH_CUSTOM_VALUE_ADVERTISER_CUR
+	// RENCY"
 	//   "METRIC_EXITS"
 	//   "METRIC_EXPANSIONS"
 	//   "METRIC_FIRST_QUARTILE_AUDIO"
@@ -1418,11 +1368,10 @@ type Parameters struct {
 	//   "METRIC_POTENTIAL_IMPRESSIONS"
 	//   "METRIC_POTENTIAL_VIEWS"
 	//   "METRIC_PREMIUM_FEE_ADVERTISER_CURRENCY"
+	//   "METRIC_PROGRAMMATIC_GUARANTEED_IMPRESSIONS_PASSED_DUE_TO_FREQUENCY"
 	//
-	// "METRIC_PROGRAMMATIC_GUARANTEED_IMPRESSIONS_PASSED_DUE_TO_FREQUENCY"
-	//
-	// "METRIC_PROGRAMMATIC_GUARANTEED_SAVINGS_RE_INVESTED_DUE_TO_FREQUENCY_A
-	// DVERTISER_CURRENCY"
+	// "METRIC_PROGRAMMATIC_GUARANTEED_SAVINGS_RE_INVESTED_DUE_TO_FREQUENCY_ADVERTIS
+	// ER_CURRENCY"
 	//   "METRIC_REFUND_BILLABLE_COST_ADVERTISER_CURRENCY"
 	//   "METRIC_REFUND_MEDIA_COST_ADVERTISER_CURRENCY"
 	//   "METRIC_REFUND_PLATFORM_FEE_ADVERTISER_CURRENCY"
@@ -1473,8 +1422,7 @@ type Parameters struct {
 	//   "METRIC_GRP_CORRECTED_VIEWABLE_IMPRESSIONS"
 	//   "METRIC_GRP_CORRECTED_VIEWABLE_IMPRESSIONS_SHARE_PERCENT"
 	//   "METRIC_VIEWABLE_GROSS_RATING_POINTS"
-	//
-	// "METRIC_VIRTUAL_PEOPLE_AVERAGE_VIEWABLE_IMPRESSION_FREQUENCY_BY_DEMO"
+	//   "METRIC_VIRTUAL_PEOPLE_AVERAGE_VIEWABLE_IMPRESSION_FREQUENCY_BY_DEMO"
 	//   "METRIC_VIRTUAL_PEOPLE_VIEWABLE_IMPRESSION_REACH_BY_DEMO"
 	//   "METRIC_VIRTUAL_PEOPLE_VIEWABLE_IMPRESSION_REACH_PERCENT"
 	//   "METRIC_VIRTUAL_PEOPLE_VIEWABLE_IMPRESSION_REACH_SHARE_PERCENT"
@@ -1503,17 +1451,14 @@ type Parameters struct {
 	//   "METRIC_UNIQUE_REACH_AVERAGE_IMPRESSION_FREQUENCY_COVIEWED"
 	//   "METRIC_GRP_CORRECTED_IMPRESSIONS_COVIEWED"
 	//   "METRIC_VIRTUAL_PEOPLE_IMPRESSION_REACH_BY_DEMO_COVIEWED"
-	//
-	// "METRIC_VIRTUAL_PEOPLE_AVERAGE_IMPRESSION_FREQUENCY_BY_DEMO_COVIEWED"
+	//   "METRIC_VIRTUAL_PEOPLE_AVERAGE_IMPRESSION_FREQUENCY_BY_DEMO_COVIEWED"
 	//   "METRIC_TARGET_RATING_POINTS_COVIEWED"
 	//   "METRIC_DEMO_COMPOSITION_IMPRESSION_COVIEWED"
 	//   "METRIC_VIRTUAL_PEOPLE_IMPRESSION_REACH_SHARE_PERCENT_COVIEWED"
 	//   "METRIC_VIRTUAL_PEOPLE_IMPRESSION_REACH_PERCENT_COVIEWED"
 	Metrics []string `json:"metrics,omitempty"`
-
 	// Options: Additional query options.
 	Options *Options `json:"options,omitempty"`
-
 	// Type: Report type.
 	//
 	// Possible values:
@@ -1552,103 +1497,81 @@ type Parameters struct {
 	//   "TYPE_PATH"
 	//   "TYPE_PATH_ATTRIBUTION"
 	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Filters") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Filters") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Filters") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Filters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Parameters) MarshalJSON() ([]byte, error) {
+func (s Parameters) MarshalJSON() ([]byte, error) {
 	type NoMethod Parameters
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PathFilter: Path filters specify which paths to include in a report.
-// A path is the result of combining DV360 events based on User ID to
-// create a workflow of users' actions. When a path filter is set, the
-// resulting report will only include paths that match the specified
-// event at the specified position. All other paths will be excluded.
+// PathFilter: Path filters specify which paths to include in a report. A path
+// is the result of combining DV360 events based on User ID to create a
+// workflow of users' actions. When a path filter is set, the resulting report
+// will only include paths that match the specified event at the specified
+// position. All other paths will be excluded.
 type PathFilter struct {
-	// EventFilters: Filter on an event to be applied to some part of the
-	// path.
+	// EventFilters: Filter on an event to be applied to some part of the path.
 	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
-
-	// PathMatchPosition: Indicates the position of the path the filter
-	// should match to (first, last, or any event in path).
+	// PathMatchPosition: Indicates the position of the path the filter should
+	// match to (first, last, or any event in path).
 	//
 	// Possible values:
 	//   "ANY"
 	//   "FIRST"
 	//   "LAST"
 	PathMatchPosition string `json:"pathMatchPosition,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EventFilters") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EventFilters") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EventFilters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *PathFilter) MarshalJSON() ([]byte, error) {
+func (s PathFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod PathFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PathQueryOptions: Path Query Options for Report Options.
 type PathQueryOptions struct {
 	// ChannelGrouping: Custom Channel Groupings.
 	ChannelGrouping *ChannelGrouping `json:"channelGrouping,omitempty"`
-
-	// PathFilters: Path Filters. There is a limit of 100 path filters that
-	// can be set per report.
+	// PathFilters: Path Filters. There is a limit of 100 path filters that can be
+	// set per report.
 	PathFilters []*PathFilter `json:"pathFilters,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ChannelGrouping") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ChannelGrouping") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ChannelGrouping") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *PathQueryOptions) MarshalJSON() ([]byte, error) {
+func (s PathQueryOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod PathQueryOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PathQueryOptionsFilter: Dimension Filter on path events.
@@ -1951,7 +1874,6 @@ type PathQueryOptionsFilter struct {
 	//   "FILTER_TRUEVIEW_TARGETING_EXPANSION"
 	//   "FILTER_PUBLISHER_TRAFFIC_SOURCE"
 	Filter string `json:"filter,omitempty"`
-
 	// Match: Indicates how the filter should be matched to the value.
 	//
 	// Possible values:
@@ -1961,90 +1883,69 @@ type PathQueryOptionsFilter struct {
 	//   "BEGINS_WITH"
 	//   "WILDCARD_EXPRESSION"
 	Match string `json:"match,omitempty"`
-
 	// Values: Value to filter on.
 	Values []string `json:"values,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Filter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Filter") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *PathQueryOptionsFilter) MarshalJSON() ([]byte, error) {
+func (s PathQueryOptionsFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod PathQueryOptionsFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Query: Represents a query.
 type Query struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "doubleclickbidmanager#query".
+	// Kind: Identifies what kind of resource this is. Value: the fixed string
+	// "doubleclickbidmanager#query".
 	Kind string `json:"kind,omitempty"`
-
 	// Metadata: Query metadata.
 	Metadata *QueryMetadata `json:"metadata,omitempty"`
-
 	// Params: Query parameters.
 	Params *Parameters `json:"params,omitempty"`
-
 	// QueryId: Query ID.
 	QueryId int64 `json:"queryId,omitempty,string"`
-
-	// ReportDataEndTimeMs: The ending time for the data that is shown in
-	// the report. Note, reportDataEndTimeMs is required if
-	// metadata.dataRange is CUSTOM_DATES and ignored otherwise.
+	// ReportDataEndTimeMs: The ending time for the data that is shown in the
+	// report. Note, reportDataEndTimeMs is required if metadata.dataRange is
+	// CUSTOM_DATES and ignored otherwise.
 	ReportDataEndTimeMs int64 `json:"reportDataEndTimeMs,omitempty,string"`
-
-	// ReportDataStartTimeMs: The starting time for the data that is shown
-	// in the report. Note, reportDataStartTimeMs is required if
-	// metadata.dataRange is CUSTOM_DATES and ignored otherwise.
+	// ReportDataStartTimeMs: The starting time for the data that is shown in the
+	// report. Note, reportDataStartTimeMs is required if metadata.dataRange is
+	// CUSTOM_DATES and ignored otherwise.
 	ReportDataStartTimeMs int64 `json:"reportDataStartTimeMs,omitempty,string"`
-
 	// Schedule: Information on how often and when to run a query.
 	Schedule *QuerySchedule `json:"schedule,omitempty"`
-
-	// TimezoneCode: Canonical timezone code for report data time. Defaults
-	// to America/New_York.
+	// TimezoneCode: Canonical timezone code for report data time. Defaults to
+	// America/New_York.
 	TimezoneCode string `json:"timezoneCode,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Query) MarshalJSON() ([]byte, error) {
+func (s Query) MarshalJSON() ([]byte, error) {
 	type NoMethod Query
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryMetadata: Query metadata.
@@ -2073,7 +1974,6 @@ type QueryMetadata struct {
 	//   "TYPE_NOT_SUPPORTED"
 	//   "LAST_60_DAYS"
 	DataRange string `json:"dataRange,omitempty"`
-
 	// Format: Format of the generated report.
 	//
 	// Possible values:
@@ -2081,74 +1981,55 @@ type QueryMetadata struct {
 	//   "EXCEL_CSV"
 	//   "XLSX"
 	Format string `json:"format,omitempty"`
-
-	// GoogleCloudStoragePathForLatestReport: The path to the location in
-	// Google Cloud Storage where the latest report is stored.
+	// GoogleCloudStoragePathForLatestReport: The path to the location in Google
+	// Cloud Storage where the latest report is stored.
 	GoogleCloudStoragePathForLatestReport string `json:"googleCloudStoragePathForLatestReport,omitempty"`
-
-	// GoogleDrivePathForLatestReport: The path in Google Drive for the
-	// latest report.
+	// GoogleDrivePathForLatestReport: The path in Google Drive for the latest
+	// report.
 	GoogleDrivePathForLatestReport string `json:"googleDrivePathForLatestReport,omitempty"`
-
-	// LatestReportRunTimeMs: The time when the latest report started to
-	// run.
+	// LatestReportRunTimeMs: The time when the latest report started to run.
 	LatestReportRunTimeMs int64 `json:"latestReportRunTimeMs,omitempty,string"`
-
-	// Locale: Locale of the generated reports. Valid values are cs CZECH de
-	// GERMAN en ENGLISH es SPANISH fr FRENCH it ITALIAN ja JAPANESE ko
-	// KOREAN pl POLISH pt-BR BRAZILIAN_PORTUGUESE ru RUSSIAN tr TURKISH uk
-	// UKRAINIAN zh-CN CHINA_CHINESE zh-TW TAIWAN_CHINESE An locale string
-	// not in the list above will generate reports in English.
+	// Locale: Locale of the generated reports. Valid values are cs CZECH de GERMAN
+	// en ENGLISH es SPANISH fr FRENCH it ITALIAN ja JAPANESE ko KOREAN pl POLISH
+	// pt-BR BRAZILIAN_PORTUGUESE ru RUSSIAN tr TURKISH uk UKRAINIAN zh-CN
+	// CHINA_CHINESE zh-TW TAIWAN_CHINESE An locale string not in the list above
+	// will generate reports in English.
 	Locale string `json:"locale,omitempty"`
-
-	// ReportCount: Number of reports that have been generated for the
-	// query.
+	// ReportCount: Number of reports that have been generated for the query.
 	ReportCount int64 `json:"reportCount,omitempty"`
-
 	// Running: Whether the latest report is currently running.
 	Running bool `json:"running,omitempty"`
-
-	// SendNotification: Whether to send an email notification when a report
-	// is ready. Default to false.
+	// SendNotification: Whether to send an email notification when a report is
+	// ready. Default to false.
 	SendNotification bool `json:"sendNotification,omitempty"`
-
 	// ShareEmailAddress: List of email addresses which are sent email
-	// notifications when the report is finished. Separate from
-	// sendNotification.
+	// notifications when the report is finished. Separate from sendNotification.
 	ShareEmailAddress []string `json:"shareEmailAddress,omitempty"`
-
-	// Title: Query title. It is used to name the reports generated from
-	// this query.
+	// Title: Query title. It is used to name the reports generated from this
+	// query.
 	Title string `json:"title,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DataRange") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataRange") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *QueryMetadata) MarshalJSON() ([]byte, error) {
+func (s QueryMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QuerySchedule: Information on how frequently and when to run a query.
 type QuerySchedule struct {
 	// EndTimeMs: Datetime to periodically run the query until.
 	EndTimeMs int64 `json:"endTimeMs,omitempty,string"`
-
 	// Frequency: How often the query is run.
 	//
 	// Possible values:
@@ -2160,75 +2041,58 @@ type QuerySchedule struct {
 	//   "QUARTERLY"
 	//   "YEARLY"
 	Frequency string `json:"frequency,omitempty"`
-
-	// NextRunMinuteOfDay: Time of day at which a new report will be
-	// generated, represented as minutes past midnight. Range is 0 to 1439.
-	// Only applies to scheduled reports.
+	// NextRunMinuteOfDay: Time of day at which a new report will be generated,
+	// represented as minutes past midnight. Range is 0 to 1439. Only applies to
+	// scheduled reports.
 	NextRunMinuteOfDay int64 `json:"nextRunMinuteOfDay,omitempty"`
-
-	// NextRunTimezoneCode: Canonical timezone code for report generation
-	// time. Defaults to America/New_York.
+	// NextRunTimezoneCode: Canonical timezone code for report generation time.
+	// Defaults to America/New_York.
 	NextRunTimezoneCode string `json:"nextRunTimezoneCode,omitempty"`
-
-	// StartTimeMs: When to start running the query. Not applicable to
-	// `ONE_TIME` frequency.
+	// StartTimeMs: When to start running the query. Not applicable to `ONE_TIME`
+	// frequency.
 	StartTimeMs int64 `json:"startTimeMs,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "EndTimeMs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTimeMs") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTimeMs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *QuerySchedule) MarshalJSON() ([]byte, error) {
+func (s QuerySchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod QuerySchedule
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Report: Represents a report.
 type Report struct {
 	// Key: Key used to identify a report.
 	Key *ReportKey `json:"key,omitempty"`
-
 	// Metadata: Report metadata.
 	Metadata *ReportMetadata `json:"metadata,omitempty"`
-
 	// Params: Report parameters.
 	Params *Parameters `json:"params,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Report) MarshalJSON() ([]byte, error) {
+func (s Report) MarshalJSON() ([]byte, error) {
 	type NoMethod Report
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportFailure: An explanation of a report failure.
@@ -2255,112 +2119,86 @@ type ReportFailure struct {
 	//   "REPORTING_INVALID_QUERY_TITLE_MISSING"
 	//   "REPORTING_INVALID_QUERY_MISSING_PARTNER_AND_ADVERTISER_FILTERS"
 	ErrorCode string `json:"errorCode,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorCode") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ErrorCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportFailure) MarshalJSON() ([]byte, error) {
+func (s ReportFailure) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportFailure
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportKey: Key used to identify a report.
 type ReportKey struct {
 	// QueryId: Query ID.
 	QueryId int64 `json:"queryId,omitempty,string"`
-
 	// ReportId: Report ID.
 	ReportId int64 `json:"reportId,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "QueryId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "QueryId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "QueryId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "QueryId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportKey) MarshalJSON() ([]byte, error) {
+func (s ReportKey) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportKey
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportMetadata: Report metadata.
 type ReportMetadata struct {
-	// GoogleCloudStoragePath: The path to the location in Google Cloud
-	// Storage where the report is stored.
+	// GoogleCloudStoragePath: The path to the location in Google Cloud Storage
+	// where the report is stored.
 	GoogleCloudStoragePath string `json:"googleCloudStoragePath,omitempty"`
-
-	// ReportDataEndTimeMs: The ending time for the data that is shown in
-	// the report.
+	// ReportDataEndTimeMs: The ending time for the data that is shown in the
+	// report.
 	ReportDataEndTimeMs int64 `json:"reportDataEndTimeMs,omitempty,string"`
-
-	// ReportDataStartTimeMs: The starting time for the data that is shown
-	// in the report.
+	// ReportDataStartTimeMs: The starting time for the data that is shown in the
+	// report.
 	ReportDataStartTimeMs int64 `json:"reportDataStartTimeMs,omitempty,string"`
-
 	// Status: Report status.
 	Status *ReportStatus `json:"status,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "GoogleCloudStoragePath") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "GoogleCloudStoragePath") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GoogleCloudStoragePath")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GoogleCloudStoragePath") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportMetadata) MarshalJSON() ([]byte, error) {
+func (s ReportMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportStatus: Report status.
 type ReportStatus struct {
 	// Failure: If the report failed, this records the cause.
 	Failure *ReportFailure `json:"failure,omitempty"`
-
-	// FinishTimeMs: The time when this report either completed successfully
-	// or failed.
+	// FinishTimeMs: The time when this report either completed successfully or
+	// failed.
 	FinishTimeMs int64 `json:"finishTimeMs,omitempty,string"`
-
 	// Format: The file type of the report.
 	//
 	// Possible values:
@@ -2368,7 +2206,6 @@ type ReportStatus struct {
 	//   "EXCEL_CSV"
 	//   "XLSX"
 	Format string `json:"format,omitempty"`
-
 	// State: The state of the report.
 	//
 	// Possible values:
@@ -2376,64 +2213,48 @@ type ReportStatus struct {
 	//   "DONE"
 	//   "FAILED"
 	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Failure") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Failure") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Failure") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Failure") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *ReportStatus) MarshalJSON() ([]byte, error) {
+func (s ReportStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Rule: A Rule defines a name, and a boolean expression in conjunctive
-// normal form (http:
-// //mathworld.wolfram.com/ConjunctiveNormalForm.html){.external} that
-// can be // applied to a path event to determine if that name should be
+// Rule: A Rule defines a name, and a boolean expression in conjunctive normal
+// form (http: //mathworld.wolfram.com/ConjunctiveNormalForm.html){.external}
+// that can be // applied to a path event to determine if that name should be
 // applied.
 type Rule struct {
 	DisjunctiveMatchStatements []*DisjunctiveMatchStatement `json:"disjunctiveMatchStatements,omitempty"`
-
 	// Name: Rule name.
 	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DisjunctiveMatchStatements") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DisjunctiveMatchStatements")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "DisjunctiveMatchStatements") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisjunctiveMatchStatements") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *Rule) MarshalJSON() ([]byte, error) {
+func (s Rule) MarshalJSON() ([]byte, error) {
 	type NoMethod Rule
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RunQueryRequest: Request to run a stored query to generate a report.
@@ -2462,45 +2283,34 @@ type RunQueryRequest struct {
 	//   "TYPE_NOT_SUPPORTED"
 	//   "LAST_60_DAYS"
 	DataRange string `json:"dataRange,omitempty"`
-
-	// ReportDataEndTimeMs: The ending time for the data that is shown in
-	// the report. Note, reportDataEndTimeMs is required if dataRange is
-	// CUSTOM_DATES and ignored otherwise.
+	// ReportDataEndTimeMs: The ending time for the data that is shown in the
+	// report. Note, reportDataEndTimeMs is required if dataRange is CUSTOM_DATES
+	// and ignored otherwise.
 	ReportDataEndTimeMs int64 `json:"reportDataEndTimeMs,omitempty,string"`
-
-	// ReportDataStartTimeMs: The starting time for the data that is shown
-	// in the report. Note, reportDataStartTimeMs is required if dataRange
-	// is CUSTOM_DATES and ignored otherwise.
+	// ReportDataStartTimeMs: The starting time for the data that is shown in the
+	// report. Note, reportDataStartTimeMs is required if dataRange is CUSTOM_DATES
+	// and ignored otherwise.
 	ReportDataStartTimeMs int64 `json:"reportDataStartTimeMs,omitempty,string"`
-
-	// TimezoneCode: Canonical timezone code for report data time. Defaults
-	// to America/New_York.
+	// TimezoneCode: Canonical timezone code for report data time. Defaults to
+	// America/New_York.
 	TimezoneCode string `json:"timezoneCode,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DataRange") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataRange") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
+func (s RunQueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunQueryRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "doubleclickbidmanager.queries.createquery":
 
 type QueriesCreatequeryCall struct {
 	s          *Service
@@ -2517,32 +2327,30 @@ func (r *QueriesService) Createquery(query *Query) *QueriesCreatequeryCall {
 	return c
 }
 
-// Asynchronous sets the optional parameter "asynchronous": If true,
-// tries to run the query asynchronously. Only applicable when the
-// frequency is ONE_TIME.
+// Asynchronous sets the optional parameter "asynchronous": If true, tries to
+// run the query asynchronously. Only applicable when the frequency is
+// ONE_TIME.
 func (c *QueriesCreatequeryCall) Asynchronous(asynchronous bool) *QueriesCreatequeryCall {
 	c.urlParams_.Set("asynchronous", fmt.Sprint(asynchronous))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *QueriesCreatequeryCall) Fields(s ...googleapi.Field) *QueriesCreatequeryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *QueriesCreatequeryCall) Context(ctx context.Context) *QueriesCreatequeryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *QueriesCreatequeryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2551,18 +2359,12 @@ func (c *QueriesCreatequeryCall) Header() http.Header {
 }
 
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.query)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "query")
@@ -2572,16 +2374,14 @@ func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "doubleclickbidmanager.queries.createquery" call.
-// Exactly one of *Query or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Query.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Query.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *QueriesCreatequeryCall) Do(opts ...googleapi.CallOption) (*Query, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2612,35 +2412,7 @@ func (c *QueriesCreatequeryCall) Do(opts ...googleapi.CallOption) (*Query, error
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a query.",
-	//   "flatPath": "query",
-	//   "httpMethod": "POST",
-	//   "id": "doubleclickbidmanager.queries.createquery",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "asynchronous": {
-	//       "default": "false",
-	//       "description": "If true, tries to run the query asynchronously. Only applicable when the frequency is ONE_TIME.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "query",
-	//   "request": {
-	//     "$ref": "Query"
-	//   },
-	//   "response": {
-	//     "$ref": "Query"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/doubleclickbidmanager"
-	//   ]
-	// }
-
 }
-
-// method id "doubleclickbidmanager.queries.deletequery":
 
 type QueriesDeletequeryCall struct {
 	s          *Service
@@ -2661,23 +2433,21 @@ func (r *QueriesService) Deletequery(queryId int64) *QueriesDeletequeryCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *QueriesDeletequeryCall) Fields(s ...googleapi.Field) *QueriesDeletequeryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *QueriesDeletequeryCall) Context(ctx context.Context) *QueriesDeletequeryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *QueriesDeletequeryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2686,12 +2456,7 @@ func (c *QueriesDeletequeryCall) Header() http.Header {
 }
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2705,7 +2470,7 @@ func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "doubleclickbidmanager.queries.deletequery" call.
@@ -2720,32 +2485,7 @@ func (c *QueriesDeletequeryCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a stored query as well as the associated stored reports.",
-	//   "flatPath": "query/{queryId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "doubleclickbidmanager.queries.deletequery",
-	//   "parameterOrder": [
-	//     "queryId"
-	//   ],
-	//   "parameters": {
-	//     "queryId": {
-	//       "description": "Query ID to delete.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "query/{queryId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/doubleclickbidmanager"
-	//   ]
-	// }
-
 }
-
-// method id "doubleclickbidmanager.queries.getquery":
 
 type QueriesGetqueryCall struct {
 	s            *Service
@@ -2766,33 +2506,29 @@ func (r *QueriesService) Getquery(queryId int64) *QueriesGetqueryCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *QueriesGetqueryCall) Fields(s ...googleapi.Field) *QueriesGetqueryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *QueriesGetqueryCall) IfNoneMatch(entityTag string) *QueriesGetqueryCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *QueriesGetqueryCall) Context(ctx context.Context) *QueriesGetqueryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *QueriesGetqueryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2801,12 +2537,7 @@ func (c *QueriesGetqueryCall) Header() http.Header {
 }
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2823,16 +2554,14 @@ func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "doubleclickbidmanager.queries.getquery" call.
-// Exactly one of *Query or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Query.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Query.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *QueriesGetqueryCall) Do(opts ...googleapi.CallOption) (*Query, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2863,35 +2592,7 @@ func (c *QueriesGetqueryCall) Do(opts ...googleapi.CallOption) (*Query, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a stored query.",
-	//   "flatPath": "query/{queryId}",
-	//   "httpMethod": "GET",
-	//   "id": "doubleclickbidmanager.queries.getquery",
-	//   "parameterOrder": [
-	//     "queryId"
-	//   ],
-	//   "parameters": {
-	//     "queryId": {
-	//       "description": "Query ID to retrieve.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "query/{queryId}",
-	//   "response": {
-	//     "$ref": "Query"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/doubleclickbidmanager"
-	//   ]
-	// }
-
 }
-
-// method id "doubleclickbidmanager.queries.listqueries":
 
 type QueriesListqueriesCall struct {
 	s            *Service
@@ -2907,49 +2608,44 @@ func (r *QueriesService) Listqueries() *QueriesListqueriesCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// results per page. Must be between 1 and 100. Defaults to 100 if
-// unspecified.
+// PageSize sets the optional parameter "pageSize": Maximum number of results
+// per page. Must be between 1 and 100. Defaults to 100 if unspecified.
 func (c *QueriesListqueriesCall) PageSize(pageSize int64) *QueriesListqueriesCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Optional
-// pagination token.
+// PageToken sets the optional parameter "pageToken": Optional pagination
+// token.
 func (c *QueriesListqueriesCall) PageToken(pageToken string) *QueriesListqueriesCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *QueriesListqueriesCall) Fields(s ...googleapi.Field) *QueriesListqueriesCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *QueriesListqueriesCall) IfNoneMatch(entityTag string) *QueriesListqueriesCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *QueriesListqueriesCall) Context(ctx context.Context) *QueriesListqueriesCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *QueriesListqueriesCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2958,12 +2654,7 @@ func (c *QueriesListqueriesCall) Header() http.Header {
 }
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2977,16 +2668,15 @@ func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "doubleclickbidmanager.queries.listqueries" call.
-// Exactly one of *ListQueriesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListQueriesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListQueriesResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *QueriesListqueriesCall) Do(opts ...googleapi.CallOption) (*ListQueriesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3017,34 +2707,6 @@ func (c *QueriesListqueriesCall) Do(opts ...googleapi.CallOption) (*ListQueriesR
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves stored queries.",
-	//   "flatPath": "queries",
-	//   "httpMethod": "GET",
-	//   "id": "doubleclickbidmanager.queries.listqueries",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Maximum number of results per page. Must be between 1 and 100. Defaults to 100 if unspecified.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional pagination token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "queries",
-	//   "response": {
-	//     "$ref": "ListQueriesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/doubleclickbidmanager"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3052,7 +2714,7 @@ func (c *QueriesListqueriesCall) Do(opts ...googleapi.CallOption) (*ListQueriesR
 // The provided context supersedes any context provided to the Context method.
 func (c *QueriesListqueriesCall) Pages(ctx context.Context, f func(*ListQueriesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3067,8 +2729,6 @@ func (c *QueriesListqueriesCall) Pages(ctx context.Context, f func(*ListQueriesR
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "doubleclickbidmanager.queries.runquery":
 
 type QueriesRunqueryCall struct {
 	s               *Service
@@ -3089,31 +2749,29 @@ func (r *QueriesService) Runquery(queryId int64, runqueryrequest *RunQueryReques
 	return c
 }
 
-// Asynchronous sets the optional parameter "asynchronous": If true,
-// tries to run the query asynchronously.
+// Asynchronous sets the optional parameter "asynchronous": If true, tries to
+// run the query asynchronously.
 func (c *QueriesRunqueryCall) Asynchronous(asynchronous bool) *QueriesRunqueryCall {
 	c.urlParams_.Set("asynchronous", fmt.Sprint(asynchronous))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *QueriesRunqueryCall) Fields(s ...googleapi.Field) *QueriesRunqueryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *QueriesRunqueryCall) Context(ctx context.Context) *QueriesRunqueryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *QueriesRunqueryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3122,18 +2780,12 @@ func (c *QueriesRunqueryCall) Header() http.Header {
 }
 
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runqueryrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "query/{queryId}")
@@ -3146,7 +2798,7 @@ func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "doubleclickbidmanager.queries.runquery" call.
@@ -3161,41 +2813,7 @@ func (c *QueriesRunqueryCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Runs a stored query to generate a report.",
-	//   "flatPath": "query/{queryId}",
-	//   "httpMethod": "POST",
-	//   "id": "doubleclickbidmanager.queries.runquery",
-	//   "parameterOrder": [
-	//     "queryId"
-	//   ],
-	//   "parameters": {
-	//     "asynchronous": {
-	//       "default": "false",
-	//       "description": "If true, tries to run the query asynchronously.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "queryId": {
-	//       "description": "Query ID to run.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "query/{queryId}",
-	//   "request": {
-	//     "$ref": "RunQueryRequest"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/doubleclickbidmanager"
-	//   ]
-	// }
-
 }
-
-// method id "doubleclickbidmanager.reports.listreports":
 
 type ReportsListreportsCall struct {
 	s            *Service
@@ -3215,49 +2833,44 @@ func (r *ReportsService) Listreports(queryId int64) *ReportsListreportsCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// results per page. Must be between 1 and 100. Defaults to 100 if
-// unspecified.
+// PageSize sets the optional parameter "pageSize": Maximum number of results
+// per page. Must be between 1 and 100. Defaults to 100 if unspecified.
 func (c *ReportsListreportsCall) PageSize(pageSize int64) *ReportsListreportsCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Optional
-// pagination token.
+// PageToken sets the optional parameter "pageToken": Optional pagination
+// token.
 func (c *ReportsListreportsCall) PageToken(pageToken string) *ReportsListreportsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ReportsListreportsCall) Fields(s ...googleapi.Field) *ReportsListreportsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ReportsListreportsCall) IfNoneMatch(entityTag string) *ReportsListreportsCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ReportsListreportsCall) Context(ctx context.Context) *ReportsListreportsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ReportsListreportsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3266,12 +2879,7 @@ func (c *ReportsListreportsCall) Header() http.Header {
 }
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3288,16 +2896,15 @@ func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"queryId": strconv.FormatInt(c.queryId, 10),
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "doubleclickbidmanager.reports.listreports" call.
-// Exactly one of *ListReportsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListReportsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListReportsResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ReportsListreportsCall) Do(opts ...googleapi.CallOption) (*ListReportsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3328,43 +2935,6 @@ func (c *ReportsListreportsCall) Do(opts ...googleapi.CallOption) (*ListReportsR
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves stored reports.",
-	//   "flatPath": "queries/{queryId}/reports",
-	//   "httpMethod": "GET",
-	//   "id": "doubleclickbidmanager.reports.listreports",
-	//   "parameterOrder": [
-	//     "queryId"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Maximum number of results per page. Must be between 1 and 100. Defaults to 100 if unspecified.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional pagination token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "queryId": {
-	//       "description": "Query ID with which the reports are associated.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "queries/{queryId}/reports",
-	//   "response": {
-	//     "$ref": "ListReportsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/doubleclickbidmanager"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3372,7 +2942,7 @@ func (c *ReportsListreportsCall) Do(opts ...googleapi.CallOption) (*ListReportsR
 // The provided context supersedes any context provided to the Context method.
 func (c *ReportsListreportsCall) Pages(ctx context.Context, f func(*ListReportsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

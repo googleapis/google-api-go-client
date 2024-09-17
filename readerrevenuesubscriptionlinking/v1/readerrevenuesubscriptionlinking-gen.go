@@ -334,7 +334,7 @@ func (c *PublicationsReadersDeleteCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "readerrevenuesubscriptionlinking.publications.readers.delete" call.
@@ -444,7 +444,7 @@ func (c *PublicationsReadersGetCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "readerrevenuesubscriptionlinking.publications.readers.get" call.
@@ -554,7 +554,7 @@ func (c *PublicationsReadersGetEntitlementsCall) doRequest(alt string) (*http.Re
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "readerrevenuesubscriptionlinking.publications.readers.getEntitlements" call.
@@ -667,7 +667,7 @@ func (c *PublicationsReadersUpdateEntitlementsCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "readerrevenuesubscriptionlinking.publications.readers.updateEntitlements" call.

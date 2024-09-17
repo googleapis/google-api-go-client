@@ -1036,7 +1036,7 @@ func (c *OrganizationsProtectedResourcesSearchCall) doRequest(alt string) (*http
 	googleapi.Expand(req.URL, map[string]string{
 		"scope": c.scope,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "kmsinventory.organizations.protectedResources.search" call.
@@ -1184,7 +1184,7 @@ func (c *ProjectsCryptoKeysListCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "kmsinventory.projects.cryptoKeys.list" call.
@@ -1317,7 +1317,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysGetProtectedResourcesSummaryCall) do
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "kmsinventory.projects.locations.keyRings.cryptoKeys.getProtectedResourcesSummary" call.

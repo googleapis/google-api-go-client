@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package cloudprivatecatalog provides access to the Cloud Private Catalog API.
 //
 // For product documentation, see: https://cloud.google.com/private-catalog/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	cloudprivatecatalogService, err := cloudprivatecatalog.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	cloudprivatecatalogService, err := cloudprivatecatalog.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	cloudprivatecatalogService, err := cloudprivatecatalog.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package cloudprivatecatalog // import "google.golang.org/api/cloudprivatecatalog/v1beta1"
 
 import (
@@ -50,6 +63,7 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
 	internaloption "google.golang.org/api/option/internaloption"
@@ -70,11 +84,14 @@ var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "cloudprivatecatalog:v1beta1"
 const apiName = "cloudprivatecatalog"
 const apiVersion = "v1beta1"
 const basePath = "https://cloudprivatecatalog.googleapis.com/"
+const basePathTemplate = "https://cloudprivatecatalog.UNIVERSE_DOMAIN/"
+const mtlsBasePath = "https://cloudprivatecatalog.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -84,12 +101,15 @@ const (
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := option.WithScopes(
+	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
+	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -274,66 +294,54 @@ type ProjectsVersionsService struct {
 	s *Service
 }
 
-// GoogleCloudPrivatecatalogV1beta1Catalog: The readonly representation
-// of a catalog computed with a given resource
+// GoogleCloudPrivatecatalogV1beta1Catalog: The readonly representation of a
+// catalog computed with a given resource
 // context.
 type GoogleCloudPrivatecatalogV1beta1Catalog struct {
 	// CreateTime: Output only. The time when the catalog was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Description: Output only. The description of the catalog.
 	Description string `json:"description,omitempty"`
-
-	// DisplayName: Output only. The descriptive name of the catalog as it
-	// appears in UIs.
+	// DisplayName: Output only. The descriptive name of the catalog as it appears
+	// in UIs.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Name: Output only. The resource name of the target catalog, in the
-	// format of
+	// Name: Output only. The resource name of the target catalog, in the format
+	// of
 	// `catalogs/{catalog_id}'.
 	Name string `json:"name,omitempty"`
-
 	// UpdateTime: Output only. The time when the catalog was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPrivatecatalogV1beta1Catalog) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPrivatecatalogV1beta1Catalog) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPrivatecatalogV1beta1Catalog
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPrivatecatalogV1beta1Product: The readonly representation
-// of a product computed with a given resource
+// GoogleCloudPrivatecatalogV1beta1Product: The readonly representation of a
+// product computed with a given resource
 // context.
 type GoogleCloudPrivatecatalogV1beta1Product struct {
-	// AssetType: Output only. The type of the product asset. It can be one
-	// of the
+	// AssetType: Output only. The type of the product asset. It can be one of
+	// the
 	// following values:
 	//
 	// * `google.deploymentmanager.Template`
 	// * `google.cloudprivatecatalog.ListingOnly`
 	AssetType string `json:"assetType,omitempty"`
-
 	// CreateTime: Output only. The time when the product was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// DisplayMetadata: Output only. The display metadata to describe the
 	// product.
 	// The JSON schema of the metadata differs by Product.asset_type.
@@ -373,8 +381,7 @@ type GoogleCloudPrivatecatalogV1beta1Product struct {
 	//         url:
 	//           type: string
 	//           pattern:
-	//
-	// "^(https?)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"
+	//           "^(https?)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"
 	//         title:
 	//           type: string
 	//           minLength: 1
@@ -426,8 +433,7 @@ type GoogleCloudPrivatecatalogV1beta1Product struct {
 	//         url:
 	//           type: string
 	//           pattern:
-	//
-	// "^(https?)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"
+	//           "^(https?)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"
 	//         title:
 	//           type: string
 	//           minLength: 1
@@ -441,222 +447,174 @@ type GoogleCloudPrivatecatalogV1beta1Product struct {
 	//     pattern:
 	//
 	// "^(https?)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"
-	// requ
-	// ired:
+	// required:
 	// - name
 	// - description
 	// - signup_url
 	// additionalProperties: false
 	// ```
 	DisplayMetadata googleapi.RawMessage `json:"displayMetadata,omitempty"`
-
 	// IconUri: Output only. The icon URI of the product.
 	IconUri string `json:"iconUri,omitempty"`
-
-	// Name: Output only. The resource name of the target product, in the
-	// format of
+	// Name: Output only. The resource name of the target product, in the format
+	// of
 	// `products/a-z*[a-z0-9]'.
 	//
 	// A unique identifier for the product under a catalog.
 	Name string `json:"name,omitempty"`
-
 	// UpdateTime: Output only. The time when the product was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AssetType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AssetType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AssetType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPrivatecatalogV1beta1Product) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPrivatecatalogV1beta1Product) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPrivatecatalogV1beta1Product
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse: Response
-// message for PrivateCatalog.SearchCatalogs.
+// GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse: Response message for
+// PrivateCatalog.SearchCatalogs.
 type GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse struct {
 	// Catalogs: The `Catalog`s computed from the resource context.
 	Catalogs []*GoogleCloudPrivatecatalogV1beta1Catalog `json:"catalogs,omitempty"`
-
 	// NextPageToken: A pagination token returned from a previous call to
 	// SearchCatalogs that
 	// indicates from where listing should continue.
 	// This field is optional.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Catalogs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Catalogs") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Catalogs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPrivatecatalogV1beta1SearchProductsResponse: Response
-// message for PrivateCatalog.SearchProducts.
+// GoogleCloudPrivatecatalogV1beta1SearchProductsResponse: Response message for
+// PrivateCatalog.SearchProducts.
 type GoogleCloudPrivatecatalogV1beta1SearchProductsResponse struct {
 	// NextPageToken: A pagination token returned from a previous call to
 	// SearchProducts that
 	// indicates from where listing should continue.
 	// This field is optional.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Products: The `Product` resources computed from the resource context.
 	Products []*GoogleCloudPrivatecatalogV1beta1Product `json:"products,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPrivatecatalogV1beta1SearchProductsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPrivatecatalogV1beta1SearchProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPrivatecatalogV1beta1SearchProductsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse: Response
-// message for PrivateCatalog.SearchVersions.
+// GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse: Response message for
+// PrivateCatalog.SearchVersions.
 type GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse struct {
 	// NextPageToken: A pagination token returned from a previous call to
 	// SearchVersions that
 	// indicates from where the listing should continue.
 	// This field is optional.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Versions: The `Version` resources computed from the resource context.
 	Versions []*GoogleCloudPrivatecatalogV1beta1Version `json:"versions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPrivatecatalogV1beta1Version: The consumer representation
-// of a version which is a child resource under a
+// GoogleCloudPrivatecatalogV1beta1Version: The consumer representation of a
+// version which is a child resource under a
 // `Product` with asset data.
 type GoogleCloudPrivatecatalogV1beta1Version struct {
-	// Asset: Output only. The asset which has been validated and is ready
-	// to be
-	// provisioned.
-	// See
+	// Asset: Output only. The asset which has been validated and is ready to
+	// be
+	// provisioned. See
 	// google.cloud.privatecatalogproducer.v1beta.Version.asset for details.
 	Asset googleapi.RawMessage `json:"asset,omitempty"`
-
 	// CreateTime: Output only. The time when the version was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Description: Output only. The user-supplied description of the
-	// version. Maximum of 256
+	// Description: Output only. The user-supplied description of the version.
+	// Maximum of 256
 	// characters.
 	Description string `json:"description,omitempty"`
-
 	// Name: Output only. The resource name of the version, in the
 	// format
-	// `catalogs/{catalog_id}/products/{product_id}/versions/a-z*[a-z0
-	// -9]'.
+	// `catalogs/{catalog_id}/products/{product_id}/versions/a-z*[a-z0-9]'.
 	//
 	// A unique identifier for the version under a product.
 	Name string `json:"name,omitempty"`
-
 	// UpdateTime: Output only. The time when the version was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Asset") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Asset") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Asset") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudPrivatecatalogV1beta1Version) MarshalJSON() ([]byte, error) {
+func (s GoogleCloudPrivatecatalogV1beta1Version) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPrivatecatalogV1beta1Version
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "cloudprivatecatalog.folders.catalogs.search":
 
 type FoldersCatalogsSearchCall struct {
 	s            *Service
@@ -667,17 +625,26 @@ type FoldersCatalogsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search Catalog resources that consumers have access to,
-// within the
+// Search: Search Catalog resources that consumers have access to, within
+// the
 // scope of the consumer cloud resource hierarchy context.
+//
+//   - resource: The name of the resource context. It can be in following
+//     formats:
+//
+//   - `projects/{project_id}`
+//
+//   - `folders/{folder_id}`
+//
+// * `organizations/{organization_id}`.
 func (r *FoldersCatalogsService) Search(resource string) *FoldersCatalogsSearchCall {
 	c := &FoldersCatalogsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of entries that are requested.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// entries that are requested.
 func (c *FoldersCatalogsSearchCall) PageSize(pageSize int64) *FoldersCatalogsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -692,8 +659,8 @@ func (c *FoldersCatalogsSearchCall) PageToken(pageToken string) *FoldersCatalogs
 	return c
 }
 
-// Query sets the optional parameter "query": The query to filter the
-// catalogs. The supported queries are:
+// Query sets the optional parameter "query": The query to filter the catalogs.
+// The supported queries are:
 //
 // * Get a single catalog: `name=catalogs/{catalog_id}`
 func (c *FoldersCatalogsSearchCall) Query(query string) *FoldersCatalogsSearchCall {
@@ -702,33 +669,29 @@ func (c *FoldersCatalogsSearchCall) Query(query string) *FoldersCatalogsSearchCa
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *FoldersCatalogsSearchCall) Fields(s ...googleapi.Field) *FoldersCatalogsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *FoldersCatalogsSearchCall) IfNoneMatch(entityTag string) *FoldersCatalogsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *FoldersCatalogsSearchCall) Context(ctx context.Context) *FoldersCatalogsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *FoldersCatalogsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -737,12 +700,7 @@ func (c *FoldersCatalogsSearchCall) Header() http.Header {
 }
 
 func (c *FoldersCatalogsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -759,19 +717,17 @@ func (c *FoldersCatalogsSearchCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudprivatecatalog.folders.catalogs.search" call.
-// Exactly one of
-// *GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *FoldersCatalogsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -779,17 +735,17 @@ func (c *FoldersCatalogsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -802,48 +758,6 @@ func (c *FoldersCatalogsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Search Catalog resources that consumers have access to, within the\nscope of the consumer cloud resource hierarchy context.",
-	//   "flatPath": "v1beta1/folders/{foldersId}/catalogs:search",
-	//   "httpMethod": "GET",
-	//   "id": "cloudprivatecatalog.folders.catalogs.search",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of entries that are requested.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to SearchCatalogs that\nindicates where this listing should continue from.\nThis field is optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "The query to filter the catalogs. The supported queries are:\n\n* Get a single catalog: `name=catalogs/{catalog_id}`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resource": {
-	//       "description": "Required. The name of the resource context. It can be in following formats:\n\n* `projects/{project_id}`\n* `folders/{folder_id}`\n* `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^folders/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}/catalogs:search",
-	//   "response": {
-	//     "$ref": "GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -851,7 +765,7 @@ func (c *FoldersCatalogsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 // The provided context supersedes any context provided to the Context method.
 func (c *FoldersCatalogsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -867,8 +781,6 @@ func (c *FoldersCatalogsSearchCall) Pages(ctx context.Context, f func(*GoogleClo
 	}
 }
 
-// method id "cloudprivatecatalog.folders.products.search":
-
 type FoldersProductsSearchCall struct {
 	s            *Service
 	resource     string
@@ -878,17 +790,22 @@ type FoldersProductsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search Product resources that consumers have access to,
-// within the
+// Search: Search Product resources that consumers have access to, within
+// the
 // scope of the consumer cloud resource hierarchy context.
+//
+//   - resource: The name of the resource context.
+//     See
+//
+// SearchCatalogsRequest.resource for details.
 func (r *FoldersProductsService) Search(resource string) *FoldersProductsSearchCall {
 	c := &FoldersProductsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of entries that are requested.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// entries that are requested.
 func (c *FoldersProductsSearchCall) PageSize(pageSize int64) *FoldersProductsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -909,8 +826,7 @@ func (c *FoldersProductsSearchCall) PageToken(pageToken string) *FoldersProducts
 // The supported queries are:
 // * List products of all catalogs: empty
 // * List products under a catalog: `parent=catalogs/{catalog_id}`
-// * Get a product by
-// name:
+// * Get a product by name:
 // `name=catalogs/{catalog_id}/products/{product_id}`
 func (c *FoldersProductsSearchCall) Query(query string) *FoldersProductsSearchCall {
 	c.urlParams_.Set("query", query)
@@ -918,33 +834,29 @@ func (c *FoldersProductsSearchCall) Query(query string) *FoldersProductsSearchCa
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *FoldersProductsSearchCall) Fields(s ...googleapi.Field) *FoldersProductsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *FoldersProductsSearchCall) IfNoneMatch(entityTag string) *FoldersProductsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *FoldersProductsSearchCall) Context(ctx context.Context) *FoldersProductsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *FoldersProductsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -953,12 +865,7 @@ func (c *FoldersProductsSearchCall) Header() http.Header {
 }
 
 func (c *FoldersProductsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -975,19 +882,17 @@ func (c *FoldersProductsSearchCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudprivatecatalog.folders.products.search" call.
-// Exactly one of
-// *GoogleCloudPrivatecatalogV1beta1SearchProductsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudPrivatecatalogV1beta1SearchProductsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPrivatecatalogV1beta1SearchProductsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *FoldersProductsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPrivatecatalogV1beta1SearchProductsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -995,17 +900,17 @@ func (c *FoldersProductsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudPrivatecatalogV1beta1SearchProductsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1018,48 +923,6 @@ func (c *FoldersProductsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Search Product resources that consumers have access to, within the\nscope of the consumer cloud resource hierarchy context.",
-	//   "flatPath": "v1beta1/folders/{foldersId}/products:search",
-	//   "httpMethod": "GET",
-	//   "id": "cloudprivatecatalog.folders.products.search",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of entries that are requested.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to SearchProducts that\nindicates where this listing should continue from.\nThis field is optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "The query to filter the products.\n\nThe supported queries are:\n* List products of all catalogs: empty\n* List products under a catalog: `parent=catalogs/{catalog_id}`\n* Get a product by name:\n`name=catalogs/{catalog_id}/products/{product_id}`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resource": {
-	//       "description": "Required. The name of the resource context. See\nSearchCatalogsRequest.resource for details.",
-	//       "location": "path",
-	//       "pattern": "^folders/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}/products:search",
-	//   "response": {
-	//     "$ref": "GoogleCloudPrivatecatalogV1beta1SearchProductsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1067,7 +930,7 @@ func (c *FoldersProductsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 // The provided context supersedes any context provided to the Context method.
 func (c *FoldersProductsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudPrivatecatalogV1beta1SearchProductsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1083,8 +946,6 @@ func (c *FoldersProductsSearchCall) Pages(ctx context.Context, f func(*GoogleClo
 	}
 }
 
-// method id "cloudprivatecatalog.folders.versions.search":
-
 type FoldersVersionsSearchCall struct {
 	s            *Service
 	resource     string
@@ -1094,17 +955,22 @@ type FoldersVersionsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search Version resources that consumers have access to,
-// within the
+// Search: Search Version resources that consumers have access to, within
+// the
 // scope of the consumer cloud resource hierarchy context.
+//
+//   - resource: The name of the resource context.
+//     See
+//
+// SearchCatalogsRequest.resource for details.
 func (r *FoldersVersionsService) Search(resource string) *FoldersVersionsSearchCall {
 	c := &FoldersVersionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of entries that are requested.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// entries that are requested.
 func (c *FoldersVersionsSearchCall) PageSize(pageSize int64) *FoldersVersionsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1119,8 +985,8 @@ func (c *FoldersVersionsSearchCall) PageToken(pageToken string) *FoldersVersions
 	return c
 }
 
-// Query sets the optional parameter "query": The query to filter the
-// versions. Required.
+// Query sets the optional parameter "query": The query to filter the versions.
+// Required.
 //
 // The supported queries are:
 // * List versions under a
@@ -1128,41 +994,36 @@ func (c *FoldersVersionsSearchCall) PageToken(pageToken string) *FoldersVersions
 // `parent=catalogs/{catalog_id}/products/{product_id}`
 // * Get a version by
 // name:
-// `name=catalogs/{catalog_id}/products/{product_id}/versions/{vers
-// ion_id}`
+// `name=catalogs/{catalog_id}/products/{product_id}/versions/{version_id}`
 func (c *FoldersVersionsSearchCall) Query(query string) *FoldersVersionsSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *FoldersVersionsSearchCall) Fields(s ...googleapi.Field) *FoldersVersionsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *FoldersVersionsSearchCall) IfNoneMatch(entityTag string) *FoldersVersionsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *FoldersVersionsSearchCall) Context(ctx context.Context) *FoldersVersionsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *FoldersVersionsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1171,12 +1032,7 @@ func (c *FoldersVersionsSearchCall) Header() http.Header {
 }
 
 func (c *FoldersVersionsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1193,19 +1049,17 @@ func (c *FoldersVersionsSearchCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudprivatecatalog.folders.versions.search" call.
-// Exactly one of
-// *GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *FoldersVersionsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1213,17 +1067,17 @@ func (c *FoldersVersionsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1236,48 +1090,6 @@ func (c *FoldersVersionsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Search Version resources that consumers have access to, within the\nscope of the consumer cloud resource hierarchy context.",
-	//   "flatPath": "v1beta1/folders/{foldersId}/versions:search",
-	//   "httpMethod": "GET",
-	//   "id": "cloudprivatecatalog.folders.versions.search",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of entries that are requested.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to SearchVersions\nthat indicates where this listing should continue from.\nThis field is optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "The query to filter the versions. Required.\n\nThe supported queries are:\n* List versions under a product:\n`parent=catalogs/{catalog_id}/products/{product_id}`\n* Get a version by name:\n`name=catalogs/{catalog_id}/products/{product_id}/versions/{version_id}`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resource": {
-	//       "description": "Required. The name of the resource context. See\nSearchCatalogsRequest.resource for details.",
-	//       "location": "path",
-	//       "pattern": "^folders/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}/versions:search",
-	//   "response": {
-	//     "$ref": "GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1285,7 +1097,7 @@ func (c *FoldersVersionsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 // The provided context supersedes any context provided to the Context method.
 func (c *FoldersVersionsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1301,8 +1113,6 @@ func (c *FoldersVersionsSearchCall) Pages(ctx context.Context, f func(*GoogleClo
 	}
 }
 
-// method id "cloudprivatecatalog.organizations.catalogs.search":
-
 type OrganizationsCatalogsSearchCall struct {
 	s            *Service
 	resource     string
@@ -1312,17 +1122,26 @@ type OrganizationsCatalogsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search Catalog resources that consumers have access to,
-// within the
+// Search: Search Catalog resources that consumers have access to, within
+// the
 // scope of the consumer cloud resource hierarchy context.
+//
+//   - resource: The name of the resource context. It can be in following
+//     formats:
+//
+//   - `projects/{project_id}`
+//
+//   - `folders/{folder_id}`
+//
+// * `organizations/{organization_id}`.
 func (r *OrganizationsCatalogsService) Search(resource string) *OrganizationsCatalogsSearchCall {
 	c := &OrganizationsCatalogsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of entries that are requested.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// entries that are requested.
 func (c *OrganizationsCatalogsSearchCall) PageSize(pageSize int64) *OrganizationsCatalogsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1337,8 +1156,8 @@ func (c *OrganizationsCatalogsSearchCall) PageToken(pageToken string) *Organizat
 	return c
 }
 
-// Query sets the optional parameter "query": The query to filter the
-// catalogs. The supported queries are:
+// Query sets the optional parameter "query": The query to filter the catalogs.
+// The supported queries are:
 //
 // * Get a single catalog: `name=catalogs/{catalog_id}`
 func (c *OrganizationsCatalogsSearchCall) Query(query string) *OrganizationsCatalogsSearchCall {
@@ -1347,33 +1166,29 @@ func (c *OrganizationsCatalogsSearchCall) Query(query string) *OrganizationsCata
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsCatalogsSearchCall) Fields(s ...googleapi.Field) *OrganizationsCatalogsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsCatalogsSearchCall) IfNoneMatch(entityTag string) *OrganizationsCatalogsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsCatalogsSearchCall) Context(ctx context.Context) *OrganizationsCatalogsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsCatalogsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1382,12 +1197,7 @@ func (c *OrganizationsCatalogsSearchCall) Header() http.Header {
 }
 
 func (c *OrganizationsCatalogsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1404,19 +1214,17 @@ func (c *OrganizationsCatalogsSearchCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudprivatecatalog.organizations.catalogs.search" call.
-// Exactly one of
-// *GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsCatalogsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1424,17 +1232,17 @@ func (c *OrganizationsCatalogsSearchCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1447,48 +1255,6 @@ func (c *OrganizationsCatalogsSearchCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Search Catalog resources that consumers have access to, within the\nscope of the consumer cloud resource hierarchy context.",
-	//   "flatPath": "v1beta1/organizations/{organizationsId}/catalogs:search",
-	//   "httpMethod": "GET",
-	//   "id": "cloudprivatecatalog.organizations.catalogs.search",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of entries that are requested.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to SearchCatalogs that\nindicates where this listing should continue from.\nThis field is optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "The query to filter the catalogs. The supported queries are:\n\n* Get a single catalog: `name=catalogs/{catalog_id}`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resource": {
-	//       "description": "Required. The name of the resource context. It can be in following formats:\n\n* `projects/{project_id}`\n* `folders/{folder_id}`\n* `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}/catalogs:search",
-	//   "response": {
-	//     "$ref": "GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1496,7 +1262,7 @@ func (c *OrganizationsCatalogsSearchCall) Do(opts ...googleapi.CallOption) (*Goo
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsCatalogsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1512,8 +1278,6 @@ func (c *OrganizationsCatalogsSearchCall) Pages(ctx context.Context, f func(*Goo
 	}
 }
 
-// method id "cloudprivatecatalog.organizations.products.search":
-
 type OrganizationsProductsSearchCall struct {
 	s            *Service
 	resource     string
@@ -1523,17 +1287,22 @@ type OrganizationsProductsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search Product resources that consumers have access to,
-// within the
+// Search: Search Product resources that consumers have access to, within
+// the
 // scope of the consumer cloud resource hierarchy context.
+//
+//   - resource: The name of the resource context.
+//     See
+//
+// SearchCatalogsRequest.resource for details.
 func (r *OrganizationsProductsService) Search(resource string) *OrganizationsProductsSearchCall {
 	c := &OrganizationsProductsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of entries that are requested.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// entries that are requested.
 func (c *OrganizationsProductsSearchCall) PageSize(pageSize int64) *OrganizationsProductsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1554,8 +1323,7 @@ func (c *OrganizationsProductsSearchCall) PageToken(pageToken string) *Organizat
 // The supported queries are:
 // * List products of all catalogs: empty
 // * List products under a catalog: `parent=catalogs/{catalog_id}`
-// * Get a product by
-// name:
+// * Get a product by name:
 // `name=catalogs/{catalog_id}/products/{product_id}`
 func (c *OrganizationsProductsSearchCall) Query(query string) *OrganizationsProductsSearchCall {
 	c.urlParams_.Set("query", query)
@@ -1563,33 +1331,29 @@ func (c *OrganizationsProductsSearchCall) Query(query string) *OrganizationsProd
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsProductsSearchCall) Fields(s ...googleapi.Field) *OrganizationsProductsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsProductsSearchCall) IfNoneMatch(entityTag string) *OrganizationsProductsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsProductsSearchCall) Context(ctx context.Context) *OrganizationsProductsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsProductsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1598,12 +1362,7 @@ func (c *OrganizationsProductsSearchCall) Header() http.Header {
 }
 
 func (c *OrganizationsProductsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1620,19 +1379,17 @@ func (c *OrganizationsProductsSearchCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudprivatecatalog.organizations.products.search" call.
-// Exactly one of
-// *GoogleCloudPrivatecatalogV1beta1SearchProductsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudPrivatecatalogV1beta1SearchProductsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPrivatecatalogV1beta1SearchProductsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsProductsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPrivatecatalogV1beta1SearchProductsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1640,17 +1397,17 @@ func (c *OrganizationsProductsSearchCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudPrivatecatalogV1beta1SearchProductsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1663,48 +1420,6 @@ func (c *OrganizationsProductsSearchCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Search Product resources that consumers have access to, within the\nscope of the consumer cloud resource hierarchy context.",
-	//   "flatPath": "v1beta1/organizations/{organizationsId}/products:search",
-	//   "httpMethod": "GET",
-	//   "id": "cloudprivatecatalog.organizations.products.search",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of entries that are requested.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to SearchProducts that\nindicates where this listing should continue from.\nThis field is optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "The query to filter the products.\n\nThe supported queries are:\n* List products of all catalogs: empty\n* List products under a catalog: `parent=catalogs/{catalog_id}`\n* Get a product by name:\n`name=catalogs/{catalog_id}/products/{product_id}`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resource": {
-	//       "description": "Required. The name of the resource context. See\nSearchCatalogsRequest.resource for details.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}/products:search",
-	//   "response": {
-	//     "$ref": "GoogleCloudPrivatecatalogV1beta1SearchProductsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1712,7 +1427,7 @@ func (c *OrganizationsProductsSearchCall) Do(opts ...googleapi.CallOption) (*Goo
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsProductsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudPrivatecatalogV1beta1SearchProductsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1728,8 +1443,6 @@ func (c *OrganizationsProductsSearchCall) Pages(ctx context.Context, f func(*Goo
 	}
 }
 
-// method id "cloudprivatecatalog.organizations.versions.search":
-
 type OrganizationsVersionsSearchCall struct {
 	s            *Service
 	resource     string
@@ -1739,17 +1452,22 @@ type OrganizationsVersionsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search Version resources that consumers have access to,
-// within the
+// Search: Search Version resources that consumers have access to, within
+// the
 // scope of the consumer cloud resource hierarchy context.
+//
+//   - resource: The name of the resource context.
+//     See
+//
+// SearchCatalogsRequest.resource for details.
 func (r *OrganizationsVersionsService) Search(resource string) *OrganizationsVersionsSearchCall {
 	c := &OrganizationsVersionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of entries that are requested.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// entries that are requested.
 func (c *OrganizationsVersionsSearchCall) PageSize(pageSize int64) *OrganizationsVersionsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1764,8 +1482,8 @@ func (c *OrganizationsVersionsSearchCall) PageToken(pageToken string) *Organizat
 	return c
 }
 
-// Query sets the optional parameter "query": The query to filter the
-// versions. Required.
+// Query sets the optional parameter "query": The query to filter the versions.
+// Required.
 //
 // The supported queries are:
 // * List versions under a
@@ -1773,41 +1491,36 @@ func (c *OrganizationsVersionsSearchCall) PageToken(pageToken string) *Organizat
 // `parent=catalogs/{catalog_id}/products/{product_id}`
 // * Get a version by
 // name:
-// `name=catalogs/{catalog_id}/products/{product_id}/versions/{vers
-// ion_id}`
+// `name=catalogs/{catalog_id}/products/{product_id}/versions/{version_id}`
 func (c *OrganizationsVersionsSearchCall) Query(query string) *OrganizationsVersionsSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsVersionsSearchCall) Fields(s ...googleapi.Field) *OrganizationsVersionsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsVersionsSearchCall) IfNoneMatch(entityTag string) *OrganizationsVersionsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsVersionsSearchCall) Context(ctx context.Context) *OrganizationsVersionsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsVersionsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1816,12 +1529,7 @@ func (c *OrganizationsVersionsSearchCall) Header() http.Header {
 }
 
 func (c *OrganizationsVersionsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1838,19 +1546,17 @@ func (c *OrganizationsVersionsSearchCall) doRequest(alt string) (*http.Response,
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudprivatecatalog.organizations.versions.search" call.
-// Exactly one of
-// *GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsVersionsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1858,17 +1564,17 @@ func (c *OrganizationsVersionsSearchCall) Do(opts ...googleapi.CallOption) (*Goo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -1881,48 +1587,6 @@ func (c *OrganizationsVersionsSearchCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Search Version resources that consumers have access to, within the\nscope of the consumer cloud resource hierarchy context.",
-	//   "flatPath": "v1beta1/organizations/{organizationsId}/versions:search",
-	//   "httpMethod": "GET",
-	//   "id": "cloudprivatecatalog.organizations.versions.search",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of entries that are requested.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to SearchVersions\nthat indicates where this listing should continue from.\nThis field is optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "The query to filter the versions. Required.\n\nThe supported queries are:\n* List versions under a product:\n`parent=catalogs/{catalog_id}/products/{product_id}`\n* Get a version by name:\n`name=catalogs/{catalog_id}/products/{product_id}/versions/{version_id}`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resource": {
-	//       "description": "Required. The name of the resource context. See\nSearchCatalogsRequest.resource for details.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}/versions:search",
-	//   "response": {
-	//     "$ref": "GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1930,7 +1594,7 @@ func (c *OrganizationsVersionsSearchCall) Do(opts ...googleapi.CallOption) (*Goo
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsVersionsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1946,8 +1610,6 @@ func (c *OrganizationsVersionsSearchCall) Pages(ctx context.Context, f func(*Goo
 	}
 }
 
-// method id "cloudprivatecatalog.projects.catalogs.search":
-
 type ProjectsCatalogsSearchCall struct {
 	s            *Service
 	resource     string
@@ -1957,17 +1619,26 @@ type ProjectsCatalogsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search Catalog resources that consumers have access to,
-// within the
+// Search: Search Catalog resources that consumers have access to, within
+// the
 // scope of the consumer cloud resource hierarchy context.
+//
+//   - resource: The name of the resource context. It can be in following
+//     formats:
+//
+//   - `projects/{project_id}`
+//
+//   - `folders/{folder_id}`
+//
+// * `organizations/{organization_id}`.
 func (r *ProjectsCatalogsService) Search(resource string) *ProjectsCatalogsSearchCall {
 	c := &ProjectsCatalogsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of entries that are requested.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// entries that are requested.
 func (c *ProjectsCatalogsSearchCall) PageSize(pageSize int64) *ProjectsCatalogsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1982,8 +1653,8 @@ func (c *ProjectsCatalogsSearchCall) PageToken(pageToken string) *ProjectsCatalo
 	return c
 }
 
-// Query sets the optional parameter "query": The query to filter the
-// catalogs. The supported queries are:
+// Query sets the optional parameter "query": The query to filter the catalogs.
+// The supported queries are:
 //
 // * Get a single catalog: `name=catalogs/{catalog_id}`
 func (c *ProjectsCatalogsSearchCall) Query(query string) *ProjectsCatalogsSearchCall {
@@ -1992,33 +1663,29 @@ func (c *ProjectsCatalogsSearchCall) Query(query string) *ProjectsCatalogsSearch
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsCatalogsSearchCall) Fields(s ...googleapi.Field) *ProjectsCatalogsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsCatalogsSearchCall) IfNoneMatch(entityTag string) *ProjectsCatalogsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsCatalogsSearchCall) Context(ctx context.Context) *ProjectsCatalogsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsCatalogsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2027,12 +1694,7 @@ func (c *ProjectsCatalogsSearchCall) Header() http.Header {
 }
 
 func (c *ProjectsCatalogsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2049,19 +1711,17 @@ func (c *ProjectsCatalogsSearchCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudprivatecatalog.projects.catalogs.search" call.
-// Exactly one of
-// *GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsCatalogsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2069,17 +1729,17 @@ func (c *ProjectsCatalogsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2092,48 +1752,6 @@ func (c *ProjectsCatalogsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Search Catalog resources that consumers have access to, within the\nscope of the consumer cloud resource hierarchy context.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/catalogs:search",
-	//   "httpMethod": "GET",
-	//   "id": "cloudprivatecatalog.projects.catalogs.search",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of entries that are requested.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to SearchCatalogs that\nindicates where this listing should continue from.\nThis field is optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "The query to filter the catalogs. The supported queries are:\n\n* Get a single catalog: `name=catalogs/{catalog_id}`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resource": {
-	//       "description": "Required. The name of the resource context. It can be in following formats:\n\n* `projects/{project_id}`\n* `folders/{folder_id}`\n* `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}/catalogs:search",
-	//   "response": {
-	//     "$ref": "GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2141,7 +1759,7 @@ func (c *ProjectsCatalogsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsCatalogsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudPrivatecatalogV1beta1SearchCatalogsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2157,8 +1775,6 @@ func (c *ProjectsCatalogsSearchCall) Pages(ctx context.Context, f func(*GoogleCl
 	}
 }
 
-// method id "cloudprivatecatalog.projects.products.search":
-
 type ProjectsProductsSearchCall struct {
 	s            *Service
 	resource     string
@@ -2168,17 +1784,22 @@ type ProjectsProductsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search Product resources that consumers have access to,
-// within the
+// Search: Search Product resources that consumers have access to, within
+// the
 // scope of the consumer cloud resource hierarchy context.
+//
+//   - resource: The name of the resource context.
+//     See
+//
+// SearchCatalogsRequest.resource for details.
 func (r *ProjectsProductsService) Search(resource string) *ProjectsProductsSearchCall {
 	c := &ProjectsProductsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of entries that are requested.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// entries that are requested.
 func (c *ProjectsProductsSearchCall) PageSize(pageSize int64) *ProjectsProductsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2199,8 +1820,7 @@ func (c *ProjectsProductsSearchCall) PageToken(pageToken string) *ProjectsProduc
 // The supported queries are:
 // * List products of all catalogs: empty
 // * List products under a catalog: `parent=catalogs/{catalog_id}`
-// * Get a product by
-// name:
+// * Get a product by name:
 // `name=catalogs/{catalog_id}/products/{product_id}`
 func (c *ProjectsProductsSearchCall) Query(query string) *ProjectsProductsSearchCall {
 	c.urlParams_.Set("query", query)
@@ -2208,33 +1828,29 @@ func (c *ProjectsProductsSearchCall) Query(query string) *ProjectsProductsSearch
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsProductsSearchCall) Fields(s ...googleapi.Field) *ProjectsProductsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsProductsSearchCall) IfNoneMatch(entityTag string) *ProjectsProductsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsProductsSearchCall) Context(ctx context.Context) *ProjectsProductsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsProductsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2243,12 +1859,7 @@ func (c *ProjectsProductsSearchCall) Header() http.Header {
 }
 
 func (c *ProjectsProductsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2265,19 +1876,17 @@ func (c *ProjectsProductsSearchCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudprivatecatalog.projects.products.search" call.
-// Exactly one of
-// *GoogleCloudPrivatecatalogV1beta1SearchProductsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudPrivatecatalogV1beta1SearchProductsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPrivatecatalogV1beta1SearchProductsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsProductsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPrivatecatalogV1beta1SearchProductsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2285,17 +1894,17 @@ func (c *ProjectsProductsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudPrivatecatalogV1beta1SearchProductsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2308,48 +1917,6 @@ func (c *ProjectsProductsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Search Product resources that consumers have access to, within the\nscope of the consumer cloud resource hierarchy context.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/products:search",
-	//   "httpMethod": "GET",
-	//   "id": "cloudprivatecatalog.projects.products.search",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of entries that are requested.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to SearchProducts that\nindicates where this listing should continue from.\nThis field is optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "The query to filter the products.\n\nThe supported queries are:\n* List products of all catalogs: empty\n* List products under a catalog: `parent=catalogs/{catalog_id}`\n* Get a product by name:\n`name=catalogs/{catalog_id}/products/{product_id}`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resource": {
-	//       "description": "Required. The name of the resource context. See\nSearchCatalogsRequest.resource for details.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}/products:search",
-	//   "response": {
-	//     "$ref": "GoogleCloudPrivatecatalogV1beta1SearchProductsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2357,7 +1924,7 @@ func (c *ProjectsProductsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsProductsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudPrivatecatalogV1beta1SearchProductsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2373,8 +1940,6 @@ func (c *ProjectsProductsSearchCall) Pages(ctx context.Context, f func(*GoogleCl
 	}
 }
 
-// method id "cloudprivatecatalog.projects.versions.search":
-
 type ProjectsVersionsSearchCall struct {
 	s            *Service
 	resource     string
@@ -2384,17 +1949,22 @@ type ProjectsVersionsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search Version resources that consumers have access to,
-// within the
+// Search: Search Version resources that consumers have access to, within
+// the
 // scope of the consumer cloud resource hierarchy context.
+//
+//   - resource: The name of the resource context.
+//     See
+//
+// SearchCatalogsRequest.resource for details.
 func (r *ProjectsVersionsService) Search(resource string) *ProjectsVersionsSearchCall {
 	c := &ProjectsVersionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of entries that are requested.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// entries that are requested.
 func (c *ProjectsVersionsSearchCall) PageSize(pageSize int64) *ProjectsVersionsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2409,8 +1979,8 @@ func (c *ProjectsVersionsSearchCall) PageToken(pageToken string) *ProjectsVersio
 	return c
 }
 
-// Query sets the optional parameter "query": The query to filter the
-// versions. Required.
+// Query sets the optional parameter "query": The query to filter the versions.
+// Required.
 //
 // The supported queries are:
 // * List versions under a
@@ -2418,41 +1988,36 @@ func (c *ProjectsVersionsSearchCall) PageToken(pageToken string) *ProjectsVersio
 // `parent=catalogs/{catalog_id}/products/{product_id}`
 // * Get a version by
 // name:
-// `name=catalogs/{catalog_id}/products/{product_id}/versions/{vers
-// ion_id}`
+// `name=catalogs/{catalog_id}/products/{product_id}/versions/{version_id}`
 func (c *ProjectsVersionsSearchCall) Query(query string) *ProjectsVersionsSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsVersionsSearchCall) Fields(s ...googleapi.Field) *ProjectsVersionsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsVersionsSearchCall) IfNoneMatch(entityTag string) *ProjectsVersionsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsVersionsSearchCall) Context(ctx context.Context) *ProjectsVersionsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsVersionsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2461,12 +2026,7 @@ func (c *ProjectsVersionsSearchCall) Header() http.Header {
 }
 
 func (c *ProjectsVersionsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20200310")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2483,19 +2043,17 @@ func (c *ProjectsVersionsSearchCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "cloudprivatecatalog.projects.versions.search" call.
-// Exactly one of
-// *GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsVersionsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2503,17 +2061,17 @@ func (c *ProjectsVersionsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse{
 		ServerResponse: googleapi.ServerResponse{
@@ -2526,48 +2084,6 @@ func (c *ProjectsVersionsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Search Version resources that consumers have access to, within the\nscope of the consumer cloud resource hierarchy context.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/versions:search",
-	//   "httpMethod": "GET",
-	//   "id": "cloudprivatecatalog.projects.versions.search",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of entries that are requested.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to SearchVersions\nthat indicates where this listing should continue from.\nThis field is optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "The query to filter the versions. Required.\n\nThe supported queries are:\n* List versions under a product:\n`parent=catalogs/{catalog_id}/products/{product_id}`\n* Get a version by name:\n`name=catalogs/{catalog_id}/products/{product_id}/versions/{version_id}`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resource": {
-	//       "description": "Required. The name of the resource context. See\nSearchCatalogsRequest.resource for details.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}/versions:search",
-	//   "response": {
-	//     "$ref": "GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2575,7 +2091,7 @@ func (c *ProjectsVersionsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsVersionsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudPrivatecatalogV1beta1SearchVersionsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

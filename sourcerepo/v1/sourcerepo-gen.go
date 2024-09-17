@@ -228,9 +228,9 @@ type AuditConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
+func (s AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
@@ -263,9 +263,9 @@ type AuditLogConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
+func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
@@ -362,9 +362,9 @@ type Binding struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Binding) MarshalJSON() ([]byte, error) {
+func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -419,9 +419,9 @@ type Expr struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Expr) MarshalJSON() ([]byte, error) {
+func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListReposResponse: Response for ListRepos. The size is not set in the
@@ -449,9 +449,9 @@ type ListReposResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ListReposResponse) MarshalJSON() ([]byte, error) {
+func (s ListReposResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReposResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // MirrorConfig: Configuration to automatically mirror a repository from
@@ -481,9 +481,9 @@ type MirrorConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *MirrorConfig) MarshalJSON() ([]byte, error) {
+func (s MirrorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MirrorConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Operation: This resource represents a long-running operation that is the
@@ -528,9 +528,9 @@ type Operation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Operation) MarshalJSON() ([]byte, error) {
+func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: An Identity and Access Management (IAM) policy, which specifies
@@ -620,9 +620,9 @@ type Policy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Policy) MarshalJSON() ([]byte, error) {
+func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ProjectConfig: Cloud Source Repositories configuration of a project.
@@ -650,9 +650,9 @@ type ProjectConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ProjectConfig) MarshalJSON() ([]byte, error) {
+func (s ProjectConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ProjectConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PubsubConfig: Configuration to publish a Cloud Pub/Sub message.
@@ -687,9 +687,9 @@ type PubsubConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *PubsubConfig) MarshalJSON() ([]byte, error) {
+func (s PubsubConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubConfig
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Repo: A repository (or repo) is a Git repository storing versioned source
@@ -727,9 +727,9 @@ type Repo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Repo) MarshalJSON() ([]byte, error) {
+func (s Repo) MarshalJSON() ([]byte, error) {
 	type NoMethod Repo
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -756,9 +756,9 @@ type SetIamPolicyRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is suitable for
@@ -790,9 +790,9 @@ type Status struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Status) MarshalJSON() ([]byte, error) {
+func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SyncRepoMetadata: Metadata of SyncRepo. This message is in the metadata
@@ -820,9 +820,9 @@ type SyncRepoMetadata struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *SyncRepoMetadata) MarshalJSON() ([]byte, error) {
+func (s SyncRepoMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod SyncRepoMetadata
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SyncRepoRequest: Request for SyncRepo.
@@ -849,9 +849,9 @@ type TestIamPermissionsRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
@@ -876,9 +876,9 @@ type TestIamPermissionsResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateProjectConfigRequest: Request for UpdateProjectConfig.
@@ -902,9 +902,9 @@ type UpdateProjectConfigRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateProjectConfigRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateProjectConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateProjectConfigRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateRepoRequest: Request for UpdateRepo.
@@ -928,9 +928,9 @@ type UpdateRepoRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *UpdateRepoRequest) MarshalJSON() ([]byte, error) {
+func (s UpdateRepoRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateRepoRequest
-	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsGetConfigCall struct {
@@ -1002,7 +1002,7 @@ func (c *ProjectsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "sourcerepo.projects.getConfig" call.
@@ -1105,7 +1105,7 @@ func (c *ProjectsUpdateConfigCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "sourcerepo.projects.updateConfig" call.
@@ -1208,7 +1208,7 @@ func (c *ProjectsReposCreateCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "sourcerepo.projects.repos.create" call.
@@ -1304,7 +1304,7 @@ func (c *ProjectsReposDeleteCall) doRequest(alt string) (*http.Response, error) 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "sourcerepo.projects.repos.delete" call.
@@ -1412,7 +1412,7 @@ func (c *ProjectsReposGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "sourcerepo.projects.repos.get" call.
@@ -1539,7 +1539,7 @@ func (c *ProjectsReposGetIamPolicyCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "sourcerepo.projects.repos.getIamPolicy" call.
@@ -1665,7 +1665,7 @@ func (c *ProjectsReposListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "sourcerepo.projects.repos.list" call.
@@ -1789,7 +1789,7 @@ func (c *ProjectsReposPatchCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "sourcerepo.projects.repos.patch" call.
@@ -1893,7 +1893,7 @@ func (c *ProjectsReposSetIamPolicyCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "sourcerepo.projects.repos.setIamPolicy" call.
@@ -1996,7 +1996,7 @@ func (c *ProjectsReposSyncCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "sourcerepo.projects.repos.sync" call.
@@ -2102,7 +2102,7 @@ func (c *ProjectsReposTestIamPermissionsCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"resource": c.resource,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "sourcerepo.projects.repos.testIamPermissions" call.

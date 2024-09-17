@@ -2832,7 +2832,7 @@ func (c *AnomaliesListCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.anomalies.list" call.
@@ -2962,7 +2962,7 @@ func (c *AppsFetchReleaseFilterOptionsCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.apps.fetchReleaseFilterOptions" call.
@@ -3081,7 +3081,7 @@ func (c *AppsSearchCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.apps.search" call.
@@ -3210,7 +3210,7 @@ func (c *VitalsAnrrateGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.anrrate.get" call.
@@ -3312,7 +3312,7 @@ func (c *VitalsAnrrateQueryCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.anrrate.query" call.
@@ -3441,7 +3441,7 @@ func (c *VitalsCrashrateGetCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.crashrate.get" call.
@@ -3543,7 +3543,7 @@ func (c *VitalsCrashrateQueryCall) doRequest(alt string) (*http.Response, error)
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.crashrate.query" call.
@@ -3673,7 +3673,7 @@ func (c *VitalsErrorsCountsGetCall) doRequest(alt string) (*http.Response, error
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.errors.counts.get" call.
@@ -3777,7 +3777,7 @@ func (c *VitalsErrorsCountsQueryCall) doRequest(alt string) (*http.Response, err
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.errors.counts.query" call.
@@ -4149,7 +4149,7 @@ func (c *VitalsErrorsIssuesSearchCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.errors.issues.search" call.
@@ -4505,7 +4505,7 @@ func (c *VitalsErrorsReportsSearchCall) doRequest(alt string) (*http.Response, e
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.errors.reports.search" call.
@@ -4634,7 +4634,7 @@ func (c *VitalsExcessivewakeuprateGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.excessivewakeuprate.get" call.
@@ -4736,7 +4736,7 @@ func (c *VitalsExcessivewakeuprateQueryCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.excessivewakeuprate.query" call.
@@ -4867,7 +4867,7 @@ func (c *VitalsSlowrenderingrateGetCall) doRequest(alt string) (*http.Response, 
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.slowrenderingrate.get" call.
@@ -4969,7 +4969,7 @@ func (c *VitalsSlowrenderingrateQueryCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.slowrenderingrate.query" call.
@@ -5100,7 +5100,7 @@ func (c *VitalsSlowstartrateGetCall) doRequest(alt string) (*http.Response, erro
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.slowstartrate.get" call.
@@ -5202,7 +5202,7 @@ func (c *VitalsSlowstartrateQueryCall) doRequest(alt string) (*http.Response, er
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.slowstartrate.query" call.
@@ -5334,7 +5334,7 @@ func (c *VitalsStuckbackgroundwakelockrateGetCall) doRequest(alt string) (*http.
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.stuckbackgroundwakelockrate.get" call.
@@ -5437,7 +5437,7 @@ func (c *VitalsStuckbackgroundwakelockrateQueryCall) doRequest(alt string) (*htt
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	return gensupport.SendRequest(c.ctx_, c.s.client, req, false)
 }
 
 // Do executes the "playdeveloperreporting.vitals.stuckbackgroundwakelockrate.query" call.

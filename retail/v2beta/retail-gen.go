@@ -5902,6 +5902,58 @@ func (s GoogleCloudRetailV2betaProduct) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2betaProductAttributeInterval: Product attribute name and
+// numeric interval.
+type GoogleCloudRetailV2betaProductAttributeInterval struct {
+	// Interval: The numeric interval (e.g. [10, 20))
+	Interval *GoogleCloudRetailV2betaInterval `json:"interval,omitempty"`
+	// Name: The attribute name (e.g. "length")
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Interval") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Interval") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaProductAttributeInterval) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaProductAttributeInterval
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaProductAttributeValue: Product attribute which
+// structured by an attribute name and value. This structure is used in
+// conversational search filters and answers. For example, if we have
+// `name=color` and `value=red`, this means that the color is `red`.
+type GoogleCloudRetailV2betaProductAttributeValue struct {
+	// Name: The attribute name.
+	Name string `json:"name,omitempty"`
+	// Value: The attribute value.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaProductAttributeValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaProductAttributeValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaProductDetail: Detailed product information
 // associated with a user event.
 type GoogleCloudRetailV2betaProductDetail struct {
@@ -7008,6 +7060,9 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 	// expanded search. This field is strongly recommended to achieve high search
 	// quality. For more information about filter syntax, see SearchRequest.filter.
 	CanonicalFilter string `json:"canonicalFilter,omitempty"`
+	// ConversationalSearchSpec: Optional. This field specifies all conversational
+	// related parameters addition to traditional retail search.
+	ConversationalSearchSpec *GoogleCloudRetailV2betaSearchRequestConversationalSearchSpec `json:"conversationalSearchSpec,omitempty"`
 	// DynamicFacetSpec: Deprecated. Refer to
 	// https://cloud.google.com/retail/docs/configs#dynamic to enable dynamic
 	// facets. Do not set this field. The specification for dynamically generated
@@ -7109,6 +7164,9 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 	// SpellCorrectionSpec: The spell correction specification that specifies the
 	// mode under which spell correction will take effect.
 	SpellCorrectionSpec *GoogleCloudRetailV2betaSearchRequestSpellCorrectionSpec `json:"spellCorrectionSpec,omitempty"`
+	// TileNavigationSpec: Optional. This field specifies tile navigation related
+	// parameters.
+	TileNavigationSpec *GoogleCloudRetailV2betaSearchRequestTileNavigationSpec `json:"tileNavigationSpec,omitempty"`
 	// UserInfo: User information.
 	UserInfo *GoogleCloudRetailV2betaUserInfo `json:"userInfo,omitempty"`
 	// VariantRollupKeys: The keys to fetch and rollup the matching variant
@@ -7248,6 +7306,99 @@ func (s *GoogleCloudRetailV2betaSearchRequestBoostSpecConditionBoostSpec) Unmars
 	}
 	s.Boost = float64(s1.Boost)
 	return nil
+}
+
+// GoogleCloudRetailV2betaSearchRequestConversationalSearchSpec: This field
+// specifies all conversational related parameters addition to traditional
+// retail search.
+type GoogleCloudRetailV2betaSearchRequestConversationalSearchSpec struct {
+	// ConversationId: This field specifies the conversation id, which maintains
+	// the state of the conversation between client side and server side. Use the
+	// value from the previous ConversationalSearchResult.conversation_id. For the
+	// initial request, this should be empty.
+	ConversationId string `json:"conversationId,omitempty"`
+	// FollowupConversationRequested: This field specifies whether the customer
+	// would like to do conversational search. If this field is set to true,
+	// conversational related extra information will be returned from server side,
+	// including follow-up question, answer options, etc.
+	FollowupConversationRequested bool `json:"followupConversationRequested,omitempty"`
+	// UserAnswer: This field specifies the current user answer during the
+	// conversational search. This can be either user selected from suggested
+	// answers or user input plain text.
+	UserAnswer *GoogleCloudRetailV2betaSearchRequestConversationalSearchSpecUserAnswer `json:"userAnswer,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConversationId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversationId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaSearchRequestConversationalSearchSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaSearchRequestConversationalSearchSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaSearchRequestConversationalSearchSpecUserAnswer: This
+// field specifies the current user answer during the conversational search.
+// This can be either user selected from suggested answers or user input plain
+// text.
+type GoogleCloudRetailV2betaSearchRequestConversationalSearchSpecUserAnswer struct {
+	// SelectedAnswer: This field specifies the selected attributes during the
+	// conversational search. This should be a subset of
+	// ConversationalSearchResult.suggested_answers.
+	SelectedAnswer *GoogleCloudRetailV2betaSearchRequestConversationalSearchSpecUserAnswerSelectedAnswer `json:"selectedAnswer,omitempty"`
+	// TextAnswer: This field specifies the incremental input text from the user
+	// during the conversational search.
+	TextAnswer string `json:"textAnswer,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SelectedAnswer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SelectedAnswer") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaSearchRequestConversationalSearchSpecUserAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaSearchRequestConversationalSearchSpecUserAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaSearchRequestConversationalSearchSpecUserAnswerSelecte
+// dAnswer: This field specifies the selected answers during the conversational
+// search.
+type GoogleCloudRetailV2betaSearchRequestConversationalSearchSpecUserAnswerSelectedAnswer struct {
+	// ProductAttributeValue: This field specifies the selected answer which is a
+	// attribute key-value.
+	ProductAttributeValue *GoogleCloudRetailV2betaProductAttributeValue `json:"productAttributeValue,omitempty"`
+	// ProductAttributeValues: This field is deprecated and should not be set.
+	ProductAttributeValues []*GoogleCloudRetailV2betaProductAttributeValue `json:"productAttributeValues,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductAttributeValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductAttributeValue") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaSearchRequestConversationalSearchSpecUserAnswerSelectedAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaSearchRequestConversationalSearchSpecUserAnswerSelectedAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaSearchRequestDynamicFacetSpec: The specifications of
@@ -7537,6 +7688,35 @@ func (s GoogleCloudRetailV2betaSearchRequestSpellCorrectionSpec) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2betaSearchRequestTileNavigationSpec: This field specifies
+// tile navigation related parameters.
+type GoogleCloudRetailV2betaSearchRequestTileNavigationSpec struct {
+	// AppliedTiles: This field specifies the tiles which are already clicked in
+	// client side. NOTE: This field is not being used for filtering search
+	// products. Client side should also put all the applied tiles in
+	// SearchRequest.filter.
+	AppliedTiles []*GoogleCloudRetailV2betaTile `json:"appliedTiles,omitempty"`
+	// TileNavigationRequested: This field specifies whether the customer would
+	// like to request tile navigation.
+	TileNavigationRequested bool `json:"tileNavigationRequested,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppliedTiles") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppliedTiles") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaSearchRequestTileNavigationSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaSearchRequestTileNavigationSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2betaSearchResponse: Response message for
 // SearchService.Search method.
 type GoogleCloudRetailV2betaSearchResponse struct {
@@ -7547,6 +7727,10 @@ type GoogleCloudRetailV2betaSearchResponse struct {
 	// UserEvent logs resulting from this search, which enables accurate
 	// attribution of search model performance.
 	AttributionToken string `json:"attributionToken,omitempty"`
+	// ConversationalSearchResult: This field specifies all related information
+	// that is needed on client side for UI rendering of conversational retail
+	// search.
+	ConversationalSearchResult *GoogleCloudRetailV2betaSearchResponseConversationalSearchResult `json:"conversationalSearchResult,omitempty"`
 	// CorrectedQuery: Contains the spell corrected query, if found. If the spell
 	// correction type is AUTOMATIC, then the search results are based on
 	// corrected_query. Otherwise the original query is used for search.
@@ -7572,6 +7756,9 @@ type GoogleCloudRetailV2betaSearchResponse struct {
 	RedirectUri string `json:"redirectUri,omitempty"`
 	// Results: A list of matched items. The order represents the ranking.
 	Results []*GoogleCloudRetailV2betaSearchResponseSearchResult `json:"results,omitempty"`
+	// TileNavigationResult: This field specifies all related information for tile
+	// navigation that will be used in client side.
+	TileNavigationResult *GoogleCloudRetailV2betaSearchResponseTileNavigationResult `json:"tileNavigationResult,omitempty"`
 	// TotalSize: The estimated total count of matched items irrespective of
 	// pagination. The count of results returned by pagination may be less than the
 	// total_size that matches.
@@ -7594,6 +7781,104 @@ type GoogleCloudRetailV2betaSearchResponse struct {
 
 func (s GoogleCloudRetailV2betaSearchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaSearchResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaSearchResponseConversationalSearchResult: This field
+// specifies all related information that is needed on client side for UI
+// rendering of conversational retail search.
+type GoogleCloudRetailV2betaSearchResponseConversationalSearchResult struct {
+	// AdditionalFilter: This is the incremental additional filters implied from
+	// the current user answer. User should add the suggested addition filters to
+	// the previous SearchRequest.filter, and use the merged filter in the follow
+	// up search request.
+	AdditionalFilter *GoogleCloudRetailV2betaSearchResponseConversationalSearchResultAdditionalFilter `json:"additionalFilter,omitempty"`
+	// AdditionalFilters: This field is deprecated but will be kept for backward
+	// compatibility. There is expected to have only one additional filter and the
+	// value will be the same to the same as field `additional_filter`.
+	AdditionalFilters []*GoogleCloudRetailV2betaSearchResponseConversationalSearchResultAdditionalFilter `json:"additionalFilters,omitempty"`
+	// ConversationId: Conversation UUID. This field will be stored in client side
+	// storage to maintain the conversation session with server and will be used
+	// for next search request's
+	// SearchRequest.ConversationalSearchSpec.conversation_id to restore
+	// conversation state in server.
+	ConversationId string `json:"conversationId,omitempty"`
+	// FollowupQuestion: The follow-up question. e.g., `What is the color?`
+	FollowupQuestion string `json:"followupQuestion,omitempty"`
+	// RefinedQuery: The current refined query for the conversational search. This
+	// field will be used in customer UI that the query in the search bar should be
+	// replaced with the refined query. For example, if SearchRequest.query is
+	// `dress` and next
+	// SearchRequest.ConversationalSearchSpec.UserAnswer.text_answer is `red
+	// color`, which does not match any product attribute value filters, the
+	// refined query will be `dress, red color`.
+	RefinedQuery string `json:"refinedQuery,omitempty"`
+	// SuggestedAnswers: The answer options provided to client for the follow-up
+	// question.
+	SuggestedAnswers []*GoogleCloudRetailV2betaSearchResponseConversationalSearchResultSuggestedAnswer `json:"suggestedAnswers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalFilter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalFilter") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaSearchResponseConversationalSearchResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaSearchResponseConversationalSearchResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaSearchResponseConversationalSearchResultAdditionalFilt
+// er: Additional filter that client side need to apply.
+type GoogleCloudRetailV2betaSearchResponseConversationalSearchResultAdditionalFilter struct {
+	// ProductAttributeValue: Product attribute value, including an attribute key
+	// and an attribute value. Other types can be added here in the future.
+	ProductAttributeValue *GoogleCloudRetailV2betaProductAttributeValue `json:"productAttributeValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductAttributeValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductAttributeValue") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaSearchResponseConversationalSearchResultAdditionalFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaSearchResponseConversationalSearchResultAdditionalFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaSearchResponseConversationalSearchResultSuggestedAnswe
+// r: Suggested answers to the follow-up question.
+type GoogleCloudRetailV2betaSearchResponseConversationalSearchResultSuggestedAnswer struct {
+	// ProductAttributeValue: Product attribute value, including an attribute key
+	// and an attribute value. Other types can be added here in the future.
+	ProductAttributeValue *GoogleCloudRetailV2betaProductAttributeValue `json:"productAttributeValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductAttributeValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductAttributeValue") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaSearchResponseConversationalSearchResultSuggestedAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaSearchResponseConversationalSearchResultSuggestedAnswer
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7762,6 +8047,31 @@ type GoogleCloudRetailV2betaSearchResponseSearchResult struct {
 
 func (s GoogleCloudRetailV2betaSearchResponseSearchResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2betaSearchResponseSearchResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2betaSearchResponseTileNavigationResult: This field
+// specifies all related information for tile navigation that will be used in
+// client side.
+type GoogleCloudRetailV2betaSearchResponseTileNavigationResult struct {
+	// Tiles: The current tiles that are used for tile navigation, sorted by
+	// engagement.
+	Tiles []*GoogleCloudRetailV2betaTile `json:"tiles,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Tiles") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Tiles") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaSearchResponseTileNavigationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaSearchResponseTileNavigationResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8023,6 +8333,34 @@ func (s GoogleCloudRetailV2betaSetInventoryRequest) MarshalJSON() ([]byte, error
 // SetInventoryRequest. Currently empty because there is no meaningful response
 // populated from the ProductService.SetInventory method.
 type GoogleCloudRetailV2betaSetInventoryResponse struct {
+}
+
+// GoogleCloudRetailV2betaTile: This field specifies the tile information
+// including an attribute key, attribute value. More fields will be added in
+// the future, eg: product id or product counts, etc.
+type GoogleCloudRetailV2betaTile struct {
+	// ProductAttributeInterval: The product attribute key-numeric interval.
+	ProductAttributeInterval *GoogleCloudRetailV2betaProductAttributeInterval `json:"productAttributeInterval,omitempty"`
+	// ProductAttributeValue: The product attribute key-value.
+	ProductAttributeValue *GoogleCloudRetailV2betaProductAttributeValue `json:"productAttributeValue,omitempty"`
+	// RepresentativeProductId: The representative product id for this tile.
+	RepresentativeProductId string `json:"representativeProductId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductAttributeInterval")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductAttributeInterval") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2betaTile) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2betaTile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRetailV2betaTuneModelMetadata: Metadata associated with a tune

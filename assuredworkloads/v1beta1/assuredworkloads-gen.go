@@ -353,6 +353,7 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	// Controls
 	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT" - Healthcare and Life
 	// Science Controls with US Support
+	//   "IRS_1075" - Internal Revenue Service 1075 controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// CreateTime: Optional. Time when the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -876,6 +877,7 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// Controls
 	//   "HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT" - Healthcare and Life
 	// Science Controls with US Support
+	//   "IRS_1075" - Internal Revenue Service 1075 controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 	// ComplianceStatus: Output only. Count of active Violations in the Workload.
 	ComplianceStatus *GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus `json:"complianceStatus,omitempty"`

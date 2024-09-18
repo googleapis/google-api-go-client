@@ -831,6 +831,8 @@ type DeviceIdentifier struct {
 	DeviceType string `json:"deviceType,omitempty"`
 	// Imei: The device’s IMEI number. Validated on input.
 	Imei string `json:"imei,omitempty"`
+	// Imei2: The device’s second IMEI number.
+	Imei2 string `json:"imei2,omitempty"`
 	// Manufacturer: The device manufacturer’s name. Matches the device's
 	// built-in value returned from `android.os.Build.MANUFACTURER`. Allowed values
 	// are listed in Android manufacturers
@@ -838,6 +840,8 @@ type DeviceIdentifier struct {
 	Manufacturer string `json:"manufacturer,omitempty"`
 	// Meid: The device’s MEID number.
 	Meid string `json:"meid,omitempty"`
+	// Meid2: The device’s second MEID number.
+	Meid2 string `json:"meid2,omitempty"`
 	// Model: The device model's name. Allowed values are listed in Android models
 	// (/zero-touch/resources/manufacturer-names#model-names) and Chrome OS models
 	// (https://support.google.com/chrome/a/answer/10130175#identify_compatible).

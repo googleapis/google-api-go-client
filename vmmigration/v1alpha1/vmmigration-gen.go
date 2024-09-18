@@ -5637,15 +5637,15 @@ func (r *ProjectsLocationsImageImportsService) List(parent string) *ProjectsLoca
 }
 
 // Filter sets the optional parameter "filter": The filter request (according
-// to https://google.aip.dev/160).
+// to AIP-160).
 func (c *ProjectsLocationsImageImportsListCall) Filter(filter string) *ProjectsLocationsImageImportsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": The order by fields for the
-// result (according to https://google.aip.dev/132#ordering). Currently
-// ordering is only possible by "name" field.
+// result (according to AIP-132). Currently ordering is only possible by "name"
+// field.
 func (c *ProjectsLocationsImageImportsListCall) OrderBy(orderBy string) *ProjectsLocationsImageImportsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -6007,15 +6007,15 @@ func (r *ProjectsLocationsImageImportsImageImportJobsService) List(parent string
 }
 
 // Filter sets the optional parameter "filter": The filter request (according
-// to https://google.aip.dev/160).
+// to AIP-160).
 func (c *ProjectsLocationsImageImportsImageImportJobsListCall) Filter(filter string) *ProjectsLocationsImageImportsImageImportJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": The order by fields for the
-// result (according to https://google.aip.dev/132#ordering). Currently
-// ordering is only possible by "name" field.
+// result (according to AIP-132). Currently ordering is only possible by "name"
+// field.
 func (c *ProjectsLocationsImageImportsImageImportJobsListCall) OrderBy(orderBy string) *ProjectsLocationsImageImportsImageImportJobsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

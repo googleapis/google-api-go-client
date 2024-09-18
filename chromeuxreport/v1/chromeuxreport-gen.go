@@ -162,7 +162,7 @@ type RecordsService struct {
 type Bin struct {
 	// Density: The proportion of users that experienced this bin's value for the
 	// given metric.
-	Density float64 `json:"density,omitempty"`
+	Density interface{} `json:"density,omitempty"`
 	// End: End is the end of the data bin. If end is not populated, then the bin
 	// has no end and is valid from start to +inf.
 	End interface{} `json:"end,omitempty"`
@@ -184,20 +184,6 @@ type Bin struct {
 func (s Bin) MarshalJSON() ([]byte, error) {
 	type NoMethod Bin
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *Bin) UnmarshalJSON(data []byte) error {
-	type NoMethod Bin
-	var s1 struct {
-		Density gensupport.JSONFloat64 `json:"density"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Density = float64(s1.Density)
-	return nil
 }
 
 // CollectionPeriod: The collection period is a date range which includes the

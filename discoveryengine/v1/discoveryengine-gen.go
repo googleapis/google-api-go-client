@@ -1767,9 +1767,13 @@ func (s GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultList
 type GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSearchResultUnstructuredDocumentInfo struct {
 	// Document: Document resource name.
 	Document string `json:"document,omitempty"`
-	// DocumentContexts: List of document contexts.
+	// DocumentContexts: List of document contexts. The content will be used for
+	// Answer Generation. This is supposed to be the main content of the document
+	// that can be long and comprehensive.
 	DocumentContexts []*GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSearchResultUnstructuredDocumentInfoDocumentContext `json:"documentContexts,omitempty"`
-	// ExtractiveAnswers: List of extractive answers.
+	// ExtractiveAnswers: Deprecated: This field is deprecated and will have no
+	// effect on the Answer generation. Please use document_contexts and
+	// extractive_segments fields. List of extractive answers.
 	ExtractiveAnswers []*GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSearchResultUnstructuredDocumentInfoExtractiveAnswer `json:"extractiveAnswers,omitempty"`
 	// ExtractiveSegments: List of extractive segments.
 	ExtractiveSegments []*GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSearchResultUnstructuredDocumentInfoExtractiveSegment `json:"extractiveSegments,omitempty"`
@@ -1798,7 +1802,7 @@ func (s GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultList
 // GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSearc
 // hResultUnstructuredDocumentInfoDocumentContext: Document context.
 type GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSearchResultUnstructuredDocumentInfoDocumentContext struct {
-	// Content: Document content.
+	// Content: Document content to be used for answer generation.
 	Content string `json:"content,omitempty"`
 	// PageIdentifier: Page identifier.
 	PageIdentifier string `json:"pageIdentifier,omitempty"`
@@ -1849,6 +1853,8 @@ func (s GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultList
 // GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSearc
 // hResultUnstructuredDocumentInfoExtractiveSegment: Extractive segment. Guide
 // (https://cloud.google.com/generative-ai-app-builder/docs/snippets#extractive-segments)
+// Answer generation will only use it if document_contexts is empty. This is
+// supposed to be shorter snippets.
 type GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchResultListSearchResultUnstructuredDocumentInfoExtractiveSegment struct {
 	// Content: Extractive segment content.
 	Content string `json:"content,omitempty"`

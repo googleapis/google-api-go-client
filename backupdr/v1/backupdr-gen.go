@@ -5921,6 +5921,27 @@ func (r *ProjectsLocationsBackupVaultsService) Get(name string) *ProjectsLocatio
 	return c
 }
 
+// View sets the optional parameter "view": Reserved for future use to provide
+// a BASIC & FULL view of Backup Vault
+//
+// Possible values:
+//
+//	"BACKUP_VAULT_VIEW_UNSPECIFIED" - If the value is not set, the default
+//
+// 'FULL' view is used.
+//
+//	"BACKUP_VAULT_VIEW_BASIC" - Includes basic data about the Backup Vault,
+//
+// but not the full contents.
+//
+//	"BACKUP_VAULT_VIEW_FULL" - Includes all data about the Backup Vault. This
+//
+// is the default value (for both ListBackupVaults and GetBackupVault).
+func (c *ProjectsLocationsBackupVaultsGetCall) View(view string) *ProjectsLocationsBackupVaultsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -6057,6 +6078,27 @@ func (c *ProjectsLocationsBackupVaultsListCall) PageSize(pageSize int64) *Projec
 // page of results the server should return.
 func (c *ProjectsLocationsBackupVaultsListCall) PageToken(pageToken string) *ProjectsLocationsBackupVaultsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Reserved for future use to provide
+// a BASIC & FULL view of Backup Vault.
+//
+// Possible values:
+//
+//	"BACKUP_VAULT_VIEW_UNSPECIFIED" - If the value is not set, the default
+//
+// 'FULL' view is used.
+//
+//	"BACKUP_VAULT_VIEW_BASIC" - Includes basic data about the Backup Vault,
+//
+// but not the full contents.
+//
+//	"BACKUP_VAULT_VIEW_FULL" - Includes all data about the Backup Vault. This
+//
+// is the default value (for both ListBackupVaults and GetBackupVault).
+func (c *ProjectsLocationsBackupVaultsListCall) View(view string) *ProjectsLocationsBackupVaultsListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 
@@ -7570,6 +7612,27 @@ func (r *ProjectsLocationsBackupVaultsDataSourcesBackupsService) Get(name string
 	return c
 }
 
+// View sets the optional parameter "view": Reserved for future use to provide
+// a BASIC & FULL view of Backup resource.
+//
+// Possible values:
+//
+//	"BACKUP_VIEW_UNSPECIFIED" - If the value is not set, the default 'FULL'
+//
+// view is used.
+//
+//	"BACKUP_VIEW_BASIC" - Includes basic data about the Backup, but not the
+//
+// full contents.
+//
+//	"BACKUP_VIEW_FULL" - Includes all data about the Backup. This is the
+//
+// default value (for both ListBackups and GetBackup).
+func (c *ProjectsLocationsBackupVaultsDataSourcesBackupsGetCall) View(view string) *ProjectsLocationsBackupVaultsDataSourcesBackupsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -7706,6 +7769,27 @@ func (c *ProjectsLocationsBackupVaultsDataSourcesBackupsListCall) PageSize(pageS
 // page of results the server should return.
 func (c *ProjectsLocationsBackupVaultsDataSourcesBackupsListCall) PageToken(pageToken string) *ProjectsLocationsBackupVaultsDataSourcesBackupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Reserved for future use to provide
+// a BASIC & FULL view of Backup resource.
+//
+// Possible values:
+//
+//	"BACKUP_VIEW_UNSPECIFIED" - If the value is not set, the default 'FULL'
+//
+// view is used.
+//
+//	"BACKUP_VIEW_BASIC" - Includes basic data about the Backup, but not the
+//
+// full contents.
+//
+//	"BACKUP_VIEW_FULL" - Includes all data about the Backup. This is the
+//
+// default value (for both ListBackups and GetBackup).
+func (c *ProjectsLocationsBackupVaultsDataSourcesBackupsListCall) View(view string) *ProjectsLocationsBackupVaultsDataSourcesBackupsListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 

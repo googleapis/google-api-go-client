@@ -1936,7 +1936,8 @@ type GoogleAppsCardV1Card struct {
 	// homepage cards and the contextual cards. Google Workspace Add-ons
 	// (https://developers.google.com/workspace/add-ons):
 	PeekCardHeader *GoogleAppsCardV1CardHeader `json:"peekCardHeader,omitempty"`
-	// SectionDividerStyle: The divider style between sections.
+	// SectionDividerStyle: The divider style between the header, sections and
+	// footer.
 	//
 	// Possible values:
 	//   "DIVIDER_STYLE_UNSPECIFIED" - Don't use. Unspecified.
@@ -2148,9 +2149,12 @@ func (s GoogleAppsCardV1Column) MarshalJSON() ([]byte, error) {
 // second column wraps if the screen width is less than or equal to 480 pixels.
 // * On iOS devices, the second column wraps if the screen width is less than
 // or equal to 300 pt. * On Android devices, the second column wraps if the
-// screen width is less than or equal to 320 dp. To include more than 2
+// screen width is less than or equal to 320 dp. To include more than two
 // columns, or to use rows, use the `Grid` widget. Google Workspace Add-ons and
-// Chat apps (https://developers.google.com/workspace/extend):
+// Chat apps (https://developers.google.com/workspace/extend): The add-on UIs
+// that support columns include: * The dialog displayed when users open the
+// add-on from an email draft. * The dialog displayed when users open the
+// add-on from the **Add attachment** menu in a Google Calendar event.
 type GoogleAppsCardV1Columns struct {
 	// ColumnItems: An array of columns. You can include up to 2 columns in a card
 	// or dialog.
@@ -3890,9 +3894,8 @@ func (s MembershipBatchUpdatedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MembershipCount: Developer Preview
-// (https://developers.google.com/workspace/preview). Represents the count of
-// memberships of a space, grouped into categories.
+// MembershipCount: Represents the count of memberships of a space, grouped
+// into categories.
 type MembershipCount struct {
 	// JoinedDirectHumanUserCount: Count of human users that have directly joined
 	// the space, not counting users joined by having membership in a joined group.
@@ -4747,12 +4750,12 @@ type Space struct {
 	// `GROUP_CHAT` or `SPACE`.
 	CreateTime string `json:"createTime,omitempty"`
 	// DisplayName: The space's display name. Required when creating a space
-	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces/create).
-	// If you receive the error message `ALREADY_EXISTS` when creating a space or
-	// updating the `displayName`, try a different `displayName`. An existing space
-	// within the Google Workspace organization might already use this display
-	// name. For direct messages, this field might be empty. Supports up to 128
-	// characters.
+	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces/create)
+	// with a `spaceType` of `SPACE`. If you receive the error message
+	// `ALREADY_EXISTS` when creating a space or updating the `displayName`, try a
+	// different `displayName`. An existing space within the Google Workspace
+	// organization might already use this display name. For direct messages, this
+	// field might be empty. Supports up to 128 characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// ExternalUserAllowed: Immutable. Whether this space permits any Google Chat
 	// user as a member. Input when creating a space in a Google Workspace
@@ -4766,12 +4769,10 @@ type Space struct {
 	// they aren't visible to users until the import is complete.
 	ImportMode bool `json:"importMode,omitempty"`
 	// LastActiveTime: Output only. Timestamp of the last message in the space.
-	// Developer Preview (https://developers.google.com/workspace/preview).
 	LastActiveTime string `json:"lastActiveTime,omitempty"`
 	// MembershipCount: Output only. The count of joined memberships grouped by
 	// member type. Populated when the `space_type` is `SPACE`, `DIRECT_MESSAGE` or
-	// `GROUP_CHAT`. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// `GROUP_CHAT`.
 	MembershipCount *MembershipCount `json:"membershipCount,omitempty"`
 	// Name: Resource name of the space. Format: `spaces/{space}` Where `{space}`
 	// represents the system-assigned ID for the space. You can obtain the space ID
@@ -5933,12 +5934,15 @@ type SpacesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a named space. Spaces grouped by topics aren't supported.
-// For an example, see Create a space
-// (https://developers.google.com/workspace/chat/create-spaces). If you receive
-// the error message `ALREADY_EXISTS` when creating a space, try a different
-// `displayName`. An existing space within the Google Workspace organization
-// might already use this display name. Requires user authentication
+// Create: Creates a space with no members. Can be used to create a named
+// space. Spaces grouped by topics aren't supported. For an example, see Create
+// a space (https://developers.google.com/workspace/chat/create-spaces). If you
+// receive the error message `ALREADY_EXISTS` when creating a space, try a
+// different `displayName`. An existing space within the Google Workspace
+// organization might already use this display name. If you're a member of the
+// Developer Preview program (https://developers.google.com/workspace/preview),
+// you can create a group chat in import mode using `spaceType.GROUP_CHAT`.
+// Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 func (r *SpacesService) Create(space *Space) *SpacesCreateCall {
 	c := &SpacesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6058,11 +6062,10 @@ func (r *SpacesService) Delete(name string) *SpacesDeleteCall {
 	return c
 }
 
-// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
-// Preview (https://developers.google.com/workspace/preview). When `true`, the
-// method runs using the user's Google Workspace administrator privileges. The
-// calling user must be a Google Workspace administrator with the manage chat
-// and spaces conversations privilege
+// UseAdminAccess sets the optional parameter "useAdminAccess": When `true`,
+// the method runs using the user's Google Workspace administrator privileges.
+// The calling user must be a Google Workspace administrator with the manage
+// chat and spaces conversations privilege
 // (https://support.google.com/a/answer/13369245). Requires the
 // `chat.admin.delete` OAuth 2.0 scope
 // (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
@@ -6305,11 +6308,10 @@ func (r *SpacesService) Get(name string) *SpacesGetCall {
 	return c
 }
 
-// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
-// Preview (https://developers.google.com/workspace/preview). When `true`, the
-// method runs using the user's Google Workspace administrator privileges. The
-// calling user must be a Google Workspace administrator with the manage chat
-// and spaces conversations privilege
+// UseAdminAccess sets the optional parameter "useAdminAccess": When `true`,
+// the method runs using the user's Google Workspace administrator privileges.
+// The calling user must be a Google Workspace administrator with the manage
+// chat and spaces conversations privilege
 // (https://support.google.com/a/answer/13369245). Requires the
 // `chat.admin.spaces` or `chat.admin.spaces.readonly` OAuth 2.0 scopes
 // (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
@@ -6652,11 +6654,10 @@ func (c *SpacesPatchCall) UpdateMask(updateMask string) *SpacesPatchCall {
 	return c
 }
 
-// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
-// Preview (https://developers.google.com/workspace/preview). When `true`, the
-// method runs using the user's Google Workspace administrator privileges. The
-// calling user must be a Google Workspace administrator with the manage chat
-// and spaces conversations privilege
+// UseAdminAccess sets the optional parameter "useAdminAccess": When `true`,
+// the method runs using the user's Google Workspace administrator privileges.
+// The calling user must be a Google Workspace administrator with the manage
+// chat and spaces conversations privilege
 // (https://support.google.com/a/answer/13369245). Requires the
 // `chat.admin.spaces` OAuth 2.0 scope
 // (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
@@ -6757,12 +6758,11 @@ type SpacesSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Developer Preview (https://developers.google.com/workspace/preview).
-// Returns a list of spaces based on a user's search. Requires user
-// authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
-// The user must be an administrator for the Google Workspace organization. In
-// the request, set `use_admin_access` to `true`.
+// Search: Returns a list of spaces in a Google Workspace organization based on
+// an administrator's search. Requires user authentication with administrator
+// privileges
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user#admin-privileges).
+// In the request, set `use_admin_access` to `true`.
 func (r *SpacesService) Search() *SpacesSearchCall {
 	c := &SpacesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -7133,11 +7133,10 @@ func (r *SpacesMembersService) Create(parent string, membership *Membership) *Sp
 	return c
 }
 
-// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
-// Preview (https://developers.google.com/workspace/preview). When `true`, the
-// method runs using the user's Google Workspace administrator privileges. The
-// calling user must be a Google Workspace administrator with the manage chat
-// and spaces conversations privilege
+// UseAdminAccess sets the optional parameter "useAdminAccess": When `true`,
+// the method runs using the user's Google Workspace administrator privileges.
+// The calling user must be a Google Workspace administrator with the manage
+// chat and spaces conversations privilege
 // (https://support.google.com/a/answer/13369245). Requires the
 // `chat.admin.memberships` OAuth 2.0 scope
 // (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
@@ -7261,11 +7260,10 @@ func (r *SpacesMembersService) Delete(name string) *SpacesMembersDeleteCall {
 	return c
 }
 
-// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
-// Preview (https://developers.google.com/workspace/preview). When `true`, the
-// method runs using the user's Google Workspace administrator privileges. The
-// calling user must be a Google Workspace administrator with the manage chat
-// and spaces conversations privilege
+// UseAdminAccess sets the optional parameter "useAdminAccess": When `true`,
+// the method runs using the user's Google Workspace administrator privileges.
+// The calling user must be a Google Workspace administrator with the manage
+// chat and spaces conversations privilege
 // (https://support.google.com/a/answer/13369245). Requires the
 // `chat.admin.memberships` OAuth 2.0 scope
 // (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
@@ -7388,11 +7386,10 @@ func (r *SpacesMembersService) Get(name string) *SpacesMembersGetCall {
 	return c
 }
 
-// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
-// Preview (https://developers.google.com/workspace/preview). When `true`, the
-// method runs using the user's Google Workspace administrator privileges. The
-// calling user must be a Google Workspace administrator with the manage chat
-// and spaces conversations privilege
+// UseAdminAccess sets the optional parameter "useAdminAccess": When `true`,
+// the method runs using the user's Google Workspace administrator privileges.
+// The calling user must be a Google Workspace administrator with the manage
+// chat and spaces conversations privilege
 // (https://support.google.com/a/answer/13369245). Requires the
 // `chat.admin.memberships` or `chat.admin.memberships.readonly` OAuth 2.0
 // scopes
@@ -7532,14 +7529,14 @@ func (r *SpacesMembersService) List(parent string) *SpacesMembersListCall {
 // and type (`member.type`
 // (https://developers.google.com/workspace/chat/api/reference/rest/v1/User#type)).
 // To filter by role, set `role` to `ROLE_MEMBER` or `ROLE_MANAGER`. To filter
-// by type, set `member.type` to `HUMAN` or `BOT`. Developer Preview: You can
-// also filter for `member.type` using the `!=` operator. To filter by both
-// role and type, use the `AND` operator. To filter by either role or type, use
-// the `OR` operator. Either `member.type = "HUMAN" or `member.type != "BOT"
-// is required when `use_admin_access` is set to true. Other member type
-// filters will be rejected. For example, the following queries are valid: ```
-// role = "ROLE_MANAGER" OR role = "ROLE_MEMBER" member.type = "HUMAN" AND role
-// = "ROLE_MANAGER" member.type != "BOT" ``` The following queries are invalid:
+// by type, set `member.type` to `HUMAN` or `BOT`. You can also filter for
+// `member.type` using the `!=` operator. To filter by both role and type, use
+// the `AND` operator. To filter by either role or type, use the `OR` operator.
+// Either `member.type = "HUMAN" or `member.type != "BOT" is required when
+// `use_admin_access` is set to true. Other member type filters will be
+// rejected. For example, the following queries are valid: ``` role =
+// "ROLE_MANAGER" OR role = "ROLE_MEMBER" member.type = "HUMAN" AND role =
+// "ROLE_MANAGER" member.type != "BOT" ``` The following queries are invalid:
 // ``` member.type = "HUMAN" AND member.type = "BOT" role = "ROLE_MANAGER" AND
 // role = "ROLE_MEMBER" ``` Invalid queries are rejected by the server with an
 // `INVALID_ARGUMENT` error.
@@ -7588,11 +7585,10 @@ func (c *SpacesMembersListCall) ShowInvited(showInvited bool) *SpacesMembersList
 	return c
 }
 
-// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
-// Preview (https://developers.google.com/workspace/preview). When `true`, the
-// method runs using the user's Google Workspace administrator privileges. The
-// calling user must be a Google Workspace administrator with the manage chat
-// and spaces conversations privilege
+// UseAdminAccess sets the optional parameter "useAdminAccess": When `true`,
+// the method runs using the user's Google Workspace administrator privileges.
+// The calling user must be a Google Workspace administrator with the manage
+// chat and spaces conversations privilege
 // (https://support.google.com/a/answer/13369245). Requires either the
 // `chat.admin.memberships.readonly` or `chat.admin.memberships` OAuth 2.0
 // scope
@@ -7745,11 +7741,10 @@ func (c *SpacesMembersPatchCall) UpdateMask(updateMask string) *SpacesMembersPat
 	return c
 }
 
-// UseAdminAccess sets the optional parameter "useAdminAccess": Developer
-// Preview (https://developers.google.com/workspace/preview). When `true`, the
-// method runs using the user's Google Workspace administrator privileges. The
-// calling user must be a Google Workspace administrator with the manage chat
-// and spaces conversations privilege
+// UseAdminAccess sets the optional parameter "useAdminAccess": When `true`,
+// the method runs using the user's Google Workspace administrator privileges.
+// The calling user must be a Google Workspace administrator with the manage
+// chat and spaces conversations privilege
 // (https://support.google.com/a/answer/13369245). Requires the
 // `chat.admin.memberships` OAuth 2.0 scope
 // (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).

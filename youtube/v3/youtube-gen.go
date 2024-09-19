@@ -7223,7 +7223,8 @@ type Video struct {
 	Localizations map[string]VideoLocalization `json:"localizations,omitempty"`
 	// MonetizationDetails: The monetizationDetails object encapsulates information
 	// about the monetization status of the video.
-	MonetizationDetails *VideoMonetizationDetails `json:"monetizationDetails,omitempty"`
+	MonetizationDetails         *VideoMonetizationDetails         `json:"monetizationDetails,omitempty"`
+	PaidProductPlacementDetails *VideoPaidProductPlacementDetails `json:"paidProductPlacementDetails,omitempty"`
 	// Player: The player object contains information that you would use to play
 	// the video in an embedded player.
 	Player *VideoPlayer `json:"player,omitempty"`
@@ -7989,6 +7990,33 @@ type VideoMonetizationDetails struct {
 
 func (s VideoMonetizationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoMonetizationDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VideoPaidProductPlacementDetails: Details about paid content, such as paid
+// product placement, sponsorships or endorsement, contained in a YouTube video
+// and a method to inform viewers of paid promotion. This data can only be
+// retrieved by the video owner.
+type VideoPaidProductPlacementDetails struct {
+	// HasPaidProductPlacement: This boolean represents whether the video contains
+	// Paid Product Placement, Studio equivalent:
+	// https://screenshot.googleplex.com/4Me79DE6AfT2ktp.png
+	HasPaidProductPlacement bool `json:"hasPaidProductPlacement,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HasPaidProductPlacement") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HasPaidProductPlacement") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VideoPaidProductPlacementDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod VideoPaidProductPlacementDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

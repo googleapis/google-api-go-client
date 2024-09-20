@@ -3995,7 +3995,10 @@ func (s V1beta1AddVisibilityLabelsResponse) MarshalJSON() ([]byte, error) {
 // V1beta1DefaultIdentity: A default identity in the Identity and Access
 // Management API.
 type V1beta1DefaultIdentity struct {
-	// Email: The email address of the default identity.
+	// Email: The email address of the default identity. Calling
+	// GenerateDefaultIdentity with a deleted or purged default identity should
+	// expect does_not_exist@invalid-project.iam.gserviceaccount.com placeholder
+	// email.
 	Email string `json:"email,omitempty"`
 	// Name: Default identity resource name. An example name would be:
 	// `services/serviceconsumermanagement.googleapis.com/projects/123/defaultIdenti

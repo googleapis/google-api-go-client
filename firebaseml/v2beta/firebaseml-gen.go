@@ -1438,6 +1438,9 @@ func (s GoogleCloudAiplatformV1beta1SafetySetting) MarshalJSON() ([]byte, error)
 // object (https://spec.openapis.org/oas/v3.0.3#schema-object). More fields may
 // be added in the future as needed.
 type GoogleCloudAiplatformV1beta1Schema struct {
+	// AnyOf: Optional. The value should be validated against any (one or more) of
+	// the subschemas in the list.
+	AnyOf []*GoogleCloudAiplatformV1beta1Schema `json:"anyOf,omitempty"`
 	// Default: Optional. Default value of the data.
 	Default interface{} `json:"default,omitempty"`
 	// Description: Optional. The description of the data.
@@ -1500,13 +1503,13 @@ type GoogleCloudAiplatformV1beta1Schema struct {
 	//   "ARRAY" - OpenAPI array type
 	//   "OBJECT" - OpenAPI object type
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Default") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "AnyOf") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Default") to include in API
+	// NullFields is a list of field names (e.g. "AnyOf") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

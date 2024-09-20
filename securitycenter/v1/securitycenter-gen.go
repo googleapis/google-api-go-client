@@ -1663,18 +1663,20 @@ func (s AzureSubscription) MarshalJSON() ([]byte, error) {
 
 // AzureTenant: Represents a Microsoft Entra tenant.
 type AzureTenant struct {
+	// DisplayName: The display name of the Azure tenant.
+	DisplayName string `json:"displayName,omitempty"`
 	// Id: The ID of the Microsoft Entra tenant, for example,
 	// "a11aaa11-aa11-1aa1-11aa-1aaa11a".
 	Id string `json:"id,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Id") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5032,18 +5034,20 @@ func (s GoogleCloudSecuritycenterV2AzureSubscription) MarshalJSON() ([]byte, err
 
 // GoogleCloudSecuritycenterV2AzureTenant: Represents a Microsoft Entra tenant.
 type GoogleCloudSecuritycenterV2AzureTenant struct {
+	// DisplayName: The display name of the Azure tenant.
+	DisplayName string `json:"displayName,omitempty"`
 	// Id: The ID of the Microsoft Entra tenant, for example,
 	// "a11aaa11-aa11-1aa1-11aa-1aaa11a".
 	Id string `json:"id,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Id") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

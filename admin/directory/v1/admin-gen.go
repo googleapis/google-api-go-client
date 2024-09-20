@@ -10069,7 +10069,8 @@ func (c *GroupsListCall) SortOrder(sortOrder string) *GroupsListCall {
 
 // UserKey sets the optional parameter "userKey": Email or immutable ID of the
 // user if only those groups are to be listed, the given user is a member of.
-// If it's an ID, it should match with the ID of the user object.
+// If it's an ID, it should match with the ID of the user object. Cannot be
+// used with the `customer` parameter.
 func (c *GroupsListCall) UserKey(userKey string) *GroupsListCall {
 	c.urlParams_.Set("userKey", userKey)
 	return c

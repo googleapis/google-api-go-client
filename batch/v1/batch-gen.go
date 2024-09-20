@@ -1233,8 +1233,9 @@ type InstancePolicyOrTemplate struct {
 	// Ops Agent on your behalf. Default is false.
 	InstallOpsAgent bool `json:"installOpsAgent,omitempty"`
 	// InstanceTemplate: Name of an instance template used to create VMs. Named the
-	// field as 'instance_template' instead of 'template' to avoid c++ keyword
-	// conflict.
+	// field as 'instance_template' instead of 'template' to avoid C++ keyword
+	// conflict. Batch only supports global instance templates. You can specify the
+	// global instance template as a full or partial URL.
 	InstanceTemplate string `json:"instanceTemplate,omitempty"`
 	// Policy: InstancePolicy.
 	Policy *InstancePolicy `json:"policy,omitempty"`

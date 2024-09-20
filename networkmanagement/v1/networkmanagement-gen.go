@@ -1027,6 +1027,9 @@ type DropInfo struct {
 	// to no route to the destination network.
 	//   "REDIS_INSTANCE_NO_EXTERNAL_IP" - Redis Instance does not have an external
 	// IP address.
+	//   "REDIS_INSTANCE_UNSUPPORTED_PROTOCOL" - Packet is dropped due to an
+	// unsupported protocol being used to connect to a Redis Instance. Only TCP
+	// connections are accepted by a Redis Instance.
 	//   "DROPPED_INSIDE_REDIS_CLUSTER_SERVICE" - Generic drop cause for a packet
 	// being dropped inside a Redis Cluster service project.
 	//   "REDIS_CLUSTER_UNSUPPORTED_PORT" - Packet is dropped due to an unsupported
@@ -1034,6 +1037,17 @@ type DropInfo struct {
 	// should be used to connect to a Redis Cluster.
 	//   "REDIS_CLUSTER_NO_EXTERNAL_IP" - Redis Cluster does not have an external
 	// IP address.
+	//   "REDIS_CLUSTER_UNSUPPORTED_PROTOCOL" - Packet is dropped due to an
+	// unsupported protocol being used to connect to a Redis Cluster. Only TCP
+	// connections are accepted by a Redis Cluster.
+	//   "NO_ADVERTISED_ROUTE_TO_GCP_DESTINATION" - Packet from the non-GCP
+	// (on-prem) or unknown GCP network is dropped due to the destination IP
+	// address not belonging to any IP prefix advertised via BGP by the Cloud
+	// Router.
+	//   "NO_TRAFFIC_SELECTOR_TO_GCP_DESTINATION" - Packet from the non-GCP
+	// (on-prem) or unknown GCP network is dropped due to the destination IP
+	// address not belonging to any IP prefix included to the local traffic
+	// selector of the VPN tunnel.
 	Cause string `json:"cause,omitempty"`
 	// DestinationIp: Destination IP address of the dropped packet (if relevant).
 	DestinationIp string `json:"destinationIp,omitempty"`
@@ -1973,12 +1987,18 @@ func (s NatInfo) MarshalJSON() ([]byte, error) {
 }
 
 // NetworkInfo: For display only. Metadata associated with a Compute Engine
-// network.
+// network. Next ID: 7
 type NetworkInfo struct {
 	// DisplayName: Name of a Compute Engine network.
 	DisplayName string `json:"displayName,omitempty"`
-	// MatchedIpRange: The IP range that matches the test.
+	// MatchedIpRange: The IP range of the subnet matching the source IP address of
+	// the test.
 	MatchedIpRange string `json:"matchedIpRange,omitempty"`
+	// MatchedSubnetUri: URI of the subnet matching the source IP address of the
+	// test.
+	MatchedSubnetUri string `json:"matchedSubnetUri,omitempty"`
+	// Region: The region of the subnet matching the source IP address of the test.
+	Region string `json:"region,omitempty"`
 	// Uri: URI of a Compute Engine network.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -2415,6 +2435,14 @@ type RerunConnectivityTestRequest struct {
 // RouteInfo: For display only. Metadata associated with a Compute Engine
 // route.
 type RouteInfo struct {
+	// AdvertisedRouteNextHopUri: For advertised routes, the URI of their next hop,
+	// i.e. the URI of the hybrid endpoint (VPN tunnel, Interconnect attachment,
+	// NCC router appliance) the advertised prefix is advertised through, or URI of
+	// the source peered network.
+	AdvertisedRouteNextHopUri string `json:"advertisedRouteNextHopUri,omitempty"`
+	// AdvertisedRouteSourceRouterUri: For advertised dynamic routes, the URI of
+	// the Cloud Router that advertised the corresponding IP prefix.
+	AdvertisedRouteSourceRouterUri string `json:"advertisedRouteSourceRouterUri,omitempty"`
 	// DestIpRange: Destination IP range of the route.
 	DestIpRange string `json:"destIpRange,omitempty"`
 	// DestPortRanges: Destination port ranges of the route. Policy based routes
@@ -2461,6 +2489,8 @@ type RouteInfo struct {
 	Priority int64 `json:"priority,omitempty"`
 	// Protocols: Protocols of the route. Policy based routes only.
 	Protocols []string `json:"protocols,omitempty"`
+	// Region: Region of the route (if applicable).
+	Region string `json:"region,omitempty"`
 	// RouteScope: Indicates where route is applicable.
 	//
 	// Possible values:
@@ -2485,19 +2515,17 @@ type RouteInfo struct {
 	SrcIpRange string `json:"srcIpRange,omitempty"`
 	// SrcPortRanges: Source port ranges of the route. Policy based routes only.
 	SrcPortRanges []string `json:"srcPortRanges,omitempty"`
-	// Uri: URI of a route. Dynamic, peering static and peering dynamic routes do
-	// not have an URI. Advertised route from Google Cloud VPC to on-premises
-	// network also does not have an URI.
+	// Uri: URI of a route (if applicable).
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DestIpRange") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AdvertisedRouteNextHopUri")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DestIpRange") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdvertisedRouteNextHopUri") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

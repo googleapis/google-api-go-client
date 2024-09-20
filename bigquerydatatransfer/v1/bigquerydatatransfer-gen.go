@@ -584,6 +584,30 @@ func (s EnrollDataSourcesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// EventDrivenSchedule: Options customizing EventDriven transfers schedule.
+type EventDrivenSchedule struct {
+	// PubsubSubscription: Pub/Sub subscription name used to receive events. Only
+	// Google Cloud Storage data source support this option. Format:
+	// projects/{project}/subscriptions/{subscription}
+	PubsubSubscription string `json:"pubsubSubscription,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PubsubSubscription") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PubsubSubscription") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EventDrivenSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod EventDrivenSchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListDataSourcesResponse: Returns list of supported data sources and their
 // metadata.
 type ListDataSourcesResponse struct {
@@ -771,6 +795,10 @@ func (s Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ManualSchedule: Options customizing manual transfers schedule.
+type ManualSchedule struct {
+}
+
 // ScheduleOptions: Options customizing the data transfer schedule.
 type ScheduleOptions struct {
 	// DisableAutoScheduling: If true, automatic scheduling of data transfer runs
@@ -804,6 +832,40 @@ type ScheduleOptions struct {
 
 func (s ScheduleOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ScheduleOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ScheduleOptionsV2: V2 options customizing different types of data transfer
+// schedule. This field supports existing time-based and manual transfer
+// schedule. Also supports Event-Driven transfer schedule. ScheduleOptionsV2
+// cannot be used together with ScheduleOptions/Schedule.
+type ScheduleOptionsV2 struct {
+	// EventDrivenSchedule: Event driven transfer schedule options. If set, the
+	// transfer will be scheduled upon events arrial.
+	EventDrivenSchedule *EventDrivenSchedule `json:"eventDrivenSchedule,omitempty"`
+	// ManualSchedule: Manual transfer schedule. If set, the transfer run will not
+	// be auto-scheduled by the system, unless the client invokes
+	// StartManualTransferRuns. This is equivalent to disable_auto_scheduling =
+	// true.
+	ManualSchedule *ManualSchedule `json:"manualSchedule,omitempty"`
+	// TimeBasedSchedule: Time based transfer schedule options. This is the default
+	// schedule option.
+	TimeBasedSchedule *TimeBasedSchedule `json:"timeBasedSchedule,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventDrivenSchedule") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventDrivenSchedule") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ScheduleOptionsV2) MarshalJSON() ([]byte, error) {
+	type NoMethod ScheduleOptionsV2
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -949,6 +1011,46 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TimeBasedSchedule: Options customizing the time based transfer schedule.
+// Options are migrated from the original ScheduleOptions message.
+type TimeBasedSchedule struct {
+	// EndTime: Defines time to stop scheduling transfer runs. A transfer run
+	// cannot be scheduled at or after the end time. The end time can be changed at
+	// any moment.
+	EndTime string `json:"endTime,omitempty"`
+	// Schedule: Data transfer schedule. If the data source does not support a
+	// custom schedule, this should be empty. If it is empty, the default value for
+	// the data source will be used. The specified times are in UTC. Examples of
+	// valid format: `1st,3rd monday of month 15:30`, `every wed,fri of jan,jun
+	// 13:15`, and `first sunday of quarter 00:00`. See more explanation about the
+	// format here:
+	// https://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format
+	// NOTE: The minimum interval time between recurring transfers depends on the
+	// data source; refer to the documentation for your data source.
+	Schedule string `json:"schedule,omitempty"`
+	// StartTime: Specifies time to start scheduling transfer runs. The first run
+	// will be scheduled at or after the start time according to a recurrence
+	// pattern defined in the schedule string. The start time can be changed at any
+	// moment.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TimeBasedSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeBasedSchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TimeRange: A specification for a time range, this will request transfer runs
 // with run_time between start_time (inclusive) and end_time (exclusive).
 type TimeRange struct {
@@ -1017,6 +1119,9 @@ type TransferConfig struct {
 	// it is present, or otherwise try to apply project default keys if it is
 	// absent.
 	EncryptionConfiguration *EncryptionConfiguration `json:"encryptionConfiguration,omitempty"`
+	// Error: Output only. Error code with detailed information about reason of the
+	// latest config failure.
+	Error *Status `json:"error,omitempty"`
 	// Name: Identifier. The resource name of the transfer config. Transfer config
 	// names have the form either
 	// `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or
@@ -1052,6 +1157,10 @@ type TransferConfig struct {
 	Schedule string `json:"schedule,omitempty"`
 	// ScheduleOptions: Options customizing the data transfer schedule.
 	ScheduleOptions *ScheduleOptions `json:"scheduleOptions,omitempty"`
+	// ScheduleOptionsV2: Options customizing different types of data transfer
+	// schedule. This field replaces "schedule" and "schedule_options" fields.
+	// ScheduleOptionsV2 cannot be used together with ScheduleOptions/Schedule.
+	ScheduleOptionsV2 *ScheduleOptionsV2 `json:"scheduleOptionsV2,omitempty"`
 	// State: Output only. State of the most recently updated transfer run.
 	//
 	// Possible values:

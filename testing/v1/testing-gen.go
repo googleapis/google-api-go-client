@@ -455,6 +455,8 @@ type AndroidModel struct {
 	// Id: The unique opaque id for this model. Use this for invoking the
 	// TestExecutionService.
 	Id string `json:"id,omitempty"`
+	// LabInfo: Output only. Lab info of this device.
+	LabInfo *LabInfo `json:"labInfo,omitempty"`
 	// LowFpsVideoRecording: True if and only if tests with this model are recorded
 	// by stitching together screenshots. See use_low_spec_video_recording in
 	// device config.
@@ -1715,6 +1717,29 @@ type IosXcTest struct {
 
 func (s IosXcTest) MarshalJSON() ([]byte, error) {
 	type NoMethod IosXcTest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LabInfo: Lab specific information for a device.
+type LabInfo struct {
+	// Name: Lab name where the device is hosted. If empty, the device is hosted in
+	// a Google owned lab.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LabInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod LabInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

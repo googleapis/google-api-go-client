@@ -5551,6 +5551,9 @@ type BackendService struct {
 	ConsistentHash *ConsistentHashLoadBalancerSettings `json:"consistentHash,omitempty"`
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+	// CustomMetrics: List of custom metrics that are used for the
+	// WEIGHTED_ROUND_ROBIN locality_lb_policy.
+	CustomMetrics []*BackendServiceCustomMetric `json:"customMetrics,omitempty"`
 	// CustomRequestHeaders: Headers that the load balancer adds to proxied
 	// requests. See Creating custom headers
 	// (https://cloud.google.com/load-balancing/docs/custom-headers).
@@ -6384,6 +6387,39 @@ type BackendServiceConnectionTrackingPolicy struct {
 
 func (s BackendServiceConnectionTrackingPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod BackendServiceConnectionTrackingPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackendServiceCustomMetric: Custom Metrics are used for WEIGHTED_ROUND_ROBIN
+// locality_lb_policy.
+type BackendServiceCustomMetric struct {
+	// DryRun: If true, the metric data is not used for load balancing.
+	DryRun bool `json:"dryRun,omitempty"`
+	// Name: Name of a custom utilization signal. The name must be 1-64 characters
+	// long and match the regular expression a-z ([-_.a-z0-9]*[a-z0-9])? which
+	// means the first character must be a lowercase letter, and all following
+	// characters must be a dash, period, underscore, lowercase letter, or digit,
+	// except the last character, which cannot be a dash, period, or underscore.
+	// For usage guidelines, see Custom Metrics balancing mode. This field can only
+	// be used for a global or regional backend service with the
+	// loadBalancingScheme set to EXTERNAL_MANAGED, INTERNAL_MANAGED
+	// INTERNAL_SELF_MANAGED.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DryRun") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DryRun") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackendServiceCustomMetric) MarshalJSON() ([]byte, error) {
+	type NoMethod BackendServiceCustomMetric
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7918,8 +7954,8 @@ type BulkInsertInstanceResource struct {
 	// InstanceProperties: The instance properties defining the VM instances to be
 	// created. Required if sourceInstanceTemplate is not provided.
 	InstanceProperties *InstanceProperties `json:"instanceProperties,omitempty"`
-	// LocationPolicy: Policy for chosing target zone. For more information, see
-	// Create VMs in bulk .
+	// LocationPolicy: Policy for choosing target zone. For more information, see
+	// Create VMs in bulk.
 	LocationPolicy *LocationPolicy `json:"locationPolicy,omitempty"`
 	// MinCount: The minimum number of instances to create. If no min_count is
 	// specified then count is used as the default value. If min_count instances
@@ -23820,6 +23856,52 @@ func (s InstancesRemoveResourcePoliciesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type InstancesReportHostAsFaultyRequest struct {
+	FaultReasons []*InstancesReportHostAsFaultyRequestFaultReason `json:"faultReasons,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FaultReasons") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FaultReasons") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstancesReportHostAsFaultyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InstancesReportHostAsFaultyRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type InstancesReportHostAsFaultyRequestFaultReason struct {
+	// Possible values:
+	//   "BEHAVIOR_UNSPECIFIED" - Public reportable behaviors
+	//   "PERFORMANCE"
+	//   "SILENT_DATA_CORRUPTION"
+	//   "UNRECOVERABLE_GPU_ERROR"
+	Behavior    string `json:"behavior,omitempty"`
+	Description string `json:"description,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Behavior") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Behavior") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstancesReportHostAsFaultyRequestFaultReason) MarshalJSON() ([]byte, error) {
+	type NoMethod InstancesReportHostAsFaultyRequestFaultReason
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type InstancesResumeRequest struct {
 	// Disks: Array of disks associated with this instance that are protected with
 	// a customer-supplied encryption key. In order to resume the instance, the
@@ -24939,10 +25021,10 @@ type Interconnect struct {
 	ApplicationAwareInterconnect *InterconnectApplicationAwareInterconnect `json:"applicationAwareInterconnect,omitempty"`
 	// AvailableFeatures: [Output only] List of features available for this
 	// Interconnect connection, which can take one of the following values: -
-	// MACSEC If present then the Interconnect connection is provisioned on MACsec
-	// capable hardware ports. If not present then the Interconnect connection is
-	// provisioned on non-MACsec capable ports and MACsec isn't supported and
-	// enabling MACsec fails.
+	// IF_MACSEC If present then the Interconnect connection is provisioned on
+	// MACsec capable hardware ports. If not present then the Interconnect
+	// connection is provisioned on non-MACsec capable ports and MACsec isn't
+	// supported and enabling MACsec fails.
 	//
 	// Possible values:
 	//   "IF_MACSEC" - Media Access Control security (MACsec)
@@ -25066,7 +25148,7 @@ type Interconnect struct {
 	RemoteLocation string `json:"remoteLocation,omitempty"`
 	// RequestedFeatures: Optional. List of features requested for this
 	// Interconnect connection, which can take one of the following values: -
-	// MACSEC If specified then the connection is created on MACsec capable
+	// IF_MACSEC If specified then the connection is created on MACsec capable
 	// hardware ports. If not specified, the default value is false, which
 	// allocates non-MACsec capable ports first if available. This parameter can be
 	// provided only with Interconnect INSERT. It isn't valid for Interconnect
@@ -25231,6 +25313,7 @@ type InterconnectAttachment struct {
 	// BPS_20G: 20 Gbit/s - BPS_50G: 50 Gbit/s
 	//
 	// Possible values:
+	//   "BPS_100G" - 100 Gbit/s
 	//   "BPS_100M" - 100 Mbit/s
 	//   "BPS_10G" - 10 Gbit/s
 	//   "BPS_1G" - 1 Gbit/s

@@ -1073,6 +1073,8 @@ type Node struct {
 	Name string `json:"name,omitempty"`
 	// NetworkConfig: Network configurations for the TPU node.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
+	// NetworkConfigs: Optional. Repeated network configurations for the TPU node.
+	NetworkConfigs []*NetworkConfig `json:"networkConfigs,omitempty"`
 	// NetworkEndpoints: Output only. The network endpoints where TPU workers can
 	// be accessed and sent work. It is recommended that runtime clients of the
 	// node reach out to the 0th entry in this map first.

@@ -2394,6 +2394,13 @@ type GoogleCloudRunV2ServiceScaling struct {
 	// of instances is divided among all revisions with specified traffic based on
 	// the percent of traffic they are receiving. (BETA)
 	MinInstanceCount int64 `json:"minInstanceCount,omitempty"`
+	// ScalingMode: Optional. The scaling mode for the service.
+	//
+	// Possible values:
+	//   "SCALING_MODE_UNSPECIFIED" - Unspecified.
+	//   "AUTOMATIC" - Scale based on traffic between min and max instances.
+	//   "MANUAL" - Scale to exactly min instances and ignore max instances.
+	ScalingMode string `json:"scalingMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MinInstanceCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

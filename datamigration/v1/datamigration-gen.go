@@ -516,6 +516,29 @@ func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AuthorizedNetwork: AuthorizedNetwork contains metadata for an authorized
+// network.
+type AuthorizedNetwork struct {
+	// CidrRange: Optional. CIDR range for one authorzied network of the instance.
+	CidrRange string `json:"cidrRange,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CidrRange") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CidrRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthorizedNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthorizedNetwork
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BackgroundJobLogEntry: Execution log of a background job.
 type BackgroundJobLogEntry struct {
 	// ApplyJobDetails: Output only. Apply job details.
@@ -772,7 +795,8 @@ type CloudSqlSettings struct {
 	// startup. An object containing a list of "key": value pairs. Example: {
 	// "name": "wrench", "mass": "1.3kg", "count": "3" }.
 	DatabaseFlags map[string]string `json:"databaseFlags,omitempty"`
-	// DatabaseVersion: The database engine type and version.
+	// DatabaseVersion: The database engine type and version. Deprecated. Use
+	// database_version_name instead.
 	//
 	// Possible values:
 	//   "SQL_DATABASE_VERSION_UNSPECIFIED" - Unspecified version.
@@ -813,6 +837,8 @@ type CloudSqlSettings struct {
 	//   "POSTGRES_15" - PostgreSQL 15.
 	//   "POSTGRES_16" - PostgreSQL 16.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
+	// DatabaseVersionName: Optional. The database engine type and version name.
+	DatabaseVersionName string `json:"databaseVersionName,omitempty"`
 	// Edition: Optional. The edition of the given Cloud SQL instance.
 	//
 	// Possible values:
@@ -2276,6 +2302,35 @@ func (s IndexEntity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InstanceNetworkConfig: Metadata related to instance level network
+// configuration.
+type InstanceNetworkConfig struct {
+	// AuthorizedExternalNetworks: Optional. A list of external network authorized
+	// to access this instance.
+	AuthorizedExternalNetworks []*AuthorizedNetwork `json:"authorizedExternalNetworks,omitempty"`
+	// EnableOutboundPublicIp: Optional. Enabling an outbound public IP address to
+	// support a database server sending requests out into the internet.
+	EnableOutboundPublicIp bool `json:"enableOutboundPublicIp,omitempty"`
+	// EnablePublicIp: Optional. Enabling public ip for the instance.
+	EnablePublicIp bool `json:"enablePublicIp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthorizedExternalNetworks")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthorizedExternalNetworks") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceNetworkConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceNetworkConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // IntComparisonFilter: Filter based on relation between source value and
 // compare value of type integer in ConditionalColumnSetValue
 type IntComparisonFilter struct {
@@ -3506,12 +3561,18 @@ type PrimaryInstanceSettings struct {
 	// Id: Required. The ID of the AlloyDB primary instance. The ID must satisfy
 	// the regex expression "[a-z0-9-]+".
 	Id string `json:"id,omitempty"`
+	// InstanceNetworkConfig: Optional. Metadata related to instance level network
+	// configuration.
+	InstanceNetworkConfig *InstanceNetworkConfig `json:"instanceNetworkConfig,omitempty"`
 	// Labels: Labels for the AlloyDB primary instance created by DMS. An object
 	// containing a list of 'key', 'value' pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 	// MachineConfig: Configuration for the machines that host the underlying
 	// database engine.
 	MachineConfig *MachineConfig `json:"machineConfig,omitempty"`
+	// OutboundPublicIpAddresses: Output only. All outbound public IP addresses
+	// configured for the instance.
+	OutboundPublicIpAddresses []string `json:"outboundPublicIpAddresses,omitempty"`
 	// PrivateIp: Output only. The private IP address for the Instance. This is the
 	// connection endpoint for an end-user application.
 	PrivateIp string `json:"privateIp,omitempty"`

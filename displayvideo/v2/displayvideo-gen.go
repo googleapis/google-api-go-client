@@ -5898,6 +5898,7 @@ type DeviceTypeAssignedTargetingOptionDetails struct {
 	//   "DEVICE_TYPE_CONNECTED_TV" - Connected TV.
 	//   "DEVICE_TYPE_SMART_PHONE" - Smart phone.
 	//   "DEVICE_TYPE_TABLET" - Tablet.
+	//   "DEVICE_TYPE_CONNECTED_DEVICE" - Connected device.
 	DeviceType string `json:"deviceType,omitempty"`
 	// YoutubeAndPartnersBidMultiplier: Output only. Bid multiplier allows you to
 	// show your ads more or less frequently based on the device type. It will
@@ -5953,6 +5954,7 @@ type DeviceTypeTargetingOptionDetails struct {
 	//   "DEVICE_TYPE_CONNECTED_TV" - Connected TV.
 	//   "DEVICE_TYPE_SMART_PHONE" - Smart phone.
 	//   "DEVICE_TYPE_TABLET" - Tablet.
+	//   "DEVICE_TYPE_CONNECTED_DEVICE" - Connected device.
 	DeviceType string `json:"deviceType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeviceType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12421,6 +12423,8 @@ type PerformanceGoal struct {
 	// (cost per impression audible and visible at completion).
 	//   "PERFORMANCE_GOAL_TYPE_CPE" - The performance goal is set in CPE (cost per
 	// engagement).
+	//   "PERFORMANCE_GOAL_TYPE_CPV" - The performance goal is set in CPV (cost per
+	// view).
 	//   "PERFORMANCE_GOAL_TYPE_CLICK_CVR" - The performance goal is set in click
 	// conversion rate (conversions per click) percentage.
 	//   "PERFORMANCE_GOAL_TYPE_IMPRESSION_CVR" - The performance goal is set in

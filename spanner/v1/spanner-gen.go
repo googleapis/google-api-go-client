@@ -3872,6 +3872,35 @@ func (s MoveInstanceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MultiplexedSessionPrecommitToken: When a read-write transaction is executed
+// on a multiplexed session, this precommit token is sent back to the client as
+// a part of the [Transaction] message in the BeginTransaction response and
+// also as a part of the [ResultSet] and [PartialResultSet] responses.
+type MultiplexedSessionPrecommitToken struct {
+	// PrecommitToken: Opaque precommit token.
+	PrecommitToken string `json:"precommitToken,omitempty"`
+	// SeqNum: An incrementing seq number is generated on every precommit token
+	// that is returned. Clients should remember the precommit token with the
+	// highest sequence number from the current transaction attempt.
+	SeqNum int64 `json:"seqNum,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PrecommitToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PrecommitToken") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MultiplexedSessionPrecommitToken) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiplexedSessionPrecommitToken
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Mutation: A modification to one or more Cloud Spanner rows. Mutations can be
 // applied to a Cloud Spanner database by sending them in a Commit call.
 type Mutation struct {
@@ -5635,6 +5664,12 @@ type Transaction struct {
 	// not have IDs, because single-use transactions do not support multiple
 	// requests.
 	Id string `json:"id,omitempty"`
+	// PrecommitToken: A precommit token will be included in the response of a
+	// BeginTransaction request if the read-write transaction is on a multiplexed
+	// session and a mutation_key was specified in the BeginTransaction. The
+	// precommit token with the highest sequence number from this transaction
+	// attempt should be passed to the Commit request for this transaction.
+	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 	// ReadTimestamp: For snapshot read-only transactions, the read timestamp
 	// chosen for the transaction. Not returned by default: see
 	// TransactionOptions.ReadOnly.return_read_timestamp. A timestamp in RFC3339

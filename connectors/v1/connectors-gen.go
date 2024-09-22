@@ -688,6 +688,9 @@ type AuthorizationCodeLink struct {
 	// ClientId: The client ID assigned to the Google Cloud Connectors OAuth app
 	// for the connector data source.
 	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Optional. The client secret assigned to the Google Cloud
+	// Connectors OAuth app for the connector data source.
+	ClientSecret *Secret `json:"clientSecret,omitempty"`
 	// EnablePkce: Whether to enable PKCE for the auth code flow.
 	EnablePkce bool `json:"enablePkce,omitempty"`
 	// OmitQueryParams: Optional. Omit query params from the redirect URI.

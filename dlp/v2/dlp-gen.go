@@ -736,6 +736,95 @@ type GooglePrivacyDlpV2AllOtherResources struct {
 type GooglePrivacyDlpV2AllText struct {
 }
 
+// GooglePrivacyDlpV2AmazonS3Bucket: Amazon S3 bucket.
+type GooglePrivacyDlpV2AmazonS3Bucket struct {
+	// AwsAccount: The AWS account.
+	AwsAccount *GooglePrivacyDlpV2AwsAccount `json:"awsAccount,omitempty"`
+	// BucketName: Required. The bucket name.
+	BucketName string `json:"bucketName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AwsAccount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AwsAccount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2AmazonS3Bucket) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2AmazonS3Bucket
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2AmazonS3BucketConditions: Amazon S3 bucket conditions.
+type GooglePrivacyDlpV2AmazonS3BucketConditions struct {
+	// BucketTypes: Optional. Bucket types that should be profiled. Optional.
+	// Defaults to TYPE_ALL_SUPPORTED if unspecified.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unused.
+	//   "TYPE_ALL_SUPPORTED" - All supported classes.
+	//   "TYPE_GENERAL_PURPOSE" - A general purpose Amazon S3 bucket.
+	BucketTypes []string `json:"bucketTypes,omitempty"`
+	// ObjectStorageClasses: Optional. Object classes that should be profiled.
+	// Optional. Defaults to ALL_SUPPORTED_CLASSES if unspecified.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Unused.
+	//   "ALL_SUPPORTED_CLASSES" - All supported classes.
+	//   "STANDARD" - Standard object class.
+	//   "STANDARD_INFREQUENT_ACCESS" - Standard - infrequent access object class.
+	//   "GLACIER_INSTANT_RETRIEVAL" - Glacier - instant retrieval object class.
+	//   "INTELLIGENT_TIERING" - Objects in the S3 Intelligent-Tiering access
+	// tiers.
+	ObjectStorageClasses []string `json:"objectStorageClasses,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BucketTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BucketTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2AmazonS3BucketConditions) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2AmazonS3BucketConditions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2AmazonS3BucketRegex: Amazon S3 bucket regex.
+type GooglePrivacyDlpV2AmazonS3BucketRegex struct {
+	// AwsAccountRegex: The AWS account regex.
+	AwsAccountRegex *GooglePrivacyDlpV2AwsAccountRegex `json:"awsAccountRegex,omitempty"`
+	// BucketNameRegex: Optional. Regex to test the bucket name against. If empty,
+	// all buckets match.
+	BucketNameRegex string `json:"bucketNameRegex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AwsAccountRegex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AwsAccountRegex") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2AmazonS3BucketRegex) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2AmazonS3BucketRegex
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails: Result of a risk analysis
 // operation request.
 type GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails struct {
@@ -806,6 +895,81 @@ type GooglePrivacyDlpV2AuxiliaryTable struct {
 
 func (s GooglePrivacyDlpV2AuxiliaryTable) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2AuxiliaryTable
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2AwsAccount: AWS account.
+type GooglePrivacyDlpV2AwsAccount struct {
+	// AccountId: Required. AWS account ID.
+	AccountId string `json:"accountId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccountId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2AwsAccount) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2AwsAccount
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2AwsAccountRegex: AWS account regex.
+type GooglePrivacyDlpV2AwsAccountRegex struct {
+	// AccountIdRegex: Optional. Regex to test the AWS account ID against. If
+	// empty, all accounts match.
+	AccountIdRegex string `json:"accountIdRegex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccountIdRegex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccountIdRegex") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2AwsAccountRegex) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2AwsAccountRegex
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2AwsDiscoveryStartingLocation: The AWS starting location
+// for discovery.
+type GooglePrivacyDlpV2AwsDiscoveryStartingLocation struct {
+	// AccountId: The AWS account ID that this discovery config applies to. Within
+	// an AWS organization, you can find the AWS account ID inside an AWS account
+	// ARN. Example:
+	// arn:{partition}:organizations::{management_account_id}:account/{org_id}/{acco
+	// unt_id}
+	AccountId string `json:"accountId,omitempty"`
+	// AllAssetInventoryAssets: All AWS assets stored in Asset Inventory that
+	// didn't match other AWS discovery configs.
+	AllAssetInventoryAssets bool `json:"allAssetInventoryAssets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccountId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2AwsDiscoveryStartingLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2AwsDiscoveryStartingLocation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2804,6 +2968,8 @@ type GooglePrivacyDlpV2DataProfileJobConfig struct {
 	InspectTemplates []string `json:"inspectTemplates,omitempty"`
 	// Location: The data to scan.
 	Location *GooglePrivacyDlpV2DataProfileLocation `json:"location,omitempty"`
+	// OtherCloudStartingLocation: Must be set only when scanning other clouds.
+	OtherCloudStartingLocation *GooglePrivacyDlpV2OtherCloudDiscoveryStartingLocation `json:"otherCloudStartingLocation,omitempty"`
 	// ProjectId: The project that will run the scan. The DLP service account that
 	// exists within this project must have access to all resources that are
 	// profiled, and the Cloud DLP API must be enabled.
@@ -4124,6 +4290,8 @@ type GooglePrivacyDlpV2DiscoveryConfig struct {
 	Name string `json:"name,omitempty"`
 	// OrgConfig: Only set when the parent is an org.
 	OrgConfig *GooglePrivacyDlpV2OrgConfig `json:"orgConfig,omitempty"`
+	// OtherCloudStartingLocation: Must be set only when scanning other clouds.
+	OtherCloudStartingLocation *GooglePrivacyDlpV2OtherCloudDiscoveryStartingLocation `json:"otherCloudStartingLocation,omitempty"`
 	// Status: Required. A status for this configuration.
 	//
 	// Possible values:
@@ -4266,6 +4434,103 @@ func (s GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2DiscoveryOtherCloudConditions: Requirements that must be
+// true before a resource is profiled for the first time.
+type GooglePrivacyDlpV2DiscoveryOtherCloudConditions struct {
+	// AmazonS3BucketConditions: Amazon S3 bucket conditions.
+	AmazonS3BucketConditions *GooglePrivacyDlpV2AmazonS3BucketConditions `json:"amazonS3BucketConditions,omitempty"`
+	// MinAge: Minimum age a resource must be before Cloud DLP can profile it.
+	// Value must be 1 hour or greater.
+	MinAge string `json:"minAge,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AmazonS3BucketConditions")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AmazonS3BucketConditions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2DiscoveryOtherCloudConditions) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryOtherCloudConditions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DiscoveryOtherCloudFilter: Determines which resources from
+// the other cloud will have profiles generated. Includes the ability to filter
+// by resource names.
+type GooglePrivacyDlpV2DiscoveryOtherCloudFilter struct {
+	// Collection: A collection of resources for this filter to apply to.
+	Collection *GooglePrivacyDlpV2OtherCloudResourceCollection `json:"collection,omitempty"`
+	// Others: Optional. Catch-all. This should always be the last target in the
+	// list because anything above it will apply first. Should only appear once in
+	// a configuration. If none is specified, a default one will be added
+	// automatically.
+	Others *GooglePrivacyDlpV2AllOtherResources `json:"others,omitempty"`
+	// SingleResource: The resource to scan. Configs using this filter can only
+	// have one target (the target with this single resource reference).
+	SingleResource *GooglePrivacyDlpV2OtherCloudSingleResourceReference `json:"singleResource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Collection") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Collection") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2DiscoveryOtherCloudFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryOtherCloudFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DiscoveryOtherCloudGenerationCadence: How often existing
+// resources should have their profiles refreshed. New resources are scanned as
+// quickly as possible depending on system capacity.
+type GooglePrivacyDlpV2DiscoveryOtherCloudGenerationCadence struct {
+	// InspectTemplateModifiedCadence: Optional. Governs when to update data
+	// profiles when the inspection rules defined by the `InspectTemplate` change.
+	// If not set, changing the template will not cause a data profile to update.
+	InspectTemplateModifiedCadence *GooglePrivacyDlpV2DiscoveryInspectTemplateModifiedCadence `json:"inspectTemplateModifiedCadence,omitempty"`
+	// RefreshFrequency: Optional. Frequency to update profiles regardless of
+	// whether the underlying resource has changes. Defaults to never.
+	//
+	// Possible values:
+	//   "UPDATE_FREQUENCY_UNSPECIFIED" - Unspecified.
+	//   "UPDATE_FREQUENCY_NEVER" - After the data profile is created, it will
+	// never be updated.
+	//   "UPDATE_FREQUENCY_DAILY" - The data profile can be updated up to once
+	// every 24 hours.
+	//   "UPDATE_FREQUENCY_MONTHLY" - The data profile can be updated up to once
+	// every 30 days. Default.
+	RefreshFrequency string `json:"refreshFrequency,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "InspectTemplateModifiedCadence") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InspectTemplateModifiedCadence")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2DiscoveryOtherCloudGenerationCadence) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryOtherCloudGenerationCadence
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2DiscoverySchemaModifiedCadence: The cadence at which to
 // update data profiles when a schema is modified.
 type GooglePrivacyDlpV2DiscoverySchemaModifiedCadence struct {
@@ -4390,6 +4655,9 @@ type GooglePrivacyDlpV2DiscoveryTarget struct {
 	// CloudStorageTarget: Cloud Storage target for Discovery. The first target to
 	// match a table will be the one applied.
 	CloudStorageTarget *GooglePrivacyDlpV2CloudStorageDiscoveryTarget `json:"cloudStorageTarget,omitempty"`
+	// OtherCloudTarget: Other clouds target for discovery. The first target to
+	// match a resource will be the one applied.
+	OtherCloudTarget *GooglePrivacyDlpV2OtherCloudDiscoveryTarget `json:"otherCloudTarget,omitempty"`
 	// SecretsTarget: Discovery target that looks for credentials and secrets
 	// stored in cloud resource metadata and reports them as vulnerabilities to
 	// Security Command Center. Only one target of this type is allowed.
@@ -4951,7 +5219,7 @@ func (s GooglePrivacyDlpV2FileStoreCollection) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2FileStoreDataProfile: The profile for a file store. *
-// Cloud Storage: maps 1:1 with a bucket.
+// Cloud Storage: maps 1:1 with a bucket. * Amazon S3: maps 1:1 with a bucket.
 type GooglePrivacyDlpV2FileStoreDataProfile struct {
 	// ConfigSnapshot: The snapshot of the configurations used to generate the
 	// profile.
@@ -4976,12 +5244,18 @@ type GooglePrivacyDlpV2FileStoreDataProfile struct {
 	// FileStoreIsEmpty: The file store does not have any files.
 	FileStoreIsEmpty bool `json:"fileStoreIsEmpty,omitempty"`
 	// FileStoreLocation: The location of the file store. * Cloud Storage:
-	// https://cloud.google.com/storage/docs/locations#available-locations
+	// https://cloud.google.com/storage/docs/locations#available-locations * Amazon
+	// S3:
+	// https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints
 	FileStoreLocation string `json:"fileStoreLocation,omitempty"`
-	// FileStorePath: The file store path. * Cloud Storage: `gs://{bucket}`
+	// FileStorePath: The file store path. * Cloud Storage: `gs://{bucket}` *
+	// Amazon S3: `s3://{bucket}`
 	FileStorePath string `json:"fileStorePath,omitempty"`
 	// FullResource: The resource name of the resource profiled.
 	// https://cloud.google.com/apis/design/resource_names#full_resource_name
+	// Example format of an S3 bucket full resource name:
+	// `//cloudasset.googleapis.com/organizations/{org_id}/otherCloudConnections/aws
+	// /arn:aws:s3:::{bucket_name}`
 	FullResource string `json:"fullResource,omitempty"`
 	// LastModifiedTime: The time the file store was last modified.
 	LastModifiedTime string `json:"lastModifiedTime,omitempty"`
@@ -4999,7 +5273,8 @@ type GooglePrivacyDlpV2FileStoreDataProfile struct {
 	// ProjectDataProfile: The resource name of the project data profile for this
 	// file store.
 	ProjectDataProfile string `json:"projectDataProfile,omitempty"`
-	// ProjectId: The Google Cloud project ID that owns the resource.
+	// ProjectId: The Google Cloud project ID that owns the resource. For Amazon S3
+	// buckets, this is the AWS Account Id.
 	ProjectId string `json:"projectId,omitempty"`
 	// ResourceAttributes: Attributes of the resource being profiled. Currently
 	// used attributes: * customer_managed_encryption: boolean - true: the resource
@@ -7474,6 +7749,165 @@ type GooglePrivacyDlpV2OrgConfig struct {
 
 func (s GooglePrivacyDlpV2OrgConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2OrgConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2OtherCloudDiscoveryStartingLocation: The other cloud
+// starting location for discovery.
+type GooglePrivacyDlpV2OtherCloudDiscoveryStartingLocation struct {
+	// AwsLocation: The AWS starting location for discovery.
+	AwsLocation *GooglePrivacyDlpV2AwsDiscoveryStartingLocation `json:"awsLocation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AwsLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AwsLocation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2OtherCloudDiscoveryStartingLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2OtherCloudDiscoveryStartingLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2OtherCloudDiscoveryTarget: Target used to match against
+// for discovery of resources from other clouds. An AWS connector in Security
+// Command Center (Enterprise
+// (https://cloud.google.com/security-command-center/docs/connect-scc-to-aws)
+// is required to use this feature.
+type GooglePrivacyDlpV2OtherCloudDiscoveryTarget struct {
+	// Conditions: Optional. In addition to matching the filter, these conditions
+	// must be true before a profile is generated.
+	Conditions *GooglePrivacyDlpV2DiscoveryOtherCloudConditions `json:"conditions,omitempty"`
+	// DataSourceType: Required. The type of data profiles generated by this
+	// discovery target. Supported values are: * aws/s3/bucket
+	DataSourceType *GooglePrivacyDlpV2DataSourceType `json:"dataSourceType,omitempty"`
+	// Disabled: Disable profiling for resources that match this filter.
+	Disabled *GooglePrivacyDlpV2Disabled `json:"disabled,omitempty"`
+	// Filter: Required. The resources that the discovery cadence applies to. The
+	// first target with a matching filter will be the one to apply to a resource.
+	Filter *GooglePrivacyDlpV2DiscoveryOtherCloudFilter `json:"filter,omitempty"`
+	// GenerationCadence: How often and when to update data profiles. New resources
+	// that match both the filter and conditions are scanned as quickly as possible
+	// depending on system capacity.
+	GenerationCadence *GooglePrivacyDlpV2DiscoveryOtherCloudGenerationCadence `json:"generationCadence,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conditions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conditions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2OtherCloudDiscoveryTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2OtherCloudDiscoveryTarget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2OtherCloudResourceCollection: Match resources using regex
+// filters.
+type GooglePrivacyDlpV2OtherCloudResourceCollection struct {
+	// IncludeRegexes: A collection of regular expressions to match a resource
+	// against.
+	IncludeRegexes *GooglePrivacyDlpV2OtherCloudResourceRegexes `json:"includeRegexes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IncludeRegexes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IncludeRegexes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2OtherCloudResourceCollection) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2OtherCloudResourceCollection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2OtherCloudResourceRegex: A pattern to match against one or
+// more resources. At least one pattern must be specified. Regular expressions
+// use RE2 syntax (https://github.com/google/re2/wiki/Syntax); a guide can be
+// found under the google/re2 repository on GitHub.
+type GooglePrivacyDlpV2OtherCloudResourceRegex struct {
+	// AmazonS3BucketRegex: Regex for Amazon S3 buckets.
+	AmazonS3BucketRegex *GooglePrivacyDlpV2AmazonS3BucketRegex `json:"amazonS3BucketRegex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AmazonS3BucketRegex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AmazonS3BucketRegex") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2OtherCloudResourceRegex) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2OtherCloudResourceRegex
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2OtherCloudResourceRegexes: A collection of regular
+// expressions to determine what resources to match against.
+type GooglePrivacyDlpV2OtherCloudResourceRegexes struct {
+	// Patterns: A group of regular expression patterns to match against one or
+	// more resources. Maximum of 100 entries. The sum of all regular expression's
+	// length can't exceed 10 KiB.
+	Patterns []*GooglePrivacyDlpV2OtherCloudResourceRegex `json:"patterns,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Patterns") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Patterns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2OtherCloudResourceRegexes) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2OtherCloudResourceRegexes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2OtherCloudSingleResourceReference: Identifies a single
+// resource, like a single Amazon S3 bucket.
+type GooglePrivacyDlpV2OtherCloudSingleResourceReference struct {
+	// AmazonS3Bucket: Amazon S3 bucket.
+	AmazonS3Bucket *GooglePrivacyDlpV2AmazonS3Bucket `json:"amazonS3Bucket,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AmazonS3Bucket") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AmazonS3Bucket") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2OtherCloudSingleResourceReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2OtherCloudSingleResourceReference
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -14650,13 +15084,13 @@ func (r *OrganizationsLocationsFileStoreDataProfilesService) List(parent string)
 // Restrictions can be combined by `AND` or `OR` logical operators. A sequence
 // of restrictions implicitly uses `AND`. * A restriction has the form of
 // `{field} {operator} {value}`. * Supported fields/values: - `project_id` -
-// The Google Cloud project ID. - `file_store_path` - The path like
-// "gs://bucket". - `data_source_type` - The profile's data source type, like
-// "google/storage/bucket". - `data_storage_location` - The location where the
-// file store's data is stored, like "us-central1". - `sensitivity_level` -
-// HIGH|MODERATE|LOW - `data_risk_level` - HIGH|MODERATE|LOW -
-// `resource_visibility`: PUBLIC|RESTRICTED - `status_code` - an RPC status
-// code as defined in
+// The Google Cloud project ID. - `account_id` - The AWS account ID. -
+// `file_store_path` - The path like "gs://bucket". - `data_source_type` - The
+// profile's data source type, like "google/storage/bucket". -
+// `data_storage_location` - The location where the file store's data is
+// stored, like "us-central1". - `sensitivity_level` - HIGH|MODERATE|LOW -
+// `data_risk_level` - HIGH|MODERATE|LOW - `resource_visibility`:
+// PUBLIC|RESTRICTED - `status_code` - an RPC status code as defined in
 // https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
 // The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
 // status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` *
@@ -24693,13 +25127,13 @@ func (r *ProjectsLocationsFileStoreDataProfilesService) List(parent string) *Pro
 // Restrictions can be combined by `AND` or `OR` logical operators. A sequence
 // of restrictions implicitly uses `AND`. * A restriction has the form of
 // `{field} {operator} {value}`. * Supported fields/values: - `project_id` -
-// The Google Cloud project ID. - `file_store_path` - The path like
-// "gs://bucket". - `data_source_type` - The profile's data source type, like
-// "google/storage/bucket". - `data_storage_location` - The location where the
-// file store's data is stored, like "us-central1". - `sensitivity_level` -
-// HIGH|MODERATE|LOW - `data_risk_level` - HIGH|MODERATE|LOW -
-// `resource_visibility`: PUBLIC|RESTRICTED - `status_code` - an RPC status
-// code as defined in
+// The Google Cloud project ID. - `account_id` - The AWS account ID. -
+// `file_store_path` - The path like "gs://bucket". - `data_source_type` - The
+// profile's data source type, like "google/storage/bucket". -
+// `data_storage_location` - The location where the file store's data is
+// stored, like "us-central1". - `sensitivity_level` - HIGH|MODERATE|LOW -
+// `data_risk_level` - HIGH|MODERATE|LOW - `resource_visibility`:
+// PUBLIC|RESTRICTED - `status_code` - an RPC status code as defined in
 // https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto *
 // The operator must be `=` or `!=`. Examples: * `project_id = 12345 AND
 // status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` *

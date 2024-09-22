@@ -381,7 +381,8 @@ type Execution struct {
 	// Result: Output only. Output of the execution represented as a JSON string.
 	// The value can only be present if the execution's state is `SUCCEEDED`.
 	Result string `json:"result,omitempty"`
-	// StartTime: Output only. Marks the beginning of execution.
+	// StartTime: Output only. Marks the beginning of execution. Note that this
+	// will be the same as `createTime` for executions that start immediately.
 	StartTime string `json:"startTime,omitempty"`
 	// State: Output only. Current state of the execution.
 	//
@@ -1653,10 +1654,11 @@ func (r *ProjectsLocationsWorkflowsExecutionsService) List(parent string) *Proje
 // Filter sets the optional parameter "filter": Filters applied to the
 // `[Executions.ListExecutions]` results. The following fields are supported
 // for filtering: `executionId`, `state`, `createTime`, `startTime`, `endTime`,
-// `duration`, `workflowRevisionId`, `stepName`, and `label`. For details, see
-// AIP-160. For more information, see Filter executions. For example, if you
-// are using the Google APIs Explorer: `state="SUCCEEDED" or
-// `startTime>"2023-08-01" AND state="FAILED"
+// `duration`, `workflowRevisionId`, `stepName`, `label`, and
+// `disableConcurrencyQuotaOverflowBuffering`. For details, see AIP-160. For
+// more information, see Filter executions. For example, if you are using the
+// Google APIs Explorer: `state="SUCCEEDED" or `startTime>"2023-08-01" AND
+// state="FAILED"
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) Filter(filter string) *ProjectsLocationsWorkflowsExecutionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

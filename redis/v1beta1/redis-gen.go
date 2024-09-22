@@ -536,7 +536,7 @@ type Cluster struct {
 	// determines the underlying machine-type of a redis node.
 	//
 	// Possible values:
-	//   "NODE_TYPE_UNSPECIFIED"
+	//   "NODE_TYPE_UNSPECIFIED" - Node type unspecified
 	//   "REDIS_SHARED_CORE_NANO" - Redis shared core nano node_type.
 	//   "REDIS_HIGHMEM_MEDIUM" - Redis highmem medium node_type.
 	//   "REDIS_HIGHMEM_XLARGE" - Redis highmem xlarge node_type.
@@ -551,8 +551,8 @@ type Cluster struct {
 	// IPs will be designated to the cluster for client access through Private
 	// Service Connect Automation. Currently, only one PscConfig is supported.
 	PscConfigs []*PscConfig `json:"pscConfigs,omitempty"`
-	// PscConnections: Output only. PSC connections for discovery of the cluster
-	// topology and accessing the cluster.
+	// PscConnections: Output only. The list of PSC connections that are
+	// auto-created through service connectivity automation.
 	PscConnections []*PscConnection `json:"pscConnections,omitempty"`
 	// RedisConfigs: Optional. Key/Value pairs of customer overrides for mutable
 	// Redis Configs
@@ -661,9 +661,6 @@ type ClusterMaintenanceSchedule struct {
 	// EndTime: Output only. The end time of any upcoming scheduled maintenance for
 	// this instance.
 	EndTime string `json:"endTime,omitempty"`
-	// ScheduleDeadlineTime: Output only. The deadline that the maintenance
-	// schedule start time can not go beyond, including reschedule.
-	ScheduleDeadlineTime string `json:"scheduleDeadlineTime,omitempty"`
 	// StartTime: Output only. The start time of any upcoming scheduled maintenance
 	// for this instance.
 	StartTime string `json:"startTime,omitempty"`
@@ -733,8 +730,6 @@ type ClusterWeeklyMaintenanceWindow struct {
 	//   "SATURDAY" - Saturday
 	//   "SUNDAY" - Sunday
 	Day string `json:"day,omitempty"`
-	// Duration: Duration of the time window.
-	Duration string `json:"duration,omitempty"`
 	// StartTime: Start time of the window in UTC.
 	StartTime *TimeOfDay `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
@@ -2520,6 +2515,8 @@ type MachineConfiguration struct {
 	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482, b/342346271) add
 	// proto validations again after bug fix.
 	MemorySizeInBytes int64 `json:"memorySizeInBytes,omitempty,string"`
+	// ShardCount: Optional. Number of shards (if applicable).
+	ShardCount int64 `json:"shardCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CpuCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3040,22 +3037,27 @@ func (s PscConfig) MarshalJSON() ([]byte, error) {
 
 // PscConnection: Details of consumer resources in a PSC connection.
 type PscConnection struct {
-	// Address: Output only. The IP allocated on the consumer network for the PSC
+	// Address: Required. The IP allocated on the consumer network for the PSC
 	// forwarding rule.
 	Address string `json:"address,omitempty"`
-	// ForwardingRule: Output only. The URI of the consumer side forwarding rule.
+	// ForwardingRule: Required. The URI of the consumer side forwarding rule.
 	// Example:
 	// projects/{projectNumOrId}/regions/us-east1/forwardingRules/{resourceId}.
 	ForwardingRule string `json:"forwardingRule,omitempty"`
-	// Network: The consumer network where the IP address resides, in the form of
-	// projects/{project_id}/global/networks/{network_id}.
+	// Network: Required. The consumer network where the IP address resides, in the
+	// form of projects/{project_id}/global/networks/{network_id}.
 	Network string `json:"network,omitempty"`
-	// ProjectId: Output only. The consumer project_id where the forwarding rule is
-	// created from.
+	// ProjectId: Optional. Project ID of the consumer project where the forwarding
+	// rule is created in.
 	ProjectId string `json:"projectId,omitempty"`
-	// PscConnectionId: Output only. The PSC connection id of the forwarding rule
+	// PscConnectionId: Optional. The PSC connection id of the forwarding rule
 	// connected to the service attachment.
 	PscConnectionId string `json:"pscConnectionId,omitempty"`
+	// ServiceAttachment: Required. The service attachment which is the target of
+	// the PSC connection, in the form of
+	// projects/{project-id}/regions/{region}/serviceAttachments/{service-attachment
+	// -id}.
+	ServiceAttachment string `json:"serviceAttachment,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

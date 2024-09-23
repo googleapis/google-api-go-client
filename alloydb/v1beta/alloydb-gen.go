@@ -758,6 +758,8 @@ type ClusterUpgradeDetails struct {
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
+	//   "CANCEL_IN_PROGRESS" - Cancel is in progress.
+	//   "CANCELLED" - Cancellation complete.
 	UpgradeStatus string `json:"upgradeStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1445,6 +1447,8 @@ type InstanceUpgradeDetails struct {
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
+	//   "CANCEL_IN_PROGRESS" - Cancel is in progress.
+	//   "CANCELLED" - Cancellation complete.
 	UpgradeStatus string `json:"upgradeStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InstanceType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2422,6 +2426,8 @@ type StageInfo struct {
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
+	//   "CANCEL_IN_PROGRESS" - Cancel is in progress.
+	//   "CANCELLED" - Cancellation complete.
 	Status string `json:"status,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LogsUrl") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3024,7 +3030,7 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceId) MarshalJSON() (
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata: Common model
-// for database resource instance metadata.
+// for database resource instance metadata. Next ID: 21
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -3102,6 +3108,8 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// the same source. Resource name to follow CAIS resource_name format as noted
 	// here go/condor-common-datamodel
 	ResourceName string `json:"resourceName,omitempty"`
+	// TagsSet: Optional. Tags associated with this resources.
+	TagsSet *StorageDatabasecenterPartnerapiV1mainTags `json:"tagsSet,omitempty"`
 	// UpdationTime: The time at which the resource was updated and recorded at
 	// partner service.
 	UpdationTime string `json:"updationTime,omitempty"`
@@ -3458,6 +3466,8 @@ type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
 	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482, b/342346271) add
 	// proto validations again after bug fix.
 	MemorySizeInBytes int64 `json:"memorySizeInBytes,omitempty,string"`
+	// ShardCount: Optional. Number of shards (if applicable).
+	ShardCount int64 `json:"shardCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CpuCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3590,6 +3600,31 @@ type StorageDatabasecenterPartnerapiV1mainRetentionSettings struct {
 
 func (s StorageDatabasecenterPartnerapiV1mainRetentionSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainRetentionSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StorageDatabasecenterPartnerapiV1mainTags: Message type for storing tags.
+// Tags provide a way to create annotations for resources, and in some cases
+// conditionally allow or deny policies based on whether a resource has a
+// specific tag.
+type StorageDatabasecenterPartnerapiV1mainTags struct {
+	// Tags: The Tag key/value mappings.
+	Tags map[string]string `json:"tags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Tags") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Tags") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StorageDatabasecenterPartnerapiV1mainTags) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainTags
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3997,6 +4032,8 @@ type UpgradeClusterResponse struct {
 	//   "SUCCESS" - Operation succeeded.
 	//   "FAILED" - Operation failed.
 	//   "PARTIAL_SUCCESS" - Operation partially succeeded.
+	//   "CANCEL_IN_PROGRESS" - Cancel is in progress.
+	//   "CANCELLED" - Cancellation complete.
 	Status string `json:"status,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterUpgradeDetails") to
 	// unconditionally include in API requests. By default, fields with empty or

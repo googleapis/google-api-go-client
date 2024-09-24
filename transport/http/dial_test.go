@@ -31,15 +31,22 @@ func TestNewClient(t *testing.T) {
 	}
 }
 
-func TestNewClient_NewAuthUniverseDomain(t *testing.T) {
-	t.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "example.com")
+func TestNewClient_NewAuthUniverseDomainEnvVar(t *testing.T) {
+	universeDomain := "example.com"
+	t.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", universeDomain)
 
+	// Replace package var in order to assert DialContext args.
+	oldNewClient := newClient
 	newClient = func(opts *httptransport.Options) (*http.Client, error) {
-		if got, want := opts.UniverseDomain, "example.com"; got != want {
+		if got, want := opts.UniverseDomain, universeDomain; got != want {
 			t.Fatalf("got %s, want: %s", got, want)
 		}
 		return nil, nil
 	}
+	defer func() {
+		newClient = oldNewClient
+	}()
+
 	_, _, err := NewClient(context.Background(), internaloption.EnableNewAuthLibrary())
 	if err != nil {
 		t.Fatalf("unable to create client: %v", err)

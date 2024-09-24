@@ -87,6 +87,25 @@ func TestDialPoolNewAuthDialOptions(t *testing.T) {
 	}
 }
 
+func TestDialPool_NewAuthUniverseDomainEnvVar(t *testing.T) {
+	universeDomain := "example.com"
+	t.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", universeDomain)
+
+	// Replace package var in order to assert DialContext args.
+	oldDialContextNewAuth := dialContextNewAuth
+	dialContextNewAuth = func(ctx context.Context, secure bool, opts *grpctransport.Options) (grpctransport.GRPCClientConnPool, error) {
+		if opts.UniverseDomain != universeDomain {
+			t.Fatalf("got: %q, want: %q", opts.UniverseDomain, universeDomain)
+		}
+		return nil, nil
+	}
+	defer func() {
+		dialContextNewAuth = oldDialContextNewAuth
+	}()
+
+	dialPoolNewAuth(context.Background(), false, 1, &internal.DialSettings{})
+}
+
 func TestPrepareDialOptsNewAuth(t *testing.T) {
 	for _, testcase := range []struct {
 		name        string

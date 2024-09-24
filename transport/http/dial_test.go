@@ -34,7 +34,7 @@ func TestNewClient(t *testing.T) {
 
 func TestNewClient_NewAuthUniverseDomain(t *testing.T) {
 	os.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "example.com")
-	defer func(){
+	defer func() {
 		os.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "")
 	}()
 

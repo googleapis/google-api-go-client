@@ -8,7 +8,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"os"
 	"testing"
 
 	"cloud.google.com/go/auth/httptransport"
@@ -33,10 +32,7 @@ func TestNewClient(t *testing.T) {
 }
 
 func TestNewClient_NewAuthUniverseDomain(t *testing.T) {
-	os.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "example.com")
-	defer func() {
-		os.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "")
-	}()
+	t.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "example.com")
 
 	newClient = func(opts *httptransport.Options) (*http.Client, error) {
 		if got, want := opts.UniverseDomain, "example.com"; got != want {

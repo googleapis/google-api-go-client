@@ -7,7 +7,12 @@ package http
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"os"
 	"testing"
+
+	"cloud.google.com/go/auth/httptransport"
+	"google.golang.org/api/option/internaloption"
 )
 
 func TestNewClient(t *testing.T) {
@@ -24,5 +29,23 @@ func TestNewClient(t *testing.T) {
 	}
 	if got, want := fmt.Sprintf("%T", client.Transport), "*httptransport.authTransport"; got != want {
 		t.Fatalf("got %s, want: %s", got, want)
+	}
+}
+
+func TestNewClient_NewAuthUniverseDomain(t *testing.T) {
+	os.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "example.com")
+	defer func(){
+		os.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "")
+	}()
+
+	newClient = func(opts *httptransport.Options) (*http.Client, error) {
+		if got, want := opts.UniverseDomain, "example.com"; got != want {
+			t.Fatalf("got %s, want: %s", got, want)
+		}
+		return nil, nil
+	}
+	_, _, err := NewClient(context.Background(), internaloption.EnableNewAuthLibrary())
+	if err != nil {
+		t.Fatalf("unable to create client: %v", err)
 	}
 }

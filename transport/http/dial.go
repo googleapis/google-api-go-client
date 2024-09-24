@@ -30,6 +30,9 @@ import (
 	"google.golang.org/api/transport/http/internal/propagation"
 )
 
+// package var for unit test substitution
+var newClient = httptransport.NewClient
+
 // NewClient returns an HTTP client for use communicating with a Google cloud
 // service, configured with the given ClientOptions. It also returns the endpoint
 // for the service as specified in the options.
@@ -107,7 +110,7 @@ func newClientNewAuth(ctx context.Context, base http.RoundTripper, ds *internal.
 	if ds.RequestReason != "" {
 		headers.Set("X-goog-request-reason", ds.RequestReason)
 	}
-	client, err := httptransport.NewClient(&httptransport.Options{
+	client, err := newClient(&httptransport.Options{
 		DisableTelemetry:      ds.TelemetryDisabled,
 		DisableAuthentication: ds.NoAuth,
 		Headers:               headers,
@@ -130,7 +133,7 @@ func newClientNewAuth(ctx context.Context, base http.RoundTripper, ds *internal.
 			DefaultScopes:           ds.DefaultScopes,
 			SkipValidation:          skipValidation,
 		},
-		UniverseDomain: ds.UniverseDomain,
+		UniverseDomain: ds.GetUniverseDomain(),
 	})
 	if err != nil {
 		return nil, err

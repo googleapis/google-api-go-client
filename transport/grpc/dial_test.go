@@ -45,7 +45,8 @@ func TestDialPoolNewAuthDialOptions(t *testing.T) {
 		if len(opts.GRPCDialOpts) != wantNumOpts {
 			t.Fatalf("got: %d, want: %d", len(opts.GRPCDialOpts), wantNumOpts)
 		}
-		if opts.UniverseDomain != universeDomain {
+		// In "no dial options", a blank UniverseDomain should result in the default "googleapis.com", so skip comparison.
+		if universeDomain != "" && opts.UniverseDomain != universeDomain {
 			t.Fatalf("got: %q, want: %q", opts.UniverseDomain, universeDomain)
 		}
 		return nil, nil

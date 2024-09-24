@@ -366,6 +366,10 @@ type AdditionalPodNetworkConfig struct {
 	// MaxPodsPerNode: The maximum number of pods per node which use this pod
 	// network.
 	MaxPodsPerNode *MaxPodsConstraint `json:"maxPodsPerNode,omitempty"`
+	// NetworkAttachment: The name of the network attachment for pods to
+	// communicate to; cannot be specified along with subnetwork or
+	// secondary_pod_range.
+	NetworkAttachment string `json:"networkAttachment,omitempty"`
 	// SecondaryPodRange: The name of the secondary range on the subnet which
 	// provides IP address for this pod range.
 	SecondaryPodRange string `json:"secondaryPodRange,omitempty"`
@@ -2757,8 +2761,8 @@ func (s GcsFuseCsiDriverConfig) MarshalJSON() ([]byte, error) {
 // GetJSONWebKeysResponse: GetJSONWebKeysResponse is a valid JSON Web Key Set
 // as specififed in rfc 7517
 type GetJSONWebKeysResponse struct {
-	// CacheHeader: OnePlatform automatically extracts this field and uses it to
-	// set the HTTP Cache-Control header.
+	// CacheHeader: For HTTP requests, this field is automatically extracted into
+	// the Cache-Control HTTP header.
 	CacheHeader *HttpCacheControlResponseHeader `json:"cacheHeader,omitempty"`
 	// Keys: The public component of the keys used by the cluster to sign token
 	// requests.
@@ -2788,8 +2792,8 @@ func (s GetJSONWebKeysResponse) MarshalJSON() ([]byte, error) {
 // document for the cluster. See the OpenID Connect Discovery 1.0 specification
 // for details.
 type GetOpenIDConfigResponse struct {
-	// CacheHeader: OnePlatform automatically extracts this field and uses it to
-	// set the HTTP Cache-Control header.
+	// CacheHeader: For HTTP requests, this field is automatically extracted into
+	// the Cache-Control HTTP header.
 	CacheHeader *HttpCacheControlResponseHeader `json:"cacheHeader,omitempty"`
 	// ClaimsSupported: Supported claims.
 	ClaimsSupported []string `json:"claims_supported,omitempty"`

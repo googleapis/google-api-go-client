@@ -1168,7 +1168,7 @@
       }
     }
   },
-  "revision": "20240904",
+  "revision": "20240923",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdbShellCommandEvent": {
@@ -1193,7 +1193,7 @@
       "id": "AdvancedSecurityOverrides",
       "properties": {
         "commonCriteriaMode": {
-          "description": "Controls Common Criteria Mode—security standards defined in the Common Criteria for Information Technology Security Evaluation (https://www.commoncriteriaportal.org/) (CC). Enabling Common Criteria Mode increases certain security components on a device, including AES-GCM encryption of Bluetooth Long Term Keys, and Wi-Fi configuration stores.Common Criteria Mode is only supported on company-owned devices running Android 11 or above.Warning: Common Criteria Mode enforces a strict security model typically only required for IT products used in national security systems and other highly sensitive organizations. Standard device use may be affected. Only enabled if required.",
+          "description": "Controls Common Criteria Mode—security standards defined in the Common Criteria for Information Technology Security Evaluation (https://www.commoncriteriaportal.org/) (CC). Enabling Common Criteria Mode increases certain security components on a device, see CommonCriteriaMode for details.Warning: Common Criteria Mode enforces a strict security model typically only required for IT products used in national security systems and other highly sensitive organizations. Standard device use may be affected. Only enabled if required. If Common Criteria Mode is turned off after being enabled previously, all user-configured Wi-Fi networks may be lost and any enterprise-configured Wi-Fi networks that require user input may need to be reconfigured.",
           "enum": [
             "COMMON_CRITERIA_MODE_UNSPECIFIED",
             "COMMON_CRITERIA_MODE_DISABLED",
@@ -2251,6 +2251,25 @@
             "Common Criteria Mode is currently disabled.",
             "Common Criteria Mode is currently enabled."
           ],
+          "type": "string"
+        },
+        "policySignatureVerificationStatus": {
+          "description": "Output only. The status of policy signature verification.",
+          "enum": [
+            "POLICY_SIGNATURE_VERIFICATION_STATUS_UNSPECIFIED",
+            "POLICY_SIGNATURE_VERIFICATION_DISABLED",
+            "POLICY_SIGNATURE_VERIFICATION_SUCCEEDED",
+            "POLICY_SIGNATURE_VERIFICATION_NOT_SUPPORTED",
+            "POLICY_SIGNATURE_VERIFICATION_FAILED"
+          ],
+          "enumDescriptions": [
+            "Unspecified. The verification status has not been reported. This is set only if statusReportingSettings.commonCriteriaModeEnabled is false.",
+            "Policy signature verification is disabled on the device as common_criteria_mode is set to false.",
+            "Policy signature verification succeeded.",
+            "Policy signature verification is not supported, e.g. because the device has been enrolled with a CloudDPC version that does not support the policy signature verification.",
+            "The policy signature verification failed. The policy has not been applied."
+          ],
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -5663,7 +5682,7 @@
       "id": "ScreenBrightnessSettings",
       "properties": {
         "screenBrightness": {
-          "description": "Optional. The screen brightness between 1 and 255 where 1 is the lowest and 255 is the highest brightness. A value of 0 (default) means no screen brightness set. Any other value is rejected. screenBrightnessMode must be either BRIGHTNESS_AUTOMATIC or BRIGHTNESS_FIXED to set this. Supported on Android 9 and above on fully managed devices. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 9.",
+          "description": "Optional. The screen brightness between 1 and 255 where 1 is the lowest and 255 is the highest brightness. A value of 0 (default) means no screen brightness set. Any other value is rejected. screenBrightnessMode must be either BRIGHTNESS_AUTOMATIC or BRIGHTNESS_FIXED to set this. Supported on Android 9 and above on fully managed devices. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 9. Supported on work profiles on company-owned devices on Android 15 and above.",
           "format": "int32",
           "type": "integer"
         },
@@ -5678,8 +5697,8 @@
           "enumDescriptions": [
             "Unspecified. Defaults to BRIGHTNESS_USER_CHOICE.",
             "The user is allowed to configure the screen brightness. screenBrightness must not be set.",
-            "The screen brightness mode is automatic in which the brightness is automatically adjusted and the user is not allowed to configure the screen brightness. screenBrightness can still be set and it is taken into account while the brightness is automatically adjusted. Supported on Android 9 and above on fully managed devices. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 9.",
-            "The screen brightness mode is fixed in which the brightness is set to screenBrightness and the user is not allowed to configure the screen brightness. screenBrightness must be set. Supported on Android 9 and above on fully managed devices. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 9."
+            "The screen brightness mode is automatic in which the brightness is automatically adjusted and the user is not allowed to configure the screen brightness. screenBrightness can still be set and it is taken into account while the brightness is automatically adjusted. Supported on Android 9 and above on fully managed devices. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 9. Supported on work profiles on company-owned devices on Android 15 and above.",
+            "The screen brightness mode is fixed in which the brightness is set to screenBrightness and the user is not allowed to configure the screen brightness. screenBrightness must be set. Supported on Android 9 and above on fully managed devices. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 9. Supported on work profiles on company-owned devices on Android 15 and above."
           ],
           "type": "string"
         }
@@ -5691,7 +5710,7 @@
       "id": "ScreenTimeoutSettings",
       "properties": {
         "screenTimeout": {
-          "description": "Optional. Controls the screen timeout duration. The screen timeout duration must be greater than 0, otherwise it is rejected. Additionally, it should not be greater than maximumTimeToLock, otherwise the screen timeout is set to maximumTimeToLock and a NonComplianceDetail with INVALID_VALUE reason and SCREEN_TIMEOUT_GREATER_THAN_MAXIMUM_TIME_TO_LOCK specific reason is reported. If the screen timeout is less than a certain lower bound, it is set to the lower bound. The lower bound may vary across devices. If this is set, screenTimeoutMode must be SCREEN_TIMEOUT_ENFORCED. Supported on Android 9 and above on fully managed devices. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 9.",
+          "description": "Optional. Controls the screen timeout duration. The screen timeout duration must be greater than 0, otherwise it is rejected. Additionally, it should not be greater than maximumTimeToLock, otherwise the screen timeout is set to maximumTimeToLock and a NonComplianceDetail with INVALID_VALUE reason and SCREEN_TIMEOUT_GREATER_THAN_MAXIMUM_TIME_TO_LOCK specific reason is reported. If the screen timeout is less than a certain lower bound, it is set to the lower bound. The lower bound may vary across devices. If this is set, screenTimeoutMode must be SCREEN_TIMEOUT_ENFORCED. Supported on Android 9 and above on fully managed devices. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 9. Supported on work profiles on company-owned devices on Android 15 and above.",
           "format": "google-duration",
           "type": "string"
         },
@@ -5705,7 +5724,7 @@
           "enumDescriptions": [
             "Unspecified. Defaults to SCREEN_TIMEOUT_USER_CHOICE.",
             "The user is allowed to configure the screen timeout. screenTimeout must not be set.",
-            "The screen timeout is set to screenTimeout and the user is not allowed to configure the timeout. screenTimeout must be set. Supported on Android 9 and above on fully managed devices. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 9."
+            "The screen timeout is set to screenTimeout and the user is not allowed to configure the timeout. screenTimeout must be set. Supported on Android 9 and above on fully managed devices. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 9. Supported on work profiles on company-owned devices on Android 15 and above."
           ],
           "type": "string"
         }

@@ -343,10 +343,15 @@ func (s BiReservation) MarshalJSON() ([]byte, error) {
 // project.
 type CapacityCommitment struct {
 	// CommitmentEndTime: Output only. The end of the current commitment period. It
-	// is applicable only for ACTIVE capacity commitments.
+	// is applicable only for ACTIVE capacity commitments. Note after renewal,
+	// commitment_end_time is the time the renewed commitment expires. So itwould
+	// be at a time after commitment_start_time + committed period, because we
+	// don't change commitment_start_time ,
 	CommitmentEndTime string `json:"commitmentEndTime,omitempty"`
 	// CommitmentStartTime: Output only. The start of the current commitment
-	// period. It is applicable only for ACTIVE capacity commitments.
+	// period. It is applicable only for ACTIVE capacity commitments. Note after
+	// the commitment is renewed, commitment_start_time won't be changed. It refers
+	// to the start time of the original commitment.
 	CommitmentStartTime string `json:"commitmentStartTime,omitempty"`
 	// Edition: Edition of the capacity commitment.
 	//

@@ -912,6 +912,17 @@ type Cluster struct {
 	// Name: The unique name of the cluster. Values are of the form
 	// `projects/{project}/instances/{instance}/clusters/a-z*`.
 	Name string `json:"name,omitempty"`
+	// NodeScalingFactor: Immutable. The node scaling factor of this cluster.
+	//
+	// Possible values:
+	//   "NODE_SCALING_FACTOR_UNSPECIFIED" - No node scaling specified. Defaults to
+	// NODE_SCALING_FACTOR_1X.
+	//   "NODE_SCALING_FACTOR_1X" - The cluster is running with a scaling factor of
+	// 1.
+	//   "NODE_SCALING_FACTOR_2X" - The cluster is running with a scaling factor of
+	// 2. All node count values must be in increments of 2 with this scaling factor
+	// enabled, otherwise an INVALID_ARGUMENT error will be returned.
+	NodeScalingFactor string `json:"nodeScalingFactor,omitempty"`
 	// ServeNodes: The number of nodes in the cluster. If no value is set, Cloud
 	// Bigtable automatically allocates nodes based on your data footprint and
 	// optimized for 50% storage utilization.
@@ -3149,11 +3160,15 @@ func (s RestoreTableRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RowAffinity: If enabled, the AFE will route the request based on the row key
-// of the request, rather than randomly. Instead, each row key will be assigned
-// to a cluster, and will stick to that cluster. If clusters are added or
-// removed, then this may affect which row keys stick to which clusters. To
-// avoid this, users can specify a group cluster.
+// RowAffinity: If enabled, Bigtable will route the request based on the row
+// key of the request, rather than randomly. Instead, each row key will be
+// assigned to a cluster, and will stick to that cluster. If clusters are added
+// or removed, then this may affect which row keys stick to which clusters. To
+// avoid this, users can use a cluster group to specify which clusters are to
+// be used. In this case, new clusters that are not a part of the cluster group
+// will not be routed to, and routing will be unaffected by the new cluster.
+// Moreover, clusters specified in the cluster group cannot be deleted unless
+// removed from the cluster group.
 type RowAffinity struct {
 }
 

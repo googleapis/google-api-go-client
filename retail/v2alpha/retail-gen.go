@@ -193,6 +193,8 @@ func NewProjectsLocationsCatalogsService(s *Service) *ProjectsLocationsCatalogsS
 	rs.Branches = NewProjectsLocationsCatalogsBranchesService(s)
 	rs.CompletionData = NewProjectsLocationsCatalogsCompletionDataService(s)
 	rs.Controls = NewProjectsLocationsCatalogsControlsService(s)
+	rs.GenerativeQuestion = NewProjectsLocationsCatalogsGenerativeQuestionService(s)
+	rs.GenerativeQuestions = NewProjectsLocationsCatalogsGenerativeQuestionsService(s)
 	rs.MerchantCenterAccountLinks = NewProjectsLocationsCatalogsMerchantCenterAccountLinksService(s)
 	rs.Models = NewProjectsLocationsCatalogsModelsService(s)
 	rs.Operations = NewProjectsLocationsCatalogsOperationsService(s)
@@ -212,6 +214,10 @@ type ProjectsLocationsCatalogsService struct {
 	CompletionData *ProjectsLocationsCatalogsCompletionDataService
 
 	Controls *ProjectsLocationsCatalogsControlsService
+
+	GenerativeQuestion *ProjectsLocationsCatalogsGenerativeQuestionService
+
+	GenerativeQuestions *ProjectsLocationsCatalogsGenerativeQuestionsService
 
 	MerchantCenterAccountLinks *ProjectsLocationsCatalogsMerchantCenterAccountLinksService
 
@@ -307,6 +313,24 @@ func NewProjectsLocationsCatalogsControlsService(s *Service) *ProjectsLocationsC
 }
 
 type ProjectsLocationsCatalogsControlsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCatalogsGenerativeQuestionService(s *Service) *ProjectsLocationsCatalogsGenerativeQuestionService {
+	rs := &ProjectsLocationsCatalogsGenerativeQuestionService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCatalogsGenerativeQuestionService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCatalogsGenerativeQuestionsService(s *Service) *ProjectsLocationsCatalogsGenerativeQuestionsService {
+	rs := &ProjectsLocationsCatalogsGenerativeQuestionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCatalogsGenerativeQuestionsService struct {
 	s *Service
 }
 
@@ -1804,6 +1828,55 @@ type GoogleCloudRetailV2alphaBatchRemoveCatalogAttributesResponse struct {
 
 func (s GoogleCloudRetailV2alphaBatchRemoveCatalogAttributesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaBatchRemoveCatalogAttributesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaBatchUpdateGenerativeQuestionConfigsRequest: Request
+// for BatchUpdateGenerativeQuestionConfig method.
+type GoogleCloudRetailV2alphaBatchUpdateGenerativeQuestionConfigsRequest struct {
+	// Requests: Required. The updates question configs.
+	Requests []*GoogleCloudRetailV2alphaUpdateGenerativeQuestionConfigRequest `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaBatchUpdateGenerativeQuestionConfigsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaBatchUpdateGenerativeQuestionConfigsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaBatchUpdateGenerativeQuestionConfigsResponse:
+// Aggregated response for UpdateGenerativeQuestionConfig method.
+type GoogleCloudRetailV2alphaBatchUpdateGenerativeQuestionConfigsResponse struct {
+	// GenerativeQuestionConfigs: Optional. The updates question configs.
+	GenerativeQuestionConfigs []*GoogleCloudRetailV2alphaGenerativeQuestionConfig `json:"generativeQuestionConfigs,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "GenerativeQuestionConfigs")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GenerativeQuestionConfigs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaBatchUpdateGenerativeQuestionConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaBatchUpdateGenerativeQuestionConfigsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3459,6 +3532,96 @@ func (s GoogleCloudRetailV2alphaGcsSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRetailV2alphaGenerativeQuestionConfig: Configuration for a single
+// generated question.
+type GoogleCloudRetailV2alphaGenerativeQuestionConfig struct {
+	// AllowedInConversation: Optional. Whether the question is asked at serving
+	// time.
+	AllowedInConversation bool `json:"allowedInConversation,omitempty"`
+	// Catalog: Required. Resource name of the catalog. Format:
+	// projects/{project}/locations/{location}/catalogs/{catalog}
+	Catalog string `json:"catalog,omitempty"`
+	// ExampleValues: Output only. Values that can be used to answer the question.
+	ExampleValues []string `json:"exampleValues,omitempty"`
+	// Facet: Required. The facet to which the question is associated.
+	Facet string `json:"facet,omitempty"`
+	// FinalQuestion: Optional. The question that will be used at serving time.
+	// Question can have a max length of 300 bytes. When not populated,
+	// generated_question should be used.
+	FinalQuestion string `json:"finalQuestion,omitempty"`
+	// Frequency: Output only. The ratio of how often a question was asked.
+	Frequency float64 `json:"frequency,omitempty"`
+	// GeneratedQuestion: Output only. The LLM generated question.
+	GeneratedQuestion string `json:"generatedQuestion,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AllowedInConversation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedInConversation") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaGenerativeQuestionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaGenerativeQuestionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRetailV2alphaGenerativeQuestionConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRetailV2alphaGenerativeQuestionConfig
+	var s1 struct {
+		Frequency gensupport.JSONFloat64 `json:"frequency"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Frequency = float64(s1.Frequency)
+	return nil
+}
+
+// GoogleCloudRetailV2alphaGenerativeQuestionsFeatureConfig: Configuration for
+// overall generative question feature state.
+type GoogleCloudRetailV2alphaGenerativeQuestionsFeatureConfig struct {
+	// Catalog: Required. Resource name of the affected catalog. Format:
+	// projects/{project}/locations/{location}/catalogs/{catalog}
+	Catalog string `json:"catalog,omitempty"`
+	// FeatureEnabled: Optional. Determines whether questions will be used at
+	// serving time. Note: This feature cannot be enabled until initial data
+	// requirements are satisfied.
+	FeatureEnabled bool `json:"featureEnabled,omitempty"`
+	// MinimumProducts: Optional. Minimum number of products in the response to
+	// trigger follow-up questions. Value must be 0 or positive.
+	MinimumProducts int64 `json:"minimumProducts,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Catalog") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Catalog") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaGenerativeQuestionsFeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaGenerativeQuestionsFeatureConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2alphaGetDefaultBranchResponse: Response message of
 // CatalogService.GetDefaultBranch.
 type GoogleCloudRetailV2alphaGetDefaultBranchResponse struct {
@@ -3944,6 +4107,32 @@ type GoogleCloudRetailV2alphaListEnrolledSolutionsResponse struct {
 
 func (s GoogleCloudRetailV2alphaListEnrolledSolutionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaListEnrolledSolutionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaListGenerativeQuestionConfigsResponse: Response for
+// ListQuestions method.
+type GoogleCloudRetailV2alphaListGenerativeQuestionConfigsResponse struct {
+	// GenerativeQuestionConfigs: All the questions for a given catalog.
+	GenerativeQuestionConfigs []*GoogleCloudRetailV2alphaGenerativeQuestionConfig `json:"generativeQuestionConfigs,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "GenerativeQuestionConfigs")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GenerativeQuestionConfigs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaListGenerativeQuestionConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaListGenerativeQuestionConfigsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8070,6 +8259,34 @@ type GoogleCloudRetailV2alphaTuneModelRequest struct {
 type GoogleCloudRetailV2alphaTuneModelResponse struct {
 }
 
+// GoogleCloudRetailV2alphaUpdateGenerativeQuestionConfigRequest: Request for
+// UpdateGenerativeQuestionConfig method.
+type GoogleCloudRetailV2alphaUpdateGenerativeQuestionConfigRequest struct {
+	// GenerativeQuestionConfig: Required. The question to update.
+	GenerativeQuestionConfig *GoogleCloudRetailV2alphaGenerativeQuestionConfig `json:"generativeQuestionConfig,omitempty"`
+	// UpdateMask: Optional. Indicates which fields in the provided
+	// GenerativeQuestionConfig to update. The following are NOT supported: *
+	// GenerativeQuestionConfig.frequency If not set or empty, all supported fields
+	// are updated.
+	UpdateMask string `json:"updateMask,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GenerativeQuestionConfig")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GenerativeQuestionConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaUpdateGenerativeQuestionConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaUpdateGenerativeQuestionConfigRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2alphaUserEvent: UserEvent captures all metadata
 // information Retail API needs to know about how end users interact with
 // customers' website.
@@ -10778,6 +10995,116 @@ func (c *ProjectsLocationsCatalogsGetDefaultBranchCall) Do(opts ...googleapi.Cal
 	return ret, nil
 }
 
+type ProjectsLocationsCatalogsGetGenerativeQuestionFeatureCall struct {
+	s            *Service
+	catalog      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetGenerativeQuestionFeature: Manages overal generative question feature
+// state -- enables toggling feature on and off.
+//
+//   - catalog: Resource name of the parent catalog. Format:
+//     projects/{project}/locations/{location}/catalogs/{catalog}.
+func (r *ProjectsLocationsCatalogsService) GetGenerativeQuestionFeature(catalog string) *ProjectsLocationsCatalogsGetGenerativeQuestionFeatureCall {
+	c := &ProjectsLocationsCatalogsGetGenerativeQuestionFeatureCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.catalog = catalog
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCatalogsGetGenerativeQuestionFeatureCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsGetGenerativeQuestionFeatureCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCatalogsGetGenerativeQuestionFeatureCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsGetGenerativeQuestionFeatureCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCatalogsGetGenerativeQuestionFeatureCall) Context(ctx context.Context) *ProjectsLocationsCatalogsGetGenerativeQuestionFeatureCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCatalogsGetGenerativeQuestionFeatureCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsGetGenerativeQuestionFeatureCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+catalog}/generativeQuestionFeature")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"catalog": c.catalog,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.getGenerativeQuestionFeature" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRetailV2alphaGenerativeQuestionsFeatureConfig.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsGetGenerativeQuestionFeatureCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2alphaGenerativeQuestionsFeatureConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2alphaGenerativeQuestionsFeatureConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsCatalogsListCall struct {
 	s            *Service
 	parent       string
@@ -11382,6 +11709,230 @@ func (c *ProjectsLocationsCatalogsUpdateCompletionConfigCall) Do(opts ...googlea
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRetailV2alphaCompletionConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCatalogsUpdateGenerativeQuestionCall struct {
+	s                                                *Service
+	catalog                                          string
+	googlecloudretailv2alphagenerativequestionconfig *GoogleCloudRetailV2alphaGenerativeQuestionConfig
+	urlParams_                                       gensupport.URLParams
+	ctx_                                             context.Context
+	header_                                          http.Header
+}
+
+// UpdateGenerativeQuestion: Allows management of individual questions.
+//
+//   - catalog: Resource name of the catalog. Format:
+//     projects/{project}/locations/{location}/catalogs/{catalog}.
+func (r *ProjectsLocationsCatalogsService) UpdateGenerativeQuestion(catalog string, googlecloudretailv2alphagenerativequestionconfig *GoogleCloudRetailV2alphaGenerativeQuestionConfig) *ProjectsLocationsCatalogsUpdateGenerativeQuestionCall {
+	c := &ProjectsLocationsCatalogsUpdateGenerativeQuestionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.catalog = catalog
+	c.googlecloudretailv2alphagenerativequestionconfig = googlecloudretailv2alphagenerativequestionconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Indicates which fields
+// in the provided GenerativeQuestionConfig to update. The following are NOT
+// supported: * GenerativeQuestionConfig.frequency If not set or empty, all
+// supported fields are updated.
+func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionCall) UpdateMask(updateMask string) *ProjectsLocationsCatalogsUpdateGenerativeQuestionCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsUpdateGenerativeQuestionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionCall) Context(ctx context.Context) *ProjectsLocationsCatalogsUpdateGenerativeQuestionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2alphagenerativequestionconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+catalog}/generativeQuestion")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"catalog": c.catalog,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.updateGenerativeQuestion" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRetailV2alphaGenerativeQuestionConfig.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2alphaGenerativeQuestionConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2alphaGenerativeQuestionConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCatalogsUpdateGenerativeQuestionFeatureCall struct {
+	s                                                        *Service
+	catalog                                                  string
+	googlecloudretailv2alphagenerativequestionsfeatureconfig *GoogleCloudRetailV2alphaGenerativeQuestionsFeatureConfig
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// UpdateGenerativeQuestionFeature: Manages overal generative question feature
+// state -- enables toggling feature on and off.
+//
+//   - catalog: Resource name of the affected catalog. Format:
+//     projects/{project}/locations/{location}/catalogs/{catalog}.
+func (r *ProjectsLocationsCatalogsService) UpdateGenerativeQuestionFeature(catalog string, googlecloudretailv2alphagenerativequestionsfeatureconfig *GoogleCloudRetailV2alphaGenerativeQuestionsFeatureConfig) *ProjectsLocationsCatalogsUpdateGenerativeQuestionFeatureCall {
+	c := &ProjectsLocationsCatalogsUpdateGenerativeQuestionFeatureCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.catalog = catalog
+	c.googlecloudretailv2alphagenerativequestionsfeatureconfig = googlecloudretailv2alphagenerativequestionsfeatureconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Indicates which fields
+// in the provided GenerativeQuestionsFeatureConfig to update. If not set or
+// empty, all supported fields are updated.
+func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionFeatureCall) UpdateMask(updateMask string) *ProjectsLocationsCatalogsUpdateGenerativeQuestionFeatureCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionFeatureCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsUpdateGenerativeQuestionFeatureCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionFeatureCall) Context(ctx context.Context) *ProjectsLocationsCatalogsUpdateGenerativeQuestionFeatureCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionFeatureCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionFeatureCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2alphagenerativequestionsfeatureconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+catalog}/generativeQuestionFeature")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"catalog": c.catalog,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.updateGenerativeQuestionFeature" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRetailV2alphaGenerativeQuestionsFeatureConfig.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsUpdateGenerativeQuestionFeatureCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2alphaGenerativeQuestionsFeatureConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2alphaGenerativeQuestionsFeatureConfig{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -14573,6 +15124,218 @@ func (c *ProjectsLocationsCatalogsControlsPatchCall) Do(opts ...googleapi.CallOp
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudRetailV2alphaControl{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCatalogsGenerativeQuestionBatchUpdateCall struct {
+	s                                                                   *Service
+	parent                                                              string
+	googlecloudretailv2alphabatchupdategenerativequestionconfigsrequest *GoogleCloudRetailV2alphaBatchUpdateGenerativeQuestionConfigsRequest
+	urlParams_                                                          gensupport.URLParams
+	ctx_                                                                context.Context
+	header_                                                             http.Header
+}
+
+// BatchUpdate: Allows management of multiple questions.
+//
+//   - parent: Optional. Resource name of the parent catalog. Format:
+//     projects/{project}/locations/{location}/catalogs/{catalog}.
+func (r *ProjectsLocationsCatalogsGenerativeQuestionService) BatchUpdate(parent string, googlecloudretailv2alphabatchupdategenerativequestionconfigsrequest *GoogleCloudRetailV2alphaBatchUpdateGenerativeQuestionConfigsRequest) *ProjectsLocationsCatalogsGenerativeQuestionBatchUpdateCall {
+	c := &ProjectsLocationsCatalogsGenerativeQuestionBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudretailv2alphabatchupdategenerativequestionconfigsrequest = googlecloudretailv2alphabatchupdategenerativequestionconfigsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCatalogsGenerativeQuestionBatchUpdateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsGenerativeQuestionBatchUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCatalogsGenerativeQuestionBatchUpdateCall) Context(ctx context.Context) *ProjectsLocationsCatalogsGenerativeQuestionBatchUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCatalogsGenerativeQuestionBatchUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsGenerativeQuestionBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudretailv2alphabatchupdategenerativequestionconfigsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+parent}/generativeQuestion:batchUpdate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.generativeQuestion.batchUpdate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRetailV2alphaBatchUpdateGenerativeQuestionConfigsResponse.ServerR
+// esponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsGenerativeQuestionBatchUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2alphaBatchUpdateGenerativeQuestionConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2alphaBatchUpdateGenerativeQuestionConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCatalogsGenerativeQuestionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns all questions for a given catalog.
+//
+//   - parent: Resource name of the parent catalog. Format:
+//     projects/{project}/locations/{location}/catalogs/{catalog}.
+func (r *ProjectsLocationsCatalogsGenerativeQuestionsService) List(parent string) *ProjectsLocationsCatalogsGenerativeQuestionsListCall {
+	c := &ProjectsLocationsCatalogsGenerativeQuestionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCatalogsGenerativeQuestionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsGenerativeQuestionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCatalogsGenerativeQuestionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsGenerativeQuestionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCatalogsGenerativeQuestionsListCall) Context(ctx context.Context) *ProjectsLocationsCatalogsGenerativeQuestionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCatalogsGenerativeQuestionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCatalogsGenerativeQuestionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+parent}/generativeQuestions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "retail.projects.locations.catalogs.generativeQuestions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRetailV2alphaListGenerativeQuestionConfigsResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCatalogsGenerativeQuestionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRetailV2alphaListGenerativeQuestionConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRetailV2alphaListGenerativeQuestionConfigsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

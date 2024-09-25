@@ -116,6 +116,10 @@ const (
 	MapsPlatformPlacesDetailsScope = "https://www.googleapis.com/auth/maps-platform.places.details"
 
 	// Private Service:
+	// https://www.googleapis.com/auth/maps-platform.places.getphotomedia
+	MapsPlatformPlacesGetphotomediaScope = "https://www.googleapis.com/auth/maps-platform.places.getphotomedia"
+
+	// Private Service:
 	// https://www.googleapis.com/auth/maps-platform.places.nearbysearch
 	MapsPlatformPlacesNearbysearchScope = "https://www.googleapis.com/auth/maps-platform.places.nearbysearch"
 
@@ -131,6 +135,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/maps-platform.places",
 		"https://www.googleapis.com/auth/maps-platform.places.autocomplete",
 		"https://www.googleapis.com/auth/maps-platform.places.details",
+		"https://www.googleapis.com/auth/maps-platform.places.getphotomedia",
 		"https://www.googleapis.com/auth/maps-platform.places.nearbysearch",
 		"https://www.googleapis.com/auth/maps-platform.places.textsearch",
 	)

@@ -5362,6 +5362,10 @@ type ServiceMeshCondition struct {
 	//   "UNSUPPORTED_MULTIPLE_CONTROL_PLANES" - Multiple control planes
 	// unsupported error code
 	//   "VPCSC_GA_SUPPORTED" - VPC-SC GA is supported for this control plane.
+	//   "DEPRECATED_SPEC_CONTROL_PLANE_MANAGEMENT" - User is using deprecated
+	// ControlPlaneManagement and they have not yet set Management.
+	//   "DEPRECATED_SPEC_CONTROL_PLANE_MANAGEMENT_SAFE" - User is using deprecated
+	// ControlPlaneManagement and they have already set Management.
 	//   "CONFIG_APPLY_INTERNAL_ERROR" - Configuration (Istio/k8s resources) failed
 	// to apply due to internal error.
 	//   "CONFIG_VALIDATION_ERROR" - Configuration failed to be applied due to
@@ -5391,6 +5395,10 @@ type ServiceMeshCondition struct {
 	//   "QUOTA_EXCEEDED_TCP_FILTERS" - TCPFilter quota exceeded error code.
 	//   "QUOTA_EXCEEDED_NETWORK_ENDPOINT_GROUPS" - NetworkEndpointGroup quota
 	// exceeded error code.
+	//   "MODERNIZATION_SCHEDULED" - Modernization is scheduled for a cluster.
+	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
+	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.
+	//   "MODERNIZATION_ABORTED" - Modernization is aborted for a cluster.
 	Code string `json:"code,omitempty"`
 	// Details: A short summary about the issue.
 	Details string `json:"details,omitempty"`

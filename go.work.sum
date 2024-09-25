@@ -1,4 +1,5 @@
 cel.dev/expr v0.15.0/go.mod h1:TRSuuV7DlVCE/uwv5QbAiW/v8l5O8C4eEPHeu7gf7Sg=
+cel.dev/expr v0.16.0/go.mod h1:TRSuuV7DlVCE/uwv5QbAiW/v8l5O8C4eEPHeu7gf7Sg=
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 cloud.google.com/go v0.110.2/go.mod h1:k04UEeEtb6ZBRTv3dZz4CeJC3jKGxyhl0sAiVVquxiw=
 cloud.google.com/go v0.112.0 h1:tpFCD7hpHFlQ8yPwT3x+QeXqc2T6+n6T+hmABHfDUSM=
@@ -54,6 +55,7 @@ cloud.google.com/go/bigquery v1.59.1/go.mod h1:VP1UJYgevyTwsV7desjzNzDND5p6hZB+Z
 cloud.google.com/go/bigquery v1.62.0/go.mod h1:5ee+ZkF1x/ntgCsFQJAQTM3QkAZOecfCmvxhkJsWRSA=
 cloud.google.com/go/bigtable v1.27.2-0.20240730134218-123c88616251/go.mod h1:avmXcmxVbLJAo9moICRYMgDyTTPoV0MA0lHKnyqV4fQ=
 cloud.google.com/go/bigtable v1.29.0/go.mod h1:5p909nNdWaNUcWs6KGZO8mI5HUovstlmrIi7+eA5PTQ=
+cloud.google.com/go/bigtable v1.31.0/go.mod h1:N/mwZO+4TSHOeyiE1JxO+sRPnW4bnR7WLn9AEaiJqew=
 cloud.google.com/go/billing v1.18.2/go.mod h1:PPIwVsOOQ7xzbADCwNe8nvK776QpfrOAUkvKjCUcpSE=
 cloud.google.com/go/billing v1.18.9/go.mod h1:bKTnh8MBfCMUT1fzZ936CPN9rZG7ZEiHB2J3SjIjByc=
 cloud.google.com/go/billing v1.19.0/go.mod h1:bGvChbZguyaWRGmu5pQHfFN1VxTDPFmabnCVA/dNdRM=
@@ -169,6 +171,7 @@ cloud.google.com/go/gkebackup v1.6.0/go.mod h1:1rskt7NgawoMDHTdLASX8caXXYG3MvDso
 cloud.google.com/go/gkeconnect v0.8.5/go.mod h1:LC/rS7+CuJ5fgIbXv8tCD/mdfnlAadTaUufgOkmijuk=
 cloud.google.com/go/gkeconnect v0.8.11/go.mod h1:ejHv5ehbceIglu1GsMwlH0nZpTftjxEY6DX7tvaM8gA=
 cloud.google.com/go/gkeconnect v0.10.0/go.mod h1:d8TE+YAlX7mvq8pWy1Q4yOnmxbN0SimmcQdtJwBdUHk=
+cloud.google.com/go/gkeconnect v0.11.0/go.mod h1:l3iPZl1OfT+DUQ+QkmH1PC5RTLqxKQSVnboLiQGAcCA=
 cloud.google.com/go/gkehub v0.14.5/go.mod h1:6bzqxM+a+vEH/h8W8ec4OJl4r36laxTs3A/fMNHJ0wA=
 cloud.google.com/go/gkehub v0.14.11/go.mod h1:CsmDJ4qbBnSPkoBltEubK6qGOjG0xNfeeT5jI5gCnRQ=
 cloud.google.com/go/gkehub v0.15.0/go.mod h1:obpeROly2mjxZJbRkFfHEflcH54XhJI+g2QgfHphL0I=
@@ -271,6 +274,7 @@ cloud.google.com/go/pubsublite v1.8.2/go.mod h1:4r8GSa9NznExjuLPEJlF1VjOPOpgf3IT
 cloud.google.com/go/recaptchaenterprise/v2 v2.9.2/go.mod h1:trwwGkfhCmp05Ll5MSJPXY7yvnO0p4v3orGANAFHAuU=
 cloud.google.com/go/recaptchaenterprise/v2 v2.14.2/go.mod h1:MwPgdgvBkE46aWuuXeBTCB8hQJ88p+CpXInROZYCTkc=
 cloud.google.com/go/recaptchaenterprise/v2 v2.16.0/go.mod h1:iq7s8lR3dXv4mDXE3/qyPtZEXOK7wHC1r3bX2fQyU9s=
+cloud.google.com/go/recaptchaenterprise/v2 v2.17.0/go.mod h1:SS4QDdlmJ3NvbOMCXQxaFhVGRjvNMfoKCoCdxqXadqs=
 cloud.google.com/go/recommendationengine v0.8.5/go.mod h1:A38rIXHGFvoPvmy6pZLozr0g59NRNREz4cx7F58HAsQ=
 cloud.google.com/go/recommendationengine v0.8.11/go.mod h1:cEkU4tCXAF88a4boMFZym7U7uyxvVwcQtKzS85IbQio=
 cloud.google.com/go/recommendationengine v0.9.0/go.mod h1:59ydKXFyXO4Y8S0Bk224sKfj6YvIyzgcpG6w8kXIMm4=
@@ -381,19 +385,23 @@ github.com/cncf/xds/go v0.0.0-20211011173535-cb28da3451f1/go.mod h1:eXthEFrGJvWH
 github.com/cncf/xds/go v0.0.0-20231128003011-0fa0005c9caa/go.mod h1:x/1Gn8zydmfq8dk6e9PdstVsDgu9RuyIIJqAaF//0IM=
 github.com/cncf/xds/go v0.0.0-20240318125728-8a4994d93e50/go.mod h1:5e1+Vvlzido69INQaVO6d87Qn543Xr6nooe9Kz7oBFM=
 github.com/cncf/xds/go v0.0.0-20240423153145-555b57ec207b/go.mod h1:W+zGtBO5Y1IgJhy4+A9GOqVhqLpfZi+vwmdNXUehLA8=
+github.com/cncf/xds/go v0.0.0-20240723142845-024c85f92f20/go.mod h1:W+zGtBO5Y1IgJhy4+A9GOqVhqLpfZi+vwmdNXUehLA8=
 github.com/elazarl/goproxy v0.0.0-20230808193330-2592e75ae04a/go.mod h1:Ro8st/ElPeALwNFlcTpWmkr6IoMFfkjXAvTHpevnDsM=
 github.com/envoyproxy/go-control-plane v0.9.9-0.20201210154907-fd9021fe5dad/go.mod h1:cXg6YxExXjJnVBQHBLXeUAgxn2UodCpnH306RInaBQk=
 github.com/envoyproxy/go-control-plane v0.9.9-0.20210217033140-668b12f5399d/go.mod h1:cXg6YxExXjJnVBQHBLXeUAgxn2UodCpnH306RInaBQk=
 github.com/envoyproxy/go-control-plane v0.9.10-0.20210907150352-cf90f659a021/go.mod h1:AFq3mo9L8Lqqiid3OhADV3RfLJnjiw63cSpi+fDTRC0=
 github.com/envoyproxy/go-control-plane v0.12.0/go.mod h1:ZBTaoJ23lqITozF0M6G4/IragXCQKCnYbmlmtHvwRG0=
 github.com/envoyproxy/go-control-plane v0.12.1-0.20240621013728-1eb8caab5155/go.mod h1:5Wkq+JduFtdAXihLmeTJf+tRYIT4KBc2vPXDhwVo1pA=
+github.com/envoyproxy/go-control-plane v0.13.0/go.mod h1:GRaKG3dwvFoTg4nj7aXdZnvMg4d7nvT/wl9WgVXn3Q8=
 github.com/envoyproxy/protoc-gen-validate v1.0.4/go.mod h1:qys6tmnRsYrQqIhm2bvKZH4Blx/1gTIZ2UKVY1M+Yew=
+github.com/envoyproxy/protoc-gen-validate v1.1.0/go.mod h1:sXRDRVmzEbkM7CVcM06s9shE/m23dg3wzjl0UWqJ2q4=
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
 github.com/gliderlabs/ssh v0.3.7/go.mod h1:zpHEXBstFnQYtGnB8k8kQLol82umzn/2/snG7alWVD8=
 github.com/go-git/go-git-fixtures/v4 v4.3.2-0.20231010084843-55a94097c399/go.mod h1:1OCfN199q1Jm3HZlxleg+Dw/mwps2Wbk9frAWm+4FII=
 github.com/go-logr/logr v1.3.0/go.mod h1:9T104GzyrTigFIr8wt5mBrctHMim0Nb2HLGrmQ40KvY=
 github.com/golang/glog v1.2.0/go.mod h1:6AhwSGph0fcJtXVM/PEHPqZlFeoLxhs7/t5UDAwmO+w=
 github.com/golang/glog v1.2.1/go.mod h1:6AhwSGph0fcJtXVM/PEHPqZlFeoLxhs7/t5UDAwmO+w=
+github.com/golang/glog v1.2.2/go.mod h1:6AhwSGph0fcJtXVM/PEHPqZlFeoLxhs7/t5UDAwmO+w=
 github.com/golang/protobuf v1.3.3/go.mod h1:vzj43D7+SQXF/4pzW/hwtAqwc6iTitCiVSaWz5lYuqw=
 github.com/golang/protobuf v1.4.2/go.mod h1:oDoupMAO8OvCJWAcko0GGGIgR6R6ocIYbsSw735rRwI=
 github.com/golang/protobuf v1.5.2/go.mod h1:XVQd3VNwM+JqD3oG2Ue2ip4fOMUkwXdXDdiuN0vRsmY=

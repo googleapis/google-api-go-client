@@ -317,13 +317,14 @@ type AdvancedSecurityOverrides struct {
 	// CommonCriteriaMode: Controls Common Criteria Mode—security standards
 	// defined in the Common Criteria for Information Technology Security
 	// Evaluation (https://www.commoncriteriaportal.org/) (CC). Enabling Common
-	// Criteria Mode increases certain security components on a device, including
-	// AES-GCM encryption of Bluetooth Long Term Keys, and Wi-Fi configuration
-	// stores.Common Criteria Mode is only supported on company-owned devices
-	// running Android 11 or above.Warning: Common Criteria Mode enforces a strict
-	// security model typically only required for IT products used in national
-	// security systems and other highly sensitive organizations. Standard device
-	// use may be affected. Only enabled if required.
+	// Criteria Mode increases certain security components on a device, see
+	// CommonCriteriaMode for details.Warning: Common Criteria Mode enforces a
+	// strict security model typically only required for IT products used in
+	// national security systems and other highly sensitive organizations. Standard
+	// device use may be affected. Only enabled if required. If Common Criteria
+	// Mode is turned off after being enabled previously, all user-configured Wi-Fi
+	// networks may be lost and any enterprise-configured Wi-Fi networks that
+	// require user input may need to be reconfigured.
 	//
 	// Possible values:
 	//   "COMMON_CRITERIA_MODE_UNSPECIFIED" - Unspecified. Defaults to
@@ -1517,6 +1518,24 @@ type CommonCriteriaModeInfo struct {
 	//   "COMMON_CRITERIA_MODE_ENABLED" - Common Criteria Mode is currently
 	// enabled.
 	CommonCriteriaModeStatus string `json:"commonCriteriaModeStatus,omitempty"`
+	// PolicySignatureVerificationStatus: Output only. The status of policy
+	// signature verification.
+	//
+	// Possible values:
+	//   "POLICY_SIGNATURE_VERIFICATION_STATUS_UNSPECIFIED" - Unspecified. The
+	// verification status has not been reported. This is set only if
+	// statusReportingSettings.commonCriteriaModeEnabled is false.
+	//   "POLICY_SIGNATURE_VERIFICATION_DISABLED" - Policy signature verification
+	// is disabled on the device as common_criteria_mode is set to false.
+	//   "POLICY_SIGNATURE_VERIFICATION_SUCCEEDED" - Policy signature verification
+	// succeeded.
+	//   "POLICY_SIGNATURE_VERIFICATION_NOT_SUPPORTED" - Policy signature
+	// verification is not supported, e.g. because the device has been enrolled
+	// with a CloudDPC version that does not support the policy signature
+	// verification.
+	//   "POLICY_SIGNATURE_VERIFICATION_FAILED" - The policy signature verification
+	// failed. The policy has not been applied.
+	PolicySignatureVerificationStatus string `json:"policySignatureVerificationStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommonCriteriaModeStatus")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5500,7 +5519,8 @@ type ScreenBrightnessSettings struct {
 	// screenBrightnessMode must be either BRIGHTNESS_AUTOMATIC or BRIGHTNESS_FIXED
 	// to set this. Supported on Android 9 and above on fully managed devices. A
 	// NonComplianceDetail with API_LEVEL is reported if the Android version is
-	// less than 9.
+	// less than 9. Supported on work profiles on company-owned devices on Android
+	// 15 and above.
 	ScreenBrightness int64 `json:"screenBrightness,omitempty"`
 	// ScreenBrightnessMode: Optional. Controls the screen brightness mode.
 	//
@@ -5514,12 +5534,14 @@ type ScreenBrightnessSettings struct {
 	// configure the screen brightness. screenBrightness can still be set and it is
 	// taken into account while the brightness is automatically adjusted. Supported
 	// on Android 9 and above on fully managed devices. A NonComplianceDetail with
-	// API_LEVEL is reported if the Android version is less than 9.
+	// API_LEVEL is reported if the Android version is less than 9. Supported on
+	// work profiles on company-owned devices on Android 15 and above.
 	//   "BRIGHTNESS_FIXED" - The screen brightness mode is fixed in which the
 	// brightness is set to screenBrightness and the user is not allowed to
 	// configure the screen brightness. screenBrightness must be set. Supported on
 	// Android 9 and above on fully managed devices. A NonComplianceDetail with
-	// API_LEVEL is reported if the Android version is less than 9.
+	// API_LEVEL is reported if the Android version is less than 9. Supported on
+	// work profiles on company-owned devices on Android 15 and above.
 	ScreenBrightnessMode string `json:"screenBrightnessMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ScreenBrightness") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5551,7 +5573,8 @@ type ScreenTimeoutSettings struct {
 	// devices. If this is set, screenTimeoutMode must be SCREEN_TIMEOUT_ENFORCED.
 	// Supported on Android 9 and above on fully managed devices. A
 	// NonComplianceDetail with API_LEVEL is reported if the Android version is
-	// less than 9.
+	// less than 9. Supported on work profiles on company-owned devices on Android
+	// 15 and above.
 	ScreenTimeout string `json:"screenTimeout,omitempty"`
 	// ScreenTimeoutMode: Optional. Controls whether the user is allowed to
 	// configure the screen timeout.
@@ -5565,7 +5588,8 @@ type ScreenTimeoutSettings struct {
 	// the user is not allowed to configure the timeout. screenTimeout must be set.
 	// Supported on Android 9 and above on fully managed devices. A
 	// NonComplianceDetail with API_LEVEL is reported if the Android version is
-	// less than 9.
+	// less than 9. Supported on work profiles on company-owned devices on Android
+	// 15 and above.
 	ScreenTimeoutMode string `json:"screenTimeoutMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ScreenTimeout") to
 	// unconditionally include in API requests. By default, fields with empty or

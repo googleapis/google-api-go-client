@@ -10309,6 +10309,14 @@ func (r *FoldersContainerThreatDetectionSettingsService) Calculate(name string) 
 	return c
 }
 
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *FoldersContainerThreatDetectionSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *FoldersContainerThreatDetectionSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -10423,6 +10431,14 @@ type FoldersEventThreatDetectionSettingsCalculateCall struct {
 func (r *FoldersEventThreatDetectionSettingsService) Calculate(name string) *FoldersEventThreatDetectionSettingsCalculateCall {
 	c := &FoldersEventThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *FoldersEventThreatDetectionSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *FoldersEventThreatDetectionSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
 	return c
 }
 
@@ -10661,6 +10677,14 @@ func (r *FoldersSecurityHealthAnalyticsSettingsService) Calculate(name string) *
 	return c
 }
 
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *FoldersSecurityHealthAnalyticsSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *FoldersSecurityHealthAnalyticsSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -10779,6 +10803,14 @@ func (r *FoldersVirtualMachineThreatDetectionSettingsService) Calculate(name str
 	return c
 }
 
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *FoldersVirtualMachineThreatDetectionSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *FoldersVirtualMachineThreatDetectionSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -10893,6 +10925,14 @@ type FoldersWebSecurityScannerSettingsCalculateCall struct {
 func (r *FoldersWebSecurityScannerSettingsService) Calculate(name string) *FoldersWebSecurityScannerSettingsCalculateCall {
 	c := &FoldersWebSecurityScannerSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *FoldersWebSecurityScannerSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *FoldersWebSecurityScannerSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
 	return c
 }
 
@@ -12627,6 +12667,14 @@ func (r *OrganizationsContainerThreatDetectionSettingsService) Calculate(name st
 	return c
 }
 
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *OrganizationsContainerThreatDetectionSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *OrganizationsContainerThreatDetectionSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -12741,6 +12789,14 @@ type OrganizationsEventThreatDetectionSettingsCalculateCall struct {
 func (r *OrganizationsEventThreatDetectionSettingsService) Calculate(name string) *OrganizationsEventThreatDetectionSettingsCalculateCall {
 	c := &OrganizationsEventThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *OrganizationsEventThreatDetectionSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *OrganizationsEventThreatDetectionSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
 	return c
 }
 
@@ -12979,6 +13035,14 @@ func (r *OrganizationsSecurityHealthAnalyticsSettingsService) Calculate(name str
 	return c
 }
 
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *OrganizationsSecurityHealthAnalyticsSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *OrganizationsSecurityHealthAnalyticsSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -13097,6 +13161,14 @@ func (r *OrganizationsVirtualMachineThreatDetectionSettingsService) Calculate(na
 	return c
 }
 
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *OrganizationsVirtualMachineThreatDetectionSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -13211,6 +13283,14 @@ type OrganizationsWebSecurityScannerSettingsCalculateCall struct {
 func (r *OrganizationsWebSecurityScannerSettingsService) Calculate(name string) *OrganizationsWebSecurityScannerSettingsCalculateCall {
 	c := &OrganizationsWebSecurityScannerSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *OrganizationsWebSecurityScannerSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *OrganizationsWebSecurityScannerSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
 	return c
 }
 
@@ -14837,6 +14917,14 @@ func (r *ProjectsContainerThreatDetectionSettingsService) Calculate(name string)
 	return c
 }
 
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *ProjectsContainerThreatDetectionSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *ProjectsContainerThreatDetectionSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -14951,6 +15039,14 @@ type ProjectsEventThreatDetectionSettingsCalculateCall struct {
 func (r *ProjectsEventThreatDetectionSettingsService) Calculate(name string) *ProjectsEventThreatDetectionSettingsCalculateCall {
 	c := &ProjectsEventThreatDetectionSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *ProjectsEventThreatDetectionSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *ProjectsEventThreatDetectionSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
 	return c
 }
 
@@ -15309,6 +15405,14 @@ func (r *ProjectsLocationsClustersContainerThreatDetectionSettingsService) Calcu
 	return c
 }
 
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -15544,6 +15648,14 @@ func (r *ProjectsSecurityHealthAnalyticsSettingsService) Calculate(name string) 
 	return c
 }
 
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *ProjectsSecurityHealthAnalyticsSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *ProjectsSecurityHealthAnalyticsSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -15662,6 +15774,14 @@ func (r *ProjectsVirtualMachineThreatDetectionSettingsService) Calculate(name st
 	return c
 }
 
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *ProjectsVirtualMachineThreatDetectionSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -15776,6 +15896,14 @@ type ProjectsWebSecurityScannerSettingsCalculateCall struct {
 func (r *ProjectsWebSecurityScannerSettingsService) Calculate(name string) *ProjectsWebSecurityScannerSettingsCalculateCall {
 	c := &ProjectsWebSecurityScannerSettingsCalculateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// ShowEligibleModulesOnly sets the optional parameter
+// "showEligibleModulesOnly": When set, will only retrieve the modules that are
+// in scope. By default, all modules will be shown.
+func (c *ProjectsWebSecurityScannerSettingsCalculateCall) ShowEligibleModulesOnly(showEligibleModulesOnly bool) *ProjectsWebSecurityScannerSettingsCalculateCall {
+	c.urlParams_.Set("showEligibleModulesOnly", fmt.Sprint(showEligibleModulesOnly))
 	return c
 }
 

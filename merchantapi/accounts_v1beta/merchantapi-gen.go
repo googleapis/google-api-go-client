@@ -425,6 +425,10 @@ func (s Account) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AccountAggregation: `AccountAggregation` payload.
+type AccountAggregation struct {
+}
+
 // AccountIssue: An `AccountIssue`
 // (https://support.google.com/merchants/answer/12153802?sjid=17798438912526418908-EU#account).
 type AccountIssue struct {
@@ -470,8 +474,10 @@ func (s AccountIssue) MarshalJSON() ([]byte, error) {
 // AddAccountService: Additional instructions to add account services during
 // creation of the account.
 type AddAccountService struct {
-	// AccountAggregation: The provider is an aggregator for the account.
-	AccountAggregation *Empty `json:"accountAggregation,omitempty"`
+	// AccountAggregation: The provider is an aggregator
+	// (https://support.google.com/merchants/answer/188487) for the account.
+	// Payload for service type Account Aggregation.
+	AccountAggregation *AccountAggregation `json:"accountAggregation,omitempty"`
 	// Provider: Optional. The provider of the service. Format:
 	// `accounts/{account}`
 	Provider string `json:"provider,omitempty"`
@@ -760,9 +766,10 @@ type CreateAndConfigureAccountRequest struct {
 	Account *Account `json:"account,omitempty"`
 	// Service: Required. An account service between the account to be created and
 	// the provider account is initialized as part of the creation. At least one
-	// such service needs to be provided. Currently only `account_aggregation` is
-	// supported which means the newly created account will be a subaccount of the
-	// provider defined in the `account_aggregation` service.
+	// such service needs to be provided. Currently exactly one of these needs to
+	// be `account_aggregation`, which means you can only create sub accounts, not
+	// standalone account through this method. Additional `account_management` or
+	// `product_management` services may be provided.
 	Service []*AddAccountService `json:"service,omitempty"`
 	// Users: Optional. Users to be added to the account.
 	Users []*CreateUserRequest `json:"users,omitempty"`
@@ -5147,17 +5154,12 @@ func (c *AccountsIssuesListCall) PageToken(pageToken string) *AccountsIssuesList
 	return c
 }
 
-// TimeZoneId sets the optional parameter "timeZone.id": IANA Time Zone
-// Database time zone, e.g. "America/New_York".
-func (c *AccountsIssuesListCall) TimeZoneId(timeZoneId string) *AccountsIssuesListCall {
-	c.urlParams_.Set("timeZone.id", timeZoneId)
-	return c
-}
-
-// TimeZoneVersion sets the optional parameter "timeZone.version": IANA Time
-// Zone Database version number, e.g. "2019a".
-func (c *AccountsIssuesListCall) TimeZoneVersion(timeZoneVersion string) *AccountsIssuesListCall {
-	c.urlParams_.Set("timeZone.version", timeZoneVersion)
+// TimeZone sets the optional parameter "timeZone": The IANA
+// (https://www.iana.org/time-zones) timezone used to localize times in
+// human-readable fields. For example 'America/Los_Angeles'. If not set,
+// 'America/Los_Angeles' will be used.
+func (c *AccountsIssuesListCall) TimeZone(timeZone string) *AccountsIssuesListCall {
+	c.urlParams_.Set("timeZone", timeZone)
 	return c
 }
 

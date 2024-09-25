@@ -412,7 +412,9 @@ type AccessSettings struct {
 	// audience
 	// (https://developers.google.com/workspace/chat/space-target-audience).
 	// Format: `audiences/{audience}` To use the default target audience for the
-	// Google Workspace organization, set to `audiences/default`.
+	// Google Workspace organization, set to `audiences/default`. This field is not
+	// populated when using the `chat.bot` scope with app authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
 	Audience string `json:"audience,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessState") to
 	// unconditionally include in API requests. By default, fields with empty or

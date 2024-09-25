@@ -3544,7 +3544,7 @@ type GoogleCloudApigeeV1DatastoreConfig struct {
 	DatasetName string `json:"datasetName,omitempty"`
 	// Path: Path of Cloud Storage bucket Required for `gcs` target_type.
 	Path string `json:"path,omitempty"`
-	// ProjectId: Required. GCP project in which the datastore exists
+	// ProjectId: Required. Google Cloud project in which the datastore exists
 	ProjectId string `json:"projectId,omitempty"`
 	// TablePrefix: Prefix of BigQuery table Required for `bigquery` target_type.
 	TablePrefix string `json:"tablePrefix,omitempty"`
@@ -11856,7 +11856,7 @@ func (r *OrganizationsService) Delete(name string) *OrganizationsDeleteCall {
 // Organization may be restored to its last known state. After this period, the
 // Organization will no longer be able to be restored. **Note: During the data
 // retention period specified using this field, the Apigee organization cannot
-// be recreated in the same GCP project.**
+// be recreated in the same Google Cloud project.**
 //
 // Possible values:
 //

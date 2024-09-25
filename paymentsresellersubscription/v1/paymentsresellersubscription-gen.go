@@ -238,7 +238,8 @@ type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	// CancellationReason: Specifies the reason for the cancellation.
 	//
 	// Possible values:
-	//   "CANCELLATION_REASON_UNSPECIFIED" - Reason is unspecified.
+	//   "CANCELLATION_REASON_UNSPECIFIED" - Reason is unspecified. Should not be
+	// used.
 	//   "CANCELLATION_REASON_FRAUD" - Fraudualant transaction.
 	//   "CANCELLATION_REASON_REMORSE" - Buyer's remorse.
 	//   "CANCELLATION_REASON_ACCIDENTAL_PURCHASE" - Accidential purchase.
@@ -1147,7 +1148,8 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails st
 	// Reason: Output only. The reason of the cancellation.
 	//
 	// Possible values:
-	//   "CANCELLATION_REASON_UNSPECIFIED" - Reason is unspecified.
+	//   "CANCELLATION_REASON_UNSPECIFIED" - Reason is unspecified. Should not be
+	// used.
 	//   "CANCELLATION_REASON_FRAUD" - Fraudualant transaction.
 	//   "CANCELLATION_REASON_REMORSE" - Buyer's remorse.
 	//   "CANCELLATION_REASON_ACCIDENTAL_PURCHASE" - Accidential purchase.

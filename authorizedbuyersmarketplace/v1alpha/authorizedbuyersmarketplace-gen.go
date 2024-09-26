@@ -776,7 +776,7 @@ func (s CriteriaTargeting) MarshalJSON() ([]byte, error) {
 type DataSegment struct {
 	// CpmFee: Optional. This will be charged when other accounts use this data
 	// segment. For example, when other accounts add this data segment to a deal or
-	// auction package.
+	// auction package. Once set, the currency code cannot be changed.
 	CpmFee *Money `json:"cpmFee,omitempty"`
 	// CreateTime: Output only. Time the data segment was created.
 	CreateTime string `json:"createTime,omitempty"`

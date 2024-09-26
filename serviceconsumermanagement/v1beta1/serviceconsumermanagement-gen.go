@@ -745,6 +745,9 @@ type CommonLanguageSettings struct {
 	// ReferenceDocsUri: Link to automatically generated reference documentation.
 	// Example: https://cloud.google.com/nodejs/docs/reference/asset/latest
 	ReferenceDocsUri string `json:"referenceDocsUri,omitempty"`
+	// SelectiveGapicGeneration: Configuration for which RPCs should be generated
+	// in the GAPIC client.
+	SelectiveGapicGeneration *SelectiveGapicGeneration `json:"selectiveGapicGeneration,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Destinations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2916,6 +2919,30 @@ type RubySettings struct {
 
 func (s RubySettings) MarshalJSON() ([]byte, error) {
 	type NoMethod RubySettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SelectiveGapicGeneration: This message is used to configure the generation
+// of a subset of the RPCs in a service for client libraries.
+type SelectiveGapicGeneration struct {
+	// Methods: An allowlist of the fully qualified names of RPCs that should be
+	// included on public client surfaces.
+	Methods []string `json:"methods,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Methods") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Methods") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SelectiveGapicGeneration) MarshalJSON() ([]byte, error) {
+	type NoMethod SelectiveGapicGeneration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

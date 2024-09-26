@@ -820,9 +820,8 @@ type GceSetup struct {
 	// supported Shielded VM features
 	// (https://cloud.google.com/compute/docs/instances/modifying-shielded-vm).
 	ShieldedInstanceConfig *ShieldedInstanceConfig `json:"shieldedInstanceConfig,omitempty"`
-	// Tags: Optional. The Compute Engine tags to add to runtime (see Tagging
-	// instances
-	// (https://cloud.google.com/compute/docs/label-or-tag-resources#tags)).
+	// Tags: Optional. The Compute Engine network tags to add to runtime (see Add
+	// network tags (https://cloud.google.com/vpc/docs/add-remove-network-tags)).
 	Tags []string `json:"tags,omitempty"`
 	// VmImage: Optional. Use a Compute Engine VM image to start the notebook
 	// instance.

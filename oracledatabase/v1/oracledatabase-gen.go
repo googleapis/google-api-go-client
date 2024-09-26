@@ -378,7 +378,8 @@ type AutonomousDatabase struct {
 	// e}
 	Name string `json:"name,omitempty"`
 	// Network: Required. The name of the VPC network used by the Autonomous
-	// Database. Format: projects/{project}/global/networks/{network}
+	// Database in the following format:
+	// projects/{project}/global/networks/{network}
 	Network string `json:"network,omitempty"`
 	// Properties: Optional. The properties of the Autonomous Database.
 	Properties *AutonomousDatabaseProperties `json:"properties,omitempty"`
@@ -512,12 +513,12 @@ type AutonomousDatabaseBackupProperties struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default unspecified value.
-	//   "CREATING" - Indicates that the resource is in Creating state.
-	//   "ACTIVE" - Indicates that the resource is in Active state.
-	//   "DELETING" - Indicates that the resource is in Deleting state.
-	//   "DELETED" - Indicates that the resource is in Deleted state.
-	//   "FAILED" - Indicates that the resource is in Failed state.
-	//   "UPDATING" - Indicates that the resource is in Updating state.
+	//   "CREATING" - Indicates that the resource is in creating state.
+	//   "ACTIVE" - Indicates that the resource is in active state.
+	//   "DELETING" - Indicates that the resource is in deleting state.
+	//   "DELETED" - Indicates that the resource is in deleted state.
+	//   "FAILED" - Indicates that the resource is in failed state.
+	//   "UPDATING" - Indicates that the resource is in updating state.
 	LifecycleState string `json:"lifecycleState,omitempty"`
 	// Ocid: Output only. OCID of the Autonomous Database backup.
 	// https://docs.oracle.com/en-us/iaas/Content/General/Concepts/identifiers.htm#Oracle
@@ -840,7 +841,7 @@ type AutonomousDatabaseProperties struct {
 	// Possible values:
 	//   "MAINTENANCE_SCHEDULE_TYPE_UNSPECIFIED" - Default unspecified value.
 	//   "EARLY" - An EARLY maintenance schedule patches the database before the
-	// the regular scheduled maintenance.
+	// regular scheduled maintenance.
 	//   "REGULAR" - A REGULAR maintenance schedule follows the normal maintenance
 	// cycle.
 	MaintenanceScheduleType string `json:"maintenanceScheduleType,omitempty"`
@@ -945,20 +946,20 @@ type AutonomousDatabaseProperties struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default unspecified value.
-	//   "PROVISIONING" - Indicates that the Autonomous Database is in Provisioning
+	//   "PROVISIONING" - Indicates that the Autonomous Database is in provisioning
 	// state.
-	//   "AVAILABLE" - Indicates that the Autonomous Database is in Available
+	//   "AVAILABLE" - Indicates that the Autonomous Database is in available
 	// state.
-	//   "STOPPING" - Indicates that the Autonomous Database is in Stopping state.
-	//   "STOPPED" - Indicates that the Autonomous Database is in Stopped state.
-	//   "STARTING" - Indicates that the Autonomous Database is in Starting state.
-	//   "TERMINATING" - Indicates that the Autonomous Database is in Terminating
+	//   "STOPPING" - Indicates that the Autonomous Database is in stopping state.
+	//   "STOPPED" - Indicates that the Autonomous Database is in stopped state.
+	//   "STARTING" - Indicates that the Autonomous Database is in starting state.
+	//   "TERMINATING" - Indicates that the Autonomous Database is in terminating
 	// state.
-	//   "TERMINATED" - Indicates that the Autonomous Database is in Terminated
+	//   "TERMINATED" - Indicates that the Autonomous Database is in terminated
 	// state.
-	//   "UNAVAILABLE" - Indicates that the Autonomous Database is in Unavailable
+	//   "UNAVAILABLE" - Indicates that the Autonomous Database is in unavailable
 	// state.
-	//   "RESTORE_IN_PROGRESS" - Indicates that the Autonomous Database Restore is
+	//   "RESTORE_IN_PROGRESS" - Indicates that the Autonomous Database restore is
 	// in progress.
 	//   "RESTORE_FAILED" - Indicates that the Autonomous Database failed to
 	// restore.
@@ -966,22 +967,22 @@ type AutonomousDatabaseProperties struct {
 	// progress.
 	//   "SCALE_IN_PROGRESS" - Indicates that the Autonomous Database scale is in
 	// progress.
-	//   "AVAILABLE_NEEDS_ATTENTION" - Indicates that the Autonomous Database is in
-	// Available Needs Attention state.
-	//   "UPDATING" - Indicates that the Autonomous Database is in Updating state.
-	//   "MAINTENANCE_IN_PROGRESS" - Indicates that the Autonomous Database is in
-	// Maintenance In Progress state.
-	//   "RESTARTING" - Indicates that the Autonomous Database is in Restarting
+	//   "AVAILABLE_NEEDS_ATTENTION" - Indicates that the Autonomous Database is
+	// available but needs attention state.
+	//   "UPDATING" - Indicates that the Autonomous Database is in updating state.
+	//   "MAINTENANCE_IN_PROGRESS" - Indicates that the Autonomous Database's
+	// maintenance is in progress state.
+	//   "RESTARTING" - Indicates that the Autonomous Database is in restarting
 	// state.
-	//   "RECREATING" - Indicates that the Autonomous Database is in Recreating
+	//   "RECREATING" - Indicates that the Autonomous Database is in recreating
 	// state.
-	//   "ROLE_CHANGE_IN_PROGRESS" - Indicates that the Autonomous Database is in
-	// Role Change In Progress state.
-	//   "UPGRADING" - Indicates that the Autonomous Database is in Upgrading
+	//   "ROLE_CHANGE_IN_PROGRESS" - Indicates that the Autonomous Database's role
+	// change is in progress state.
+	//   "UPGRADING" - Indicates that the Autonomous Database is in upgrading
 	// state.
-	//   "INACCESSIBLE" - Indicates that the Autonomous Database is in Inaccessible
+	//   "INACCESSIBLE" - Indicates that the Autonomous Database is in inaccessible
 	// state.
-	//   "STANDBY" - Indicates that the Autonomous Database is in Standby state.
+	//   "STANDBY" - Indicates that the Autonomous Database is in standby state.
 	State string `json:"state,omitempty"`
 	// SupportedCloneRegions: Output only. The list of available regions that can
 	// be used to create a clone for the Autonomous Database.
@@ -1053,20 +1054,20 @@ type AutonomousDatabaseStandbySummary struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default unspecified value.
-	//   "PROVISIONING" - Indicates that the Autonomous Database is in Provisioning
+	//   "PROVISIONING" - Indicates that the Autonomous Database is in provisioning
 	// state.
-	//   "AVAILABLE" - Indicates that the Autonomous Database is in Available
+	//   "AVAILABLE" - Indicates that the Autonomous Database is in available
 	// state.
-	//   "STOPPING" - Indicates that the Autonomous Database is in Stopping state.
-	//   "STOPPED" - Indicates that the Autonomous Database is in Stopped state.
-	//   "STARTING" - Indicates that the Autonomous Database is in Starting state.
-	//   "TERMINATING" - Indicates that the Autonomous Database is in Terminating
+	//   "STOPPING" - Indicates that the Autonomous Database is in stopping state.
+	//   "STOPPED" - Indicates that the Autonomous Database is in stopped state.
+	//   "STARTING" - Indicates that the Autonomous Database is in starting state.
+	//   "TERMINATING" - Indicates that the Autonomous Database is in terminating
 	// state.
-	//   "TERMINATED" - Indicates that the Autonomous Database is in Terminated
+	//   "TERMINATED" - Indicates that the Autonomous Database is in terminated
 	// state.
-	//   "UNAVAILABLE" - Indicates that the Autonomous Database is in Unavailable
+	//   "UNAVAILABLE" - Indicates that the Autonomous Database is in unavailable
 	// state.
-	//   "RESTORE_IN_PROGRESS" - Indicates that the Autonomous Database Restore is
+	//   "RESTORE_IN_PROGRESS" - Indicates that the Autonomous Database restore is
 	// in progress.
 	//   "RESTORE_FAILED" - Indicates that the Autonomous Database failed to
 	// restore.
@@ -1074,22 +1075,22 @@ type AutonomousDatabaseStandbySummary struct {
 	// progress.
 	//   "SCALE_IN_PROGRESS" - Indicates that the Autonomous Database scale is in
 	// progress.
-	//   "AVAILABLE_NEEDS_ATTENTION" - Indicates that the Autonomous Database is in
-	// Available Needs Attention state.
-	//   "UPDATING" - Indicates that the Autonomous Database is in Updating state.
-	//   "MAINTENANCE_IN_PROGRESS" - Indicates that the Autonomous Database is in
-	// Maintenance In Progress state.
-	//   "RESTARTING" - Indicates that the Autonomous Database is in Restarting
+	//   "AVAILABLE_NEEDS_ATTENTION" - Indicates that the Autonomous Database is
+	// available but needs attention state.
+	//   "UPDATING" - Indicates that the Autonomous Database is in updating state.
+	//   "MAINTENANCE_IN_PROGRESS" - Indicates that the Autonomous Database's
+	// maintenance is in progress state.
+	//   "RESTARTING" - Indicates that the Autonomous Database is in restarting
 	// state.
-	//   "RECREATING" - Indicates that the Autonomous Database is in Recreating
+	//   "RECREATING" - Indicates that the Autonomous Database is in recreating
 	// state.
-	//   "ROLE_CHANGE_IN_PROGRESS" - Indicates that the Autonomous Database is in
-	// Role Change In Progress state.
-	//   "UPGRADING" - Indicates that the Autonomous Database is in Upgrading
+	//   "ROLE_CHANGE_IN_PROGRESS" - Indicates that the Autonomous Database's role
+	// change is in progress state.
+	//   "UPGRADING" - Indicates that the Autonomous Database is in upgrading
 	// state.
-	//   "INACCESSIBLE" - Indicates that the Autonomous Database is in Inaccessible
+	//   "INACCESSIBLE" - Indicates that the Autonomous Database is in inaccessible
 	// state.
-	//   "STANDBY" - Indicates that the Autonomous Database is in Standby state.
+	//   "STANDBY" - Indicates that the Autonomous Database is in standby state.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataGuardRoleChangedTime")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -1193,7 +1194,8 @@ type CloudExadataInfrastructure struct {
 	// EntitlementId: Output only. Entitlement ID of the private offer against
 	// which this infrastructure resource is provisioned.
 	EntitlementId string `json:"entitlementId,omitempty"`
-	// GcpOracleZone: Optional. GCP location where Oracle Exadata is hosted.
+	// GcpOracleZone: Optional. Google Cloud Platform location where Oracle Exadata
+	// is hosted.
 	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
 	// Labels: Optional. Labels or tags associated with the resource.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -1359,8 +1361,9 @@ type CloudVmCluster struct {
 	// projects/{project}/locations/{region}/cloudExadataInfrastuctures/{cloud_extra
 	// data_infrastructure}
 	ExadataInfrastructure string `json:"exadataInfrastructure,omitempty"`
-	// GcpOracleZone: Output only. GCP location where Oracle Exadata is hosted. It
-	// is same as GCP Oracle zone of Exadata infrastructure.
+	// GcpOracleZone: Output only. Google Cloud Platform location where Oracle
+	// Exadata is hosted. It is same as Google Cloud Platform Oracle zone of
+	// Exadata infrastructure.
 	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
 	// Labels: Optional. Labels or tags associated with the VM Cluster.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -1471,14 +1474,14 @@ type CloudVmClusterProperties struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default unspecified value.
-	//   "PROVISIONING" - Indicates that the resource is in Provisioning state.
-	//   "AVAILABLE" - Indicates that the resource is in Available state.
-	//   "UPDATING" - Indicates that the resource is in Updating state.
-	//   "TERMINATING" - Indicates that the resource is in Terminating state.
-	//   "TERMINATED" - Indicates that the resource is in Terminated state.
-	//   "FAILED" - Indicates that the resource is in Failed state.
-	//   "MAINTENANCE_IN_PROGRESS" - Indicates that the resource is in Maintenance
-	// In Progress state.
+	//   "PROVISIONING" - Indicates that the resource is in provisioning state.
+	//   "AVAILABLE" - Indicates that the resource is in available state.
+	//   "UPDATING" - Indicates that the resource is in updating state.
+	//   "TERMINATING" - Indicates that the resource is in terminating state.
+	//   "TERMINATED" - Indicates that the resource is in terminated state.
+	//   "FAILED" - Indicates that the resource is in failed state.
+	//   "MAINTENANCE_IN_PROGRESS" - Indicates that the resource is in maintenance
+	// in progress state.
 	State string `json:"state,omitempty"`
 	// StorageSizeGb: Output only. The storage allocation for the disk group, in
 	// gigabytes (GB).
@@ -1699,15 +1702,15 @@ type DbNodeProperties struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default unspecified value.
-	//   "PROVISIONING" - Indicates that the resource is in Provisioning state.
-	//   "AVAILABLE" - Indicates that the resource is in Available state.
-	//   "UPDATING" - Indicates that the resource is in Updating state.
-	//   "STOPPING" - Indicates that the resource is in Stopping state.
-	//   "STOPPED" - Indicates that the resource is in Stopped state.
-	//   "STARTING" - Indicates that the resource is in Starting state.
-	//   "TERMINATING" - Indicates that the resource is in Terminating state.
-	//   "TERMINATED" - Indicates that the resource is in Terminated state.
-	//   "FAILED" - Indicates that the resource is in Failed state.
+	//   "PROVISIONING" - Indicates that the resource is in provisioning state.
+	//   "AVAILABLE" - Indicates that the resource is in available state.
+	//   "UPDATING" - Indicates that the resource is in updating state.
+	//   "STOPPING" - Indicates that the resource is in stopping state.
+	//   "STOPPED" - Indicates that the resource is in stopped state.
+	//   "STARTING" - Indicates that the resource is in starting state.
+	//   "TERMINATING" - Indicates that the resource is in terminating state.
+	//   "TERMINATED" - Indicates that the resource is in terminated state.
+	//   "FAILED" - Indicates that the resource is in failed state.
 	State string `json:"state,omitempty"`
 	// TotalCpuCoreCount: Total CPU core count of the database node.
 	TotalCpuCoreCount int64 `json:"totalCpuCoreCount,omitempty"`
@@ -1782,11 +1785,11 @@ type DbServerProperties struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default unspecified value.
-	//   "CREATING" - Indicates that the resource is in Creating state.
-	//   "AVAILABLE" - Indicates that the resource is in Available state.
-	//   "UNAVAILABLE" - Indicates that the resource is in Unavailable state.
-	//   "DELETING" - Indicates that the resource is in Deleting state.
-	//   "DELETED" - Indicates that the resource is in Deleted state.
+	//   "CREATING" - Indicates that the resource is in creating state.
+	//   "AVAILABLE" - Indicates that the resource is in available state.
+	//   "UNAVAILABLE" - Indicates that the resource is in unavailable state.
+	//   "DELETING" - Indicates that the resource is in deleting state.
+	//   "DELETED" - Indicates that the resource is in deleted state.
 	State string `json:"state,omitempty"`
 	// VmCount: Optional. Vm count per database.
 	VmCount int64 `json:"vmCount,omitempty"`
@@ -2397,7 +2400,8 @@ func (s Location) MarshalJSON() ([]byte, error) {
 
 // LocationMetadata: Metadata for a given Location.
 type LocationMetadata struct {
-	// GcpOracleZones: Output only. GCP Oracle zones in a location.
+	// GcpOracleZones: Output only. Google Cloud Platform Oracle zones in a
+	// location.
 	GcpOracleZones []string `json:"gcpOracleZones,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GcpOracleZones") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3035,7 +3039,7 @@ type ProjectsLocationsAutonomousDatabaseBackupsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the long term and automatic backups of an Autonomous Database.
+// List: Lists the long-term and automatic backups of an Autonomous Database.
 //
 //   - parent: The parent value for ListAutonomousDatabaseBackups in the
 //     following format: projects/{project}/locations/{location}.
@@ -3582,7 +3586,7 @@ type ProjectsLocationsAutonomousDatabasesGenerateWalletCall struct {
 	header_                                 http.Header
 }
 
-// GenerateWallet: Generates a wallet for a single Autonomous Database.
+// GenerateWallet: Generates a wallet for an Autonomous Database.
 //
 //   - name: The name of the Autonomous Database in the following format:
 //     projects/{project}/locations/{location}/autonomousDatabases/{autonomous_dat
@@ -5646,7 +5650,7 @@ type ProjectsLocationsEntitlementsListCall struct {
 
 // List: Lists the entitlements in a given project.
 //
-//   - parent: The parent value for Entitlement in the following format:
+//   - parent: The parent value for the entitlement in the following format:
 //     projects/{project}/locations/{location}.
 func (r *ProjectsLocationsEntitlementsService) List(parent string) *ProjectsLocationsEntitlementsListCall {
 	c := &ProjectsLocationsEntitlementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}

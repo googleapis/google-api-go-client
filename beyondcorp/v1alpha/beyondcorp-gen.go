@@ -2865,7 +2865,7 @@ func (s GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaSubscription) Marsh
 type GoogleCloudBeyondcorpSecuritygatewaysV1alphaApplication struct {
 	// CreateTime: Output only. Timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Optional. An arbitrary user-provided name for the Route
+	// DisplayName: Optional. An arbitrary user-provided name for the Application
 	// resource. Cannot exceed 64 characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// EndpointMatchers: Required. Endpoint matchers associated with an

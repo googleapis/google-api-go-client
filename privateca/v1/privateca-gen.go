@@ -556,8 +556,8 @@ type CaPool struct {
 	IssuancePolicy *IssuancePolicy `json:"issuancePolicy,omitempty"`
 	// Labels: Optional. Labels with user-defined metadata.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. The resource name for this CaPool in the format
-	// `projects/*/locations/*/caPools/*`.
+	// Name: Output only. Identifier. The resource name for this CaPool in the
+	// format `projects/*/locations/*/caPools/*`.
 	Name string `json:"name,omitempty"`
 	// PublishingOptions: Optional. The PublishingOptions to follow when issuing
 	// Certificates from any CertificateAuthority in this CaPool.
@@ -3920,8 +3920,8 @@ type ProjectsLocationsCaPoolsPatchCall struct {
 
 // Patch: Update a CaPool.
 //
-//   - name: Output only. The resource name for this CaPool in the format
-//     `projects/*/locations/*/caPools/*`.
+//   - name: Output only. Identifier. The resource name for this CaPool in the
+//     format `projects/*/locations/*/caPools/*`.
 func (r *ProjectsLocationsCaPoolsService) Patch(name string, capool *CaPool) *ProjectsLocationsCaPoolsPatchCall {
 	c := &ProjectsLocationsCaPoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

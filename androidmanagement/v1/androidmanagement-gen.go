@@ -2149,6 +2149,8 @@ type DeviceConnectivityManagement struct {
 	// nonComplianceDetail with API_LEVEL is reported if the Android version is
 	// less than 13.
 	WifiDirectSettings string `json:"wifiDirectSettings,omitempty"`
+	// WifiRoamingPolicy: Optional. Wi-Fi roaming policy.
+	WifiRoamingPolicy *WifiRoamingPolicy `json:"wifiRoamingPolicy,omitempty"`
 	// WifiSsidPolicy: Restrictions on which Wi-Fi SSIDs the device can connect to.
 	// Note that this does not affect which networks can be configured on the
 	// device. Supported on company-owned devices running Android 13 and above.
@@ -6662,6 +6664,65 @@ type WebToken struct {
 
 func (s WebToken) MarshalJSON() ([]byte, error) {
 	type NoMethod WebToken
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WifiRoamingPolicy: Wi-Fi roaming policy.
+type WifiRoamingPolicy struct {
+	// WifiRoamingSettings: Optional. Wi-Fi roaming settings. SSIDs provided in
+	// this list must be unique, the policy will be rejected otherwise.
+	WifiRoamingSettings []*WifiRoamingSetting `json:"wifiRoamingSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WifiRoamingSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WifiRoamingSettings") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WifiRoamingPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod WifiRoamingPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WifiRoamingSetting: Wi-Fi roaming setting.
+type WifiRoamingSetting struct {
+	// WifiRoamingMode: Required. Wi-Fi roaming mode for the specified SSID.
+	//
+	// Possible values:
+	//   "WIFI_ROAMING_MODE_UNSPECIFIED" - Unspecified. Defaults to
+	// WIFI_ROAMING_DEFAULT.
+	//   "WIFI_ROAMING_DEFAULT" - Default Wi-Fi roaming mode of the device.
+	//   "WIFI_ROAMING_AGGRESSIVE" - Aggressive roaming mode which allows quicker
+	// Wi-Fi roaming. Supported on Android 15 and above on fully managed devices
+	// and work profiles on company-owned devices. A nonComplianceDetail with
+	// MANAGEMENT_MODE is reported for other management modes. A
+	// nonComplianceDetail with API_LEVEL is reported if the Android version is
+	// less than 15. A nonComplianceDetail with DEVICE_INCOMPATIBLE is reported if
+	// the device does not support aggressive roaming mode.
+	WifiRoamingMode string `json:"wifiRoamingMode,omitempty"`
+	// WifiSsid: Required. SSID of the Wi-Fi network.
+	WifiSsid string `json:"wifiSsid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WifiRoamingMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WifiRoamingMode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WifiRoamingSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod WifiRoamingSetting
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

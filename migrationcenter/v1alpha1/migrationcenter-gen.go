@@ -1317,7 +1317,7 @@ func (s CloudSqlForMySqlShape) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CloudSqlForPostgreSqlShape: Cloud SQL for Postgres database shape.
+// CloudSqlForPostgreSqlShape: Cloud SQL for PostgreSQL database shape.
 type CloudSqlForPostgreSqlShape struct {
 	// BackupStorageGb: Output only. Predicted backup storage size in GiB.
 	BackupStorageGb int64 `json:"backupStorageGb,omitempty"`
@@ -5734,7 +5734,7 @@ type ReportSummaryGroupFinding struct {
 	//   "DATABASE_TYPE_UNSPECIFIED" - Unknown database type.
 	//   "SQL_SERVER" - SQL Server database.
 	//   "MYSQL" - MySQL database.
-	//   "POSTGRES" - Postgres database.
+	//   "POSTGRES" - PostgreSQL database.
 	DatabaseType string `json:"databaseType,omitempty"`
 	// Description: Description for this group finding.
 	Description string `json:"description,omitempty"`
@@ -5797,8 +5797,8 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	// MonthlyCostNetworkEgress: Output only. Network Egress monthly cost for this
 	// preference set. Only present for virtual machines.
 	MonthlyCostNetworkEgress *Money `json:"monthlyCostNetworkEgress,omitempty"`
-	// MonthlyCostOsLicense: Output only. Operating system licensing monthly cost
-	// for this preference set. Only present for virtual machines.
+	// MonthlyCostOsLicense: Output only. All operating systems licensing monthly
+	// cost for this preference set. Only present for virtual machines.
 	MonthlyCostOsLicense *Money `json:"monthlyCostOsLicense,omitempty"`
 	// MonthlyCostOther: Output only. Miscellaneous monthly cost for this
 	// preference set.

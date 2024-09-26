@@ -1183,9 +1183,8 @@ type Instance struct {
 	// Subnet: The name of the subnet that this instance is in. Format:
 	// `projects/{project_id}/regions/{region}/subnetworks/{subnetwork_id}`
 	Subnet string `json:"subnet,omitempty"`
-	// Tags: Optional. The Compute Engine tags to add to runtime (see Tagging
-	// instances
-	// (https://cloud.google.com/compute/docs/label-or-tag-resources#tags)).
+	// Tags: Optional. The Compute Engine network tags to add to runtime (see Add
+	// network tags (https://cloud.google.com/vpc/docs/add-remove-network-tags)).
 	Tags []string `json:"tags,omitempty"`
 	// UpdateTime: Output only. Instance update time.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -3375,9 +3374,8 @@ type VirtualMachineConfig struct {
 	// /subnetworks/sub0` *
 	// `projects/[project_id]/regions/us-east1/subnetworks/sub0`
 	Subnet string `json:"subnet,omitempty"`
-	// Tags: Optional. The Compute Engine tags to add to runtime (see Tagging
-	// instances
-	// (https://cloud.google.com/compute/docs/label-or-tag-resources#tags)).
+	// Tags: Optional. The Compute Engine network tags to add to runtime (see Add
+	// network tags (https://cloud.google.com/vpc/docs/add-remove-network-tags)).
 	Tags []string `json:"tags,omitempty"`
 	// Zone: Output only. The zone where the virtual machine is located. If using
 	// regional request, the notebooks service will pick a location in the

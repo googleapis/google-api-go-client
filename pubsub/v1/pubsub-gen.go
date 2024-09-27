@@ -332,6 +332,12 @@ func (s AvroConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AvroFormat: Configuration for reading Cloud Storage data in Avro binary
+// format. The bytes of each object will be set to the `data` field of a
+// Pub/Sub message.
+type AvroFormat struct {
+}
+
 // AwsKinesis: Ingestion settings for Amazon Kinesis Data Streams.
 type AwsKinesis struct {
 	// AwsRoleArn: Required. AWS role ARN to be used for Federated Identity
@@ -555,6 +561,68 @@ type Binding struct {
 
 func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudStorage: Ingestion settings for Cloud Storage.
+type CloudStorage struct {
+	// AvroFormat: Optional. Data from Cloud Storage will be interpreted in Avro
+	// format.
+	AvroFormat *AvroFormat `json:"avroFormat,omitempty"`
+	// Bucket: Optional. Cloud Storage bucket. The bucket name must be without any
+	// prefix like "gs://". See the [bucket naming requirements]
+	// (https://cloud.google.com/storage/docs/buckets#naming).
+	Bucket string `json:"bucket,omitempty"`
+	// MatchGlob: Optional. Glob pattern used to match objects that will be
+	// ingested. If unset, all objects will be ingested. See the supported patterns
+	// (https://cloud.google.com/storage/docs/json_api/v1/objects/list#list-objects-and-prefixes-using-glob).
+	MatchGlob string `json:"matchGlob,omitempty"`
+	// MinimumObjectCreateTime: Optional. Only objects with a larger or equal
+	// creation timestamp will be ingested.
+	MinimumObjectCreateTime string `json:"minimumObjectCreateTime,omitempty"`
+	// PubsubAvroFormat: Optional. It will be assumed data from Cloud Storage was
+	// written via Cloud Storage subscriptions
+	// (https://cloud.google.com/pubsub/docs/cloudstorage).
+	PubsubAvroFormat *PubSubAvroFormat `json:"pubsubAvroFormat,omitempty"`
+	// State: Output only. An output-only field that indicates the state of the
+	// Cloud Storage ingestion source.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "ACTIVE" - Ingestion is active.
+	//   "CLOUD_STORAGE_PERMISSION_DENIED" - Permission denied encountered while
+	// calling the Cloud Storage API. This can happen if the Pub/Sub SA has not
+	// been granted the [appropriate
+	// permissions](https://cloud.google.com/storage/docs/access-control/iam-permiss
+	// ions): - storage.objects.list: to list the objects in a bucket. -
+	// storage.objects.get: to read the objects in a bucket. - storage.buckets.get:
+	// to verify the bucket exists.
+	//   "PUBLISH_PERMISSION_DENIED" - Permission denied encountered while
+	// publishing to the topic. This can happen if the Pub/Sub SA has not been
+	// granted the [appropriate publish
+	// permissions](https://cloud.google.com/pubsub/docs/access-control#pubsub.publi
+	// sher)
+	//   "BUCKET_NOT_FOUND" - The provided Cloud Storage bucket doesn't exist.
+	//   "TOO_MANY_OBJECTS" - The Cloud Storage bucket has too many objects,
+	// ingestion will be paused.
+	State string `json:"state,omitempty"`
+	// TextFormat: Optional. Data from Cloud Storage will be interpreted as text.
+	TextFormat *TextFormat `json:"textFormat,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AvroFormat") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AvroFormat") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudStorage) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudStorage
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -828,6 +896,11 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 type IngestionDataSourceSettings struct {
 	// AwsKinesis: Optional. Amazon Kinesis Data Streams.
 	AwsKinesis *AwsKinesis `json:"awsKinesis,omitempty"`
+	// CloudStorage: Optional. Cloud Storage.
+	CloudStorage *CloudStorage `json:"cloudStorage,omitempty"`
+	// PlatformLogsSettings: Optional. Platform Logs settings. If unset, no
+	// Platform Logs will be generated.
+	PlatformLogsSettings *PlatformLogsSettings `json:"platformLogsSettings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AwsKinesis") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1199,6 +1272,38 @@ func (s OidcToken) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PlatformLogsSettings: Settings for Platform Logs produced by Pub/Sub.
+type PlatformLogsSettings struct {
+	// Severity: Optional. The minimum severity level of Platform Logs that will be
+	// written.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Default value. Logs level is unspecified. Logs
+	// will be disabled.
+	//   "DISABLED" - Logs will be disabled.
+	//   "DEBUG" - Debug logs and higher-severity logs will be written.
+	//   "INFO" - Info logs and higher-severity logs will be written.
+	//   "WARNING" - Warning logs and higher-severity logs will be written.
+	//   "ERROR" - Only error logs will be written.
+	Severity string `json:"severity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Severity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Severity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PlatformLogsSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod PlatformLogsSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Policy: An Identity and Access Management (IAM) policy, which specifies
 // access controls for Google Cloud resources. A `Policy` is a collection of
 // `bindings`. A `binding` binds one or more `members`, or principals, to a
@@ -1287,6 +1392,14 @@ type Policy struct {
 func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PubSubAvroFormat: Configuration for reading Cloud Storage data written via
+// Cloud Storage subscriptions
+// (https://cloud.google.com/pubsub/docs/cloudstorage). The data and attributes
+// fields of the originally exported Pub/Sub message will be restored when
+// publishing.
+type PubSubAvroFormat struct {
 }
 
 // PublishRequest: Request for the Publish method.
@@ -2001,6 +2114,30 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // TextConfig: Configuration for writing message data in text format. Message
 // payloads will be written to files as raw text, separated by a newline.
 type TextConfig struct {
+}
+
+// TextFormat: Configuration for reading Cloud Storage data in text format.
+// Each line of text as specified by the delimiter will be set to the `data`
+// field of a Pub/Sub message.
+type TextFormat struct {
+	// Delimiter: Optional. When unset, '\n' is used.
+	Delimiter string `json:"delimiter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Delimiter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Delimiter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TextFormat) MarshalJSON() ([]byte, error) {
+	type NoMethod TextFormat
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Topic: A topic resource.

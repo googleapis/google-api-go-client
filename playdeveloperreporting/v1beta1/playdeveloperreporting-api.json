@@ -947,7 +947,7 @@
       }
     }
   },
-  "revision": "20240704",
+  "revision": "20240924",
   "rootUrl": "https://playdeveloperreporting.googleapis.com/",
   "schemas": {
     "GooglePlayDeveloperReportingV1beta1Anomaly": {
@@ -1197,12 +1197,14 @@
           "enum": [
             "ERROR_TYPE_UNSPECIFIED",
             "APPLICATION_NOT_RESPONDING",
-            "CRASH"
+            "CRASH",
+            "NON_FATAL"
           ],
           "enumDescriptions": [
             "Unspecified error type.",
             "Application Not Responding (ANR) error. To learn more about this type of errors visit the corresponding Android Developers documentation.",
-            "Crash caused by an unhandled exception in Java (or Kotlin or any other JVM language) or a signal in native code such as SIGSEGV."
+            "Crash caused by an unhandled exception in Java (or Kotlin or any other JVM language) or a signal in native code such as SIGSEGV.",
+            "Non-fatal caused by events that do not immediately cause crashes, but is likely to lead to one."
           ],
           "type": "string"
         }
@@ -1247,12 +1249,14 @@
           "enum": [
             "ERROR_TYPE_UNSPECIFIED",
             "APPLICATION_NOT_RESPONDING",
-            "CRASH"
+            "CRASH",
+            "NON_FATAL"
           ],
           "enumDescriptions": [
             "Unspecified error type.",
             "Application Not Responding (ANR) error. To learn more about this type of errors visit the corresponding Android Developers documentation.",
-            "Crash caused by an unhandled exception in Java (or Kotlin or any other JVM language) or a signal in native code such as SIGSEGV."
+            "Crash caused by an unhandled exception in Java (or Kotlin or any other JVM language) or a signal in native code such as SIGSEGV.",
+            "Non-fatal caused by events that do not immediately cause crashes, but is likely to lead to one."
           ],
           "type": "string"
         },

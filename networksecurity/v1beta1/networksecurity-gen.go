@@ -588,18 +588,18 @@ func (s AuthorizationPolicy) MarshalJSON() ([]byte, error) {
 // AuthzPolicy: `AuthzPolicy` is a resource that allows to forward traffic to a
 // callout backend designed to scan the traffic for security purposes.
 type AuthzPolicy struct {
-	// Action: Required. Can be one of ALLOW, DENY, CUSTOM. When the action is
-	// CUSTOM, customProvider must be specified. When the action is ALLOW, only
-	// requests matching the policy will be allowed. When the action is DENY, only
-	// requests matching the policy will be denied. When a request arrives, the
-	// policies are evaluated in the following order: 1. If there is a CUSTOM
-	// policy that matches the request, the CUSTOM policy is evaluated using the
-	// custom authorization providers and the request is denied if the provider
-	// rejects the request. 2. If there are any DENY policies that match the
-	// request, the request is denied. 3. If there are no ALLOW policies for the
-	// resource or if any of the ALLOW policies match the request, the request is
-	// allowed. 4. Else the request is denied by default if none of the configured
-	// AuthzPolicies with ALLOW action match the request.
+	// Action: Required. Can be one of `ALLOW`, `DENY`, `CUSTOM`. When the action
+	// is `CUSTOM`, `customProvider` must be specified. When the action is `ALLOW`,
+	// only requests matching the policy will be allowed. When the action is
+	// `DENY`, only requests matching the policy will be denied. When a request
+	// arrives, the policies are evaluated in the following order: 1. If there is a
+	// `CUSTOM` policy that matches the request, the `CUSTOM` policy is evaluated
+	// using the custom authorization providers and the request is denied if the
+	// provider rejects the request. 2. If there are any `DENY` policies that match
+	// the request, the request is denied. 3. If there are no `ALLOW` policies for
+	// the resource or if any of the `ALLOW` policies match the request, the
+	// request is allowed. 4. Else the request is denied by default if none of the
+	// configured AuthzPolicies with `ALLOW` action match the request.
 	//
 	// Possible values:
 	//   "AUTHZ_ACTION_UNSPECIFIED" - Unspecified action.
@@ -610,16 +610,16 @@ type AuthzPolicy struct {
 	Action string `json:"action,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// CustomProvider: Optional. Required if the action is CUSTOM. Allows
+	// CustomProvider: Optional. Required if the action is `CUSTOM`. Allows
 	// delegating authorization decisions to Cloud IAP or to Service Extensions.
-	// One of cloudIap or authzExtension must be specified.
+	// One of `cloudIap` or `authzExtension` must be specified.
 	CustomProvider *AuthzPolicyCustomProvider `json:"customProvider,omitempty"`
 	// Description: Optional. A human-readable description of the resource.
 	Description string `json:"description,omitempty"`
 	// HttpRules: Optional. A list of authorization HTTP rules to match against the
 	// incoming request. A policy match occurs when at least one HTTP rule matches
 	// the request or when no HTTP rules are specified in the policy. At least one
-	// HTTP Rule is required for Allow or Deny Action.
+	// HTTP Rule is required for Allow or Deny Action. Limited to 5 rules.
 	HttpRules []*AuthzPolicyAuthzRule `json:"httpRules,omitempty"`
 	// Labels: Optional. Set of labels associated with the `AuthzPolicy` resource.
 	// The format must comply with the following requirements
@@ -691,7 +691,7 @@ type AuthzPolicyAuthzRuleFrom struct {
 	// this field. At least one of sources or notSources must be specified.
 	NotSources []*AuthzPolicyAuthzRuleFromRequestSource `json:"notSources,omitempty"`
 	// Sources: Optional. Describes the properties of a request's sources. At least
-	// one of sources or notSources must be specified. Limited to 10 sources. A
+	// one of sources or notSources must be specified. Limited to 5 sources. A
 	// match occurs when ANY source (in sources or notSources) matches the request.
 	// Within a single source, the match follows AND semantics across fields and OR
 	// semantics within a single field, i.e. a match occurs when ANY principal
@@ -724,10 +724,10 @@ type AuthzPolicyAuthzRuleFromRequestSource struct {
 	// value is matched against the URI SAN, or DNS SAN or the subject field in the
 	// client's certificate. The match can be exact, prefix, suffix or a substring
 	// match. One of exact, prefix, suffix or contains must be specified. Limited
-	// to 10 principals.
+	// to 5 principals.
 	Principals []*AuthzPolicyAuthzRuleStringMatch `json:"principals,omitempty"`
 	// Resources: Optional. A list of resources to match against the resource of
-	// the source VM of a request. Limited to 10 resources.
+	// the source VM of a request. Limited to 5 resources.
 	Resources []*AuthzPolicyAuthzRuleRequestResource `json:"resources,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Principals") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -807,7 +807,7 @@ type AuthzPolicyAuthzRuleRequestResourceTagValueIdSet struct {
 	// Ids: Required. A list of resource tag value permanent IDs to match against
 	// the resource manager tags value associated with the source VM of a request.
 	// The match follows AND semantics which means all the ids must match. Limited
-	// to 10 matches.
+	// to 5 matches.
 	Ids googleapi.Int64s `json:"ids,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Ids") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -877,10 +877,10 @@ type AuthzPolicyAuthzRuleTo struct {
 	NotOperations []*AuthzPolicyAuthzRuleToRequestOperation `json:"notOperations,omitempty"`
 	// Operations: Optional. Describes properties of one or more targets of a
 	// request. At least one of operations or notOperations must be specified.
-	// Limited to 10 operations. A match occurs when ANY operation (in operations
-	// or notOperations) matches. Within an operation, the match follows AND
-	// semantics across fields and OR semantics within a field, i.e. a match occurs
-	// when ANY path matches AND ANY header matches and ANY method matches.
+	// Limited to 5 operations. A match occurs when ANY operation (in operations or
+	// notOperations) matches. Within an operation, the match follows AND semantics
+	// across fields and OR semantics within a field, i.e. a match occurs when ANY
+	// path matches AND ANY header matches and ANY method matches.
 	Operations []*AuthzPolicyAuthzRuleToRequestOperation `json:"operations,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NotOperations") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -907,7 +907,7 @@ type AuthzPolicyAuthzRuleToRequestOperation struct {
 	HeaderSet *AuthzPolicyAuthzRuleToRequestOperationHeaderSet `json:"headerSet,omitempty"`
 	// Hosts: Optional. A list of HTTP Hosts to match against. The match can be one
 	// of exact, prefix, suffix, or contains (substring match). Matches are always
-	// case sensitive unless the ignoreCase is set. Limited to 10 matches.
+	// case sensitive unless the ignoreCase is set. Limited to 5 matches.
 	Hosts []*AuthzPolicyAuthzRuleStringMatch `json:"hosts,omitempty"`
 	// Methods: Optional. A list of HTTP methods to match against. Each entry must
 	// be a valid HTTP method name (GET, PUT, POST, HEAD, PATCH, DELETE, OPTIONS).
@@ -915,8 +915,8 @@ type AuthzPolicyAuthzRuleToRequestOperation struct {
 	Methods []string `json:"methods,omitempty"`
 	// Paths: Optional. A list of paths to match against. The match can be one of
 	// exact, prefix, suffix, or contains (substring match). Matches are always
-	// case sensitive unless the ignoreCase is set. Limited to 10 matches. Note
-	// that this path match includes the query parameters. For gRPC services, this
+	// case sensitive unless the ignoreCase is set. Limited to 5 matches. Note that
+	// this path match includes the query parameters. For gRPC services, this
 	// should be a fully-qualified name of the form /package.service/method.
 	Paths []*AuthzPolicyAuthzRuleStringMatch `json:"paths,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "HeaderSet") to
@@ -943,8 +943,8 @@ type AuthzPolicyAuthzRuleToRequestOperationHeaderSet struct {
 	// Headers: Required. A list of headers to match against in http header. The
 	// match can be one of exact, prefix, suffix, or contains (substring match).
 	// The match follows AND semantics which means all the headers must match.
-	// Matches are always case sensitive unless the ignoreCase is set. Limited to
-	// 10 matches.
+	// Matches are always case sensitive unless the ignoreCase is set. Limited to 5
+	// matches.
 	Headers []*AuthzPolicyAuthzRuleHeaderMatch `json:"headers,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1036,7 +1036,7 @@ type AuthzPolicyTarget struct {
 	// LoadBalancingScheme: Required. All gateways and forwarding rules referenced
 	// by this policy and extensions must share the same load balancing scheme.
 	// Supported values: `INTERNAL_MANAGED` and `EXTERNAL_MANAGED`. For more
-	// information, refer to Choosing a load balancer
+	// information, refer to Backend services overview
 	// (https://cloud.google.com/load-balancing/docs/backend-service).
 	//
 	// Possible values:
@@ -1182,6 +1182,30 @@ type CloneAddressGroupItemsRequest struct {
 
 func (s CloneAddressGroupItemsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CloneAddressGroupItemsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomMirroringProfile: CustomMirroringProfile defines an action for
+// mirroring traffic to a collector's EndpointGroup
+type CustomMirroringProfile struct {
+	// MirroringEndpointGroup: Required. The MirroringEndpointGroup to which
+	// traffic associated with the SP should be mirrored.
+	MirroringEndpointGroup string `json:"mirroringEndpointGroup,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MirroringEndpointGroup") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MirroringEndpointGroup") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomMirroringProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomMirroringProfile
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2816,7 +2840,8 @@ func (s MirroringDeploymentGroupConnectedEndpointGroup) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MirroringEndpointGroup: Message describing MirroringEndpointGroup object
+// MirroringEndpointGroup: Message describing MirroringEndpointGroup object.
+// Next ID: 10
 type MirroringEndpointGroup struct {
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
@@ -3122,6 +3147,9 @@ func (s Rule) MarshalJSON() ([]byte, error) {
 type SecurityProfile struct {
 	// CreateTime: Output only. Resource creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
+	// CustomMirroringProfile: The custom Packet Mirroring v2 configuration for the
+	// SecurityProfile.
+	CustomMirroringProfile *CustomMirroringProfile `json:"customMirroringProfile,omitempty"`
 	// Description: Optional. An optional description of the profile. Max length
 	// 512 characters.
 	Description string `json:"description,omitempty"`
@@ -3145,6 +3173,7 @@ type SecurityProfile struct {
 	// Possible values:
 	//   "PROFILE_TYPE_UNSPECIFIED" - Profile type not specified.
 	//   "THREAT_PREVENTION" - Profile type for threat prevention.
+	//   "CUSTOM_MIRRORING" - Profile type for packet mirroring v2
 	Type string `json:"type,omitempty"`
 	// UpdateTime: Output only. Last resource update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -3174,6 +3203,9 @@ func (s SecurityProfile) MarshalJSON() ([]byte, error) {
 type SecurityProfileGroup struct {
 	// CreateTime: Output only. Resource creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
+	// CustomMirroringProfile: Optional. Reference to a SecurityProfile with the
+	// CustomMirroring configuration.
+	CustomMirroringProfile string `json:"customMirroringProfile,omitempty"`
 	// Description: Optional. An optional description of the profile group. Max
 	// length 2048 characters.
 	Description string `json:"description,omitempty"`
@@ -10260,7 +10292,7 @@ func (c *ProjectsLocationsAuthzPoliciesPatchCall) RequestId(requestId string) *P
 
 // UpdateMask sets the optional parameter "updateMask": Required. Used to
 // specify the fields to be overwritten in the `AuthzPolicy` resource by the
-// update. The fields specified in the update_mask are relative to the
+// update. The fields specified in the `update_mask` are relative to the
 // resource, not the full request. A field is overwritten if it is in the mask.
 // If the user does not specify a mask, then all fields are overwritten.
 func (c *ProjectsLocationsAuthzPoliciesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAuthzPoliciesPatchCall {

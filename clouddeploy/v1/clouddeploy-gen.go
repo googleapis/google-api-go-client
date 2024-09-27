@@ -170,6 +170,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.CustomTargetTypes = NewProjectsLocationsCustomTargetTypesService(s)
 	rs.DeliveryPipelines = NewProjectsLocationsDeliveryPipelinesService(s)
+	rs.DeployPolicies = NewProjectsLocationsDeployPoliciesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Targets = NewProjectsLocationsTargetsService(s)
 	return rs
@@ -181,6 +182,8 @@ type ProjectsLocationsService struct {
 	CustomTargetTypes *ProjectsLocationsCustomTargetTypesService
 
 	DeliveryPipelines *ProjectsLocationsDeliveryPipelinesService
+
+	DeployPolicies *ProjectsLocationsDeployPoliciesService
 
 	Operations *ProjectsLocationsOperationsService
 
@@ -262,6 +265,15 @@ func NewProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsService(s *Serv
 }
 
 type ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDeployPoliciesService(s *Service) *ProjectsLocationsDeployPoliciesService {
+	rs := &ProjectsLocationsDeployPoliciesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDeployPoliciesService struct {
 	s *Service
 }
 
@@ -357,17 +369,20 @@ func (s AdvanceRolloutOperation) MarshalJSON() ([]byte, error) {
 
 // AdvanceRolloutRequest: The request object used by `AdvanceRollout`.
 type AdvanceRolloutRequest struct {
+	// OverrideDeployPolicy: Optional. Deploy policies to override. Format is
+	// `projects/{project}/locations/{location}/deployPolicies/{deployPolicy}`.
+	OverrideDeployPolicy []string `json:"overrideDeployPolicy,omitempty"`
 	// PhaseId: Required. The phase ID to advance the `Rollout` to.
 	PhaseId string `json:"phaseId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PhaseId") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "OverrideDeployPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PhaseId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "OverrideDeployPolicy") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -446,6 +461,9 @@ func (s AnthosCluster) MarshalJSON() ([]byte, error) {
 type ApproveRolloutRequest struct {
 	// Approved: Required. True = approve; false = reject
 	Approved bool `json:"approved,omitempty"`
+	// OverrideDeployPolicy: Optional. Deploy policies to override. Format is
+	// `projects/{project}/locations/{location}/deployPolicies/{deployPolicy}`.
+	OverrideDeployPolicy []string `json:"overrideDeployPolicy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Approved") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -649,6 +667,7 @@ type AutomationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -802,6 +821,9 @@ type AutomationRun struct {
 	// `projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline
 	// }/automationRuns/{automation_run}`.
 	Name string `json:"name,omitempty"`
+	// PolicyViolation: Output only. Contains information about what policies
+	// prevented the `AutomationRun` to proceed.
+	PolicyViolation *PolicyViolation `json:"policyViolation,omitempty"`
 	// PromoteReleaseOperation: Output only. Promotes a release to a specified
 	// 'Target'.
 	PromoteReleaseOperation *PromoteReleaseOperation `json:"promoteReleaseOperation,omitempty"`
@@ -886,6 +908,7 @@ type AutomationRunEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -1114,6 +1137,25 @@ type CancelOperationRequest struct {
 
 // CancelRolloutRequest: The request object used by `CancelRollout`.
 type CancelRolloutRequest struct {
+	// OverrideDeployPolicy: Optional. Deploy policies to override. Format is
+	// `projects/{project}/locations/{location}/deployPolicies/{deployPolicy}`.
+	OverrideDeployPolicy []string `json:"overrideDeployPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OverrideDeployPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OverrideDeployPolicy") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CancelRolloutRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelRolloutRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelRolloutResponse: The response object from `CancelRollout`.
@@ -1538,6 +1580,7 @@ type CustomTargetTypeNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -1690,6 +1733,33 @@ func (s DeliveryPipeline) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeliveryPipelineAttribute: Contains criteria for selecting
+// DeliveryPipelines.
+type DeliveryPipelineAttribute struct {
+	// Id: ID of the `DeliveryPipeline`. The value of this field could be one of
+	// the following: * The last segment of a pipeline name * "*", all delivery
+	// pipelines in a location
+	Id string `json:"id,omitempty"`
+	// Labels: DeliveryPipeline labels.
+	Labels map[string]string `json:"labels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeliveryPipelineAttribute) MarshalJSON() ([]byte, error) {
+	type NoMethod DeliveryPipelineAttribute
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeliveryPipelineNotificationEvent: Payload proto for
 // "clouddeploy.googleapis.com/deliverypipeline_notification" Platform Log
 // event that describes the failure to send delivery pipeline status change
@@ -1712,6 +1782,7 @@ type DeliveryPipelineNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -1874,6 +1945,154 @@ func (s DeployParameters) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeployPolicy: A `DeployPolicy` resource in the Cloud Deploy API. A
+// `DeployPolicy` inhibits manual or automation driven actions within a
+// Delivery Pipeline or Target.
+type DeployPolicy struct {
+	// Annotations: User annotations. These attributes can only be set and used by
+	// the user, and not by Cloud Deploy. Annotations must meet the following
+	// constraints: * Annotations are key/value pairs. * Valid annotation keys have
+	// two segments: an optional prefix and name, separated by a slash (`/`). * The
+	// name segment is required and must be 63 characters or less, beginning and
+	// ending with an alphanumeric character (`[a-z0-9A-Z]`) with dashes (`-`),
+	// underscores (`_`), dots (`.`), and alphanumerics between. * The prefix is
+	// optional. If specified, the prefix must be a DNS subdomain: a series of DNS
+	// labels separated by dots(`.`), not longer than 253 characters in total,
+	// followed by a slash (`/`). See
+	// https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/#syntax-and-character-set
+	// for more details.
+	Annotations map[string]string `json:"annotations,omitempty"`
+	// CreateTime: Output only. Time at which the deploy policy was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Description of the `DeployPolicy`. Max length is 255
+	// characters.
+	Description string `json:"description,omitempty"`
+	// Etag: The weak etag of the `Automation` resource. This checksum is computed
+	// by the server based on the value of other fields, and may be sent on update
+	// and delete requests to ensure the client has an up-to-date value before
+	// proceeding.
+	Etag string `json:"etag,omitempty"`
+	// Labels: Labels are attributes that can be set and used by both the user and
+	// by Cloud Deploy. Labels must meet the following constraints: * Keys and
+	// values can contain only lowercase letters, numeric characters, underscores,
+	// and dashes. * All characters must use UTF-8 encoding, and international
+	// characters are allowed. * Keys must start with a lowercase letter or
+	// international character. * Each resource is limited to a maximum of 64
+	// labels. Both keys and values are additionally constrained to be <= 128
+	// bytes.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Output only. Name of the `DeployPolicy`. Format is
+	// `projects/{project}/locations/{location}/deployPolicies/{deployPolicy}`. The
+	// `deployPolicy` component must match `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
+	Name string `json:"name,omitempty"`
+	// Rules: Required. Rules to apply. At least one rule must be present.
+	Rules []*PolicyRule `json:"rules,omitempty"`
+	// Selectors: Required. Selected resources to which the policy will be applied.
+	// At least one selector is required. If one selector matches the resource the
+	// policy applies. For example, if there are two selectors and the action being
+	// attempted matches one of them, the policy will apply to that action.
+	Selectors []*DeployPolicyResourceSelector `json:"selectors,omitempty"`
+	// Suspended: When suspended, the policy will not prevent actions from
+	// occurring, even if the action violates the policy.
+	Suspended bool `json:"suspended,omitempty"`
+	// Uid: Output only. Unique identifier of the `DeployPolicy`.
+	Uid string `json:"uid,omitempty"`
+	// UpdateTime: Output only. Most recent time at which the deploy policy was
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeployPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod DeployPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeployPolicyEvaluationEvent: Payload proto for
+// "clouddeploy.googleapis.com/deploypolicy_evaluation" Platform Log event that
+// describes the deploy policy evaluation event.
+type DeployPolicyEvaluationEvent struct {
+	// Allowed: Whether the request is allowed. Allowed is set as true if: (1) the
+	// request complies with the policy; or (2) the request doesn't comply with the
+	// policy but the policy was overridden; or (3) the request doesn't comply with
+	// the policy but the policy was suspended
+	Allowed bool `json:"allowed,omitempty"`
+	// DeliveryPipeline: The name of the `Delivery Pipeline`.
+	DeliveryPipeline string `json:"deliveryPipeline,omitempty"`
+	// DeployPolicy: The name of the `DeployPolicy`.
+	DeployPolicy string `json:"deployPolicy,omitempty"`
+	// DeployPolicyUid: Unique identifier of the `DeployPolicy`.
+	DeployPolicyUid string `json:"deployPolicyUid,omitempty"`
+	// Invoker: What invoked the action (e.g. a user or automation).
+	//
+	// Possible values:
+	//   "INVOKER_UNSPECIFIED" - Unspecified.
+	//   "USER" - The action is user-driven. For example, creating a rollout
+	// manually via a gcloud create command.
+	//   "DEPLOY_AUTOMATION" - Automated action by Cloud Deploy.
+	Invoker string `json:"invoker,omitempty"`
+	// Message: Debug message for when a deploy policy event occurs.
+	Message string `json:"message,omitempty"`
+	// Overrides: Things that could have overridden the policy verdict. Overrides
+	// together with verdict decide whether the request is allowed.
+	//
+	// Possible values:
+	//   "POLICY_VERDICT_OVERRIDE_UNSPECIFIED" - This should never happen.
+	//   "POLICY_OVERRIDDEN" - The policy was overridden.
+	//   "POLICY_SUSPENDED" - The policy was suspended.
+	Overrides []string `json:"overrides,omitempty"`
+	// PipelineUid: Unique identifier of the `Delivery Pipeline`.
+	PipelineUid string `json:"pipelineUid,omitempty"`
+	// Rule: Rule id.
+	Rule string `json:"rule,omitempty"`
+	// RuleType: Rule type (e.g. Restrict Rollouts).
+	RuleType string `json:"ruleType,omitempty"`
+	// Target: The name of the `Target`. This is an optional field, as a `Target`
+	// may not always be applicable to a policy.
+	Target string `json:"target,omitempty"`
+	// TargetUid: Unique identifier of the `Target`. This is an optional field, as
+	// a `Target` may not always be applicable to a policy.
+	TargetUid string `json:"targetUid,omitempty"`
+	// Verdict: The policy verdict of the request.
+	//
+	// Possible values:
+	//   "POLICY_VERDICT_UNSPECIFIED" - This should never happen.
+	//   "ALLOWED_BY_POLICY" - Allowed by policy. This enum value is not currently
+	// used but may be used in the future. Currently logs are only generated when a
+	// request is denied by policy.
+	//   "DENIED_BY_POLICY" - Denied by policy.
+	Verdict string `json:"verdict,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Allowed") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Allowed") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeployPolicyEvaluationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod DeployPolicyEvaluationEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeployPolicyNotificationEvent: Payload proto for
 // "clouddeploy.googleapis.com/deploypolicy_notification". Platform Log event
 // that describes the failure to send a pub/sub notification when there is a
@@ -1897,6 +2116,7 @@ type DeployPolicyNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -1915,6 +2135,35 @@ type DeployPolicyNotificationEvent struct {
 
 func (s DeployPolicyNotificationEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod DeployPolicyNotificationEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeployPolicyResourceSelector: Contains information on the resources to
+// select for a deploy policy. Attributes provided must all match the resource
+// in order for policy restrictions to apply. For example, if delivery
+// pipelines attributes given are an id "prod" and labels "foo: bar", a
+// delivery pipeline resource must match both that id and have that label in
+// order to be subject to the policy.
+type DeployPolicyResourceSelector struct {
+	// DeliveryPipeline: Optional. Contains attributes about a delivery pipeline.
+	DeliveryPipeline *DeliveryPipelineAttribute `json:"deliveryPipeline,omitempty"`
+	// Target: Optional. Contains attributes about a target.
+	Target *TargetAttribute `json:"target,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeliveryPipeline") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeliveryPipeline") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeployPolicyResourceSelector) MarshalJSON() ([]byte, error) {
+	type NoMethod DeployPolicyResourceSelector
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2142,6 +2391,9 @@ func (s GkeCluster) MarshalJSON() ([]byte, error) {
 type IgnoreJobRequest struct {
 	// JobId: Required. The job ID for the Job to ignore.
 	JobId string `json:"jobId,omitempty"`
+	// OverrideDeployPolicy: Optional. Deploy policies to override. Format is
+	// `projects/{project}/locations/{location}/deployPolicies/{deployPolicy}`.
+	OverrideDeployPolicy []string `json:"overrideDeployPolicy,omitempty"`
 	// PhaseId: Required. The phase ID the Job to ignore belongs to.
 	PhaseId string `json:"phaseId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "JobId") to unconditionally
@@ -2322,6 +2574,7 @@ type JobRunNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -2487,6 +2740,36 @@ type ListDeliveryPipelinesResponse struct {
 
 func (s ListDeliveryPipelinesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDeliveryPipelinesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListDeployPoliciesResponse: The response object from `ListDeployPolicies`.
+type ListDeployPoliciesResponse struct {
+	// DeployPolicies: The `DeployPolicy` objects.
+	DeployPolicies []*DeployPolicy `json:"deployPolicies,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DeployPolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeployPolicies") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListDeployPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDeployPoliciesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2754,6 +3037,38 @@ type MultiTarget struct {
 
 func (s MultiTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod MultiTarget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OneTimeWindow: One-time window within which actions are restricted. For
+// example, blocking actions over New Year's Eve from December 31st at 5pm to
+// January 1st at 9am.
+type OneTimeWindow struct {
+	// EndDate: Required. End date.
+	EndDate *Date `json:"endDate,omitempty"`
+	// EndTime: Required. End time (exclusive). You may use 24:00 for the end of
+	// the day.
+	EndTime *TimeOfDay `json:"endTime,omitempty"`
+	// StartDate: Required. Start date.
+	StartDate *Date `json:"startDate,omitempty"`
+	// StartTime: Required. Start time (inclusive). Use 00:00 for the beginning of
+	// the day.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndDate") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndDate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OneTimeWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeWindow
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3099,6 +3414,80 @@ type Policy struct {
 
 func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyRule: Deploy Policy rule.
+type PolicyRule struct {
+	// RolloutRestriction: Rollout restrictions.
+	RolloutRestriction *RolloutRestriction `json:"rolloutRestriction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RolloutRestriction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RolloutRestriction") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyRule) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyViolation: Returned from an action if one or more policies were
+// violated, and therefore the action was prevented. Contains information about
+// what policies were violated and why.
+type PolicyViolation struct {
+	// PolicyViolationDetails: Policy violation details.
+	PolicyViolationDetails []*PolicyViolationDetails `json:"policyViolationDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PolicyViolationDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PolicyViolationDetails") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyViolation) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyViolation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyViolationDetails: Policy violation details.
+type PolicyViolationDetails struct {
+	// FailureMessage: User readable message about why the request violated a
+	// policy. This is not intended for machine parsing.
+	FailureMessage string `json:"failureMessage,omitempty"`
+	// Policy: Name of the policy that was violated. Policy resource will be in the
+	// format of `projects/{project}/locations/{location}/policies/{policy}`.
+	Policy string `json:"policy,omitempty"`
+	// RuleId: Id of the rule that triggered the policy violation.
+	RuleId string `json:"ruleId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FailureMessage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailureMessage") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyViolationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyViolationDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3538,6 +3927,7 @@ type ReleaseNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -3620,6 +4010,7 @@ type ReleaseRenderEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -3802,6 +4193,9 @@ func (s RetryAttempt) MarshalJSON() ([]byte, error) {
 type RetryJobRequest struct {
 	// JobId: Required. The job ID for the Job to retry.
 	JobId string `json:"jobId,omitempty"`
+	// OverrideDeployPolicy: Optional. Deploy policies to override. Format is
+	// `projects/{project}/locations/{location}/deployPolicies/{deployPolicy}`.
+	OverrideDeployPolicy []string `json:"overrideDeployPolicy,omitempty"`
 	// PhaseId: Required. The phase ID the Job to retry belongs to.
 	PhaseId string `json:"phaseId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "JobId") to unconditionally
@@ -3927,6 +4321,9 @@ func (s RollbackTargetConfig) MarshalJSON() ([]byte, error) {
 
 // RollbackTargetRequest: The request object for `RollbackTarget`.
 type RollbackTargetRequest struct {
+	// OverrideDeployPolicy: Optional. Deploy policies to override. Format is
+	// `projects/{project}/locations/{location}/deployPolicies/{deploy_policy}`.
+	OverrideDeployPolicy []string `json:"overrideDeployPolicy,omitempty"`
 	// ReleaseId: Optional. ID of the `Release` to roll back to. If this isn't
 	// specified, the previous successful `Rollout` to the specified target will be
 	// used to determine the `Release`.
@@ -3943,15 +4340,15 @@ type RollbackTargetRequest struct {
 	// ValidateOnly: Optional. If set to true, the request is validated and the
 	// user is provided with a `RollbackTargetResponse`.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ReleaseId") to
+	// ForceSendFields is a list of field names (e.g. "OverrideDeployPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ReleaseId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "OverrideDeployPolicy") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4151,6 +4548,7 @@ type RolloutNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -4169,6 +4567,54 @@ type RolloutNotificationEvent struct {
 
 func (s RolloutNotificationEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod RolloutNotificationEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RolloutRestriction: Rollout restrictions.
+type RolloutRestriction struct {
+	// Actions: Optional. Rollout actions to be restricted as part of the policy.
+	// If left empty, all actions will be restricted.
+	//
+	// Possible values:
+	//   "ROLLOUT_ACTIONS_UNSPECIFIED" - Unspecified.
+	//   "ADVANCE" - Advance the rollout to the next phase.
+	//   "APPROVE" - Approve the rollout.
+	//   "CANCEL" - Cancel the rollout.
+	//   "CREATE" - Create a rollout.
+	//   "IGNORE_JOB" - Ignore a job result on the rollout.
+	//   "RETRY_JOB" - Retry a job for a rollout.
+	//   "ROLLBACK" - Rollback a rollout.
+	//   "TERMINATE_JOBRUN" - Terminate a jobrun.
+	Actions []string `json:"actions,omitempty"`
+	// Id: Required. Restriction rule ID. Required and must be unique within a
+	// DeployPolicy. The format is `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
+	Id string `json:"id,omitempty"`
+	// Invokers: Optional. What invoked the action. If left empty, all invoker
+	// types will be restricted.
+	//
+	// Possible values:
+	//   "INVOKER_UNSPECIFIED" - Unspecified.
+	//   "USER" - The action is user-driven. For example, creating a rollout
+	// manually via a gcloud create command.
+	//   "DEPLOY_AUTOMATION" - Automated action by Cloud Deploy.
+	Invokers []string `json:"invokers,omitempty"`
+	// TimeWindows: Required. Time window within which actions are restricted.
+	TimeWindows *TimeWindows `json:"timeWindows,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Actions") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Actions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RolloutRestriction) MarshalJSON() ([]byte, error) {
+	type NoMethod RolloutRestriction
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4219,6 +4665,7 @@ type RolloutUpdateEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -4818,6 +5265,7 @@ type TargetNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never used. Use
 	// release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -4963,6 +5411,25 @@ func (s TargetsTypeCondition) MarshalJSON() ([]byte, error) {
 
 // TerminateJobRunRequest: The request object used by `TerminateJobRun`.
 type TerminateJobRunRequest struct {
+	// OverrideDeployPolicy: Optional. Deploy policies to override. Format is
+	// `projects/{project}/locations/{location}/deployPolicies/{deployPolicy}`.
+	OverrideDeployPolicy []string `json:"overrideDeployPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OverrideDeployPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OverrideDeployPolicy") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TerminateJobRunRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod TerminateJobRunRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // TerminateJobRunResponse: The response object from `TerminateJobRun`.
@@ -5023,6 +5490,68 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TimeOfDay: Represents a time of day. The date and time zone are either not
+// significant or are specified elsewhere. An API may choose to allow leap
+// seconds. Related types are google.type.Date and `google.protobuf.Timestamp`.
+type TimeOfDay struct {
+	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API may
+	// choose to allow the value "24:00:00" for scenarios like business closing
+	// time.
+	Hours int64 `json:"hours,omitempty"`
+	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	Minutes int64 `json:"minutes,omitempty"`
+	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+	Nanos int64 `json:"nanos,omitempty"`
+	// Seconds: Seconds of minutes of the time. Must normally be from 0 to 59. An
+	// API may allow the value 60 if it allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hours") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeOfDay
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TimeWindows: Time windows within which actions are restricted.
+type TimeWindows struct {
+	// OneTimeWindows: Optional. One-time windows within which actions are
+	// restricted.
+	OneTimeWindows []*OneTimeWindow `json:"oneTimeWindows,omitempty"`
+	// TimeZone: Required. The time zone in IANA format IANA Time Zone Database
+	// (https://www.iana.org/time-zones) (e.g. America/New_York).
+	TimeZone string `json:"timeZone,omitempty"`
+	// WeeklyWindows: Optional. Recurring weekly windows within which actions are
+	// restricted.
+	WeeklyWindows []*WeeklyWindow `json:"weeklyWindows,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OneTimeWindows") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OneTimeWindows") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TimeWindows) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeWindows
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // VerifyJob: A verify Job.
 type VerifyJob struct {
 }
@@ -5077,6 +5606,50 @@ type VerifyJobRun struct {
 
 func (s VerifyJobRun) MarshalJSON() ([]byte, error) {
 	type NoMethod VerifyJobRun
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WeeklyWindow: Weekly windows. For example, blocking actions every Saturday
+// and Sunday. Another example would be blocking actions every weekday from 5pm
+// to midnight.
+type WeeklyWindow struct {
+	// DaysOfWeek: Optional. Days of week. If left empty, all days of the week will
+	// be included.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	DaysOfWeek []string `json:"daysOfWeek,omitempty"`
+	// EndTime: Optional. End time (exclusive). Use 24:00 to indicate midnight. If
+	// you specify end_time you must also specify start_time. If left empty, this
+	// will block for the entire day for the days specified in days_of_week.
+	EndTime *TimeOfDay `json:"endTime,omitempty"`
+	// StartTime: Optional. Start time (inclusive). Use 00:00 for the beginning of
+	// the day. If you specify start_time you must also specify end_time. If left
+	// empty, this will block for the entire day for the days specified in
+	// days_of_week.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DaysOfWeek") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DaysOfWeek") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WeeklyWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod WeeklyWindow
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8706,6 +9279,14 @@ func (r *ProjectsLocationsDeliveryPipelinesReleasesService) Create(parent string
 	return c
 }
 
+// OverrideDeployPolicy sets the optional parameter "overrideDeployPolicy":
+// Deploy policies to override. Format is
+// `projects/{project}/locations/{location}/deployPolicies/{deployPolicy}`.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesCreateCall) OverrideDeployPolicy(overrideDeployPolicy ...string) *ProjectsLocationsDeliveryPipelinesReleasesCreateCall {
+	c.urlParams_.SetMulti("overrideDeployPolicy", append([]string{}, overrideDeployPolicy...))
+	return c
+}
+
 // ReleaseId sets the optional parameter "releaseId": Required. ID of the
 // `Release`.
 func (c *ProjectsLocationsDeliveryPipelinesReleasesCreateCall) ReleaseId(releaseId string) *ProjectsLocationsDeliveryPipelinesReleasesCreateCall {
@@ -9421,6 +10002,14 @@ func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Create(paren
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.rollout = rollout
+	return c
+}
+
+// OverrideDeployPolicy sets the optional parameter "overrideDeployPolicy":
+// Deploy policies to override. Format is
+// `projects/{project}/locations/{location}/deployPolicies/{deployPolicy}`.
+func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall) OverrideDeployPolicy(overrideDeployPolicy ...string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall {
+	c.urlParams_.SetMulti("overrideDeployPolicy", append([]string{}, overrideDeployPolicy...))
 	return c
 }
 
@@ -10386,6 +10975,694 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsTerminateCall)
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &TerminateJobRunResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsDeployPoliciesCreateCall struct {
+	s            *Service
+	parent       string
+	deploypolicy *DeployPolicy
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Create: Creates a new DeployPolicy in a given project and location.
+//
+//   - parent: The parent collection in which the `DeployPolicy` must be created.
+//     The format is `projects/{project_id}/locations/{location_name}`.
+func (r *ProjectsLocationsDeployPoliciesService) Create(parent string, deploypolicy *DeployPolicy) *ProjectsLocationsDeployPoliciesCreateCall {
+	c := &ProjectsLocationsDeployPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.deploypolicy = deploypolicy
+	return c
+}
+
+// DeployPolicyId sets the optional parameter "deployPolicyId": Required. ID of
+// the `DeployPolicy`.
+func (c *ProjectsLocationsDeployPoliciesCreateCall) DeployPolicyId(deployPolicyId string) *ProjectsLocationsDeployPoliciesCreateCall {
+	c.urlParams_.Set("deployPolicyId", deployPolicyId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes after the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDeployPoliciesCreateCall) RequestId(requestId string) *ProjectsLocationsDeployPoliciesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to true, the
+// request is validated and the user is provided with an expected result, but
+// no actual change is made.
+func (c *ProjectsLocationsDeployPoliciesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsDeployPoliciesCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDeployPoliciesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeployPoliciesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDeployPoliciesCreateCall) Context(ctx context.Context) *ProjectsLocationsDeployPoliciesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDeployPoliciesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeployPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.deploypolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/deployPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deployPolicies.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeployPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsDeployPoliciesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single DeployPolicy.
+//
+//   - name: The name of the `DeployPolicy` to delete. The format is
+//     `projects/{project_id}/locations/{location_name}/deployPolicies/{deploy_pol
+//     icy_name}`.
+func (r *ProjectsLocationsDeployPoliciesService) Delete(name string) *ProjectsLocationsDeployPoliciesDeleteCall {
+	c := &ProjectsLocationsDeployPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to true,
+// then deleting an already deleted or non-existing `DeployPolicy` will
+// succeed.
+func (c *ProjectsLocationsDeployPoliciesDeleteCall) AllowMissing(allowMissing bool) *ProjectsLocationsDeployPoliciesDeleteCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// Etag sets the optional parameter "etag": This checksum is computed by the
+// server based on the value of other fields, and may be sent on update and
+// delete requests to ensure the client has an up-to-date value before
+// proceeding.
+func (c *ProjectsLocationsDeployPoliciesDeleteCall) Etag(etag string) *ProjectsLocationsDeployPoliciesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes after the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDeployPoliciesDeleteCall) RequestId(requestId string) *ProjectsLocationsDeployPoliciesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set, validate
+// the request and preview the review, but do not actually post it.
+func (c *ProjectsLocationsDeployPoliciesDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsDeployPoliciesDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDeployPoliciesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeployPoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDeployPoliciesDeleteCall) Context(ctx context.Context) *ProjectsLocationsDeployPoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDeployPoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeployPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deployPolicies.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeployPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsDeployPoliciesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single DeployPolicy.
+//
+//   - name: Name of the `DeployPolicy`. Format must be
+//     `projects/{project_id}/locations/{location_name}/deployPolicies/{deploy_pol
+//     icy_name}`.
+func (r *ProjectsLocationsDeployPoliciesService) Get(name string) *ProjectsLocationsDeployPoliciesGetCall {
+	c := &ProjectsLocationsDeployPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDeployPoliciesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeployPoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDeployPoliciesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDeployPoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDeployPoliciesGetCall) Context(ctx context.Context) *ProjectsLocationsDeployPoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDeployPoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeployPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deployPolicies.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DeployPolicy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeployPoliciesGetCall) Do(opts ...googleapi.CallOption) (*DeployPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DeployPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsDeployPoliciesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists DeployPolicies in a given project and location.
+//
+//   - parent: The parent, which owns this collection of deploy policies. Format
+//     must be `projects/{project_id}/locations/{location_name}`.
+func (r *ProjectsLocationsDeployPoliciesService) List(parent string) *ProjectsLocationsDeployPoliciesListCall {
+	c := &ProjectsLocationsDeployPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter deploy policies to be
+// returned. See https://google.aip.dev/160 for more details. All fields can be
+// used in the filter.
+func (c *ProjectsLocationsDeployPoliciesListCall) Filter(filter string) *ProjectsLocationsDeployPoliciesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to sort by. See
+// https://google.aip.dev/132#ordering for more details.
+func (c *ProjectsLocationsDeployPoliciesListCall) OrderBy(orderBy string) *ProjectsLocationsDeployPoliciesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// deploy policies to return. The service may return fewer than this value. If
+// unspecified, at most 50 deploy policies will be returned. The maximum value
+// is 1000; values above 1000 will be set to 1000.
+func (c *ProjectsLocationsDeployPoliciesListCall) PageSize(pageSize int64) *ProjectsLocationsDeployPoliciesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListDeployPolicies` call. Provide this to retrieve the
+// subsequent page. When paginating, all other provided parameters match the
+// call that provided the page token.
+func (c *ProjectsLocationsDeployPoliciesListCall) PageToken(pageToken string) *ProjectsLocationsDeployPoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDeployPoliciesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeployPoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDeployPoliciesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDeployPoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDeployPoliciesListCall) Context(ctx context.Context) *ProjectsLocationsDeployPoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDeployPoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeployPoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/deployPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deployPolicies.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDeployPoliciesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeployPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListDeployPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDeployPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDeployPoliciesListCall) Pages(ctx context.Context, f func(*ListDeployPoliciesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsDeployPoliciesPatchCall struct {
+	s            *Service
+	name         string
+	deploypolicy *DeployPolicy
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates the parameters of a single DeployPolicy.
+//
+//   - name: Output only. Name of the `DeployPolicy`. Format is
+//     `projects/{project}/locations/{location}/deployPolicies/{deployPolicy}`.
+//     The `deployPolicy` component must match `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
+func (r *ProjectsLocationsDeployPoliciesService) Patch(name string, deploypolicy *DeployPolicy) *ProjectsLocationsDeployPoliciesPatchCall {
+	c := &ProjectsLocationsDeployPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.deploypolicy = deploypolicy
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to true,
+// updating a `DeployPolicy` that does not exist will result in the creation of
+// a new `DeployPolicy`.
+func (c *ProjectsLocationsDeployPoliciesPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsDeployPoliciesPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to identify
+// requests. Specify a unique request ID so that if you must retry your
+// request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes after the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDeployPoliciesPatchCall) RequestId(requestId string) *ProjectsLocationsDeployPoliciesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
+// used to specify the fields to be overwritten by the update in the
+// `DeployPolicy` resource. The fields specified in the update_mask are
+// relative to the resource, not the full request. A field will be overwritten
+// if it's in the mask. If the user doesn't provide a mask then all fields are
+// overwritten.
+func (c *ProjectsLocationsDeployPoliciesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDeployPoliciesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to true, the
+// request is validated and the user is provided with an expected result, but
+// no actual change is made.
+func (c *ProjectsLocationsDeployPoliciesPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsDeployPoliciesPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDeployPoliciesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDeployPoliciesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDeployPoliciesPatchCall) Context(ctx context.Context) *ProjectsLocationsDeployPoliciesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDeployPoliciesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDeployPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.deploypolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.deployPolicies.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDeployPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

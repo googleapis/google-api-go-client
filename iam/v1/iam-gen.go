@@ -1183,7 +1183,7 @@ type GoogleIamAdminV1WorkforcePoolProviderExtraAttributesOAuth2Client struct {
 	// Possible values:
 	//   "ATTRIBUTES_TYPE_UNSPECIFIED" - No AttributesType specified.
 	//   "AZURE_AD_GROUPS_MAIL" - Used to get the user's group claims from the
-	// Azure AD identity provider using configuration provided in
+	// Microsoft Entra ID identity provider using configuration provided in
 	// ExtraAttributesOAuth2Client and `mail` property of the
 	// `microsoft.graph.group` object is used for claim mapping. See
 	// https://learn.microsoft.com/en-us/graph/api/resources/group?view=graph-rest-1.0#properties

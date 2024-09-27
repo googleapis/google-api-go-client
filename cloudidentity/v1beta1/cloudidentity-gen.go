@@ -526,17 +526,19 @@ func (s BlockDeviceUserResponse) MarshalJSON() ([]byte, error) {
 }
 
 // BrowserAttributes: Contains information about browser profiles reported by
-// the Endpoint Verification extension.
+// the Endpoint Verification extension
+// (https://chromewebstore.google.com/detail/endpoint-verification/callobklhcbilhphinckomhgkigmfocg?pli=1).
 type BrowserAttributes struct {
 	// ChromeBrowserInfo: Represents the current state of the Chrome browser
 	// attributes
 	// (https://cloud.google.com/access-context-manager/docs/browser-attributes)
-	// sent by the Endpoint Verification extension.
+	// sent by the Endpoint Verification extension
+	// (https://chromewebstore.google.com/detail/endpoint-verification/callobklhcbilhphinckomhgkigmfocg?pli=1).
 	ChromeBrowserInfo *BrowserInfo `json:"chromeBrowserInfo,omitempty"`
 	// ChromeProfileId: Chrome profile ID that is exposed by the Chrome API. It is
 	// unique for each device.
 	ChromeProfileId string `json:"chromeProfileId,omitempty"`
-	// LastProfileSyncTime: Timestamp in milliseconds since Epoch when the
+	// LastProfileSyncTime: Timestamp in milliseconds since the Unix epoch when the
 	// profile/gcm id was last synced.
 	LastProfileSyncTime string `json:"lastProfileSyncTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChromeBrowserInfo") to
@@ -558,7 +560,8 @@ func (s BrowserAttributes) MarshalJSON() ([]byte, error) {
 }
 
 // BrowserInfo: Browser-specific fields reported by the Endpoint Verification
-// extension. LINT.IfChange
+// extension
+// (https://chromewebstore.google.com/detail/endpoint-verification/callobklhcbilhphinckomhgkigmfocg?pli=1).
 type BrowserInfo struct {
 	// BrowserManagementState: Output only. Browser's management state.
 	//
@@ -570,7 +573,8 @@ type BrowserInfo struct {
 	//   "PROFILE_MANAGED" - Profile is managed by customer.
 	//   "BROWSER_MANAGED" - Browser is managed by customer.
 	BrowserManagementState string `json:"browserManagementState,omitempty"`
-	// BrowserVersion: Version of the request initiating browser.
+	// BrowserVersion: Version of the request initiating browser. E.g.
+	// `91.0.4442.4`.
 	BrowserVersion string `json:"browserVersion,omitempty"`
 	// IsBuiltInDnsClientEnabled: Current state of built-in DNS client
 	// (https://chromeenterprise.google/policies/#BuiltInDnsClientEnabled).
@@ -1412,11 +1416,15 @@ func (s DynamicGroupStatus) MarshalJSON() ([]byte, error) {
 // (https://cloud.google.com/endpoint-verification/docs/device-information) of
 // a device.
 type EndpointVerificationSpecificAttributes struct {
-	// AdditionalSignals: Additional signals reported by Endpoint Verification. It
-	// includes the following attributes: 1. Non-configurable attributes: hotfixes,
-	// av_installed, av_enabled, windows_domain_name,
-	// is_os_native_firewall_enabled, and is_secure_boot_enabled. 2. Configurable
-	// attributes: file_config, registry_config, and plist_config.
+	// AdditionalSignals: Additional signals
+	// (https://cloud.google.com/endpoint-verification/docs/device-information)
+	// reported by Endpoint Verification. It includes the following attributes: *
+	// Non-configurable attributes: hotfixes, av_installed, av_enabled,
+	// windows_domain_name, is_os_native_firewall_enabled, and
+	// is_secure_boot_enabled. * Configurable attributes
+	// (https://cloud.google.com/endpoint-verification/docs/collect-config-attributes):
+	// file, folder, and binary attributes; registry entries; and properties in a
+	// plist.
 	AdditionalSignals googleapi.RawMessage `json:"additionalSignals,omitempty"`
 	// BrowserAttributes: Details of browser profiles reported by Endpoint
 	// Verification.
@@ -1646,7 +1654,7 @@ type GoogleAppsCloudidentityDevicesV1BrowserAttributes struct {
 	// ChromeProfileId: Chrome profile ID that is exposed by the Chrome API. It is
 	// unique for each device.
 	ChromeProfileId string `json:"chromeProfileId,omitempty"`
-	// LastProfileSyncTime: Timestamp in milliseconds since Epoch when the
+	// LastProfileSyncTime: Timestamp in milliseconds since the Unix epoch when the
 	// profile/gcm id was last synced.
 	LastProfileSyncTime string `json:"lastProfileSyncTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChromeBrowserInfo") to
@@ -1670,7 +1678,6 @@ func (s GoogleAppsCloudidentityDevicesV1BrowserAttributes) MarshalJSON() ([]byte
 // GoogleAppsCloudidentityDevicesV1BrowserInfo: Browser-specific fields
 // reported by the Endpoint Verification extension
 // (https://chromewebstore.google.com/detail/endpoint-verification/callobklhcbilhphinckomhgkigmfocg?pli=1).
-// LINT.IfChange
 type GoogleAppsCloudidentityDevicesV1BrowserInfo struct {
 	// BrowserManagementState: Output only. Browser's management state.
 	//
@@ -1682,7 +1689,8 @@ type GoogleAppsCloudidentityDevicesV1BrowserInfo struct {
 	//   "PROFILE_MANAGED" - Profile is managed by customer.
 	//   "BROWSER_MANAGED" - Browser is managed by customer.
 	BrowserManagementState string `json:"browserManagementState,omitempty"`
-	// BrowserVersion: Version of the request initiating browser.
+	// BrowserVersion: Version of the request initiating browser. E.g.
+	// `91.0.4442.4`.
 	BrowserVersion string `json:"browserVersion,omitempty"`
 	// IsBuiltInDnsClientEnabled: Current state of built-in DNS client
 	// (https://chromeenterprise.google/policies/#BuiltInDnsClientEnabled).
@@ -2257,11 +2265,12 @@ func (s GoogleAppsCloudidentityDevicesV1DeviceUser) MarshalJSON() ([]byte, error
 // (https://cloud.google.com/endpoint-verification/docs/device-information) of
 // a device.
 type GoogleAppsCloudidentityDevicesV1EndpointVerificationSpecificAttributes struct {
-	// AdditionalSignals: Additional signals reported by Endpoint Verification. It
-	// includes the following attributes: 1. Non-configurable attributes: hotfixes,
-	// av_installed, av_enabled, windows_domain_name,
-	// is_os_native_firewall_enabled, and is_secure_boot_enabled. 2. Configurable
-	// attributes
+	// AdditionalSignals: Additional signals
+	// (https://cloud.google.com/endpoint-verification/docs/device-information)
+	// reported by Endpoint Verification. It includes the following attributes: *
+	// Non-configurable attributes: hotfixes, av_installed, av_enabled,
+	// windows_domain_name, is_os_native_firewall_enabled, and
+	// is_secure_boot_enabled. * Configurable attributes
 	// (https://cloud.google.com/endpoint-verification/docs/collect-config-attributes):
 	// file, folder, and binary attributes; registry entries; and properties in a
 	// plist.

@@ -206,6 +206,8 @@ func New(client *http.Client) (*Service, error) {
 	s.Subaccounts = NewSubaccountsService(s)
 	s.TargetableRemarketingLists = NewTargetableRemarketingListsService(s)
 	s.TargetingTemplates = NewTargetingTemplatesService(s)
+	s.TvCampaignDetails = NewTvCampaignDetailsService(s)
+	s.TvCampaignSummaries = NewTvCampaignSummariesService(s)
 	s.UserProfiles = NewUserProfilesService(s)
 	s.UserRolePermissionGroups = NewUserRolePermissionGroupsService(s)
 	s.UserRolePermissions = NewUserRolePermissionsService(s)
@@ -334,6 +336,10 @@ type Service struct {
 	TargetableRemarketingLists *TargetableRemarketingListsService
 
 	TargetingTemplates *TargetingTemplatesService
+
+	TvCampaignDetails *TvCampaignDetailsService
+
+	TvCampaignSummaries *TvCampaignSummariesService
 
 	UserProfiles *UserProfilesService
 
@@ -896,6 +902,24 @@ func NewTargetingTemplatesService(s *Service) *TargetingTemplatesService {
 }
 
 type TargetingTemplatesService struct {
+	s *Service
+}
+
+func NewTvCampaignDetailsService(s *Service) *TvCampaignDetailsService {
+	rs := &TvCampaignDetailsService{s: s}
+	return rs
+}
+
+type TvCampaignDetailsService struct {
+	s *Service
+}
+
+func NewTvCampaignSummariesService(s *Service) *TvCampaignSummariesService {
+	rs := &TvCampaignSummariesService{s: s}
+	return rs
+}
+
+type TvCampaignSummariesService struct {
 	s *Service
 }
 
@@ -2569,7 +2593,8 @@ func (s CampaignsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CartData: Contains additional information about cart data.
+// CartData: Contains additional information about cart data. This field may
+// only be used when calling batchinsert; it is not supported by batchupdate.
 type CartData struct {
 	// Items: Data of the items purchased.
 	Items []*CartDataItem `json:"items,omitempty"`
@@ -2582,7 +2607,8 @@ type CartData struct {
 	// are uploaded. Use ISO 639-1 language codes. This field is needed only when
 	// item IDs are not unique across multiple Merchant Center feeds.
 	MerchantFeedLanguage string `json:"merchantFeedLanguage,omitempty"`
-	// MerchantId: The Merchant Center ID where the items are uploaded.
+	// MerchantId: The Merchant Center ID where the items are uploaded. This is a
+	// required field.
 	MerchantId int64 `json:"merchantId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2947,10 +2973,14 @@ func (s CompanionSetting) MarshalJSON() ([]byte, error) {
 }
 
 // CompatibleFields: Represents a response to the queryCompatibleFields method.
+// Next ID: 10
 type CompatibleFields struct {
 	// CrossDimensionReachReportCompatibleFields: Contains items that are
 	// compatible to be selected for a report of type "CROSS_DIMENSION_REACH".
 	CrossDimensionReachReportCompatibleFields *CrossDimensionReachReportCompatibleFields `json:"crossDimensionReachReportCompatibleFields,omitempty"`
+	// CrossMediaReachReportCompatibleFields: Contains items that are compatible to
+	// be selected for a report of type "CROSS_MEDIA_REACH".
+	CrossMediaReachReportCompatibleFields *CrossMediaReachReportCompatibleFields `json:"crossMediaReachReportCompatibleFields,omitempty"`
 	// FloodlightReportCompatibleFields: Contains items that are compatible to be
 	// selected for a report of type "FLOODLIGHT".
 	FloodlightReportCompatibleFields *FloodlightReportCompatibleFields `json:"floodlightReportCompatibleFields,omitempty"`
@@ -3128,8 +3158,7 @@ type Conversion struct {
 	// ChildDirectedTreatment: Whether this particular request may come from a user
 	// under the age of 13, under COPPA compliance.
 	ChildDirectedTreatment bool `json:"childDirectedTreatment,omitempty"`
-	// CustomVariables: Custom floodlight variables. This field may only be used
-	// when calling batchinsert; it is not supported by batchupdate.
+	// CustomVariables: Custom floodlight variables.
 	CustomVariables []*CustomFloodlightVariable `json:"customVariables,omitempty"`
 	// Dclid: The display click ID. This field is mutually exclusive with
 	// encryptedUserId, encryptedUserIdCandidates[], matchId, mobileDeviceId,
@@ -5169,6 +5198,39 @@ func (s CrossDimensionReachReportCompatibleFields) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CrossMediaReachReportCompatibleFields: Represents fields that are compatible
+// to be selected for a report of type "CROSS_MEDIA_REACH".
+type CrossMediaReachReportCompatibleFields struct {
+	// DimensionFilters: Dimensions which are compatible to be selected in the
+	// "dimensionFilters" section of the report.
+	DimensionFilters []*Dimension `json:"dimensionFilters,omitempty"`
+	// Dimensions: Dimensions which are compatible to be selected in the
+	// "dimensions" section of the report.
+	Dimensions []*Dimension `json:"dimensions,omitempty"`
+	// Kind: The kind of resource this is, in this case
+	// dfareporting#crossMediaReachReportCompatibleFields.
+	Kind string `json:"kind,omitempty"`
+	// Metrics: Metrics which are compatible to be selected in the "metricNames"
+	// section of the report.
+	Metrics []*Metric `json:"metrics,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DimensionFilters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DimensionFilters") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CrossMediaReachReportCompatibleFields) MarshalJSON() ([]byte, error) {
+	type NoMethod CrossMediaReachReportCompatibleFields
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CustomFloodlightVariable: A custom floodlight variable. This field may only
 // be used when calling batchinsert; it is not supported by batchupdate.
 type CustomFloodlightVariable struct {
@@ -5176,7 +5238,7 @@ type CustomFloodlightVariable struct {
 	// "dfareporting#customFloodlightVariable".
 	Kind string `json:"kind,omitempty"`
 	// Type: The type of custom floodlight variable to supply a value for. These
-	// map to the "u[1-20]=" in the tags.
+	// map to the "u[1-100]=" in the tags.
 	//
 	// Possible values:
 	//   "U1"
@@ -9782,6 +9844,9 @@ type Report struct {
 	// CrossDimensionReachCriteria: The report criteria for a report of type
 	// "CROSS_DIMENSION_REACH".
 	CrossDimensionReachCriteria *ReportCrossDimensionReachCriteria `json:"crossDimensionReachCriteria,omitempty"`
+	// CrossMediaReachCriteria: Optional. The report criteria for a report of type
+	// "CROSS_MEDIA_REACH".
+	CrossMediaReachCriteria *ReportCrossMediaReachCriteria `json:"crossMediaReachCriteria,omitempty"`
 	// Delivery: The report's email delivery settings.
 	Delivery *ReportDelivery `json:"delivery,omitempty"`
 	// Etag: The eTag of this response for caching purposes.
@@ -9828,6 +9893,7 @@ type Report struct {
 	//   "PATH_TO_CONVERSION"
 	//   "CROSS_DIMENSION_REACH"
 	//   "FLOODLIGHT"
+	//   "CROSS_MEDIA_REACH"
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -9923,6 +9989,38 @@ type ReportCrossDimensionReachCriteria struct {
 
 func (s ReportCrossDimensionReachCriteria) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportCrossDimensionReachCriteria
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReportCrossMediaReachCriteria: Optional. The report criteria for a report of
+// type "CROSS_MEDIA_REACH".
+type ReportCrossMediaReachCriteria struct {
+	// DateRange: Required. The date range this report should be run for.
+	DateRange *DateRange `json:"dateRange,omitempty"`
+	// DimensionFilters: Required. The list of filters on which dimensions are
+	// filtered. Filters for different dimensions are ANDed, filters for the same
+	// dimension are grouped together and ORed.
+	DimensionFilters []*DimensionValue `json:"dimensionFilters,omitempty"`
+	// Dimensions: Required. The list of dimensions the report should include.
+	Dimensions []*SortedDimension `json:"dimensions,omitempty"`
+	// MetricNames: Required. The list of names of metrics the report should
+	// include.
+	MetricNames []string `json:"metricNames,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateRange") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReportCrossMediaReachCriteria) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportCrossMediaReachCriteria
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11453,6 +11551,178 @@ type TranscodeSetting struct {
 func (s TranscodeSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod TranscodeSetting
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TvCampaignDetail: TvCampaignDetail contains data from a TV campaign for
+// specific start dates and date windows.
+type TvCampaignDetail struct {
+	// Id: ID of this TV campaign.
+	Id string `json:"id,omitempty"`
+	// Kind: Identifies what kind of resource this is. Value: the fixed string
+	// "dfareporting#tvCampaignSummary".
+	Kind string `json:"kind,omitempty"`
+	// Timepoints: The timepoints of the TV campaign.
+	Timepoints []*TvCampaignTimepoint `json:"timepoints,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TvCampaignDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod TvCampaignDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TvCampaignSummariesListResponse: Response message for
+// TvCampaignSummariesService.List.
+type TvCampaignSummariesListResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed string
+	// "dfareporting#tvCampaignSummariesListResponse".
+	Kind string `json:"kind,omitempty"`
+	// TvCampaignSummaries: List of TV campaign summaries.
+	TvCampaignSummaries []*TvCampaignSummary `json:"tvCampaignSummaries,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TvCampaignSummariesListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod TvCampaignSummariesListResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TvCampaignSummary: TvCampaignSummary contains aggregate data from a TV
+// campaign.
+type TvCampaignSummary struct {
+	// EndDate: The end date of the TV campaign, inclusive. A string of the format:
+	// "yyyy-MM-dd".
+	EndDate string `json:"endDate,omitempty"`
+	// Grp: GRP of this TV campaign.
+	Grp int64 `json:"grp,omitempty,string"`
+	// Id: ID of this TV campaign.
+	Id string `json:"id,omitempty"`
+	// Impressions: Impressions across the entire TV campaign.
+	Impressions int64 `json:"impressions,omitempty,string"`
+	// Kind: Identifies what kind of resource this is. Value: the fixed string
+	// "dfareporting#tvCampaignSummary".
+	Kind string `json:"kind,omitempty"`
+	// Name: Identifier. Name of this TV campaign.
+	Name string `json:"name,omitempty"`
+	// Spend: Spend across the entire TV campaign.
+	Spend float64 `json:"spend,omitempty"`
+	// StartDate: The start date of the TV campaign, inclusive. A string of the
+	// format: "yyyy-MM-dd".
+	StartDate string `json:"startDate,omitempty"`
+	// Type: "CampaignComponentType" of this TV campaign.
+	//
+	// Possible values:
+	//   "CAMPAIGN_COMPONENT_TYPE_UNSPECIFIED" - Required to exist; do not use.
+	//   "COMPANY" - Company.
+	//   "BRAND" - Brand.
+	//   "PRODUCT" - Product.
+	//   "CAMPAIGN" - Campaign.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndDate") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndDate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TvCampaignSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod TvCampaignSummary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *TvCampaignSummary) UnmarshalJSON(data []byte) error {
+	type NoMethod TvCampaignSummary
+	var s1 struct {
+		Spend gensupport.JSONFloat64 `json:"spend"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Spend = float64(s1.Spend)
+	return nil
+}
+
+// TvCampaignTimepoint: A single data point for TvCampaignDetail, which holds
+// information about the TV campaign for a specific start date and date window.
+type TvCampaignTimepoint struct {
+	// DateWindow: The date window of the timepoint.
+	//
+	// Possible values:
+	//   "WEEKS_UNSPECIFIED" - Default value, should never be set.
+	//   "WEEKS_ONE" - One week.
+	//   "WEEKS_FOUR" - Four weeks.
+	//   "WEEKS_EIGHT" - Eight weeks.
+	//   "WEEKS_TWELVE" - Twelve weeks.
+	DateWindow string `json:"dateWindow,omitempty"`
+	// Spend: The spend within the time range of the timepoint.
+	Spend float64 `json:"spend,omitempty"`
+	// StartDate: The start date of the timepoint. A string in the format of
+	// "yyyy-MM-dd".
+	StartDate string `json:"startDate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateWindow") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateWindow") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TvCampaignTimepoint) MarshalJSON() ([]byte, error) {
+	type NoMethod TvCampaignTimepoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *TvCampaignTimepoint) UnmarshalJSON(data []byte) error {
+	type NoMethod TvCampaignTimepoint
+	var s1 struct {
+		Spend gensupport.JSONFloat64 `json:"spend"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Spend = float64(s1.Spend)
+	return nil
 }
 
 // UniversalAdId: A Universal Ad ID as per the VAST 4.0 spec. Applicable to the
@@ -36940,6 +37210,247 @@ func (c *TargetingTemplatesUpdateCall) Do(opts ...googleapi.CallOption) (*Target
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &TargetingTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type TvCampaignDetailsGetCall struct {
+	s            *Service
+	profileId    int64
+	id           string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets one TvCampaignDetail by ID.
+//
+// - id: TV Campaign ID.
+// - profileId: User profile ID associated with this request.
+func (r *TvCampaignDetailsService) Get(profileId int64, id string) *TvCampaignDetailsGetCall {
+	c := &TvCampaignDetailsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.id = id
+	return c
+}
+
+// AccountId sets the optional parameter "accountId": Required. Account ID
+// associated with this request.
+func (c *TvCampaignDetailsGetCall) AccountId(accountId int64) *TvCampaignDetailsGetCall {
+	c.urlParams_.Set("accountId", fmt.Sprint(accountId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *TvCampaignDetailsGetCall) Fields(s ...googleapi.Field) *TvCampaignDetailsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TvCampaignDetailsGetCall) IfNoneMatch(entityTag string) *TvCampaignDetailsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *TvCampaignDetailsGetCall) Context(ctx context.Context) *TvCampaignDetailsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *TvCampaignDetailsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TvCampaignDetailsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{+profileId}/tvCampaignDetails/{+id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+		"id":        c.id,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.tvCampaignDetails.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TvCampaignDetail.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *TvCampaignDetailsGetCall) Do(opts ...googleapi.CallOption) (*TvCampaignDetail, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TvCampaignDetail{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type TvCampaignSummariesListCall struct {
+	s            *Service
+	profileId    int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves a list of TV campaign summaries.
+//
+// - profileId: User profile ID associated with this request.
+func (r *TvCampaignSummariesService) List(profileId int64) *TvCampaignSummariesListCall {
+	c := &TvCampaignSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	return c
+}
+
+// AccountId sets the optional parameter "accountId": Required. Account ID
+// associated with this request.
+func (c *TvCampaignSummariesListCall) AccountId(accountId int64) *TvCampaignSummariesListCall {
+	c.urlParams_.Set("accountId", fmt.Sprint(accountId))
+	return c
+}
+
+// Name sets the optional parameter "name": Required. Search string to filter
+// the list of TV campaign summaries. Matches any substring. Required field.
+func (c *TvCampaignSummariesListCall) Name(name string) *TvCampaignSummariesListCall {
+	c.urlParams_.Set("name", name)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *TvCampaignSummariesListCall) Fields(s ...googleapi.Field) *TvCampaignSummariesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *TvCampaignSummariesListCall) IfNoneMatch(entityTag string) *TvCampaignSummariesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *TvCampaignSummariesListCall) Context(ctx context.Context) *TvCampaignSummariesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *TvCampaignSummariesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TvCampaignSummariesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{+profileId}/tvCampaignSummaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.tvCampaignSummaries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TvCampaignSummariesListResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *TvCampaignSummariesListCall) Do(opts ...googleapi.CallOption) (*TvCampaignSummariesListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TvCampaignSummariesListResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

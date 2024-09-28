@@ -1383,7 +1383,7 @@
           "parameterOrder": [],
           "parameters": {
             "kind": {
-              "description": "The Kind this terms of service version applies to.",
+              "description": "Required. The Kind this terms of service version applies to.",
               "enum": [
                 "TERMS_OF_SERVICE_KIND_UNSPECIFIED",
                 "MERCHANT_CENTER"
@@ -1396,7 +1396,7 @@
               "type": "string"
             },
             "regionCode": {
-              "description": "Region code as defined by [CLDR](https://cldr.unicode.org/). This is either a country when the ToS applies specifically to that country or 001 when it applies globally.",
+              "description": "Required. Region code as defined by [CLDR](https://cldr.unicode.org/). This is either a country when the ToS applies specifically to that country or 001 when it applies globally.",
               "location": "query",
               "type": "string"
             }
@@ -1412,7 +1412,7 @@
       }
     }
   },
-  "revision": "20240923",
+  "revision": "20240924",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "AcceptTermsOfService": {

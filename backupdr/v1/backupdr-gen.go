@@ -723,7 +723,11 @@ type Backup struct {
 	// Labels: Optional. Resource labels to represent user provided metadata. No
 	// labels currently defined.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. Identifier. Name of the resource.
+	// Name: Output only. Identifier. Name of the backup to create. It must have
+	// the
+	// format"projects//locations//backupVaults//dataSources/{datasource}/backups/{
+	// backup}". `{backup}` cannot be changed after creation. It must be between
+	// 3-63 characters long and must be unique within the datasource.
 	Name string `json:"name,omitempty"`
 	// ResourceSizeBytes: Output only. source resource size in bytes at the time of
 	// the backup.
@@ -1106,6 +1110,19 @@ func (s BackupRule) MarshalJSON() ([]byte, error) {
 
 // BackupVault: Message describing a BackupVault object.
 type BackupVault struct {
+	// AccessRestriction: Optional. Note: This field is added for future use case
+	// and will not be supported in the current release. Optional. Access
+	// restriction for the backup vault. Default value is WITHIN_ORGANIZATION if
+	// not provided during creation.
+	//
+	// Possible values:
+	//   "ACCESS_RESTRICTION_UNSPECIFIED" - Access restriction not set.
+	//   "WITHIN_PROJECT" - Access to or from resources outside your current
+	// project will be denied.
+	//   "WITHIN_ORGANIZATION" - Access to or from resources outside your current
+	// organization will be denied.
+	//   "UNRESTRICTED" - No access restriction.
+	AccessRestriction string `json:"accessRestriction,omitempty"`
 	// Annotations: Optional. User annotations. See
 	// https://google.aip.dev/128#annotations Stores small amounts of arbitrary
 	// data.
@@ -1133,7 +1150,11 @@ type BackupVault struct {
 	// Labels: Optional. Resource labels to represent user provided metadata. No
 	// labels currently defined:
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. Identifier. The resource name.
+	// Name: Output only. Identifier. Name of the backup vault to create. It must
+	// have the
+	// format"projects/{project}/locations/{location}/backupVaults/{backupvault}".
+	//  `{backupvault}` cannot be changed after creation. It must be between 3-63
+	// characters long and must be unique within the project and location.
 	Name string `json:"name,omitempty"`
 	// ServiceAccount: Output only. Service account used by the BackupVault Service
 	// for this BackupVault. The user should grant this account permissions in
@@ -1160,15 +1181,15 @@ type BackupVault struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// ForceSendFields is a list of field names (e.g. "AccessRestriction") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Annotations") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AccessRestriction") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1724,7 +1745,12 @@ type DataSource struct {
 	// Labels: Optional. Resource labels to represent user provided metadata. No
 	// labels currently defined:
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. Identifier. The resource name.
+	// Name: Output only. Identifier. Name of the datasource to create. It must
+	// have the
+	// format"projects/{project}/locations/{location}/backupVaults/{backupvault}/da
+	// taSources/{datasource}". `{datasource}` cannot be changed after creation.
+	// It must be between 3-63 characters long and must be unique within the backup
+	// vault.
 	Name string `json:"name,omitempty"`
 	// State: Output only. The DataSource resource instance state.
 	//
@@ -5475,7 +5501,7 @@ type ProjectsLocationsBackupVaultsCreateCall struct {
 	header_     http.Header
 }
 
-// Create:
+// Create: Creates a new BackupVault in a given project and location.
 //
 // - parent: Value for parent.
 func (r *ProjectsLocationsBackupVaultsService) Create(parent string, backupvault *BackupVault) *ProjectsLocationsBackupVaultsCreateCall {
@@ -6224,7 +6250,11 @@ type ProjectsLocationsBackupVaultsPatchCall struct {
 
 // Patch: Updates the settings of a BackupVault.
 //
-// - name: Output only. Identifier. The resource name.
+//   - name: Output only. Identifier. Name of the backup vault to create. It must
+//     have the
+//     format"projects/{project}/locations/{location}/backupVaults/{backupvault}"
+//     `. `{backupvault}` cannot be changed after creation. It must be between
+//     3-63 characters long and must be unique within the project and location.
 func (r *ProjectsLocationsBackupVaultsService) Patch(name string, backupvault *BackupVault) *ProjectsLocationsBackupVaultsPatchCall {
 	c := &ProjectsLocationsBackupVaultsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7154,7 +7184,12 @@ type ProjectsLocationsBackupVaultsDataSourcesPatchCall struct {
 
 // Patch: Updates the settings of a DataSource.
 //
-// - name: Output only. Identifier. The resource name.
+//   - name: Output only. Identifier. Name of the datasource to create. It must
+//     have the
+//     format"projects/{project}/locations/{location}/backupVaults/{backupvault}/
+//     dataSources/{datasource}". `{datasource}` cannot be changed after
+//     creation. It must be between 3-63 characters long and must be unique
+//     within the backup vault.
 func (r *ProjectsLocationsBackupVaultsDataSourcesService) Patch(name string, datasource *DataSource) *ProjectsLocationsBackupVaultsDataSourcesPatchCall {
 	c := &ProjectsLocationsBackupVaultsDataSourcesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7915,7 +7950,11 @@ type ProjectsLocationsBackupVaultsDataSourcesBackupsPatchCall struct {
 
 // Patch: Updates the settings of a Backup.
 //
-// - name: Output only. Identifier. Name of the resource.
+//   - name: Output only. Identifier. Name of the backup to create. It must have
+//     the
+//     format"projects//locations//backupVaults//dataSources/{datasource}/backups
+//     /{backup}". `{backup}` cannot be changed after creation. It must be
+//     between 3-63 characters long and must be unique within the datasource.
 func (r *ProjectsLocationsBackupVaultsDataSourcesBackupsService) Patch(name string, backup *Backup) *ProjectsLocationsBackupVaultsDataSourcesBackupsPatchCall {
 	c := &ProjectsLocationsBackupVaultsDataSourcesBackupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

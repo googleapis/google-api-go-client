@@ -2399,6 +2399,8 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	// 5574. In other words, each RTP header is replaced with a single byte
 	// containing the block length. Only Speex wideband is supported.
 	// `sample_rate_hertz` must be 16000.
+	//   "AUDIO_ENCODING_ALAW" - 8-bit samples that compand 13-bit audio samples
+	// using G.711 PCMU/a-law.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 	// BargeInConfig: Configuration of barge-in behavior during the streaming of
 	// input audio.
@@ -5679,6 +5681,8 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	// 5574. In other words, each RTP header is replaced with a single byte
 	// containing the block length. Only Speex wideband is supported.
 	// `sample_rate_hertz` must be 16000.
+	//   "AUDIO_ENCODING_ALAW" - 8-bit samples that compand 13-bit audio samples
+	// using G.711 PCMU/a-law.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 	// BargeInConfig: Configuration of barge-in behavior during the streaming of
 	// input audio.
@@ -8794,6 +8798,12 @@ type GoogleCloudDialogflowV2ConversationDataset struct {
 	// Name: Output only. ConversationDataset resource name. Format:
 	// `projects//locations//conversationDatasets/`
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. A read only boolean field reflecting Zone
+	// Isolation status of the dataset.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. A read only boolean field reflecting Zone
+	// Separation status of the dataset.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -8909,6 +8919,12 @@ type GoogleCloudDialogflowV2ConversationModel struct {
 	// Name: ConversationModel resource name. Format:
 	// `projects//conversationModels/`
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. A read only boolean field reflecting Zone
+	// Isolation status of the model.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. A read only boolean field reflecting Zone
+	// Separation status of the model.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SmartReplyModelMetadata: Metadata for smart reply models.
 	SmartReplyModelMetadata *GoogleCloudDialogflowV2SmartReplyModelMetadata `json:"smartReplyModelMetadata,omitempty"`
 	// State: Output only. State of the model. A model can only serve prediction
@@ -11550,6 +11566,8 @@ type GoogleCloudDialogflowV2InputAudioConfig struct {
 	// 5574. In other words, each RTP header is replaced with a single byte
 	// containing the block length. Only Speex wideband is supported.
 	// `sample_rate_hertz` must be 16000.
+	//   "AUDIO_ENCODING_ALAW" - 8-bit samples that compand 13-bit audio samples
+	// using G.711 PCMU/a-law.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 	// DisableNoSpeechRecognizedEvent: Only used in Participants.AnalyzeContent and
 	// Participants.StreamingAnalyzeContent. If `false` and recognition doesn't
@@ -13859,6 +13877,8 @@ type GoogleCloudDialogflowV2OutputAudioConfig struct {
 	// bitrate.
 	//   "OUTPUT_AUDIO_ENCODING_MULAW" - 8-bit samples that compand 14-bit audio
 	// samples using G.711 PCMU/mu-law.
+	//   "OUTPUT_AUDIO_ENCODING_ALAW" - 8-bit samples that compand 13-bit audio
+	// samples using G.711 PCMU/a-law.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 	// SampleRateHertz: The synthesis sample rate (in hertz) for this audio. If not
 	// provided, then the synthesizer will use the default sample rate based on the
@@ -14880,6 +14900,8 @@ type GoogleCloudDialogflowV2SpeechToTextConfig struct {
 	// 5574. In other words, each RTP header is replaced with a single byte
 	// containing the block length. Only Speex wideband is supported.
 	// `sample_rate_hertz` must be 16000.
+	//   "AUDIO_ENCODING_ALAW" - 8-bit samples that compand 13-bit audio samples
+	// using G.711 PCMU/a-law.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 	// EnableWordInfo: If `true`, Dialogflow returns SpeechWordInfo in
 	// StreamingRecognitionResult with information about the recognized speech
@@ -15693,6 +15715,8 @@ type GoogleCloudDialogflowV2TextToSpeechSettings struct {
 	// bitrate.
 	//   "OUTPUT_AUDIO_ENCODING_MULAW" - 8-bit samples that compand 14-bit audio
 	// samples using G.711 PCMU/mu-law.
+	//   "OUTPUT_AUDIO_ENCODING_ALAW" - 8-bit samples that compand 13-bit audio
+	// samples using G.711 PCMU/a-law.
 	OutputAudioEncoding string `json:"outputAudioEncoding,omitempty"`
 	// SampleRateHertz: Optional. The synthesis sample rate (in hertz) for this
 	// audio. If not provided, then the synthesizer will use the default sample

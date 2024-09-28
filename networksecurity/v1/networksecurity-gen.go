@@ -653,6 +653,30 @@ func (s CloneAddressGroupItemsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CustomMirroringProfile: CustomMirroringProfile defines an action for
+// mirroring traffic to a collector's EndpointGroup
+type CustomMirroringProfile struct {
+	// MirroringEndpointGroup: Required. The MirroringEndpointGroup to which
+	// traffic associated with the SP should be mirrored.
+	MirroringEndpointGroup string `json:"mirroringEndpointGroup,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MirroringEndpointGroup") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MirroringEndpointGroup") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomMirroringProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomMirroringProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Destination: Specification of traffic destination attributes.
 type Destination struct {
 	// Hosts: Required. List of host names to match. Matched against the
@@ -2159,6 +2183,9 @@ func (s Rule) MarshalJSON() ([]byte, error) {
 type SecurityProfile struct {
 	// CreateTime: Output only. Resource creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
+	// CustomMirroringProfile: The custom Packet Mirroring v2 configuration for the
+	// SecurityProfile.
+	CustomMirroringProfile *CustomMirroringProfile `json:"customMirroringProfile,omitempty"`
 	// Description: Optional. An optional description of the profile. Max length
 	// 512 characters.
 	Description string `json:"description,omitempty"`
@@ -2182,6 +2209,7 @@ type SecurityProfile struct {
 	// Possible values:
 	//   "PROFILE_TYPE_UNSPECIFIED" - Profile type not specified.
 	//   "THREAT_PREVENTION" - Profile type for threat prevention.
+	//   "CUSTOM_MIRRORING" - Profile type for packet mirroring v2
 	Type string `json:"type,omitempty"`
 	// UpdateTime: Output only. Last resource update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -2211,6 +2239,9 @@ func (s SecurityProfile) MarshalJSON() ([]byte, error) {
 type SecurityProfileGroup struct {
 	// CreateTime: Output only. Resource creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
+	// CustomMirroringProfile: Optional. Reference to a SecurityProfile with the
+	// CustomMirroring configuration.
+	CustomMirroringProfile string `json:"customMirroringProfile,omitempty"`
 	// Description: Optional. An optional description of the profile group. Max
 	// length 2048 characters.
 	Description string `json:"description,omitempty"`

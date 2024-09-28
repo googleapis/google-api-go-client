@@ -1244,7 +1244,7 @@ func (s DatabaseResourceId) MarshalJSON() ([]byte, error) {
 }
 
 // DatabaseResourceMetadata: Common model for database resource instance
-// metadata. Next ID: 21
+// metadata. Next ID: 23
 type DatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *AvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -1268,6 +1268,16 @@ type DatabaseResourceMetadata struct {
 	CurrentState string `json:"currentState,omitempty"`
 	// CustomMetadata: Any custom metadata associated with the resource
 	CustomMetadata *CustomMetadataData `json:"customMetadata,omitempty"`
+	// Edition: Optional. Edition represents whether the instance is ENTERPRISE or
+	// ENTERPRISE_PLUS. This information is core to Cloud SQL only and is used to
+	// identify the edition of the instance.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - Default, to make it consistent with instance
+	// edition enum.
+	//   "EDITION_ENTERPRISE" - Represents the enterprise edition.
+	//   "EDITION_ENTERPRISE_PLUS" - Represents the enterprise plus edition.
+	Edition string `json:"edition,omitempty"`
 	// Entitlements: Entitlements associated with the resource
 	Entitlements []*Entitlement `json:"entitlements,omitempty"`
 	// ExpectedState: The state that the instance is expected to be in. For
@@ -1309,6 +1319,10 @@ type DatabaseResourceMetadata struct {
 	// Database resource. Else it would be NULL. REQUIRED if the immediate parent
 	// exists when first time resource is getting ingested, otherwise optional.
 	PrimaryResourceId *DatabaseResourceId `json:"primaryResourceId,omitempty"`
+	// PrimaryResourceLocation: Primary resource location. REQUIRED if the
+	// immediate parent exists when first time resource is getting ingested,
+	// otherwise optional.
+	PrimaryResourceLocation string `json:"primaryResourceLocation,omitempty"`
 	// Product: The product this resource represents.
 	Product *Product `json:"product,omitempty"`
 	// ResourceContainer: Closest parent Cloud Resource Manager container of this
@@ -3046,7 +3060,7 @@ type PscConnection struct {
 	// ProjectId: Optional. Project ID of the consumer project where the forwarding
 	// rule is created in.
 	ProjectId string `json:"projectId,omitempty"`
-	// PscConnectionId: Optional. The PSC connection id of the forwarding rule
+	// PscConnectionId: Required. The PSC connection id of the forwarding rule
 	// connected to the service attachment.
 	PscConnectionId string `json:"pscConnectionId,omitempty"`
 	// ServiceAttachment: Required. The service attachment which is the target of
@@ -3295,7 +3309,10 @@ func (s RescheduleMaintenanceRequest) MarshalJSON() ([]byte, error) {
 }
 
 type RetentionSettings struct {
-	QuantityBasedRetention int64 `json:"quantityBasedRetention,omitempty"`
+	// DurationBasedRetention: Duration based retention period i.e. 172800 seconds
+	// (2 days)
+	DurationBasedRetention string `json:"durationBasedRetention,omitempty"`
+	QuantityBasedRetention int64  `json:"quantityBasedRetention,omitempty"`
 	// RetentionUnit: The unit that 'retained_backups' represents.
 	//
 	// Possible values:
@@ -3303,17 +3320,20 @@ type RetentionSettings struct {
 	// be treated as COUNT.
 	//   "COUNT" - Retention will be by count, eg. "retain the most recent 7
 	// backups".
-	//   "TIME" - Retention will be by Time, eg. "retain the last 7 days backups".
+	//   "TIME" - Retention will be by Time, eg. "retain backups till a specific
+	// time" i.e. till 2024-05-01T00:00:00Z.
+	//   "DURATION" - Retention will be by duration, eg. "retain the backups for
+	// 172800 seconds (2 days)".
 	//   "RETENTION_UNIT_OTHER" - For rest of the other category
 	RetentionUnit      string `json:"retentionUnit,omitempty"`
 	TimeBasedRetention string `json:"timeBasedRetention,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "QuantityBasedRetention") to
+	// ForceSendFields is a list of field names (e.g. "DurationBasedRetention") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "QuantityBasedRetention") to
+	// NullFields is a list of field names (e.g. "DurationBasedRetention") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

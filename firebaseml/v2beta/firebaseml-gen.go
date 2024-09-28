@@ -498,6 +498,50 @@ func (s GoogleCloudAiplatformV1beta1CountTokensResponse) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1beta1DynamicRetrievalConfig: Describes the options to
+// customize dynamic retrieval.
+type GoogleCloudAiplatformV1beta1DynamicRetrievalConfig struct {
+	// DynamicThreshold: Optional. The threshold to be used in dynamic retrieval.
+	// If not set, a system default value is used.
+	DynamicThreshold float64 `json:"dynamicThreshold,omitempty"`
+	// Mode: The mode of the predictor to be used in dynamic retrieval.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Always trigger retrieval.
+	//   "MODE_DYNAMIC" - Run retrieval only when system decides it is necessary.
+	Mode string `json:"mode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DynamicThreshold") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DynamicThreshold") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1DynamicRetrievalConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1DynamicRetrievalConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1beta1DynamicRetrievalConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1beta1DynamicRetrievalConfig
+	var s1 struct {
+		DynamicThreshold gensupport.JSONFloat64 `json:"dynamicThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DynamicThreshold = float64(s1.DynamicThreshold)
+	return nil
+}
+
 // GoogleCloudAiplatformV1beta1FileData: URI based data.
 type GoogleCloudAiplatformV1beta1FileData struct {
 	// FileUri: Required. URI.
@@ -988,6 +1032,25 @@ func (s GoogleCloudAiplatformV1beta1GenerationConfigRoutingConfigManualRoutingMo
 // GoogleCloudAiplatformV1beta1GoogleSearchRetrieval: Tool to retrieve public
 // web data for grounding, powered by Google.
 type GoogleCloudAiplatformV1beta1GoogleSearchRetrieval struct {
+	// DynamicRetrievalConfig: Specifies the dynamic retrieval configuration for
+	// the given source.
+	DynamicRetrievalConfig *GoogleCloudAiplatformV1beta1DynamicRetrievalConfig `json:"dynamicRetrievalConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DynamicRetrievalConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DynamicRetrievalConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1GoogleSearchRetrieval) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1GoogleSearchRetrieval
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAiplatformV1beta1GroundingChunk: Grounding chunk.
@@ -1072,6 +1135,8 @@ type GoogleCloudAiplatformV1beta1GroundingMetadata struct {
 	GroundingChunks []*GoogleCloudAiplatformV1beta1GroundingChunk `json:"groundingChunks,omitempty"`
 	// GroundingSupports: Optional. List of grounding support.
 	GroundingSupports []*GoogleCloudAiplatformV1beta1GroundingSupport `json:"groundingSupports,omitempty"`
+	// RetrievalMetadata: Optional. Output only. Retrieval metadata.
+	RetrievalMetadata *GoogleCloudAiplatformV1beta1RetrievalMetadata `json:"retrievalMetadata,omitempty"`
 	// RetrievalQueries: Optional. Queries executed by the retrieval tools.
 	RetrievalQueries []string `json:"retrievalQueries,omitempty"`
 	// SearchEntryPoint: Optional. Google search entry for the following-up web
@@ -1176,9 +1241,9 @@ func (s GoogleCloudAiplatformV1beta1LogprobsResult) MarshalJSON() ([]byte, error
 type GoogleCloudAiplatformV1beta1LogprobsResultCandidate struct {
 	// LogProbability: The candidate's log probability.
 	LogProbability float64 `json:"logProbability,omitempty"`
-	// Token: The candidate’s token string value.
+	// Token: The candidate's token string value.
 	Token string `json:"token,omitempty"`
-	// TokenId: The candidate’s token id value.
+	// TokenId: The candidate's token id value.
 	TokenId int64 `json:"tokenId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LogProbability") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1305,6 +1370,50 @@ type GoogleCloudAiplatformV1beta1Retrieval struct {
 func (s GoogleCloudAiplatformV1beta1Retrieval) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1Retrieval
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1RetrievalMetadata: Metadata related to retrieval
+// in the grounding flow.
+type GoogleCloudAiplatformV1beta1RetrievalMetadata struct {
+	// GoogleSearchDynamicRetrievalScore: Optional. Score indicating how likely
+	// information from google search could help answer the prompt. The score is in
+	// the range [0, 1], where 0 is the least likely and 1 is the most likely. This
+	// score is only populated when google search grounding and dynamic retrieval
+	// is enabled. It will be compared to the threshold to determine whether to
+	// trigger google search.
+	GoogleSearchDynamicRetrievalScore float64 `json:"googleSearchDynamicRetrievalScore,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "GoogleSearchDynamicRetrievalScore") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "GoogleSearchDynamicRetrievalScore") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1RetrievalMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1RetrievalMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1beta1RetrievalMetadata) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1beta1RetrievalMetadata
+	var s1 struct {
+		GoogleSearchDynamicRetrievalScore gensupport.JSONFloat64 `json:"googleSearchDynamicRetrievalScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.GoogleSearchDynamicRetrievalScore = float64(s1.GoogleSearchDynamicRetrievalScore)
+	return nil
 }
 
 // GoogleCloudAiplatformV1beta1SafetyRating: Safety rating corresponding to the

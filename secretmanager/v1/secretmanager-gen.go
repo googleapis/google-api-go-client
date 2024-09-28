@@ -1073,7 +1073,7 @@ type Secret struct {
 	// CreateTime: Output only. The time at which the Secret was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomerManagedEncryption: Optional. The customer-managed encryption
-	// configuration of the Regionalised Secrets. If no configuration is provided,
+	// configuration of the regionalized secrets. If no configuration is provided,
 	// Google-managed default encryption is used. Updates to the Secret encryption
 	// configuration only apply to SecretVersions added afterwards. They do not
 	// apply retroactively to existing SecretVersions.
@@ -1188,7 +1188,7 @@ type SecretVersion struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomerManagedEncryption: Output only. The customer-managed encryption
 	// status of the SecretVersion. Only populated if customer-managed encryption
-	// is used and Secret is a Regionalised Secret.
+	// is used and Secret is a regionalized secret.
 	CustomerManagedEncryption *CustomerManagedEncryptionStatus `json:"customerManagedEncryption,omitempty"`
 	// DestroyTime: Output only. The time this SecretVersion was destroyed. Only
 	// present if state is DESTROYED.

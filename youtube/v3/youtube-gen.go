@@ -6742,9 +6742,6 @@ type SubscriptionSnippet struct {
 	// ChannelId: The ID that YouTube uses to uniquely identify the subscriber's
 	// channel.
 	ChannelId string `json:"channelId,omitempty"`
-	// ChannelTitle: Channel title for the channel that the subscription belongs
-	// to.
-	ChannelTitle string `json:"channelTitle,omitempty"`
 	// Description: The subscription's details.
 	Description string `json:"description,omitempty"`
 	// PublishedAt: The date and time that the subscription was created.

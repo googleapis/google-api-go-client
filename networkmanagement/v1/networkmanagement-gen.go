@@ -1048,6 +1048,9 @@ type DropInfo struct {
 	// (on-prem) or unknown GCP network is dropped due to the destination IP
 	// address not belonging to any IP prefix included to the local traffic
 	// selector of the VPN tunnel.
+	//   "NO_KNOWN_ROUTE_FROM_PEERED_NETWORK_TO_DESTINATION" - Packet from the
+	// unknown peered network is dropped due to no known route from the source
+	// network to the destination IP address.
 	Cause string `json:"cause,omitempty"`
 	// DestinationIp: Destination IP address of the dropped packet (if relevant).
 	DestinationIp string `json:"destinationIp,omitempty"`
@@ -1194,6 +1197,12 @@ type Endpoint struct {
 	// provide is from the service project. In this case, the network that the IP
 	// address resides in is defined in the host project.
 	ProjectId string `json:"projectId,omitempty"`
+	// RedisCluster: A Redis Cluster
+	// (https://cloud.google.com/memorystore/docs/cluster) URI.
+	RedisCluster string `json:"redisCluster,omitempty"`
+	// RedisInstance: A Redis Instance
+	// (https://cloud.google.com/memorystore/docs/redis) URI.
+	RedisInstance string `json:"redisInstance,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppEngineVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2510,6 +2519,8 @@ type RouteInfo struct {
 	//   "PEERING_STATIC" - A static route received from peering network.
 	//   "PEERING_DYNAMIC" - A dynamic route received from peering network.
 	//   "POLICY_BASED" - Policy based route.
+	//   "ADVERTISED" - Advertised route. Synthetic route which is used to
+	// transition from the StartFromPrivateNetwork state in Connectivity tests.
 	RouteType string `json:"routeType,omitempty"`
 	// SrcIpRange: Source IP address range of the route. Policy based routes only.
 	SrcIpRange string `json:"srcIpRange,omitempty"`

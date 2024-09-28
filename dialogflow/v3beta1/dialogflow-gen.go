@@ -2003,6 +2003,8 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	// 5574. In other words, each RTP header is replaced with a single byte
 	// containing the block length. Only Speex wideband is supported.
 	// `sample_rate_hertz` must be 16000.
+	//   "AUDIO_ENCODING_ALAW" - 8-bit samples that compand 13-bit audio samples
+	// using G.711 PCMU/a-law.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 	// BargeInConfig: Configuration of barge-in behavior during the streaming of
 	// input audio.
@@ -4009,6 +4011,12 @@ type GoogleCloudDialogflowCxV3beta1Agent struct {
 	// (https://cloud.google.com/dialogflow/docs/integrations/web-demo)
 	// integration.
 	AvatarUri string `json:"avatarUri,omitempty"`
+	// BigqueryExportSettings: Optional. The BigQuery export settings for this
+	// agent. The conversation data will be exported to BigQuery tables if it is
+	// enabled. By default, BigQuery export settings will not be exported with
+	// agent. You need to set include_bigquery_export_settings to include it in the
+	// exported agent.
+	BigqueryExportSettings *GoogleCloudDialogflowCxV3beta1BigQueryExportSettings `json:"bigqueryExportSettings,omitempty"`
 	// ClientCertificateSettings: Optional. Settings for custom client
 	// certificates.
 	ClientCertificateSettings *GoogleCloudDialogflowCxV3beta1AgentClientCertificateSettings `json:"clientCertificateSettings,omitempty"`
@@ -4543,6 +4551,32 @@ type GoogleCloudDialogflowCxV3beta1BatchRunTestCasesResponse struct {
 
 func (s GoogleCloudDialogflowCxV3beta1BatchRunTestCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1BatchRunTestCasesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1BigQueryExportSettings: The settings of
+// BigQuery export.
+type GoogleCloudDialogflowCxV3beta1BigQueryExportSettings struct {
+	// BigqueryTable: The BigQuery table to export. Format:
+	// `projects//datasets//tables/`.
+	BigqueryTable string `json:"bigqueryTable,omitempty"`
+	// Enabled: The field to indicate whether the BigQuery export is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BigqueryTable") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BigqueryTable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1BigQueryExportSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1BigQueryExportSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6288,7 +6322,8 @@ type GoogleCloudDialogflowCxV3beta1Example struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// LanguageCode: Optional. The language code of the example. If not specified,
 	// the agent's default language is used. Note: languages must be enabled in the
-	// agent before they can be used.
+	// agent before they can be used. Note: example's language code is not
+	// currently used in dialogflow agents.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// Name: The unique identifier of the playbook example. Format:
 	// `projects//locations//agents//playbooks//examples/`.
@@ -8377,6 +8412,8 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	// 5574. In other words, each RTP header is replaced with a single byte
 	// containing the block length. Only Speex wideband is supported.
 	// `sample_rate_hertz` must be 16000.
+	//   "AUDIO_ENCODING_ALAW" - 8-bit samples that compand 13-bit audio samples
+	// using G.711 PCMU/a-law.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 	// BargeInConfig: Configuration of barge-in behavior during the streaming of
 	// input audio.
@@ -9790,6 +9827,8 @@ type GoogleCloudDialogflowCxV3beta1OutputAudioConfig struct {
 	// bitrate.
 	//   "OUTPUT_AUDIO_ENCODING_MULAW" - 8-bit samples that compand 14-bit audio
 	// samples using G.711 PCMU/mu-law.
+	//   "OUTPUT_AUDIO_ENCODING_ALAW" - 8-bit samples that compand 13-bit audio
+	// samples using G.711 PCMU/a-law.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 	// SampleRateHertz: Optional. The synthesis sample rate (in hertz) for this
 	// audio. If not provided, then the synthesizer will use the default sample
@@ -10489,8 +10528,8 @@ type GoogleCloudDialogflowCxV3beta1QueryResult struct {
 	CurrentPage *GoogleCloudDialogflowCxV3beta1Page `json:"currentPage,omitempty"`
 	// DataStoreConnectionSignals: Optional. Data store connection feature output
 	// signals. Filled only when data stores are involved in serving the query and
-	// DetectIntentRequest.populate data_store_connection_quality_signals is set to
-	// true in the request.
+	// DetectIntentRequest.populate_data_store_connection_signals is set to true in
+	// the request.
 	DataStoreConnectionSignals *GoogleCloudDialogflowCxV3beta1DataStoreConnectionSignals `json:"dataStoreConnectionSignals,omitempty"`
 	// DiagnosticInfo: The free-form diagnostic info. For example, this field could
 	// contain webhook call latency. The fields of this data can change without
@@ -11215,6 +11254,18 @@ func (s GoogleCloudDialogflowCxV3beta1RunTestCaseResponse) MarshalJSON() ([]byte
 type GoogleCloudDialogflowCxV3beta1SafetySettings struct {
 	// BannedPhrases: Banned phrases for generated text.
 	BannedPhrases []*GoogleCloudDialogflowCxV3beta1SafetySettingsPhrase `json:"bannedPhrases,omitempty"`
+	// DefaultBannedPhraseMatchStrategy: Optional. Default phrase match strategy
+	// for banned phrases.
+	//
+	// Possible values:
+	//   "PHRASE_MATCH_STRATEGY_UNSPECIFIED" - Unspecified, defaults to
+	// PARTIAL_MATCH.
+	//   "PARTIAL_MATCH" - Text that contains the phrase as a substring will be
+	// matched, e.g. "foo" will match "afoobar".
+	//   "WORD_MATCH" - Text that contains the tokenized words of the phrase will
+	// be matched, e.g. "foo" will match "a foo bar" and "foo bar", but not
+	// "foobar".
+	DefaultBannedPhraseMatchStrategy string `json:"defaultBannedPhraseMatchStrategy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BannedPhrases") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12146,6 +12197,8 @@ type GoogleCloudDialogflowCxV3beta1ToolAuthenticationOAuthConfig struct {
 	//   "CLIENT_CREDENTIAL" - Represents the [client credential
 	// flow](https://oauth.net/2/grant-types/client-credentials).
 	OauthGrantType string `json:"oauthGrantType,omitempty"`
+	// Scopes: Optional. The OAuth scopes to grant.
+	Scopes []string `json:"scopes,omitempty"`
 	// TokenEndpoint: Required. The token endpoint in the OAuth provider to
 	// exchange for an access token.
 	TokenEndpoint string `json:"tokenEndpoint,omitempty"`
@@ -14063,6 +14116,12 @@ type GoogleCloudDialogflowV2ConversationModel struct {
 	// Name: ConversationModel resource name. Format:
 	// `projects//conversationModels/`
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. A read only boolean field reflecting Zone
+	// Isolation status of the model.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. A read only boolean field reflecting Zone
+	// Separation status of the model.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SmartReplyModelMetadata: Metadata for smart reply models.
 	SmartReplyModelMetadata *GoogleCloudDialogflowV2SmartReplyModelMetadata `json:"smartReplyModelMetadata,omitempty"`
 	// State: Output only. State of the model. A model can only serve prediction
@@ -32406,7 +32465,7 @@ func (r *ProjectsLocationsAgentsPlaybooksExamplesService) List(parent string) *P
 }
 
 // LanguageCode sets the optional parameter "languageCode": The language to
-// list examples for. If not specified, the agent's default language is used.
+// list examples for. If not specified, list all examples under the playbook.
 // Note: languages must be enabled in the agent before they can be used.
 func (c *ProjectsLocationsAgentsPlaybooksExamplesListCall) LanguageCode(languageCode string) *ProjectsLocationsAgentsPlaybooksExamplesListCall {
 	c.urlParams_.Set("languageCode", languageCode)

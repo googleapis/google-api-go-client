@@ -4465,6 +4465,8 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	// 5574. In other words, each RTP header is replaced with a single byte
 	// containing the block length. Only Speex wideband is supported.
 	// `sample_rate_hertz` must be 16000.
+	//   "AUDIO_ENCODING_ALAW" - 8-bit samples that compand 13-bit audio samples
+	// using G.711 PCMU/a-law.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 	// BargeInConfig: Configuration of barge-in behavior during the streaming of
 	// input audio.
@@ -5701,6 +5703,8 @@ type GoogleCloudDialogflowCxV3OutputAudioConfig struct {
 	// bitrate.
 	//   "OUTPUT_AUDIO_ENCODING_MULAW" - 8-bit samples that compand 14-bit audio
 	// samples using G.711 PCMU/mu-law.
+	//   "OUTPUT_AUDIO_ENCODING_ALAW" - 8-bit samples that compand 13-bit audio
+	// samples using G.711 PCMU/a-law.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 	// SampleRateHertz: Optional. The synthesis sample rate (in hertz) for this
 	// audio. If not provided, then the synthesizer will use the default sample
@@ -6105,8 +6109,8 @@ type GoogleCloudDialogflowCxV3QueryResult struct {
 	CurrentPage *GoogleCloudDialogflowCxV3Page `json:"currentPage,omitempty"`
 	// DataStoreConnectionSignals: Optional. Data store connection feature output
 	// signals. Filled only when data stores are involved in serving the query and
-	// DetectIntentRequest.populate data_store_connection_quality_signals is set to
-	// true in the request.
+	// DetectIntentRequest.populate_data_store_connection_signals is set to true in
+	// the request.
 	DataStoreConnectionSignals *GoogleCloudDialogflowCxV3DataStoreConnectionSignals `json:"dataStoreConnectionSignals,omitempty"`
 	// DiagnosticInfo: The free-form diagnostic info. For example, this field could
 	// contain webhook call latency. The fields of this data can change without
@@ -10190,6 +10194,8 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	// 5574. In other words, each RTP header is replaced with a single byte
 	// containing the block length. Only Speex wideband is supported.
 	// `sample_rate_hertz` must be 16000.
+	//   "AUDIO_ENCODING_ALAW" - 8-bit samples that compand 13-bit audio samples
+	// using G.711 PCMU/a-law.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 	// BargeInConfig: Configuration of barge-in behavior during the streaming of
 	// input audio.
@@ -12419,6 +12425,12 @@ type GoogleCloudDialogflowV2ConversationModel struct {
 	// Name: ConversationModel resource name. Format:
 	// `projects//conversationModels/`
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. A read only boolean field reflecting Zone
+	// Isolation status of the model.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. A read only boolean field reflecting Zone
+	// Separation status of the model.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SmartReplyModelMetadata: Metadata for smart reply models.
 	SmartReplyModelMetadata *GoogleCloudDialogflowV2SmartReplyModelMetadata `json:"smartReplyModelMetadata,omitempty"`
 	// State: Output only. State of the model. A model can only serve prediction

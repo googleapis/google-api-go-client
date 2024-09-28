@@ -1323,7 +1323,7 @@ func (s InternalRange) MarshalJSON() ([]byte, error) {
 // all attachments should be capable of advertising the same prefixes.
 type LinkedInterconnectAttachments struct {
 	// IncludeImportRanges: Optional. IP ranges allowed to be included during
-	// import from hub.(does not control transit connectivity) The only allowed
+	// import from hub (does not control transit connectivity). The only allowed
 	// value for now is "ALL_IPV4_RANGES".
 	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
@@ -1354,13 +1354,47 @@ func (s LinkedInterconnectAttachments) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LinkedProducerVpcNetwork: Next ID: 7
+type LinkedProducerVpcNetwork struct {
+	// ExcludeExportRanges: Optional. IP ranges encompassing the subnets to be
+	// excluded from peering.
+	ExcludeExportRanges []string `json:"excludeExportRanges,omitempty"`
+	// Network: Immutable. The URI of the Service Consumer VPC that the Producer
+	// VPC is peered with.
+	Network string `json:"network,omitempty"`
+	// Peering: Immutable. The name of the VPC peering between the Service Consumer
+	// VPC and the Producer VPC (defined in the Tenant project) which is added to
+	// the NCC hub. This peering must be in ACTIVE state.
+	Peering string `json:"peering,omitempty"`
+	// ProducerNetwork: Output only. The URI of the Producer VPC.
+	ProducerNetwork string `json:"producerNetwork,omitempty"`
+	// ServiceConsumerVpcSpoke: Output only. The Service Consumer Network spoke.
+	ServiceConsumerVpcSpoke string `json:"serviceConsumerVpcSpoke,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExcludeExportRanges") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExcludeExportRanges") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LinkedProducerVpcNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod LinkedProducerVpcNetwork
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // LinkedRouterApplianceInstances: A collection of router appliance instances.
 // If you configure multiple router appliance instances to receive data from
 // the same set of sites outside of Google Cloud, we recommend that you
 // associate those instances with the same spoke.
 type LinkedRouterApplianceInstances struct {
 	// IncludeImportRanges: Optional. IP ranges allowed to be included during
-	// import from hub.(does not control transit connectivity) The only allowed
+	// import from hub (does not control transit connectivity). The only allowed
 	// value for now is "ALL_IPV4_RANGES".
 	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
 	// Instances: The list of router appliance instances.
@@ -1429,7 +1463,7 @@ func (s LinkedVpcNetwork) MarshalJSON() ([]byte, error) {
 // all tunnels should be capable of advertising the same prefixes.
 type LinkedVpnTunnels struct {
 	// IncludeImportRanges: Optional. IP ranges allowed to be included during
-	// import from hub.(does not control transit connectivity) The only allowed
+	// import from hub (does not control transit connectivity). The only allowed
 	// value for now is "ALL_IPV4_RANGES".
 	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
@@ -3071,6 +3105,9 @@ type Spoke struct {
 	// LinkedInterconnectAttachments: VLAN attachments that are associated with the
 	// spoke.
 	LinkedInterconnectAttachments *LinkedInterconnectAttachments `json:"linkedInterconnectAttachments,omitempty"`
+	// LinkedProducerVpcNetwork: Optional. The linked producer VPC that is
+	// associated with the spoke.
+	LinkedProducerVpcNetwork *LinkedProducerVpcNetwork `json:"linkedProducerVpcNetwork,omitempty"`
 	// LinkedRouterApplianceInstances: Router appliance instances that are
 	// associated with the spoke.
 	LinkedRouterApplianceInstances *LinkedRouterApplianceInstances `json:"linkedRouterApplianceInstances,omitempty"`
@@ -3093,6 +3130,7 @@ type Spoke struct {
 	//   "INTERCONNECT_ATTACHMENT" - Spokes associated with VLAN attachments.
 	//   "ROUTER_APPLIANCE" - Spokes associated with router appliance instances.
 	//   "VPC_NETWORK" - Spokes associated with VPC networks.
+	//   "PRODUCER_VPC_NETWORK" - Spokes that are backed by a producer VPC network.
 	SpokeType string `json:"spokeType,omitempty"`
 	// State: Output only. The current lifecycle state of this spoke.
 	//
@@ -3255,6 +3293,7 @@ type SpokeTypeCount struct {
 	//   "INTERCONNECT_ATTACHMENT" - Spokes associated with VLAN attachments.
 	//   "ROUTER_APPLIANCE" - Spokes associated with router appliance instances.
 	//   "VPC_NETWORK" - Spokes associated with VPC networks.
+	//   "PRODUCER_VPC_NETWORK" - Spokes that are backed by a producer VPC network.
 	SpokeType string `json:"spokeType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

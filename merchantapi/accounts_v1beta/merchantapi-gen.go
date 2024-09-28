@@ -7827,8 +7827,8 @@ func (r *TermsOfServiceService) RetrieveLatest() *TermsOfServiceRetrieveLatestCa
 	return c
 }
 
-// Kind sets the optional parameter "kind": The Kind this terms of service
-// version applies to.
+// Kind sets the optional parameter "kind": Required. The Kind this terms of
+// service version applies to.
 //
 // Possible values:
 //
@@ -7839,9 +7839,10 @@ func (c *TermsOfServiceRetrieveLatestCall) Kind(kind string) *TermsOfServiceRetr
 	return c
 }
 
-// RegionCode sets the optional parameter "regionCode": Region code as defined
-// by CLDR (https://cldr.unicode.org/). This is either a country when the ToS
-// applies specifically to that country or 001 when it applies globally.
+// RegionCode sets the optional parameter "regionCode": Required. Region code
+// as defined by CLDR (https://cldr.unicode.org/). This is either a country
+// when the ToS applies specifically to that country or 001 when it applies
+// globally.
 func (c *TermsOfServiceRetrieveLatestCall) RegionCode(regionCode string) *TermsOfServiceRetrieveLatestCall {
 	c.urlParams_.Set("regionCode", regionCode)
 	return c

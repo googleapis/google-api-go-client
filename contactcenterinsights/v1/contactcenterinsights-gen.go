@@ -7441,8 +7441,8 @@ type ProjectsLocationsConversationsCreateCall struct {
 	header_                                        http.Header
 }
 
-// Create: Creates a conversation. Does not support audio transcription or DLP
-// redaction. Use `conversations.upload` instead.
+// Create: Creates a conversation. Note that this method does not support audio
+// transcription or redaction. Use `conversations.upload` instead.
 //
 // - parent: The parent resource of the conversation.
 func (r *ProjectsLocationsConversationsService) Create(parent string, googlecloudcontactcenterinsightsv1conversation *GoogleCloudContactcenterinsightsV1Conversation) *ProjectsLocationsConversationsCreateCall {
@@ -7916,7 +7916,7 @@ func (c *ProjectsLocationsConversationsListCall) OrderBy(orderBy string) *Projec
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // conversations to return in the response. A valid page size ranges from 0 to
-// 1,000 inclusive. If the page size is zero or unspecified, a default page
+// 100,000 inclusive. If the page size is zero or unspecified, a default page
 // size of 100 will be chosen. Note that a call might return fewer results than
 // the requested page size.
 func (c *ProjectsLocationsConversationsListCall) PageSize(pageSize int64) *ProjectsLocationsConversationsListCall {

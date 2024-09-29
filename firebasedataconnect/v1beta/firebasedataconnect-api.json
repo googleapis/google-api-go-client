@@ -1070,7 +1070,7 @@
       }
     }
   },
-  "revision": "20240918",
+  "revision": "20240924",
   "rootUrl": "https://firebasedataconnect.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -1634,6 +1634,10 @@
             "Connect to the SQL database and validate that the SQL DDL has all the SQL resources used in the given Firebase Data Connect Schema. Surface any missing resources as `FAILED_PRECONDITION` with an `IncompatibleSqlSchemaError` error detail. Succeed even if there are unknown tables and columns."
           ],
           "type": "string"
+        },
+        "unlinked": {
+          "description": "No Postgres data source is linked. If set, don't allow `database` and `schema_validation` to be configured.",
+          "type": "boolean"
         }
       },
       "type": "object"

@@ -203,6 +203,7 @@ type ProjectsLocationsOperationsService struct {
 func NewProjectsLocationsRepositoriesService(s *Service) *ProjectsLocationsRepositoriesService {
 	rs := &ProjectsLocationsRepositoriesService{s: s}
 	rs.AptArtifacts = NewProjectsLocationsRepositoriesAptArtifactsService(s)
+	rs.Attachments = NewProjectsLocationsRepositoriesAttachmentsService(s)
 	rs.DockerImages = NewProjectsLocationsRepositoriesDockerImagesService(s)
 	rs.Files = NewProjectsLocationsRepositoriesFilesService(s)
 	rs.GenericArtifacts = NewProjectsLocationsRepositoriesGenericArtifactsService(s)
@@ -213,6 +214,7 @@ func NewProjectsLocationsRepositoriesService(s *Service) *ProjectsLocationsRepos
 	rs.NpmPackages = NewProjectsLocationsRepositoriesNpmPackagesService(s)
 	rs.Packages = NewProjectsLocationsRepositoriesPackagesService(s)
 	rs.PythonPackages = NewProjectsLocationsRepositoriesPythonPackagesService(s)
+	rs.Rules = NewProjectsLocationsRepositoriesRulesService(s)
 	rs.YumArtifacts = NewProjectsLocationsRepositoriesYumArtifactsService(s)
 	return rs
 }
@@ -221,6 +223,8 @@ type ProjectsLocationsRepositoriesService struct {
 	s *Service
 
 	AptArtifacts *ProjectsLocationsRepositoriesAptArtifactsService
+
+	Attachments *ProjectsLocationsRepositoriesAttachmentsService
 
 	DockerImages *ProjectsLocationsRepositoriesDockerImagesService
 
@@ -242,6 +246,8 @@ type ProjectsLocationsRepositoriesService struct {
 
 	PythonPackages *ProjectsLocationsRepositoriesPythonPackagesService
 
+	Rules *ProjectsLocationsRepositoriesRulesService
+
 	YumArtifacts *ProjectsLocationsRepositoriesYumArtifactsService
 }
 
@@ -251,6 +257,15 @@ func NewProjectsLocationsRepositoriesAptArtifactsService(s *Service) *ProjectsLo
 }
 
 type ProjectsLocationsRepositoriesAptArtifactsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsRepositoriesAttachmentsService(s *Service) *ProjectsLocationsRepositoriesAttachmentsService {
+	rs := &ProjectsLocationsRepositoriesAttachmentsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRepositoriesAttachmentsService struct {
 	s *Service
 }
 
@@ -368,6 +383,15 @@ type ProjectsLocationsRepositoriesPythonPackagesService struct {
 	s *Service
 }
 
+func NewProjectsLocationsRepositoriesRulesService(s *Service) *ProjectsLocationsRepositoriesRulesService {
+	rs := &ProjectsLocationsRepositoriesRulesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRepositoriesRulesService struct {
+	s *Service
+}
+
 func NewProjectsLocationsRepositoriesYumArtifactsService(s *Service) *ProjectsLocationsRepositoriesYumArtifactsService {
 	rs := &ProjectsLocationsRepositoriesYumArtifactsService{s: s}
 	return rs
@@ -438,6 +462,63 @@ type AptRepository struct {
 
 func (s AptRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod AptRepository
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Attachment: An Attachment refers to additional metadata that can be attached
+// to artifacts in ArtifactRegistry. An attachment consists of one or more
+// files.
+type Attachment struct {
+	// Annotations: Optional. User annotations. These attributes can only be set
+	// and used by the user, and not by Artifact Registry. See
+	// https://google.aip.dev/128#annotations for more details such as format and
+	// size limitations. Client specified annotations.
+	Annotations map[string]string `json:"annotations,omitempty"`
+	// AttachmentNamespace: The namespace this attachment belongs to. E.g. If an
+	// Attachment is created by artifact analysis, namespace is set to
+	// artifactanalysis.googleapis.com.
+	AttachmentNamespace string `json:"attachmentNamespace,omitempty"`
+	// CreateTime: Output only. The time when the attachment was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Files: Required. The files that blong to this Attachment. If the file ID
+	// part contains slashes, they are escaped. E.g.
+	// "projects/p1/locations/us-central1/repositories/repo1/files/sha:".
+	Files []string `json:"files,omitempty"`
+	// Name: The name of the attachment. E.g.
+	// "projects/p1/locations/us/repositories/repo/attachments/sbom".
+	Name string `json:"name,omitempty"`
+	// OciVersionName: Output only. The name of the OCI version that this
+	// attachment created. Only populated for Docker attachments. E.g.
+	// "projects/p1/locations/us-central1/repositories/repo1/packages/p1/versions/v1
+	// ".
+	OciVersionName string `json:"ociVersionName,omitempty"`
+	// Target: Required. The target the attachment is for, can be a Version,
+	// Package or Repository. E.g.
+	// "projects/p1/locations/us-central1/repositories/repo1/packages/p1/versions/v1
+	// ".
+	Target string `json:"target,omitempty"`
+	// Type: Type of Attachment. E.g. application/vnd.spdx+jsonn
+	Type string `json:"type,omitempty"`
+	// UpdateTime: Output only. The time when the attachment was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Attachment) MarshalJSON() ([]byte, error) {
+	type NoMethod Attachment
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -982,6 +1063,8 @@ func (s GoogetArtifact) MarshalJSON() ([]byte, error) {
 // GoogleDevtoolsArtifactregistryV1File: Files store content that is
 // potentially associated with Packages or Versions.
 type GoogleDevtoolsArtifactregistryV1File struct {
+	// Annotations: Optional. Client specified annotations.
+	Annotations map[string]string `json:"annotations,omitempty"`
 	// CreateTime: Output only. The time when the File was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// FetchTime: Output only. The time when the last attempt to refresh the file's
@@ -1002,13 +1085,13 @@ type GoogleDevtoolsArtifactregistryV1File struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1230,6 +1313,51 @@ type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryPublicRe
 
 func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryPublicRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryPublicRepository
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsArtifactregistryV1Rule: A Rule applies to repository or
+// package level. It defines the deny or allow action of the operation when the
+// conditions in the rule are met.
+type GoogleDevtoolsArtifactregistryV1Rule struct {
+	// Action: The action this rule makes.
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED" - Action not specified.
+	//   "ALLOW" - Allow the operation.
+	//   "DENY" - Deny the operation.
+	Action string `json:"action,omitempty"`
+	// Condition: Optional. The condition of the rule in CEL expression. If not
+	// provided, the rule matches all the objects.
+	Condition *Expr `json:"condition,omitempty"`
+	// Name: The name of the rule, for example:
+	// "projects/p1/locations/us-central1/repositories/repo1/rules/rule1".
+	Name string `json:"name,omitempty"`
+	// Possible values:
+	//   "OPERATION_UNSPECIFIED" - Operation not specified.
+	//   "DOWNLOAD" - Download operation.
+	Operation string `json:"operation,omitempty"`
+	// PackageId: The package ID the rule applies to. If empty, this rule applies
+	// to all the packages inside the repository.
+	PackageId string `json:"packageId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevtoolsArtifactregistryV1Rule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsArtifactregistryV1Rule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1598,6 +1726,34 @@ func (s KfpArtifact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListAttachmentsResponse: The response from listing attachments.
+type ListAttachmentsResponse struct {
+	// Attachments: The Attachments returned.
+	Attachments []*Attachment `json:"attachments,omitempty"`
+	// NextPageToken: The token to retrieve the next page of attachments, or empty
+	// if there are no more attachments to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Attachments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attachments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAttachmentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAttachmentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListDockerImagesResponse: The response from listing docker images.
 type ListDockerImagesResponse struct {
 	// DockerImages: The docker images returned.
@@ -1819,6 +1975,34 @@ type ListRepositoriesResponse struct {
 
 func (s ListRepositoriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRepositoriesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListRulesResponse: The response from listing rules.
+type ListRulesResponse struct {
+	// NextPageToken: The token to retrieve the next page of rules, or empty if
+	// there are no more rules to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Rules: The rules returned.
+	Rules []*GoogleDevtoolsArtifactregistryV1Rule `json:"rules,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListRulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRulesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2742,6 +2926,54 @@ func (s UploadAptArtifactResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// UploadFileMediaResponse: The response to upload a generic artifact.
+type UploadFileMediaResponse struct {
+	// Operation: Operation that will be returned to the user.
+	Operation *Operation `json:"operation,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Operation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Operation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UploadFileMediaResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadFileMediaResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UploadFileRequest: The request to upload a file.
+type UploadFileRequest struct {
+	// FileId: Optional. The ID of the file. If left empty will default to sha256
+	// digest of the content uploaded.
+	FileId string `json:"fileId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UploadFileRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadFileRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UploadGenericArtifactMediaResponse: The response to upload a generic
 // artifact.
 type UploadGenericArtifactMediaResponse struct {
@@ -3133,6 +3365,8 @@ func (s VPCSCConfig) MarshalJSON() ([]byte, error) {
 // collection of components, such as files and other data. This may correspond
 // to a version in many package management schemes.
 type Version struct {
+	// Annotations: Optional. Client specified annotations.
+	Annotations map[string]string `json:"annotations,omitempty"`
 	// CreateTime: The time when the version was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. Description of the version, as specified in its
@@ -3156,13 +3390,13 @@ type Version struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5266,6 +5500,471 @@ func (c *ProjectsLocationsRepositoriesAptArtifactsUploadCall) Do(opts ...googlea
 	return ret, nil
 }
 
+type ProjectsLocationsRepositoriesAttachmentsCreateCall struct {
+	s          *Service
+	parent     string
+	attachment *Attachment
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates an attachment. The returned Operation will finish once the
+// attachment has been created. Its response will be the created Attachment.
+//
+//   - parent: The name of the parent resource where the attachment will be
+//     created.
+func (r *ProjectsLocationsRepositoriesAttachmentsService) Create(parent string, attachment *Attachment) *ProjectsLocationsRepositoriesAttachmentsCreateCall {
+	c := &ProjectsLocationsRepositoriesAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.attachment = attachment
+	return c
+}
+
+// AttachmentId sets the optional parameter "attachmentId": Required. The
+// attachment id to use for this attachment.
+func (c *ProjectsLocationsRepositoriesAttachmentsCreateCall) AttachmentId(attachmentId string) *ProjectsLocationsRepositoriesAttachmentsCreateCall {
+	c.urlParams_.Set("attachmentId", attachmentId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesAttachmentsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesAttachmentsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesAttachmentsCreateCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesAttachmentsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesAttachmentsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesAttachmentsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.attachment)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/attachments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.attachments.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesAttachmentsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesAttachmentsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an attachment. The returned Operation will finish once the
+// attachments has been deleted. It will not have any Operation metadata and
+// will return a google.protobuf.Empty response.
+//
+// - name: The name of the attachment to delete.
+func (r *ProjectsLocationsRepositoriesAttachmentsService) Delete(name string) *ProjectsLocationsRepositoriesAttachmentsDeleteCall {
+	c := &ProjectsLocationsRepositoriesAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesAttachmentsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesAttachmentsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesAttachmentsDeleteCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesAttachmentsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesAttachmentsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesAttachmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.attachments.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesAttachmentsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesAttachmentsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an attachment.
+//
+// - name: The name of the attachment to retrieve.
+func (r *ProjectsLocationsRepositoriesAttachmentsService) Get(name string) *ProjectsLocationsRepositoriesAttachmentsGetCall {
+	c := &ProjectsLocationsRepositoriesAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesAttachmentsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesAttachmentsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRepositoriesAttachmentsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesAttachmentsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesAttachmentsGetCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesAttachmentsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesAttachmentsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.attachments.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Attachment.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesAttachmentsGetCall) Do(opts ...googleapi.CallOption) (*Attachment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Attachment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesAttachmentsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists repositories.
+//
+// - parent: The name of the parent resource whose attachments will be listed.
+func (r *ProjectsLocationsRepositoriesAttachmentsService) List(parent string) *ProjectsLocationsRepositoriesAttachmentsListCall {
+	c := &ProjectsLocationsRepositoriesAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. Filter rules are case insensitive. The fields
+// eligible for filtering are: * `target` * `type` * `attachment_namespace`
+func (c *ProjectsLocationsRepositoriesAttachmentsListCall) Filter(filter string) *ProjectsLocationsRepositoriesAttachmentsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// attachments to return. Maximum page size is 1,000.
+func (c *ProjectsLocationsRepositoriesAttachmentsListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesAttachmentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous list request, if any.
+func (c *ProjectsLocationsRepositoriesAttachmentsListCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesAttachmentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesAttachmentsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesAttachmentsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRepositoriesAttachmentsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesAttachmentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesAttachmentsListCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesAttachmentsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesAttachmentsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/attachments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.attachments.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAttachmentsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesAttachmentsListCall) Do(opts ...googleapi.CallOption) (*ListAttachmentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAttachmentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRepositoriesAttachmentsListCall) Pages(ctx context.Context, f func(*ListAttachmentsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type ProjectsLocationsRepositoriesDockerImagesGetCall struct {
 	s            *Service
 	name         string
@@ -6040,6 +6739,289 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Pages(ctx context.Context, 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsRepositoriesFilesPatchCall struct {
+	s                                    *Service
+	name                                 string
+	googledevtoolsartifactregistryv1file *GoogleDevtoolsArtifactregistryV1File
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Patch: Updates a file.
+//
+//   - name: The name of the file, for example:
+//     `projects/p1/locations/us-central1/repositories/repo1/files/a%2Fb%2Fc.txt`.
+//     If the file ID part contains slashes, they are escaped.
+func (r *ProjectsLocationsRepositoriesFilesService) Patch(name string, googledevtoolsartifactregistryv1file *GoogleDevtoolsArtifactregistryV1File) *ProjectsLocationsRepositoriesFilesPatchCall {
+	c := &ProjectsLocationsRepositoriesFilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googledevtoolsartifactregistryv1file = googledevtoolsartifactregistryv1file
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The update
+// mask applies to the resource. For the `FieldMask` definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+func (c *ProjectsLocationsRepositoriesFilesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRepositoriesFilesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesFilesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesFilesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesFilesPatchCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesFilesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesFilesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesFilesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googledevtoolsartifactregistryv1file)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.files.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleDevtoolsArtifactregistryV1File.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesFilesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleDevtoolsArtifactregistryV1File, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleDevtoolsArtifactregistryV1File{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesFilesUploadCall struct {
+	s                 *Service
+	parent            string
+	uploadfilerequest *UploadFileRequest
+	urlParams_        gensupport.URLParams
+	mediaInfo_        *gensupport.MediaInfo
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Upload: Directly uploads a File to a repository. The returned Operation will
+// complete once the resources are uploaded.
+//
+//   - parent: The resource name of the repository where the file will be
+//     uploaded.
+func (r *ProjectsLocationsRepositoriesFilesService) Upload(parent string, uploadfilerequest *UploadFileRequest) *ProjectsLocationsRepositoriesFilesUploadCall {
+	c := &ProjectsLocationsRepositoriesFilesUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.uploadfilerequest = uploadfilerequest
+	return c
+}
+
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
+// googleapi.ChunkSize. The chunk size defaults to
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
+// At most one of Media and ResumableMedia may be set.
+func (c *ProjectsLocationsRepositoriesFilesUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsLocationsRepositoriesFilesUploadCall {
+	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
+//
+// Deprecated: use Media instead.
+//
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
+func (c *ProjectsLocationsRepositoriesFilesUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsLocationsRepositoriesFilesUploadCall {
+	c.ctx_ = ctx
+	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
+func (c *ProjectsLocationsRepositoriesFilesUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsLocationsRepositoriesFilesUploadCall {
+	c.mediaInfo_.SetProgressUpdater(pu)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesFilesUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesFilesUploadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
+func (c *ProjectsLocationsRepositoriesFilesUploadCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesFilesUploadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesFilesUploadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesFilesUploadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.uploadfilerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/files:upload")
+	if c.mediaInfo_ != nil {
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/v1/{+parent}/files:upload")
+		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
+	}
+	if body == nil {
+		body = new(bytes.Buffer)
+		reqHeaders.Set("Content-Type", "application/json")
+	}
+	body, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	defer cleanup()
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	req.GetBody = getBody
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.files.upload" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UploadFileMediaResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesFilesUploadCall) Do(opts ...googleapi.CallOption) (*UploadFileMediaResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
+	if rx != nil {
+		rx.Client = c.s.client
+		rx.UserAgent = c.s.userAgent()
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
+		if err != nil {
+			return nil, err
+		}
+		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, gensupport.WrapError(err)
+		}
+	}
+	ret := &UploadFileMediaResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsRepositoriesGenericArtifactsUploadCall struct {
@@ -8966,6 +9948,118 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) Pages(ctx contex
 	}
 }
 
+type ProjectsLocationsRepositoriesPackagesVersionsPatchCall struct {
+	s          *Service
+	name       string
+	version    *Version
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a version.
+//
+//   - name: The name of the version, for example:
+//     "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/version
+//     s/art1". If the package or version ID parts contain slashes, the slashes
+//     are escaped.
+func (r *ProjectsLocationsRepositoriesPackagesVersionsService) Patch(name string, version *Version) *ProjectsLocationsRepositoriesPackagesVersionsPatchCall {
+	c := &ProjectsLocationsRepositoriesPackagesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.version = version
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The update mask applies
+// to the resource. For the `FieldMask` definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+func (c *ProjectsLocationsRepositoriesPackagesVersionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRepositoriesPackagesVersionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesPackagesVersionsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesPackagesVersionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesPackagesVersionsPatchCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesPackagesVersionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesPackagesVersionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesPackagesVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.version)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.packages.versions.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Version.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesPackagesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Version, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Version{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsRepositoriesPythonPackagesGetCall struct {
 	s            *Service
 	name         string
@@ -9215,6 +10309,573 @@ func (c *ProjectsLocationsRepositoriesPythonPackagesListCall) Pages(ctx context.
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsRepositoriesRulesCreateCall struct {
+	s                                    *Service
+	parent                               string
+	googledevtoolsartifactregistryv1rule *GoogleDevtoolsArtifactregistryV1Rule
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Create: Creates a rule.
+//
+// - parent: The name of the parent resource where the rule will be created.
+func (r *ProjectsLocationsRepositoriesRulesService) Create(parent string, googledevtoolsartifactregistryv1rule *GoogleDevtoolsArtifactregistryV1Rule) *ProjectsLocationsRepositoriesRulesCreateCall {
+	c := &ProjectsLocationsRepositoriesRulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googledevtoolsartifactregistryv1rule = googledevtoolsartifactregistryv1rule
+	return c
+}
+
+// RuleId sets the optional parameter "ruleId": The rule id to use for this
+// repository.
+func (c *ProjectsLocationsRepositoriesRulesCreateCall) RuleId(ruleId string) *ProjectsLocationsRepositoriesRulesCreateCall {
+	c.urlParams_.Set("ruleId", ruleId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesRulesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesRulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesRulesCreateCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesRulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesRulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesRulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googledevtoolsartifactregistryv1rule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/rules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.rules.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleDevtoolsArtifactregistryV1Rule.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesRulesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleDevtoolsArtifactregistryV1Rule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleDevtoolsArtifactregistryV1Rule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesRulesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a rule.
+//
+// - name: The name of the rule to delete.
+func (r *ProjectsLocationsRepositoriesRulesService) Delete(name string) *ProjectsLocationsRepositoriesRulesDeleteCall {
+	c := &ProjectsLocationsRepositoriesRulesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesRulesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesRulesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesRulesDeleteCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesRulesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesRulesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesRulesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.rules.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesRulesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesRulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a rule.
+//
+// - name: The name of the rule to retrieve.
+func (r *ProjectsLocationsRepositoriesRulesService) Get(name string) *ProjectsLocationsRepositoriesRulesGetCall {
+	c := &ProjectsLocationsRepositoriesRulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesRulesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesRulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRepositoriesRulesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesRulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesRulesGetCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesRulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesRulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesRulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.rules.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleDevtoolsArtifactregistryV1Rule.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesRulesGetCall) Do(opts ...googleapi.CallOption) (*GoogleDevtoolsArtifactregistryV1Rule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleDevtoolsArtifactregistryV1Rule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesRulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists rules.
+//
+//   - parent: The name of the parent repository whose rules will be listed. For
+//     example: `projects/p1/locations/us-central1/repositories/repo1`.
+func (r *ProjectsLocationsRepositoriesRulesService) List(parent string) *ProjectsLocationsRepositoriesRulesListCall {
+	c := &ProjectsLocationsRepositoriesRulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of rules
+// to return. Maximum page size is 1,000.
+func (c *ProjectsLocationsRepositoriesRulesListCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesRulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous list request, if any.
+func (c *ProjectsLocationsRepositoriesRulesListCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesRulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesRulesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesRulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRepositoriesRulesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesRulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesRulesListCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesRulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesRulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesRulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/rules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.rules.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListRulesResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRepositoriesRulesListCall) Do(opts ...googleapi.CallOption) (*ListRulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRepositoriesRulesListCall) Pages(ctx context.Context, f func(*ListRulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsRepositoriesRulesPatchCall struct {
+	s                                    *Service
+	name                                 string
+	googledevtoolsartifactregistryv1rule *GoogleDevtoolsArtifactregistryV1Rule
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Patch: Updates a rule.
+//
+//   - name: The name of the rule, for example:
+//     "projects/p1/locations/us-central1/repositories/repo1/rules/rule1".
+func (r *ProjectsLocationsRepositoriesRulesService) Patch(name string, googledevtoolsartifactregistryv1rule *GoogleDevtoolsArtifactregistryV1Rule) *ProjectsLocationsRepositoriesRulesPatchCall {
+	c := &ProjectsLocationsRepositoriesRulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googledevtoolsartifactregistryv1rule = googledevtoolsartifactregistryv1rule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The update mask applies
+// to the resource. For the `FieldMask` definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+func (c *ProjectsLocationsRepositoriesRulesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRepositoriesRulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesRulesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesRulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesRulesPatchCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesRulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesRulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesRulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googledevtoolsartifactregistryv1rule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.rules.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleDevtoolsArtifactregistryV1Rule.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesRulesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleDevtoolsArtifactregistryV1Rule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleDevtoolsArtifactregistryV1Rule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsRepositoriesYumArtifactsImportCall struct {

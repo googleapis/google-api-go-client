@@ -962,6 +962,9 @@ type PostgreSql struct {
 	// `IncompatibleSqlSchemaError` error detail. Succeed even if there are unknown
 	// tables and columns.
 	SchemaValidation string `json:"schemaValidation,omitempty"`
+	// Unlinked: No Postgres data source is linked. If set, don't allow `database`
+	// and `schema_validation` to be configured.
+	Unlinked bool `json:"unlinked,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudSql") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

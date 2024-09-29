@@ -506,6 +506,8 @@ type BackupContext struct {
 	BackupId int64 `json:"backupId,omitempty,string"`
 	// Kind: This is always `sql#backupContext`.
 	Kind string `json:"kind,omitempty"`
+	// Name: The name of the backup. Format: projects/{project}/backups/{backup}
+	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2656,18 +2658,28 @@ func (s InstancesReencryptRequest) MarshalJSON() ([]byte, error) {
 
 // InstancesRestoreBackupRequest: Database instance restore backup request.
 type InstancesRestoreBackupRequest struct {
+	// Backup: The name of the backup to restore from in following format:
+	// projects/{project-id}/backups/{backup-uid} Only one of
+	// restore_backup_context or backup can be passed to the input.
+	Backup string `json:"backup,omitempty"`
 	// RestoreBackupContext: Parameters required to perform the restore backup
 	// operation.
 	RestoreBackupContext *RestoreBackupContext `json:"restoreBackupContext,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RestoreBackupContext") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// RestoreInstanceSettings: Optional. Restore instance settings overrides the
+	// instance settings stored as part of the backup. Instance's major database
+	// version cannot be changed and the disk size can only be increased. This
+	// feature is only available for restores to new instances using the backup
+	// name.
+	RestoreInstanceSettings *DatabaseInstance `json:"restoreInstanceSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RestoreBackupContext") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3169,6 +3181,7 @@ type Operation struct {
 	//   "REENCRYPT" - Re-encrypts CMEK instances with latest key version.
 	//   "SWITCHOVER" - Switches the roles of the primary and replica pair. The
 	// target instance should be the replica.
+	//   "UPDATE_BACKUP" - Update a backup.
 	//   "ACQUIRE_SSRS_LEASE" - Acquire a lease for the setup of SQL Server
 	// Reporting Services (SSRS).
 	//   "RELEASE_SSRS_LEASE" - Release a lease for the setup of SQL Server
@@ -3334,6 +3347,8 @@ type OperationsListResponse struct {
 	// sets. Provide this value in a subsequent request to return the next page of
 	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Warnings: List of warnings that occurred while handling the request.
+	Warnings []*ApiWarning `json:"warnings,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -7015,6 +7030,35 @@ func (r *InstancesService) Delete(project string, instance string) *InstancesDel
 	return c
 }
 
+// EnableFinalBackup sets the optional parameter "enableFinalBackup": Flag to
+// opt-in for final backup. By default, it is turned off.
+func (c *InstancesDeleteCall) EnableFinalBackup(enableFinalBackup bool) *InstancesDeleteCall {
+	c.urlParams_.Set("enableFinalBackup", fmt.Sprint(enableFinalBackup))
+	return c
+}
+
+// FinalBackupDescription sets the optional parameter "finalBackupDescription":
+// The description of the final backup.
+func (c *InstancesDeleteCall) FinalBackupDescription(finalBackupDescription string) *InstancesDeleteCall {
+	c.urlParams_.Set("finalBackupDescription", finalBackupDescription)
+	return c
+}
+
+// FinalBackupExpiryTime sets the optional parameter "finalBackupExpiryTime":
+// Final Backup expiration time. Timestamp in UTC of when this resource is
+// considered expired.
+func (c *InstancesDeleteCall) FinalBackupExpiryTime(finalBackupExpiryTime string) *InstancesDeleteCall {
+	c.urlParams_.Set("finalBackupExpiryTime", finalBackupExpiryTime)
+	return c
+}
+
+// FinalBackupTtlDays sets the optional parameter "finalBackupTtlDays":
+// Retention period of the final backup.
+func (c *InstancesDeleteCall) FinalBackupTtlDays(finalBackupTtlDays int64) *InstancesDeleteCall {
+	c.urlParams_.Set("finalBackupTtlDays", fmt.Sprint(finalBackupTtlDays))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -9707,6 +9751,15 @@ type OperationsListCall struct {
 func (r *OperationsService) List(project string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter string that follows
+// the rules of EBNF grammar
+// (https://google.aip.dev/assets/misc/ebnf-filtering.txt). Cloud SQL provides
+// filters for status, operationType, and startTime.
+func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 

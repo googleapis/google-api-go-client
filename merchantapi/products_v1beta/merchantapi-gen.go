@@ -1040,7 +1040,10 @@ type Product struct {
 	// FeedLabel: Output only. The feed label for the product.
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// Name: The name of the product. Format:
-	// "{product.name=accounts/{account}/products/{product}}"
+	// "{product.name=accounts/{account}/products/{product}}" where the last
+	// section `product` consists of 4 parts:
+	// channel~content_language~feed_label~offer_id example for product name is
+	// "accounts/123/products/online~en~US~sku123"
 	Name string `json:"name,omitempty"`
 	// OfferId: Output only. Your unique identifier for the product. This is the
 	// same for the product input and processed product. Leading and trailing
@@ -1254,6 +1257,9 @@ type ProductInput struct {
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// Name: Identifier. The name of the product input. Format:
 	// "{productinput.name=accounts/{account}/productInputs/{productinput}}"
+	// where the last section `productinput` consists of 4 parts:
+	// channel~content_language~feed_label~offer_id example for product input name
+	// is "accounts/123/productInputs/online~en~US~sku123"
 	Name string `json:"name,omitempty"`
 	// OfferId: Required. Immutable. Your unique identifier for the product. This
 	// is the same for the product input and processed product. Leading and

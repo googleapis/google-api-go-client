@@ -2468,10 +2468,11 @@ func (s UserList) MarshalJSON() ([]byte, error) {
 type VideoContent struct {
 	// VideoMetadata: Output only. Video metadata.
 	VideoMetadata *VideoMetadata `json:"videoMetadata,omitempty"`
-	// VideoUrl: The URL to fetch a video ad.
+	// VideoUrl: The URL to fetch a video ad. The URL should return an XML response
+	// that conforms to the VAST 2.0, 3.0 or 4.x standard.
 	VideoUrl string `json:"videoUrl,omitempty"`
 	// VideoVastXml: The contents of a VAST document for a video ad. This document
-	// should conform to the VAST 2.0 or 3.0 standard.
+	// should conform to the VAST 2.0, 3.0, or 4.x standard.
 	VideoVastXml string `json:"videoVastXml,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "VideoMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or

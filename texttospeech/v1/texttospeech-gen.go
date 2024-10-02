@@ -225,6 +225,29 @@ type VoicesService struct {
 	s *Service
 }
 
+// AdvancedVoiceOptions: Used for advanced voice options.
+type AdvancedVoiceOptions struct {
+	// LowLatencyJourneySynthesis: Only for Jounrney voices. If false, the
+	// synthesis will be context aware and have higher latency.
+	LowLatencyJourneySynthesis bool `json:"lowLatencyJourneySynthesis,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LowLatencyJourneySynthesis")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LowLatencyJourneySynthesis") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdvancedVoiceOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod AdvancedVoiceOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AudioConfig: Description of audio data to be synthesized.
 type AudioConfig struct {
 	// AudioEncoding: Required. The format of the audio byte stream.
@@ -316,6 +339,64 @@ func (s *AudioConfig) UnmarshalJSON(data []byte) error {
 type CancelOperationRequest struct {
 }
 
+// CustomPronunciationParams: Pronunciation customization for a phrase.
+type CustomPronunciationParams struct {
+	// PhoneticEncoding: The phonetic encoding of the phrase.
+	//
+	// Possible values:
+	//   "PHONETIC_ENCODING_UNSPECIFIED" - Not specified.
+	//   "PHONETIC_ENCODING_IPA" - IPA. (e.g. apple -> ˈæpəl )
+	// https://en.wikipedia.org/wiki/International_Phonetic_Alphabet
+	//   "PHONETIC_ENCODING_X_SAMPA" - X-SAMPA (e.g. apple -> "{p@l" )
+	// https://en.wikipedia.org/wiki/X-SAMPA
+	PhoneticEncoding string `json:"phoneticEncoding,omitempty"`
+	// Phrase: The phrase to which the customization will be applied. The phrase
+	// can be multiple words (in the case of proper nouns etc), but should not span
+	// to a whole sentence.
+	Phrase string `json:"phrase,omitempty"`
+	// Pronunciation: The pronunciation of the phrase. This must be in the phonetic
+	// encoding specified above.
+	Pronunciation string `json:"pronunciation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PhoneticEncoding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PhoneticEncoding") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomPronunciationParams) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomPronunciationParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomPronunciations: A collection of pronunciation customizations.
+type CustomPronunciations struct {
+	// Pronunciations: The pronunciation customizations to be applied.
+	Pronunciations []*CustomPronunciationParams `json:"pronunciations,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Pronunciations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Pronunciations") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomPronunciations) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomPronunciations
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CustomVoiceParams: Description of the custom voice to be synthesized.
 type CustomVoiceParams struct {
 	// Model: Required. The name of the AutoML model that synthesizes the custom
@@ -360,6 +441,72 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GenerateVoiceCloningKeyRequest: Request message for the
+// `GenerateVoiceCloningKey` method.
+type GenerateVoiceCloningKeyRequest struct {
+	// ConsentScript: Required. The script used for the voice talent statement. The
+	// script will be provided to the caller through other channels. It must be
+	// returned unchanged in this field.
+	ConsentScript string `json:"consentScript,omitempty"`
+	// LanguageCode: Required. The language of the supplied audio as a BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. Example:
+	// "en-US". See Language Support
+	// (https://cloud.google.com/speech-to-text/docs/languages) for a list of the
+	// currently supported language codes.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// ReferenceAudio: Required. The training audio used to create voice clone.
+	// This is currently limited to LINEAR16 PCM WAV files mono audio with 24khz
+	// sample rate. This needs to be specified in [InputAudio.audio_config], other
+	// values will be explicitly rejected.
+	ReferenceAudio *InputAudio `json:"referenceAudio,omitempty"`
+	// VoiceTalentConsent: Required. The voice talent audio used to verify consent
+	// to voice clone.
+	VoiceTalentConsent *InputAudio `json:"voiceTalentConsent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConsentScript") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsentScript") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateVoiceCloningKeyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateVoiceCloningKeyRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateVoiceCloningKeyResponse: Response message for the
+// `GenerateVoiceCloningKey` method.
+type GenerateVoiceCloningKeyResponse struct {
+	// VoiceCloningKey: The voice clone key. Use it in the SynthesizeSpeechRequest
+	// by setting [voice.voice_clone.voice_cloning_key].
+	VoiceCloningKey string `json:"voiceCloningKey,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "VoiceCloningKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "VoiceCloningKey") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateVoiceCloningKeyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateVoiceCloningKeyResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata: Metadata for response
 // returned by the `SynthesizeLongAudio` method.
 type GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata struct {
@@ -400,6 +547,73 @@ func (s *GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata) UnmarshalJSON(dat
 	}
 	s.ProgressPercentage = float64(s1.ProgressPercentage)
 	return nil
+}
+
+// InputAudio: Holds audio content and config.
+type InputAudio struct {
+	// AudioConfig: Required. Provides information that specifies how to process
+	// content.
+	AudioConfig *InputAudioConfig `json:"audioConfig,omitempty"`
+	// Content: Required. The audio data bytes encoded as specified in
+	// `InputAudioConfig`. Note: as with all bytes fields, proto buffers use a pure
+	// binary representation, whereas JSON representations use base64. Audio
+	// samples should be between 5-25 seconds in length.
+	Content string `json:"content,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AudioConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AudioConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InputAudio) MarshalJSON() ([]byte, error) {
+	type NoMethod InputAudio
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InputAudioConfig: Description of inputted audio data.
+type InputAudioConfig struct {
+	// AudioEncoding: Required. The format of the audio byte stream.
+	//
+	// Possible values:
+	//   "AUDIO_ENCODING_UNSPECIFIED" - Not specified. Will return result
+	// google.rpc.Code.INVALID_ARGUMENT.
+	//   "LINEAR16" - Uncompressed 16-bit signed little-endian samples (Linear
+	// PCM). Audio content returned as LINEAR16 also contains a WAV header.
+	//   "MP3" - MP3 audio at 32kbps.
+	//   "OGG_OPUS" - Opus encoded audio wrapped in an ogg container. The result
+	// will be a file which can be played natively on Android, and in browsers (at
+	// least Chrome and Firefox). The quality of the encoding is considerably
+	// higher than MP3 while using approximately the same bitrate.
+	//   "MULAW" - 8-bit samples that compand 14-bit audio samples using G.711
+	// PCMU/mu-law. Audio content returned as MULAW also contains a WAV header.
+	//   "ALAW" - 8-bit samples that compand 14-bit audio samples using G.711
+	// PCMU/A-law. Audio content returned as ALAW also contains a WAV header.
+	AudioEncoding string `json:"audioEncoding,omitempty"`
+	// SampleRateHertz: Required. The sample rate (in hertz) for this audio.
+	SampleRateHertz int64 `json:"sampleRateHertz,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AudioEncoding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AudioEncoding") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InputAudioConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod InputAudioConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListOperationsResponse: The response message for Operations.ListOperations.
@@ -541,6 +755,15 @@ func (s Status) MarshalJSON() ([]byte, error) {
 // `ssml` must be supplied. Supplying both or neither returns
 // google.rpc.Code.INVALID_ARGUMENT. The input size is limited to 5000 bytes.
 type SynthesisInput struct {
+	// CustomPronunciations: Optional. The pronunciation customizations to be
+	// applied to the input. If this is set, the input will be synthesized using
+	// the given pronunciation customizations. The initial support will be for
+	// EFIGS (English, French, Italian, German, Spanish) languages, as provided in
+	// VoiceSelectionParams. Journey and Instant Clone voices are not supported
+	// yet. In order to customize the pronunciation of a phrase, there must be an
+	// exact match of the phrase in the input types. If using SSML, the phrase must
+	// not be inside a phoneme tag (entirely or partially).
+	CustomPronunciations *CustomPronunciations `json:"customPronunciations,omitempty"`
 	// Ssml: The SSML document to be synthesized. The SSML document must be valid
 	// and well-formed. Otherwise the RPC will fail and return
 	// google.rpc.Code.INVALID_ARGUMENT. For more information, see SSML
@@ -548,15 +771,15 @@ type SynthesisInput struct {
 	Ssml string `json:"ssml,omitempty"`
 	// Text: The raw text to be synthesized.
 	Text string `json:"text,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Ssml") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CustomPronunciations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Ssml") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "CustomPronunciations") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -643,6 +866,8 @@ func (s SynthesizeLongAudioRequest) MarshalJSON() ([]byte, error) {
 // SynthesizeSpeechRequest: The top-level message sent by the client for the
 // `SynthesizeSpeech` method.
 type SynthesizeSpeechRequest struct {
+	// AdvancedVoiceOptions: Adnanced voice options.
+	AdvancedVoiceOptions *AdvancedVoiceOptions `json:"advancedVoiceOptions,omitempty"`
 	// AudioConfig: Required. The configuration of the synthesized audio.
 	AudioConfig *AudioConfig `json:"audioConfig,omitempty"`
 	// Input: Required. The Synthesizer requires either plain text or SSML as
@@ -650,15 +875,15 @@ type SynthesizeSpeechRequest struct {
 	Input *SynthesisInput `json:"input,omitempty"`
 	// Voice: Required. The desired voice of the synthesized audio.
 	Voice *VoiceSelectionParams `json:"voice,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AudioConfig") to
+	// ForceSendFields is a list of field names (e.g. "AdvancedVoiceOptions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AudioConfig") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdvancedVoiceOptions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -738,6 +963,28 @@ func (s Voice) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// VoiceCloneParams: The configuration of Voice Clone feature.
+type VoiceCloneParams struct {
+	// VoiceCloningKey: Required. Created by GenerateVoiceCloningKey.
+	VoiceCloningKey string `json:"voiceCloningKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "VoiceCloningKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "VoiceCloningKey") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VoiceCloneParams) MarshalJSON() ([]byte, error) {
+	type NoMethod VoiceCloneParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // VoiceSelectionParams: Description of which voice to use for a synthesis
 // request.
 type VoiceSelectionParams struct {
@@ -777,6 +1024,10 @@ type VoiceSelectionParams struct {
 	//   "FEMALE" - A female voice.
 	//   "NEUTRAL" - A gender-neutral voice. This voice is not yet supported.
 	SsmlGender string `json:"ssmlGender,omitempty"`
+	// VoiceClone: Optional. The configuration for a voice clone. If
+	// [VoiceCloneParams.voice_clone_key] is set, the service will choose the voice
+	// clone matching the specified configuration.
+	VoiceClone *VoiceCloneParams `json:"voiceClone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomVoice") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1447,6 +1698,104 @@ func (c *TextSynthesizeCall) Do(opts ...googleapi.CallOption) (*SynthesizeSpeech
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &SynthesizeSpeechResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type VoicesGenerateVoiceCloningKeyCall struct {
+	s                              *Service
+	generatevoicecloningkeyrequest *GenerateVoiceCloningKeyRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// GenerateVoiceCloningKey: Generates voice clone key given a short voice
+// prompt. This method validates the voice prompts with a series of checks
+// against the voice talent statement to verify the voice clone is safe to
+// generate.
+func (r *VoicesService) GenerateVoiceCloningKey(generatevoicecloningkeyrequest *GenerateVoiceCloningKeyRequest) *VoicesGenerateVoiceCloningKeyCall {
+	c := &VoicesGenerateVoiceCloningKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.generatevoicecloningkeyrequest = generatevoicecloningkeyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *VoicesGenerateVoiceCloningKeyCall) Fields(s ...googleapi.Field) *VoicesGenerateVoiceCloningKeyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *VoicesGenerateVoiceCloningKeyCall) Context(ctx context.Context) *VoicesGenerateVoiceCloningKeyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *VoicesGenerateVoiceCloningKeyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *VoicesGenerateVoiceCloningKeyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.generatevoicecloningkeyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/voices:generateVoiceCloningKey")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "texttospeech.voices.generateVoiceCloningKey" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateVoiceCloningKeyResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *VoicesGenerateVoiceCloningKeyCall) Do(opts ...googleapi.CallOption) (*GenerateVoiceCloningKeyResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateVoiceCloningKeyResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

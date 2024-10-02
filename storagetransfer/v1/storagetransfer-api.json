@@ -754,7 +754,7 @@
       "properties": {
         "azureCredentials": {
           "$ref": "AzureCredentials",
-          "description": "Required. Input only. Credentials used to authenticate API requests to Azure. For information on our data retention policy for user credentials, see [User credentials](/storage-transfer/docs/data-retention#user-credentials)."
+          "description": "Optional. Input only. Credentials used to authenticate API requests to Azure. For information on our data retention policy for user credentials, see [User credentials](/storage-transfer/docs/data-retention#user-credentials)."
         },
         "container": {
           "description": "Required. The container to transfer from the Azure Storage account.",
@@ -763,6 +763,10 @@
         "credentialsSecret": {
           "description": "Optional. The Resource name of a secret in Secret Manager. The Azure SAS token must be stored in Secret Manager in JSON format: { \"sas_token\" : \"SAS_TOKEN\" } GoogleServiceAccount must be granted `roles/secretmanager.secretAccessor` for the resource. See [Configure access to a source: Microsoft Azure Blob Storage] (https://cloud.google.com/storage-transfer/docs/source-microsoft-azure#secret_manager) for more information. If `credentials_secret` is specified, do not specify azure_credentials. Format: `projects/{project_number}/secrets/{secret_name}`",
           "type": "string"
+        },
+        "federatedIdentifyConfig": {
+          "$ref": "FederatedIdentifyConfig",
+          "description": "Optional. Input only. Azure Workload identity federationton config. For more info check [Authenticate Using Federated Identity] (https://cloud.google.com/storage-transfer/docs/source-microsoft-azure#option_3_authenticate_using_federated_identity)"
         },
         "path": {
           "description": "Root path to transfer objects. Must be an empty string or full path name that ends with a '/'. This field is treated as an object prefix. As such, it should generally not begin with a '/'.",
@@ -786,6 +790,22 @@
       },
       "type": "object"
     },
+    "FederatedIdentifyConfig": {
+      "description": "Azure Workload identity federationton config. [Authenticate Using Federated Identity] (https://cloud.google.com/storage-transfer/docs/source-microsoft-azure#option_3_authenticate_using_federated_identity)",
+      "id": "FederatedIdentifyConfig",
+      "properties": {
+        "client_id": {
+          "description": "Required. Azure Workfoce Identity Application (client) ID , For more information see [Azure Workload identity federation](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation).",
+          "type": "string"
+        },
+        "tenant_id": {
+          "description": "Required. Azure Workfoce Identity Application (tenant) ID. For more informatio see [Azure Workload identity federation](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    
     "BandwidthLimit": {
       "description": "Specifies a bandwidth limit for an agent pool.",
       "id": "BandwidthLimit",

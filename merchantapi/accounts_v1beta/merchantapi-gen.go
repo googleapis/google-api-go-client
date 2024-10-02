@@ -3182,12 +3182,23 @@ type AccountsDeleteCall struct {
 
 // Delete: Deletes the specified account regardless of its type: standalone,
 // MCA or sub-account. Deleting an MCA leads to the deletion of all of its
-// sub-accounts. Executing this method requires admin access.
+// sub-accounts. Executing this method requires admin access. The deletion
+// succeeds only if the account does not provide services to any other account
+// and has no processed offers. You can use the `force` parameter to override
+// this.
 //
 // - name: The name of the account to delete. Format: `accounts/{account}`.
 func (r *AccountsService) Delete(name string) *AccountsDeleteCall {
 	c := &AccountsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": If set to `true`, the account is
+// deleted even if it provides services to other accounts or has processed
+// offers.
+func (c *AccountsDeleteCall) Force(force bool) *AccountsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
 }
 
@@ -3390,7 +3401,8 @@ type AccountsListCall struct {
 // constraints of the request such as page size or filters. This is not just
 // listing the sub-accounts of an MCA, but all accounts the calling user has
 // access to including other MCAs, linked accounts, standalone accounts and so
-// on.
+// on. If no filter is provided, then it returns accounts the user is directly
+// added to.
 func (r *AccountsService) List() *AccountsListCall {
 	c := &AccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c

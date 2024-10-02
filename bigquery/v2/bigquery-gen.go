@@ -6051,6 +6051,7 @@ type MlStatistics struct {
 	//   "ONNX" - An imported ONNX model.
 	//   "TRANSFORM_ONLY" - Model to capture the columns and logic in the TRANSFORM
 	// clause along with statistics useful for ML analytic functions.
+	//   "CONTRIBUTION_ANALYSIS" - The contribution analysis model.
 	ModelType string `json:"modelType,omitempty"`
 	// TrainingType: Output only. Training type of the job.
 	//
@@ -6167,6 +6168,7 @@ type Model struct {
 	//   "ONNX" - An imported ONNX model.
 	//   "TRANSFORM_ONLY" - Model to capture the columns and logic in the TRANSFORM
 	// clause along with statistics useful for ML analytic functions.
+	//   "CONTRIBUTION_ANALYSIS" - The contribution analysis model.
 	ModelType string `json:"modelType,omitempty"`
 	// OptimalTrialIds: Output only. For single-objective hyperparameter tuning
 	// (https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-overview)
@@ -9576,6 +9578,11 @@ type TrainingOptions struct {
 	// ColsampleBytree: Subsample ratio of columns when constructing each tree for
 	// boosted tree models.
 	ColsampleBytree float64 `json:"colsampleBytree,omitempty"`
+	// ContributionMetric: The contribution metric. Applies to contribution
+	// analysis models. Allowed formats supported are for summable and summable
+	// ratio contribution metrics. These include expressions such as "SUM(x)" or
+	// "SUM(x)/SUM(y)", where x and y are column names from the base table.
+	ContributionMetric string `json:"contributionMetric,omitempty"`
 	// DartNormalizeType: Type of normalization algorithm for boosted tree models
 	// using dart booster.
 	//
@@ -9625,6 +9632,9 @@ type TrainingOptions struct {
 	// DecomposeTimeSeries: If true, perform decompose time series and save the
 	// results.
 	DecomposeTimeSeries bool `json:"decomposeTimeSeries,omitempty"`
+	// DimensionIdColumns: Optional. Names of the columns to slice on. Applies to
+	// contribution analysis models.
+	DimensionIdColumns []string `json:"dimensionIdColumns,omitempty"`
 	// DistanceType: Distance type for clustering models.
 	//
 	// Possible values:
@@ -9855,6 +9865,9 @@ type TrainingOptions struct {
 	// IntegratedGradientsNumSteps: Number of integral steps for the integrated
 	// gradients explain method.
 	IntegratedGradientsNumSteps int64 `json:"integratedGradientsNumSteps,omitempty,string"`
+	// IsTestColumn: Name of the column used to determine the rows corresponding to
+	// control and test. Applies to contribution analysis models.
+	IsTestColumn string `json:"isTestColumn,omitempty"`
 	// ItemColumn: Item column specified for matrix factorization models.
 	ItemColumn string `json:"itemColumn,omitempty"`
 	// KmeansInitializationColumn: The column used to provide the initial centroids
@@ -9910,6 +9923,9 @@ type TrainingOptions struct {
 	MaxTimeSeriesLength int64 `json:"maxTimeSeriesLength,omitempty,string"`
 	// MaxTreeDepth: Maximum depth of a tree for boosted tree models.
 	MaxTreeDepth int64 `json:"maxTreeDepth,omitempty,string"`
+	// MinAprioriSupport: The apriori support minimum. Applies to contribution
+	// analysis models.
+	MinAprioriSupport float64 `json:"minAprioriSupport,omitempty"`
 	// MinRelativeProgress: When early_stop is true, stops training when accuracy
 	// improvement is less than 'min_relative_progress'. Used only for iterative
 	// training algorithms.
@@ -10073,6 +10089,7 @@ func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 		L1Regularization          gensupport.JSONFloat64 `json:"l1Regularization"`
 		L2Regularization          gensupport.JSONFloat64 `json:"l2Regularization"`
 		LearnRate                 gensupport.JSONFloat64 `json:"learnRate"`
+		MinAprioriSupport         gensupport.JSONFloat64 `json:"minAprioriSupport"`
 		MinRelativeProgress       gensupport.JSONFloat64 `json:"minRelativeProgress"`
 		MinSplitLoss              gensupport.JSONFloat64 `json:"minSplitLoss"`
 		PcaExplainedVarianceRatio gensupport.JSONFloat64 `json:"pcaExplainedVarianceRatio"`
@@ -10096,6 +10113,7 @@ func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 	s.L1Regularization = float64(s1.L1Regularization)
 	s.L2Regularization = float64(s1.L2Regularization)
 	s.LearnRate = float64(s1.LearnRate)
+	s.MinAprioriSupport = float64(s1.MinAprioriSupport)
 	s.MinRelativeProgress = float64(s1.MinRelativeProgress)
 	s.MinSplitLoss = float64(s1.MinSplitLoss)
 	s.PcaExplainedVarianceRatio = float64(s1.PcaExplainedVarianceRatio)

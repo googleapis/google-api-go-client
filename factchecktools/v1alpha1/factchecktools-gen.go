@@ -34,11 +34,6 @@
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate.
-// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
-//
-//	factchecktoolsService, err := factchecktools.NewService(ctx, option.WithScopes(factchecktools.UserinfoEmailScope))
-//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -102,16 +97,12 @@ const mtlsBasePath = "https://factchecktools.mtls.googleapis.com/"
 const (
 	// Read, create, update, and delete your ClaimReview data.
 	FactchecktoolsScope = "https://www.googleapis.com/auth/factchecktools"
-
-	// See your primary Google Account email address
-	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/factchecktools",
-		"https://www.googleapis.com/auth/userinfo.email",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)

@@ -384,7 +384,7 @@ func (s AwsS3Data) MarshalJSON() ([]byte, error) {
 // Storage blob's key name
 // (https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata#blob-names).
 type AzureBlobStorageData struct {
-	// AzureCredentials: Required. Input only. Credentials used to authenticate API
+	// AzureCredentials: Optional. Input only. Credentials used to authenticate API
 	// requests to Azure. For information on our data retention policy for user
 	// credentials, see User credentials
 	// (/storage-transfer/docs/data-retention#user-credentials).
@@ -401,6 +401,11 @@ type AzureBlobStorageData struct {
 	// for more information. If `credentials_secret` is specified, do not specify
 	// azure_credentials. Format: `projects/{project_number}/secrets/{secret_name}`
 	CredentialsSecret string `json:"credentialsSecret,omitempty"`
+	// FederatedIdentifyConfig: Optional. Input only. Authenticate Using Federated Identity Config used to authenticate API
+	// requests to Azure. For information on our data retention policy for user
+	// Federated Identity Config, see Authenticate_using_federated_identity
+	// (https://cloud.google.com/storage-transfer/docs/source-microsoft-azure#option_3_authenticate_using_federated_identity).
+	FederatedIdentifyConfig *FederatedIdentifyConfig `json:"federatedIdentifyConfig,omitempty"`
 	// Path: Root path to transfer objects. Must be an empty string or full path
 	// name that ends with a '/'. This field is treated as an object prefix. As
 	// such, it should generally not begin with a '/'.
@@ -449,6 +454,37 @@ type AzureCredentials struct {
 
 func (s AzureCredentials) MarshalJSON() ([]byte, error) {
 	type NoMethod AzureCredentials
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FederatedIdentifyConfig: Optional. Input only. Authenticate Using Federated Identity Config used to authenticate API
+// requests to Azure. For information on our data retention policy for user
+// Federated Identity Config, see Authenticate_using_federated_identity
+// (https://cloud.google.com/storage-transfer/docs/source-microsoft-azure#option_3_authenticate_using_federated_identity).
+type FederatedIdentifyConfig struct {
+	// ClientId: Required. Azure Workload Identity Client ID
+	// information about Azure Workload Identity, see
+	// (https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation).
+	ClientId string `json:"client_id,omitempty"`
+	// TenantId: Required. Azure Workload Identity Tenant ID
+	// information about Azure Workload Identity, see
+	// (https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation).
+	TenantId string `json:"tenant_id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SasToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SasToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FederatedIdentifyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod FederatedIdentifyConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

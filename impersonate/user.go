@@ -34,6 +34,7 @@ func user(ctx context.Context, c CredentialsConfig, client *http.Client, lifetim
 	u.scopes = make([]string, len(c.Scopes))
 	copy(u.scopes, c.Scopes)
 	if isStaticToken {
+		fmt.Println("google-api-go-client user.go. Calling Token()")
 		tok, err := u.Token()
 		if err != nil {
 			return nil, err

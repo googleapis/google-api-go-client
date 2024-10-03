@@ -157,6 +157,7 @@ func tokenSourceFromBytes(ctx context.Context, data []byte, audience string, ds 
 		cfg.UseIDToken = true
 
 		ts := cfg.TokenSource(ctx)
+		fmt.Println("google-api-go-client idtoken.go. Calling Token()")
 		tok, err := ts.Token()
 		if err != nil {
 			return nil, err

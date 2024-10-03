@@ -118,6 +118,7 @@ func CredentialsTokenSource(ctx context.Context, config CredentialsConfig, opts 
 	copy(its.scopes, config.Scopes)
 
 	if isStaticToken {
+		fmt.Println("google-api-go-client impersonate.go. Calling Token()")
 		tok, err := its.Token()
 		if err != nil {
 			return nil, err

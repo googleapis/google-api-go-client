@@ -24,6 +24,7 @@ func computeTokenSource(audience string, ds *internal.DialSettings) (oauth2.Toke
 	ts := computeIDTokenSource{
 		audience: audience,
 	}
+	fmt.Println("google-api-go-client compute.go. Calling Token()")
 	tok, err := ts.Token()
 	if err != nil {
 		return nil, err

@@ -29,6 +29,7 @@ const quotaProjectEnvVar = "GOOGLE_CLOUD_QUOTA_PROJECT"
 // Creds returns credential information obtained from DialSettings, or if none, then
 // it returns default credential information.
 func Creds(ctx context.Context, ds *DialSettings) (*google.Credentials, error) {
+	fmt.Println("Entering Creds")
 	if ds.IsNewAuthLibraryEnabled() {
 		return credsNewAuth(ctx, ds)
 	}

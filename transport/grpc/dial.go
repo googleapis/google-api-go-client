@@ -131,7 +131,7 @@ func prefixTime(msg string) {
 //
 // This API is subject to change as we further refine requirements. It will go away if gRPC stubs accept an interface instead of the concrete ClientConn type. See https://github.com/grpc/grpc-go/issues/1287.
 func DialPool(ctx context.Context, opts ...option.ClientOption) (ConnPool, error) {
-	prefixTime(fmt.Sprintf("In Dialpool\n"))
+	prefixTime(fmt.Sprintf("In DialPool\n"))
 	o, err := processAndValidateOpts(opts)
 	if err != nil {
 		return nil, err
@@ -142,11 +142,12 @@ func DialPool(ctx context.Context, opts ...option.ClientOption) (ConnPool, error
 	}
 
 	if o.IsNewAuthLibraryEnabled() {
-		prefixTime(fmt.Sprintf("o.IsNewAuthLibraryEnabled\n"))
+		prefixTime(fmt.Sprintf("o.IsNewAuthLibraryEnabled is true\n"))
 
 		if o.GRPCConn != nil {
 			return &singleConnPool{o.GRPCConn}, nil
 		}
+		prefixTime(fmt.Sprintf("Calling dialPoolNewAuth\n"))
 		pool, err := dialPoolNewAuth(ctx, true, o.GRPCConnPoolSize, o)
 		if err != nil {
 			return nil, err
@@ -187,6 +188,7 @@ func DialPool(ctx context.Context, opts ...option.ClientOption) (ConnPool, error
 
 // dialPoolNewAuth is an adapter to call new auth library.
 func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *internal.DialSettings) (grpctransport.GRPCClientConnPool, error) {
+	prefixTime(fmt.Sprintf("\tIn dialPoolNewAuth\n"))
 	// honor options if set
 	var creds *auth.Credentials
 	if ds.InternalCredentials != nil {
@@ -236,7 +238,7 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 		defaultEndpointTemplate = ds.DefaultEndpoint
 	}
 
-	prefixTime(fmt.Sprintf("Before dialContextNewAuth\n"))
+	prefixTime(fmt.Sprintf("\tCalling dialContextNewAuth\n"))
 	pool, err := dialContextNewAuth(ctx, secure, &grpctransport.Options{
 		DisableTelemetry:      ds.TelemetryDisabled,
 		DisableAuthentication: ds.NoAuth,
@@ -398,6 +400,7 @@ type grpcTokenSource struct {
 // GetRequestMetadata gets the request metadata as a map from a grpcTokenSource.
 func (ts grpcTokenSource) GetRequestMetadata(ctx context.Context, uri ...string) (
 	map[string]string, error) {
+	fmt.Println("google-api-go-client dial.go. Calling ts.TokenSource.GetRequestMetadata")
 	metadata, err := ts.TokenSource.GetRequestMetadata(ctx, uri...)
 	if err != nil {
 		return nil, err
@@ -468,6 +471,7 @@ func isTokenSourceDirectPathCompatible(ts oauth2.TokenSource, o *internal.DialSe
 	if ts == nil {
 		return false
 	}
+	fmt.Println("google-api-go-client dial.go. Calling Token()")
 	tok, err := ts.Token()
 	if err != nil {
 		return false

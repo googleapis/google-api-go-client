@@ -2,6 +2,12 @@ module google.golang.org/api
 
 go 1.21
 
+replace cloud.google.com/go => /mnt/disks/nvme0n2/work/google-cloud-go
+
+replace cloud.google.com/go/auth => /mnt/disks/nvme0n2/work/google-cloud-go/auth
+
+replace cloud.google.com/go/auth/oauth2adapt => /mnt/disks/nvme0n2/work/google-cloud-go/auth/oauth2adapt
+
 require (
 	cloud.google.com/go v0.115.1
 	cloud.google.com/go/auth v0.9.5

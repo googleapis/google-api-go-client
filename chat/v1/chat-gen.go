@@ -4344,6 +4344,70 @@ func (s OpenLink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PermissionSetting: Represents a space permission setting.
+type PermissionSetting struct {
+	// ManagersAllowed: Whether spaces managers have this permission.
+	ManagersAllowed bool `json:"managersAllowed,omitempty"`
+	// MembersAllowed: Whether non-manager members have this permission.
+	MembersAllowed bool `json:"membersAllowed,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ManagersAllowed") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ManagersAllowed") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PermissionSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod PermissionSetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PermissionSettings: Permission settings
+// (https://support.google.com/chat/answer/13340792) for a named space. To set
+// permission settings when creating a space, specify the
+// `PredefinedPermissionSettings` field in your request.
+type PermissionSettings struct {
+	// ManageApps: Setting for managing apps in a space.
+	ManageApps *PermissionSetting `json:"manageApps,omitempty"`
+	// ManageMembersAndGroups: Setting for managing members and groups in a space.
+	ManageMembersAndGroups *PermissionSetting `json:"manageMembersAndGroups,omitempty"`
+	// ManageWebhooks: Setting for managing webhooks in a space.
+	ManageWebhooks *PermissionSetting `json:"manageWebhooks,omitempty"`
+	// ModifySpaceDetails: Setting for updating space name, avatar, description and
+	// guidelines.
+	ModifySpaceDetails *PermissionSetting `json:"modifySpaceDetails,omitempty"`
+	// PostMessages: Output only. Setting for posting messages in a space.
+	PostMessages *PermissionSetting `json:"postMessages,omitempty"`
+	// ReplyMessages: Setting for replying to messages in a space.
+	ReplyMessages *PermissionSetting `json:"replyMessages,omitempty"`
+	// ToggleHistory: Setting for toggling space history on and off.
+	ToggleHistory *PermissionSetting `json:"toggleHistory,omitempty"`
+	// UseAtMentionAll: Setting for using @all in a space.
+	UseAtMentionAll *PermissionSetting `json:"useAtMentionAll,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ManageApps") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ManageApps") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PermissionSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod PermissionSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // QuotedMessageMetadata: Information about a quoted message.
 type QuotedMessageMetadata struct {
 	// LastUpdateTime: Output only. The timestamp when the quoted message was
@@ -4784,6 +4848,22 @@ type Space struct {
 	// `https://mail.google.com/mail/u/0/#chat/space/AAAAAAAAA`, the space ID is
 	// `AAAAAAAAA`.
 	Name string `json:"name,omitempty"`
+	// PermissionSettings: Optional. Exact permission settings which can be set to
+	// update the space. Input for updating a space. Otherwise, output only. For
+	// space creation, use `predefined_permission_settings` instead.
+	PermissionSettings *PermissionSettings `json:"permissionSettings,omitempty"`
+	// PredefinedPermissionSettings: Optional. Input only. Space permission
+	// settings. Input for creating a space, a collaboration space is created if
+	// this field is not set. After you create the space, settings are populated in
+	// the `PermissionSettings` field.
+	//
+	// Possible values:
+	//   "PREDEFINED_PERMISSION_SETTINGS_UNSPECIFIED" - Unspecified. Don't use.
+	//   "COLLABORATION_SPACE" - Setting to make the space a collaboration space
+	// where all members can post messages.
+	//   "ANNOUNCEMENT_SPACE" - Setting to make the space an announcement space
+	// where only space managers can post messages.
+	PredefinedPermissionSettings string `json:"predefinedPermissionSettings,omitempty"`
 	// SingleUserBotDm: Optional. Whether the space is a DM between a Chat app and
 	// a single human.
 	SingleUserBotDm bool `json:"singleUserBotDm,omitempty"`
@@ -6611,40 +6691,10 @@ func (r *SpacesService) Patch(name string, space *Space) *SpacesPatchCall {
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The updated
-// field paths, comma separated if there are multiple. You can update the
-// following fields for a space: - `space_details` - `display_name`: Only
-// supports updating the display name for spaces where `spaceType` field is
-// `SPACE`. If you receive the error message `ALREADY_EXISTS`, try a different
-// value. An existing space within the Google Workspace organization might
-// already use this display name. - `space_type`: Only supports changing a
-// `GROUP_CHAT` space type to `SPACE`. Include `display_name` together with
-// `space_type` in the update mask and ensure that the specified space has a
-// non-empty display name and the `SPACE` space type. Including the
-// `space_type` mask and the `SPACE` type in the specified space when updating
-// the display name is optional if the existing space already has the `SPACE`
-// type. Trying to update the space type in other ways results in an invalid
-// argument error. `space_type` is not supported with admin access. -
-// `space_history_state`: Updates space history settings
-// (https://support.google.com/chat/answer/7664687) by turning history on or
-// off for the space. Only supported if history settings are enabled for the
-// Google Workspace organization. To update the space history state, you must
-// omit all other field masks in your request. `space_history_state` is not
-// supported with admin access. - `access_settings.audience`: Updates the
-// access setting (https://support.google.com/chat/answer/11971020) of who can
-// discover the space, join the space, and preview the messages in named space
-// where `spaceType` field is `SPACE`. If the existing space has a target
-// audience, you can remove the audience and restrict space access by omitting
-// a value for this field mask. To update access settings for a space, the
-// authenticating user must be a space manager and omit all other field masks
-// in your request. You can't update this field if the space is in import mode
-// (https://developers.google.com/workspace/chat/import-data-overview). To
-// learn more, see Make a space discoverable to specific users
-// (https://developers.google.com/workspace/chat/space-target-audience).
-// `access_settings.audience` is not supported with admin access. - Developer
-// Preview: Supports changing the permission settings
-// (https://support.google.com/chat/answer/13340792) of a space, supported
-// field paths include: `permission_settings.manage_members_and_groups`,
+// UpdateMask sets the optional parameter "updateMask": - Supports changing the
+// permission settings (https://support.google.com/chat/answer/13340792) of a
+// space, supported field paths include:
+// `permission_settings.manage_members_and_groups`,
 // `permission_settings.modify_space_details`,
 // `permission_settings.toggle_history`,
 // `permission_settings.use_at_mention_all`, `permission_settings.manage_apps`,

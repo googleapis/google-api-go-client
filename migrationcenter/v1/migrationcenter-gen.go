@@ -2787,7 +2787,8 @@ type MachineArchitectureDetails struct {
 	CpuName string `json:"cpuName,omitempty"`
 	// CpuSocketCount: Number of processor sockets allocated to the machine.
 	CpuSocketCount int64 `json:"cpuSocketCount,omitempty"`
-	// CpuThreadCount: Number of CPU threads allocated to the machine.
+	// CpuThreadCount: Deprecated: use MachineDetails.core_count instead. Number of
+	// CPU threads allocated to the machine.
 	CpuThreadCount int64 `json:"cpuThreadCount,omitempty"`
 	// FirmwareType: Firmware type.
 	//
@@ -3805,7 +3806,8 @@ func (s ReportSummary) MarshalJSON() ([]byte, error) {
 // ReportSummaryAssetAggregateStats: Aggregate statistics for a collection of
 // assets.
 type ReportSummaryAssetAggregateStats struct {
-	// CoreCountHistogram: Histogram showing a distribution of CPU core counts.
+	// CoreCountHistogram: Histogram showing a distribution of logical CPU core
+	// counts.
 	CoreCountHistogram *ReportSummaryHistogramChartData `json:"coreCountHistogram,omitempty"`
 	// MemoryBytesHistogram: Histogram showing a distribution of memory sizes.
 	MemoryBytesHistogram *ReportSummaryHistogramChartData `json:"memoryBytesHistogram,omitempty"`

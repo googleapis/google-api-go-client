@@ -459,7 +459,7 @@
               "type": "string"
             },
             "updateMask": {
-              "description": "Required. The updated field paths, comma separated if there are multiple. You can update the following fields for a space: - `space_details` - `display_name`: Only supports updating the display name for spaces where `spaceType` field is `SPACE`. If you receive the error message `ALREADY_EXISTS`, try a different value. An existing space within the Google Workspace organization might already use this display name. - `space_type`: Only supports changing a `GROUP_CHAT` space type to `SPACE`. Include `display_name` together with `space_type` in the update mask and ensure that the specified space has a non-empty display name and the `SPACE` space type. Including the `space_type` mask and the `SPACE` type in the specified space when updating the display name is optional if the existing space already has the `SPACE` type. Trying to update the space type in other ways results in an invalid argument error. `space_type` is not supported with admin access. - `space_history_state`: Updates [space history settings](https://support.google.com/chat/answer/7664687) by turning history on or off for the space. Only supported if history settings are enabled for the Google Workspace organization. To update the space history state, you must omit all other field masks in your request. `space_history_state` is not supported with admin access. - `access_settings.audience`: Updates the [access setting](https://support.google.com/chat/answer/11971020) of who can discover the space, join the space, and preview the messages in named space where `spaceType` field is `SPACE`. If the existing space has a target audience, you can remove the audience and restrict space access by omitting a value for this field mask. To update access settings for a space, the authenticating user must be a space manager and omit all other field masks in your request. You can't update this field if the space is in [import mode](https://developers.google.com/workspace/chat/import-data-overview). To learn more, see [Make a space discoverable to specific users](https://developers.google.com/workspace/chat/space-target-audience). `access_settings.audience` is not supported with admin access. - Developer Preview: Supports changing the [permission settings](https://support.google.com/chat/answer/13340792) of a space, supported field paths include: `permission_settings.manage_members_and_groups`, `permission_settings.modify_space_details`, `permission_settings.toggle_history`, `permission_settings.use_at_mention_all`, `permission_settings.manage_apps`, `permission_settings.manage_webhooks`, `permission_settings.reply_messages` (Warning: mutually exclusive with all other non-permission settings field paths). `permission_settings` is not supported with admin access.",
+              "description": "- Supports changing the [permission settings](https://support.google.com/chat/answer/13340792) of a space, supported field paths include: `permission_settings.manage_members_and_groups`, `permission_settings.modify_space_details`, `permission_settings.toggle_history`, `permission_settings.use_at_mention_all`, `permission_settings.manage_apps`, `permission_settings.manage_webhooks`, `permission_settings.reply_messages` (Warning: mutually exclusive with all other non-permission settings field paths). `permission_settings` is not supported with admin access.",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -1344,7 +1344,7 @@
       }
     }
   },
-  "revision": "20240919",
+  "revision": "20240926",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessSettings": {
@@ -3993,6 +3993,61 @@
       },
       "type": "object"
     },
+    "PermissionSetting": {
+      "description": "Represents a space permission setting.",
+      "id": "PermissionSetting",
+      "properties": {
+        "managersAllowed": {
+          "description": "Whether spaces managers have this permission.",
+          "type": "boolean"
+        },
+        "membersAllowed": {
+          "description": "Whether non-manager members have this permission.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "PermissionSettings": {
+      "description": "[Permission settings](https://support.google.com/chat/answer/13340792) for a named space. To set permission settings when creating a space, specify the `PredefinedPermissionSettings` field in your request.",
+      "id": "PermissionSettings",
+      "properties": {
+        "manageApps": {
+          "$ref": "PermissionSetting",
+          "description": "Setting for managing apps in a space."
+        },
+        "manageMembersAndGroups": {
+          "$ref": "PermissionSetting",
+          "description": "Setting for managing members and groups in a space."
+        },
+        "manageWebhooks": {
+          "$ref": "PermissionSetting",
+          "description": "Setting for managing webhooks in a space."
+        },
+        "modifySpaceDetails": {
+          "$ref": "PermissionSetting",
+          "description": "Setting for updating space name, avatar, description and guidelines."
+        },
+        "postMessages": {
+          "$ref": "PermissionSetting",
+          "description": "Output only. Setting for posting messages in a space.",
+          "readOnly": true
+        },
+        "replyMessages": {
+          "$ref": "PermissionSetting",
+          "description": "Setting for replying to messages in a space."
+        },
+        "toggleHistory": {
+          "$ref": "PermissionSetting",
+          "description": "Setting for toggling space history on and off."
+        },
+        "useAtMentionAll": {
+          "$ref": "PermissionSetting",
+          "description": "Setting for using @all in a space."
+        }
+      },
+      "type": "object"
+    },
     "QuotedMessageMetadata": {
       "description": "Information about a quoted message.",
       "id": "QuotedMessageMetadata",
@@ -4284,6 +4339,24 @@
         },
         "name": {
           "description": "Resource name of the space. Format: `spaces/{space}` Where `{space}` represents the system-assigned ID for the space. You can obtain the space ID by calling the [`spaces.list()`](https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces/list) method or from the space URL. For example, if the space URL is `https://mail.google.com/mail/u/0/#chat/space/AAAAAAAAA`, the space ID is `AAAAAAAAA`.",
+          "type": "string"
+        },
+        "permissionSettings": {
+          "$ref": "PermissionSettings",
+          "description": "Optional. Exact permission settings which can be set to update the space. Input for updating a space. Otherwise, output only. For space creation, use `predefined_permission_settings` instead."
+        },
+        "predefinedPermissionSettings": {
+          "description": "Optional. Input only. Space permission settings. Input for creating a space, a collaboration space is created if this field is not set. After you create the space, settings are populated in the `PermissionSettings` field.",
+          "enum": [
+            "PREDEFINED_PERMISSION_SETTINGS_UNSPECIFIED",
+            "COLLABORATION_SPACE",
+            "ANNOUNCEMENT_SPACE"
+          ],
+          "enumDescriptions": [
+            "Unspecified. Don't use.",
+            "Setting to make the space a collaboration space where all members can post messages.",
+            "Setting to make the space an announcement space where only space managers can post messages."
+          ],
           "type": "string"
         },
         "singleUserBotDm": {

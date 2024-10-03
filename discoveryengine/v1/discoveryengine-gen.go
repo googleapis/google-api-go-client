@@ -3939,6 +3939,9 @@ type GoogleCloudDiscoveryengineV1CustomTuningModel struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// DisplayName: The display name of the model.
 	DisplayName string `json:"displayName,omitempty"`
+	// ErrorMessage: Currently this is only populated if the model state is
+	// `INPUT_VALIDATION_FAILED`.
+	ErrorMessage string `json:"errorMessage,omitempty"`
 	// Metrics: The metrics of the trained model.
 	Metrics map[string]float64 `json:"metrics,omitempty"`
 	// ModelState: The state that the model is in (e.g.`TRAINING` or
@@ -4646,6 +4649,9 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// associated here. Note that when used in CreateEngineRequest, one DataStore
 	// id must be provided as the system will use it for necessary initializations.
 	DataStoreIds []string `json:"dataStoreIds,omitempty"`
+	// DisableAnalytics: Optional. Whether to disable analytics for searches
+	// performed on this engine.
+	DisableAnalytics bool `json:"disableAnalytics,omitempty"`
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
@@ -9138,6 +9144,14 @@ func (s GoogleCloudDiscoveryengineV1UserInfo) MarshalJSON() ([]byte, error) {
 type GoogleCloudDiscoveryengineV1WorkspaceConfig struct {
 	// DasherCustomerId: Obfuscated Dasher customer ID.
 	DasherCustomerId string `json:"dasherCustomerId,omitempty"`
+	// SuperAdminEmailAddress: Optional. The super admin email address for the
+	// workspace that will be used for access token generation. For now we only use
+	// it for Native Google Drive connector data ingestion.
+	SuperAdminEmailAddress string `json:"superAdminEmailAddress,omitempty"`
+	// SuperAdminServiceAccount: Optional. The super admin service account for the
+	// workspace that will be used for access token generation. For now we only use
+	// it for Native Google Drive connector data ingestion.
+	SuperAdminServiceAccount string `json:"superAdminServiceAccount,omitempty"`
 	// Type: The Google Workspace data source.
 	//
 	// Possible values:
@@ -10262,6 +10276,9 @@ type GoogleCloudDiscoveryengineV1alphaCustomTuningModel struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// DisplayName: The display name of the model.
 	DisplayName string `json:"displayName,omitempty"`
+	// ErrorMessage: Currently this is only populated if the model state is
+	// `INPUT_VALIDATION_FAILED`.
+	ErrorMessage string `json:"errorMessage,omitempty"`
 	// Metrics: The metrics of the trained model.
 	Metrics map[string]float64 `json:"metrics,omitempty"`
 	// ModelState: The state that the model is in (e.g.`TRAINING` or
@@ -10802,6 +10819,9 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// associated here. Note that when used in CreateEngineRequest, one DataStore
 	// id must be provided as the system will use it for necessary initializations.
 	DataStoreIds []string `json:"dataStoreIds,omitempty"`
+	// DisableAnalytics: Optional. Whether to disable analytics for searches
+	// performed on this engine.
+	DisableAnalytics bool `json:"disableAnalytics,omitempty"`
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
@@ -14284,6 +14304,14 @@ func (s GoogleCloudDiscoveryengineV1alphaUserInfo) MarshalJSON() ([]byte, error)
 type GoogleCloudDiscoveryengineV1alphaWorkspaceConfig struct {
 	// DasherCustomerId: Obfuscated Dasher customer ID.
 	DasherCustomerId string `json:"dasherCustomerId,omitempty"`
+	// SuperAdminEmailAddress: Optional. The super admin email address for the
+	// workspace that will be used for access token generation. For now we only use
+	// it for Native Google Drive connector data ingestion.
+	SuperAdminEmailAddress string `json:"superAdminEmailAddress,omitempty"`
+	// SuperAdminServiceAccount: Optional. The super admin service account for the
+	// workspace that will be used for access token generation. For now we only use
+	// it for Native Google Drive connector data ingestion.
+	SuperAdminServiceAccount string `json:"superAdminServiceAccount,omitempty"`
 	// Type: The Google Workspace data source.
 	//
 	// Possible values:
@@ -14764,6 +14792,9 @@ type GoogleCloudDiscoveryengineV1betaCustomTuningModel struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// DisplayName: The display name of the model.
 	DisplayName string `json:"displayName,omitempty"`
+	// ErrorMessage: Currently this is only populated if the model state is
+	// `INPUT_VALIDATION_FAILED`.
+	ErrorMessage string `json:"errorMessage,omitempty"`
 	// Metrics: The metrics of the trained model.
 	Metrics map[string]float64 `json:"metrics,omitempty"`
 	// ModelState: The state that the model is in (e.g.`TRAINING` or
@@ -15294,6 +15325,9 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// associated here. Note that when used in CreateEngineRequest, one DataStore
 	// id must be provided as the system will use it for necessary initializations.
 	DataStoreIds []string `json:"dataStoreIds,omitempty"`
+	// DisableAnalytics: Optional. Whether to disable analytics for searches
+	// performed on this engine.
+	DisableAnalytics bool `json:"disableAnalytics,omitempty"`
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
@@ -17948,6 +17982,14 @@ func (s GoogleCloudDiscoveryengineV1betaUserInfo) MarshalJSON() ([]byte, error) 
 type GoogleCloudDiscoveryengineV1betaWorkspaceConfig struct {
 	// DasherCustomerId: Obfuscated Dasher customer ID.
 	DasherCustomerId string `json:"dasherCustomerId,omitempty"`
+	// SuperAdminEmailAddress: Optional. The super admin email address for the
+	// workspace that will be used for access token generation. For now we only use
+	// it for Native Google Drive connector data ingestion.
+	SuperAdminEmailAddress string `json:"superAdminEmailAddress,omitempty"`
+	// SuperAdminServiceAccount: Optional. The super admin service account for the
+	// workspace that will be used for access token generation. For now we only use
+	// it for Native Google Drive connector data ingestion.
+	SuperAdminServiceAccount string `json:"superAdminServiceAccount,omitempty"`
 	// Type: The Google Workspace data source.
 	//
 	// Possible values:
@@ -38454,7 +38496,7 @@ func (c *ProjectsLocationsIdentityMappingStoresOperationsGetCall) doRequest(alt 
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "discoveryengine.projects.locations.identity_mapping_stores.operations.get" call.
+// Do executes the "discoveryengine.projects.locations.identityMappingStores.operations.get" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
@@ -38583,7 +38625,7 @@ func (c *ProjectsLocationsIdentityMappingStoresOperationsListCall) doRequest(alt
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "discoveryengine.projects.locations.identity_mapping_stores.operations.list" call.
+// Do executes the "discoveryengine.projects.locations.identityMappingStores.operations.list" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use

@@ -10,6 +10,7 @@ package grpc
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log"
 	"net"
 	"os"
@@ -118,6 +119,10 @@ func DialInsecure(ctx context.Context, opts ...option.ClientOption) (*grpc.Clien
 	return dial(ctx, true, o)
 }
 
+func prefixTime(msg string) {
+	fmt.Printf("%v: "+msg, time.Now().Format("2006/01/02 15:04:05"))
+}
+
 // DialPool returns a pool of GRPC connections for the given service.
 // This differs from the connection pooling implementation used by Dial, which uses a custom GRPC load balancer.
 // DialPool should be used instead of Dial when a pool is used by default or a different custom GRPC load balancer is needed.
@@ -126,15 +131,19 @@ func DialInsecure(ctx context.Context, opts ...option.ClientOption) (*grpc.Clien
 //
 // This API is subject to change as we further refine requirements. It will go away if gRPC stubs accept an interface instead of the concrete ClientConn type. See https://github.com/grpc/grpc-go/issues/1287.
 func DialPool(ctx context.Context, opts ...option.ClientOption) (ConnPool, error) {
+	prefixTime(fmt.Sprintf("In Dialpool\n"))
 	o, err := processAndValidateOpts(opts)
 	if err != nil {
 		return nil, err
 	}
 	if o.GRPCConnPool != nil {
+		prefixTime(fmt.Sprintf("o.GRPCConnPool != nil\n"))
 		return o.GRPCConnPool, nil
 	}
 
 	if o.IsNewAuthLibraryEnabled() {
+		prefixTime(fmt.Sprintf("o.IsNewAuthLibraryEnabled\n"))
+
 		if o.GRPCConn != nil {
 			return &singleConnPool{o.GRPCConn}, nil
 		}
@@ -162,8 +171,10 @@ func DialPool(ctx context.Context, opts ...option.ClientOption) (ConnPool, error
 		return &singleConnPool{conn}, nil
 	}
 
+	prefixTime(fmt.Sprintf("In old auth Dialpool\n"))
 	pool := &roundRobinConnPool{}
 	for i := 0; i < poolSize; i++ {
+		prefixTime(fmt.Sprintf("Calling dial\n"))
 		conn, err := dial(ctx, false, o)
 		if err != nil {
 			defer pool.Close() // NOTE: error from Close is ignored.
@@ -179,12 +190,16 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 	// honor options if set
 	var creds *auth.Credentials
 	if ds.InternalCredentials != nil {
+		prefixTime(fmt.Sprintf("ds.InternalCredentials != nil\n"))
 		creds = oauth2adapt.AuthCredentialsFromOauth2Credentials(ds.InternalCredentials)
 	} else if ds.Credentials != nil {
+		prefixTime(fmt.Sprintf("ds.Credentials != nil\n"))
 		creds = oauth2adapt.AuthCredentialsFromOauth2Credentials(ds.Credentials)
 	} else if ds.AuthCredentials != nil {
+		prefixTime(fmt.Sprintf("ds.AuthCredentials != nil \n"))
 		creds = ds.AuthCredentials
 	} else if ds.TokenSource != nil {
+		prefixTime(fmt.Sprintf("ds.TokenSource != nil\n"))
 		credOpts := &auth.CredentialsOptions{
 			TokenProvider: oauth2adapt.TokenProviderFromTokenSource(ds.TokenSource),
 		}
@@ -221,6 +236,7 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 		defaultEndpointTemplate = ds.DefaultEndpoint
 	}
 
+	prefixTime(fmt.Sprintf("Before dialContextNewAuth\n"))
 	pool, err := dialContextNewAuth(ctx, secure, &grpctransport.Options{
 		DisableTelemetry:      ds.TelemetryDisabled,
 		DisableAuthentication: ds.NoAuth,
@@ -293,6 +309,7 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 				requestReason: o.RequestReason,
 			}))
 		} else {
+			prefixTime(fmt.Sprintf("Calling internal.Creds\n"))
 			creds, err := internal.Creds(ctx, o)
 			if err != nil {
 				return nil, err
@@ -351,6 +368,7 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 		grpcOpts = append(grpcOpts, grpc.WithUserAgent(o.UserAgent))
 	}
 
+	prefixTime(fmt.Sprintf("Calling dialContext\n"))
 	return dialContext(ctx, endpoint, grpcOpts...)
 }
 

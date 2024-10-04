@@ -822,7 +822,7 @@ type AutomationRun struct {
 	// }/automationRuns/{automation_run}`.
 	Name string `json:"name,omitempty"`
 	// PolicyViolation: Output only. Contains information about what policies
-	// prevented the `AutomationRun` to proceed.
+	// prevented the `AutomationRun` from proceeding.
 	PolicyViolation *PolicyViolation `json:"policyViolation,omitempty"`
 	// PromoteReleaseOperation: Output only. Promotes a release to a specified
 	// 'Target'.
@@ -1946,7 +1946,7 @@ func (s DeployParameters) MarshalJSON() ([]byte, error) {
 }
 
 // DeployPolicy: A `DeployPolicy` resource in the Cloud Deploy API. A
-// `DeployPolicy` inhibits manual or automation driven actions within a
+// `DeployPolicy` inhibits manual or automation-driven actions within a
 // Delivery Pipeline or Target.
 type DeployPolicy struct {
 	// Annotations: User annotations. These attributes can only be set and used by
@@ -4083,9 +4083,36 @@ func (s RepairPhase) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RepairPhaseConfig: Configuration of the repair phase.
+type RepairPhaseConfig struct {
+	// Retry: Optional. Retries a failed job.
+	Retry *Retry `json:"retry,omitempty"`
+	// Rollback: Optional. Rolls back a `Rollout`.
+	Rollback *Rollback `json:"rollback,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Retry") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Retry") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RepairPhaseConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RepairPhaseConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RepairRolloutOperation: Contains the information for an automated `repair
 // rollout` operation.
 type RepairRolloutOperation struct {
+	// CurrentRepairPhaseIndex: Output only. The index of the current repair action
+	// in the repair sequence.
+	CurrentRepairPhaseIndex int64 `json:"currentRepairPhaseIndex,omitempty,string"`
 	// JobId: Output only. The job ID for the Job to repair.
 	JobId string `json:"jobId,omitempty"`
 	// PhaseId: Output only. The phase ID of the phase that includes the job being
@@ -4097,15 +4124,15 @@ type RepairRolloutOperation struct {
 	// Rollout: Output only. The name of the rollout that initiates the
 	// `AutomationRun`.
 	Rollout string `json:"rollout,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "JobId") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CurrentRepairPhaseIndex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "JobId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CurrentRepairPhaseIndex") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4133,6 +4160,16 @@ type RepairRolloutRule struct {
 	// characters. In other words, it must match the following regex: `^a-z
 	// ([a-z0-9-]{0,61}[a-z0-9])?$`.
 	Jobs []string `json:"jobs,omitempty"`
+	// Phases: Optional. Phases within which jobs are subject to automatic repair
+	// actions on failure. Proceeds only after phase name matched any one in the
+	// list, or for all phases if unspecified. This value must consist of
+	// lower-case letters, numbers, and hyphens, start with a letter and end with a
+	// letter or a number, and have a max length of 63 characters. In other words,
+	// it must match the following regex: `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`.
+	Phases []string `json:"phases,omitempty"`
+	// RepairPhases: Required. Defines the types of automatic repair phases for
+	// failed jobs.
+	RepairPhases []*RepairPhaseConfig `json:"repairPhases,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4148,6 +4185,40 @@ type RepairRolloutRule struct {
 
 func (s RepairRolloutRule) MarshalJSON() ([]byte, error) {
 	type NoMethod RepairRolloutRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Retry: Retries the failed job.
+type Retry struct {
+	// Attempts: Required. Total number of retries. Retry is skipped if set to 0;
+	// The minimum value is 1, and the maximum value is 10.
+	Attempts int64 `json:"attempts,omitempty,string"`
+	// BackoffMode: Optional. The pattern of how wait time will be increased.
+	// Default is linear. Backoff mode will be ignored if `wait` is 0.
+	//
+	// Possible values:
+	//   "BACKOFF_MODE_UNSPECIFIED" - No WaitMode is specified.
+	//   "BACKOFF_MODE_LINEAR" - Increases the wait time linearly.
+	//   "BACKOFF_MODE_EXPONENTIAL" - Increases the wait time exponentially.
+	BackoffMode string `json:"backoffMode,omitempty"`
+	// Wait: Optional. How long to wait for the first retry. Default is 0, and the
+	// maximum value is 14d.
+	Wait string `json:"wait,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attempts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attempts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Retry) MarshalJSON() ([]byte, error) {
+	type NoMethod Retry
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4255,12 +4326,41 @@ func (s RetryPhase) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Rollback: Rolls back a `Rollout`.
+type Rollback struct {
+	// DestinationPhase: Optional. The starting phase ID for the `Rollout`. If
+	// unspecified, the `Rollout` will start in the stable phase.
+	DestinationPhase string `json:"destinationPhase,omitempty"`
+	// DisableRollbackIfRolloutPending: Optional. If pending rollout exists on the
+	// target, the rollback operation will be aborted.
+	DisableRollbackIfRolloutPending bool `json:"disableRollbackIfRolloutPending,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestinationPhase") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestinationPhase") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Rollback) MarshalJSON() ([]byte, error) {
+	type NoMethod Rollback
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RollbackAttempt: RollbackAttempt represents an action of rolling back a
 // Cloud Deploy 'Target'.
 type RollbackAttempt struct {
 	// DestinationPhase: Output only. The phase to which the rollout will be rolled
 	// back to.
 	DestinationPhase string `json:"destinationPhase,omitempty"`
+	// DisableRollbackIfRolloutPending: Output only. If active rollout exists on
+	// the target, abort this rollback.
+	DisableRollbackIfRolloutPending bool `json:"disableRollbackIfRolloutPending,omitempty"`
 	// RolloutId: Output only. ID of the rollback `Rollout` to create.
 	RolloutId string `json:"rolloutId,omitempty"`
 	// State: Output only. Valid state of this rollback action.
@@ -4387,6 +4487,9 @@ func (s RollbackTargetResponse) MarshalJSON() ([]byte, error) {
 // Rollout: A `Rollout` resource in the Cloud Deploy API. A `Rollout` contains
 // information around a specific deployment to a `Target`.
 type Rollout struct {
+	// ActiveRepairAutomationRun: Output only. The AutomationRun actively repairing
+	// the rollout.
+	ActiveRepairAutomationRun string `json:"activeRepairAutomationRun,omitempty"`
 	// Annotations: User annotations. These attributes can only be set and used by
 	// the user, and not by Cloud Deploy. See
 	// https://google.aip.dev/128#annotations for more details such as format and
@@ -4501,15 +4604,15 @@ type Rollout struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "ActiveRepairAutomationRun")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Annotations") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ActiveRepairAutomationRun") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5220,7 +5323,8 @@ func (s TargetArtifact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TargetAttribute: Contains criteria for selecting Targets.
+// TargetAttribute: Contains criteria for selecting Targets. This could be used
+// to select targets for a Deploy Policy or for an Automation.
 type TargetAttribute struct {
 	// Id: ID of the `Target`. The value of this field could be one of the
 	// following: * The last segment of a target name * "*", all targets in a
@@ -5523,7 +5627,10 @@ func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TimeWindows: Time windows within which actions are restricted.
+// TimeWindows: Time windows within which actions are restricted. See the
+// documentation
+// (https://cloud.google.com/deploy/docs/deploy-policy#dates_times) for more
+// information on how to configure dates/times.
 type TimeWindows struct {
 	// OneTimeWindows: Optional. One-time windows within which actions are
 	// restricted.

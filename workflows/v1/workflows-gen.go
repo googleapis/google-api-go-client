@@ -501,7 +501,7 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Workflow: LINT.IfChange Workflow program to be executed by Workflows.
+// Workflow: Workflow program to be executed by Workflows.
 type Workflow struct {
 	// AllKmsKeys: Output only. A list of all KMS crypto keys used to encrypt or
 	// decrypt the data associated with the workflow.

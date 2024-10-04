@@ -1965,6 +1965,8 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	//   "REGIONAL_USER_OWNED_BUCKET" - Bucket is located in user-owned project in
 	// the same region as the build. The builder service account must have access
 	// to create and write to Cloud Storage buckets in the build project.
+	//   "LEGACY_BUCKET" - Bucket is located in a Google-owned project and is not
+	// regionalized.
 	DefaultLogsBucketBehavior string `json:"defaultLogsBucketBehavior,omitempty"`
 	// DiskSizeGb: Requested disk size for the VM that runs the build. Note that
 	// this is *NOT* "disk free"; some of the space will be used by the operating
@@ -3939,7 +3941,7 @@ type ObjectMeta struct {
 	// `run.googleapis.com/execution-environment`: Revision, Execution. *
 	// `run.googleapis.com/gc-traffic-tags`: Service. *
 	// `run.googleapis.com/ingress`: Service. * `run.googleapis.com/launch-stage`:
-	// Service, Job. * `run.googleapis.com/minScale`: Service (ALPHA) *
+	// Service, Job. * `run.googleapis.com/minScale`: Service *
 	// `run.googleapis.com/network-interfaces`: Revision, Execution. *
 	// `run.googleapis.com/post-key-revocation-action-type`: Revision. *
 	// `run.googleapis.com/secrets`: Revision, Execution. *

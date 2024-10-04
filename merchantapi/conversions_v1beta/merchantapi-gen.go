@@ -734,7 +734,7 @@ type AccountsConversionSourcesGetCall struct {
 // Get: Fetches a conversion source.
 //
 //   - name: The name of the conversion source to be fetched. Format:
-//     accounts/{account}/conversionsources/{conversion_source}.
+//     accounts/{account}/conversionSources/{conversion_source}.
 func (r *AccountsConversionSourcesService) Get(name string) *AccountsConversionSourcesGetCall {
 	c := &AccountsConversionSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

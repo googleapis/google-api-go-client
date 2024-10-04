@@ -3485,7 +3485,9 @@ func (s OrgMembership) MarshalJSON() ([]byte, error) {
 }
 
 // PosixGroup: POSIX Group definition to represent a group in a POSIX compliant
-// system.
+// system. Caution: POSIX groups are deprecated. As of September 26, 2024, you
+// can no longer create new POSIX groups. For more information, see
+// https://cloud.google.com/identity/docs/deprecations/posix-groups
 type PosixGroup struct {
 	// Gid: GID of the POSIX group.
 	Gid uint64 `json:"gid,omitempty,string"`

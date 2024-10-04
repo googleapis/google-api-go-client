@@ -257,7 +257,9 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.AppGateways = NewProjectsLocationsAppGatewaysService(s)
 	rs.ClientConnectorServices = NewProjectsLocationsClientConnectorServicesService(s)
 	rs.ClientGateways = NewProjectsLocationsClientGatewaysService(s)
+	rs.Global = NewProjectsLocationsGlobalService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.SecurityGateways = NewProjectsLocationsSecurityGatewaysService(s)
 	return rs
 }
 
@@ -274,7 +276,11 @@ type ProjectsLocationsService struct {
 
 	ClientGateways *ProjectsLocationsClientGatewaysService
 
+	Global *ProjectsLocationsGlobalService
+
 	Operations *ProjectsLocationsOperationsService
+
+	SecurityGateways *ProjectsLocationsSecurityGatewaysService
 }
 
 func NewProjectsLocationsAppConnectionsService(s *Service) *ProjectsLocationsAppConnectionsService {
@@ -322,12 +328,66 @@ type ProjectsLocationsClientGatewaysService struct {
 	s *Service
 }
 
+func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalService {
+	rs := &ProjectsLocationsGlobalService{s: s}
+	rs.SecurityGateways = NewProjectsLocationsGlobalSecurityGatewaysService(s)
+	return rs
+}
+
+type ProjectsLocationsGlobalService struct {
+	s *Service
+
+	SecurityGateways *ProjectsLocationsGlobalSecurityGatewaysService
+}
+
+func NewProjectsLocationsGlobalSecurityGatewaysService(s *Service) *ProjectsLocationsGlobalSecurityGatewaysService {
+	rs := &ProjectsLocationsGlobalSecurityGatewaysService{s: s}
+	rs.Applications = NewProjectsLocationsGlobalSecurityGatewaysApplicationsService(s)
+	return rs
+}
+
+type ProjectsLocationsGlobalSecurityGatewaysService struct {
+	s *Service
+
+	Applications *ProjectsLocationsGlobalSecurityGatewaysApplicationsService
+}
+
+func NewProjectsLocationsGlobalSecurityGatewaysApplicationsService(s *Service) *ProjectsLocationsGlobalSecurityGatewaysApplicationsService {
+	rs := &ProjectsLocationsGlobalSecurityGatewaysApplicationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGlobalSecurityGatewaysApplicationsService struct {
+	s *Service
+}
+
 func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
 	rs := &ProjectsLocationsOperationsService{s: s}
 	return rs
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSecurityGatewaysService(s *Service) *ProjectsLocationsSecurityGatewaysService {
+	rs := &ProjectsLocationsSecurityGatewaysService{s: s}
+	rs.Applications = NewProjectsLocationsSecurityGatewaysApplicationsService(s)
+	return rs
+}
+
+type ProjectsLocationsSecurityGatewaysService struct {
+	s *Service
+
+	Applications *ProjectsLocationsSecurityGatewaysApplicationsService
+}
+
+func NewProjectsLocationsSecurityGatewaysApplicationsService(s *Service) *ProjectsLocationsSecurityGatewaysApplicationsService {
+	rs := &ProjectsLocationsSecurityGatewaysApplicationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSecurityGatewaysApplicationsService struct {
 	s *Service
 }
 
@@ -1611,6 +1671,341 @@ type GoogleCloudBeyondcorpPartnerservicesV1mainPartnerServiceOperationMetadata s
 
 func (s GoogleCloudBeyondcorpPartnerservicesV1mainPartnerServiceOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpPartnerservicesV1mainPartnerServiceOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1Application: A Beyondcorp Application
+// resource information.
+type GoogleCloudBeyondcorpSecuritygatewaysV1Application struct {
+	// CreateTime: Output only. Timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Optional. An arbitrary user-provided name for the Application
+	// resource. Cannot exceed 64 characters.
+	DisplayName string `json:"displayName,omitempty"`
+	// EndpointMatchers: Required. Endpoint matchers associated with an
+	// application. A combination of hostname and ports as endpoint matcher is used
+	// to match the application. Match conditions for OR logic. An array of match
+	// conditions to allow for multiple matching criteria. The rule is considered a
+	// match if one the conditions are met. The conditions can be one of the
+	// following combination (Hostname), (Hostname & Ports) EXAMPLES: Hostname -
+	// ("*.abc.com"), ("xyz.abc.com") Hostname and Ports - ("abc.com" and "22"),
+	// ("abc.com" and "22,33") etc
+	EndpointMatchers []*GoogleCloudBeyondcorpSecuritygatewaysV1EndpointMatcher `json:"endpointMatchers,omitempty"`
+	// Name: Identifier. Name of the resource.
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. Timestamp when the resource was last modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1Application) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1Application
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1EndpointMatcher: EndpointMatcher
+// contains the information of the endpoint that will match the application.
+type GoogleCloudBeyondcorpSecuritygatewaysV1EndpointMatcher struct {
+	// Hostname: Required. Hostname of the application.
+	Hostname string `json:"hostname,omitempty"`
+	// Ports: Optional. Ports of the application.
+	Ports []int64 `json:"ports,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hostname") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hostname") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1EndpointMatcher) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1EndpointMatcher
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1Hub: The Hub message contains
+// information pertaining to the regional data path deployments.
+type GoogleCloudBeyondcorpSecuritygatewaysV1Hub struct {
+	// NatGatewayConfig: Optional. NAT gateway setup to ensure enough NAT IP
+	// addresses are available to handle the traffic needed to access the
+	// applications. Allows to explicitly enable or disable the NAT in the Hub
+	// along with the total IPs allocated to handle the capacity limits.
+	NatGatewayConfig *GoogleCloudBeyondcorpSecuritygatewaysV1NatGatewayConfig `json:"natGatewayConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NatGatewayConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NatGatewayConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1Hub) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1Hub
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1ListApplicationsResponse: Message for
+// response to listing Applications.
+type GoogleCloudBeyondcorpSecuritygatewaysV1ListApplicationsResponse struct {
+	// Applications: A list of BeyondCorp Application in the project.
+	Applications []*GoogleCloudBeyondcorpSecuritygatewaysV1Application `json:"applications,omitempty"`
+	// NextPageToken: A token to retrieve the next page of results, or empty if
+	// there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: A list of locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Applications") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Applications") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1ListApplicationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1ListApplicationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1ListSecurityGatewaysResponse: Message
+// for response to listing SecurityGateways.
+type GoogleCloudBeyondcorpSecuritygatewaysV1ListSecurityGatewaysResponse struct {
+	// NextPageToken: A token to retrieve the next page of results, or empty if
+	// there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SecurityGateways: A list of BeyondCorp SecurityGateway in the project.
+	SecurityGateways []*GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway `json:"securityGateways,omitempty"`
+	// Unreachable: A list of locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1ListSecurityGatewaysResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1ListSecurityGatewaysResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1NatGatewayConfig: Represents the NAT
+// Gateway configuration.
+type GoogleCloudBeyondcorpSecuritygatewaysV1NatGatewayConfig struct {
+	// NatIps: Output only. List of NAT IPs that will be used for establishing
+	// connection to the endpoints.
+	NatIps []string `json:"natIps,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NatIps") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NatIps") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1NatGatewayConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1NatGatewayConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1Peering: VPC Peering details.
+type GoogleCloudBeyondcorpSecuritygatewaysV1Peering struct {
+	// DnsZones: Optional. List of DNS zones for DNS peering with the customer VPC
+	// network.
+	DnsZones []string `json:"dnsZones,omitempty"`
+	// TargetVpcNetwork: Required. The name of the Target VPC network name in the
+	// format: `projects/{project}/global/networks/{network}
+	TargetVpcNetwork string `json:"targetVpcNetwork,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DnsZones") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DnsZones") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1Peering) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1Peering
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway: Information about a
+// BeyoncCorp SecurityGateway resource.
+type GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway struct {
+	// CreateTime: Output only. Timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Optional. An arbitrary user-provided name for the
+	// SecurityGateway. Cannot exceed 64 characters.
+	DisplayName string `json:"displayName,omitempty"`
+	// ExternalIps: Output only. IP addresses that will be used for establishing
+	// connection to the endpoints.
+	ExternalIps []string `json:"externalIps,omitempty"`
+	// Hubs: Optional. Map of Hubs that represents regional data path deployment
+	// with GCP region as a key.
+	Hubs map[string]GoogleCloudBeyondcorpSecuritygatewaysV1Hub `json:"hubs,omitempty"`
+	// Name: Identifier. Name of the resource.
+	Name string `json:"name,omitempty"`
+	// State: Output only. The operational state of the SecurityGateway.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "CREATING" - SecurityGateway is being created.
+	//   "UPDATING" - SecurityGateway is being updated.
+	//   "DELETING" - SecurityGateway is being deleted.
+	//   "RUNNING" - SecurityGateway is running.
+	//   "DOWN" - SecurityGateway is down and may be restored in the future. This
+	// happens when CCFE sends ProjectState = OFF.
+	//   "ERROR" - SecurityGateway encountered an error and is in an
+	// indeterministic state.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. Timestamp when the resource was last modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGatewayOperationMetadata:
+// Represents the metadata of the long-running operation.
+type GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGatewayOperationMetadata struct {
+	// ApiVersion: Output only. API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have been cancelled
+	// successfully have Operation.error value with a google.rpc.Status.code of 1,
+	// corresponding to `Code.CANCELLED`.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+	// StatusMessage: Output only. Human-readable status of the operation, if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
+	// Target: Output only. Server-defined resource path for the target of the
+	// operation.
+	Target string `json:"target,omitempty"`
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGatewayOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGatewayOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1SetPeeringRequest: Set Peering
+// request for creating a VPC peering between Google network and customer
+// networks.
+type GoogleCloudBeyondcorpSecuritygatewaysV1SetPeeringRequest struct {
+	// RequestId: Optional. An optional request ID to identify requests. Specify a
+	// unique request ID so that if you must retry your request, the server will
+	// know to ignore the request if it has already been completed. The server will
+	// guarantee that for at least 60 minutes since the first request. For example,
+	// consider a situation where you make an initial request and the request times
+	// out. If you make the request again with the same request ID, the server can
+	// check if original operation with the same request ID was received, and if
+	// so, will ignore the second request. This prevents clients from accidentally
+	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// exception that zero UUID is not supported
+	// (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+	// ValidateOnly: Optional. If set, validates request by executing a dry-run
+	// which would not alter the resource in any way.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// VpcPeerings: Required. List of Peering connection information.
+	VpcPeerings []*GoogleCloudBeyondcorpSecuritygatewaysV1Peering `json:"vpcPeerings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1SetPeeringRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1SetPeeringRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8187,6 +8582,253 @@ func (c *ProjectsLocationsClientGatewaysTestIamPermissionsCall) Do(opts ...googl
 	return ret, nil
 }
 
+type ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall struct {
+	s                                                  *Service
+	parent                                             string
+	googlecloudbeyondcorpsecuritygatewaysv1application *GoogleCloudBeyondcorpSecuritygatewaysV1Application
+	urlParams_                                         gensupport.URLParams
+	ctx_                                               context.Context
+	header_                                            http.Header
+}
+
+// Create: Creates a new Application in a given project and location.
+//
+//   - parent: The resource name of the parent SecurityGateway using the form:
+//     `projects/{project_id}/locations/global/securityGateways/{security_gateway_
+//     id}`.
+func (r *ProjectsLocationsGlobalSecurityGatewaysApplicationsService) Create(parent string, googlecloudbeyondcorpsecuritygatewaysv1application *GoogleCloudBeyondcorpSecuritygatewaysV1Application) *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall {
+	c := &ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudbeyondcorpsecuritygatewaysv1application = googlecloudbeyondcorpsecuritygatewaysv1application
+	return c
+}
+
+// ApplicationId sets the optional parameter "applicationId": User-settable
+// Application resource ID. * Must start with a letter. * Must contain between
+// 4-63 characters from `/a-z-/`. * Must end with a number or letter.
+func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall) ApplicationId(applicationId string) *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall {
+	c.urlParams_.Set("applicationId", applicationId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore request if it has already been
+// completed. The server will guarantee that for at least 60 minutes since the
+// first request.
+func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall) RequestId(requestId string) *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall) Context(ctx context.Context) *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudbeyondcorpsecuritygatewaysv1application)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/applications")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.global.securityGateways.applications.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall struct {
+	s                                                  *Service
+	name                                               string
+	googlecloudbeyondcorpsecuritygatewaysv1application *GoogleCloudBeyondcorpSecuritygatewaysV1Application
+	urlParams_                                         gensupport.URLParams
+	ctx_                                               context.Context
+	header_                                            http.Header
+}
+
+// Patch: Updates the parameters of a single Application.
+//
+// - name: Identifier. Name of the resource.
+func (r *ProjectsLocationsGlobalSecurityGatewaysApplicationsService) Patch(name string, googlecloudbeyondcorpsecuritygatewaysv1application *GoogleCloudBeyondcorpSecuritygatewaysV1Application) *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall {
+	c := &ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudbeyondcorpsecuritygatewaysv1application = googlecloudbeyondcorpsecuritygatewaysv1application
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request timed out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) RequestId(requestId string) *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Mutable
+// fields include: display_name.
+func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) Context(ctx context.Context) *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudbeyondcorpsecuritygatewaysv1application)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.global.securityGateways.applications.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalSecurityGatewaysApplicationsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsOperationsCancelCall struct {
 	s                                       *Service
 	name                                    string
@@ -8637,6 +9279,1156 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsSecurityGatewaysCreateCall struct {
+	s                                                      *Service
+	parent                                                 string
+	googlecloudbeyondcorpsecuritygatewaysv1securitygateway *GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Create: Creates a new SecurityGateway in a given project and location.
+//
+//   - parent: The resource project name of the SecurityGateway location using
+//     the form: `projects/{project_id}/locations/{location_id}`.
+func (r *ProjectsLocationsSecurityGatewaysService) Create(parent string, googlecloudbeyondcorpsecuritygatewaysv1securitygateway *GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway) *ProjectsLocationsSecurityGatewaysCreateCall {
+	c := &ProjectsLocationsSecurityGatewaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudbeyondcorpsecuritygatewaysv1securitygateway = googlecloudbeyondcorpsecuritygatewaysv1securitygateway
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore request if it has already been
+// completed. The server will guarantee that for at least 60 minutes since the
+// first request.
+func (c *ProjectsLocationsSecurityGatewaysCreateCall) RequestId(requestId string) *ProjectsLocationsSecurityGatewaysCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// SecurityGatewayId sets the optional parameter "securityGatewayId":
+// User-settable SecurityGateway resource ID. * Must start with a letter. *
+// Must contain between 4-63 characters from `/a-z-/`. * Must end with a number
+// or letter.
+func (c *ProjectsLocationsSecurityGatewaysCreateCall) SecurityGatewayId(securityGatewayId string) *ProjectsLocationsSecurityGatewaysCreateCall {
+	c.urlParams_.Set("securityGatewayId", securityGatewayId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSecurityGatewaysCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecurityGatewaysCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSecurityGatewaysCreateCall) Context(ctx context.Context) *ProjectsLocationsSecurityGatewaysCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSecurityGatewaysCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecurityGatewaysCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudbeyondcorpsecuritygatewaysv1securitygateway)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityGateways")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.securityGateways.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSecurityGatewaysCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsSecurityGatewaysDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single SecurityGateway.
+//
+//   - name: BeyondCorp SecurityGateway name using the form:
+//     `projects/{project_id}/locations/{location_id}/securityGateways/{security_g
+//     ateway_id}`.
+func (r *ProjectsLocationsSecurityGatewaysService) Delete(name string) *ProjectsLocationsSecurityGatewaysDeleteCall {
+	c := &ProjectsLocationsSecurityGatewaysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsSecurityGatewaysDeleteCall) RequestId(requestId string) *ProjectsLocationsSecurityGatewaysDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set, validates
+// request by executing a dry-run which would not alter the resource in any
+// way.
+func (c *ProjectsLocationsSecurityGatewaysDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsSecurityGatewaysDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSecurityGatewaysDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecurityGatewaysDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSecurityGatewaysDeleteCall) Context(ctx context.Context) *ProjectsLocationsSecurityGatewaysDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSecurityGatewaysDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecurityGatewaysDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.securityGateways.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSecurityGatewaysDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsSecurityGatewaysGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single SecurityGateway.
+//
+//   - name: The resource name of the PartnerTenant using the form:
+//     `projects/{project_id}/locations/{location_id}/securityGateway/{security_ga
+//     teway_id}`.
+func (r *ProjectsLocationsSecurityGatewaysService) Get(name string) *ProjectsLocationsSecurityGatewaysGetCall {
+	c := &ProjectsLocationsSecurityGatewaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSecurityGatewaysGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecurityGatewaysGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSecurityGatewaysGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSecurityGatewaysGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSecurityGatewaysGetCall) Context(ctx context.Context) *ProjectsLocationsSecurityGatewaysGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSecurityGatewaysGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecurityGatewaysGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.securityGateways.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSecurityGatewaysGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsSecurityGatewaysListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists SecurityGateways in a given project and location.
+//
+//   - parent: The parent location to which the resources belong.
+//     `projects/{project_id}/locations/{location_id}/`.
+func (r *ProjectsLocationsSecurityGatewaysService) List(parent string) *ProjectsLocationsSecurityGatewaysListCall {
+	c := &ProjectsLocationsSecurityGatewaysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter specifying constraints
+// of a list operation. All fields in the SecurityGateway message are
+// supported. For example, the following query will return the SecurityGateway
+// with displayName "test-security-gateway" For more information, please refer
+// to https://google.aip.dev/160.
+func (c *ProjectsLocationsSecurityGatewaysListCall) Filter(filter string) *ProjectsLocationsSecurityGatewaysListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Specifies the ordering of
+// results. See Sorting order
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order) for
+// more information.
+func (c *ProjectsLocationsSecurityGatewaysListCall) OrderBy(orderBy string) *ProjectsLocationsSecurityGatewaysListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If not specified, a default value of 50 will be used by the
+// service. Regardless of the page_size value, the response may include a
+// partial list and a caller should only rely on response's next_page_token to
+// determine if there are more instances left to be queried.
+func (c *ProjectsLocationsSecurityGatewaysListCall) PageSize(pageSize int64) *ProjectsLocationsSecurityGatewaysListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous ListSecurityGatewayRequest, if any.
+func (c *ProjectsLocationsSecurityGatewaysListCall) PageToken(pageToken string) *ProjectsLocationsSecurityGatewaysListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSecurityGatewaysListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecurityGatewaysListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSecurityGatewaysListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSecurityGatewaysListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSecurityGatewaysListCall) Context(ctx context.Context) *ProjectsLocationsSecurityGatewaysListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSecurityGatewaysListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecurityGatewaysListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityGateways")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.securityGateways.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBeyondcorpSecuritygatewaysV1ListSecurityGatewaysResponse.ServerRe
+// sponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSecurityGatewaysListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBeyondcorpSecuritygatewaysV1ListSecurityGatewaysResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudBeyondcorpSecuritygatewaysV1ListSecurityGatewaysResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSecurityGatewaysListCall) Pages(ctx context.Context, f func(*GoogleCloudBeyondcorpSecuritygatewaysV1ListSecurityGatewaysResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsSecurityGatewaysPatchCall struct {
+	s                                                      *Service
+	name                                                   string
+	googlecloudbeyondcorpsecuritygatewaysv1securitygateway *GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Patch: Updates the parameters of a single SecurityGateway.
+//
+// - name: Identifier. Name of the resource.
+func (r *ProjectsLocationsSecurityGatewaysService) Patch(name string, googlecloudbeyondcorpsecuritygatewaysv1securitygateway *GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway) *ProjectsLocationsSecurityGatewaysPatchCall {
+	c := &ProjectsLocationsSecurityGatewaysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudbeyondcorpsecuritygatewaysv1securitygateway = googlecloudbeyondcorpsecuritygatewaysv1securitygateway
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request timed out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsSecurityGatewaysPatchCall) RequestId(requestId string) *ProjectsLocationsSecurityGatewaysPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Mutable
+// fields include: display_name, hubs.
+func (c *ProjectsLocationsSecurityGatewaysPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSecurityGatewaysPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSecurityGatewaysPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecurityGatewaysPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSecurityGatewaysPatchCall) Context(ctx context.Context) *ProjectsLocationsSecurityGatewaysPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSecurityGatewaysPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecurityGatewaysPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudbeyondcorpsecuritygatewaysv1securitygateway)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.securityGateways.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSecurityGatewaysPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsSecurityGatewaysSetPeeringCall struct {
+	s                                                        *Service
+	securityGateway                                          string
+	googlecloudbeyondcorpsecuritygatewaysv1setpeeringrequest *GoogleCloudBeyondcorpSecuritygatewaysV1SetPeeringRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// SetPeering: This is a custom method to allow customers to create a peering
+// connections between Google network and customer networks. This is enabled
+// only for the allowlisted customers.
+//
+//   - securityGateway: BeyondCorp SecurityGateway name using the form:
+//     `projects/{project}/locations/{location}/securityGateways/{security_gateway
+//     }`.
+func (r *ProjectsLocationsSecurityGatewaysService) SetPeering(securityGateway string, googlecloudbeyondcorpsecuritygatewaysv1setpeeringrequest *GoogleCloudBeyondcorpSecuritygatewaysV1SetPeeringRequest) *ProjectsLocationsSecurityGatewaysSetPeeringCall {
+	c := &ProjectsLocationsSecurityGatewaysSetPeeringCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.securityGateway = securityGateway
+	c.googlecloudbeyondcorpsecuritygatewaysv1setpeeringrequest = googlecloudbeyondcorpsecuritygatewaysv1setpeeringrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSecurityGatewaysSetPeeringCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecurityGatewaysSetPeeringCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSecurityGatewaysSetPeeringCall) Context(ctx context.Context) *ProjectsLocationsSecurityGatewaysSetPeeringCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSecurityGatewaysSetPeeringCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecurityGatewaysSetPeeringCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudbeyondcorpsecuritygatewaysv1setpeeringrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+securityGateway}:setPeering")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"securityGateway": c.securityGateway,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.securityGateways.setPeering" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSecurityGatewaysSetPeeringCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsSecurityGatewaysApplicationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single Application.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsSecurityGatewaysApplicationsService) Delete(name string) *ProjectsLocationsSecurityGatewaysApplicationsDeleteCall {
+	c := &ProjectsLocationsSecurityGatewaysApplicationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsSecurityGatewaysApplicationsDeleteCall) RequestId(requestId string) *ProjectsLocationsSecurityGatewaysApplicationsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set, validates
+// request by executing a dry-run which would not alter the resource in any
+// way.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsSecurityGatewaysApplicationsDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecurityGatewaysApplicationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsSecurityGatewaysApplicationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecurityGatewaysApplicationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.securityGateways.applications.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsSecurityGatewaysApplicationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single Application.
+//
+//   - name: The resource name of the Application using the form:
+//     `projects/{project_id}/locations/global/securityGateway/{security_gateway_i
+//     d}/applications/{application_id}`.
+func (r *ProjectsLocationsSecurityGatewaysApplicationsService) Get(name string) *ProjectsLocationsSecurityGatewaysApplicationsGetCall {
+	c := &ProjectsLocationsSecurityGatewaysApplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecurityGatewaysApplicationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSecurityGatewaysApplicationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsGetCall) Context(ctx context.Context) *ProjectsLocationsSecurityGatewaysApplicationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecurityGatewaysApplicationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.securityGateways.applications.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBeyondcorpSecuritygatewaysV1Application.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBeyondcorpSecuritygatewaysV1Application, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudBeyondcorpSecuritygatewaysV1Application{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsSecurityGatewaysApplicationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Applications in a given project and location.
+//
+//   - parent: The parent location to which the resources belong.
+//     `projects/{project_id}/locations/global/securityGateways/{security_gateway_
+//     id}`.
+func (r *ProjectsLocationsSecurityGatewaysApplicationsService) List(parent string) *ProjectsLocationsSecurityGatewaysApplicationsListCall {
+	c := &ProjectsLocationsSecurityGatewaysApplicationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter specifying constraints
+// of a list operation. All fields in the Application message are supported.
+// For example, the following query will return the Application with
+// displayName "test-application" For more information, please refer to
+// https://google.aip.dev/160.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsListCall) Filter(filter string) *ProjectsLocationsSecurityGatewaysApplicationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Specifies the ordering of
+// results. See Sorting order
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order) for
+// more information.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsListCall) OrderBy(orderBy string) *ProjectsLocationsSecurityGatewaysApplicationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If not specified, a default value of 50 will be used by the
+// service. Regardless of the page_size value, the response may include a
+// partial list and a caller should only rely on response's next_page_token to
+// determine if there are more instances left to be queried.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsListCall) PageSize(pageSize int64) *ProjectsLocationsSecurityGatewaysApplicationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous ListApplicationsRequest, if any.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsListCall) PageToken(pageToken string) *ProjectsLocationsSecurityGatewaysApplicationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecurityGatewaysApplicationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSecurityGatewaysApplicationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsListCall) Context(ctx context.Context) *ProjectsLocationsSecurityGatewaysApplicationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSecurityGatewaysApplicationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/applications")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.securityGateways.applications.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBeyondcorpSecuritygatewaysV1ListApplicationsResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBeyondcorpSecuritygatewaysV1ListApplicationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudBeyondcorpSecuritygatewaysV1ListApplicationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSecurityGatewaysApplicationsListCall) Pages(ctx context.Context, f func(*GoogleCloudBeyondcorpSecuritygatewaysV1ListApplicationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

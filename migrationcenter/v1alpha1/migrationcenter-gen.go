@@ -2162,8 +2162,7 @@ type DatabasePreferencesCloudSqlCommon struct {
 	// discount. While not supported in the v1 API, this value is converted to
 	// UNSPECIFIED in conversions to the v1 API.
 	CommitmentPlan string `json:"commitmentPlan,omitempty"`
-	// Edition: Optional. Cloud SQL edition. For SQL Server, only Enterprise is
-	// available.
+	// Edition: Optional. Preferred Cloud SQL edition.
 	//
 	// Possible values:
 	//   "CLOUD_SQL_EDITION_UNSPECIFIED" - An unspecified Cloud SQL edition.
@@ -5580,7 +5579,8 @@ func (s ReportSummary) MarshalJSON() ([]byte, error) {
 type ReportSummaryAssetAggregateStats struct {
 	// AssetAge: Count of assets grouped by age.
 	AssetAge *ReportSummaryChartData `json:"assetAge,omitempty"`
-	// CoreCountHistogram: Histogram showing a distribution of CPU core counts.
+	// CoreCountHistogram: Histogram showing a distribution of logical CPU core
+	// counts.
 	CoreCountHistogram *ReportSummaryHistogramChartData `json:"coreCountHistogram,omitempty"`
 	// DatabaseTypes: Output only. Count of assets grouped by database type. Keys
 	// here are taken from DatabaseType enum. Only present for databases.
@@ -7026,7 +7026,8 @@ type VirtualMachineArchitectureDetails struct {
 	CpuName string `json:"cpuName,omitempty"`
 	// CpuSocketCount: Number of processor sockets allocated to the machine.
 	CpuSocketCount int64 `json:"cpuSocketCount,omitempty"`
-	// CpuThreadCount: Number of CPU threads allocated to the machine.
+	// CpuThreadCount: Deprecated: use VirtualMachineDetails.core_count instead.
+	// Number of CPU threads allocated to the machine.
 	CpuThreadCount int64 `json:"cpuThreadCount,omitempty"`
 	// Firmware: Firmware (BIOS/efi).
 	Firmware string `json:"firmware,omitempty"`

@@ -2220,6 +2220,10 @@ type GoogleCloudRunV2Service struct {
 	// Load Balancer traffic is allowed.
 	//   "INGRESS_TRAFFIC_NONE" - No ingress traffic is allowed.
 	Ingress string `json:"ingress,omitempty"`
+	// InvokerIamDisabled: Optional. Disables IAM permission check for
+	// run.routes.invoke for callers of this service. This setting should not be
+	// used with external ingress.
+	InvokerIamDisabled bool `json:"invokerIamDisabled,omitempty"`
 	// Labels: Optional. Unstructured key value map that can be used to organize
 	// and categorize objects. User-provided labels are shared with Google's
 	// billing system, so they can be used to filter, or break down billing charges
@@ -2392,7 +2396,7 @@ func (s GoogleCloudRunV2ServiceMesh) MarshalJSON() ([]byte, error) {
 type GoogleCloudRunV2ServiceScaling struct {
 	// MinInstanceCount: Optional. total min instances for the service. This number
 	// of instances is divided among all revisions with specified traffic based on
-	// the percent of traffic they are receiving. (BETA)
+	// the percent of traffic they are receiving.
 	MinInstanceCount int64 `json:"minInstanceCount,omitempty"`
 	// ScalingMode: Optional. The scaling mode for the service.
 	//
@@ -3345,6 +3349,8 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	//   "REGIONAL_USER_OWNED_BUCKET" - Bucket is located in user-owned project in
 	// the same region as the build. The builder service account must have access
 	// to create and write to Cloud Storage buckets in the build project.
+	//   "LEGACY_BUCKET" - Bucket is located in a Google-owned project and is not
+	// regionalized.
 	DefaultLogsBucketBehavior string `json:"defaultLogsBucketBehavior,omitempty"`
 	// DiskSizeGb: Requested disk size for the VM that runs the build. Note that
 	// this is *NOT* "disk free"; some of the space will be used by the operating

@@ -1616,15 +1616,17 @@ func (s AzureMetadata) MarshalJSON() ([]byte, error) {
 
 // AzureResourceGroup: Represents an Azure resource group.
 type AzureResourceGroup struct {
+	// Id: The ID of the Azure resource group.
+	Id string `json:"id,omitempty"`
 	// Name: The name of the Azure resource group. This is not a UUID.
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
 	// with the JSON null value. By default, fields with empty values are omitted
 	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1948,6 +1950,44 @@ type BulkMuteFindingsRequest struct {
 
 func (s BulkMuteFindingsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkMuteFindingsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CelPolicySpec: YAML-based rule that uses CEL, which supports the declaration
+// of variables and a filtering predicate. A vulnerable resource is emitted if
+// the evaluation is false. Given: 1) the resource types as: - resource_types:
+// "compute.googleapis.com/Instance" - resource_types:
+// "compute.googleapis.com/Firewall" 2) the CEL policy spec as: name:
+// bad_instance resource_filters: - name: instance resource_type:
+// compute.googleapis.com/Instance filter: > instance.status == 'RUNNING' &&
+// 'public' in instance.tags.items - name: firewall resource_type:
+// compute.googleapis.com/Firewall filter: > firewall.direction == 'INGRESS' &&
+// !firewall.disabled && firewall.allowed.exists(rule,
+// rule.IPProtocol.upperAscii() in ['TCP', 'ALL'] && rule.ports.exists(port,
+// network.portsInRange(port, '11-256'))) rule: match: - predicate: >
+// instance.networkInterfaces.exists(net, firewall.network == net.network)
+// output: > {'message': 'Compute instance with publicly accessible ports',
+// 'instance': instance.name} Users are able to join resource types together
+// using the exact format as Kubernetes Validating Admission policies.
+type CelPolicySpec struct {
+	// Spec: The CEL policy to evaluate to produce findings. A finding is generated
+	// when the policy validation evaluates to false.
+	Spec string `json:"spec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Spec") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Spec") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CelPolicySpec) MarshalJSON() ([]byte, error) {
+	type NoMethod CelPolicySpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3610,6 +3650,8 @@ type GoogleCloudSecuritycenterV1BulkMuteFindingsResponse struct {
 // configuration to create custom detectors that generate custom findings for
 // resources that you specify.
 type GoogleCloudSecuritycenterV1CustomConfig struct {
+	// CelPolicy: The CEL policy spec attached to the custom module.
+	CelPolicy *CelPolicySpec `json:"celPolicy,omitempty"`
 	// CustomOutput: Custom output properties.
 	CustomOutput *GoogleCloudSecuritycenterV1CustomOutputSpec `json:"customOutput,omitempty"`
 	// Description: Text that describes the vulnerability or misconfiguration that
@@ -3637,13 +3679,13 @@ type GoogleCloudSecuritycenterV1CustomConfig struct {
 	//   "MEDIUM" - Medium severity.
 	//   "LOW" - Low severity.
 	Severity string `json:"severity,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CustomOutput") to
+	// ForceSendFields is a list of field names (e.g. "CelPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CustomOutput") to include in API
+	// NullFields is a list of field names (e.g. "CelPolicy") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4986,15 +5028,17 @@ func (s GoogleCloudSecuritycenterV2AzureMetadata) MarshalJSON() ([]byte, error) 
 // GoogleCloudSecuritycenterV2AzureResourceGroup: Represents an Azure resource
 // group.
 type GoogleCloudSecuritycenterV2AzureResourceGroup struct {
+	// Id: The ID of the Azure resource group.
+	Id string `json:"id,omitempty"`
 	// Name: The name of the Azure resource group. This is not a UUID.
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
 	// with the JSON null value. By default, fields with empty values are omitted
 	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -13690,120 +13734,6 @@ func (c *FoldersFindingsBulkMuteCall) Do(opts ...googleapi.CallOption) (*Operati
 	return ret, nil
 }
 
-type FoldersLocationsMuteConfigsCreateCall struct {
-	s                                     *Service
-	parent                                string
-	googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig
-	urlParams_                            gensupport.URLParams
-	ctx_                                  context.Context
-	header_                               http.Header
-}
-
-// Create: Creates a mute config.
-//
-//   - parent: Resource name of the new mute configs's parent. Its format is
-//     `organizations/[organization_id]`, `folders/[folder_id]`, or
-//     `projects/[project_id]`.
-func (r *FoldersLocationsMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *FoldersLocationsMuteConfigsCreateCall {
-	c := &FoldersLocationsMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googlecloudsecuritycenterv1muteconfig = googlecloudsecuritycenterv1muteconfig
-	return c
-}
-
-// MuteConfigId sets the optional parameter "muteConfigId": Required. Unique
-// identifier provided by the client within the parent scope. It must consist
-// of only lowercase letters, numbers, and hyphens, must start with a letter,
-// must end with either a letter or a number, and must be 63 characters or
-// less.
-func (c *FoldersLocationsMuteConfigsCreateCall) MuteConfigId(muteConfigId string) *FoldersLocationsMuteConfigsCreateCall {
-	c.urlParams_.Set("muteConfigId", muteConfigId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *FoldersLocationsMuteConfigsCreateCall) Fields(s ...googleapi.Field) *FoldersLocationsMuteConfigsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *FoldersLocationsMuteConfigsCreateCall) Context(ctx context.Context) *FoldersLocationsMuteConfigsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *FoldersLocationsMuteConfigsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *FoldersLocationsMuteConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1muteconfig)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/muteConfigs")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "securitycenter.folders.locations.muteConfigs.create" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudSecuritycenterV1MuteConfig.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *FoldersLocationsMuteConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1MuteConfig, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudSecuritycenterV1MuteConfig{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
 type FoldersLocationsMuteConfigsDeleteCall struct {
 	s          *Service
 	name       string
@@ -14017,155 +13947,6 @@ func (c *FoldersLocationsMuteConfigsGetCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-}
-
-type FoldersLocationsMuteConfigsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists mute configs.
-//
-//   - parent: The parent, which owns the collection of mute configs. Its format
-//     is `organizations/[organization_id]`, `folders/[folder_id]`,
-//     `projects/[project_id]`.
-func (r *FoldersLocationsMuteConfigsService) List(parent string) *FoldersLocationsMuteConfigsListCall {
-	c := &FoldersLocationsMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number of
-// configs to return. The service may return fewer than this value. If
-// unspecified, at most 10 configs will be returned. The maximum value is 1000;
-// values above 1000 will be coerced to 1000.
-func (c *FoldersLocationsMuteConfigsListCall) PageSize(pageSize int64) *FoldersLocationsMuteConfigsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A page token, received
-// from a previous `ListMuteConfigs` call. Provide this to retrieve the
-// subsequent page. When paginating, all other parameters provided to
-// `ListMuteConfigs` must match the call that provided the page token.
-func (c *FoldersLocationsMuteConfigsListCall) PageToken(pageToken string) *FoldersLocationsMuteConfigsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *FoldersLocationsMuteConfigsListCall) Fields(s ...googleapi.Field) *FoldersLocationsMuteConfigsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *FoldersLocationsMuteConfigsListCall) IfNoneMatch(entityTag string) *FoldersLocationsMuteConfigsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *FoldersLocationsMuteConfigsListCall) Context(ctx context.Context) *FoldersLocationsMuteConfigsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *FoldersLocationsMuteConfigsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *FoldersLocationsMuteConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "securitycenter.folders.locations.muteConfigs.list" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *ListMuteConfigsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *FoldersLocationsMuteConfigsListCall) Do(opts ...googleapi.CallOption) (*ListMuteConfigsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ListMuteConfigsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *FoldersLocationsMuteConfigsListCall) Pages(ctx context.Context, f func(*ListMuteConfigsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken"))
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }
 
 type FoldersLocationsMuteConfigsPatchCall struct {
@@ -20312,120 +20093,6 @@ func (c *OrganizationsFindingsBulkMuteCall) Do(opts ...googleapi.CallOption) (*O
 	return ret, nil
 }
 
-type OrganizationsLocationsMuteConfigsCreateCall struct {
-	s                                     *Service
-	parent                                string
-	googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig
-	urlParams_                            gensupport.URLParams
-	ctx_                                  context.Context
-	header_                               http.Header
-}
-
-// Create: Creates a mute config.
-//
-//   - parent: Resource name of the new mute configs's parent. Its format is
-//     `organizations/[organization_id]`, `folders/[folder_id]`, or
-//     `projects/[project_id]`.
-func (r *OrganizationsLocationsMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *OrganizationsLocationsMuteConfigsCreateCall {
-	c := &OrganizationsLocationsMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googlecloudsecuritycenterv1muteconfig = googlecloudsecuritycenterv1muteconfig
-	return c
-}
-
-// MuteConfigId sets the optional parameter "muteConfigId": Required. Unique
-// identifier provided by the client within the parent scope. It must consist
-// of only lowercase letters, numbers, and hyphens, must start with a letter,
-// must end with either a letter or a number, and must be 63 characters or
-// less.
-func (c *OrganizationsLocationsMuteConfigsCreateCall) MuteConfigId(muteConfigId string) *OrganizationsLocationsMuteConfigsCreateCall {
-	c.urlParams_.Set("muteConfigId", muteConfigId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *OrganizationsLocationsMuteConfigsCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsMuteConfigsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *OrganizationsLocationsMuteConfigsCreateCall) Context(ctx context.Context) *OrganizationsLocationsMuteConfigsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *OrganizationsLocationsMuteConfigsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsMuteConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1muteconfig)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/muteConfigs")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "securitycenter.organizations.locations.muteConfigs.create" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudSecuritycenterV1MuteConfig.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *OrganizationsLocationsMuteConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1MuteConfig, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudSecuritycenterV1MuteConfig{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
 type OrganizationsLocationsMuteConfigsDeleteCall struct {
 	s          *Service
 	name       string
@@ -20639,155 +20306,6 @@ func (c *OrganizationsLocationsMuteConfigsGetCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-}
-
-type OrganizationsLocationsMuteConfigsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists mute configs.
-//
-//   - parent: The parent, which owns the collection of mute configs. Its format
-//     is `organizations/[organization_id]`, `folders/[folder_id]`,
-//     `projects/[project_id]`.
-func (r *OrganizationsLocationsMuteConfigsService) List(parent string) *OrganizationsLocationsMuteConfigsListCall {
-	c := &OrganizationsLocationsMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number of
-// configs to return. The service may return fewer than this value. If
-// unspecified, at most 10 configs will be returned. The maximum value is 1000;
-// values above 1000 will be coerced to 1000.
-func (c *OrganizationsLocationsMuteConfigsListCall) PageSize(pageSize int64) *OrganizationsLocationsMuteConfigsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A page token, received
-// from a previous `ListMuteConfigs` call. Provide this to retrieve the
-// subsequent page. When paginating, all other parameters provided to
-// `ListMuteConfigs` must match the call that provided the page token.
-func (c *OrganizationsLocationsMuteConfigsListCall) PageToken(pageToken string) *OrganizationsLocationsMuteConfigsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *OrganizationsLocationsMuteConfigsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsMuteConfigsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *OrganizationsLocationsMuteConfigsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsMuteConfigsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *OrganizationsLocationsMuteConfigsListCall) Context(ctx context.Context) *OrganizationsLocationsMuteConfigsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *OrganizationsLocationsMuteConfigsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OrganizationsLocationsMuteConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "securitycenter.organizations.locations.muteConfigs.list" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *ListMuteConfigsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *OrganizationsLocationsMuteConfigsListCall) Do(opts ...googleapi.CallOption) (*ListMuteConfigsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ListMuteConfigsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *OrganizationsLocationsMuteConfigsListCall) Pages(ctx context.Context, f func(*ListMuteConfigsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken"))
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }
 
 type OrganizationsLocationsMuteConfigsPatchCall struct {
@@ -29592,120 +29110,6 @@ func (c *ProjectsFindingsBulkMuteCall) Do(opts ...googleapi.CallOption) (*Operat
 	return ret, nil
 }
 
-type ProjectsLocationsMuteConfigsCreateCall struct {
-	s                                     *Service
-	parent                                string
-	googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig
-	urlParams_                            gensupport.URLParams
-	ctx_                                  context.Context
-	header_                               http.Header
-}
-
-// Create: Creates a mute config.
-//
-//   - parent: Resource name of the new mute configs's parent. Its format is
-//     `organizations/[organization_id]`, `folders/[folder_id]`, or
-//     `projects/[project_id]`.
-func (r *ProjectsLocationsMuteConfigsService) Create(parent string, googlecloudsecuritycenterv1muteconfig *GoogleCloudSecuritycenterV1MuteConfig) *ProjectsLocationsMuteConfigsCreateCall {
-	c := &ProjectsLocationsMuteConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googlecloudsecuritycenterv1muteconfig = googlecloudsecuritycenterv1muteconfig
-	return c
-}
-
-// MuteConfigId sets the optional parameter "muteConfigId": Required. Unique
-// identifier provided by the client within the parent scope. It must consist
-// of only lowercase letters, numbers, and hyphens, must start with a letter,
-// must end with either a letter or a number, and must be 63 characters or
-// less.
-func (c *ProjectsLocationsMuteConfigsCreateCall) MuteConfigId(muteConfigId string) *ProjectsLocationsMuteConfigsCreateCall {
-	c.urlParams_.Set("muteConfigId", muteConfigId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsMuteConfigsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsMuteConfigsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsMuteConfigsCreateCall) Context(ctx context.Context) *ProjectsLocationsMuteConfigsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsMuteConfigsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsMuteConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudsecuritycenterv1muteconfig)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/muteConfigs")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "securitycenter.projects.locations.muteConfigs.create" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudSecuritycenterV1MuteConfig.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsMuteConfigsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudSecuritycenterV1MuteConfig, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudSecuritycenterV1MuteConfig{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
 type ProjectsLocationsMuteConfigsDeleteCall struct {
 	s          *Service
 	name       string
@@ -29919,155 +29323,6 @@ func (c *ProjectsLocationsMuteConfigsGetCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-}
-
-type ProjectsLocationsMuteConfigsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists mute configs.
-//
-//   - parent: The parent, which owns the collection of mute configs. Its format
-//     is `organizations/[organization_id]`, `folders/[folder_id]`,
-//     `projects/[project_id]`.
-func (r *ProjectsLocationsMuteConfigsService) List(parent string) *ProjectsLocationsMuteConfigsListCall {
-	c := &ProjectsLocationsMuteConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number of
-// configs to return. The service may return fewer than this value. If
-// unspecified, at most 10 configs will be returned. The maximum value is 1000;
-// values above 1000 will be coerced to 1000.
-func (c *ProjectsLocationsMuteConfigsListCall) PageSize(pageSize int64) *ProjectsLocationsMuteConfigsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A page token, received
-// from a previous `ListMuteConfigs` call. Provide this to retrieve the
-// subsequent page. When paginating, all other parameters provided to
-// `ListMuteConfigs` must match the call that provided the page token.
-func (c *ProjectsLocationsMuteConfigsListCall) PageToken(pageToken string) *ProjectsLocationsMuteConfigsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsMuteConfigsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsMuteConfigsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsMuteConfigsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsMuteConfigsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsMuteConfigsListCall) Context(ctx context.Context) *ProjectsLocationsMuteConfigsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsMuteConfigsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsMuteConfigsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "securitycenter.projects.locations.muteConfigs.list" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *ListMuteConfigsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsMuteConfigsListCall) Do(opts ...googleapi.CallOption) (*ListMuteConfigsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ListMuteConfigsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsMuteConfigsListCall) Pages(ctx context.Context, f func(*ListMuteConfigsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken"))
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }
 
 type ProjectsLocationsMuteConfigsPatchCall struct {

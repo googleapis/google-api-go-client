@@ -1187,7 +1187,8 @@ type InstancePolicy struct {
 	ProvisioningModel string `json:"provisioningModel,omitempty"`
 	// Reservation: Optional. If specified, VMs will consume only the specified
 	// reservation. If not specified (default), VMs will consume any applicable
-	// reservation.
+	// reservation. Additionally, VMs will not consume any reservation if
+	// "NO_RESERVATION" is specified.
 	Reservation string `json:"reservation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Accelerators") to
 	// unconditionally include in API requests. By default, fields with empty or

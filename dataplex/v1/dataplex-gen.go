@@ -16347,9 +16347,11 @@ func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) AllowMissing(allowMissing
 // AspectKeys sets the optional parameter "aspectKeys": The map keys of the
 // Aspects which the service should modify. It supports the following syntaxes:
 // - matches an aspect of the given type and empty path. @path - matches an
-// aspect of the given type and specified path. * - matches aspects of the
-// given type for all paths. *@path - matches aspects of all types on the given
-// path.The service will not remove existing aspects matching the syntax unless
+// aspect of the given type and specified path. For example, to attach an
+// aspect to a field that is specified by the schema aspect, the path should
+// have the format Schema.. * - matches aspects of the given type for all
+// paths. *@path - matches aspects of all types on the given path.The service
+// will not remove existing aspects matching the syntax unless
 // delete_missing_aspects is set to true.If this field is left empty, the
 // service treats it as specifying exactly those Aspects present in the
 // request.

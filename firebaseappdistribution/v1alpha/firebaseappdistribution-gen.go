@@ -1243,6 +1243,15 @@ type GoogleFirebaseAppdistroV1alphaReleaseTest struct {
 	// `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_id
 	// }`
 	Name string `json:"name,omitempty"`
+	// TestState: Output only. The state of the release test.
+	//
+	// Possible values:
+	//   "TEST_STATE_UNSPECIFIED" - Test state unspecified.
+	//   "IN_PROGRESS" - The test is in progress.
+	//   "PASSED" - The test has passed.
+	//   "FAILED" - The test has failed.
+	//   "INCONCLUSIVE" - The test was inconclusive.
+	TestState string `json:"testState,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2599,9 +2608,9 @@ func (r *ProjectsAppsReleasesTestsService) Create(parent string, googlefirebasea
 }
 
 // ReleaseTestId sets the optional parameter "releaseTestId": The ID to use for
-// the test, which will become the final component of the tests's resource
-// name. This value should be 4-63 characters, and valid characters are /a-z-/.
-// If it is not provided one will be automatically generated.
+// the test, which will become the final component of the test's resource name.
+// This value should be 4-63 characters, and valid characters are /a-z-/. If it
+// is not provided one will be automatically generated.
 func (c *ProjectsAppsReleasesTestsCreateCall) ReleaseTestId(releaseTestId string) *ProjectsAppsReleasesTestsCreateCall {
 	c.urlParams_.Set("releaseTestId", releaseTestId)
 	return c

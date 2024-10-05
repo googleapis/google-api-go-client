@@ -929,6 +929,30 @@ func (s BasicSli) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BooleanTest: A test that uses an alerting result in a boolean column
+// produced by the SQL query.
+type BooleanTest struct {
+	// Column: Required. The name of the column containing the boolean value. If
+	// the value in a row is NULL, that row is ignored.
+	Column string `json:"column,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BooleanTest) MarshalJSON() ([]byte, error) {
+	type NoMethod BooleanTest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BucketOptions: BucketOptions describes the bucket boundaries used to create
 // a histogram for the distribution. The buckets can be in a linear sequence,
 // an exponential sequence, or each bucket can be specified explicitly.
@@ -1237,6 +1261,8 @@ type Condition struct {
 	// ConditionPrometheusQueryLanguage: A condition that uses the Prometheus query
 	// language to define alerts.
 	ConditionPrometheusQueryLanguage *PrometheusQueryLanguageCondition `json:"conditionPrometheusQueryLanguage,omitempty"`
+	// ConditionSql: A condition that uses SQL to define alerts in Logs Analytics.
+	ConditionSql *SqlCondition `json:"conditionSql,omitempty"`
 	// ConditionThreshold: A condition that compares a time series against a
 	// threshold.
 	ConditionThreshold *MetricThreshold `json:"conditionThreshold,omitempty"`
@@ -1484,6 +1510,35 @@ func (s Criteria) MarshalJSON() ([]byte, error) {
 // when none of the other service types (like App Engine, Cloud Run, or a GKE
 // type) matches your intended service.
 type Custom struct {
+}
+
+// Daily: Used to schedule the query to run every so many days.
+type Daily struct {
+	// ExecutionTime: Optional. The time of day (in UTC) at which the query should
+	// run. If left unspecified, the server picks an arbitrary time of day and runs
+	// the query at the same time each day.
+	ExecutionTime *TimeOfDay `json:"executionTime,omitempty"`
+	// Periodicity: Required. LINT.IfChange The number of days between runs. Must
+	// be greater than or equal to 1 day and less than or equal to 31 days.
+	// LINT.ThenChange(//depot/google3/cloud/monitoring/api/alerts/policy_validation
+	// .cc)
+	Periodicity int64 `json:"periodicity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExecutionTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExecutionTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Daily) MarshalJSON() ([]byte, error) {
+	type NoMethod Daily
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Distribution: Distribution contains summary statistics for a population of
@@ -2217,6 +2272,37 @@ type Group struct {
 
 func (s Group) MarshalJSON() ([]byte, error) {
 	type NoMethod Group
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Hourly: Used to schedule the query to run every so many hours.
+type Hourly struct {
+	// MinuteOffset: Optional. LINT.IfChange The number of minutes after the hour
+	// (in UTC) to run the query. Must be between 0 and 59 inclusive. If left
+	// unspecified, then an arbitrary offset is used.
+	// LINT.ThenChange(//depot/google3/cloud/monitoring/api/alerts/policy_validation
+	// .cc)
+	MinuteOffset int64 `json:"minuteOffset,omitempty"`
+	// Periodicity: Required. LINT.IfChange The number of hours between runs. Must
+	// be greater than or equal to 1 hour and less than or equal to 48 hours.
+	// LINT.ThenChange(//depot/google3/cloud/monitoring/api/alerts/policy_validation
+	// .cc)
+	Periodicity int64 `json:"periodicity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MinuteOffset") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MinuteOffset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Hourly) MarshalJSON() ([]byte, error) {
+	type NoMethod Hourly
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3576,6 +3662,31 @@ func (s *MetricThreshold) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Minutes: Used to schedule the query to run every so many minutes.
+type Minutes struct {
+	// Periodicity: Required. LINT.IfChange Number of minutes between runs. The
+	// interval must be between 5 minutes and 1440 minutes.
+	// LINT.ThenChange(//depot/google3/cloud/monitoring/api/alerts/policy_validation
+	// .cc)
+	Periodicity int64 `json:"periodicity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Periodicity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Periodicity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Minutes) MarshalJSON() ([]byte, error) {
+	type NoMethod Minutes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MonitoredResource: An object representing a resource that can be used for
 // monitoring, logging, billing, or other purposes. Examples include virtual
 // machine instances, databases, and storage devices such as disks. The type
@@ -4546,6 +4657,47 @@ func (s ResponseStatusCode) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RowCountTest: A test that checks if the number of rows in the result set
+// violates some threshold.
+type RowCountTest struct {
+	// Comparison: Required. The comparison to apply between the number of rows
+	// returned by the query and the threshold.
+	//
+	// Possible values:
+	//   "COMPARISON_UNSPECIFIED" - No ordering relationship is specified.
+	//   "COMPARISON_GT" - True if the left argument is greater than the right
+	// argument.
+	//   "COMPARISON_GE" - True if the left argument is greater than or equal to
+	// the right argument.
+	//   "COMPARISON_LT" - True if the left argument is less than the right
+	// argument.
+	//   "COMPARISON_LE" - True if the left argument is less than or equal to the
+	// right argument.
+	//   "COMPARISON_EQ" - True if the left argument is equal to the right
+	// argument.
+	//   "COMPARISON_NE" - True if the left argument is not equal to the right
+	// argument.
+	Comparison string `json:"comparison,omitempty"`
+	// Threshold: Required. The value against which to compare the row count.
+	Threshold int64 `json:"threshold,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Comparison") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Comparison") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RowCountTest) MarshalJSON() ([]byte, error) {
+	type NoMethod RowCountTest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SendNotificationChannelVerificationCodeRequest: The
 // SendNotificationChannelVerificationCode request.
 type SendNotificationChannelVerificationCodeRequest struct {
@@ -4868,6 +5020,46 @@ func (s SpanContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SqlCondition: A condition that allows alert policies to be defined using
+// GoogleSQL. SQL conditions examine a sliding window of logs using GoogleSQL.
+// Alert policies with SQL conditions may incur additional billing.
+type SqlCondition struct {
+	// BooleanTest: Test the boolean value in the indicated column.
+	BooleanTest *BooleanTest `json:"booleanTest,omitempty"`
+	// Daily: Schedule the query to execute every so many days.
+	Daily *Daily `json:"daily,omitempty"`
+	// Hourly: Schedule the query to execute every so many hours.
+	Hourly *Hourly `json:"hourly,omitempty"`
+	// Minutes: Schedule the query to execute every so many minutes.
+	Minutes *Minutes `json:"minutes,omitempty"`
+	// Query: Required. The Log Analytics SQL query to run, as a string. The query
+	// must conform to the required shape. Specifically, the query must not try to
+	// filter the input by time. A filter will automatically be applied to filter
+	// the input so that the query receives all rows received since the last time
+	// the query was run.E.g. Extract all log entries containing an HTTP
+	// request:SELECT timestamp, log_name, severity, http_request, resource, labels
+	// FROM my-project.global._Default._AllLogs WHERE http_request IS NOT NULL
+	Query string `json:"query,omitempty"`
+	// RowCountTest: Test the row count against a threshold.
+	RowCountTest *RowCountTest `json:"rowCountTest,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BooleanTest") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BooleanTest") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Status: The Status type defines a logical error model that is suitable for
 // different programming environments, including REST APIs and RPC APIs. It is
 // used by gRPC (https://github.com/grpc). Each Status message contains three
@@ -5027,6 +5219,39 @@ type TimeInterval struct {
 
 func (s TimeInterval) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeInterval
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TimeOfDay: Represents a time of day. The date and time zone are either not
+// significant or are specified elsewhere. An API may choose to allow leap
+// seconds. Related types are google.type.Date and google.protobuf.Timestamp.
+type TimeOfDay struct {
+	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API may
+	// choose to allow the value "24:00:00" for scenarios like business closing
+	// time.
+	Hours int64 `json:"hours,omitempty"`
+	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	Minutes int64 `json:"minutes,omitempty"`
+	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+	Nanos int64 `json:"nanos,omitempty"`
+	// Seconds: Seconds of minutes of the time. Must normally be from 0 to 59. An
+	// API may allow the value 60 if it allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hours") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeOfDay
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -465,7 +465,7 @@
                           "type": "string"
                         },
                         "releaseTestId": {
-                          "description": "Optional. The ID to use for the test, which will become the final component of the tests's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. If it is not provided one will be automatically generated.",
+                          "description": "Optional. The ID to use for the test, which will become the final component of the test's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. If it is not provided one will be automatically generated.",
                           "location": "query",
                           "type": "string"
                         }
@@ -585,7 +585,7 @@
       }
     }
   },
-  "revision": "20240911",
+  "revision": "20241003",
   "rootUrl": "https://firebaseappdistribution.googleapis.com/",
   "schemas": {
     "AndroidxCrawlerOutputPoint": {
@@ -1439,6 +1439,25 @@
         },
         "name": {
           "description": "The name of the release test resource. Format: `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_id}`",
+          "type": "string"
+        },
+        "testState": {
+          "description": "Output only. The state of the release test.",
+          "enum": [
+            "TEST_STATE_UNSPECIFIED",
+            "IN_PROGRESS",
+            "PASSED",
+            "FAILED",
+            "INCONCLUSIVE"
+          ],
+          "enumDescriptions": [
+            "Test state unspecified.",
+            "The test is in progress.",
+            "The test has passed.",
+            "The test has failed.",
+            "The test was inconclusive."
+          ],
+          "readOnly": true,
           "type": "string"
         }
       },

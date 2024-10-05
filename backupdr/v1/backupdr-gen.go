@@ -2211,6 +2211,33 @@ func (s GcpBackupConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GcpResource: Minimum details to identify a Google Cloud resource
+type GcpResource struct {
+	// GcpResourcename: Name of the Google Cloud resource.
+	GcpResourcename string `json:"gcpResourcename,omitempty"`
+	// Location: Location of the resource: //"global"/"unspecified".
+	Location string `json:"location,omitempty"`
+	// Type: Type of the resource. Use the Unified Resource Type, eg.
+	// compute.googleapis.com/Instance.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GcpResourcename") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcpResourcename") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GcpResource) MarshalJSON() ([]byte, error) {
+	type NoMethod GcpResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GuestOsFeature: Feature type of the Guest OS.
 type GuestOsFeature struct {
 	// Type: The ID of a supported feature.
@@ -3451,6 +3478,29 @@ func (s RestoreBackupRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RestoreBackupResponse: Response message for restoring from a Backup.
+type RestoreBackupResponse struct {
+	// TargetResource: Details of the target resource created/modified as part of
+	// restore.
+	TargetResource *TargetResource `json:"targetResource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TargetResource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TargetResource") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RestoreBackupResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreBackupResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RuleConfigInfo: Message for rules config info.
 type RuleConfigInfo struct {
 	// LastBackupError: Output only. Output Only. google.rpc.Status object to store
@@ -3705,6 +3755,10 @@ func (s SetInternalStatusRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SetInternalStatusResponse: Response message from SetStatusInternal method.
+type SetInternalStatusResponse struct {
+}
+
 type SpannerLocation struct {
 	// BackupName: Set of backups used by the resource with name in the same format
 	// as what is available at http://table/spanner_automon.backup_metadata
@@ -3883,6 +3937,30 @@ type Tags struct {
 
 func (s Tags) MarshalJSON() ([]byte, error) {
 	type NoMethod Tags
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TargetResource: Details of the target resource created/modified as part of
+// restore.
+type TargetResource struct {
+	// GcpResource: Details of the native Google Cloud resource created as part of
+	// restore.
+	GcpResource *GcpResource `json:"gcpResource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GcpResource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcpResource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TargetResource) MarshalJSON() ([]byte, error) {
+	type NoMethod TargetResource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

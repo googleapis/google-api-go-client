@@ -14266,15 +14266,9 @@ type SensitiveCategoryAssignedTargetingOptionDetails struct {
 	//   "SENSITIVE_CATEGORY_SHOCKING" - Content which may be considered shocking
 	// or disturbing, such as violent news stories, stunts, or toilet humor.
 	//   "SENSITIVE_CATEGORY_EMBEDDED_VIDEO" - YouTube videos embedded on websites
-	// outside of YouTube.com. Only applicable to YouTube and Partners line items.
-	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
-	// about this announced
-	// change](/display-video/api/deprecations#features.yt_li_categories).
+	// outside of YouTube.com.
 	//   "SENSITIVE_CATEGORY_LIVE_STREAMING_VIDEO" - Video of live events streamed
-	// over the internet. Only applicable to YouTube and Partners line items.
-	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
-	// about this announced
-	// change](/display-video/api/deprecations#features.yt_li_categories).
+	// over the internet.
 	ExcludedSensitiveCategory string `json:"excludedSensitiveCategory,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludedSensitiveCategory")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -14352,15 +14346,9 @@ type SensitiveCategoryTargetingOptionDetails struct {
 	//   "SENSITIVE_CATEGORY_SHOCKING" - Content which may be considered shocking
 	// or disturbing, such as violent news stories, stunts, or toilet humor.
 	//   "SENSITIVE_CATEGORY_EMBEDDED_VIDEO" - YouTube videos embedded on websites
-	// outside of YouTube.com. Only applicable to YouTube and Partners line items.
-	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
-	// about this announced
-	// change](/display-video/api/deprecations#features.yt_li_categories).
+	// outside of YouTube.com.
 	//   "SENSITIVE_CATEGORY_LIVE_STREAMING_VIDEO" - Video of live events streamed
-	// over the internet. Only applicable to YouTube and Partners line items.
-	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
-	// about this announced
-	// change](/display-video/api/deprecations#features.yt_li_categories).
+	// over the internet.
 	SensitiveCategory string `json:"sensitiveCategory,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SensitiveCategory") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14590,10 +14578,15 @@ type TargetingExpansionConfig struct {
 	// item and ad group resources.
 	AudienceExpansionSeedListExcluded bool `json:"audienceExpansionSeedListExcluded,omitempty"`
 	// EnableOptimizedTargeting: Required. Whether to enable Optimized Targeting
-	// for the line item. *Warning*: Starting on **September 30, 2024**, optimized
-	// targeting will no longer be compatible with a subset of bid strategies. Read
-	// more about this announced change
-	// (/display-video/api/deprecations#features.ot_bid_strategies).
+	// for the line item. Optimized targeting is not compatible with all bid
+	// strategies. Attempting to set this field to `true` for a line item using one
+	// of the following combinations of BiddingStrategy fields and
+	// BiddingStrategyPerformanceGoalType will result in an error:
+	// maximize_auto_spend_bid: * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CIVA` *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_IVO_TEN` *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_AV_VIEWED`
+	// performance_goal_auto_bid: *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM`
 	EnableOptimizedTargeting bool `json:"enableOptimizedTargeting,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudienceExpansionLevel") to
 	// unconditionally include in API requests. By default, fields with empty or

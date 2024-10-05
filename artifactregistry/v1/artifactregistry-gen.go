@@ -466,38 +466,38 @@ func (s AptRepository) MarshalJSON() ([]byte, error) {
 }
 
 // Attachment: An Attachment refers to additional metadata that can be attached
-// to artifacts in ArtifactRegistry. An attachment consists of one or more
+// to artifacts in Artifact Registry. An attachment consists of one or more
 // files.
 type Attachment struct {
 	// Annotations: Optional. User annotations. These attributes can only be set
 	// and used by the user, and not by Artifact Registry. See
 	// https://google.aip.dev/128#annotations for more details such as format and
-	// size limitations. Client specified annotations.
+	// size limitations.
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// AttachmentNamespace: The namespace this attachment belongs to. E.g. If an
 	// Attachment is created by artifact analysis, namespace is set to
-	// artifactanalysis.googleapis.com.
+	// `artifactanalysis.googleapis.com`.
 	AttachmentNamespace string `json:"attachmentNamespace,omitempty"`
 	// CreateTime: Output only. The time when the attachment was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Files: Required. The files that blong to this Attachment. If the file ID
+	// Files: Required. The files that belong to this attachment. If the file ID
 	// part contains slashes, they are escaped. E.g.
-	// "projects/p1/locations/us-central1/repositories/repo1/files/sha:".
+	// `projects/p1/locations/us-central1/repositories/repo1/files/sha:`.
 	Files []string `json:"files,omitempty"`
 	// Name: The name of the attachment. E.g.
 	// "projects/p1/locations/us/repositories/repo/attachments/sbom".
 	Name string `json:"name,omitempty"`
 	// OciVersionName: Output only. The name of the OCI version that this
 	// attachment created. Only populated for Docker attachments. E.g.
-	// "projects/p1/locations/us-central1/repositories/repo1/packages/p1/versions/v1
-	// ".
+	// `projects/p1/locations/us-central1/repositories/repo1/packages/p1/versions/v1
+	// `.
 	OciVersionName string `json:"ociVersionName,omitempty"`
 	// Target: Required. The target the attachment is for, can be a Version,
 	// Package or Repository. E.g.
 	// "projects/p1/locations/us-central1/repositories/repo1/packages/p1/versions/v1
 	// ".
 	Target string `json:"target,omitempty"`
-	// Type: Type of Attachment. E.g. application/vnd.spdx+jsonn
+	// Type: Type of Attachment. E.g. `application/vnd.spdx+json`
 	Type string `json:"type,omitempty"`
 	// UpdateTime: Output only. The time when the attachment was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -777,7 +777,7 @@ func (s CleanupPolicyMostRecentVersions) MarshalJSON() ([]byte, error) {
 
 // CommonRemoteRepository: Common remote repository settings type.
 type CommonRemoteRepository struct {
-	// Uri: Required. A common public repository base for Remote Repository.
+	// Uri: Required. A common public repository base for remote repository.
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2499,11 +2499,6 @@ func (s ProjectSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PromoteArtifactMetadata: The metadata for promote artifact long running
-// operation.
-type PromoteArtifactMetadata struct {
-}
-
 // PythonPackage: PythonPackage represents a python artifact.
 type PythonPackage struct {
 	// CreateTime: Output only. Time the package was created.
@@ -2580,9 +2575,10 @@ func (s PythonRepository) MarshalJSON() ([]byte, error) {
 type RemoteRepositoryConfig struct {
 	// AptRepository: Specific settings for an Apt remote repository.
 	AptRepository *AptRepository `json:"aptRepository,omitempty"`
-	// CommonRepository: Common remote repository settings. Used as the RR upstream
-	// URL instead of Predefined and Custom remote repositories. UI and Gcloud will
-	// map all the new remote repositories to this field.
+	// CommonRepository: Common remote repository settings. Used as the
+	// RemoteRepository upstream URL instead of Predefined and Custom remote
+	// repositories. Google Cloud Console and Google Cloud CLI will map all the new
+	// remote repositories to this field.
 	CommonRepository *CommonRemoteRepository `json:"commonRepository,omitempty"`
 	// Description: The description of the remote source.
 	Description string `json:"description,omitempty"`
@@ -3378,8 +3374,8 @@ type Version struct {
 	// MavenArtifact
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Name: The name of the version, for example:
-	// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/
-	// art1". If the package or version ID parts contain slashes, the slashes are
+	// `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/
+	// art1`. If the package or version ID parts contain slashes, the slashes are
 	// escaped.
 	Name string `json:"name,omitempty"`
 	// RelatedTags: Output only. A list of related tags. Will contain up to 100
@@ -5510,7 +5506,7 @@ type ProjectsLocationsRepositoriesAttachmentsCreateCall struct {
 }
 
 // Create: Creates an attachment. The returned Operation will finish once the
-// attachment has been created. Its response will be the created Attachment.
+// attachment has been created. Its response will be the created attachment.
 //
 //   - parent: The name of the parent resource where the attachment will be
 //     created.
@@ -5620,7 +5616,7 @@ type ProjectsLocationsRepositoriesAttachmentsDeleteCall struct {
 
 // Delete: Deletes an attachment. The returned Operation will finish once the
 // attachments has been deleted. It will not have any Operation metadata and
-// will return a google.protobuf.Empty response.
+// will return a `google.protobuf.Empty` response.
 //
 // - name: The name of the attachment to delete.
 func (r *ProjectsLocationsRepositoriesAttachmentsService) Delete(name string) *ProjectsLocationsRepositoriesAttachmentsDeleteCall {
@@ -5823,7 +5819,7 @@ type ProjectsLocationsRepositoriesAttachmentsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists repositories.
+// List: Lists attachments.
 //
 // - parent: The name of the parent resource whose attachments will be listed.
 func (r *ProjectsLocationsRepositoriesAttachmentsService) List(parent string) *ProjectsLocationsRepositoriesAttachmentsListCall {
@@ -6863,7 +6859,7 @@ type ProjectsLocationsRepositoriesFilesUploadCall struct {
 	header_           http.Header
 }
 
-// Upload: Directly uploads a File to a repository. The returned Operation will
+// Upload: Directly uploads a file to a repository. The returned Operation will
 // complete once the resources are uploaded.
 //
 //   - parent: The resource name of the repository where the file will be
@@ -9960,8 +9956,8 @@ type ProjectsLocationsRepositoriesPackagesVersionsPatchCall struct {
 // Patch: Updates a version.
 //
 //   - name: The name of the version, for example:
-//     "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/version
-//     s/art1". If the package or version ID parts contain slashes, the slashes
+//     `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/version
+//     s/art1`. If the package or version ID parts contain slashes, the slashes
 //     are escaped.
 func (r *ProjectsLocationsRepositoriesPackagesVersionsService) Patch(name string, version *Version) *ProjectsLocationsRepositoriesPackagesVersionsPatchCall {
 	c := &ProjectsLocationsRepositoriesPackagesVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

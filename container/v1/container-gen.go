@@ -1332,6 +1332,8 @@ type Cluster struct {
 	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) notation (e.g.
 	// `1.2.3.4/29`).
 	TpuIpv4CidrBlock string `json:"tpuIpv4CidrBlock,omitempty"`
+	// UserManagedKeysConfig: The Custom keys configuration for the cluster.
+	UserManagedKeysConfig *UserManagedKeysConfig `json:"userManagedKeysConfig,omitempty"`
 	// VerticalPodAutoscaling: Cluster-level Vertical Pod Autoscaling
 	// configuration.
 	VerticalPodAutoscaling *VerticalPodAutoscaling `json:"verticalPodAutoscaling,omitempty"`
@@ -1664,6 +1666,8 @@ type ClusterUpdate struct {
 	// removed from the cluster. The pod ranges specified here must have been
 	// specified earlier in the 'additional_pod_ranges_config' argument.
 	RemovedAdditionalPodRangesConfig *AdditionalPodRangesConfig `json:"removedAdditionalPodRangesConfig,omitempty"`
+	// UserManagedKeysConfig: The Custom keys configuration for the cluster.
+	UserManagedKeysConfig *UserManagedKeysConfig `json:"userManagedKeysConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalPodRangesConfig")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3235,6 +3239,8 @@ type LoggingComponentConfig struct {
 	//   "APISERVER" - kube-apiserver
 	//   "SCHEDULER" - kube-scheduler
 	//   "CONTROLLER_MANAGER" - kube-controller-manager
+	//   "KCP_SSHD" - kcp-sshd
+	//   "KCP_CONNECTION" - kcp connection logs
 	EnableComponents []string `json:"enableComponents,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableComponents") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3925,6 +3931,20 @@ type NodeConfig struct {
 	// 'pd-ssd' or 'pd-balanced') If unspecified, the default disk type is
 	// 'pd-standard'
 	DiskType string `json:"diskType,omitempty"`
+	// EffectiveCgroupMode: Output only. effective_cgroup_mode is the cgroup mode
+	// actually used by the node pool. It is determined by the cgroup mode
+	// specified in the LinuxNodeConfig or the default cgroup mode based on the
+	// cluster creation version.
+	//
+	// Possible values:
+	//   "EFFECTIVE_CGROUP_MODE_UNSPECIFIED" - EFFECTIVE_CGROUP_MODE_UNSPECIFIED
+	// means the cgroup configuration for the node pool is unspecified, i.e. the
+	// node pool is a Windows node pool.
+	//   "EFFECTIVE_CGROUP_MODE_V1" - CGROUP_MODE_V1 means the node pool is
+	// configured to use cgroupv1 for the cgroup configuration.
+	//   "EFFECTIVE_CGROUP_MODE_V2" - CGROUP_MODE_V2 means the node pool is
+	// configured to use cgroupv2 for the cgroup configuration.
+	EffectiveCgroupMode string `json:"effectiveCgroupMode,omitempty"`
 	// EnableConfidentialStorage: Optional. Reserved for future use.
 	EnableConfidentialStorage bool `json:"enableConfidentialStorage,omitempty"`
 	// EphemeralStorageLocalSsdConfig: Parameters for the node ephemeral storage
@@ -7106,6 +7126,56 @@ type UsableSubnetworkSecondaryRange struct {
 
 func (s UsableSubnetworkSecondaryRange) MarshalJSON() ([]byte, error) {
 	type NoMethod UsableSubnetworkSecondaryRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserManagedKeysConfig: UserManagedKeysConfig holds the resource address to
+// Keys which are used for signing certs and token that are used for
+// communication within cluster.
+type UserManagedKeysConfig struct {
+	// AggregationCa: The Certificate Authority Service caPool to use for the
+	// aggregation CA in this cluster.
+	AggregationCa string `json:"aggregationCa,omitempty"`
+	// ClusterCa: The Certificate Authority Service caPool to use for the cluster
+	// CA in this cluster.
+	ClusterCa string `json:"clusterCa,omitempty"`
+	// ControlPlaneDiskEncryptionKey: The Cloud KMS cryptoKey to use for
+	// Confidential Hyperdisk on the control plane nodes.
+	ControlPlaneDiskEncryptionKey string `json:"controlPlaneDiskEncryptionKey,omitempty"`
+	// EtcdApiCa: Resource path of the Certificate Authority Service caPool to use
+	// for the etcd API CA in this cluster.
+	EtcdApiCa string `json:"etcdApiCa,omitempty"`
+	// EtcdPeerCa: Resource path of the Certificate Authority Service caPool to use
+	// for the etcd peer CA in this cluster.
+	EtcdPeerCa string `json:"etcdPeerCa,omitempty"`
+	// GkeopsEtcdBackupEncryptionKey: Resource path of the Cloud KMS cryptoKey to
+	// use for encryption of internal etcd backups.
+	GkeopsEtcdBackupEncryptionKey string `json:"gkeopsEtcdBackupEncryptionKey,omitempty"`
+	// ServiceAccountSigningKeys: The Cloud KMS cryptoKeyVersions to use for
+	// signing service account JWTs issued by this cluster. Format:
+	// `projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{crypt
+	// oKey}/cryptoKeyVersions/{cryptoKeyVersion}`
+	ServiceAccountSigningKeys []string `json:"serviceAccountSigningKeys,omitempty"`
+	// ServiceAccountVerificationKeys: The Cloud KMS cryptoKeyVersions to use for
+	// verifying service account JWTs issued by this cluster. Format:
+	// `projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{crypt
+	// oKey}/cryptoKeyVersions/{cryptoKeyVersion}`
+	ServiceAccountVerificationKeys []string `json:"serviceAccountVerificationKeys,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AggregationCa") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AggregationCa") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserManagedKeysConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod UserManagedKeysConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

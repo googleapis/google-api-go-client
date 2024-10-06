@@ -445,6 +445,10 @@ type ClassificationCategory struct {
 	Confidence float64 `json:"confidence,omitempty"`
 	// Name: The name of the category representing the document.
 	Name string `json:"name,omitempty"`
+	// Severity: Optional. The classifier's severity of the category. This is only
+	// present when the ModerateTextRequest.ModelVersion is set to MODEL_VERSION_2,
+	// and the corresponding category has a severity score.
+	Severity float64 `json:"severity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -467,6 +471,7 @@ func (s *ClassificationCategory) UnmarshalJSON(data []byte) error {
 	type NoMethod ClassificationCategory
 	var s1 struct {
 		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		Severity   gensupport.JSONFloat64 `json:"severity"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -474,6 +479,7 @@ func (s *ClassificationCategory) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.Confidence = float64(s1.Confidence)
+	s.Severity = float64(s1.Severity)
 	return nil
 }
 
@@ -695,6 +701,9 @@ type CpuMetric struct {
 	//   "A2_ULTRAGPU_2G"
 	//   "A2_ULTRAGPU_4G"
 	//   "A2_ULTRAGPU_8G"
+	//   "A3_HIGHGPU_1G"
+	//   "A3_HIGHGPU_2G"
+	//   "A3_HIGHGPU_4G"
 	//   "A3_HIGHGPU_8G"
 	//   "A3_MEGAGPU_8G"
 	//   "E2_STANDARD_2"
@@ -1092,6 +1101,9 @@ type GpuMetric struct {
 	//   "A2_ULTRAGPU_2G"
 	//   "A2_ULTRAGPU_4G"
 	//   "A2_ULTRAGPU_8G"
+	//   "A3_HIGHGPU_1G"
+	//   "A3_HIGHGPU_2G"
+	//   "A3_HIGHGPU_4G"
 	//   "A3_HIGHGPU_8G"
 	//   "A3_MEGAGPU_8G"
 	//   "E2_STANDARD_2"
@@ -1278,6 +1290,17 @@ func (s InfraUsage) MarshalJSON() ([]byte, error) {
 type ModerateTextRequest struct {
 	// Document: Required. Input document.
 	Document *Document `json:"document,omitempty"`
+	// ModelVersion: Optional. The model version to use for ModerateText.
+	//
+	// Possible values:
+	//   "MODEL_VERSION_UNSPECIFIED" - The default model version.
+	//   "MODEL_VERSION_1" - Use the v1 model, this model is used by default when
+	// not provided. The v1 model only returns probability (confidence) score for
+	// each category.
+	//   "MODEL_VERSION_2" - Use the v2 model. The v2 model only returns
+	// probability (confidence) score for each category, and returns severity score
+	// for a subset of the categories.
+	ModelVersion string `json:"modelVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Document") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1369,6 +1392,9 @@ type RamMetric struct {
 	//   "A2_ULTRAGPU_2G"
 	//   "A2_ULTRAGPU_4G"
 	//   "A2_ULTRAGPU_8G"
+	//   "A3_HIGHGPU_1G"
+	//   "A3_HIGHGPU_2G"
+	//   "A3_HIGHGPU_4G"
 	//   "A3_HIGHGPU_8G"
 	//   "A3_MEGAGPU_8G"
 	//   "E2_STANDARD_2"

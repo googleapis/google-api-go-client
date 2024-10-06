@@ -403,6 +403,9 @@ type AccessSettings struct {
 	// invited to the space can also discover and access the space. To learn more,
 	// see [Make a space discoverable to specific
 	// users](https://developers.google.com/workspace/chat/space-target-audience).
+	// Creating discoverable spaces requires [user
+	// authentication](https://developers.google.com/workspace/chat/authenticate-aut
+	// horize-chat-user).
 	AccessState string `json:"accessState,omitempty"`
 	// Audience: Optional. The resource name of the target audience
 	// (https://support.google.com/a/answer/9934697) who can discover the space,
@@ -412,9 +415,18 @@ type AccessSettings struct {
 	// audience
 	// (https://developers.google.com/workspace/chat/space-target-audience).
 	// Format: `audiences/{audience}` To use the default target audience for the
-	// Google Workspace organization, set to `audiences/default`. This field is not
+	// Google Workspace organization, set to `audiences/default`. Reading the
+	// target audience supports: - User authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+	// - App authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+	// with administrator approval (https://support.google.com/a?p=chat-app-auth)
+	// with the `chat.app.spaces` scope in Developer Preview
+	// (https://developers.google.com/workspace/preview). This field is not
 	// populated when using the `chat.bot` scope with app authentication
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
+	// Setting the target audience requires user authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 	Audience string `json:"audience,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessState") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3769,7 +3781,9 @@ type Membership struct {
 	// only, except when used to import historical memberships in import mode
 	// spaces.
 	DeleteTime string `json:"deleteTime,omitempty"`
-	// GroupMember: The Google Group the membership corresponds to.
+	// GroupMember: The Google Group the membership corresponds to. Reading or
+	// mutating memberships for Google Groups requires user authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 	GroupMember *Group `json:"groupMember,omitempty"`
 	// Member: The Google Chat user or app the membership corresponds to. If your
 	// Chat app authenticates as a user
@@ -4832,7 +4846,9 @@ type Space struct {
 	ExternalUserAllowed bool `json:"externalUserAllowed,omitempty"`
 	// ImportMode: Optional. Whether this space is created in `Import Mode` as part
 	// of a data migration into Google Workspace. While spaces are being imported,
-	// they aren't visible to users until the import is complete.
+	// they aren't visible to users until the import is complete. Creating a space
+	// in `Import Mode`requires user authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 	ImportMode bool `json:"importMode,omitempty"`
 	// LastActiveTime: Output only. Timestamp of the last message in the space.
 	LastActiveTime string `json:"lastActiveTime,omitempty"`
@@ -6024,8 +6040,16 @@ type SpacesCreateCall struct {
 // organization might already use this display name. If you're a member of the
 // Developer Preview program (https://developers.google.com/workspace/preview),
 // you can create a group chat in import mode using `spaceType.GROUP_CHAT`.
-// Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// Supports the following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
+// authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+// with administrator approval (https://support.google.com/a?p=chat-app-auth)
+// in Developer Preview (https://developers.google.com/workspace/preview) -
+// User authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// When authenticating as an app, the `space.customer` field must be set in the
+// request.
 func (r *SpacesService) Create(space *Space) *SpacesCreateCall {
 	c := &SpacesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.space = space
@@ -6133,9 +6157,14 @@ type SpacesDeleteCall struct {
 // means that the space's child resources—like messages posted in the space
 // and memberships in the space—are also deleted. For an example, see Delete
 // a space (https://developers.google.com/workspace/chat/delete-spaces).
-// Requires user authentication
+// Supports the following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
+// authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+// with administrator approval (https://support.google.com/a?p=chat-app-auth)
+// in Developer Preview (https://developers.google.com/workspace/preview) -
+// User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// from a user who has permission to delete the space.
 //
 // - name: Resource name of the space to delete. Format: `spaces/{space}`.
 func (r *SpacesService) Delete(name string) *SpacesDeleteCall {
@@ -6245,16 +6274,18 @@ type SpacesFindDirectMessageCall struct {
 // FindDirectMessage: Returns the existing direct message with the specified
 // user. If no direct message space is found, returns a `404 NOT_FOUND` error.
 // For an example, see Find a direct message
-// (/chat/api/guides/v1/spaces/find-direct-message). With user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
-// returns the direct message space between the specified user and the
-// authenticated user. With app authentication
+// (/chat/api/guides/v1/spaces/find-direct-message). With app authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app),
 // returns the direct message space between the specified user and the calling
-// Chat app. Requires user authentication
+// Chat app. With user authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
+// returns the direct message space between the specified user and the
+// authenticated user. // Supports the following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
+// authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+// - User authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
-// or app authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
 func (r *SpacesService) FindDirectMessage() *SpacesFindDirectMessageCall {
 	c := &SpacesFindDirectMessageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -6374,13 +6405,13 @@ type SpacesGetCall struct {
 }
 
 // Get: Returns details about a space. For an example, see Get details about a
-// space (https://developers.google.com/workspace/chat/get-spaces). Requires
+// space (https://developers.google.com/workspace/chat/get-spaces). Supports
+// the following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize).
-// Supports app authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// and user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// - User authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 //
 //   - name: Resource name of the space, in the form `spaces/{space}`. Format:
 //     `spaces/{space}`.
@@ -6501,13 +6532,13 @@ type SpacesListCall struct {
 
 // List: Lists spaces the caller is a member of. Group chats and DMs aren't
 // listed until the first message is sent. For an example, see List spaces
-// (https://developers.google.com/workspace/chat/list-spaces). Requires
+// (https://developers.google.com/workspace/chat/list-spaces). Supports the
+// following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize).
-// Supports app authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// and user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// - User authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // Lists spaces visible to the caller or authenticated user. Group chats and
 // DMs aren't listed until the first message is sent. To list all named spaces
 // by Google Workspace organization, use the `spaces.search()`
@@ -6674,8 +6705,14 @@ type SpacesPatchCall struct {
 // updating the `displayName` field and receive the error message
 // `ALREADY_EXISTS`, try a different display name.. An existing space within
 // the Google Workspace organization might already use this display name.
-// Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// Supports the following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
+// authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+// with administrator approval (https://support.google.com/a?p=chat-app-auth)
+// in Developer Preview (https://developers.google.com/workspace/preview) -
+// User authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 //
 //   - name: Resource name of the space. Format: `spaces/{space}` Where `{space}`
 //     represents the system-assigned ID for the space. You can obtain the space
@@ -7167,8 +7204,14 @@ type SpacesMembersCreateCall struct {
 // creating a membership, if the specified member has their auto-accept policy
 // turned off, then they're invited, and must accept the space invitation
 // before joining. Otherwise, creating a membership adds the member directly to
-// the specified space. Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// the specified space. Supports the following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
+// authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+// with administrator approval (https://support.google.com/a?p=chat-app-auth)
+// in Developer Preview (https://developers.google.com/workspace/preview) -
+// User authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // For example usage, see: - Invite or add a user to a space
 // (https://developers.google.com/workspace/chat/create-members#create-user-membership).
 // - Invite or add a Google Group to a space
@@ -7292,9 +7335,15 @@ type SpacesMembersDeleteCall struct {
 
 // Delete: Deletes a membership. For an example, see Remove a user or a Google
 // Chat app from a space
-// (https://developers.google.com/workspace/chat/delete-members). Requires user
+// (https://developers.google.com/workspace/chat/delete-members). Supports the
+// following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+// with administrator approval (https://support.google.com/a?p=chat-app-auth)
+// in Developer Preview (https://developers.google.com/workspace/preview) -
+// User authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 //
 //   - name: Resource name of the membership to delete. Chat apps can delete
 //     human users' or their own memberships. Chat apps can't delete other apps'
@@ -7414,22 +7463,20 @@ type SpacesMembersGetCall struct {
 
 // Get: Returns details about a membership. For an example, see Get details
 // about a user's or Google Chat app's membership
-// (https://developers.google.com/workspace/chat/get-members). Requires
+// (https://developers.google.com/workspace/chat/get-members). Supports the
+// following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize).
-// Supports app authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// and user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// - User authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 //
 //   - name: Resource name of the membership to retrieve. To get the app's own
 //     membership by using user authentication
 //     (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
 //     you can optionally use `spaces/{space}/members/app`. Format:
-//     `spaces/{space}/members/{member}` or `spaces/{space}/members/app` When
-//     authenticated as a user
-//     (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
-//     you can use the user's email as an alias for `{member}`. For example,
+//     `spaces/{space}/members/{member}` or `spaces/{space}/members/app` You can
+//     use the user's email as an alias for `{member}`. For example,
 //     `spaces/{space}/members/example@gmail.com` where `example@gmail.com` is
 //     the email of the Google Chat user.
 func (r *SpacesMembersService) Get(name string) *SpacesMembersGetCall {
@@ -7560,12 +7607,12 @@ type SpacesMembersListCall struct {
 // authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // lists memberships in spaces that the authenticated user has access to.
-// Requires authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize).
-// Supports app authentication
+// Supports the following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
+// authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// and user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// - User authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 //
 //   - parent: The resource name of the space for which to fetch a membership
 //     list. Format: spaces/{space}.
@@ -7773,8 +7820,14 @@ type SpacesMembersPatchCall struct {
 
 // Patch: Updates a membership. For an example, see Update a user's membership
 // in a space (https://developers.google.com/workspace/chat/update-members).
-// Requires user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// Supports the following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
+// authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+// with administrator approval (https://support.google.com/a?p=chat-app-auth)
+// in Developer Preview (https://developers.google.com/workspace/preview) -
+// User authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 //
 //   - name: Resource name of the membership, assigned by the server. Format:
 //     `spaces/{space}/members/{member}`.
@@ -8072,13 +8125,13 @@ type SpacesMessagesDeleteCall struct {
 }
 
 // Delete: Deletes a message. For an example, see Delete a message
-// (https://developers.google.com/workspace/chat/delete-messages). Requires
+// (https://developers.google.com/workspace/chat/delete-messages). Supports the
+// following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize).
-// Supports app authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// and user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// - User authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // When using app authentication, requests can only delete messages created by
 // the calling Chat app.
 //
@@ -8193,12 +8246,12 @@ type SpacesMessagesGetCall struct {
 
 // Get: Returns details about a message. For an example, see Get details about
 // a message (https://developers.google.com/workspace/chat/get-messages).
-// Requires authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize).
-// Supports app authentication
+// Supports the following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
+// authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// and user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// - User authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // Note: Might return a message from a blocked member or space.
 //
 //   - name: Resource name of the message. Format:
@@ -8513,13 +8566,13 @@ type SpacesMessagesPatchCall struct {
 // `update` methods. The `patch` method uses a `patch` request while the
 // `update` method uses a `put` request. We recommend using the `patch` method.
 // For an example, see Update a message
-// (https://developers.google.com/workspace/chat/update-messages). Requires
+// (https://developers.google.com/workspace/chat/update-messages). Supports the
+// following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize).
-// Supports app authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// and user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// - User authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // When using app authentication, requests can only update messages created by
 // the calling Chat app.
 //
@@ -8659,13 +8712,13 @@ type SpacesMessagesUpdateCall struct {
 // `update` methods. The `patch` method uses a `patch` request while the
 // `update` method uses a `put` request. We recommend using the `patch` method.
 // For an example, see Update a message
-// (https://developers.google.com/workspace/chat/update-messages). Requires
+// (https://developers.google.com/workspace/chat/update-messages). Supports the
+// following types of authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize): - App
 // authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize).
-// Supports app authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
-// and user authentication
-// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// - User authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
 // When using app authentication, requests can only update messages created by
 // the calling Chat app.
 //

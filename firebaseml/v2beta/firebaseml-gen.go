@@ -871,6 +871,9 @@ func (s GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata) Marsha
 
 // GoogleCloudAiplatformV1beta1GenerationConfig: Generation config.
 type GoogleCloudAiplatformV1beta1GenerationConfig struct {
+	// AudioTimestamp: Optional. If enabled, audio timestamp will be included in
+	// the request to the model.
+	AudioTimestamp bool `json:"audioTimestamp,omitempty"`
 	// CandidateCount: Optional. Number of candidates to generate.
 	CandidateCount int64 `json:"candidateCount,omitempty"`
 	// FrequencyPenalty: Optional. Frequency penalties.
@@ -910,13 +913,13 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	TopK float64 `json:"topK,omitempty"`
 	// TopP: Optional. If specified, nucleus sampling will be used.
 	TopP float64 `json:"topP,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CandidateCount") to
+	// ForceSendFields is a list of field names (e.g. "AudioTimestamp") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CandidateCount") to include in
+	// NullFields is a list of field names (e.g. "AudioTimestamp") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1554,9 +1557,10 @@ type GoogleCloudAiplatformV1beta1Schema struct {
 	Default interface{} `json:"default,omitempty"`
 	// Description: Optional. The description of the data.
 	Description string `json:"description,omitempty"`
-	// Enum: Optional. Possible values of the element of Type.STRING with enum
-	// format. For example we can define an Enum Direction as : {type:STRING,
-	// format:enum, enum:["EAST", NORTH", "SOUTH", "WEST"]}
+	// Enum: Optional. Possible values of the element of primitive type with enum
+	// format. Examples: 1. We can define direction as : {type:STRING, format:enum,
+	// enum:["EAST", NORTH", "SOUTH", "WEST"]} 2. We can define apartment number as
+	// : {type:INTEGER, format:enum, enum:["101", "201", "301"]}
 	Enum []string `json:"enum,omitempty"`
 	// Example: Optional. Example of the object. Will only populated when the
 	// object is the root.

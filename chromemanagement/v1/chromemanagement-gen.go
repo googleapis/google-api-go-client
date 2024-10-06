@@ -108,7 +108,7 @@ const (
 	// organization
 	ChromeManagementReportsReadonlyScope = "https://www.googleapis.com/auth/chrome.management.reports.readonly"
 
-	// See basic device and telemetry information collected from Chrome OS devices
+	// See basic device and telemetry information collected from ChromeOS devices
 	// or users managed within your organization
 	ChromeManagementTelemetryReadonlyScope = "https://www.googleapis.com/auth/chrome.management.telemetry.readonly"
 )

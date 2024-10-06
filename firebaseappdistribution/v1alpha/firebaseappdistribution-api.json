@@ -448,6 +448,31 @@
               "resources": {
                 "tests": {
                   "methods": {
+                    "cancel": {
+                      "description": "Abort automated test run on release.",
+                      "flatPath": "v1alpha/projects/{projectsId}/apps/{appsId}/releases/{releasesId}/tests/{testsId}:cancel",
+                      "httpMethod": "GET",
+                      "id": "firebaseappdistribution.projects.apps.releases.tests.cancel",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The name of the release test resource. Format: `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_id}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/apps/[^/]+/releases/[^/]+/tests/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1alpha/{+name}:cancel",
+                      "response": {
+                        "$ref": "GoogleFirebaseAppdistroV1alphaCancelReleaseTestResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "create": {
                       "description": "Run automated test(s) on release.",
                       "flatPath": "v1alpha/projects/{projectsId}/apps/{appsId}/releases/{releasesId}/tests",
@@ -585,7 +610,7 @@
       }
     }
   },
-  "revision": "20241003",
+  "revision": "20241004",
   "rootUrl": "https://firebaseappdistribution.googleapis.com/",
   "schemas": {
     "AndroidxCrawlerOutputPoint": {
@@ -872,6 +897,12 @@
           "readOnly": true
         }
       },
+      "type": "object"
+    },
+    "GoogleFirebaseAppdistroV1alphaCancelReleaseTestResponse": {
+      "description": "The (empty) response message for `CancelReleaseTest`.",
+      "id": "GoogleFirebaseAppdistroV1alphaCancelReleaseTestResponse",
+      "properties": {},
       "type": "object"
     },
     "GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest": {

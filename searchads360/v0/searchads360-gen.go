@@ -1271,9 +1271,17 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// one device, then converts on a different device or browser. Cross-device
 	// conversions are already included in all_conversions.
 	CrossDeviceConversions float64 `json:"crossDeviceConversions,omitempty"`
+	// CrossDeviceConversionsByConversionDate: The number of cross-device
+	// conversions by conversion date. Details for the by_conversion_date columns
+	// are available at https://support.google.com/sa360/answer/9250611.
+	CrossDeviceConversionsByConversionDate float64 `json:"crossDeviceConversionsByConversionDate,omitempty"`
 	// CrossDeviceConversionsValue: The sum of the value of cross-device
 	// conversions.
 	CrossDeviceConversionsValue float64 `json:"crossDeviceConversionsValue,omitempty"`
+	// CrossDeviceConversionsValueByConversionDate: The sum of cross-device
+	// conversions value by conversion date. Details for the by_conversion_date
+	// columns are available at https://support.google.com/sa360/answer/9250611.
+	CrossDeviceConversionsValueByConversionDate float64 `json:"crossDeviceConversionsValueByConversionDate,omitempty"`
 	// CrossSellCostOfGoodsSoldMicros: Cross-sell cost of goods sold (COGS) is the
 	// total cost of products sold as a result of advertising a different product.
 	// How it works: You report conversions with cart data for completed purchases
@@ -1340,6 +1348,22 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// Ctr: The number of clicks your ad receives (Clicks) divided by the number of
 	// times your ad is shown (Impressions).
 	Ctr float64 `json:"ctr,omitempty"`
+	// GeneralInvalidClickRate: The percentage of clicks that have been filtered
+	// out of your total number of clicks (filtered + non-filtered clicks) due to
+	// being general invalid clicks. These are clicks Google considers illegitimate
+	// that are detected through routine means of filtration (that is, known
+	// invalid data-center traffic, bots and spiders or other crawlers, irregular
+	// patterns, etc). You're not charged for them, and they don't affect your
+	// account statistics. See the help page at
+	// https://support.google.com/campaignmanager/answer/6076504 for details.
+	GeneralInvalidClickRate float64 `json:"generalInvalidClickRate,omitempty"`
+	// GeneralInvalidClicks: Number of general invalid clicks. These are a subset
+	// of your invalid clicks that are detected through routine means of filtration
+	// (such as known invalid data-center traffic, bots and spiders or other
+	// crawlers, irregular patterns, etc.). You're not charged for them, and they
+	// don't affect your account statistics. See the help page at
+	// https://support.google.com/campaignmanager/answer/6076504 for details.
+	GeneralInvalidClicks int64 `json:"generalInvalidClicks,omitempty,string"`
 	// HistoricalCreativeQualityScore: The creative historical quality score.
 	//
 	// Possible values:
@@ -1617,9 +1641,12 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 		CostPerConversion                                 gensupport.JSONFloat64 `json:"costPerConversion"`
 		CostPerCurrentModelAttributedConversion           gensupport.JSONFloat64 `json:"costPerCurrentModelAttributedConversion"`
 		CrossDeviceConversions                            gensupport.JSONFloat64 `json:"crossDeviceConversions"`
+		CrossDeviceConversionsByConversionDate            gensupport.JSONFloat64 `json:"crossDeviceConversionsByConversionDate"`
 		CrossDeviceConversionsValue                       gensupport.JSONFloat64 `json:"crossDeviceConversionsValue"`
+		CrossDeviceConversionsValueByConversionDate       gensupport.JSONFloat64 `json:"crossDeviceConversionsValueByConversionDate"`
 		CrossSellUnitsSold                                gensupport.JSONFloat64 `json:"crossSellUnitsSold"`
 		Ctr                                               gensupport.JSONFloat64 `json:"ctr"`
+		GeneralInvalidClickRate                           gensupport.JSONFloat64 `json:"generalInvalidClickRate"`
 		InteractionRate                                   gensupport.JSONFloat64 `json:"interactionRate"`
 		InvalidClickRate                                  gensupport.JSONFloat64 `json:"invalidClickRate"`
 		LeadUnitsSold                                     gensupport.JSONFloat64 `json:"leadUnitsSold"`
@@ -1684,9 +1711,12 @@ func (s *GoogleAdsSearchads360V0Common__Metrics) UnmarshalJSON(data []byte) erro
 	s.CostPerConversion = float64(s1.CostPerConversion)
 	s.CostPerCurrentModelAttributedConversion = float64(s1.CostPerCurrentModelAttributedConversion)
 	s.CrossDeviceConversions = float64(s1.CrossDeviceConversions)
+	s.CrossDeviceConversionsByConversionDate = float64(s1.CrossDeviceConversionsByConversionDate)
 	s.CrossDeviceConversionsValue = float64(s1.CrossDeviceConversionsValue)
+	s.CrossDeviceConversionsValueByConversionDate = float64(s1.CrossDeviceConversionsValueByConversionDate)
 	s.CrossSellUnitsSold = float64(s1.CrossSellUnitsSold)
 	s.Ctr = float64(s1.Ctr)
+	s.GeneralInvalidClickRate = float64(s1.GeneralInvalidClickRate)
 	s.InteractionRate = float64(s1.InteractionRate)
 	s.InvalidClickRate = float64(s1.InvalidClickRate)
 	s.LeadUnitsSold = float64(s1.LeadUnitsSold)
@@ -3855,8 +3885,8 @@ func (s GoogleAdsSearchads360V0ResourcesCampaignOptimizationGoalSetting) Marshal
 // campaigns that use MULTI_CHANNEL as AdvertisingChannelType and APP_CAMPAIGN
 // or APP_CAMPAIGN_FOR_ENGAGEMENT as AdvertisingChannelSubType.
 type GoogleAdsSearchads360V0ResourcesCampaignSelectiveOptimization struct {
-	// ConversionActions: The selected set of conversion actions for optimizing
-	// this campaign.
+	// ConversionActions: The selected set of resource names for conversion actions
+	// for optimizing this campaign.
 	ConversionActions []string `json:"conversionActions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConversionActions") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4565,6 +4595,10 @@ type GoogleAdsSearchads360V0Resources__AdGroup struct {
 	// timestamp is in the customer's time zone and in "yyyy-MM-dd HH:mm:ss"
 	// format.
 	CreationTime string `json:"creationTime,omitempty"`
+	// EffectiveLabels: Output only. The resource names of effective labels
+	// attached to this ad group. An effective label is a label inherited or
+	// directly assigned to this ad group.
+	EffectiveLabels []string `json:"effectiveLabels,omitempty"`
 	// EndDate: Output only. Date when the ad group ends serving ads. By default,
 	// the ad group ends on the ad group's end date. If this field is set, then the
 	// ad group ends at the end of the specified date in the customer's time zone.
@@ -5178,6 +5212,39 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel struct {
 
 func (s GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__AdGroupEffectiveLabel: A relationship
+// between an ad group and an effective label. An effective label is a label
+// inherited or directly assigned to this ad group.
+type GoogleAdsSearchads360V0Resources__AdGroupEffectiveLabel struct {
+	// AdGroup: Immutable. The ad group to which the effective label is attached.
+	AdGroup string `json:"adGroup,omitempty"`
+	// Label: Immutable. The effective label assigned to the ad group.
+	Label string `json:"label,omitempty"`
+	// OwnerCustomerId: Output only. The ID of the Customer which owns the
+	// effective label.
+	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
+	// ResourceName: Immutable. The resource name of the ad group effective label.
+	// Ad group effective label resource names have the form:
+	// `customers/{customer_id}/adGroupEffectiveLabels/{ad_group_id}~{label_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdGroup") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdGroup") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V0Resources__AdGroupEffectiveLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupEffectiveLabel
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5998,7 +6065,8 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	//   "TRAVEL" - Travel campaigns.
 	//   "SOCIAL" - Social campaigns.
 	AdvertisingChannelType string `json:"advertisingChannelType,omitempty"`
-	// BiddingStrategy: Portfolio bidding strategy used by campaign.
+	// BiddingStrategy: The resource name of the portfolio bidding strategy used by
+	// the campaign.
 	BiddingStrategy string `json:"biddingStrategy,omitempty"`
 	// BiddingStrategySystemStatus: Output only. The system status of the
 	// campaign's bidding strategy.
@@ -6119,7 +6187,7 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	//   "TARGET_SPEND" - Target Spend is an automated bid strategy that sets your
 	// bids to help get as many clicks as possible within your budget.
 	BiddingStrategyType string `json:"biddingStrategyType,omitempty"`
-	// CampaignBudget: The budget of the campaign.
+	// CampaignBudget: The resource name of the campaign budget of the campaign.
 	CampaignBudget string `json:"campaignBudget,omitempty"`
 	// CreateTime: Output only. The timestamp when this campaign was created. The
 	// timestamp is in the customer's time zone and in "yyyy-MM-dd HH:mm:ss"
@@ -6132,6 +6200,10 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	// DynamicSearchAdsSetting: The setting for controlling Dynamic Search Ads
 	// (DSA).
 	DynamicSearchAdsSetting *GoogleAdsSearchads360V0ResourcesCampaignDynamicSearchAdsSetting `json:"dynamicSearchAdsSetting,omitempty"`
+	// EffectiveLabels: Output only. The resource names of effective labels
+	// attached to this campaign. An effective label is a label inherited or
+	// directly assigned to this campaign.
+	EffectiveLabels []string `json:"effectiveLabels,omitempty"`
 	// EndDate: The last day of the campaign in serving customer's timezone in
 	// YYYY-MM-DD format. On create, defaults to 2037-12-30, which means the
 	// campaign will run indefinitely. To set an existing campaign to run
@@ -6612,6 +6684,39 @@ func (s *GoogleAdsSearchads360V0Resources__CampaignCriterion) UnmarshalJSON(data
 	}
 	s.BidModifier = float64(s1.BidModifier)
 	return nil
+}
+
+// GoogleAdsSearchads360V0Resources__CampaignEffectiveLabel: Represents a
+// relationship between a campaign and an effective label. An effective label
+// is a label inherited or directly assigned to this campaign.
+type GoogleAdsSearchads360V0Resources__CampaignEffectiveLabel struct {
+	// Campaign: Immutable. The campaign to which the effective label is attached.
+	Campaign string `json:"campaign,omitempty"`
+	// Label: Immutable. The effective label assigned to the campaign.
+	Label string `json:"label,omitempty"`
+	// OwnerCustomerId: Output only. The ID of the Customer which owns the
+	// effective label.
+	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
+	// ResourceName: Immutable. Name of the resource. CampaignEffectivelabel
+	// resource names have the form:
+	// `customers/{customer_id}/campaignEffectiveLabels/{campaign_id}~{label_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Campaign") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Campaign") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V0Resources__CampaignEffectiveLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__CampaignEffectiveLabel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__CampaignLabel: Represents a relationship
@@ -8507,6 +8612,8 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 	AdGroupCriterion *GoogleAdsSearchads360V0Resources__AdGroupCriterion `json:"adGroupCriterion,omitempty"`
 	// AdGroupCriterionLabel: The ad group criterion label referenced in the query.
 	AdGroupCriterionLabel *GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel `json:"adGroupCriterionLabel,omitempty"`
+	// AdGroupEffectiveLabel: The ad group effective label referenced in the query.
+	AdGroupEffectiveLabel *GoogleAdsSearchads360V0Resources__AdGroupEffectiveLabel `json:"adGroupEffectiveLabel,omitempty"`
 	// AdGroupLabel: The ad group label referenced in the query.
 	AdGroupLabel *GoogleAdsSearchads360V0Resources__AdGroupLabel `json:"adGroupLabel,omitempty"`
 	// AgeRangeView: The age range view referenced in the query.
@@ -8545,6 +8652,9 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 	CampaignBudget *GoogleAdsSearchads360V0Resources__CampaignBudget `json:"campaignBudget,omitempty"`
 	// CampaignCriterion: The campaign criterion referenced in the query.
 	CampaignCriterion *GoogleAdsSearchads360V0Resources__CampaignCriterion `json:"campaignCriterion,omitempty"`
+	// CampaignEffectiveLabel: The campaign effective label referenced in the
+	// query.
+	CampaignEffectiveLabel *GoogleAdsSearchads360V0Resources__CampaignEffectiveLabel `json:"campaignEffectiveLabel,omitempty"`
 	// CampaignLabel: The campaign label referenced in the query.
 	CampaignLabel *GoogleAdsSearchads360V0Resources__CampaignLabel `json:"campaignLabel,omitempty"`
 	// CartDataSalesView: The cart data sales view referenced in the query.

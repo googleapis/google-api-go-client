@@ -624,6 +624,13 @@ func (s GoogleFirebaseAppdistroV1alphaAssertionDetails) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppdistroV1alphaCancelReleaseTestResponse: The (empty)
+// response message for `CancelReleaseTest`.
+type GoogleFirebaseAppdistroV1alphaCancelReleaseTestResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 type GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest struct {
 	// ReleaseNotes: The actual release notes body from the user
 	ReleaseNotes *GoogleFirebaseAppdistroV1alphaReleaseNotes `json:"releaseNotes,omitempty"`
@@ -2575,6 +2582,116 @@ func (c *ProjectsAppsUpdateTestConfigCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleFirebaseAppdistroV1alphaTestConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsAppsReleasesTestsCancelCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Cancel: Abort automated test run on release.
+//
+//   - name: The name of the release test resource. Format:
+//     `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_
+//     id}`.
+func (r *ProjectsAppsReleasesTestsService) Cancel(name string) *ProjectsAppsReleasesTestsCancelCall {
+	c := &ProjectsAppsReleasesTestsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAppsReleasesTestsCancelCall) Fields(s ...googleapi.Field) *ProjectsAppsReleasesTestsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsAppsReleasesTestsCancelCall) IfNoneMatch(entityTag string) *ProjectsAppsReleasesTestsCancelCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAppsReleasesTestsCancelCall) Context(ctx context.Context) *ProjectsAppsReleasesTestsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAppsReleasesTestsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAppsReleasesTestsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappdistribution.projects.apps.releases.tests.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaCancelReleaseTestResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsAppsReleasesTestsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaCancelReleaseTestResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppdistroV1alphaCancelReleaseTestResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

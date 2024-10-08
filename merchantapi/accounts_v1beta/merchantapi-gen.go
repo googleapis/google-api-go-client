@@ -318,36 +318,6 @@ type TermsOfServiceService struct {
 	s *APIService
 }
 
-// AcceptTermsOfService: Reference to a Terms of Service resource.
-type AcceptTermsOfService struct {
-	// Name: Required. The resource name of the terms of service version in the
-	// format `termsOfService/{version}`. To retrieve the latest version, use the
-	// termsOfService.retrieveLatest
-	// (/merchant/api/reference/rest/accounts_v1beta/termsOfService/retrieveLatest)
-	// method.
-	Name string `json:"name,omitempty"`
-	// RegionCode: Required. Region code as defined by CLDR
-	// (https://cldr.unicode.org/). This is either a country when the ToS applies
-	// specifically to that country or `001` when it applies globally.
-	RegionCode string `json:"regionCode,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s AcceptTermsOfService) MarshalJSON() ([]byte, error) {
-	type NoMethod AcceptTermsOfService
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // Accepted: Describes the accepted terms of service.
 type Accepted struct {
 	// AcceptedBy: The account where the acceptance was recorded. This can be the
@@ -759,9 +729,6 @@ type ClaimHomepageRequest struct {
 // CreateAndConfigureAccountRequest: Request message for the
 // `CreateAndConfigureAccount` method.
 type CreateAndConfigureAccountRequest struct {
-	// AcceptTermsOfService: Optional. The Terms of Service (ToS) to be accepted
-	// immediately upon account creation.
-	AcceptTermsOfService *AcceptTermsOfService `json:"acceptTermsOfService,omitempty"`
 	// Account: Required. The account to be created.
 	Account *Account `json:"account,omitempty"`
 	// Service: Required. An account service between the account to be created and
@@ -773,15 +740,15 @@ type CreateAndConfigureAccountRequest struct {
 	Service []*AddAccountService `json:"service,omitempty"`
 	// Users: Optional. Users to be added to the account.
 	Users []*CreateUserRequest `json:"users,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AcceptTermsOfService") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AcceptTermsOfService") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Account") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

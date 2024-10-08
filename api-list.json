@@ -3233,6 +3233,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "firebaseremoteconfig:v1",
+      "name": "firebaseremoteconfig",
+      "version": "v1",
+      "title": "Firebase Remote Config API",
+      "description": "Configure apps remotely",
+      "discoveryRestUrl": "https://firebaserules.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://firebase.google.com/docs/remote-config",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "firebaserules:v1",
       "name": "firebaserules",
       "version": "v1",

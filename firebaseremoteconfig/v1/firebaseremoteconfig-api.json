@@ -19,14 +19,8 @@
   "parameters": {
     "$.xgafv": {
       "description": "V1 error format.",
-      "enum": [
-        "1",
-        "2"
-      ],
-      "enumDescriptions": [
-        "v1 error format",
-        "v2 error format"
-      ],
+      "enum": ["1", "2"],
+      "enumDescriptions": ["v1 error format", "v2 error format"],
       "location": "query",
       "type": "string"
     },
@@ -38,11 +32,7 @@
     "alt": {
       "default": "json",
       "description": "Data format for response.",
-      "enum": [
-        "json",
-        "media",
-        "proto"
-      ],
+      "enum": ["json", "media", "proto"],
       "enumDescriptions": [
         "Responses with Content-Type of application/json",
         "Media download with context-dependent Content-Type",
@@ -113,9 +103,7 @@
           "flatPath": "v1/projects/{projectsId}/remoteConfig",
           "httpMethod": "GET",
           "id": "firebaseremoteconfig.projects.getRemoteConfig",
-          "parameterOrder": [
-            "project"
-          ],
+          "parameterOrder": ["project"],
           "parameters": {
             "project": {
               "description": "The GMP project identifier. Required.\nSee note at the beginning of this file regarding project ids.",
@@ -135,9 +123,7 @@
           "flatPath": "v1/projects/{projectsId}/remoteConfig",
           "httpMethod": "PUT",
           "id": "firebaseremoteconfig.projects.updateRemoteConfig",
-          "parameterOrder": [
-            "project"
-          ],
+          "parameterOrder": ["project"],
           "parameters": {
             "project": {
               "description": "The GMP project identifier. Required.\nSee note at the beginning of this file regarding project ids.",
@@ -182,6 +168,13 @@
             "$ref": "RemoteConfigParameter"
           },
           "description": "Map of parameter keys to their optional default values and optional submap\nof (condition name : value). Order doesn't affect semantics, and so is\nsorted by the server. The 'key' values of the params must be unique.",
+          "type": "object"
+        },
+        "parameterGroups": {
+          "additionalProperties": {
+            "$ref": "RemoteConfigParameterGroup"
+          },
+          "description": "Map of parameter group keys to their parameters. The 'parameter group key' values of the params must be unique.",
           "type": "object"
         }
       },
@@ -233,6 +226,23 @@
             "Purple",
             "Teal"
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RemoteConfigParameterGroup": {
+      "id": "RemoteConfigParameterGroup",
+      "properties": {
+        "parameters": {
+          "additionalProperties": {
+            "$ref": "RemoteConfigParameter"
+          },
+          "description": "Map of parameter keys to their optional default values and optional submap\nof (condition name : value). Order doesn't affect semantics, and so is\nsorted by the server. The 'key' values of the params must be unique.",
+          "type": "object"
+        },
+        "description": {
+          "description": "Optional.\nA description for this Parameter Groupd. Length must be less than or equal to\n100 characters (or more precisely, unicode code points, which is defined in\njava/com/google/wireless/android/config/ConstsExporter.java).\nA description may contain any Unicode characters",
           "type": "string"
         }
       },

@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -7,6 +7,17 @@
 // Package firebaseremoteconfig provides access to the Firebase Remote Config API.
 //
 // For product documentation, see: https://firebase.google.com/docs/remote-config/
+//
+// # Library status
+//
+// These client libraries are officially supported by Google. However, this
+// library is considered complete and is in maintenance mode. This means
+// that we will address critical bugs and security issues but will not add
+// any new features.
+//
+// When possible, we recommend using our newer
+// [Cloud Client Libraries for Go](https://pkg.go.dev/cloud.google.com/go)
+// that are still actively being worked and iterated on.
 //
 // # Creating a client
 //
@@ -17,24 +28,26 @@
 //	ctx := context.Background()
 //	firebaseremoteconfigService, err := firebaseremoteconfig.NewService(ctx)
 //
-// In this example, Google Application Default Credentials are used for authentication.
-//
-// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+// In this example, Google Application Default Credentials are used for
+// authentication. For information on how to create and obtain Application
+// Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
 //
 // # Other authentication options
 //
-// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+// To use an API key for authentication (note: some APIs do not support API
+// keys), use [google.golang.org/api/option.WithAPIKey]:
 //
 //	firebaseremoteconfigService, err := firebaseremoteconfig.NewService(ctx, option.WithAPIKey("AIza..."))
 //
-// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth
+// flow, use [google.golang.org/api/option.WithTokenSource]:
 //
 //	config := &oauth2.Config{...}
 //	// ...
 //	token, err := config.Exchange(ctx, ...)
 //	firebaseremoteconfigService, err := firebaseremoteconfig.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
 //
-// See https://godoc.org/google.golang.org/api/option/ for details on options.
+// See [google.golang.org/api/option.ClientOption] for details on options.
 package firebaseremoteconfig // import "google.golang.org/api/firebaseremoteconfig/v1"
 
 import (
@@ -50,8 +63,10 @@ import (
 	"strings"
 
 	googleapi "google.golang.org/api/googleapi"
+	internal "google.golang.org/api/internal"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
+	internaloption "google.golang.org/api/option/internaloption"
 	htransport "google.golang.org/api/transport/http"
 )
 
@@ -68,14 +83,20 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
+var _ = internaloption.WithDefaultEndpoint
+var _ = internal.Version
 
 const apiId = "firebaseremoteconfig:v1"
 const apiName = "firebaseremoteconfig"
 const apiVersion = "v1"
 const basePath = "https://firebaseremoteconfig.googleapis.com/"
+const basePathTemplate = "https://firebaseremoteconfig.UNIVERSE_DOMAIN/"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
+	opts = append(opts, internaloption.EnableNewAuthLibrary())
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -129,10 +150,9 @@ type ProjectsService struct {
 }
 
 // RemoteConfig: *
-// The RemoteConfig consists of a list of conditions (which can
-// be
-// thought of as named "if" statements) and a map of parameters
-// (parameter key
+// The RemoteConfig consists of a list of conditions (which can be
+// thought of as named "if" statements) and a map of parameters (parameter
+// key
 // to a structure containing an optional default value, as well as a
 // optional
 // submap of (condition name to value when that condition is true).
@@ -142,97 +162,78 @@ type RemoteConfig struct {
 	// The condition_name values of these entries must be unique.
 	//
 	// The resolved value of a config parameter P is determined as follow:
-	// * Let Y be the set of values from the submap of P that refer to
-	// conditions
+	// * Let Y be the set of values from the submap of P that refer to conditions
 	//   that evaluate to <code>true</code>.
-	// * If Y is non empty, the value is taken from the specific submap in Y
-	// whose
+	// * If Y is non empty, the value is taken from the specific submap in Y whose
 	//   condition_name is the earliest in this condition list.
-	// * Else, if P has a default value option (condition_name is empty)
-	// then
+	// * Else, if P has a default value option (condition_name is empty) then
 	//   the value is taken from that option.
 	// * Else, parameter P has no value and is omitted from the config
 	// result.
 	//
-	// Example: parameter key "p1", default value "v1", submap specified
-	// as
+	// Example: parameter key "p1", default value "v1", submap specified as
 	// {"c1": v2, "c2": v3} where "c1" and "c2" are names of conditions in
 	// the
-	// condition list (where "c1" in this example appears before "c2").
-	// The
-	// value of p1 would be v2 as long as c1 is true.  Otherwise, if c2 is
-	// true,
+	// condition list (where "c1" in this example appears before "c2").  The
+	// value of p1 would be v2 as long as c1 is true.  Otherwise, if c2 is true,
 	// p1 would evaluate to v3, and if c1 and c2 are both false, p1 would
 	// evaluate
-	// to v1.  If no default value was specified, and c1 and c2 were both
-	// false,
+	// to v1.  If no default value was specified, and c1 and c2 were both false,
 	// no value for p1 would be generated.
 	Conditions []*RemoteConfigCondition `json:"conditions,omitempty"`
-
-	// Parameters: Map of parameter keys to their optional default values
-	// and optional submap
+	// ParameterGroups: Map of parameter group keys to their parameters. The
+	// 'parameter group key' values of the params must be unique.
+	ParameterGroups map[string]RemoteConfigParameterGroup `json:"parameterGroups,omitempty"`
+	// Parameters: Map of parameter keys to their optional default values and
+	// optional submap
 	// of (condition name : value). Order doesn't affect semantics, and so
 	// is
 	// sorted by the server. The 'key' values of the params must be unique.
 	Parameters map[string]RemoteConfigParameter `json:"parameters,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Conditions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Conditions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Conditions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoteConfig) MarshalJSON() ([]byte, error) {
+func (s RemoteConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemoteConfigCondition: A single RemoteConfig Condition.  A list of
-// these (because order matters) are
+// RemoteConfigCondition: A single RemoteConfig Condition.  A list of these
+// (because order matters) are
 // part of a single RemoteConfig template.
 type RemoteConfigCondition struct {
-	// Description: DO NOT USE. Implementation removed and will not be added
-	// unless requested.
-	// A description for this Condition. Length must be less than or equal
-	// to
-	// 100 characters (or more precisely, unicode code points, which is
-	// defined
+	// Description: DO NOT USE. Implementation removed and will not be added unless
+	// requested.
+	// A description for this Condition. Length must be less than or equal to
+	// 100 characters (or more precisely, unicode code points, which is defined
 	// in
 	// java/com/google/wireless/android/config/ConstsExporter.java).
 	// A description may contain any Unicode characters
 	Description string `json:"description,omitempty"`
-
 	// Expression: Required.
 	Expression string `json:"expression,omitempty"`
-
 	// Name: Required.
 	// A non empty and unique name of this condition.
 	Name string `json:"name,omitempty"`
-
 	// TagColor: Optional.
-	// The display (tag) color of this condition. This serves as part of a
-	// tag
+	// The display (tag) color of this condition. This serves as part of a tag
 	// (in the future, we may add tag text as well as tag color, but that is
 	// not
 	// yet implemented in the UI).
-	// This value has no affect on the semantics of the delivered config and
-	// it
+	// This value has no affect on the semantics of the delivered config and it
 	// is ignored by the backend, except for passing it through
 	// write/read
 	// requests.
@@ -257,32 +258,26 @@ type RemoteConfigCondition struct {
 	//   "PURPLE" - Purple
 	//   "TEAL" - Teal
 	TagColor string `json:"tagColor,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoteConfigCondition) MarshalJSON() ([]byte, error) {
+func (s RemoteConfigCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteConfigCondition
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemoteConfigParameter: While default_value and conditional_values are
-// each optional, at least one of
+// RemoteConfigParameter: While default_value and conditional_values are each
+// optional, at least one of
 // the two is required - otherwise, the parameter is meaningless (and
 // an
 // exception will be thrown by the validation logic).
@@ -293,54 +288,75 @@ type RemoteConfigParameter struct {
 	// determines
 	// the value of this parameter.
 	ConditionalValues map[string]RemoteConfigParameterValue `json:"conditionalValues,omitempty"`
-
-	// DefaultValue: Optional - value to set the parameter to, when none of
-	// the named conditions
+	// DefaultValue: Optional - value to set the parameter to, when none of the
+	// named conditions
 	// evaluate to <code>true</code>.
 	DefaultValue *RemoteConfigParameterValue `json:"defaultValue,omitempty"`
-
 	// Description: Optional.
-	// A description for this Parameter. Length must be less than or equal
-	// to
-	// 100 characters (or more precisely, unicode code points, which is
-	// defined
+	// A description for this Parameter. Length must be less than or equal to
+	// 100 characters (or more precisely, unicode code points, which is defined
 	// in
 	// java/com/google/wireless/android/config/ConstsExporter.java).
 	// A description may contain any Unicode characters
 	Description string `json:"description,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConditionalValues")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ConditionalValues") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConditionalValues") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ConditionalValues") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoteConfigParameter) MarshalJSON() ([]byte, error) {
+func (s RemoteConfigParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteConfigParameter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemoteConfigParameterValue: A RemoteConfigParameter's "value" (either
-// the default value, or the value
+type RemoteConfigParameterGroup struct {
+	// Description: Optional.
+	// A description for this Parameter Groupd. Length must be less than or equal
+	// to
+	// 100 characters (or more precisely, unicode code points, which is defined
+	// in
+	// java/com/google/wireless/android/config/ConstsExporter.java).
+	// A description may contain any Unicode characters
+	Description string `json:"description,omitempty"`
+	// Parameters: Map of parameter keys to their optional default values and
+	// optional submap
+	// of (condition name : value). Order doesn't affect semantics, and so
+	// is
+	// sorted by the server. The 'key' values of the params must be unique.
+	Parameters map[string]RemoteConfigParameter `json:"parameters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoteConfigParameterGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteConfigParameterGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemoteConfigParameterValue: A RemoteConfigParameter's "value" (either the
+// default value, or the value
 // associated with a condition name) is either a string, or
 // the
-// "use_in_app_default" indicator (which means to leave out the
-// parameter from
-// the returned <key, value> map that is the output of the parameter
-// fetch).
+// "use_in_app_default" indicator (which means to leave out the parameter
+// from
+// the returned <key, value> map that is the output of the parameter fetch).
 // We represent the "use_in_app_default" as a bool, but (when using the
 // boolean
 // instead of the string) it should always be <code>true</code>.
@@ -348,35 +364,25 @@ type RemoteConfigParameterValue struct {
 	// UseInAppDefault: if true, omit the parameter from the map of fetched
 	// parameter values
 	UseInAppDefault bool `json:"useInAppDefault,omitempty"`
-
 	// Value: the string to set the parameter to
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "UseInAppDefault") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UseInAppDefault") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "UseInAppDefault") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s *RemoteConfigParameterValue) MarshalJSON() ([]byte, error) {
+func (s RemoteConfigParameterValue) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteConfigParameterValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "firebaseremoteconfig.projects.getRemoteConfig":
 
 type ProjectsGetRemoteConfigCall struct {
 	s            *Service
@@ -389,9 +395,11 @@ type ProjectsGetRemoteConfigCall struct {
 
 // GetRemoteConfig: Get the latest version Remote Configuration for a
 // project.
-// Returns the RemoteConfig as the payload, and also the eTag as
-// a
+// Returns the RemoteConfig as the payload, and also the eTag as a
 // response header.
+//
+//   - project: The GMP project identifier.
+//     See note at the beginning of this file regarding project ids.
 func (r *ProjectsService) GetRemoteConfig(projectid string) *ProjectsGetRemoteConfigCall {
 	c := &ProjectsGetRemoteConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectid = projectid
@@ -399,33 +407,29 @@ func (r *ProjectsService) GetRemoteConfig(projectid string) *ProjectsGetRemoteCo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsGetRemoteConfigCall) Fields(s ...googleapi.Field) *ProjectsGetRemoteConfigCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsGetRemoteConfigCall) IfNoneMatch(entityTag string) *ProjectsGetRemoteConfigCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsGetRemoteConfigCall) Context(ctx context.Context) *ProjectsGetRemoteConfigCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsGetRemoteConfigCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -434,12 +438,7 @@ func (c *ProjectsGetRemoteConfigCall) Header() http.Header {
 }
 
 func (c *ProjectsGetRemoteConfigCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -460,12 +459,10 @@ func (c *ProjectsGetRemoteConfigCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "firebaseremoteconfig.projects.getRemoteConfig" call.
-// Exactly one of *RemoteConfig or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *RemoteConfig.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *RemoteConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsGetRemoteConfigCall) Do(opts ...googleapi.CallOption) (*RemoteConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -473,17 +470,17 @@ func (c *ProjectsGetRemoteConfigCall) Do(opts ...googleapi.CallOption) (*RemoteC
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RemoteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -496,32 +493,7 @@ func (c *ProjectsGetRemoteConfigCall) Do(opts ...googleapi.CallOption) (*RemoteC
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get the latest version Remote Configuration for a project.\nReturns the RemoteConfig as the payload, and also the eTag as a\nresponse header.",
-	//   "flatPath": "v1/projects/{projectsId}/remoteConfig",
-	//   "httpMethod": "GET",
-	//   "id": "firebaseremoteconfig.projects.getRemoteConfig",
-	//   "parameterOrder": [
-	//     "project"
-	//   ],
-	//   "parameters": {
-	//     "project": {
-	//       "description": "The GMP project identifier. Required.\nSee note at the beginning of this file regarding project ids.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+project}/remoteConfig",
-	//   "response": {
-	//     "$ref": "RemoteConfig"
-	//   }
-	// }
-
 }
-
-// method id "firebaseremoteconfig.projects.updateRemoteConfig":
 
 type ProjectsUpdateRemoteConfigCall struct {
 	s            *Service
@@ -534,34 +506,29 @@ type ProjectsUpdateRemoteConfigCall struct {
 
 // UpdateRemoteConfig: Update a RemoteConfig. We treat this as an
 // always-existing
-// resource (when it is not found in our data store, we treat it as
-// version
-// 0, a template with zero conditions and zero parameters). Hence there
-// are
-// no Create or Delete operations. Returns the updated template
-// when
+// resource (when it is not found in our data store, we treat it as version
+// 0, a template with zero conditions and zero parameters). Hence there are
+// no Create or Delete operations. Returns the updated template when
 // successful (and the updated eTag as a response header), or an error
 // if
 // things go wrong.
 // Possible error messages:
-// * VALIDATION_ERROR (HTTP status 400) with additional details if
-// the
+// * VALIDATION_ERROR (HTTP status 400) with additional details if the
 // template being passed in can not be validated.
 // * AUTHENTICATION_ERROR (HTTP status 401) if the request can not
 // be
 // authenticate (e.g. no access token, or invalid access token).
-// * AUTHORIZATION_ERROR (HTTP status 403) if the request can not
-// be
-// authorized (e.g. the user has no access to the specified project
-// id).
-// * VERSION_MISMATCH (HTTP status 412) when trying to update when
-// the
-// expected eTag (passed in via the "If-match" header) is not specified,
-// or
+// * AUTHORIZATION_ERROR (HTTP status 403) if the request can not be
+// authorized (e.g. the user has no access to the specified project id).
+// * VERSION_MISMATCH (HTTP status 412) when trying to update when the
+// expected eTag (passed in via the "If-match" header) is not specified, or
 // is specified but does does not match the current eTag.
 // * Internal error (HTTP status 500) for Database problems or other
 // internal
 // errors.
+//
+//   - project: The GMP project identifier.
+//     See note at the beginning of this file regarding project ids.
 func (r *ProjectsService) UpdateRemoteConfig(projectid string, remoteconfig *RemoteConfig) *ProjectsUpdateRemoteConfigCall {
 	c := &ProjectsUpdateRemoteConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectid = projectid
@@ -571,16 +538,15 @@ func (r *ProjectsService) UpdateRemoteConfig(projectid string, remoteconfig *Rem
 
 // ValidateOnly sets the optional parameter "validateOnly": Defaults to
 // <code>false</code> (UpdateRemoteConfig call should
-// update the backend if there are no validation/interal errors). May be
-// set
+// update the backend if there are no validation/interal errors). May be set
 // to <code>true</code> to indicate that, should no validation errors
 // occur,
 // the call should return a "200 OK" instead of performing the update.
 // Note
 // that other error messages (500 Internal Error, 412 Version Mismatch,
 // etc)
-// may still result after flipping to <code>false</code>, even if
-// getting a
+// may still result after flipping to <code>false</code>, even if getting
+// a
 // "200 OK" when calling with <code>true</code>.
 func (c *ProjectsUpdateRemoteConfigCall) ValidateOnly(validateOnly bool) *ProjectsUpdateRemoteConfigCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
@@ -588,23 +554,21 @@ func (c *ProjectsUpdateRemoteConfigCall) ValidateOnly(validateOnly bool) *Projec
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsUpdateRemoteConfigCall) Fields(s ...googleapi.Field) *ProjectsUpdateRemoteConfigCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsUpdateRemoteConfigCall) Context(ctx context.Context) *ProjectsUpdateRemoteConfigCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsUpdateRemoteConfigCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -613,18 +577,12 @@ func (c *ProjectsUpdateRemoteConfigCall) Header() http.Header {
 }
 
 func (c *ProjectsUpdateRemoteConfigCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/1.13.7 gdcl/20200203")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.remoteconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+project}/remoteConfig")
@@ -641,12 +599,10 @@ func (c *ProjectsUpdateRemoteConfigCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "firebaseremoteconfig.projects.updateRemoteConfig" call.
-// Exactly one of *RemoteConfig or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *RemoteConfig.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *RemoteConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsUpdateRemoteConfigCall) Do(opts ...googleapi.CallOption) (*RemoteConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -654,17 +610,17 @@ func (c *ProjectsUpdateRemoteConfigCall) Do(opts ...googleapi.CallOption) (*Remo
 		if res.Body != nil {
 			res.Body.Close()
 		}
-		return nil, &googleapi.Error{
+		return nil, gensupport.WrapError(&googleapi.Error{
 			Code:   res.StatusCode,
 			Header: res.Header,
-		}
+		})
 	}
 	if err != nil {
 		return nil, err
 	}
 	defer googleapi.CloseBody(res)
 	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
+		return nil, gensupport.WrapError(err)
 	}
 	ret := &RemoteConfig{
 		ServerResponse: googleapi.ServerResponse{
@@ -677,35 +633,4 @@ func (c *ProjectsUpdateRemoteConfigCall) Do(opts ...googleapi.CallOption) (*Remo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update a RemoteConfig. We treat this as an always-existing\nresource (when it is not found in our data store, we treat it as version\n0, a template with zero conditions and zero parameters). Hence there are\nno Create or Delete operations. Returns the updated template when\nsuccessful (and the updated eTag as a response header), or an error if\nthings go wrong.\nPossible error messages:\n* VALIDATION_ERROR (HTTP status 400) with additional details if the\ntemplate being passed in can not be validated.\n* AUTHENTICATION_ERROR (HTTP status 401) if the request can not be\nauthenticate (e.g. no access token, or invalid access token).\n* AUTHORIZATION_ERROR (HTTP status 403) if the request can not be\nauthorized (e.g. the user has no access to the specified project id).\n* VERSION_MISMATCH (HTTP status 412) when trying to update when the\nexpected eTag (passed in via the \"If-match\" header) is not specified, or\nis specified but does does not match the current eTag.\n* Internal error (HTTP status 500) for Database problems or other internal\nerrors.",
-	//   "flatPath": "v1/projects/{projectsId}/remoteConfig",
-	//   "httpMethod": "PUT",
-	//   "id": "firebaseremoteconfig.projects.updateRemoteConfig",
-	//   "parameterOrder": [
-	//     "project"
-	//   ],
-	//   "parameters": {
-	//     "project": {
-	//       "description": "The GMP project identifier. Required.\nSee note at the beginning of this file regarding project ids.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "validateOnly": {
-	//       "description": "Optional. Defaults to \u003ccode\u003efalse\u003c/code\u003e (UpdateRemoteConfig call should\nupdate the backend if there are no validation/interal errors). May be set\nto \u003ccode\u003etrue\u003c/code\u003e to indicate that, should no validation errors occur,\nthe call should return a \"200 OK\" instead of performing the update. Note\nthat other error messages (500 Internal Error, 412 Version Mismatch, etc)\nmay still result after flipping to \u003ccode\u003efalse\u003c/code\u003e, even if getting a\n\"200 OK\" when calling with \u003ccode\u003etrue\u003c/code\u003e.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v1/{+project}/remoteConfig",
-	//   "request": {
-	//     "$ref": "RemoteConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "RemoteConfig"
-	//   }
-	// }
-
 }

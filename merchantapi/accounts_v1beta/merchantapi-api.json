@@ -1417,24 +1417,9 @@
       }
     }
   },
-  "revision": "20240930",
+  "revision": "20241004",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
-    "AcceptTermsOfService": {
-      "description": "Reference to a Terms of Service resource.",
-      "id": "AcceptTermsOfService",
-      "properties": {
-        "name": {
-          "description": "Required. The resource name of the terms of service version in the format `termsOfService/{version}`. To retrieve the latest version, use the [termsOfService.retrieveLatest](/merchant/api/reference/rest/accounts_v1beta/termsOfService/retrieveLatest) method.",
-          "type": "string"
-        },
-        "regionCode": {
-          "description": "Required. Region code as defined by [CLDR](https://cldr.unicode.org/). This is either a country when the ToS applies specifically to that country or `001` when it applies globally.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "Accepted": {
       "description": "Describes the accepted terms of service.",
       "id": "Accepted",
@@ -1769,10 +1754,6 @@
       "description": "Request message for the `CreateAndConfigureAccount` method.",
       "id": "CreateAndConfigureAccountRequest",
       "properties": {
-        "acceptTermsOfService": {
-          "$ref": "AcceptTermsOfService",
-          "description": "Optional. The Terms of Service (ToS) to be accepted immediately upon account creation."
-        },
         "account": {
           "$ref": "Account",
           "description": "Required. The account to be created."

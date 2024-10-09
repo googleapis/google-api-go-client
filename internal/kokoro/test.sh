@@ -27,8 +27,7 @@ set -x
 
 # cd to project dir on Kokoro instance
 cd github/google-api-go-client
-wd=$(pwd)/*
-git config --global --add safe.directory $wd
+git config --global --add safe.directory "$(pwd)/*"
 
 go version
 

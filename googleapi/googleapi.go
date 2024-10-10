@@ -201,6 +201,10 @@ var WithDataWrapper = MarshalStyle(true)
 var WithoutDataWrapper = MarshalStyle(false)
 
 func (wrap MarshalStyle) JSONReader(v interface{}) (io.Reader, error) {
+	return wrap.JSONBuffer(v)
+}
+
+func (wrap MarshalStyle) JSONBuffer(v interface{}) (*bytes.Buffer, error) {
 	buf := new(bytes.Buffer)
 	if wrap {
 		buf.Write([]byte(`{"data": `))

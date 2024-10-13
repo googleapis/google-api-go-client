@@ -3589,11 +3589,10 @@ type GoogleCloudRetailV2Product struct {
 	// where "key" is the key of a custom attribute, as specified in attributes.
 	// For Type.PRIMARY and Type.COLLECTION, the following fields are always
 	// returned in SearchResponse by default: * name For Type.VARIANT, the
-	// following fields are always returned in by default: * name * color_info The
-	// maximum number of paths is 30. Otherwise, an INVALID_ARGUMENT error is
-	// returned. Note: Returning more fields in SearchResponse can increase
-	// response payload size and serving latency. This field is deprecated. Use the
-	// retrievable site-wide control instead.
+	// following fields are always returned in by default: * name * color_info
+	// Note: Returning more fields in SearchResponse can increase response payload
+	// size and serving latency. This field is deprecated. Use the retrievable
+	// site-wide control instead.
 	RetrievableFields string `json:"retrievableFields,omitempty"`
 	// Sizes: The size of the product. To represent different size systems or size
 	// types, consider using this format: [[[size_system:]size_type:]size_value].
@@ -7236,6 +7235,8 @@ type GoogleCloudRetailV2alphaModelModelFeaturesConfig struct {
 	// FrequentlyBoughtTogetherConfig: Additional configs for
 	// frequently-bought-together models.
 	FrequentlyBoughtTogetherConfig *GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig `json:"frequentlyBoughtTogetherConfig,omitempty"`
+	// LlmEmbeddingConfig: Optional. LLM embedding config to use for this model.
+	LlmEmbeddingConfig *GoogleCloudRetailV2alphaModelModelFeaturesConfigLlmEmbeddingConfig `json:"llmEmbeddingConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "FrequentlyBoughtTogetherConfig") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -7252,6 +7253,31 @@ type GoogleCloudRetailV2alphaModelModelFeaturesConfig struct {
 
 func (s GoogleCloudRetailV2alphaModelModelFeaturesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaModelModelFeaturesConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaModelModelFeaturesConfigLlmEmbeddingConfig: Config
+// that turns on usage of llm embeddings as features to the model. Embeddings
+// leverage unstructured text fields like description and title.
+type GoogleCloudRetailV2alphaModelModelFeaturesConfigLlmEmbeddingConfig struct {
+	// LlmEmbeddingVersion: Optional. The LLM embedding version to use. Currently
+	// only `v0` is supported. If not specified, feature will not be turned on.
+	LlmEmbeddingVersion string `json:"llmEmbeddingVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LlmEmbeddingVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LlmEmbeddingVersion") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaModelModelFeaturesConfigLlmEmbeddingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaModelModelFeaturesConfigLlmEmbeddingConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

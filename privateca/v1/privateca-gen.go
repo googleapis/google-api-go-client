@@ -740,8 +740,9 @@ type CertificateAuthority struct {
 	// Used to create the "not_before_time" and "not_after_time" fields inside an
 	// X.509 certificate.
 	Lifetime string `json:"lifetime,omitempty"`
-	// Name: Output only. The resource name for this CertificateAuthority in the
-	// format `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+	// Name: Output only. Identifier. The resource name for this
+	// CertificateAuthority in the format
+	// `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
 	Name string `json:"name,omitempty"`
 	// PemCaCertificates: Output only. This CertificateAuthority's certificate
 	// chain, including the current CertificateAuthority's certificate. Ordered
@@ -5217,8 +5218,9 @@ type ProjectsLocationsCaPoolsCertificateAuthoritiesPatchCall struct {
 
 // Patch: Update a CertificateAuthority.
 //
-//   - name: Output only. The resource name for this CertificateAuthority in the
-//     format `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
+//   - name: Output only. Identifier. The resource name for this
+//     CertificateAuthority in the format
+//     `projects/*/locations/*/caPools/*/certificateAuthorities/*`.
 func (r *ProjectsLocationsCaPoolsCertificateAuthoritiesService) Patch(name string, certificateauthority *CertificateAuthority) *ProjectsLocationsCaPoolsCertificateAuthoritiesPatchCall {
 	c := &ProjectsLocationsCaPoolsCertificateAuthoritiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

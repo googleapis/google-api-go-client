@@ -4723,7 +4723,7 @@ type DeveloperMetadataLookup struct {
 	MetadataValue string `json:"metadataValue,omitempty"`
 	// Visibility: Limits the selected developer metadata to that which has a
 	// matching DeveloperMetadata.visibility. If left unspecified, all developer
-	// metadata visibile to the requesting project is considered.
+	// metadata visible to the requesting project is considered.
 	//
 	// Possible values:
 	//   "DEVELOPER_METADATA_VISIBILITY_UNSPECIFIED" - Default value.

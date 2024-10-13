@@ -2312,10 +2312,9 @@ type GoogleCloudDiscoveryengineV1DisableAdvancedSiteSearchResponse struct {
 }
 
 // GoogleCloudDiscoveryengineV1DocumentProcessingConfig: A singleton resource
-// of DataStore. It's empty when DataStore is created, which defaults to
-// digital parser. The first call to
-// DataStoreService.UpdateDocumentProcessingConfig method will initialize the
-// config.
+// of DataStore. If it's empty when DataStore is created and DataStore is set
+// to DataStore.ContentConfig.CONTENT_REQUIRED, the default parser will default
+// to digital parser.
 type GoogleCloudDiscoveryengineV1DocumentProcessingConfig struct {
 	// ChunkingConfig: Whether chunking mode is enabled.
 	ChunkingConfig *GoogleCloudDiscoveryengineV1DocumentProcessingConfigChunkingConfig `json:"chunkingConfig,omitempty"`
@@ -7232,10 +7231,9 @@ func (s GoogleCloudDiscoveryengineV1alphaDocumentInfo) MarshalJSON() ([]byte, er
 }
 
 // GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig: A singleton
-// resource of DataStore. It's empty when DataStore is created, which defaults
-// to digital parser. The first call to
-// DataStoreService.UpdateDocumentProcessingConfig method will initialize the
-// config.
+// resource of DataStore. If it's empty when DataStore is created and DataStore
+// is set to DataStore.ContentConfig.CONTENT_REQUIRED, the default parser will
+// default to digital parser.
 type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig struct {
 	// ChunkingConfig: Whether chunking mode is enabled.
 	ChunkingConfig *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfig `json:"chunkingConfig,omitempty"`
@@ -15577,10 +15575,9 @@ type GoogleCloudDiscoveryengineV1betaDisableAdvancedSiteSearchResponse struct {
 }
 
 // GoogleCloudDiscoveryengineV1betaDocumentProcessingConfig: A singleton
-// resource of DataStore. It's empty when DataStore is created, which defaults
-// to digital parser. The first call to
-// DataStoreService.UpdateDocumentProcessingConfig method will initialize the
-// config.
+// resource of DataStore. If it's empty when DataStore is created and DataStore
+// is set to DataStore.ContentConfig.CONTENT_REQUIRED, the default parser will
+// default to digital parser.
 type GoogleCloudDiscoveryengineV1betaDocumentProcessingConfig struct {
 	// ChunkingConfig: Whether chunking mode is enabled.
 	ChunkingConfig *GoogleCloudDiscoveryengineV1betaDocumentProcessingConfigChunkingConfig `json:"chunkingConfig,omitempty"`

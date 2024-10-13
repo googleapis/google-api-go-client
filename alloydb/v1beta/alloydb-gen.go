@@ -395,6 +395,10 @@ type Backup struct {
 	//   "FAILED" - The backup failed.
 	//   "DELETING" - The backup is being deleted.
 	State string `json:"state,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: ``` "123/environment": "production",
+	// "123/costCenter": "marketing" ```
+	Tags map[string]string `json:"tags,omitempty"`
 	// Type: The backup type, which suggests the trigger for the backup.
 	//
 	// Possible values:
@@ -691,6 +695,10 @@ type Cluster struct {
 	//   "STANDARD" - Standard subscription.
 	//   "TRIAL" - Trial subscription.
 	SubscriptionType string `json:"subscriptionType,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: ``` "123/environment": "production",
+	// "123/costCenter": "marketing" ```
+	Tags map[string]string `json:"tags,omitempty"`
 	// TrialMetadata: Output only. Metadata for free trial clusters
 	TrialMetadata *TrialMetadata `json:"trialMetadata,omitempty"`
 	// Uid: Output only. The system-generated UID of the resource. The UID is
@@ -1157,16 +1165,19 @@ func (s GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
 // allow leap seconds. Related types are google.type.Date and
 // `google.protobuf.Timestamp`.
 type GoogleTypeTimeOfDay struct {
-	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API may
-	// choose to allow the value "24:00:00" for scenarios like business closing
-	// time.
+	// Hours: Hours of a day in 24 hour format. Must be greater than or equal to 0
+	// and typically must be less than or equal to 23. An API may choose to allow
+	// the value "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
-	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Minutes of an hour. Must be greater than or equal to 0 and less
+	// than or equal to 59.
 	Minutes int64 `json:"minutes,omitempty"`
-	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+	// Nanos: Fractions of seconds, in nanoseconds. Must be greater than or equal
+	// to 0 and less than or equal to 999,999,999.
 	Nanos int64 `json:"nanos,omitempty"`
-	// Seconds: Seconds of minutes of the time. Must normally be from 0 to 59. An
-	// API may allow the value 60 if it allows leap-seconds.
+	// Seconds: Seconds of a minute. Must be greater than or equal to 0 and
+	// typically must be less than or equal to 59. An API may allow the value 60 if
+	// it allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3030,7 +3041,7 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceId) MarshalJSON() (
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata: Common model
-// for database resource instance metadata. Next ID: 22
+// for database resource instance metadata. Next ID: 23
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -3054,6 +3065,16 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	CurrentState string `json:"currentState,omitempty"`
 	// CustomMetadata: Any custom metadata associated with the resource
 	CustomMetadata *StorageDatabasecenterPartnerapiV1mainCustomMetadataData `json:"customMetadata,omitempty"`
+	// Edition: Optional. Edition represents whether the instance is ENTERPRISE or
+	// ENTERPRISE_PLUS. This information is core to Cloud SQL only and is used to
+	// identify the edition of the instance.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - Default, to make it consistent with instance
+	// edition enum.
+	//   "EDITION_ENTERPRISE" - Represents the enterprise edition.
+	//   "EDITION_ENTERPRISE_PLUS" - Represents the enterprise plus edition.
+	Edition string `json:"edition,omitempty"`
 	// Entitlements: Entitlements associated with the resource
 	Entitlements []*StorageDatabasecenterPartnerapiV1mainEntitlement `json:"entitlements,omitempty"`
 	// ExpectedState: The state that the instance is expected to be in. For

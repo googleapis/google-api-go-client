@@ -877,15 +877,17 @@ func (s AzureMetadata) MarshalJSON() ([]byte, error) {
 
 // AzureResourceGroup: Represents an Azure resource group.
 type AzureResourceGroup struct {
+	// Id: The ID of the Azure resource group.
+	Id string `json:"id,omitempty"`
 	// Name: The name of the Azure resource group. This is not a UUID.
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
 	// with the JSON null value. By default, fields with empty values are omitted
 	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1015,6 +1017,44 @@ type BackupDisasterRecovery struct {
 
 func (s BackupDisasterRecovery) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupDisasterRecovery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CelPolicySpec: YAML-based rule that uses CEL, which supports the declaration
+// of variables and a filtering predicate. A vulnerable resource is emitted if
+// the evaluation is false. Given: 1) the resource types as: - resource_types:
+// "compute.googleapis.com/Instance" - resource_types:
+// "compute.googleapis.com/Firewall" 2) the CEL policy spec as: name:
+// bad_instance resource_filters: - name: instance resource_type:
+// compute.googleapis.com/Instance filter: > instance.status == 'RUNNING' &&
+// 'public' in instance.tags.items - name: firewall resource_type:
+// compute.googleapis.com/Firewall filter: > firewall.direction == 'INGRESS' &&
+// !firewall.disabled && firewall.allowed.exists(rule,
+// rule.IPProtocol.upperAscii() in ['TCP', 'ALL'] && rule.ports.exists(port,
+// network.portsInRange(port, '11-256'))) rule: match: - predicate: >
+// instance.networkInterfaces.exists(net, firewall.network == net.network)
+// output: > {'message': 'Compute instance with publicly accessible ports',
+// 'instance': instance.name} Users are able to join resource types together
+// using the exact format as Kubernetes Validating Admission policies.
+type CelPolicySpec struct {
+	// Spec: The CEL policy to evaluate to produce findings. A finding is generated
+	// when the policy validation evaluates to false.
+	Spec string `json:"spec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Spec") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Spec") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CelPolicySpec) MarshalJSON() ([]byte, error) {
+	type NoMethod CelPolicySpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2566,6 +2606,8 @@ type GoogleCloudSecuritycenterV1BulkMuteFindingsResponse struct {
 // configuration to create custom detectors that generate custom findings for
 // resources that you specify.
 type GoogleCloudSecuritycenterV1CustomConfig struct {
+	// CelPolicy: The CEL policy spec attached to the custom module.
+	CelPolicy *CelPolicySpec `json:"celPolicy,omitempty"`
 	// CustomOutput: Custom output properties.
 	CustomOutput *GoogleCloudSecuritycenterV1CustomOutputSpec `json:"customOutput,omitempty"`
 	// Description: Text that describes the vulnerability or misconfiguration that
@@ -2593,13 +2635,13 @@ type GoogleCloudSecuritycenterV1CustomConfig struct {
 	//   "MEDIUM" - Medium severity.
 	//   "LOW" - Low severity.
 	Severity string `json:"severity,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CustomOutput") to
+	// ForceSendFields is a list of field names (e.g. "CelPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CustomOutput") to include in API
+	// NullFields is a list of field names (e.g. "CelPolicy") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3927,15 +3969,17 @@ func (s GoogleCloudSecuritycenterV2AzureMetadata) MarshalJSON() ([]byte, error) 
 // GoogleCloudSecuritycenterV2AzureResourceGroup: Represents an Azure resource
 // group.
 type GoogleCloudSecuritycenterV2AzureResourceGroup struct {
+	// Id: The ID of the Azure resource group.
+	Id string `json:"id,omitempty"`
 	// Name: The name of the Azure resource group. This is not a UUID.
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
 	// with the JSON null value. By default, fields with empty values are omitted
 	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

@@ -499,6 +499,9 @@ type GoogleFirebaseAppdistroV1alphaAiStepResult struct {
 	//   "IN_PROGRESS" - The step is in progress
 	//   "PASSED" - The step has completed successfully
 	//   "FAILED" - The step has failed
+	//   "TIMED_OUT" - The test timed out during this step
+	//   "GOAL_ACTION_LIMIT_REACHED" - The number of actions needed to reach the
+	// goal exceeded its limit
 	State string `json:"state,omitempty"`
 	// Step: Required. The step performed by the AI
 	Step *GoogleFirebaseAppdistroV1alphaAiStep `json:"step,omitempty"`

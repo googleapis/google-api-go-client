@@ -397,6 +397,10 @@ type Backup struct {
 	//   "FAILED" - The backup failed.
 	//   "DELETING" - The backup is being deleted.
 	State string `json:"state,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: ``` "123/environment": "production",
+	// "123/costCenter": "marketing" ```
+	Tags map[string]string `json:"tags,omitempty"`
 	// Type: The backup type, which suggests the trigger for the backup.
 	//
 	// Possible values:
@@ -699,6 +703,10 @@ type Cluster struct {
 	//   "STANDARD" - Standard subscription.
 	//   "TRIAL" - Trial subscription.
 	SubscriptionType string `json:"subscriptionType,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: ``` "123/environment": "production",
+	// "123/costCenter": "marketing" ```
+	Tags map[string]string `json:"tags,omitempty"`
 	// TrialMetadata: Output only. Metadata for free trial clusters
 	TrialMetadata *TrialMetadata `json:"trialMetadata,omitempty"`
 	// Uid: Output only. The system-generated UID of the resource. The UID is
@@ -1165,16 +1173,19 @@ func (s GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
 // allow leap seconds. Related types are google.type.Date and
 // `google.protobuf.Timestamp`.
 type GoogleTypeTimeOfDay struct {
-	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API may
-	// choose to allow the value "24:00:00" for scenarios like business closing
-	// time.
+	// Hours: Hours of a day in 24 hour format. Must be greater than or equal to 0
+	// and typically must be less than or equal to 23. An API may choose to allow
+	// the value "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
-	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Minutes of an hour. Must be greater than or equal to 0 and less
+	// than or equal to 59.
 	Minutes int64 `json:"minutes,omitempty"`
-	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+	// Nanos: Fractions of seconds, in nanoseconds. Must be greater than or equal
+	// to 0 and less than or equal to 999,999,999.
 	Nanos int64 `json:"nanos,omitempty"`
-	// Seconds: Seconds of minutes of the time. Must normally be from 0 to 59. An
-	// API may allow the value 60 if it allows leap-seconds.
+	// Seconds: Seconds of a minute. Must be greater than or equal to 0 and
+	// typically must be less than or equal to 59. An API may allow the value 60 if
+	// it allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2092,6 +2103,9 @@ type PscConfig struct {
 	// PscEnabled: Optional. Create an instance that allows connections from
 	// Private Service Connect endpoints to the instance.
 	PscEnabled bool `json:"pscEnabled,omitempty"`
+	// ServiceOwnedProjectNumber: Output only. The project number that needs to be
+	// allowlisted on the network attachment to enable outbound connectivity.
+	ServiceOwnedProjectNumber int64 `json:"serviceOwnedProjectNumber,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "PscEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2119,6 +2133,11 @@ type PscInstanceConfig struct {
 	// PscDnsName: Output only. The DNS name of the instance for PSC connectivity.
 	// Name convention: ...alloydb-psc.goog
 	PscDnsName string `json:"pscDnsName,omitempty"`
+	// PscInterfaceConfigs: Optional. Configurations for setting up PSC interfaces
+	// attached to the instance which are used for outbound connectivity. Only
+	// primary instances can have PSC interface attached. Currently we only support
+	// 0 or 1 PSC interface.
+	PscInterfaceConfigs []*PscInterfaceConfig `json:"pscInterfaceConfigs,omitempty"`
 	// ServiceAttachmentLink: Output only. The service attachment created when
 	// Private Service Connect (PSC) is enabled for the instance. The name of the
 	// resource will be in the format of `projects//regions//serviceAttachments/`
@@ -2138,6 +2157,34 @@ type PscInstanceConfig struct {
 
 func (s PscInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PscInstanceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PscInterfaceConfig: Configuration for setting up a PSC interface to enable
+// outbound connectivity.
+type PscInterfaceConfig struct {
+	// NetworkAttachmentResource: The network attachment resource created in the
+	// consumer network to which the PSC interface will be linked. This is of the
+	// format:
+	// "projects/${CONSUMER_PROJECT}/regions/${REGION}/networkAttachments/${NETWORK_
+	// ATTACHMENT_NAME}". The network attachment must be in the same region as the
+	// instance.
+	NetworkAttachmentResource string `json:"networkAttachmentResource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NetworkAttachmentResource")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NetworkAttachmentResource") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscInterfaceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscInterfaceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3040,7 +3087,7 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceId) MarshalJSON() (
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata: Common model
-// for database resource instance metadata. Next ID: 22
+// for database resource instance metadata. Next ID: 23
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -3064,6 +3111,16 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	CurrentState string `json:"currentState,omitempty"`
 	// CustomMetadata: Any custom metadata associated with the resource
 	CustomMetadata *StorageDatabasecenterPartnerapiV1mainCustomMetadataData `json:"customMetadata,omitempty"`
+	// Edition: Optional. Edition represents whether the instance is ENTERPRISE or
+	// ENTERPRISE_PLUS. This information is core to Cloud SQL only and is used to
+	// identify the edition of the instance.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - Default, to make it consistent with instance
+	// edition enum.
+	//   "EDITION_ENTERPRISE" - Represents the enterprise edition.
+	//   "EDITION_ENTERPRISE_PLUS" - Represents the enterprise plus edition.
+	Edition string `json:"edition,omitempty"`
 	// Entitlements: Entitlements associated with the resource
 	Entitlements []*StorageDatabasecenterPartnerapiV1mainEntitlement `json:"entitlements,omitempty"`
 	// ExpectedState: The state that the instance is expected to be in. For

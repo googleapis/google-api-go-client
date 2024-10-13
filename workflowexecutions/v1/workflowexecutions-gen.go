@@ -886,7 +886,8 @@ type StepEntryMetadata struct {
 	ExpectedIteration int64 `json:"expectedIteration,omitempty,string"`
 	// ProgressNumber: Progress number represents the current state of the current
 	// progress. eg: A step entry represents the 4th iteration in a progress of
-	// PROGRESS_TYPE_FOR.
+	// PROGRESS_TYPE_FOR. Note: This field is only populated when an iteration
+	// exists and the starting value is 1.
 	ProgressNumber int64 `json:"progressNumber,omitempty,string"`
 	// ProgressType: Progress type of this step entry.
 	//

@@ -1744,7 +1744,7 @@ func (s MonitoredResource) MarshalJSON() ([]byte, error) {
 // multiple grid blocks and can be placed at arbitrary locations in the grid.
 type MosaicLayout struct {
 	// Columns: The number of columns in the mosaic grid. The number of columns
-	// must be between 1 and 12, inclusive.
+	// must be between 1 and 48, inclusive.
 	Columns int64 `json:"columns,omitempty"`
 	// Tiles: The tiles to display.
 	Tiles []*Tile `json:"tiles,omitempty"`

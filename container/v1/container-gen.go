@@ -1084,6 +1084,9 @@ type Cluster struct {
 	// ConfidentialNodes: Configuration of Confidential Nodes. All the nodes in the
 	// cluster will be Confidential VM once enabled.
 	ConfidentialNodes *ConfidentialNodes `json:"confidentialNodes,omitempty"`
+	// ControlPlaneEndpointsConfig: Configuration for all cluster's control plane
+	// endpoints.
+	ControlPlaneEndpointsConfig *ControlPlaneEndpointsConfig `json:"controlPlaneEndpointsConfig,omitempty"`
 	// CostManagementConfig: Configuration for the fine-grained cost management
 	// feature.
 	CostManagementConfig *CostManagementConfig `json:"costManagementConfig,omitempty"`
@@ -1205,7 +1208,9 @@ type Cluster struct {
 	// password will be generated, and a client certificate will be issued.
 	MasterAuth *MasterAuth `json:"masterAuth,omitempty"`
 	// MasterAuthorizedNetworksConfig: The configuration options for master
-	// authorized networks feature.
+	// authorized networks feature. Deprecated: Use
+	// ControlPlaneEndpointsConfig.IPEndpointsConfig.authorized_networks_config
+	// instead.
 	MasterAuthorizedNetworksConfig *MasterAuthorizedNetworksConfig `json:"masterAuthorizedNetworksConfig,omitempty"`
 	// MeshCertificates: Configuration for issuance of mTLS keys and certificates
 	// to Kubernetes pods.
@@ -1460,6 +1465,8 @@ type ClusterUpdate struct {
 	DesiredCompliancePostureConfig *CompliancePostureConfig `json:"desiredCompliancePostureConfig,omitempty"`
 	// DesiredContainerdConfig: The desired containerd config for the cluster.
 	DesiredContainerdConfig *ContainerdConfig `json:"desiredContainerdConfig,omitempty"`
+	// DesiredControlPlaneEndpointsConfig: Control plane endpoints configuration.
+	DesiredControlPlaneEndpointsConfig *ControlPlaneEndpointsConfig `json:"desiredControlPlaneEndpointsConfig,omitempty"`
 	// DesiredCostManagementConfig: The desired configuration for the fine-grained
 	// cost management feature.
 	DesiredCostManagementConfig *CostManagementConfig `json:"desiredCostManagementConfig,omitempty"`
@@ -1475,6 +1482,10 @@ type ClusterUpdate struct {
 	// documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/datapla
 	// ne-v2) for more.
 	DesiredDatapathProvider string `json:"desiredDatapathProvider,omitempty"`
+	// DesiredDefaultEnablePrivateNodes: Override the default setting of whether
+	// future created nodes have private IP addresses only, namely
+	// NetworkConfig.default_enable_private_nodes
+	DesiredDefaultEnablePrivateNodes bool `json:"desiredDefaultEnablePrivateNodes,omitempty"`
 	// DesiredDefaultSnatStatus: The desired status of whether to disable default
 	// sNAT for this cluster.
 	DesiredDefaultSnatStatus *DefaultSnatStatus `json:"desiredDefaultSnatStatus,omitempty"`
@@ -1490,7 +1501,10 @@ type ClusterUpdate struct {
 	// cluster
 	DesiredEnableMultiNetworking bool `json:"desiredEnableMultiNetworking,omitempty"`
 	// DesiredEnablePrivateEndpoint: Enable/Disable private endpoint for the
-	// cluster's master.
+	// cluster's master. Deprecated: Use
+	// desired_control_plane_endpoints_config.ip_endpoints_config.enable_public_endp
+	// oint instead. Note that the value of enable_public_endpoint is reversed: if
+	// enable_private_endpoint is false, then enable_public_endpoint will be true.
 	DesiredEnablePrivateEndpoint bool `json:"desiredEnablePrivateEndpoint,omitempty"`
 	// DesiredFleet: The desired fleet configuration for the cluster.
 	DesiredFleet *Fleet `json:"desiredFleet,omitempty"`
@@ -1540,7 +1554,9 @@ type ClusterUpdate struct {
 	// be used for GKE 1.14+ or `logging.googleapis.com` for earlier versions.
 	DesiredLoggingService string `json:"desiredLoggingService,omitempty"`
 	// DesiredMasterAuthorizedNetworksConfig: The desired configuration options for
-	// master authorized networks feature.
+	// master authorized networks feature. Deprecated: Use
+	// desired_control_plane_endpoints_config.ip_endpoints_config.authorized_network
+	// s_config instead.
 	DesiredMasterAuthorizedNetworksConfig *MasterAuthorizedNetworksConfig `json:"desiredMasterAuthorizedNetworksConfig,omitempty"`
 	// DesiredMasterVersion: The Kubernetes version to change the master to. Users
 	// may specify either explicit versions offered by Kubernetes Engine or version
@@ -1609,7 +1625,9 @@ type ClusterUpdate struct {
 	// DesiredPrivateClusterConfig: The desired private cluster configuration.
 	// master_global_access_config is the only field that can be changed via this
 	// field. See also ClusterUpdate.desired_enable_private_endpoint for modifying
-	// other fields within PrivateClusterConfig.
+	// other fields within PrivateClusterConfig. Deprecated: Use
+	// desired_control_plane_endpoints_config.ip_endpoints_config.global_access
+	// instead.
 	DesiredPrivateClusterConfig *PrivateClusterConfig `json:"desiredPrivateClusterConfig,omitempty"`
 	// DesiredPrivateIpv6GoogleAccess: The desired state of IPv6 connectivity to
 	// Google Services.
@@ -1873,6 +1891,31 @@ func (s ContainerdConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ControlPlaneEndpointsConfig: Configuration for all of the cluster's control
+// plane endpoints.
+type ControlPlaneEndpointsConfig struct {
+	// DnsEndpointConfig: DNS endpoint configuration.
+	DnsEndpointConfig *DNSEndpointConfig `json:"dnsEndpointConfig,omitempty"`
+	// IpEndpointsConfig: IP endpoints configuration.
+	IpEndpointsConfig *IPEndpointsConfig `json:"ipEndpointsConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DnsEndpointConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DnsEndpointConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ControlPlaneEndpointsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ControlPlaneEndpointsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CostManagementConfig: Configuration for fine-grained cost management
 // feature.
 type CostManagementConfig struct {
@@ -2012,6 +2055,35 @@ type DNSConfig struct {
 
 func (s DNSConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DNSConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DNSEndpointConfig: Describes the configuration of a DNS endpoint.
+type DNSEndpointConfig struct {
+	// AllowExternalTraffic: Controls whether user traffic is allowed over this
+	// endpoint. Note that GCP-managed services may still use the endpoint even if
+	// this is false.
+	AllowExternalTraffic bool `json:"allowExternalTraffic,omitempty"`
+	// Endpoint: Output only. The cluster's DNS endpoint configuration. A DNS
+	// format address. This is accessible from the public internet. Ex:
+	// uid.us-central1.gke.goog. Always present, but the behavior may change
+	// according to the value of DNSEndpointConfig.allow_external_traffic.
+	Endpoint string `json:"endpoint,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowExternalTraffic") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowExternalTraffic") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DNSEndpointConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DNSEndpointConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2880,6 +2952,54 @@ func (s *IPAllocationPolicy) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// IPEndpointsConfig: IP endpoints configuration.
+type IPEndpointsConfig struct {
+	// AuthorizedNetworksConfig: Configuration of authorized networks. If enabled,
+	// restricts access to the control plane based on source IP. It is invalid to
+	// specify both Cluster.masterAuthorizedNetworksConfig and this field at the
+	// same time.
+	AuthorizedNetworksConfig *MasterAuthorizedNetworksConfig `json:"authorizedNetworksConfig,omitempty"`
+	// EnablePublicEndpoint: Controls whether the control plane allows access
+	// through a public IP. It is invalid to specify both
+	// PrivateClusterConfig.enablePrivateEndpoint and this field at the same time.
+	EnablePublicEndpoint bool `json:"enablePublicEndpoint,omitempty"`
+	// Enabled: Controls whether to allow direct IP access.
+	Enabled bool `json:"enabled,omitempty"`
+	// GlobalAccess: Controls whether the control plane's private endpoint is
+	// accessible from sources in other regions. It is invalid to specify both
+	// PrivateClusterMasterGlobalAccessConfig.enabled and this field at the same
+	// time.
+	GlobalAccess bool `json:"globalAccess,omitempty"`
+	// PrivateEndpoint: Output only. The internal IP address of this cluster's
+	// control plane. Only populated if enabled.
+	PrivateEndpoint string `json:"privateEndpoint,omitempty"`
+	// PrivateEndpointSubnetwork: Subnet to provision the master's private endpoint
+	// during cluster creation. Specified in projects/*/regions/*/subnetworks/*
+	// format. It is invalid to specify both
+	// PrivateClusterConfig.privateEndpointSubnetwork and this field at the same
+	// time.
+	PrivateEndpointSubnetwork string `json:"privateEndpointSubnetwork,omitempty"`
+	// PublicEndpoint: Output only. The external IP address of this cluster's
+	// control plane. Only populated if enabled.
+	PublicEndpoint string `json:"publicEndpoint,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthorizedNetworksConfig")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthorizedNetworksConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IPEndpointsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IPEndpointsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // IdentityServiceConfig: IdentityServiceConfig is configuration for Identity
 // Service which allows customers to use external identity providers with the
 // K8S API
@@ -3493,6 +3613,9 @@ type MasterAuthorizedNetworksConfig struct {
 	// GcpPublicCidrsAccessEnabled: Whether master is accessbile via Google Compute
 	// Engine Public IP addresses.
 	GcpPublicCidrsAccessEnabled bool `json:"gcpPublicCidrsAccessEnabled,omitempty"`
+	// PrivateEndpointEnforcementEnabled: Whether master authorized networks is
+	// enforced on private endpoint or not.
+	PrivateEndpointEnforcementEnabled bool `json:"privateEndpointEnforcementEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CidrBlocks") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3686,6 +3809,12 @@ type NetworkConfig struct {
 	// documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/datapla
 	// ne-v2) for more.
 	DatapathProvider string `json:"datapathProvider,omitempty"`
+	// DefaultEnablePrivateNodes: Controls whether by default nodes have private IP
+	// addresses only. It is invalid to specify both
+	// PrivateClusterConfig.enablePrivateNodes and this field at the same time. To
+	// update the default setting, use
+	// ClusterUpdate.desired_default_enable_private_nodes
+	DefaultEnablePrivateNodes bool `json:"defaultEnablePrivateNodes,omitempty"`
 	// DefaultSnatStatus: Whether the cluster disables default in-node sNAT rules.
 	// In-node sNAT rules will be disabled when default_snat_status is disabled.
 	// When disabled is set to false, default IP masquerade rules will be applied
@@ -4246,7 +4375,7 @@ type NodeNetworkConfig struct {
 	CreatePodRange bool `json:"createPodRange,omitempty"`
 	// EnablePrivateNodes: Whether nodes have internal IP addresses only. If
 	// enable_private_nodes is not specified, then the value is derived from
-	// cluster.privateClusterConfig.enablePrivateNodes
+	// Cluster.NetworkConfig.default_enable_private_nodes
 	EnablePrivateNodes bool `json:"enablePrivateNodes,omitempty"`
 	// NetworkPerformanceConfig: Network bandwidth tier configuration.
 	NetworkPerformanceConfig *NetworkPerformanceConfig `json:"networkPerformanceConfig,omitempty"`
@@ -4951,13 +5080,19 @@ func (s PodCIDROverprovisionConfig) MarshalJSON() ([]byte, error) {
 // PrivateClusterConfig: Configuration options for private clusters.
 type PrivateClusterConfig struct {
 	// EnablePrivateEndpoint: Whether the master's internal IP address is used as
-	// the cluster endpoint.
+	// the cluster endpoint. Deprecated: Use
+	// ControlPlaneEndpointsConfig.IPEndpointsConfig.enable_public_endpoint
+	// instead. Note that the value of enable_public_endpoint is reversed: if
+	// enable_private_endpoint is false, then enable_public_endpoint will be true.
 	EnablePrivateEndpoint bool `json:"enablePrivateEndpoint,omitempty"`
 	// EnablePrivateNodes: Whether nodes have internal IP addresses only. If
 	// enabled, all nodes are given only RFC 1918 private addresses and communicate
-	// with the master via private networking.
+	// with the master via private networking. Deprecated: Use
+	// NetworkConfig.default_enable_private_nodes instead.
 	EnablePrivateNodes bool `json:"enablePrivateNodes,omitempty"`
 	// MasterGlobalAccessConfig: Controls master global access settings.
+	// Deprecated: Use
+	// ControlPlaneEndpointsConfig.IPEndpointsConfig.enable_global_access instead.
 	MasterGlobalAccessConfig *PrivateClusterMasterGlobalAccessConfig `json:"masterGlobalAccessConfig,omitempty"`
 	// MasterIpv4CidrBlock: The IP range in CIDR notation to use for the hosted
 	// master network. This range will be used for assigning internal IP addresses
@@ -4968,14 +5103,18 @@ type PrivateClusterConfig struct {
 	// cluster.
 	PeeringName string `json:"peeringName,omitempty"`
 	// PrivateEndpoint: Output only. The internal IP address of this cluster's
-	// master endpoint.
+	// master endpoint. Deprecated: Use
+	// ControlPlaneEndpointsConfig.IPEndpointsConfig.private_endpoint instead.
 	PrivateEndpoint string `json:"privateEndpoint,omitempty"`
 	// PrivateEndpointSubnetwork: Subnet to provision the master's private endpoint
 	// during cluster creation. Specified in projects/*/regions/*/subnetworks/*
-	// format.
+	// format. Deprecated: Use
+	// ControlPlaneEndpointsConfig.IPEndpointsConfig.private_endpoint_subnetwork
+	// instead.
 	PrivateEndpointSubnetwork string `json:"privateEndpointSubnetwork,omitempty"`
 	// PublicEndpoint: Output only. The external IP address of this cluster's
-	// master endpoint.
+	// master endpoint. Deprecated:Use
+	// ControlPlaneEndpointsConfig.IPEndpointsConfig.public_endpoint instead.
 	PublicEndpoint string `json:"publicEndpoint,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnablePrivateEndpoint") to
 	// unconditionally include in API requests. By default, fields with empty or

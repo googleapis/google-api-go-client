@@ -1038,19 +1038,28 @@ func (s AssetsExportJobPerformanceData) MarshalJSON() ([]byte, error) {
 
 // AwsEc2PlatformDetails: AWS EC2 specific details.
 type AwsEc2PlatformDetails struct {
+	// Hyperthreading: Optional. Whether the machine is hyperthreaded.
+	//
+	// Possible values:
+	//   "HYPERTHREADING_STATUS_UNSPECIFIED" - Simultaneous Multithreading status
+	// unknown.
+	//   "HYPERTHREADING_STATUS_DISABLED" - Simultaneous Multithreading is disabled
+	// or unavailable.
+	//   "HYPERTHREADING_STATUS_ENABLED" - Simultaneous Multithreading is enabled.
+	Hyperthreading string `json:"hyperthreading,omitempty"`
 	// Location: The location of the machine in the AWS format.
 	Location string `json:"location,omitempty"`
 	// MachineTypeLabel: AWS platform's machine type label.
 	MachineTypeLabel string `json:"machineTypeLabel,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Location") to
+	// ForceSendFields is a list of field names (e.g. "Hyperthreading") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Location") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Hyperthreading") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1062,21 +1071,30 @@ func (s AwsEc2PlatformDetails) MarshalJSON() ([]byte, error) {
 
 // AzureVmPlatformDetails: Azure VM specific details.
 type AzureVmPlatformDetails struct {
+	// Hyperthreading: Whether the machine is hyperthreaded.
+	//
+	// Possible values:
+	//   "HYPERTHREADING_STATUS_UNSPECIFIED" - Simultaneous Multithreading status
+	// unknown.
+	//   "HYPERTHREADING_STATUS_DISABLED" - Simultaneous Multithreading is disabled
+	// or unavailable.
+	//   "HYPERTHREADING_STATUS_ENABLED" - Simultaneous Multithreading is enabled.
+	Hyperthreading string `json:"hyperthreading,omitempty"`
 	// Location: The location of the machine in the Azure format.
 	Location string `json:"location,omitempty"`
 	// MachineTypeLabel: Azure platform's machine type label.
 	MachineTypeLabel string `json:"machineTypeLabel,omitempty"`
 	// ProvisioningState: Azure platform's provisioning state.
 	ProvisioningState string `json:"provisioningState,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Location") to
+	// ForceSendFields is a list of field names (e.g. "Hyperthreading") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Location") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Hyperthreading") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3063,19 +3081,28 @@ func (s GenericInsight) MarshalJSON() ([]byte, error) {
 
 // GenericPlatformDetails: Generic platform details.
 type GenericPlatformDetails struct {
+	// Hyperthreading: Whether the machine is hyperthreaded.
+	//
+	// Possible values:
+	//   "HYPERTHREADING_STATUS_UNSPECIFIED" - Simultaneous Multithreading status
+	// unknown.
+	//   "HYPERTHREADING_STATUS_DISABLED" - Simultaneous Multithreading is disabled
+	// or unavailable.
+	//   "HYPERTHREADING_STATUS_ENABLED" - Simultaneous Multithreading is enabled.
+	Hyperthreading string `json:"hyperthreading,omitempty"`
 	// Location: Free text representation of the machine location. The format of
 	// this field should not be relied on. Different VMs in the same location may
 	// have different string values for this field.
 	Location string `json:"location,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Location") to
+	// ForceSendFields is a list of field names (e.g. "Hyperthreading") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Location") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Hyperthreading") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5075,19 +5102,28 @@ func (s PerformanceSample) MarshalJSON() ([]byte, error) {
 
 // PhysicalPlatformDetails: Platform specific details for Physical Machines.
 type PhysicalPlatformDetails struct {
+	// Hyperthreading: Whether the machine is hyperthreaded.
+	//
+	// Possible values:
+	//   "HYPERTHREADING_STATUS_UNSPECIFIED" - Simultaneous Multithreading status
+	// unknown.
+	//   "HYPERTHREADING_STATUS_DISABLED" - Simultaneous Multithreading is disabled
+	// or unavailable.
+	//   "HYPERTHREADING_STATUS_ENABLED" - Simultaneous Multithreading is enabled.
+	Hyperthreading string `json:"hyperthreading,omitempty"`
 	// Location: Free text representation of the machine location. The format of
 	// this field should not be relied on. Different machines in the same location
 	// may have different string values for this field.
 	Location string `json:"location,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Location") to
+	// ForceSendFields is a list of field names (e.g. "Hyperthreading") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Location") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Hyperthreading") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -7495,6 +7531,15 @@ func (s *VmwareEnginePreferences) UnmarshalJSON(data []byte) error {
 
 // VmwarePlatformDetails: VMware specific details.
 type VmwarePlatformDetails struct {
+	// EsxHyperthreading: Whether the ESX is hyperthreaded.
+	//
+	// Possible values:
+	//   "HYPERTHREADING_STATUS_UNSPECIFIED" - Simultaneous Multithreading status
+	// unknown.
+	//   "HYPERTHREADING_STATUS_DISABLED" - Simultaneous Multithreading is disabled
+	// or unavailable.
+	//   "HYPERTHREADING_STATUS_ENABLED" - Simultaneous Multithreading is enabled.
+	EsxHyperthreading string `json:"esxHyperthreading,omitempty"`
 	// EsxVersion: ESX version.
 	EsxVersion string `json:"esxVersion,omitempty"`
 	// Osid: VMware os enum -
@@ -7502,15 +7547,15 @@ type VmwarePlatformDetails struct {
 	Osid string `json:"osid,omitempty"`
 	// VcenterVersion: vCenter version.
 	VcenterVersion string `json:"vcenterVersion,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EsxVersion") to
+	// ForceSendFields is a list of field names (e.g. "EsxHyperthreading") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EsxVersion") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EsxHyperthreading") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

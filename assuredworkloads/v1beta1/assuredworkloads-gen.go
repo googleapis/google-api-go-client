@@ -1258,6 +1258,8 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// the createWorkload call will not be honored. This will always be true while
 	// creating the workload.
 	ViolationNotificationsEnabled bool `json:"violationNotificationsEnabled,omitempty"`
+	// WorkloadOptions: Optional. Options to be set for the given created workload.
+	WorkloadOptions *GoogleCloudAssuredworkloadsV1beta1WorkloadWorkloadOptions `json:"workloadOptions,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1682,6 +1684,34 @@ type GoogleCloudAssuredworkloadsV1beta1WorkloadUpdate struct {
 
 func (s GoogleCloudAssuredworkloadsV1beta1WorkloadUpdate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadUpdate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1beta1WorkloadWorkloadOptions: Options to be set
+// for the given created workload.
+type GoogleCloudAssuredworkloadsV1beta1WorkloadWorkloadOptions struct {
+	// KajEnrollmentType: Optional. Specifies type of KAJ Enrollment if provided.
+	//
+	// Possible values:
+	//   "KAJ_ENROLLMENT_TYPE_UNSPECIFIED" - KAJ Enrollment type is unspecified
+	//   "KEY_ACCESS_TRANSPARENCY_OFF" - KAT sets External, Hardware, and Software
+	// key feature logging only to TRUE. (no enforcement)
+	KajEnrollmentType string `json:"kajEnrollmentType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KajEnrollmentType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KajEnrollmentType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1beta1WorkloadWorkloadOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadWorkloadOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

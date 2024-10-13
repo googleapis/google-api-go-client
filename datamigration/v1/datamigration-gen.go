@@ -4679,7 +4679,7 @@ type SslConfig struct {
 	// key associated with the Client Certificate. If this field is used then the
 	// 'client_certificate' field is mandatory.
 	ClientKey string `json:"clientKey,omitempty"`
-	// Type: Output only. The ssl config type according to 'client_key',
+	// Type: Optional. The ssl config type according to 'client_key',
 	// 'client_certificate' and 'ca_certificate'.
 	//
 	// Possible values:

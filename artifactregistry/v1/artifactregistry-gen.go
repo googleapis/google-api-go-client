@@ -475,7 +475,7 @@ type Attachment struct {
 	// size limitations.
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// AttachmentNamespace: The namespace this attachment belongs to. E.g. If an
-	// Attachment is created by artifact analysis, namespace is set to
+	// attachment is created by artifact analysis, namespace is set to
 	// `artifactanalysis.googleapis.com`.
 	AttachmentNamespace string `json:"attachmentNamespace,omitempty"`
 	// CreateTime: Output only. The time when the attachment was created.
@@ -485,7 +485,7 @@ type Attachment struct {
 	// `projects/p1/locations/us-central1/repositories/repo1/files/sha:`.
 	Files []string `json:"files,omitempty"`
 	// Name: The name of the attachment. E.g.
-	// "projects/p1/locations/us/repositories/repo/attachments/sbom".
+	// `projects/p1/locations/us/repositories/repo/attachments/sbom`.
 	Name string `json:"name,omitempty"`
 	// OciVersionName: Output only. The name of the OCI version that this
 	// attachment created. Only populated for Docker attachments. E.g.
@@ -494,10 +494,10 @@ type Attachment struct {
 	OciVersionName string `json:"ociVersionName,omitempty"`
 	// Target: Required. The target the attachment is for, can be a Version,
 	// Package or Repository. E.g.
-	// "projects/p1/locations/us-central1/repositories/repo1/packages/p1/versions/v1
-	// ".
+	// `projects/p1/locations/us-central1/repositories/repo1/packages/p1/versions/v1
+	// `.
 	Target string `json:"target,omitempty"`
-	// Type: Type of Attachment. E.g. `application/vnd.spdx+json`
+	// Type: Type of attachment. E.g. `application/vnd.spdx+json`
 	Type string `json:"type,omitempty"`
 	// UpdateTime: Output only. The time when the attachment was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1728,7 +1728,7 @@ func (s KfpArtifact) MarshalJSON() ([]byte, error) {
 
 // ListAttachmentsResponse: The response from listing attachments.
 type ListAttachmentsResponse struct {
-	// Attachments: The Attachments returned.
+	// Attachments: The attachments returned.
 	Attachments []*Attachment `json:"attachments,omitempty"`
 	// NextPageToken: The token to retrieve the next page of attachments, or empty
 	// if there are no more attachments to return.
@@ -2575,10 +2575,8 @@ func (s PythonRepository) MarshalJSON() ([]byte, error) {
 type RemoteRepositoryConfig struct {
 	// AptRepository: Specific settings for an Apt remote repository.
 	AptRepository *AptRepository `json:"aptRepository,omitempty"`
-	// CommonRepository: Common remote repository settings. Used as the
-	// RemoteRepository upstream URL instead of Predefined and Custom remote
-	// repositories. Google Cloud Console and Google Cloud CLI will map all the new
-	// remote repositories to this field.
+	// CommonRepository: Common remote repository settings. Used as the remote
+	// repository upstream URL.
 	CommonRepository *CommonRemoteRepository `json:"commonRepository,omitempty"`
 	// Description: The description of the remote source.
 	Description string `json:"description,omitempty"`
@@ -2788,8 +2786,8 @@ type Tag struct {
 	// URL encoded.
 	Name string `json:"name,omitempty"`
 	// Version: The name of the version the tag refers to, for example:
-	// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/
-	// sha256:5243811" If the package or version ID parts contain slashes, the
+	// `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/
+	// sha256:5243811` If the package or version ID parts contain slashes, the
 	// slashes are escaped.
 	Version string `json:"version,omitempty"`
 

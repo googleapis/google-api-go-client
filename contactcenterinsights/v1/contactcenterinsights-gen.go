@@ -973,9 +973,9 @@ type GoogleCloudContactcenterinsightsV1Conversation struct {
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
 	Medium string `json:"medium,omitempty"`
-	// MetadataJson: Input only. JSON Metadata encoded as a string. This field is
+	// MetadataJson: Input only. JSON metadata encoded as a string. This field is
 	// primarily used by Insights integrations with various telphony systems and
-	// must be in one of Insights' supported formats.
+	// must be in one of Insight's supported formats.
 	MetadataJson string `json:"metadataJson,omitempty"`
 	// Name: Immutable. The resource name of the conversation. Format:
 	// projects/{project}/locations/{location}/conversations/{conversation}
@@ -1734,12 +1734,12 @@ func (s GoogleCloudContactcenterinsightsV1DialogflowSource) MarshalJSON() ([]byt
 
 // GoogleCloudContactcenterinsightsV1EncryptionSpec: A customer-managed
 // encryption key specification that can be applied to all created resources
-// (e.g. Conversation).
+// (e.g. `Conversation`).
 type GoogleCloudContactcenterinsightsV1EncryptionSpec struct {
 	// KmsKey: Required. The name of customer-managed encryption key that is used
 	// to secure a resource and its sub-resources. If empty, the resource is
-	// secured by the default Google encryption key. Only the key in the same
-	// location as this resource is allowed to be used for encryption. Format:
+	// secured by our default encryption key. Only the key in the same location as
+	// this resource is allowed to be used for encryption. Format:
 	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{key}`
 	KmsKey string `json:"kmsKey,omitempty"`
 	// Name: Immutable. The resource name of the encryption key specification
@@ -2496,7 +2496,7 @@ type GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecMetadata struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// EndTime: Output only. The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
-	// PartialErrors: Partial errors during initialising operation that might cause
+	// PartialErrors: Partial errors during initializing operation that might cause
 	// the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
 	// Request: Output only. The original request for initialization.
@@ -2525,7 +2525,7 @@ type GoogleCloudContactcenterinsightsV1InitializeEncryptionSpecRequest struct {
 	// EncryptionSpec: Required. The encryption spec used for CMEK encryption. It
 	// is required that the kms key is in the same region as the endpoint. The same
 	// key will be used for all provisioned resources, if encryption is available.
-	// If the kms_key_name is left empty, no encryption will be enforced.
+	// If the `kms_key_name` field is left empty, no encryption will be enforced.
 	EncryptionSpec *GoogleCloudContactcenterinsightsV1EncryptionSpec `json:"encryptionSpec,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EncryptionSpec") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4372,9 +4372,9 @@ type GoogleCloudContactcenterinsightsV1alpha1Conversation struct {
 	// phone.
 	//   "CHAT" - The format for conversations that took place over chat.
 	Medium string `json:"medium,omitempty"`
-	// MetadataJson: Input only. JSON Metadata encoded as a string. This field is
+	// MetadataJson: Input only. JSON metadata encoded as a string. This field is
 	// primarily used by Insights integrations with various telphony systems and
-	// must be in one of Insights' supported formats.
+	// must be in one of Insight's supported formats.
 	MetadataJson string `json:"metadataJson,omitempty"`
 	// Name: Immutable. The resource name of the conversation. Format:
 	// projects/{project}/locations/{location}/conversations/{conversation}
@@ -5131,12 +5131,12 @@ func (s GoogleCloudContactcenterinsightsV1alpha1DialogflowSource) MarshalJSON() 
 
 // GoogleCloudContactcenterinsightsV1alpha1EncryptionSpec: A customer-managed
 // encryption key specification that can be applied to all created resources
-// (e.g. Conversation).
+// (e.g. `Conversation`).
 type GoogleCloudContactcenterinsightsV1alpha1EncryptionSpec struct {
 	// KmsKey: Required. The name of customer-managed encryption key that is used
 	// to secure a resource and its sub-resources. If empty, the resource is
-	// secured by the default Google encryption key. Only the key in the same
-	// location as this resource is allowed to be used for encryption. Format:
+	// secured by our default encryption key. Only the key in the same location as
+	// this resource is allowed to be used for encryption. Format:
 	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{key}`
 	KmsKey string `json:"kmsKey,omitempty"`
 	// Name: Immutable. The resource name of the encryption key specification
@@ -5867,7 +5867,7 @@ type GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecMetadata st
 	CreateTime string `json:"createTime,omitempty"`
 	// EndTime: Output only. The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
-	// PartialErrors: Partial errors during initialising operation that might cause
+	// PartialErrors: Partial errors during initializing operation that might cause
 	// the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
 	// Request: Output only. The original request for initialization.
@@ -5896,7 +5896,7 @@ type GoogleCloudContactcenterinsightsV1alpha1InitializeEncryptionSpecRequest str
 	// EncryptionSpec: Required. The encryption spec used for CMEK encryption. It
 	// is required that the kms key is in the same region as the endpoint. The same
 	// key will be used for all provisioned resources, if encryption is available.
-	// If the kms_key_name is left empty, no encryption will be enforced.
+	// If the `kms_key_name` field is left empty, no encryption will be enforced.
 	EncryptionSpec *GoogleCloudContactcenterinsightsV1alpha1EncryptionSpec `json:"encryptionSpec,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EncryptionSpec") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8754,8 +8754,8 @@ type ProjectsLocationsEncryptionSpecInitializeCall struct {
 }
 
 // Initialize: Initializes a location-level encryption key specification. An
-// error will be thrown if the location has resources already created before
-// the initialization. Once the encryption specification is initialized at a
+// error will result if the location has resources already created before the
+// initialization. After the encryption specification is initialized at a
 // location, it is immutable and all newly created resources under the location
 // will be encrypted with the existing specification.
 //

@@ -584,6 +584,13 @@ type ExecutionResult struct {
 	Rule string `json:"rule,omitempty"`
 	// Severity: The severity of violation.
 	Severity string `json:"severity,omitempty"`
+	// Type: Execution result type of the scanned resource
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unknown state
+	//   "TYPE_PASSED" - resource successfully passed the rule
+	//   "TYPE_VIOLATED" - resource violated the rule
+	Type string `json:"type,omitempty"`
 	// ViolationDetails: The details of violation in an evaluation result.
 	ViolationDetails *ViolationDetails `json:"violationDetails,omitempty"`
 	// ViolationMessage: The violation message of an execution.
@@ -1720,6 +1727,8 @@ type SapDiscoveryResourceInstanceProperties struct {
 	//   "INSTANCE_ROLE_ASCS_ERS_APP_SERVER_DATABASE" - Application central
 	// services, enqueue replication server, application server and database.
 	InstanceRole string `json:"instanceRole,omitempty"`
+	// IsDrSite: Optional. Instance is part of a DR site.
+	IsDrSite bool `json:"isDrSite,omitempty"`
 	// VirtualHostname: Optional. A virtual hostname of the instance if it has one.
 	VirtualHostname string `json:"virtualHostname,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppInstances") to

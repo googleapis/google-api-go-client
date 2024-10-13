@@ -434,8 +434,8 @@ type Subscription struct {
 	// ExpireTime: Non-empty default. The timestamp in UTC when the subscription
 	// expires. Always displayed on output, regardless of what was used on input.
 	ExpireTime string `json:"expireTime,omitempty"`
-	// Name: Optional. Immutable. Identifier. Resource name of the subscription.
-	// Format: `subscriptions/{subscription}`
+	// Name: Identifier. Resource name of the subscription. Format:
+	// `subscriptions/{subscription}`
 	Name string `json:"name,omitempty"`
 	// NotificationEndpoint: Required. Immutable. The endpoint where the
 	// subscription delivers events, such as a Pub/Sub topic.
@@ -1145,8 +1145,8 @@ type SubscriptionsPatchCall struct {
 // method, see Update or renew a Google Workspace subscription
 // (https://developers.google.com/workspace/events/guides/update-subscription).
 //
-//   - name: Optional. Immutable. Identifier. Resource name of the subscription.
-//     Format: `subscriptions/{subscription}`.
+//   - name: Identifier. Resource name of the subscription. Format:
+//     `subscriptions/{subscription}`.
 func (r *SubscriptionsService) Patch(name string, subscription *Subscription) *SubscriptionsPatchCall {
 	c := &SubscriptionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

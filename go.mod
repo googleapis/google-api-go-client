@@ -3,7 +3,7 @@ module google.golang.org/api
 go 1.21
 
 require (
-	cloud.google.com/go v0.115.1
+	cloud.google.com/go v0.116.0
 	cloud.google.com/go/auth v0.9.8
 	cloud.google.com/go/auth/oauth2adapt v0.2.4
 	cloud.google.com/go/compute/metadata v0.5.2

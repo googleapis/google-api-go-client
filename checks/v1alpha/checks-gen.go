@@ -623,6 +623,15 @@ type GoogleChecksReportV1alphaCheck struct {
 	// Information data type declaration matches usage.
 	//   "DATA_MONITORING_PII_LOGCAT_LEAK" - Checks if there were any PII leaked to
 	// device logs.
+	//   "DATA_MONITORING_MINIMIZE_PERMISSION_MEDIA" - Checks if there are media
+	// (photo and video) permissions that are considered sensitive and should be
+	// minimized for Android.
+	//   "DATA_MONITORING_MINIMIZE_PERMISSION_CAMERA" - Checks if there are camera
+	// use permissions that are considered sensitive and should be minimized for
+	// Android.
+	//   "DATA_MONITORING_MINIMIZE_PERMISSION_DOCUMENTS" - Checks if there are
+	// documents and file permissions that are considered sensitive and should be
+	// minimized for Android.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Citations") to
 	// unconditionally include in API requests. By default, fields with empty or

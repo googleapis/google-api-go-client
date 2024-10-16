@@ -861,6 +861,10 @@ func (s GoogleCloudDataplexV1Aspect) MarshalJSON() ([]byte, error) {
 type GoogleCloudDataplexV1AspectSource struct {
 	// CreateTime: The time the aspect was created in the source system.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataVersion: The version of the data format used to produce this data. This
+	// field is used to indicated when the underlying data format changes (e.g.,
+	// schema modifications, changes to the source URL format definition, etc).
+	DataVersion string `json:"dataVersion,omitempty"`
 	// UpdateTime: The time the aspect was last updated in the source system.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -2402,7 +2406,7 @@ func (s *GoogleCloudDataplexV1DataQualityColumnResult) UnmarshalJSON(data []byte
 type GoogleCloudDataplexV1DataQualityDimension struct {
 	// Name: The dimension name a rule belongs to. Supported dimensions are
 	// "COMPLETENESS", "ACCURACY", "CONSISTENCY", "VALIDITY", "UNIQUENESS",
-	// "INTEGRITY"
+	// "FRESHNESS", "VOLUME"
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2587,7 +2591,7 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 	Description string `json:"description,omitempty"`
 	// Dimension: Required. The dimension a rule belongs to. Results are also
 	// aggregated at the dimension level. Supported dimensions are "COMPLETENESS",
-	// "ACCURACY", "CONSISTENCY", "VALIDITY", "UNIQUENESS", "INTEGRITY"
+	// "ACCURACY", "CONSISTENCY", "VALIDITY", "UNIQUENESS", "FRESHNESS", "VOLUME"
 	Dimension string `json:"dimension,omitempty"`
 	// IgnoreNull: Optional. Rows with null values will automatically fail a rule,
 	// unless ignore_null is true. In that case, such null rows are trivially
@@ -3249,13 +3253,13 @@ type GoogleCloudDataplexV1DataScan struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Data: Required. The data source for DataScan.
 	Data *GoogleCloudDataplexV1DataSource `json:"data,omitempty"`
-	// DataProfileResult: Output only. The result of the data profile scan.
+	// DataProfileResult: Output only. The result of a data profile scan.
 	DataProfileResult *GoogleCloudDataplexV1DataProfileResult `json:"dataProfileResult,omitempty"`
-	// DataProfileSpec: DataProfileScan related setting.
+	// DataProfileSpec: Settings for a data profile scan.
 	DataProfileSpec *GoogleCloudDataplexV1DataProfileSpec `json:"dataProfileSpec,omitempty"`
-	// DataQualityResult: Output only. The result of the data quality scan.
+	// DataQualityResult: Output only. The result of a data quality scan.
 	DataQualityResult *GoogleCloudDataplexV1DataQualityResult `json:"dataQualityResult,omitempty"`
-	// DataQualitySpec: DataQualityScan related setting.
+	// DataQualitySpec: Settings for a data quality scan.
 	DataQualitySpec *GoogleCloudDataplexV1DataQualitySpec `json:"dataQualitySpec,omitempty"`
 	// Description: Optional. Description of the scan. Must be between 1-1024
 	// characters.
@@ -3287,9 +3291,9 @@ type GoogleCloudDataplexV1DataScan struct {
 	// Type: Output only. The type of DataScan.
 	//
 	// Possible values:
-	//   "DATA_SCAN_TYPE_UNSPECIFIED" - The DataScan type is unspecified.
-	//   "DATA_QUALITY" - Data Quality scan.
-	//   "DATA_PROFILE" - Data Profile scan.
+	//   "DATA_SCAN_TYPE_UNSPECIFIED" - The data scan type is unspecified.
+	//   "DATA_QUALITY" - Data quality scan.
+	//   "DATA_PROFILE" - Data profile scan.
 	Type string `json:"type,omitempty"`
 	// Uid: Output only. System generated globally unique ID for the scan. This ID
 	// will be different if the scan is deleted and re-created with the same name.
@@ -3676,13 +3680,13 @@ func (s GoogleCloudDataplexV1DataScanExecutionStatus) MarshalJSON() ([]byte, err
 type GoogleCloudDataplexV1DataScanJob struct {
 	// CreateTime: Output only. The time when the DataScanJob was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DataProfileResult: Output only. The result of the data profile scan.
+	// DataProfileResult: Output only. The result of a data profile scan.
 	DataProfileResult *GoogleCloudDataplexV1DataProfileResult `json:"dataProfileResult,omitempty"`
-	// DataProfileSpec: Output only. DataProfileScan related setting.
+	// DataProfileSpec: Output only. Settings for a data profile scan.
 	DataProfileSpec *GoogleCloudDataplexV1DataProfileSpec `json:"dataProfileSpec,omitempty"`
-	// DataQualityResult: Output only. The result of the data quality scan.
+	// DataQualityResult: Output only. The result of a data quality scan.
 	DataQualityResult *GoogleCloudDataplexV1DataQualityResult `json:"dataQualityResult,omitempty"`
-	// DataQualitySpec: Output only. DataQualityScan related setting.
+	// DataQualitySpec: Output only. Settings for a data quality scan.
 	DataQualitySpec *GoogleCloudDataplexV1DataQualitySpec `json:"dataQualitySpec,omitempty"`
 	// EndTime: Output only. The time when the DataScanJob ended.
 	EndTime string `json:"endTime,omitempty"`
@@ -3710,9 +3714,9 @@ type GoogleCloudDataplexV1DataScanJob struct {
 	// Type: Output only. The type of the parent DataScan.
 	//
 	// Possible values:
-	//   "DATA_SCAN_TYPE_UNSPECIFIED" - The DataScan type is unspecified.
-	//   "DATA_QUALITY" - Data Quality scan.
-	//   "DATA_PROFILE" - Data Profile scan.
+	//   "DATA_SCAN_TYPE_UNSPECIFIED" - The data scan type is unspecified.
+	//   "DATA_QUALITY" - Data quality scan.
+	//   "DATA_PROFILE" - Data profile scan.
 	Type string `json:"type,omitempty"`
 	// Uid: Output only. System generated globally unique ID for the DataScanJob.
 	Uid string `json:"uid,omitempty"`
@@ -3879,17 +3883,19 @@ func (s GoogleCloudDataplexV1DiscoveryEvent) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudDataplexV1DiscoveryEventActionDetails: Details about the action.
 type GoogleCloudDataplexV1DiscoveryEventActionDetails struct {
+	// Issue: The human readable issue associated with the action.
+	Issue string `json:"issue,omitempty"`
 	// Type: The type of action. Eg. IncompatibleDataSchema, InvalidDataFormat
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Issue") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Type") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "Issue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

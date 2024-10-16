@@ -418,12 +418,77 @@ type ScansService struct {
 	s *Service
 }
 
+// AsymmetricAutoscalingOption: AsymmetricAutoscalingOption specifies the
+// scaling of replicas identified by the given selection.
+type AsymmetricAutoscalingOption struct {
+	// Overrides: Optional. Overrides applied to the top-level autoscaling
+	// configuration for the selected replicas.
+	Overrides *AutoscalingConfigOverrides `json:"overrides,omitempty"`
+	// ReplicaSelection: Required. Selects the replicas to which this
+	// AsymmetricAutoscalingOption applies. Only read-only replicas are supported.
+	ReplicaSelection *InstanceReplicaSelection `json:"replicaSelection,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Overrides") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Overrides") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AsymmetricAutoscalingOption) MarshalJSON() ([]byte, error) {
+	type NoMethod AsymmetricAutoscalingOption
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AutoscalingConfig: Autoscaling configuration for an instance.
 type AutoscalingConfig struct {
+	// AsymmetricAutoscalingOptions: Optional. Optional asymmetric autoscaling
+	// options. Replicas matching the replica selection criteria will be autoscaled
+	// independently from other replicas. The autoscaler will scale the replicas
+	// based on the utilization of replicas identified by the replica selection.
+	// Replica selections should not overlap with each other. Other replicas (those
+	// do not match any replica selection) will be autoscaled together and will
+	// have the same compute capacity allocated to them.
+	AsymmetricAutoscalingOptions []*AsymmetricAutoscalingOption `json:"asymmetricAutoscalingOptions,omitempty"`
 	// AutoscalingLimits: Required. Autoscaling limits for an instance.
 	AutoscalingLimits *AutoscalingLimits `json:"autoscalingLimits,omitempty"`
 	// AutoscalingTargets: Required. The autoscaling targets for an instance.
 	AutoscalingTargets *AutoscalingTargets `json:"autoscalingTargets,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AsymmetricAutoscalingOptions") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AsymmetricAutoscalingOptions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutoscalingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AutoscalingConfigOverrides: Overrides the top-level autoscaling
+// configuration for the replicas identified by `replica_selection`. All fields
+// in this message are optional. Any unspecified fields will use the
+// corresponding values from the top-level autoscaling configuration.
+type AutoscalingConfigOverrides struct {
+	// AutoscalingLimits: Optional. If specified, overrides the min/max limit in
+	// the top-level autoscaling configuration for the selected replicas.
+	AutoscalingLimits *AutoscalingLimits `json:"autoscalingLimits,omitempty"`
+	// AutoscalingTargetHighPriorityCpuUtilizationPercent: Optional. If specified,
+	// overrides the autoscaling target high_priority_cpu_utilization_percent in
+	// the top-level autoscaling configuration for the selected replicas.
+	AutoscalingTargetHighPriorityCpuUtilizationPercent int64 `json:"autoscalingTargetHighPriorityCpuUtilizationPercent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoscalingLimits") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -437,8 +502,8 @@ type AutoscalingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s AutoscalingConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod AutoscalingConfig
+func (s AutoscalingConfigOverrides) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingConfigOverrides
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2328,6 +2393,10 @@ type ExecuteSqlRequest struct {
 	// statistics, operator level execution statistics along with the results. This
 	// has a performance overhead compared to the other modes. It is not
 	// recommended to use this mode for production traffic.
+	//   "WITH_STATS" - This mode returns the overall (but not operator-level)
+	// execution statistics along with the results.
+	//   "WITH_PLAN_AND_STATS" - This mode returns the query plan, overall (but not
+	// operator-level) execution statistics along with the results.
 	QueryMode string `json:"queryMode,omitempty"`
 	// QueryOptions: Query optimizer configuration to use for the given query.
 	QueryOptions *QueryOptions `json:"queryOptions,omitempty"`
@@ -2783,9 +2852,11 @@ type Instance struct {
 	// allocated to the instance. If autoscaling is enabled, `node_count` is
 	// treated as an `OUTPUT_ONLY` field and reflects the current number of nodes
 	// allocated to the instance. This might be zero in API responses for instances
-	// that are not yet in the `READY` state. For more information, see Compute
-	// capacity, nodes, and processing units
-	// (https://cloud.google.com/spanner/docs/compute-capacity).
+	// that are not yet in the `READY` state. If the instance has varying node
+	// count across replicas (achieved by setting asymmetric_autoscaling_options in
+	// autoscaling config), the node_count here is the maximum node count across
+	// all replicas. For more information, see Compute capacity, nodes, and
+	// processing units (https://cloud.google.com/spanner/docs/compute-capacity).
 	NodeCount int64 `json:"nodeCount,omitempty"`
 	// ProcessingUnits: The number of processing units allocated to this instance.
 	// At most, one of either `processing_units` or `node_count` should be present
@@ -2794,9 +2865,17 @@ type Instance struct {
 	// is enabled, `processing_units` is treated as an `OUTPUT_ONLY` field and
 	// reflects the current number of processing units allocated to the instance.
 	// This might be zero in API responses for instances that are not yet in the
-	// `READY` state. For more information, see Compute capacity, nodes and
-	// processing units (https://cloud.google.com/spanner/docs/compute-capacity).
+	// `READY` state. If the instance has varying processing units per replica
+	// (achieved by setting asymmetric_autoscaling_options in autoscaling config),
+	// the processing_units here is the maximum processing units across all
+	// replicas. For more information, see Compute capacity, nodes and processing
+	// units (https://cloud.google.com/spanner/docs/compute-capacity).
 	ProcessingUnits int64 `json:"processingUnits,omitempty"`
+	// ReplicaComputeCapacity: Output only. Lists the compute capacity per
+	// ReplicaSelection. A replica selection identifies a set of replicas with
+	// common properties. Replicas identified by a ReplicaSelection are scaled with
+	// the same compute capacity.
+	ReplicaComputeCapacity []*ReplicaComputeCapacity `json:"replicaComputeCapacity,omitempty"`
 	// State: Output only. The current instance state. For CreateInstance, the
 	// state must be either omitted or set to `CREATING`. For UpdateInstance, the
 	// state must be either omitted or set to `READY`.
@@ -3075,6 +3154,30 @@ type InstancePartition struct {
 
 func (s InstancePartition) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancePartition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InstanceReplicaSelection: ReplicaSelection identifies replicas with common
+// properties.
+type InstanceReplicaSelection struct {
+	// Location: Required. Name of the location of the replicas (e.g.,
+	// "us-central1").
+	Location string `json:"location,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Location") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceReplicaSelection) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceReplicaSelection
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4892,6 +4995,38 @@ func (s ReadWrite) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ReplicaComputeCapacity: ReplicaComputeCapacity describes the amount of
+// server resources that are allocated to each replica identified by the
+// replica selection.
+type ReplicaComputeCapacity struct {
+	// NodeCount: The number of nodes allocated to each replica. This may be zero
+	// in API responses for instances that are not yet in state `READY`.
+	NodeCount int64 `json:"nodeCount,omitempty"`
+	// ProcessingUnits: The number of processing units allocated to each replica.
+	// This may be zero in API responses for instances that are not yet in state
+	// `READY`.
+	ProcessingUnits int64 `json:"processingUnits,omitempty"`
+	// ReplicaSelection: Required. Identifies replicas by specified properties. All
+	// replicas in the selection have the same amount of compute capacity.
+	ReplicaSelection *InstanceReplicaSelection `json:"replicaSelection,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NodeCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NodeCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReplicaComputeCapacity) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplicaComputeCapacity
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type ReplicaInfo struct {
 	// DefaultLeaderLocation: If true, this location is designated as the default
 	// leader location where leader replicas are placed. See the region types
@@ -6016,6 +6151,10 @@ type Type struct {
 	//   "PROTO" - Encoded as a base64-encoded `string`, as described in RFC 4648,
 	// section 4.
 	//   "ENUM" - Encoded as `string`, in decimal format.
+	//   "INTERVAL" - Encoded as `string`, in `ISO8601` duration format -
+	// `P[n]Y[n]M[n]DT[n]H[n]M[n[.fraction]]S` where `n` is an integer. For
+	// example, `P1Y2M3DT4H5M6.5S` represents time duration of 1 year, 2 months, 3
+	// days, 4 hours, 5 minutes, and 6.5 seconds.
 	Code string `json:"code,omitempty"`
 	// ProtoTypeFqn: If code == PROTO or code == ENUM, then `proto_type_fqn` is the
 	// fully qualified name of the proto type representing the proto/enum

@@ -1766,6 +1766,15 @@ func (s GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse) Marshal
 // GoogleCloudRecaptchaenterpriseV1RiskAnalysis: Risk analysis result for an
 // event.
 type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
+	// Challenge: Output only. Challenge information for SCORE_AND_CHALLENGE keys
+	//
+	// Possible values:
+	//   "CHALLENGE_UNSPECIFIED" - Default unspecified type.
+	//   "NOCAPTCHA" - No challenge was presented for solving.
+	//   "PASSED" - A solution was submitted that was correct.
+	//   "FAILED" - A solution was submitted that was incorrect or otherwise deemed
+	// suspicious.
+	Challenge string `json:"challenge,omitempty"`
 	// ExtendedVerdictReasons: Output only. Extended verdict reasons to be used for
 	// experimentation only. The set of possible reasons is subject to change.
 	ExtendedVerdictReasons []string `json:"extendedVerdictReasons,omitempty"`
@@ -1791,15 +1800,15 @@ type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
 	// likely legitimate traffic while 0.0 means very likely non-legitimate
 	// traffic).
 	Score float64 `json:"score,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExtendedVerdictReasons") to
+	// ForceSendFields is a list of field names (e.g. "Challenge") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExtendedVerdictReasons") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Challenge") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

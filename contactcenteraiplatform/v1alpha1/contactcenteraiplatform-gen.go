@@ -257,7 +257,7 @@ func (s Component) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ContactCenter: Message describing ContactCenter object Next ID: 23
+// ContactCenter: Message describing ContactCenter object Next ID: 24
 type ContactCenter struct {
 	// AdminUser: Optional. Info about the first admin user, such as given name and
 	// family name.

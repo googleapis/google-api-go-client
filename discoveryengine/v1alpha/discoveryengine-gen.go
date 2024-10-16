@@ -171,6 +171,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.CmekConfigs = NewProjectsLocationsCmekConfigsService(s)
 	rs.Collections = NewProjectsLocationsCollectionsService(s)
 	rs.DataStores = NewProjectsLocationsDataStoresService(s)
 	rs.Evaluations = NewProjectsLocationsEvaluationsService(s)
@@ -187,6 +188,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 
 type ProjectsLocationsService struct {
 	s *Service
+
+	CmekConfigs *ProjectsLocationsCmekConfigsService
 
 	Collections *ProjectsLocationsCollectionsService
 
@@ -209,6 +212,15 @@ type ProjectsLocationsService struct {
 	UserEvents *ProjectsLocationsUserEventsService
 
 	UserStores *ProjectsLocationsUserStoresService
+}
+
+func NewProjectsLocationsCmekConfigsService(s *Service) *ProjectsLocationsCmekConfigsService {
+	rs := &ProjectsLocationsCmekConfigsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCmekConfigsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsCollectionsService(s *Service) *ProjectsLocationsCollectionsService {
@@ -1659,6 +1671,56 @@ func (s GoogleCloudDiscoveryengineV1BatchCreateTargetSitesResponse) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1CmekConfig: Configurations used to enable CMEK
+// data encryption with Cloud KMS keys.
+type GoogleCloudDiscoveryengineV1CmekConfig struct {
+	// IsDefault: Output only. The default CmekConfig for the Customer.
+	IsDefault bool `json:"isDefault,omitempty"`
+	// KmsKey: Kms key resource name which will be used to encrypt resources
+	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
+	// }`.
+	KmsKey string `json:"kmsKey,omitempty"`
+	// KmsKeyVersion: Kms key version resource name which will be used to encrypt
+	// resources `/cryptoKeyVersions/{keyVersion}`.
+	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
+	// LastRotationTimestampMicros: Output only. The timestamp of the last key
+	// rotation.
+	LastRotationTimestampMicros int64 `json:"lastRotationTimestampMicros,omitempty,string"`
+	// Name: Required. Name of the CmekConfig, of the form
+	// `projects/{project}/locations/{location}/cmekConfig` or
+	// `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+	Name string `json:"name,omitempty"`
+	// State: Output only. State of the CmekConfig.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The CmekConfig state is unknown.
+	//   "CREATING" - The CmekConfig is creating.
+	//   "ACTIVE" - The CmekConfig can be used with DataStores.
+	//   "KEY_ISSUE" - The CmekConfig is unavailable, most likely due to the KMS
+	// Key being revoked.
+	//   "DELETING" - The CmekConfig is deleting.
+	//   "UNUSABLE" - The CmekConfig is not usable, most likely due to some
+	// internal issue.
+	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsDefault") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsDefault") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1CmekConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1CmekConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1Condition: Defines circumstances to be checked
 // before allowing a behavior
 type GoogleCloudDiscoveryengineV1Condition struct {
@@ -2051,6 +2113,8 @@ func (s GoogleCloudDiscoveryengineV1CreateTargetSiteMetadata) MarshalJSON() ([]b
 type GoogleCloudDiscoveryengineV1DataStore struct {
 	// BillingEstimation: Output only. Data size estimation for billing.
 	BillingEstimation *GoogleCloudDiscoveryengineV1DataStoreBillingEstimation `json:"billingEstimation,omitempty"`
+	// CmekConfig: Output only. CMEK-related information for the DataStore.
+	CmekConfig *GoogleCloudDiscoveryengineV1CmekConfig `json:"cmekConfig,omitempty"`
 	// ContentConfig: Immutable. The content config of the data store. If this
 	// field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.
 	//
@@ -2084,6 +2148,12 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// KmsKeyName: Input only. The KMS key to be used to protect this DataStore at
+	// creation time. Must be set for requests that need to comply with CMEK Org
+	// Policy protections. If this field is set and processed successfully, the
+	// DataStore will be protected by the KMS key, as indicated in the cmek_config
+	// field.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// Name: Immutable. The full resource name of the data store. Format:
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. This field must be a UTF-8 encoded string with a length
@@ -3539,6 +3609,33 @@ func (s GoogleCloudDiscoveryengineV1TrainCustomModelResponse) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1UpdateCmekConfigMetadata: Metadata related to
+// the progress of the CmekConfigService.UpdateCmekConfig operation. This will
+// be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1UpdateCmekConfigMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1UpdateCmekConfigMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1UpdateCmekConfigMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1UpdateSchemaMetadata: Metadata for UpdateSchema
 // LRO.
 type GoogleCloudDiscoveryengineV1UpdateSchemaMetadata struct {
@@ -3734,6 +3831,8 @@ type GoogleCloudDiscoveryengineV1alphaAnswer struct {
 	//   "NON_ANSWER_SEEKING_QUERY_IGNORED_V2" - The non-answer seeking query
 	// ignored case. Google skips the answer if the query doesn't have clear
 	// intent.
+	//   "LOW_GROUNDED_ANSWER" - The low-grounded answer case. Google skips the
+	// answer if a well grounded answer was unable to be generated.
 	AnswerSkippedReasons []string `json:"answerSkippedReasons,omitempty"`
 	// AnswerText: The textual answer.
 	AnswerText string `json:"answerText,omitempty"`
@@ -5825,6 +5924,59 @@ func (s GoogleCloudDiscoveryengineV1alphaCloudSqlSource) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaCmekConfig: Configurations used to enable
+// CMEK data encryption with Cloud KMS keys.
+type GoogleCloudDiscoveryengineV1alphaCmekConfig struct {
+	// IsDefault: Output only. The default CmekConfig for the Customer.
+	IsDefault bool `json:"isDefault,omitempty"`
+	// KmsKey: Kms key resource name which will be used to encrypt resources
+	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
+	// }`.
+	KmsKey string `json:"kmsKey,omitempty"`
+	// KmsKeyVersion: Kms key version resource name which will be used to encrypt
+	// resources `/cryptoKeyVersions/{keyVersion}`.
+	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
+	// LastRotationTimestampMicros: Output only. The timestamp of the last key
+	// rotation.
+	LastRotationTimestampMicros int64 `json:"lastRotationTimestampMicros,omitempty,string"`
+	// Name: Required. Name of the CmekConfig, of the form
+	// `projects/{project}/locations/{location}/cmekConfig` or
+	// `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+	Name string `json:"name,omitempty"`
+	// State: Output only. State of the CmekConfig.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The CmekConfig state is unknown.
+	//   "CREATING" - The CmekConfig is creating.
+	//   "ACTIVE" - The CmekConfig can be used with DataStores.
+	//   "KEY_ISSUE" - The CmekConfig is unavailable, most likely due to the KMS
+	// Key being revoked.
+	//   "DELETING" - The CmekConfig is deleting.
+	//   "UNUSABLE" - The CmekConfig is not usable, most likely due to some
+	// internal issue.
+	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "IsDefault") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsDefault") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaCmekConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCmekConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaCompleteQueryResponse: Response message for
 // CompletionService.CompleteQuery method.
 type GoogleCloudDiscoveryengineV1alphaCompleteQueryResponse struct {
@@ -6727,6 +6879,8 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	AclEnabled bool `json:"aclEnabled,omitempty"`
 	// BillingEstimation: Output only. Data size estimation for billing.
 	BillingEstimation *GoogleCloudDiscoveryengineV1alphaDataStoreBillingEstimation `json:"billingEstimation,omitempty"`
+	// CmekConfig: Output only. CMEK-related information for the DataStore.
+	CmekConfig *GoogleCloudDiscoveryengineV1alphaCmekConfig `json:"cmekConfig,omitempty"`
 	// ContentConfig: Immutable. The content config of the data store. If this
 	// field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.
 	//
@@ -6762,6 +6916,12 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// KmsKeyName: Input only. The KMS key to be used to protect this DataStore at
+	// creation time. Must be set for requests that need to comply with CMEK Org
+	// Policy protections. If this field is set and processed successfully, the
+	// DataStore will be protected by the KMS key, as indicated in the cmek_config
+	// field.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// LanguageInfo: Language info for DataStore.
 	LanguageInfo *GoogleCloudDiscoveryengineV1alphaLanguageInfo `json:"languageInfo,omitempty"`
 	// Name: Immutable. The full resource name of the data store. Format:
@@ -9422,6 +9582,32 @@ func (s GoogleCloudDiscoveryengineV1alphaListChunksResponse) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaListCmekConfigsResponse: Response message
+// for CmekConfigService.ListCmekConfigs method.
+type GoogleCloudDiscoveryengineV1alphaListCmekConfigsResponse struct {
+	// CmekConfigs: All the customer's CmekConfigs.
+	CmekConfigs []*GoogleCloudDiscoveryengineV1alphaCmekConfig `json:"cmekConfigs,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CmekConfigs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CmekConfigs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaListCmekConfigsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaListCmekConfigsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaListControlsResponse: Response for
 // ListControls method.
 type GoogleCloudDiscoveryengineV1alphaListControlsResponse struct {
@@ -11657,6 +11843,9 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// relevant) in search results. This field is only considered if page_token is
 	// unset. If this field is negative, an `INVALID_ARGUMENT` is returned.
 	Offset int64 `json:"offset,omitempty"`
+	// OneBoxPageSize: The maximum number of results to return for OneBox. This
+	// applies to each OneBox type individually. Default number is 10.
+	OneBoxPageSize int64 `json:"oneBoxPageSize,omitempty"`
 	// OrderBy: The order in which documents are returned. Documents can be ordered
 	// by a field in an Document object. Leave it unset if ordered by relevance.
 	// `order_by` expression is case-sensitive. For more information on ordering
@@ -14520,6 +14709,33 @@ type GoogleCloudDiscoveryengineV1alphaTuneEngineRequest struct {
 type GoogleCloudDiscoveryengineV1alphaTuneEngineResponse struct {
 }
 
+// GoogleCloudDiscoveryengineV1alphaUpdateCmekConfigMetadata: Metadata related
+// to the progress of the CmekConfigService.UpdateCmekConfig operation. This
+// will be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaUpdateCmekConfigMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaUpdateCmekConfigMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaUpdateCmekConfigMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaUpdateSchemaMetadata: Metadata for
 // UpdateSchema LRO.
 type GoogleCloudDiscoveryengineV1alphaUpdateSchemaMetadata struct {
@@ -14855,6 +15071,56 @@ type GoogleCloudDiscoveryengineV1betaBatchCreateTargetSitesResponse struct {
 
 func (s GoogleCloudDiscoveryengineV1betaBatchCreateTargetSitesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaBatchCreateTargetSitesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaCmekConfig: Configurations used to enable
+// CMEK data encryption with Cloud KMS keys.
+type GoogleCloudDiscoveryengineV1betaCmekConfig struct {
+	// IsDefault: Output only. The default CmekConfig for the Customer.
+	IsDefault bool `json:"isDefault,omitempty"`
+	// KmsKey: Kms key resource name which will be used to encrypt resources
+	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{keyId
+	// }`.
+	KmsKey string `json:"kmsKey,omitempty"`
+	// KmsKeyVersion: Kms key version resource name which will be used to encrypt
+	// resources `/cryptoKeyVersions/{keyVersion}`.
+	KmsKeyVersion string `json:"kmsKeyVersion,omitempty"`
+	// LastRotationTimestampMicros: Output only. The timestamp of the last key
+	// rotation.
+	LastRotationTimestampMicros int64 `json:"lastRotationTimestampMicros,omitempty,string"`
+	// Name: Required. Name of the CmekConfig, of the form
+	// `projects/{project}/locations/{location}/cmekConfig` or
+	// `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+	Name string `json:"name,omitempty"`
+	// State: Output only. State of the CmekConfig.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The CmekConfig state is unknown.
+	//   "CREATING" - The CmekConfig is creating.
+	//   "ACTIVE" - The CmekConfig can be used with DataStores.
+	//   "KEY_ISSUE" - The CmekConfig is unavailable, most likely due to the KMS
+	// Key being revoked.
+	//   "DELETING" - The CmekConfig is deleting.
+	//   "UNUSABLE" - The CmekConfig is not usable, most likely due to some
+	// internal issue.
+	//   "ACTIVE_ROTATING" - The KMS key version is being rotated.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsDefault") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsDefault") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaCmekConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaCmekConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15309,6 +15575,8 @@ func (s GoogleCloudDiscoveryengineV1betaCustomTuningModel) MarshalJSON() ([]byte
 type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	// BillingEstimation: Output only. Data size estimation for billing.
 	BillingEstimation *GoogleCloudDiscoveryengineV1betaDataStoreBillingEstimation `json:"billingEstimation,omitempty"`
+	// CmekConfig: Output only. CMEK-related information for the DataStore.
+	CmekConfig *GoogleCloudDiscoveryengineV1betaCmekConfig `json:"cmekConfig,omitempty"`
 	// ContentConfig: Immutable. The content config of the data store. If this
 	// field is unset, the server behavior defaults to ContentConfig.NO_CONTENT.
 	//
@@ -15342,6 +15610,12 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	//   "MEDIA" - The media industry vertical.
 	//   "HEALTHCARE_FHIR" - The healthcare FHIR vertical.
 	IndustryVertical string `json:"industryVertical,omitempty"`
+	// KmsKeyName: Input only. The KMS key to be used to protect this DataStore at
+	// creation time. Must be set for requests that need to comply with CMEK Org
+	// Policy protections. If this field is set and processed successfully, the
+	// DataStore will be protected by the KMS key, as indicated in the cmek_config
+	// field.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// LanguageInfo: Language info for DataStore.
 	LanguageInfo *GoogleCloudDiscoveryengineV1betaLanguageInfo `json:"languageInfo,omitempty"`
 	// Name: Immutable. The full resource name of the data store. Format:
@@ -16986,6 +17260,9 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// relevant) in search results. This field is only considered if page_token is
 	// unset. If this field is negative, an `INVALID_ARGUMENT` is returned.
 	Offset int64 `json:"offset,omitempty"`
+	// OneBoxPageSize: The maximum number of results to return for OneBox. This
+	// applies to each OneBox type individually. Default number is 10.
+	OneBoxPageSize int64 `json:"oneBoxPageSize,omitempty"`
 	// OrderBy: The order in which documents are returned. Documents can be ordered
 	// by a field in an Document object. Leave it unset if ordered by relevance.
 	// `order_by` expression is case-sensitive. For more information on ordering
@@ -19275,6 +19552,118 @@ func (c *ProjectsLocationsGetAclConfigCall) Do(opts ...googleapi.CallOption) (*G
 	return ret, nil
 }
 
+type ProjectsLocationsGetCmekConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetCmekConfig: Gets the CmekConfig.
+//
+//   - name: Resource name of CmekConfig, such as
+//     `projects/*/locations/*/cmekConfig` or
+//     `projects/*/locations/*/cmekConfigs/*`. If the caller does not have
+//     permission to access the CmekConfig, regardless of whether or not it
+//     exists, a PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsService) GetCmekConfig(name string) *ProjectsLocationsGetCmekConfigCall {
+	c := &ProjectsLocationsGetCmekConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGetCmekConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetCmekConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGetCmekConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetCmekConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGetCmekConfigCall) Context(ctx context.Context) *ProjectsLocationsGetCmekConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGetCmekConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetCmekConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.getCmekConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaCmekConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetCmekConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaCmekConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaCmekConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsUpdateAclConfigCall struct {
 	s                                          *Service
 	name                                       string
@@ -19369,6 +19758,458 @@ func (c *ProjectsLocationsUpdateAclConfigCall) Do(opts ...googleapi.CallOption) 
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDiscoveryengineV1alphaAclConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsUpdateCmekConfigCall struct {
+	s                                           *Service
+	name                                        string
+	googleclouddiscoveryenginev1alphacmekconfig *GoogleCloudDiscoveryengineV1alphaCmekConfig
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// UpdateCmekConfig: Provisions a CMEK key for use in a location of a
+// customer's project. This method will also conduct location validation on the
+// provided cmekConfig to make sure the key is valid and can be used in the
+// selected location.
+//
+//   - name: Name of the CmekConfig, of the form
+//     `projects/{project}/locations/{location}/cmekConfig` or
+//     `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+func (r *ProjectsLocationsService) UpdateCmekConfig(name string, googleclouddiscoveryenginev1alphacmekconfig *GoogleCloudDiscoveryengineV1alphaCmekConfig) *ProjectsLocationsUpdateCmekConfigCall {
+	c := &ProjectsLocationsUpdateCmekConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphacmekconfig = googleclouddiscoveryenginev1alphacmekconfig
+	return c
+}
+
+// SetDefault sets the optional parameter "setDefault": Set the following
+// CmekConfig as the default to be used for child resources if one is not
+// specified.
+func (c *ProjectsLocationsUpdateCmekConfigCall) SetDefault(setDefault bool) *ProjectsLocationsUpdateCmekConfigCall {
+	c.urlParams_.Set("setDefault", fmt.Sprint(setDefault))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsUpdateCmekConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateCmekConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsUpdateCmekConfigCall) Context(ctx context.Context) *ProjectsLocationsUpdateCmekConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsUpdateCmekConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUpdateCmekConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphacmekconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.updateCmekConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsUpdateCmekConfigCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCmekConfigsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the CmekConfig.
+//
+//   - name: Resource name of CmekConfig, such as
+//     `projects/*/locations/*/cmekConfig` or
+//     `projects/*/locations/*/cmekConfigs/*`. If the caller does not have
+//     permission to access the CmekConfig, regardless of whether or not it
+//     exists, a PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsCmekConfigsService) Get(name string) *ProjectsLocationsCmekConfigsGetCall {
+	c := &ProjectsLocationsCmekConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCmekConfigsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCmekConfigsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCmekConfigsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCmekConfigsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCmekConfigsGetCall) Context(ctx context.Context) *ProjectsLocationsCmekConfigsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCmekConfigsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCmekConfigsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.cmekConfigs.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaCmekConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCmekConfigsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaCmekConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaCmekConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCmekConfigsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the CmekConfigs with the project.
+//
+//   - parent: The parent location resource name, such as
+//     `projects/{project}/locations/{location}`. If the caller does not have
+//     permission to list CmekConfigs under this location, regardless of whether
+//     or not a CmekConfig exists, a PERMISSION_DENIED error is returned.
+func (r *ProjectsLocationsCmekConfigsService) List(parent string) *ProjectsLocationsCmekConfigsListCall {
+	c := &ProjectsLocationsCmekConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCmekConfigsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCmekConfigsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCmekConfigsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCmekConfigsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCmekConfigsListCall) Context(ctx context.Context) *ProjectsLocationsCmekConfigsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCmekConfigsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCmekConfigsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/cmekConfigs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.cmekConfigs.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaListCmekConfigsResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCmekConfigsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaListCmekConfigsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaListCmekConfigsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCmekConfigsPatchCall struct {
+	s                                           *Service
+	name                                        string
+	googleclouddiscoveryenginev1alphacmekconfig *GoogleCloudDiscoveryengineV1alphaCmekConfig
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Patch: Provisions a CMEK key for use in a location of a customer's project.
+// This method will also conduct location validation on the provided cmekConfig
+// to make sure the key is valid and can be used in the selected location.
+//
+//   - name: Name of the CmekConfig, of the form
+//     `projects/{project}/locations/{location}/cmekConfig` or
+//     `projects/{project}/locations/{location}/cmekConfigs/{cmekConfig}`.
+func (r *ProjectsLocationsCmekConfigsService) Patch(name string, googleclouddiscoveryenginev1alphacmekconfig *GoogleCloudDiscoveryengineV1alphaCmekConfig) *ProjectsLocationsCmekConfigsPatchCall {
+	c := &ProjectsLocationsCmekConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1alphacmekconfig = googleclouddiscoveryenginev1alphacmekconfig
+	return c
+}
+
+// SetDefault sets the optional parameter "setDefault": Set the following
+// CmekConfig as the default to be used for child resources if one is not
+// specified.
+func (c *ProjectsLocationsCmekConfigsPatchCall) SetDefault(setDefault bool) *ProjectsLocationsCmekConfigsPatchCall {
+	c.urlParams_.Set("setDefault", fmt.Sprint(setDefault))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCmekConfigsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCmekConfigsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCmekConfigsPatchCall) Context(ctx context.Context) *ProjectsLocationsCmekConfigsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCmekConfigsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCmekConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphacmekconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.cmekConfigs.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCmekConfigsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -19824,6 +20665,13 @@ func (r *ProjectsLocationsCollectionsDataStoresService) Create(parent string, go
 	return c
 }
 
+// CmekConfigName sets the optional parameter "cmekConfigName": Resource name
+// of the CmekConfig to use for protecting this DataStore.
+func (c *ProjectsLocationsCollectionsDataStoresCreateCall) CmekConfigName(cmekConfigName string) *ProjectsLocationsCollectionsDataStoresCreateCall {
+	c.urlParams_.Set("cmekConfigName", cmekConfigName)
+	return c
+}
+
 // CreateAdvancedSiteSearch sets the optional parameter
 // "createAdvancedSiteSearch": A boolean flag indicating whether user want to
 // directly create an advanced data store for site search. If the data store is
@@ -19841,6 +20689,14 @@ func (c *ProjectsLocationsCollectionsDataStoresCreateCall) CreateAdvancedSiteSea
 // characters. Otherwise, an INVALID_ARGUMENT error is returned.
 func (c *ProjectsLocationsCollectionsDataStoresCreateCall) DataStoreId(dataStoreId string) *ProjectsLocationsCollectionsDataStoresCreateCall {
 	c.urlParams_.Set("dataStoreId", dataStoreId)
+	return c
+}
+
+// DisableCmek sets the optional parameter "disableCmek": DataStore without
+// CMEK protections. If a default CmekConfig is set for the project, setting
+// this field will override the default CmekConfig as well.
+func (c *ProjectsLocationsCollectionsDataStoresCreateCall) DisableCmek(disableCmek bool) *ProjectsLocationsCollectionsDataStoresCreateCall {
+	c.urlParams_.Set("disableCmek", fmt.Sprint(disableCmek))
 	return c
 }
 
@@ -33977,6 +34833,13 @@ func (r *ProjectsLocationsDataStoresService) Create(parent string, googleclouddi
 	return c
 }
 
+// CmekConfigName sets the optional parameter "cmekConfigName": Resource name
+// of the CmekConfig to use for protecting this DataStore.
+func (c *ProjectsLocationsDataStoresCreateCall) CmekConfigName(cmekConfigName string) *ProjectsLocationsDataStoresCreateCall {
+	c.urlParams_.Set("cmekConfigName", cmekConfigName)
+	return c
+}
+
 // CreateAdvancedSiteSearch sets the optional parameter
 // "createAdvancedSiteSearch": A boolean flag indicating whether user want to
 // directly create an advanced data store for site search. If the data store is
@@ -33994,6 +34857,14 @@ func (c *ProjectsLocationsDataStoresCreateCall) CreateAdvancedSiteSearch(createA
 // characters. Otherwise, an INVALID_ARGUMENT error is returned.
 func (c *ProjectsLocationsDataStoresCreateCall) DataStoreId(dataStoreId string) *ProjectsLocationsDataStoresCreateCall {
 	c.urlParams_.Set("dataStoreId", dataStoreId)
+	return c
+}
+
+// DisableCmek sets the optional parameter "disableCmek": DataStore without
+// CMEK protections. If a default CmekConfig is set for the project, setting
+// this field will override the default CmekConfig as well.
+func (c *ProjectsLocationsDataStoresCreateCall) DisableCmek(disableCmek bool) *ProjectsLocationsDataStoresCreateCall {
+	c.urlParams_.Set("disableCmek", fmt.Sprint(disableCmek))
 	return c
 }
 

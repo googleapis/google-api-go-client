@@ -178,8 +178,8 @@ type Entitlement struct {
 	// limit.
 	Detail string `json:"detail,omitempty"`
 	// ExpireTime: Required. Expiration time of the entitlement. Entitlements that
-	// have expired over 30 days will be purged. Required.
-	// LINT.IfChange(expire_time) The max expire_time is 398 days from now().
+	// have expired over 30 days will be purged. The max expire_time is 398 days
+	// from now().
 	// LINT.ThenChange(//depot/google3/java/com/google/subscribewithgoogle/accountli
 	// nking/subscriptionlink/service/config/protoconf.pi:max_expiry_age)
 	ExpireTime string `json:"expireTime,omitempty"`

@@ -809,6 +809,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 		"errors",
 		"fmt",
 		"io",
+		"log/slog",
 		"net/http",
 		"net/url",
 		"strconv",
@@ -820,6 +821,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	if a.Name == "storage" {
 		pn("  %q", "github.com/googleapis/gax-go/v2")
 	}
+	pn(`"github.com/googleapis/gax-go/v2/clog"`)
 	for _, imp := range []struct {
 		pkg   string
 		lname string
@@ -917,6 +919,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 
 	pn("\ntype %s struct {", service)
 	pn(" client *http.Client")
+	pn(" logger *slog.Logger")
 	pn(" BasePath string // API endpoint base URL")
 	pn(" UserAgent string // optional additional User-Agent fragment")
 
@@ -995,6 +998,7 @@ func splitFileHeading(w io.Writer, pkg string) {
 		"context",
 		"fmt",
 		"io",
+		"log/slog",
 		"net/http",
 	} {
 		pn("  %q", imp)
@@ -2279,27 +2283,32 @@ func (meth *Method) generateCode() {
 		pn(` reqHeaders.Set("If-None-Match",  c.ifNoneMatch_)`)
 		pn("}")
 	}
-	pn("var body io.Reader = nil")
+	var hasBody bool
 	if meth.IsRawRequest() {
-		pn("body = c.body_")
+		pn("body := bytes.NewBuffer(nil)")
+		pn("_, err := body.ReadFrom(c.body_)")
+		pn("if err != nil { return nil, err }")
+		hasBody = true
 	} else if meth.IsProtoStructRequest() {
 		pn("protoBytes, err := json.Marshal(c.req)")
 		pn("if err != nil { return nil, err }")
-		pn("body = bytes.NewReader(protoBytes)")
+		pn("body := bytes.NewReader(protoBytes)")
+		hasBody = true
 	} else {
 		if ba := args.bodyArg(); ba != nil && httpMethod != "GET" {
 			if meth.m.ID == "ml.projects.predict" {
 				// TODO(cbro): move ML API to rawHTTP (it will be a breaking change)
-				// Skip JSONReader for APIs that require clients to pass in JSON already.
-				pn("body = strings.NewReader(c.%s.HttpBody.Data)", ba.goname)
+				// Skip JSONBuffer for APIs that require clients to pass in JSON already.
+				pn("body := bytes.NewBufferString(c.%s.HttpBody.Data)", ba.goname)
 			} else {
 				style := "WithoutDataWrapper"
 				if a.needsDataWrapper() {
 					style = "WithDataWrapper"
 				}
-				pn("body, err := googleapi.%s.JSONReader(c.%s)", style, ba.goname)
+				pn("body, err := googleapi.%s.JSONBuffer(c.%s)", style, ba.goname)
 				pn("if err != nil { return nil, err }")
 			}
+			hasBody = true
 		}
 		pn(`c.urlParams_.Set("alt", alt)`)
 		pn(`c.urlParams_.Set("prettyPrint", "false")`)
@@ -2320,7 +2329,11 @@ func (meth *Method) generateCode() {
 		pn("defer cleanup()")
 	}
 	pn(`urls += "?" + c.urlParams_.Encode()`)
-	pn("req, err := http.NewRequest(%q, urls, body)", httpMethod)
+	reqBody := "nil"
+	if hasBody {
+		reqBody = "body"
+	}
+	pn("req, err := http.NewRequest(%q, urls, %s)", httpMethod, reqBody)
 	pn("if err != nil { return nil, err }")
 	pn("req.Header = reqHeaders")
 	if meth.supportsMediaUpload() {
@@ -2337,12 +2350,18 @@ func (meth *Method) generateCode() {
 		}
 		pn(`})`)
 	}
+	logBody := "nil"
+	if hasBody {
+		logBody = "body.Bytes()"
+	}
 	if meth.supportsMediaUpload() && meth.api.Name == "storage" {
+		pn(`c.s.logger.Log(c.ctx_, clog.DynamicLevel(), "api request", "serviceName", apiName, "rpcName", %q, "request", clog.HTTPRequest(req, %s))`, meth.Id(), logBody)
 		pn("if c.retry != nil {")
 		pn("	return gensupport.SendRequestWithRetry(c.ctx_, c.s.client, req, c.retry)")
 		pn("}")
 		pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")
 	} else {
+		pn(`c.s.logger.Log(c.ctx_, clog.DynamicLevel(), "api request", "serviceName", apiName, "rpcName", %q, "request", clog.HTTPRequest(req, %s))`, meth.Id(), logBody)
 		pn("return gensupport.SendRequest(c.ctx_, c.s.client, req)")
 	}
 	pn("}")
@@ -2421,6 +2440,7 @@ func (meth *Method) generateCode() {
 			pn("}")
 		}
 		if retTypeComma == "" {
+			pn(`c.s.logger.Log(c.ctx_, clog.DynamicLevel(), "api response", "serviceName", apiName, "rpcName", %q, "response", clog.HTTPResponse(res, nil))`, meth.Id())
 			pn("return nil")
 		} else {
 			if meth.IsProtoStructResponse() {
@@ -2449,8 +2469,11 @@ func (meth *Method) generateCode() {
 				pn("if err := res.Body.Close(); err != nil { return nil, err }")
 				pn("if err := json.NewDecoder(bytes.NewReader(b.Bytes())).Decode(target); err != nil { return nil, err }")
 				pn("ret.Data = b.String()")
+				pn(`c.s.logger.Log(c.ctx_, clog.DynamicLevel(), "api response", "serviceName", apiName, "rpcName", %q, "response", clog.HTTPResponse(res, b.Bytes()))`, meth.Id())
 			} else {
-				pn("if err := gensupport.DecodeResponse(target, res); err != nil { return nil, err }")
+				pn("b, err := gensupport.DecodeResponseBytes(target, res)")
+				pn("if err != nil { return nil, err }")
+				pn(`c.s.logger.Log(c.ctx_, clog.DynamicLevel(), "api response", "serviceName", apiName, "rpcName", %q, "response", clog.HTTPResponse(res, b))`, meth.Id())
 			}
 			pn("return ret, nil")
 		}

@@ -146,9 +146,11 @@ func TestScope(t *testing.T) {
 		},
 	}
 	for _, test := range tests {
-		if got := scopeIdentifier(disco.Scope{ID: test[0]}); got != test[1] {
-			t.Errorf("scopeIdentifier(%q) got %q, want %q", test[0], got, test[1])
-		}
+		t.Run(test[1], func(t *testing.T) {
+			if got := scopeIdentifier(disco.Scope{ID: test[0]}); got != test[1] {
+				t.Errorf("scopeIdentifier(%q) got %q, want %q", test[0], got, test[1])
+			}
+		})
 	}
 }
 
@@ -214,9 +216,11 @@ func TestDepunct(t *testing.T) {
 		},
 	}
 	for _, test := range tests {
-		if got := depunct(test.in, test.needCap); got != test.want {
-			t.Errorf("depunct(%q,%v) = %q; want %q", test.in, test.needCap, got, test.want)
-		}
+		t.Run(test.in, func(t *testing.T) {
+			if got := depunct(test.in, test.needCap); got != test.want {
+				t.Errorf("depunct(%q,%v) = %q; want %q", test.in, test.needCap, got, test.want)
+			}
+		})
 	}
 }
 
@@ -238,9 +242,11 @@ func TestRenameVersion(t *testing.T) {
 		},
 	}
 	for _, test := range tests {
-		if got := renameVersion(test.version); got != test.want {
-			t.Errorf("renameVersion(%q) = %q; want %q", test.version, got, test.want)
-		}
+		t.Run(test.version, func(t *testing.T) {
+			if got := renameVersion(test.version); got != test.want {
+				t.Errorf("renameVersion(%q) = %q; want %q", test.version, got, test.want)
+			}
+		})
 	}
 }
 
@@ -252,11 +258,13 @@ func TestSupportsPaging(t *testing.T) {
 	api.PopulateSchemas()
 	res := api.doc.Resources[0]
 	for _, meth := range api.resourceMethods(res) {
-		_, _, got := meth.supportsPaging()
-		want := strings.HasPrefix(meth.m.Name, "yes")
-		if got != want {
-			t.Errorf("method %s supports paging: got %t, want %t", meth.m.Name, got, want)
-		}
+		t.Run(meth.m.Name, func(t *testing.T) {
+			_, _, got := meth.supportsPaging()
+			want := strings.HasPrefix(meth.m.Name, "yes")
+			if got != want {
+				t.Errorf("method %s supports paging: got %t, want %t", meth.m.Name, got, want)
+			}
+		})
 	}
 }
 

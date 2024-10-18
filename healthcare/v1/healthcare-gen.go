@@ -1380,7 +1380,8 @@ type DeidentifiedStoreDestination struct {
 	// Config: The configuration to use when de-identifying resources that are
 	// added to this store.
 	Config *DeidentifyConfig `json:"config,omitempty"`
-	// Store: The full resource name of a Cloud Healthcare FHIR store, for example,
+	// Store: Optional. The full resource name of a Cloud Healthcare FHIR store,
+	// for example,
 	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
 	// es/{fhir_store_id}`.
 	Store string `json:"store,omitempty"`
@@ -2360,14 +2361,15 @@ func (s FhirNotificationConfig) MarshalJSON() ([]byte, error) {
 
 // FhirStore: Represents a FHIR store.
 type FhirStore struct {
-	// ComplexDataTypeReferenceParsing: Enable parsing of references within complex
-	// FHIR data types such as Extensions. If this value is set to ENABLED, then
-	// features like referential integrity and Bundle reference rewriting apply to
-	// all references. If this flag has not been specified the behavior of the FHIR
-	// store will not change, references in complex data types will not be parsed.
-	// New stores will have this value set to ENABLED after a notification period.
-	// Warning: turning on this flag causes processing existing resources to fail
-	// if they contain references to non-existent resources.
+	// ComplexDataTypeReferenceParsing: Optional. Enable parsing of references
+	// within complex FHIR data types such as Extensions. If this value is set to
+	// ENABLED, then features like referential integrity and Bundle reference
+	// rewriting apply to all references. If this flag has not been specified the
+	// behavior of the FHIR store will not change, references in complex data types
+	// will not be parsed. New stores will have this value set to ENABLED after a
+	// notification period. Warning: turning on this flag causes processing
+	// existing resources to fail if they contain references to non-existent
+	// resources.
 	//
 	// Possible values:
 	//   "COMPLEX_DATA_TYPE_REFERENCE_PARSING_UNSPECIFIED" - No parsing behavior
@@ -2447,8 +2449,8 @@ type FhirStore struct {
 	// the order of dozens of seconds) is expected before the results show up in
 	// the streaming destination.
 	StreamConfigs []*StreamConfig `json:"streamConfigs,omitempty"`
-	// ValidationConfig: Configuration for how to validate incoming FHIR resources
-	// against configured profiles.
+	// ValidationConfig: Optional. Configuration for how to validate incoming FHIR
+	// resources against configured profiles.
 	ValidationConfig *ValidationConfig `json:"validationConfig,omitempty"`
 	// Version: Required. Immutable. The FHIR specification version that this FHIR
 	// store supports natively. This field is immutable after store creation.
@@ -2767,17 +2769,17 @@ type GoogleCloudHealthcareV1DeidentifyDeidentifyFhirStoreSummary struct {
 // GoogleCloudHealthcareV1DicomBigQueryDestination: The BigQuery table where
 // the server writes the output.
 type GoogleCloudHealthcareV1DicomBigQueryDestination struct {
-	// Force: Use `write_disposition` instead. If `write_disposition` is specified,
-	// this parameter is ignored. force=false is equivalent to
+	// Force: Optional. Use `write_disposition` instead. If `write_disposition` is
+	// specified, this parameter is ignored. force=false is equivalent to
 	// write_disposition=WRITE_EMPTY and force=true is equivalent to
 	// write_disposition=WRITE_TRUNCATE.
 	Force bool `json:"force,omitempty"`
-	// TableUri: BigQuery URI to a table, up to 2000 characters long, in the format
-	// `bq://projectId.bqDatasetId.tableId`
+	// TableUri: Optional. BigQuery URI to a table, up to 2000 characters long, in
+	// the format `bq://projectId.bqDatasetId.tableId`
 	TableUri string `json:"tableUri,omitempty"`
-	// WriteDisposition: Determines whether the existing table in the destination
-	// is to be overwritten or appended to. If a write_disposition is specified,
-	// the `force` parameter is ignored.
+	// WriteDisposition: Optional. Determines whether the existing table in the
+	// destination is to be overwritten or appended to. If a write_disposition is
+	// specified, the `force` parameter is ignored.
 	//
 	// Possible values:
 	//   "WRITE_DISPOSITION_UNSPECIFIED" - Default behavior is the same as
@@ -5378,14 +5380,15 @@ type StreamConfig struct {
 	// DeidentifiedStoreDestination: The destination FHIR store for de-identified
 	// resources. After this field is added, all subsequent creates/updates/patches
 	// to the source store will be de-identified using the provided configuration
-	// and applied to the destination store. Importing resources to the source
-	// store will not trigger the streaming. If the source store already contains
-	// resources when this option is enabled, those resources will not be copied to
-	// the destination store unless they are subsequently updated. This may result
-	// in invalid references in the destination store. Before adding this config,
-	// you must grant the healthcare.fhirResources.update permission on the
-	// destination store to your project's **Cloud Healthcare Service Agent**
-	// service account
+	// and applied to the destination store. Resources deleted from the source
+	// store will be deleted from the destination store. Importing resources to the
+	// source store will not trigger the streaming. If the source store already
+	// contains resources when this option is enabled, those resources will not be
+	// copied to the destination store unless they are subsequently updated. This
+	// may result in invalid references in the destination store. Before adding
+	// this config, you must grant the healthcare.fhirResources.update permission
+	// on the destination store to your project's **Cloud Healthcare Service
+	// Agent** service account
 	// (https://cloud.google.com/healthcare/docs/how-tos/permissions-healthcare-api-gcp-products#the_cloud_healthcare_service_agent).
 	// The destination store must set enable_update_create to true. The destination
 	// store must have disable_referential_integrity set to true. If a resource
@@ -5717,35 +5720,35 @@ func (s UserDataMapping) MarshalJSON() ([]byte, error) {
 // ValidationConfig: Contains the configuration for FHIR profiles and
 // validation.
 type ValidationConfig struct {
-	// DisableFhirpathValidation: Whether to disable FHIRPath validation for
-	// incoming resources. The default value is false. Set this to true to disable
-	// checking incoming resources for conformance against FHIRPath requirement
-	// defined in the FHIR specification. This property only affects resource types
-	// that do not have profiles configured for them, any rules in enabled
-	// implementation guides will still be enforced.
-	DisableFhirpathValidation bool `json:"disableFhirpathValidation,omitempty"`
-	// DisableProfileValidation: Whether to disable profile validation for this
-	// FHIR store. The default value is false. Set this to true to disable checking
-	// incoming resources for conformance against structure definitions in this
-	// FHIR store.
-	DisableProfileValidation bool `json:"disableProfileValidation,omitempty"`
-	// DisableReferenceTypeValidation: Whether to disable reference type validation
+	// DisableFhirpathValidation: Optional. Whether to disable FHIRPath validation
 	// for incoming resources. The default value is false. Set this to true to
-	// disable checking incoming resources for conformance against reference type
+	// disable checking incoming resources for conformance against FHIRPath
 	// requirement defined in the FHIR specification. This property only affects
 	// resource types that do not have profiles configured for them, any rules in
 	// enabled implementation guides will still be enforced.
+	DisableFhirpathValidation bool `json:"disableFhirpathValidation,omitempty"`
+	// DisableProfileValidation: Optional. Whether to disable profile validation
+	// for this FHIR store. The default value is false. Set this to true to disable
+	// checking incoming resources for conformance against structure definitions in
+	// this FHIR store.
+	DisableProfileValidation bool `json:"disableProfileValidation,omitempty"`
+	// DisableReferenceTypeValidation: Optional. Whether to disable reference type
+	// validation for incoming resources. The default value is false. Set this to
+	// true to disable checking incoming resources for conformance against
+	// reference type requirement defined in the FHIR specification. This property
+	// only affects resource types that do not have profiles configured for them,
+	// any rules in enabled implementation guides will still be enforced.
 	DisableReferenceTypeValidation bool `json:"disableReferenceTypeValidation,omitempty"`
-	// DisableRequiredFieldValidation: Whether to disable required fields
+	// DisableRequiredFieldValidation: Optional. Whether to disable required fields
 	// validation for incoming resources. The default value is false. Set this to
 	// true to disable checking incoming resources for conformance against required
 	// fields requirement defined in the FHIR specification. This property only
 	// affects resource types that do not have profiles configured for them, any
 	// rules in enabled implementation guides will still be enforced.
 	DisableRequiredFieldValidation bool `json:"disableRequiredFieldValidation,omitempty"`
-	// EnabledImplementationGuides: A list of implementation guide URLs in this
-	// FHIR store that are used to configure the profiles to use for validation.
-	// For example, to use the US Core profiles for validation, set
+	// EnabledImplementationGuides: Optional. A list of implementation guide URLs
+	// in this FHIR store that are used to configure the profiles to use for
+	// validation. For example, to use the US Core profiles for validation, set
 	// `enabled_implementation_guides` to
 	// `["http://hl7.org/fhir/us/core/ImplementationGuide/ig"]`. If
 	// `enabled_implementation_guides` is empty or omitted, then incoming resources

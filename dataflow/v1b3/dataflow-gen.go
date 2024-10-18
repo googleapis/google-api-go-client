@@ -1914,7 +1914,7 @@ func (s FlattenInstruction) MarshalJSON() ([]byte, error) {
 }
 
 // FlexTemplateRuntimeEnvironment: The environment values to be set at runtime
-// for flex template. LINT.IfChange
+// for flex template.
 type FlexTemplateRuntimeEnvironment struct {
 	// AdditionalExperiments: Additional experiment flags for the job.
 	AdditionalExperiments []string `json:"additionalExperiments,omitempty"`
@@ -4464,7 +4464,7 @@ func (s ResourceUtilizationReport) MarshalJSON() ([]byte, error) {
 type ResourceUtilizationReportResponse struct {
 }
 
-// RuntimeEnvironment: The environment values to set at runtime. LINT.IfChange
+// RuntimeEnvironment: The environment values to set at runtime.
 type RuntimeEnvironment struct {
 	// AdditionalExperiments: Optional. Additional experiment flags for the job,
 	// specified with the `--experiments` option.

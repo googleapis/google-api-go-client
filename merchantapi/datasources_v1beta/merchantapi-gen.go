@@ -219,6 +219,9 @@ type DataSource struct {
 	// LocalInventoryDataSource: Required. The local inventory
 	// (https://support.google.com/merchants/answer/7023001) data source.
 	LocalInventoryDataSource *LocalInventoryDataSource `json:"localInventoryDataSource,omitempty"`
+	// MerchantReviewDataSource: Required. The merchant review
+	// (https://support.google.com/merchants/answer/7045996) data source.
+	MerchantReviewDataSource *MerchantReviewDataSource `json:"merchantReviewDataSource,omitempty"`
 	// Name: Identifier. The name of the data source. Format:
 	// `{datasource.name=accounts/{account}/dataSources/{datasource}}`
 	Name string `json:"name,omitempty"`
@@ -226,6 +229,9 @@ type DataSource struct {
 	// (https://support.google.com/merchants/answer/7439058) for local and online
 	// products.
 	PrimaryProductDataSource *PrimaryProductDataSource `json:"primaryProductDataSource,omitempty"`
+	// ProductReviewDataSource: Required. The product review
+	// (https://support.google.com/merchants/answer/7045996) data source.
+	ProductReviewDataSource *ProductReviewDataSource `json:"productReviewDataSource,omitempty"`
 	// PromotionDataSource: Required. The promotion
 	// (https://support.google.com/merchants/answer/2906014) data source.
 	PromotionDataSource *PromotionDataSource `json:"promotionDataSource,omitempty"`
@@ -590,6 +596,10 @@ func (s LocalInventoryDataSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MerchantReviewDataSource: The merchant review data source.
+type MerchantReviewDataSource struct {
+}
+
 // PrimaryProductDataSource: The primary data source for local and online
 // products.
 type PrimaryProductDataSource struct {
@@ -706,6 +716,10 @@ type ProductChange struct {
 func (s ProductChange) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductChange
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProductReviewDataSource: The product review data source.
+type ProductReviewDataSource struct {
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to

@@ -1477,7 +1477,8 @@ type GoogleMapsPlacesV1Place struct {
 	// offset by fractions of an hour, e.g. X hours and 15 minutes.
 	UtcOffsetMinutes int64 `json:"utcOffsetMinutes,omitempty"`
 	// Viewport: A viewport suitable for displaying the place on an average-sized
-	// map.
+	// map. This viewport should not be used as the physical boundary or the
+	// service area of the business.
 	Viewport *GoogleGeoTypeViewport `json:"viewport,omitempty"`
 	// WebsiteUri: The authoritative website for this place, e.g. a business'
 	// homepage. Note that for places that are part of a chain (e.g. an IKEA

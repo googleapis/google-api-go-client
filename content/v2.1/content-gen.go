@@ -4801,7 +4801,8 @@ type FreeListingsProgramStatusRegionStatus struct {
 	//   "WILL_BE_REVIEWED_AUTOMATICALLY" - Account will be automatically reviewed
 	// at the end of the grace period.
 	//   "IS_RETIRED" - Account is retired. Should not appear in MC.
-	//   "ALREADY_REVIEWED" - Account was already reviewd.
+	//   "ALREADY_REVIEWED" - Account has already been reviewed. You can't request
+	// further reviews.
 	ReviewIneligibilityReason string `json:"reviewIneligibilityReason,omitempty"`
 	// ReviewIneligibilityReasonDescription: Reason a program in a specific region
 	// isn’t eligible for review. Only visible if `reviewEligibilityStatus` is
@@ -12495,7 +12496,8 @@ type ShoppingAdsProgramStatusRegionStatus struct {
 	//   "WILL_BE_REVIEWED_AUTOMATICALLY" - Account will be automatically reviewed
 	// at the end of the grace period.
 	//   "IS_RETIRED" - Account is retired. Should not appear in MC.
-	//   "ALREADY_REVIEWED" - Account was already reviewd.
+	//   "ALREADY_REVIEWED" - Account has already been reviewed. You can't request
+	// further reviews.
 	ReviewIneligibilityReason string `json:"reviewIneligibilityReason,omitempty"`
 	// ReviewIneligibilityReasonDescription: Reason a program in a specific region
 	// isn’t eligible for review. Only visible if `reviewEligibilityStatus` is

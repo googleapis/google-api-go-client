@@ -7608,7 +7608,7 @@ func (c *FilesAccessproposalsResolveCall) Action(action string) *FilesAccessprop
 }
 
 // Role sets the optional parameter "role": The roles the approver has allowed,
-// if any.
+// if any. Note: This field is required for the `ACCEPT` action.
 func (c *FilesAccessproposalsResolveCall) Role(role ...string) *FilesAccessproposalsResolveCall {
 	c.urlParams_.SetMulti("role", append([]string{}, role...))
 	return c

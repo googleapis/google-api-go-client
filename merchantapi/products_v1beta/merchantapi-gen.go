@@ -1785,7 +1785,10 @@ type AccountsProductInputsDeleteCall struct {
 // minutes before the processed product can be retrieved.
 //
 //   - name: The name of the product input resource to delete. Format:
-//     accounts/{account}/productInputs/{product}.
+//     accounts/{account}/productInputs/{product} where the last section
+//     `product` consists of 4 parts:
+//     channel~content_language~feed_label~offer_id example for product name is
+//     "accounts/123/productInputs/online~en~US~sku123".
 func (r *AccountsProductInputsService) Delete(name string) *AccountsProductInputsDeleteCall {
 	c := &AccountsProductInputsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2007,7 +2010,9 @@ type AccountsProductsGetCall struct {
 // minutes before the updated final product can be retrieved.
 //
 //   - name: The name of the product to retrieve. Format:
-//     `accounts/{account}/products/{product}`.
+//     `accounts/{account}/products/{product}` where the last section `product`
+//     consists of 4 parts: channel~content_language~feed_label~offer_id example
+//     for product name is "accounts/123/products/online~en~US~sku123".
 func (r *AccountsProductsService) Get(name string) *AccountsProductsGetCall {
 	c := &AccountsProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

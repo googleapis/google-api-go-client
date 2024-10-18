@@ -448,7 +448,7 @@ type AddAccountService struct {
 	// (https://support.google.com/merchants/answer/188487) for the account.
 	// Payload for service type Account Aggregation.
 	AccountAggregation *AccountAggregation `json:"accountAggregation,omitempty"`
-	// Provider: Optional. The provider of the service. Format:
+	// Provider: Required. The provider of the service. Format:
 	// `accounts/{account}`
 	Provider string `json:"provider,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccountAggregation") to
@@ -4438,8 +4438,10 @@ type AccountsEmailPreferencesGetEmailPreferencesCall struct {
 }
 
 // GetEmailPreferences: Returns the email preferences for a Merchant Center
-// account user. Use the name=accounts/*/users/me/emailPreferences alias to get
-// preferences for the authenticated user.
+// account user. This service only permits retrieving and updating email
+// preferences for the authenticated user. Use the
+// name=accounts/*/users/me/emailPreferences alias to get preferences for the
+// authenticated user.
 //
 //   - name: The name of the `EmailPreferences` resource. Format:
 //     `accounts/{account}/users/{email}/emailPreferences`.
@@ -7099,7 +7101,9 @@ type AccountsUsersDeleteCall struct {
 }
 
 // Delete: Deletes a Merchant Center account user. Executing this method
-// requires admin access.
+// requires admin access. The user to be deleted can't be the last admin user
+// of that account. Also a user is protected from deletion if it is managed by
+// Business Manager"
 //
 //   - name: The name of the user to delete. Format:
 //     `accounts/{account}/users/{email}` It is also possible to delete the user

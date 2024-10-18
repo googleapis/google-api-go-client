@@ -15028,7 +15028,7 @@ type RegionMultiMigsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns the specified multi-MIG resource.
+// Get: Returns all the details of a specific multi-MIG.
 //
 // - multiMig: Name of the multi-MIG resource to return.
 // - project: Project ID for this request.
@@ -15161,9 +15161,9 @@ func (r *RegionMultiMigsService) Insert(project string, region string, multimig 
 // request and the request times out. If you make the request again with the
 // same request ID, the server can check if original operation with the same
 // request ID was received, and if so, will ignore the second request. This
-// prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported ( 00000000-0000-0000-0000-000000000000).
+// prevents you from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not supported (
+// 00000000-0000-0000-0000-000000000000).
 func (c *RegionMultiMigsInsertCall) RequestId(requestId string) *RegionMultiMigsInsertCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c

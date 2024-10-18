@@ -2221,8 +2221,9 @@ type GoogleCloudRunV2Service struct {
 	//   "INGRESS_TRAFFIC_NONE" - No ingress traffic is allowed.
 	Ingress string `json:"ingress,omitempty"`
 	// InvokerIamDisabled: Optional. Disables IAM permission check for
-	// run.routes.invoke for callers of this service. This setting should not be
-	// used with external ingress.
+	// run.routes.invoke for callers of this service. This feature is available by
+	// invitation only. For more information, visit
+	// https://cloud.google.com/run/docs/securing/managing-access#invoker_check.
 	InvokerIamDisabled bool `json:"invokerIamDisabled,omitempty"`
 	// Labels: Optional. Unstructured key value map that can be used to organize
 	// and categorize objects. User-provided labels are shared with Google's

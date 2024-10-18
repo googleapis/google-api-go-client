@@ -280,7 +280,7 @@
       }
     }
   },
-  "revision": "20241013",
+  "revision": "20241015",
   "rootUrl": "https://places.googleapis.com/",
   "schemas": {
     "GoogleGeoTypeViewport": {
@@ -1298,7 +1298,7 @@
         },
         "viewport": {
           "$ref": "GoogleGeoTypeViewport",
-          "description": "A viewport suitable for displaying the place on an average-sized map."
+          "description": "A viewport suitable for displaying the place on an average-sized map. This viewport should not be used as the physical boundary or the service area of the business."
         },
         "websiteUri": {
           "description": "The authoritative website for this place, e.g. a business' homepage. Note that for places that are part of a chain (e.g. an IKEA store), this will usually be the website for the individual store, not the overall chain.",

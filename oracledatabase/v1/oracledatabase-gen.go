@@ -1242,13 +1242,13 @@ type CloudExadataInfrastructureProperties struct {
 	// ComputeCount: Optional. The number of compute servers for the Exadata
 	// Infrastructure.
 	ComputeCount int64 `json:"computeCount,omitempty"`
-	// CpuCount: Optional. The number of enabled CPU cores.
+	// CpuCount: Output only. The number of enabled CPU cores.
 	CpuCount int64 `json:"cpuCount,omitempty"`
 	// CustomerContacts: Optional. The list of customer contacts.
 	CustomerContacts []*CustomerContact `json:"customerContacts,omitempty"`
 	// DataStorageSizeTb: Output only. Size, in terabytes, of the DATA disk group.
 	DataStorageSizeTb float64 `json:"dataStorageSizeTb,omitempty"`
-	// DbNodeStorageSizeGb: Optional. The local node storage allocated in GBs.
+	// DbNodeStorageSizeGb: Output only. The local node storage allocated in GBs.
 	DbNodeStorageSizeGb int64 `json:"dbNodeStorageSizeGb,omitempty"`
 	// DbServerVersion: Output only. The software version of the database servers
 	// (dom0) in the Exadata Infrastructure.
@@ -1264,7 +1264,7 @@ type CloudExadataInfrastructureProperties struct {
 	MaxDbNodeStorageSizeGb int64 `json:"maxDbNodeStorageSizeGb,omitempty"`
 	// MaxMemoryGb: Output only. The total memory available in GBs.
 	MaxMemoryGb int64 `json:"maxMemoryGb,omitempty"`
-	// MemorySizeGb: Optional. The memory allocated in GBs.
+	// MemorySizeGb: Output only. The memory allocated in GBs.
 	MemorySizeGb int64 `json:"memorySizeGb,omitempty"`
 	// MonthlyDbServerVersion: Output only. The monthly software version of the
 	// database servers (dom0) in the Exadata Infrastructure. Example: 20.1.15

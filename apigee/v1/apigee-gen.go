@@ -46233,7 +46233,7 @@ type OrganizationsSecurityProfilesV2CreateCall struct {
 
 // Create: Create a security profile v2.
 //
-// - parent: The parent resource name.
+// - parent: The parent resource name. Format: `organizations/{org}`.
 func (r *OrganizationsSecurityProfilesV2Service) Create(parent string, googlecloudapigeev1securityprofilev2 *GoogleCloudApigeeV1SecurityProfileV2) *OrganizationsSecurityProfilesV2CreateCall {
 	c := &OrganizationsSecurityProfilesV2CreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -46341,7 +46341,8 @@ type OrganizationsSecurityProfilesV2DeleteCall struct {
 
 // Delete: Delete a security profile v2.
 //
-// - name: The name of the security profile v2 to delete.
+//   - name: The name of the security profile v2 to delete. Format:
+//     `organizations/{org}/securityProfilesV2/{profile}`.
 func (r *OrganizationsSecurityProfilesV2Service) Delete(name string) *OrganizationsSecurityProfilesV2DeleteCall {
 	c := &OrganizationsSecurityProfilesV2DeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -46438,7 +46439,8 @@ type OrganizationsSecurityProfilesV2GetCall struct {
 
 // Get: Get a security profile v2.
 //
-// - name: The security profile id.
+//   - name: The name of the security profile v2 to get. Format:
+//     `organizations/{org}/securityProfilesV2/{profile}`.
 func (r *OrganizationsSecurityProfilesV2Service) Get(name string) *OrganizationsSecurityProfilesV2GetCall {
 	c := &OrganizationsSecurityProfilesV2GetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -46700,8 +46702,9 @@ func (r *OrganizationsSecurityProfilesV2Service) Patch(name string, googleclouda
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The list of
-// fields to update.
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Valid fields to update are `description` and
+// `profileAssessmentConfigs`.
 func (c *OrganizationsSecurityProfilesV2PatchCall) UpdateMask(updateMask string) *OrganizationsSecurityProfilesV2PatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

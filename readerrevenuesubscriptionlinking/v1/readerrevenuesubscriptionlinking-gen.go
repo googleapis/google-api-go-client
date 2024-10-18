@@ -180,8 +180,6 @@ type Entitlement struct {
 	// ExpireTime: Required. Expiration time of the entitlement. Entitlements that
 	// have expired over 30 days will be purged. The max expire_time is 398 days
 	// from now().
-	// LINT.ThenChange(//depot/google3/java/com/google/subscribewithgoogle/accountli
-	// nking/subscriptionlink/service/config/protoconf.pi:max_expiry_age)
 	ExpireTime string `json:"expireTime,omitempty"`
 	// ProductId: Required. The publication's product ID that the user has access
 	// to. This is the same product ID as can be found in Schema.org markup

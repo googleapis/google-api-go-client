@@ -21848,7 +21848,7 @@ func (s InstancesBulkInsertOperationMetadata) MarshalJSON() ([]byte, error) {
 }
 
 type InstancesGetEffectiveFirewallsResponse struct {
-	// FirewallPolicys: Effective firewalls from firewall policies.
+	// FirewallPolicys: [Output Only] Effective firewalls from firewall policies.
 	FirewallPolicys []*InstancesGetEffectiveFirewallsResponseEffectiveFirewallPolicy `json:"firewallPolicys,omitempty"`
 	// Firewalls: Effective firewalls on the instance.
 	Firewalls []*Firewall `json:"firewalls,omitempty"`
@@ -21884,7 +21884,9 @@ type InstancesGetEffectiveFirewallsResponseEffectiveFirewallPolicy struct {
 	// Priority: [Output only] Priority of firewall policy association. Not
 	// applicable for type=HIERARCHY.
 	Priority int64 `json:"priority,omitempty"`
-	// Rules: The rules that apply to the network.
+	// Rules: [Output Only] The rules that apply to the instance. Only rules that
+	// target the specific VM instance are returned if target service accounts or
+	// target secure tags are specified in the rules.
 	Rules []*FirewallPolicyRule `json:"rules,omitempty"`
 	// ShortName: [Output Only] The short name of the firewall policy.
 	ShortName string `json:"shortName,omitempty"`
@@ -22936,11 +22938,17 @@ func (s Int64RangeMatch) MarshalJSON() ([]byte, error) {
 // on-premises network. For more information, read the Dedicated Interconnect
 // Overview.
 type Interconnect struct {
+	// AaiEnabled: Enable or disable the application awareness feature on this
+	// Cloud Interconnect.
+	AaiEnabled bool `json:"aaiEnabled,omitempty"`
 	// AdminEnabled: Administrative status of the interconnect. When this is set to
 	// true, the Interconnect is functional and can carry traffic. When set to
 	// false, no packets can be carried over the interconnect and no BGP routes are
 	// exchanged over it. By default, the status is set to true.
 	AdminEnabled bool `json:"adminEnabled,omitempty"`
+	// ApplicationAwareInterconnect: Configuration information for application
+	// awareness on this Cloud Interconnect.
+	ApplicationAwareInterconnect *InterconnectApplicationAwareInterconnect `json:"applicationAwareInterconnect,omitempty"`
 	// AvailableFeatures: [Output only] List of features available for this
 	// Interconnect connection, which can take one of the following values: -
 	// IF_MACSEC If present then the Interconnect connection is provisioned on
@@ -23103,13 +23111,13 @@ type Interconnect struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AdminEnabled") to
+	// ForceSendFields is a list of field names (e.g. "AaiEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AdminEnabled") to include in API
+	// NullFields is a list of field names (e.g. "AaiEnabled") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -23119,6 +23127,98 @@ type Interconnect struct {
 func (s Interconnect) MarshalJSON() ([]byte, error) {
 	type NoMethod Interconnect
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterconnectApplicationAwareInterconnect: Configuration information for
+// application awareness on this Cloud Interconnect.
+type InterconnectApplicationAwareInterconnect struct {
+	BandwidthPercentagePolicy *InterconnectApplicationAwareInterconnectBandwidthPercentagePolicy `json:"bandwidthPercentagePolicy,omitempty"`
+	// ProfileDescription: Description for the application awareness profile on
+	// this Cloud Interconnect.
+	ProfileDescription string `json:"profileDescription,omitempty"`
+	// ShapeAveragePercentages: Optional field to specify a list of shape average
+	// percentages to be applied in conjunction with StrictPriorityPolicy or
+	// BandwidthPercentagePolicy.
+	ShapeAveragePercentages []*InterconnectApplicationAwareInterconnectBandwidthPercentage `json:"shapeAveragePercentages,omitempty"`
+	StrictPriorityPolicy    *InterconnectApplicationAwareInterconnectStrictPriorityPolicy  `json:"strictPriorityPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BandwidthPercentagePolicy")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BandwidthPercentagePolicy") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterconnectApplicationAwareInterconnect) MarshalJSON() ([]byte, error) {
+	type NoMethod InterconnectApplicationAwareInterconnect
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterconnectApplicationAwareInterconnectBandwidthPercentage: Specify
+// bandwidth percentages [1-100] for various traffic classes in
+// BandwidthPercentagePolicy. The sum of all percentages must equal 100. All
+// traffic classes must have a percentage value specified.
+type InterconnectApplicationAwareInterconnectBandwidthPercentage struct {
+	// Percentage: Bandwidth percentage for a specific traffic class.
+	Percentage int64 `json:"percentage,omitempty"`
+	// TrafficClass: TrafficClass whose bandwidth percentage is being specified.
+	//
+	// Possible values:
+	//   "TC1" - Traffic Class 1, corresponding to DSCP ranges (0-7) 000xxx.
+	//   "TC2" - Traffic Class 2, corresponding to DSCP ranges (8-15) 001xxx.
+	//   "TC3" - Traffic Class 3, corresponding to DSCP ranges (16-23) 010xxx.
+	//   "TC4" - Traffic Class 4, corresponding to DSCP ranges (24-31) 011xxx.
+	//   "TC5" - Traffic Class 5, corresponding to DSCP ranges (32-47) 10xxxx.
+	//   "TC6" - Traffic Class 6, corresponding to DSCP ranges (48-63) 11xxxx.
+	TrafficClass string `json:"trafficClass,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Percentage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Percentage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterconnectApplicationAwareInterconnectBandwidthPercentage) MarshalJSON() ([]byte, error) {
+	type NoMethod InterconnectApplicationAwareInterconnectBandwidthPercentage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type InterconnectApplicationAwareInterconnectBandwidthPercentagePolicy struct {
+	// BandwidthPercentages: Specify bandwidth percentages for various traffic
+	// classes for queuing type Bandwidth Percent.
+	BandwidthPercentages []*InterconnectApplicationAwareInterconnectBandwidthPercentage `json:"bandwidthPercentages,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BandwidthPercentages") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BandwidthPercentages") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterconnectApplicationAwareInterconnectBandwidthPercentagePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod InterconnectApplicationAwareInterconnectBandwidthPercentagePolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InterconnectApplicationAwareInterconnectStrictPriorityPolicy: Specify
+// configuration for StrictPriorityPolicy.
+type InterconnectApplicationAwareInterconnectStrictPriorityPolicy struct {
 }
 
 // InterconnectAttachment: Represents an Interconnect Attachment (VLAN)
@@ -27326,7 +27426,7 @@ type MultiMigsList struct {
 	Etag string `json:"etag,omitempty"`
 	// Id: Unique identifier for the resource; defined by the server.
 	Id string `json:"id,omitempty"`
-	// Items: A list of multi-MIG resources.
+	// Items: A list of multi-MIGs in the specified project and region.
 	Items []*MultiMig `json:"items,omitempty"`
 	// Kind: Type of resource.
 	Kind string `json:"kind,omitempty"`
@@ -30616,7 +30716,10 @@ func (s NetworksAddPeeringRequest) MarshalJSON() ([]byte, error) {
 }
 
 type NetworksGetEffectiveFirewallsResponse struct {
-	// FirewallPolicys: Effective firewalls from firewall policy.
+	// FirewallPolicys: [Output Only] Effective firewalls from firewall policy. It
+	// returns Global Network Firewall Policies and Hierarchical Firewall Policies.
+	// Use regionNetworkFirewallPolicies.getEffectiveFirewalls to get Regional
+	// Network Firewall Policies as well.
 	FirewallPolicys []*NetworksGetEffectiveFirewallsResponseEffectiveFirewallPolicy `json:"firewallPolicys,omitempty"`
 	// Firewalls: Effective firewalls on the network.
 	Firewalls []*Firewall `json:"firewalls,omitempty"`
@@ -30652,7 +30755,7 @@ type NetworksGetEffectiveFirewallsResponseEffectiveFirewallPolicy struct {
 	// Priority: [Output only] Priority of firewall policy association. Not
 	// applicable for type=HIERARCHY.
 	Priority int64 `json:"priority,omitempty"`
-	// Rules: The rules that apply to the network.
+	// Rules: [Output Only] The rules that apply to the network.
 	Rules []*FirewallPolicyRule `json:"rules,omitempty"`
 	// ShortName: [Output Only] The short name of the firewall policy.
 	ShortName string `json:"shortName,omitempty"`
@@ -38774,7 +38877,10 @@ func (s RegionNetworkEndpointGroupsDetachEndpointsRequest) MarshalJSON() ([]byte
 }
 
 type RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponse struct {
-	// FirewallPolicys: Effective firewalls from firewall policy.
+	// FirewallPolicys: [Output only] Effective firewalls from firewall policy. It
+	// applies to Regional Network Firewall Policies in the specified region,
+	// Global Network Firewall Policies and Hierachial Firewall Policies which are
+	// associated with the network.
 	FirewallPolicys []*RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirewallPolicy `json:"firewallPolicys,omitempty"`
 	// Firewalls: Effective firewalls on the network.
 	Firewalls []*Firewall `json:"firewalls,omitempty"`
@@ -38807,7 +38913,7 @@ type RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponseEffectiveFirewall
 	// Priority: [Output only] Priority of firewall policy association. Not
 	// applicable for type=HIERARCHY.
 	Priority int64 `json:"priority,omitempty"`
-	// Rules: The rules that apply to the network.
+	// Rules: [Output only] The rules that apply to the network.
 	Rules []*FirewallPolicyRule `json:"rules,omitempty"`
 	// Type: [Output Only] The type of the firewall policy. Can be one of
 	// HIERARCHY, NETWORK, NETWORK_REGIONAL, SYSTEM_GLOBAL, SYSTEM_REGIONAL.
@@ -39049,14 +39155,18 @@ type Reservation struct {
 	// then only VMs that target the reservation by name can consume from this
 	// reservation.
 	SpecificReservationRequired bool `json:"specificReservationRequired,omitempty"`
-	// Status: [Output Only] The status of the reservation.
+	// Status: [Output Only] The status of the reservation. - CREATING: Reservation
+	// resources are being allocated. - READY: Reservation resources have been
+	// allocated, and the reservation is ready for use. - DELETING: Reservation
+	// deletion is in progress. - UPDATING: Reservation update is in progress.
 	//
 	// Possible values:
-	//   "CREATING" - Resources are being allocated for the reservation.
-	//   "DELETING" - Reservation is currently being deleted.
+	//   "CREATING" - Reservation resources are being allocated.
+	//   "DELETING" - Reservation deletion is in progress.
 	//   "INVALID"
-	//   "READY" - Reservation has allocated all its resources.
-	//   "UPDATING" - Reservation is currently being resized.
+	//   "READY" - Reservation resources have been allocated, and the reservation
+	// is ready for use.
+	//   "UPDATING" - Reservation update is in progress.
 	Status string `json:"status,omitempty"`
 	// Zone: Zone in which the reservation resides. A zone must be provided if the
 	// reservation is created within a commitment.

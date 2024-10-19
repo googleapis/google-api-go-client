@@ -457,7 +457,8 @@ type AudioStream struct {
 	// Front center channel - `lfe` - Low frequency
 	ChannelLayout []string `json:"channelLayout,omitempty"`
 	// Codec: The codec for this audio stream. The default is `aac`. Supported
-	// audio codecs: - `aac` - `aac-he` - `aac-he-v2` - `mp3` - `ac3` - `eac3`
+	// audio codecs: - `aac` - `aac-he` - `aac-he-v2` - `mp3` - `ac3` - `eac3` -
+	// `vorbis`
 	Codec string `json:"codec,omitempty"`
 	// DisplayName: The name for this particular audio stream that will be added to
 	// the HLS/DASH manifest. Not supported in MP4 files.
@@ -1602,7 +1603,7 @@ func (s MpegCommonEncryption) MarshalJSON() ([]byte, error) {
 type MuxStream struct {
 	// Container: The container format. The default is `mp4` Supported container
 	// formats: - `ts` - `fmp4`- the corresponding file extension is `.m4s` - `mp4`
-	// - `vtt` See also: Supported input and output formats
+	// - `vtt` - `ogg` See also: Supported input and output formats
 	// (https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats)
 	Container string `json:"container,omitempty"`
 	// ElementaryStreams: List of ElementaryStream.key values multiplexed in this

@@ -567,6 +567,14 @@ func (s AwsSourceDetails) MarshalJSON() ([]byte, error) {
 
 // AwsSourceVmDetails: Represent the source AWS VM details.
 type AwsSourceVmDetails struct {
+	// Architecture: Output only. The VM architecture.
+	//
+	// Possible values:
+	//   "VM_ARCHITECTURE_UNSPECIFIED" - The architecture is unknown.
+	//   "VM_ARCHITECTURE_X86_FAMILY" - The architecture is one of the x86
+	// architectures.
+	//   "VM_ARCHITECTURE_ARM64" - The architecture is ARM64.
+	Architecture string `json:"architecture,omitempty"`
 	// CommittedStorageBytes: Output only. The total size of the disks being
 	// migrated in bytes.
 	CommittedStorageBytes int64 `json:"committedStorageBytes,omitempty,string"`
@@ -582,15 +590,15 @@ type AwsSourceVmDetails struct {
 	// VmCapabilitiesInfo: Output only. Information about VM capabilities needed
 	// for some Compute Engine features.
 	VmCapabilitiesInfo *VmCapabilities `json:"vmCapabilitiesInfo,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CommittedStorageBytes") to
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CommittedStorageBytes") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Architecture") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -784,6 +792,14 @@ func (s AzureSourceDetails) MarshalJSON() ([]byte, error) {
 
 // AzureSourceVmDetails: Represent the source Azure VM details.
 type AzureSourceVmDetails struct {
+	// Architecture: Output only. The VM architecture.
+	//
+	// Possible values:
+	//   "VM_ARCHITECTURE_UNSPECIFIED" - The architecture is unknown.
+	//   "VM_ARCHITECTURE_X86_FAMILY" - The architecture is one of the x86
+	// architectures.
+	//   "VM_ARCHITECTURE_ARM64" - The architecture is ARM64.
+	Architecture string `json:"architecture,omitempty"`
 	// CommittedStorageBytes: Output only. The total size of the disks being
 	// migrated in bytes.
 	CommittedStorageBytes int64 `json:"committedStorageBytes,omitempty,string"`
@@ -799,15 +815,15 @@ type AzureSourceVmDetails struct {
 	// VmCapabilitiesInfo: Output only. Information about VM capabilities needed
 	// for some Compute Engine features.
 	VmCapabilitiesInfo *VmCapabilities `json:"vmCapabilitiesInfo,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CommittedStorageBytes") to
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CommittedStorageBytes") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Architecture") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -819,6 +835,14 @@ func (s AzureSourceVmDetails) MarshalJSON() ([]byte, error) {
 
 // AzureVmDetails: AzureVmDetails describes a VM in Azure.
 type AzureVmDetails struct {
+	// Architecture: The CPU architecture.
+	//
+	// Possible values:
+	//   "VM_ARCHITECTURE_UNSPECIFIED" - The architecture is unknown.
+	//   "VM_ARCHITECTURE_X86_FAMILY" - The architecture is one of the x86
+	// architectures.
+	//   "VM_ARCHITECTURE_ARM64" - The architecture is ARM64.
+	Architecture string `json:"architecture,omitempty"`
 	// BootOption: The VM Boot Option.
 	//
 	// Possible values:
@@ -860,13 +884,13 @@ type AzureVmDetails struct {
 	VmId string `json:"vmId,omitempty"`
 	// VmSize: VM size as configured in Azure. Determines the VM's hardware spec.
 	VmSize string `json:"vmSize,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BootOption") to
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BootOption") to include in API
+	// NullFields is a list of field names (e.g. "Architecture") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3930,6 +3954,14 @@ func (s VmwareSourceDetails) MarshalJSON() ([]byte, error) {
 
 // VmwareSourceVmDetails: Represent the source Vmware VM details.
 type VmwareSourceVmDetails struct {
+	// Architecture: Output only. The VM architecture.
+	//
+	// Possible values:
+	//   "VM_ARCHITECTURE_UNSPECIFIED" - The architecture is unknown.
+	//   "VM_ARCHITECTURE_X86_FAMILY" - The architecture is one of the x86
+	// architectures.
+	//   "VM_ARCHITECTURE_ARM64" - The architecture is ARM64.
+	Architecture string `json:"architecture,omitempty"`
 	// CommittedStorageBytes: Output only. The total size of the disks being
 	// migrated in bytes.
 	CommittedStorageBytes int64 `json:"committedStorageBytes,omitempty,string"`
@@ -3945,15 +3977,15 @@ type VmwareSourceVmDetails struct {
 	// VmCapabilitiesInfo: Output only. Information about VM capabilities needed
 	// for some Compute Engine features.
 	VmCapabilitiesInfo *VmCapabilities `json:"vmCapabilitiesInfo,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CommittedStorageBytes") to
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CommittedStorageBytes") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Architecture") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3965,6 +3997,14 @@ func (s VmwareSourceVmDetails) MarshalJSON() ([]byte, error) {
 
 // VmwareVmDetails: VmwareVmDetails describes a VM in vCenter.
 type VmwareVmDetails struct {
+	// Architecture: Output only. The CPU architecture.
+	//
+	// Possible values:
+	//   "VM_ARCHITECTURE_UNSPECIFIED" - The architecture is unknown.
+	//   "VM_ARCHITECTURE_X86_FAMILY" - The architecture is one of the x86
+	// architectures.
+	//   "VM_ARCHITECTURE_ARM64" - The architecture is ARM64.
+	Architecture string `json:"architecture,omitempty"`
 	// BootOption: Output only. The VM Boot Option.
 	//
 	// Possible values:
@@ -4006,13 +4046,13 @@ type VmwareVmDetails struct {
 	// VmId: The VM's id in the source (note that this is not the MigratingVm's
 	// id). This is the moref id of the VM.
 	VmId string `json:"vmId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BootOption") to
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BootOption") to include in API
+	// NullFields is a list of field names (e.g. "Architecture") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

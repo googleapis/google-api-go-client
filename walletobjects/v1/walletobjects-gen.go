@@ -1912,6 +1912,19 @@ type EventTicketClass struct {
 	//   "oneUserAllDevices" - Legacy alias for `ONE_USER_ALL_DEVICES`. Deprecated.
 	//   "oneUserOneDevice" - Legacy alias for `ONE_USER_ONE_DEVICE`. Deprecated.
 	MultipleDevicesAndHoldersAllowedStatus string `json:"multipleDevicesAndHoldersAllowedStatus,omitempty"`
+	// NotifyPreference: Whether or not field updates to this class should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If not specified, no notification will be
+	// triggered. This setting is ephemeral and needs to be set with each PATCH or
+	// UPDATE request, otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// RedemptionIssuers: Identifies which redemption issuers can redeem the pass
 	// over Smart Tap. Redemption issuers are identified by their issuer ID.
 	// Redemption issuers must have at least one Smart Tap key configured. The
@@ -2169,6 +2182,20 @@ type EventTicketObject struct {
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
 	Messages []*Message `json:"messages,omitempty"`
+	// NotifyPreference: Whether or not field updates to this object should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If set to DO_NOT_NOTIFY or
+	// NOTIFICATION_SETTINGS_UNSPECIFIED, no notification will be triggered. This
+	// setting is ephemeral and needs to be set with each PATCH or UPDATE request,
+	// otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// PassConstraints: Pass constraints for the object. Includes limiting NFC and
 	// screenshot behaviors.
 	PassConstraints *PassConstraints `json:"passConstraints,omitempty"`
@@ -2681,6 +2708,19 @@ type FlightClass struct {
 	//   "oneUserAllDevices" - Legacy alias for `ONE_USER_ALL_DEVICES`. Deprecated.
 	//   "oneUserOneDevice" - Legacy alias for `ONE_USER_ONE_DEVICE`. Deprecated.
 	MultipleDevicesAndHoldersAllowedStatus string `json:"multipleDevicesAndHoldersAllowedStatus,omitempty"`
+	// NotifyPreference: Whether or not field updates to this class should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If not specified, no notification will be
+	// triggered. This setting is ephemeral and needs to be set with each PATCH or
+	// UPDATE request, otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// Origin: Required. Origin airport.
 	Origin *AirportInfo `json:"origin,omitempty"`
 	// RedemptionIssuers: Identifies which redemption issuers can redeem the pass
@@ -2931,6 +2971,20 @@ type FlightObject struct {
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
 	Messages []*Message `json:"messages,omitempty"`
+	// NotifyPreference: Whether or not field updates to this object should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If set to DO_NOT_NOTIFY or
+	// NOTIFICATION_SETTINGS_UNSPECIFIED, no notification will be triggered. This
+	// setting is ephemeral and needs to be set with each PATCH or UPDATE request,
+	// otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// PassConstraints: Pass constraints for the object. Includes limiting NFC and
 	// screenshot behaviors.
 	PassConstraints *PassConstraints `json:"passConstraints,omitempty"`
@@ -3572,6 +3626,19 @@ type GiftCardClass struct {
 	//   "oneUserAllDevices" - Legacy alias for `ONE_USER_ALL_DEVICES`. Deprecated.
 	//   "oneUserOneDevice" - Legacy alias for `ONE_USER_ONE_DEVICE`. Deprecated.
 	MultipleDevicesAndHoldersAllowedStatus string `json:"multipleDevicesAndHoldersAllowedStatus,omitempty"`
+	// NotifyPreference: Whether or not field updates to this class should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If not specified, no notification will be
+	// triggered. This setting is ephemeral and needs to be set with each PATCH or
+	// UPDATE request, otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// PinLabel: The label to display for the PIN, such as "4-digit PIN".
 	PinLabel string `json:"pinLabel,omitempty"`
 	// ProgramLogo: The logo of the gift card program or company. This logo is
@@ -3791,6 +3858,20 @@ type GiftCardObject struct {
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
 	Messages []*Message `json:"messages,omitempty"`
+	// NotifyPreference: Whether or not field updates to this object should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If set to DO_NOT_NOTIFY or
+	// NOTIFICATION_SETTINGS_UNSPECIFIED, no notification will be triggered. This
+	// setting is ephemeral and needs to be set with each PATCH or UPDATE request,
+	// otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// PassConstraints: Pass constraints for the object. Includes limiting NFC and
 	// screenshot behaviors.
 	PassConstraints *PassConstraints `json:"passConstraints,omitempty"`
@@ -4522,6 +4603,19 @@ type LoyaltyClass struct {
 	//   "oneUserAllDevices" - Legacy alias for `ONE_USER_ALL_DEVICES`. Deprecated.
 	//   "oneUserOneDevice" - Legacy alias for `ONE_USER_ONE_DEVICE`. Deprecated.
 	MultipleDevicesAndHoldersAllowedStatus string `json:"multipleDevicesAndHoldersAllowedStatus,omitempty"`
+	// NotifyPreference: Whether or not field updates to this class should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If not specified, no notification will be
+	// triggered. This setting is ephemeral and needs to be set with each PATCH or
+	// UPDATE request, otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// ProgramLogo: Required. The logo of the loyalty program or company. This logo
 	// is displayed in both the details and list views of the app.
 	ProgramLogo *Image `json:"programLogo,omitempty"`
@@ -4761,6 +4855,20 @@ type LoyaltyObject struct {
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
 	Messages []*Message `json:"messages,omitempty"`
+	// NotifyPreference: Whether or not field updates to this object should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If set to DO_NOT_NOTIFY or
+	// NOTIFICATION_SETTINGS_UNSPECIFIED, no notification will be triggered. This
+	// setting is ephemeral and needs to be set with each PATCH or UPDATE request,
+	// otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// PassConstraints: Pass constraints for the object. Includes limiting NFC and
 	// screenshot behaviors.
 	PassConstraints *PassConstraints `json:"passConstraints,omitempty"`
@@ -5507,6 +5615,19 @@ type OfferClass struct {
 	//   "oneUserAllDevices" - Legacy alias for `ONE_USER_ALL_DEVICES`. Deprecated.
 	//   "oneUserOneDevice" - Legacy alias for `ONE_USER_ONE_DEVICE`. Deprecated.
 	MultipleDevicesAndHoldersAllowedStatus string `json:"multipleDevicesAndHoldersAllowedStatus,omitempty"`
+	// NotifyPreference: Whether or not field updates to this class should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If not specified, no notification will be
+	// triggered. This setting is ephemeral and needs to be set with each PATCH or
+	// UPDATE request, otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// Provider: Required. The offer provider (either the aggregator name or
 	// merchant name). Recommended maximum length is 12 characters to ensure full
 	// string is displayed on smaller screens.
@@ -5740,6 +5861,20 @@ type OfferObject struct {
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
 	Messages []*Message `json:"messages,omitempty"`
+	// NotifyPreference: Whether or not field updates to this object should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If set to DO_NOT_NOTIFY or
+	// NOTIFICATION_SETTINGS_UNSPECIFIED, no notification will be triggered. This
+	// setting is ephemeral and needs to be set with each PATCH or UPDATE request,
+	// otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// PassConstraints: Pass constraints for the object. Includes limiting NFC and
 	// screenshot behaviors.
 	PassConstraints *PassConstraints `json:"passConstraints,omitempty"`
@@ -6922,6 +7057,20 @@ type TransitClass struct {
 	//   "oneUserAllDevices" - Legacy alias for `ONE_USER_ALL_DEVICES`. Deprecated.
 	//   "oneUserOneDevice" - Legacy alias for `ONE_USER_ONE_DEVICE`. Deprecated.
 	MultipleDevicesAndHoldersAllowedStatus string `json:"multipleDevicesAndHoldersAllowedStatus,omitempty"`
+	// NotifyPreference: Whether or not field updates to this class should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If set to DO_NOT_NOTIFY or
+	// NOTIFICATION_SETTINGS_UNSPECIFIED, no notification will be triggered. This
+	// setting is ephemeral and needs to be set with each PATCH or UPDATE request,
+	// otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// RedemptionIssuers: Identifies which redemption issuers can redeem the pass
 	// over Smart Tap. Redemption issuers are identified by their issuer ID.
 	// Redemption issuers must have at least one Smart Tap key configured. The
@@ -7172,6 +7321,20 @@ type TransitObject struct {
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
 	Messages []*Message `json:"messages,omitempty"`
+	// NotifyPreference: Whether or not field updates to this object should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If set to DO_NOT_NOTIFY or
+	// NOTIFICATION_SETTINGS_UNSPECIFIED, no notification will be triggered. This
+	// setting is ephemeral and needs to be set with each PATCH or UPDATE request,
+	// otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// PassConstraints: Pass constraints for the object. Includes limiting NFC and
 	// screenshot behaviors.
 	PassConstraints *PassConstraints `json:"passConstraints,omitempty"`

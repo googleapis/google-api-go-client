@@ -1417,7 +1417,7 @@
       }
     }
   },
-  "revision": "20241015",
+  "revision": "20241016",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "Accepted": {
@@ -1747,7 +1747,12 @@
     "ClaimHomepageRequest": {
       "description": "Request message for the `ClaimHomepage` method.",
       "id": "ClaimHomepageRequest",
-      "properties": {},
+      "properties": {
+        "overwrite": {
+          "description": "Optional. When set to `true`, this option removes any existing claim on the requested website and replaces it with a claim from the account that makes the request.",
+          "type": "boolean"
+        }
+      },
       "type": "object"
     },
     "CreateAndConfigureAccountRequest": {

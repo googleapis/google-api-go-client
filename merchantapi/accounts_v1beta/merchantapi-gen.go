@@ -724,6 +724,26 @@ func (s CarrierRate) MarshalJSON() ([]byte, error) {
 
 // ClaimHomepageRequest: Request message for the `ClaimHomepage` method.
 type ClaimHomepageRequest struct {
+	// Overwrite: Optional. When set to `true`, this option removes any existing
+	// claim on the requested website and replaces it with a claim from the account
+	// that makes the request.
+	Overwrite bool `json:"overwrite,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Overwrite") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Overwrite") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClaimHomepageRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ClaimHomepageRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateAndConfigureAccountRequest: Request message for the

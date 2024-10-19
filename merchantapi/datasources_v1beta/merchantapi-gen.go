@@ -847,9 +847,9 @@ type SupplementalProductDataSource struct {
 	// (https://developers.google.com/shopping-content/guides/products/feed-labels).
 	// `feedLabel` and `contentLanguage` must be either both set or unset for data
 	// sources with product content type. They must be set for data sources with a
-	// file input. If set, the data source will only accept products matching this
-	// combination. If unset, the data source will accept produts without that
-	// restriction.
+	// file input. The fields must be unset for data sources without file input. If
+	// set, the data source will only accept products matching this combination. If
+	// unset, the data source will accept produts without that restriction.
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// ReferencingPrimaryDataSources: Output only. The (unordered and deduplicated)
 	// list of all primary data sources linked to this data source in either

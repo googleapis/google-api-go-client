@@ -1070,6 +1070,80 @@ func (s AdUrl) MarshalJSON() ([]byte, error) {
 
 // Adloox: Details of Adloox settings.
 type Adloox struct {
+	// AdultExplicitSexualContent: Optional. Adult explicit sexual content.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk level option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
+	// and Floor).
+	AdultExplicitSexualContent string `json:"adultExplicitSexualContent,omitempty"`
+	// ArmsAmmunitionContent: Optional. Arms ammunition content.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk level option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
+	// and Floor).
+	ArmsAmmunitionContent string `json:"armsAmmunitionContent,omitempty"`
+	// CrimeHarmfulActsIndividualsSocietyHumanRightsViolationsContent: Optional.
+	// Crime harmful acts to individuals society human rights violations content.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk level option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
+	// and Floor).
+	CrimeHarmfulActsIndividualsSocietyHumanRightsViolationsContent string `json:"crimeHarmfulActsIndividualsSocietyHumanRightsViolationsContent,omitempty"`
+	// DeathInjuryMilitaryConflictContent: Optional. Death injury military conflict
+	// content.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk level option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
+	// and Floor).
+	DeathInjuryMilitaryConflictContent string `json:"deathInjuryMilitaryConflictContent,omitempty"`
+	// DebatedSensitiveSocialIssueContent: Optional. Debated sensitive social issue
+	// content.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk level option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
+	// and Floor).
+	DebatedSensitiveSocialIssueContent string `json:"debatedSensitiveSocialIssueContent,omitempty"`
+	// DisplayIabViewability: Optional. Display IAB viewability.
+	//
+	// Possible values:
+	//   "DISPLAY_IAB_VIEWABILITY_UNSPECIFIED" - This enum is only a placeholder
+	// and it doesn't specify any display viewability options.
+	//   "DISPLAY_IAB_VIEWABILITY_10" - 10%+ in view (IAB display viewability
+	// standard).
+	//   "DISPLAY_IAB_VIEWABILITY_20" - 20%+ in view (IAB display viewability
+	// standard).
+	//   "DISPLAY_IAB_VIEWABILITY_35" - 35%+ in view (IAB display viewability
+	// standard).
+	//   "DISPLAY_IAB_VIEWABILITY_50" - 50%+ in view (IAB display viewability
+	// standard).
+	//   "DISPLAY_IAB_VIEWABILITY_75" - 75%+ in view (IAB display viewability
+	// standard).
+	DisplayIabViewability string `json:"displayIabViewability,omitempty"`
 	// ExcludedAdlooxCategories: Adloox's brand safety settings.
 	//
 	// Possible values:
@@ -1084,13 +1158,115 @@ type Adloox struct {
 	//   "LOW_VIEWABILITY_DOMAINS" - Low viewability domains.
 	//   "FRAUD" - Fraud.
 	ExcludedAdlooxCategories []string `json:"excludedAdlooxCategories,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExcludedAdlooxCategories")
+	// ExcludedFraudIvtMfaCategories: Optional. Adloox's fraud IVT MFA settings.
+	//
+	// Possible values:
+	//   "FRAUD_IVT_MFA_CATEGORY_UNSPECIFIED" - This enum is only a placeholder and
+	// it doesn't specify any fraud IVT MFA categories.
+	//   "FRAUD_IVT_MFA" - FRAUD, IVT, MFA.
+	ExcludedFraudIvtMfaCategories []string `json:"excludedFraudIvtMfaCategories,omitempty"`
+	// HateSpeechActsAggressionContent: Optional. Hate speech acts of aggression
+	// content.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk level option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
+	// and Floor).
+	HateSpeechActsAggressionContent string `json:"hateSpeechActsAggressionContent,omitempty"`
+	// IllegalDrugsTobaccoEcigarettesVapingAlcoholContent: Optional. Illegal drugs
+	// tobacco ecigarettes vaping alcohol content.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk level option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
+	// and Floor).
+	IllegalDrugsTobaccoEcigarettesVapingAlcoholContent string `json:"illegalDrugsTobaccoEcigarettesVapingAlcoholContent,omitempty"`
+	// MisinformationContent: Optional. Misinformation content.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk level option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
+	// and Floor).
+	MisinformationContent string `json:"misinformationContent,omitempty"`
+	// ObscenityProfanityContent: Optional. Obscenity profanity content.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk level option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
+	// and Floor).
+	ObscenityProfanityContent string `json:"obscenityProfanityContent,omitempty"`
+	// OnlinePiracyContent: Optional. Online piracy content.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk level option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
+	// and Floor).
+	OnlinePiracyContent string `json:"onlinePiracyContent,omitempty"`
+	// SpamHarmfulContent: Optional. Spam harmful content.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk level option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
+	// and Floor).
+	SpamHarmfulContent string `json:"spamHarmfulContent,omitempty"`
+	// TerrorismContent: Optional. Terrorism content.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk level option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
+	// and Floor).
+	TerrorismContent string `json:"terrorismContent,omitempty"`
+	// VideoIabViewability: Optional. Video IAB viewability.
+	//
+	// Possible values:
+	//   "VIDEO_IAB_VIEWABILITY_UNSPECIFIED" - This enum is only a placeholder and
+	// it doesn't specify any video viewability options.
+	//   "VIDEO_IAB_VIEWABILITY_10" - 10%+ in view (IAB video viewability
+	// standard).
+	//   "VIDEO_IAB_VIEWABILITY_20" - 20%+ in view (IAB video viewability
+	// standard).
+	//   "VIDEO_IAB_VIEWABILITY_35" - 35%+ in view (IAB video viewability
+	// standard).
+	//   "VIDEO_IAB_VIEWABILITY_50" - 50%+ in view (IAB video viewability
+	// standard).
+	//   "VIDEO_IAB_VIEWABILITY_75" - 75%+ in view (IAB video viewability
+	// standard).
+	VideoIabViewability string `json:"videoIabViewability,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdultExplicitSexualContent")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExcludedAdlooxCategories") to
+	// NullFields is a list of field names (e.g. "AdultExplicitSexualContent") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5413,6 +5589,8 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_8" - SDF version 8. **This SDF version is in beta. It is only
+	// available to a subset of users.**
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14043,6 +14221,8 @@ type SdfConfig struct {
 	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_8" - SDF version 8. **This SDF version is in beta. It is only
+	// available to a subset of users.**
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14118,6 +14298,8 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_8" - SDF version 8. **This SDF version is in beta. It is only
+	// available to a subset of users.**
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or

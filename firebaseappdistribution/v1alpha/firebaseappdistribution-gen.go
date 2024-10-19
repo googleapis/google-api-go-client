@@ -777,6 +777,8 @@ func (s GoogleFirebaseAppdistroV1alphaDeviceExecution) MarshalJSON() ([]byte, er
 // GoogleFirebaseAppdistroV1alphaDeviceInteraction: An interaction with the
 // device, such as a tap, text entry, wait, etc.
 type GoogleFirebaseAppdistroV1alphaDeviceInteraction struct {
+	// KeyCode: Output only. Key code for a key event action.
+	KeyCode string `json:"keyCode,omitempty"`
 	// Screenshot: Output only. The screenshot used in the context of this action.
 	// The screen may have changed before the action was actually taken.
 	Screenshot *GoogleFirebaseAppdistroV1alphaScreenshot `json:"screenshot,omitempty"`
@@ -788,13 +790,13 @@ type GoogleFirebaseAppdistroV1alphaDeviceInteraction struct {
 	TextInput string `json:"textInput,omitempty"`
 	// Wait: Output only. A wait action.
 	Wait *GoogleFirebaseAppdistroV1alphaDeviceInteractionWait `json:"wait,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Screenshot") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "KeyCode") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Screenshot") to include in API
+	// NullFields is a list of field names (e.g. "KeyCode") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

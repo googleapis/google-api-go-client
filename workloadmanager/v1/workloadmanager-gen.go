@@ -533,6 +533,8 @@ type Execution struct {
 	// projects/{project}/locations/{location}/evaluations/{evaluation}/executions/{
 	// execution}
 	Name string `json:"name,omitempty"`
+	// RuleResults: Output only. execution result summary per rule
+	RuleResults []*RuleExecutionResult `json:"ruleResults,omitempty"`
 	// RunType: type represent whether the execution executed directly by user or
 	// scheduled according evaluation.schedule field.
 	//
@@ -1390,6 +1392,42 @@ type Rule struct {
 
 func (s Rule) MarshalJSON() ([]byte, error) {
 	type NoMethod Rule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RuleExecutionResult: Message for execution result summary per rule
+type RuleExecutionResult struct {
+	// Message: Execution message, if any
+	Message string `json:"message,omitempty"`
+	// ResultCount: Number of violations
+	ResultCount int64 `json:"resultCount,omitempty,string"`
+	// Rule: rule name
+	Rule string `json:"rule,omitempty"`
+	// ScannedResourceCount: Number of total scanned resources
+	ScannedResourceCount int64 `json:"scannedResourceCount,omitempty,string"`
+	// State: Output only. The execution status
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unknown state
+	//   "STATE_SUCCESS" - execution completed successfully
+	//   "STATE_FAILURE" - execution completed with failures
+	//   "STATE_SKIPPED" - execution was not executed
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RuleExecutionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod RuleExecutionResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

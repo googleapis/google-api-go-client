@@ -5185,7 +5185,7 @@
       }
     }
   },
-  "revision": "20241009",
+  "revision": "20241018",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AdvancedSettings": {
@@ -5514,13 +5514,13 @@
             "DATA_STORE_TYPE_UNSPECIFIED",
             "PUBLIC_WEB",
             "UNSTRUCTURED",
-            "FAQ"
+            "STRUCTURED"
           ],
           "enumDescriptions": [
             "Not specified. This value indicates that the data store type is not specified, so it will not be used during search.",
             "A data store that contains public web content.",
             "A data store that contains unstructured private data.",
-            "A data store that contains structured data used as FAQ."
+            "A data store that contains structured data (for example FAQ)."
           ],
           "type": "string"
         }
@@ -8646,13 +8646,13 @@
             "DATA_STORE_TYPE_UNSPECIFIED",
             "PUBLIC_WEB",
             "UNSTRUCTURED",
-            "FAQ"
+            "STRUCTURED"
           ],
           "enumDescriptions": [
             "Not specified. This value indicates that the data store type is not specified, so it will not be used during search.",
             "A data store that contains public web content.",
             "A data store that contains unstructured private data.",
-            "A data store that contains structured data used as FAQ."
+            "A data store that contains structured data (for example FAQ)."
           ],
           "type": "string"
         }

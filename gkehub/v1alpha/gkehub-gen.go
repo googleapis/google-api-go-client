@@ -1555,6 +1555,18 @@ func (s ConfigManagementConfigSyncError) MarshalJSON() ([]byte, error) {
 
 // ConfigManagementConfigSyncState: State information for ConfigSync
 type ConfigManagementConfigSyncState struct {
+	// ClusterLevelStopSyncingState: Whether syncing resources to the cluster is
+	// stopped at the cluster level.
+	//
+	// Possible values:
+	//   "STOP_SYNCING_STATE_UNSPECIFIED" - State cannot be determined
+	//   "NOT_STOPPED" - Syncing resources to the cluster is not stopped at the
+	// cluster level.
+	//   "PENDING" - Some reconcilers stop syncing resources to the cluster, while
+	// others are still syncing.
+	//   "STOPPED" - Syncing resources to the cluster is stopped at the cluster
+	// level.
+	ClusterLevelStopSyncingState string `json:"clusterLevelStopSyncingState,omitempty"`
 	// DeploymentState: Information about the deployment of ConfigSync, including
 	// the version of the various Pods deployed
 	DeploymentState *ConfigManagementConfigSyncDeploymentState `json:"deploymentState,omitempty"`
@@ -1595,15 +1607,15 @@ type ConfigManagementConfigSyncState struct {
 	SyncState *ConfigManagementSyncState `json:"syncState,omitempty"`
 	// Version: The version of ConfigSync deployed
 	Version *ConfigManagementConfigSyncVersion `json:"version,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DeploymentState") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "ClusterLevelStopSyncingState") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DeploymentState") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ClusterLevelStopSyncingState") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

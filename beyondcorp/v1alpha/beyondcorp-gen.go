@@ -3067,9 +3067,9 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1alphaPeering struct {
 	// DnsZones: Optional. List of DNS zones for DNS peering with the customer VPC
 	// network.
 	DnsZones []string `json:"dnsZones,omitempty"`
-	// TargetVpcNetwork: Required. The name of the Target VPC network name in the
+	// TargetNetwork: Required. The name of the Target VPC network name in the
 	// format: `projects/{project}/global/networks/{network}
-	TargetVpcNetwork string `json:"targetVpcNetwork,omitempty"`
+	TargetNetwork string `json:"targetNetwork,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DnsZones") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

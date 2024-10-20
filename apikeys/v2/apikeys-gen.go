@@ -488,6 +488,9 @@ type V2Key struct {
 	Name string `json:"name,omitempty"`
 	// Restrictions: Key restrictions.
 	Restrictions *V2Restrictions `json:"restrictions,omitempty"`
+	// ServiceAccountEmail: Optional. The email address of the service account
+	// (https://cloud.google.com/iam/docs/service-accounts) the key is bound to.
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 	// Uid: Output only. Unique id in UUID4 format.
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. A timestamp identifying the time this key was last

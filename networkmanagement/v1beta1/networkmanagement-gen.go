@@ -1022,9 +1022,10 @@ type DropInfo struct {
 	//   "CLOUD_NAT_NO_ADDRESSES" - Packet sent to Cloud Nat without active NAT
 	// IPs.
 	//   "ROUTING_LOOP" - Packet is stuck in a routing loop.
-	//   "DROPPED_INSIDE_GOOGLE_MANAGED_SERVICE" - Packet is dropped due to an
-	// unspecified reason inside a Google-managed service. Used only for return
-	// traces.
+	//   "DROPPED_INSIDE_GOOGLE_MANAGED_SERVICE" - Packet is dropped inside a
+	// Google-managed service due to being delivered in return trace to an endpoint
+	// that doesn't match the endpoint the packet was sent from in forward trace.
+	// Used only for return traces.
 	//   "LOAD_BALANCER_BACKEND_INVALID_NETWORK" - Packet is dropped due to a load
 	// balancer backend instance not having a network interface in the network
 	// expected by the load balancer.

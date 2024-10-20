@@ -1316,29 +1316,30 @@ func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryPubli
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDevtoolsArtifactregistryV1Rule: A Rule applies to repository or
-// package level. It defines the deny or allow action of the operation when the
-// conditions in the rule are met.
+// GoogleDevtoolsArtifactregistryV1Rule: A rule defines the deny or allow
+// action of the operation it applies to and the conditions required for the
+// rule to apply. You can set one rule for an entire repository and one rule
+// for each package within.
 type GoogleDevtoolsArtifactregistryV1Rule struct {
-	// Action: The action this rule makes.
+	// Action: The action this rule takes.
 	//
 	// Possible values:
 	//   "ACTION_UNSPECIFIED" - Action not specified.
 	//   "ALLOW" - Allow the operation.
 	//   "DENY" - Deny the operation.
 	Action string `json:"action,omitempty"`
-	// Condition: Optional. The condition of the rule in CEL expression. If not
-	// provided, the rule matches all the objects.
+	// Condition: Optional. A CEL expression for conditions that must be met in
+	// order for the rule to apply. If not provided, the rule matches all objects.
 	Condition *Expr `json:"condition,omitempty"`
 	// Name: The name of the rule, for example:
-	// "projects/p1/locations/us-central1/repositories/repo1/rules/rule1".
+	// `projects/p1/locations/us-central1/repositories/repo1/rules/rule1`.
 	Name string `json:"name,omitempty"`
 	// Possible values:
 	//   "OPERATION_UNSPECIFIED" - Operation not specified.
 	//   "DOWNLOAD" - Download operation.
 	Operation string `json:"operation,omitempty"`
 	// PackageId: The package ID the rule applies to. If empty, this rule applies
-	// to all the packages inside the repository.
+	// to all packages inside the repository.
 	PackageId string `json:"packageId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2696,6 +2697,9 @@ type Repository struct {
 	UpdateTime string `json:"updateTime,omitempty"`
 	// VirtualRepositoryConfig: Configuration specific for a Virtual Repository.
 	VirtualRepositoryConfig *VirtualRepositoryConfig `json:"virtualRepositoryConfig,omitempty"`
+	// VulnerabilityScanningConfig: Optional. Config and state for vulnerability
+	// scanning of resources within this Repository.
+	VulnerabilityScanningConfig *VulnerabilityScanningConfig `json:"vulnerabilityScanningConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3423,6 +3427,54 @@ type VirtualRepositoryConfig struct {
 
 func (s VirtualRepositoryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VirtualRepositoryConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VulnerabilityScanningConfig: Config on whether to perform vulnerability
+// scanning for resources in this repository, as well as output fields
+// describing current state.
+type VulnerabilityScanningConfig struct {
+	// EnablementConfig: Optional. Config for whether this repository has
+	// vulnerability scanning disabled.
+	//
+	// Possible values:
+	//   "ENABLEMENT_CONFIG_UNSPECIFIED" - Not set. This will be treated as
+	// INHERITED.
+	//   "INHERITED" - Scanning is Enabled, but dependent on API enablement.
+	//   "DISABLED" - No automatic vulnerability scanning will be performed for
+	// this repository.
+	EnablementConfig string `json:"enablementConfig,omitempty"`
+	// EnablementState: Output only. State of feature enablement, combining
+	// repository enablement config and API enablement state.
+	//
+	// Possible values:
+	//   "ENABLEMENT_STATE_UNSPECIFIED" - Enablement state is unclear.
+	//   "SCANNING_UNSUPPORTED" - Repository does not support vulnerability
+	// scanning.
+	//   "SCANNING_DISABLED" - Vulnerability scanning is disabled for this
+	// repository.
+	//   "SCANNING_ACTIVE" - Vulnerability scanning is active for this repository.
+	EnablementState string `json:"enablementState,omitempty"`
+	// EnablementStateReason: Output only. Reason for the repository state.
+	EnablementStateReason string `json:"enablementStateReason,omitempty"`
+	// LastEnableTime: Output only. The last time this repository config was
+	// enabled.
+	LastEnableTime string `json:"lastEnableTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnablementConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnablementConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VulnerabilityScanningConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod VulnerabilityScanningConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10773,7 +10825,7 @@ type ProjectsLocationsRepositoriesRulesPatchCall struct {
 // Patch: Updates a rule.
 //
 //   - name: The name of the rule, for example:
-//     "projects/p1/locations/us-central1/repositories/repo1/rules/rule1".
+//     `projects/p1/locations/us-central1/repositories/repo1/rules/rule1`.
 func (r *ProjectsLocationsRepositoriesRulesService) Patch(name string, googledevtoolsartifactregistryv1rule *GoogleDevtoolsArtifactregistryV1Rule) *ProjectsLocationsRepositoriesRulesPatchCall {
 	c := &ProjectsLocationsRepositoriesRulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

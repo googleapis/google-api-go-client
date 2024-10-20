@@ -488,6 +488,32 @@ type ApproveRolloutResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// AssociatedEntities: Information about entities associated with a `Target`.
+type AssociatedEntities struct {
+	// AnthosClusters: Optional. Information specifying Anthos clusters as
+	// associated entities.
+	AnthosClusters []*AnthosCluster `json:"anthosClusters,omitempty"`
+	// GkeClusters: Optional. Information specifying GKE clusters as associated
+	// entities.
+	GkeClusters []*GkeCluster `json:"gkeClusters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnthosClusters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnthosClusters") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssociatedEntities) MarshalJSON() ([]byte, error) {
+	type NoMethod AssociatedEntities
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must have one
@@ -2323,6 +2349,12 @@ type GatewayServiceMesh struct {
 	// Deployment and Service resources. This label must already be present in both
 	// resources.
 	PodSelectorLabel string `json:"podSelectorLabel,omitempty"`
+	// RouteDestinations: Optional. Route destinations allow configuring the
+	// Gateway API HTTPRoute to be deployed to additional clusters. This option is
+	// available for multi-cluster service mesh set ups that require the route to
+	// exist in the clusters that call the service. If unspecified, the HTTPRoute
+	// will only be deployed to the Target cluster.
+	RouteDestinations *RouteDestinations `json:"routeDestinations,omitempty"`
 	// RouteUpdateWaitTime: Optional. The time to wait for route updates to
 	// propagate. The maximum configurable time is 3 hours, in seconds format. If
 	// unspecified, there is no wait time.
@@ -4790,6 +4822,38 @@ func (s RolloutUpdateEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RouteDestinations: Information about route destinations for the Gateway API
+// service mesh.
+type RouteDestinations struct {
+	// DestinationIds: Required. The clusters where the Gateway API HTTPRoute
+	// resource will be deployed to. Valid entries include the associated entities
+	// IDs configured in the Target resource and "@self" to include the Target
+	// cluster.
+	DestinationIds []string `json:"destinationIds,omitempty"`
+	// PropagateService: Optional. Whether to propagate the Kubernetes Service to
+	// the route destination clusters. The Service will always be deployed to the
+	// Target cluster even if the HTTPRoute is not. This option may be used to
+	// facilitiate successful DNS lookup in the route destination clusters. Can
+	// only be set to true if destinations are specified.
+	PropagateService bool `json:"propagateService,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestinationIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestinationIds") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RouteDestinations) MarshalJSON() ([]byte, error) {
+	type NoMethod RouteDestinations
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RuntimeConfig: RuntimeConfig contains the runtime specific configurations
 // for a deployment strategy.
 type RuntimeConfig struct {
@@ -5222,6 +5286,15 @@ type Target struct {
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// AnthosCluster: Optional. Information specifying an Anthos Cluster.
 	AnthosCluster *AnthosCluster `json:"anthosCluster,omitempty"`
+	// AssociatedEntities: Optional. Map of entity IDs to their associated
+	// entities. Associated entities allows specifying places other than the
+	// deployment target for specific features. For example, the Gateway API canary
+	// can be configured to deploy the HTTPRoute to a different cluster(s) than the
+	// deployment cluster using associated entities. An entity ID must consist of
+	// lower-case letters, numbers, and hyphens, start with a letter and end with a
+	// letter or a number, and have a max length of 63 characters. In other words,
+	// it must match the following regex: `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`.
+	AssociatedEntities map[string]AssociatedEntities `json:"associatedEntities,omitempty"`
 	// CreateTime: Output only. Time at which the `Target` was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomTarget: Optional. Information specifying a Custom Target.

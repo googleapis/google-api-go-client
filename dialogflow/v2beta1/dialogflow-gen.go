@@ -1323,7 +1323,8 @@ type GoogleCloudDialogflowCxV3DataStoreConnection struct {
 	// the data store type is not specified, so it will not be used during search.
 	//   "PUBLIC_WEB" - A data store that contains public web content.
 	//   "UNSTRUCTURED" - A data store that contains unstructured private data.
-	//   "FAQ" - A data store that contains structured data used as FAQ.
+	//   "STRUCTURED" - A data store that contains structured data (for example
+	// FAQ).
 	DataStoreType string `json:"dataStoreType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataStore") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4603,7 +4604,8 @@ type GoogleCloudDialogflowCxV3beta1DataStoreConnection struct {
 	// the data store type is not specified, so it will not be used during search.
 	//   "PUBLIC_WEB" - A data store that contains public web content.
 	//   "UNSTRUCTURED" - A data store that contains unstructured private data.
-	//   "FAQ" - A data store that contains structured data used as FAQ.
+	//   "STRUCTURED" - A data store that contains structured data (for example
+	// FAQ).
 	DataStoreType string `json:"dataStoreType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataStore") to
 	// unconditionally include in API requests. By default, fields with empty or

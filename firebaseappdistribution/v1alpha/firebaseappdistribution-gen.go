@@ -2965,6 +2965,26 @@ func (c *ProjectsAppsReleasesTestsListCall) PageToken(pageToken string) *Project
 	return c
 }
 
+// View sets the optional parameter "view": The requested view on the returned
+// ReleaseTests. Defaults to the basic view.
+//
+// Possible values:
+//
+//	"RELEASE_TEST_VIEW_UNSPECIFIED" - The default / unset value. The default
+//
+// view depends on the RPC.
+//
+//	"RELEASE_TEST_VIEW_BASIC" - Include basic metadata about the release test
+//
+// and its status, but not the full result details. This is the default value
+// for ListReleaseTests.
+//
+//	"RELEASE_TEST_VIEW_FULL" - Include everything.
+func (c *ProjectsAppsReleasesTestsListCall) View(view string) *ProjectsAppsReleasesTestsListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.

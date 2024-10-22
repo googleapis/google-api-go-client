@@ -1078,6 +1078,13 @@ type ConnectionProfile struct {
 	//   "AURORA" - Amazon Aurora is the source instance provider.
 	//   "ALLOYDB" - AlloyDB for PostgreSQL is the source instance provider.
 	Provider string `json:"provider,omitempty"`
+	// Role: Optional. The connection profile role.
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - The role is unspecified.
+	//   "SOURCE" - The role is source.
+	//   "DESTINATION" - The role is destination.
+	Role string `json:"role,omitempty"`
 	// Sqlserver: Connection profile for a SQL Server data source.
 	Sqlserver *SqlServerConnectionProfile `json:"sqlserver,omitempty"`
 	// State: The current connection profile state (e.g. DRAFT, READY, or FAILED).

@@ -1620,6 +1620,11 @@ func (s GoogleCloudDiscoveryengineLoggingSourceLocation) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig: Configuration data for
+// advance site search.
+type GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig struct {
+}
+
 // GoogleCloudDiscoveryengineV1BatchCreateTargetSiteMetadata: Metadata related
 // to the progress of the SiteSearchEngineService.BatchCreateTargetSites
 // operation. This will be returned by the
@@ -1727,8 +1732,12 @@ type GoogleCloudDiscoveryengineV1Condition struct {
 	// ActiveTimeRange: Range of time(s) specifying when condition is active.
 	// Maximum of 10 time ranges.
 	ActiveTimeRange []*GoogleCloudDiscoveryengineV1ConditionTimeRange `json:"activeTimeRange,omitempty"`
-	// QueryTerms: Search only A list of terms to match the query on. Maximum of 10
-	// query terms.
+	// QueryRegex: Optional. Query regex to match the whole search query. Cannot be
+	// set when Condition.query_terms is set. This is currently supporting
+	// promotion use case.
+	QueryRegex string `json:"queryRegex,omitempty"`
+	// QueryTerms: Search only A list of terms to match the query on. Cannot be set
+	// when Condition.query_regex is set. Maximum of 10 query terms.
 	QueryTerms []*GoogleCloudDiscoveryengineV1ConditionQueryTerm `json:"queryTerms,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActiveTimeRange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2111,6 +2120,8 @@ func (s GoogleCloudDiscoveryengineV1CreateTargetSiteMetadata) MarshalJSON() ([]b
 // GoogleCloudDiscoveryengineV1DataStore: DataStore captures global settings
 // and configs at the DataStore level.
 type GoogleCloudDiscoveryengineV1DataStore struct {
+	// AdvancedSiteSearchConfig: Optional. Configuration for advanced site search.
+	AdvancedSiteSearchConfig *GoogleCloudDiscoveryengineV1AdvancedSiteSearchConfig `json:"advancedSiteSearchConfig,omitempty"`
 	// BillingEstimation: Output only. Data size estimation for billing.
 	BillingEstimation *GoogleCloudDiscoveryengineV1DataStoreBillingEstimation `json:"billingEstimation,omitempty"`
 	// CmekConfig: Output only. CMEK-related information for the DataStore.
@@ -2160,7 +2171,7 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	// limit of 1024 characters.
 	Name string `json:"name,omitempty"`
 	// ServingConfigDataStore: Optional. Stores serving config at DataStore level.
-	ServingConfigDataStore *GoogleCloudDiscoveryengineV1ServingConfigDataStore `json:"servingConfigDataStore,omitempty"`
+	ServingConfigDataStore *GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore `json:"servingConfigDataStore,omitempty"`
 	// SolutionTypes: The solutions that the data store enrolls. Available
 	// solutions for each industry_vertical: * `MEDIA`:
 	// `SOLUTION_TYPE_RECOMMENDATION` and `SOLUTION_TYPE_SEARCH`. * `SITE_SEARCH`:
@@ -2190,15 +2201,15 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	// data. This must be set when DataStore.content_config is set as
 	// DataStore.ContentConfig.GOOGLE_WORKSPACE.
 	WorkspaceConfig *GoogleCloudDiscoveryengineV1WorkspaceConfig `json:"workspaceConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BillingEstimation") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AdvancedSiteSearchConfig")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BillingEstimation") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdvancedSiteSearchConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2238,6 +2249,30 @@ type GoogleCloudDiscoveryengineV1DataStoreBillingEstimation struct {
 
 func (s GoogleCloudDiscoveryengineV1DataStoreBillingEstimation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1DataStoreBillingEstimation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore: Stores
+// information regarding the serving configurations at DataStore level.
+type GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore struct {
+	// DisabledForServing: If set true, the DataStore will not be available for
+	// serving search requests.
+	DisabledForServing bool `json:"disabledForServing,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisabledForServing") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DataStoreServingConfigDataStore
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3369,30 +3404,6 @@ func (s GoogleCloudDiscoveryengineV1Schema) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDiscoveryengineV1ServingConfigDataStore: Stores information
-// regarding the serving configurations at DataStore level.
-type GoogleCloudDiscoveryengineV1ServingConfigDataStore struct {
-	// DisabledForServing: If set true, the DataStore will not be available for
-	// serving search requests.
-	DisabledForServing bool `json:"disabledForServing,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisabledForServing") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1ServingConfigDataStore) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1ServingConfigDataStore
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDiscoveryengineV1SiteVerificationInfo: Verification information
 // for target sites in advanced site search.
 type GoogleCloudDiscoveryengineV1SiteVerificationInfo struct {
@@ -3758,6 +3769,33 @@ type GoogleCloudDiscoveryengineV1alphaAclConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaAclConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaAclConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaAdvancedSiteSearchConfig: Configuration
+// data for advance site search.
+type GoogleCloudDiscoveryengineV1alphaAdvancedSiteSearchConfig struct {
+	// DisableAutomaticRefresh: If set true, automatic refresh is disabled for the
+	// DataStore.
+	DisableAutomaticRefresh bool `json:"disableAutomaticRefresh,omitempty"`
+	// DisableInitialIndex: If set true, initial indexing is disabled for the
+	// DataStore.
+	DisableInitialIndex bool `json:"disableInitialIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisableAutomaticRefresh") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisableAutomaticRefresh") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaAdvancedSiteSearchConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaAdvancedSiteSearchConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4938,7 +4976,7 @@ type GoogleCloudDiscoveryengineV1alphaAnswerStepActionObservationSearchResult st
 	SnippetInfo []*GoogleCloudDiscoveryengineV1alphaAnswerStepActionObservationSearchResultSnippetInfo `json:"snippetInfo,omitempty"`
 	// StructData: Data representation. The structured JSON data for the document.
 	// It's populated from the struct data from the Document, or the Chunk in
-	// search result. .
+	// search result.
 	StructData googleapi.RawMessage `json:"structData,omitempty"`
 	// Title: Title.
 	Title string `json:"title,omitempty"`
@@ -5198,7 +5236,7 @@ func (s GoogleCloudDiscoveryengineV1alphaBatchGetDocumentsMetadataResponseDocume
 // adataMatcherValue: The value of the matcher that was used to match the
 // Document.
 type GoogleCloudDiscoveryengineV1alphaBatchGetDocumentsMetadataResponseDocumentMetadataMatcherValue struct {
-	// FhirResource: Required. Format:
+	// FhirResource: Format:
 	// projects/{project}/locations/{location}/datasets/{dataset}/fhirStores/{fhir_s
 	// tore}/fhir/{resource_type}/{fhir_resource_id}
 	FhirResource string `json:"fhirResource,omitempty"`
@@ -5450,8 +5488,8 @@ func (s GoogleCloudDiscoveryengineV1alphaBigtableSource) MarshalJSON() ([]byte, 
 // GoogleCloudDiscoveryengineV1alphaCheckGroundingRequest: Request message for
 // GroundedGenerationService.CheckGrounding method.
 type GoogleCloudDiscoveryengineV1alphaCheckGroundingRequest struct {
-	// AnswerCandidate: Answer candidate to check. Can have a maximum length of
-	// 1024 characters.
+	// AnswerCandidate: Answer candidate to check. It can have a maximum length of
+	// 4096 tokens.
 	AnswerCandidate string `json:"answerCandidate,omitempty"`
 	// Facts: List of facts for the grounding check. We support up to 200 facts.
 	Facts []*GoogleCloudDiscoveryengineV1alphaGroundingFact `json:"facts,omitempty"`
@@ -5493,7 +5531,7 @@ func (s GoogleCloudDiscoveryengineV1alphaCheckGroundingRequest) MarshalJSON() ([
 type GoogleCloudDiscoveryengineV1alphaCheckGroundingResponse struct {
 	// CitedChunks: List of facts cited across all claims in the answer candidate.
 	// These are derived from the facts supplied in the request.
-	CitedChunks []*GoogleCloudDiscoveryengineV1alphaFactChunk `json:"citedChunks,omitempty"`
+	CitedChunks []*GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseFactChunk `json:"citedChunks,omitempty"`
 	// Claims: Claim texts and citation info across all claims in the answer
 	// candidate.
 	Claims []*GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseClaim `json:"claims,omitempty"`
@@ -5575,6 +5613,34 @@ type GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseClaim struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseClaim) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseClaim
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseFactChunk: Fact chunk
+// for grounding check.
+type GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseFactChunk struct {
+	// ChunkText: Text content of the fact chunk. Can be at most 10K characters
+	// long.
+	ChunkText string `json:"chunkText,omitempty"`
+	// Source: Source from which this fact chunk was retrieved. For a fact chunk
+	// retrieved from inline facts, this field will contain the index of the
+	// specific fact from which this chunk was retrieved.
+	Source string `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChunkText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChunkText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseFactChunk) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCheckGroundingResponseFactChunk
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6125,8 +6191,12 @@ type GoogleCloudDiscoveryengineV1alphaCondition struct {
 	// ActiveTimeRange: Range of time(s) specifying when condition is active.
 	// Maximum of 10 time ranges.
 	ActiveTimeRange []*GoogleCloudDiscoveryengineV1alphaConditionTimeRange `json:"activeTimeRange,omitempty"`
-	// QueryTerms: Search only A list of terms to match the query on. Maximum of 10
-	// query terms.
+	// QueryRegex: Optional. Query regex to match the whole search query. Cannot be
+	// set when Condition.query_terms is set. This is currently supporting
+	// promotion use case.
+	QueryRegex string `json:"queryRegex,omitempty"`
+	// QueryTerms: Search only A list of terms to match the query on. Cannot be set
+	// when Condition.query_regex is set. Maximum of 10 query terms.
 	QueryTerms []*GoogleCloudDiscoveryengineV1alphaConditionQueryTerm `json:"queryTerms,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActiveTimeRange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6815,7 +6885,7 @@ func (s GoogleCloudDiscoveryengineV1alphaCustomFineTuningSpec) MarshalJSON() ([]
 // GoogleCloudDiscoveryengineV1alphaCustomTuningModel: Metadata that describes
 // a custom tuned model.
 type GoogleCloudDiscoveryengineV1alphaCustomTuningModel struct {
-	// CreateTime: Timestamp the Model was created at.
+	// CreateTime: Deprecated: Timestamp the Model was created at.
 	CreateTime string `json:"createTime,omitempty"`
 	// DisplayName: The display name of the model.
 	DisplayName string `json:"displayName,omitempty"`
@@ -6877,6 +6947,8 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	// is only supported in `GENERIC` industry vertical with non-`PUBLIC_WEBSITE`
 	// content config.
 	AclEnabled bool `json:"aclEnabled,omitempty"`
+	// AdvancedSiteSearchConfig: Optional. Configuration for advanced site search.
+	AdvancedSiteSearchConfig *GoogleCloudDiscoveryengineV1alphaAdvancedSiteSearchConfig `json:"advancedSiteSearchConfig,omitempty"`
 	// BillingEstimation: Output only. Data size estimation for billing.
 	BillingEstimation *GoogleCloudDiscoveryengineV1alphaDataStoreBillingEstimation `json:"billingEstimation,omitempty"`
 	// CmekConfig: Output only. CMEK-related information for the DataStore.
@@ -6933,7 +7005,7 @@ type GoogleCloudDiscoveryengineV1alphaDataStore struct {
 	// Language Query Understanding.
 	NaturalLanguageQueryUnderstandingConfig *GoogleCloudDiscoveryengineV1alphaNaturalLanguageQueryUnderstandingConfig `json:"naturalLanguageQueryUnderstandingConfig,omitempty"`
 	// ServingConfigDataStore: Optional. Stores serving config at DataStore level.
-	ServingConfigDataStore *GoogleCloudDiscoveryengineV1alphaServingConfigDataStore `json:"servingConfigDataStore,omitempty"`
+	ServingConfigDataStore *GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore `json:"servingConfigDataStore,omitempty"`
 	// SolutionTypes: The solutions that the data store enrolls. Available
 	// solutions for each industry_vertical: * `MEDIA`:
 	// `SOLUTION_TYPE_RECOMMENDATION` and `SOLUTION_TYPE_SEARCH`. * `SITE_SEARCH`:
@@ -7014,6 +7086,30 @@ type GoogleCloudDiscoveryengineV1alphaDataStoreBillingEstimation struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDataStoreBillingEstimation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDataStoreBillingEstimation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore: Stores
+// information regarding the serving configurations at DataStore level.
+type GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore struct {
+	// DisabledForServing: If set true, the DataStore will not be available for
+	// serving search requests.
+	DisabledForServing bool `json:"disabledForServing,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisabledForServing") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8331,37 +8427,6 @@ type GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpecQuerySetSpec struc
 
 func (s GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpecQuerySetSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaEvaluationEvaluationSpecQuerySetSpec
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1alphaFactChunk: Fact Chunk.
-type GoogleCloudDiscoveryengineV1alphaFactChunk struct {
-	// ChunkText: Text content of the fact chunk. Can be at most 10K characters
-	// long.
-	ChunkText string `json:"chunkText,omitempty"`
-	// Index: The index of this chunk. Currently, only used for the streaming mode.
-	Index int64 `json:"index,omitempty"`
-	// Source: Source from which this fact chunk was retrieved. If it was retrieved
-	// from the GroundingFacts provided in the request then this field will contain
-	// the index of the specific fact from which this chunk was retrieved.
-	Source string `json:"source,omitempty"`
-	// SourceMetadata: More fine-grained information for the source reference.
-	SourceMetadata map[string]string `json:"sourceMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChunkText") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChunkText") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1alphaFactChunk) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1alphaFactChunk
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11148,10 +11213,12 @@ func (s GoogleCloudDiscoveryengineV1alphaRecommendResponseRecommendationResult) 
 type GoogleCloudDiscoveryengineV1alphaRecrawlUrisMetadata struct {
 	// CreateTime: Operation create time.
 	CreateTime string `json:"createTime,omitempty"`
-	// InvalidUris: Unique URIs in the request that don't match any TargetSite in
-	// the DataStore, only match TargetSites that haven't been fully indexed, or
-	// match a TargetSite with type EXCLUDE.
+	// InvalidUris: Unique URIs in the request that have invalid format. Sample
+	// limited to 1000.
 	InvalidUris []string `json:"invalidUris,omitempty"`
+	// InvalidUrisCount: Total number of unique URIs in the request that have
+	// invalid format.
+	InvalidUrisCount int64 `json:"invalidUrisCount,omitempty"`
 	// PendingCount: Total number of URIs that have yet to be crawled.
 	PendingCount int64 `json:"pendingCount,omitempty"`
 	// QuotaExceededCount: Total number of URIs that were rejected due to
@@ -11162,6 +11229,13 @@ type GoogleCloudDiscoveryengineV1alphaRecrawlUrisMetadata struct {
 	// UpdateTime: Operation last update time. If the operation is done, this is
 	// also the finish time.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// UrisNotMatchingTargetSites: Unique URIs in the request that don't match any
+	// TargetSite in the DataStore, only match TargetSites that haven't been fully
+	// indexed, or match a TargetSite with type EXCLUDE. Sample limited to 1000.
+	UrisNotMatchingTargetSites []string `json:"urisNotMatchingTargetSites,omitempty"`
+	// UrisNotMatchingTargetSitesCount: Total number of URIs that don't match any
+	// TargetSites.
+	UrisNotMatchingTargetSitesCount int64 `json:"urisNotMatchingTargetSitesCount,omitempty"`
 	// ValidUrisCount: Total number of unique URIs in the request that are not in
 	// invalid_uris.
 	ValidUrisCount int64 `json:"validUrisCount,omitempty"`
@@ -13946,30 +14020,6 @@ func (s GoogleCloudDiscoveryengineV1alphaServingConfig) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDiscoveryengineV1alphaServingConfigDataStore: Stores information
-// regarding the serving configurations at DataStore level.
-type GoogleCloudDiscoveryengineV1alphaServingConfigDataStore struct {
-	// DisabledForServing: If set true, the DataStore will not be available for
-	// serving search requests.
-	DisabledForServing bool `json:"disabledForServing,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisabledForServing") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1alphaServingConfigDataStore) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1alphaServingConfigDataStore
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDiscoveryengineV1alphaServingConfigGenericConfig: Specifies the
 // configurations needed for Generic Discovery.Currently we support: *
 // `content_search_spec`: configuration for generic content search.
@@ -14017,6 +14067,10 @@ type GoogleCloudDiscoveryengineV1alphaServingConfigMediaConfig struct {
 	// ContentWatchedSecondsThreshold: Specifies the content watched minutes
 	// threshold for demotion.
 	ContentWatchedSecondsThreshold float64 `json:"contentWatchedSecondsThreshold,omitempty"`
+	// DemoteContentWatchedPastDays: Optional. Specifies the number of days to look
+	// back for demoting watched content. If set to zero or unset, defaults to the
+	// maximum of 365 days.
+	DemoteContentWatchedPastDays int64 `json:"demoteContentWatchedPastDays,omitempty"`
 	// DemotionEventType: Specifies the event type used for demoting recommendation
 	// result. Currently supported values: * `view-item`: Item viewed. *
 	// `media-play`: Start/resume watching a video, playing a song, etc. *
@@ -15023,6 +15077,11 @@ func (s GoogleCloudDiscoveryengineV1alphaWorkspaceConfig) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig: Configuration data
+// for advance site search.
+type GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig struct {
+}
+
 // GoogleCloudDiscoveryengineV1betaBatchCreateTargetSiteMetadata: Metadata
 // related to the progress of the
 // SiteSearchEngineService.BatchCreateTargetSites operation. This will be
@@ -15130,8 +15189,12 @@ type GoogleCloudDiscoveryengineV1betaCondition struct {
 	// ActiveTimeRange: Range of time(s) specifying when condition is active.
 	// Maximum of 10 time ranges.
 	ActiveTimeRange []*GoogleCloudDiscoveryengineV1betaConditionTimeRange `json:"activeTimeRange,omitempty"`
-	// QueryTerms: Search only A list of terms to match the query on. Maximum of 10
-	// query terms.
+	// QueryRegex: Optional. Query regex to match the whole search query. Cannot be
+	// set when Condition.query_terms is set. This is currently supporting
+	// promotion use case.
+	QueryRegex string `json:"queryRegex,omitempty"`
+	// QueryTerms: Search only A list of terms to match the query on. Cannot be set
+	// when Condition.query_regex is set. Maximum of 10 query terms.
 	QueryTerms []*GoogleCloudDiscoveryengineV1betaConditionQueryTerm `json:"queryTerms,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActiveTimeRange") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -15519,7 +15582,7 @@ func (s GoogleCloudDiscoveryengineV1betaCreateTargetSiteMetadata) MarshalJSON() 
 // GoogleCloudDiscoveryengineV1betaCustomTuningModel: Metadata that describes a
 // custom tuned model.
 type GoogleCloudDiscoveryengineV1betaCustomTuningModel struct {
-	// CreateTime: Timestamp the Model was created at.
+	// CreateTime: Deprecated: Timestamp the Model was created at.
 	CreateTime string `json:"createTime,omitempty"`
 	// DisplayName: The display name of the model.
 	DisplayName string `json:"displayName,omitempty"`
@@ -15573,6 +15636,8 @@ func (s GoogleCloudDiscoveryengineV1betaCustomTuningModel) MarshalJSON() ([]byte
 // GoogleCloudDiscoveryengineV1betaDataStore: DataStore captures global
 // settings and configs at the DataStore level.
 type GoogleCloudDiscoveryengineV1betaDataStore struct {
+	// AdvancedSiteSearchConfig: Optional. Configuration for advanced site search.
+	AdvancedSiteSearchConfig *GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig `json:"advancedSiteSearchConfig,omitempty"`
 	// BillingEstimation: Output only. Data size estimation for billing.
 	BillingEstimation *GoogleCloudDiscoveryengineV1betaDataStoreBillingEstimation `json:"billingEstimation,omitempty"`
 	// CmekConfig: Output only. CMEK-related information for the DataStore.
@@ -15627,7 +15692,7 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	// Language Query Understanding.
 	NaturalLanguageQueryUnderstandingConfig *GoogleCloudDiscoveryengineV1betaNaturalLanguageQueryUnderstandingConfig `json:"naturalLanguageQueryUnderstandingConfig,omitempty"`
 	// ServingConfigDataStore: Optional. Stores serving config at DataStore level.
-	ServingConfigDataStore *GoogleCloudDiscoveryengineV1betaServingConfigDataStore `json:"servingConfigDataStore,omitempty"`
+	ServingConfigDataStore *GoogleCloudDiscoveryengineV1betaDataStoreServingConfigDataStore `json:"servingConfigDataStore,omitempty"`
 	// SolutionTypes: The solutions that the data store enrolls. Available
 	// solutions for each industry_vertical: * `MEDIA`:
 	// `SOLUTION_TYPE_RECOMMENDATION` and `SOLUTION_TYPE_SEARCH`. * `SITE_SEARCH`:
@@ -15657,15 +15722,15 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	// data. This must be set when DataStore.content_config is set as
 	// DataStore.ContentConfig.GOOGLE_WORKSPACE.
 	WorkspaceConfig *GoogleCloudDiscoveryengineV1betaWorkspaceConfig `json:"workspaceConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BillingEstimation") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AdvancedSiteSearchConfig")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BillingEstimation") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AdvancedSiteSearchConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -15705,6 +15770,30 @@ type GoogleCloudDiscoveryengineV1betaDataStoreBillingEstimation struct {
 
 func (s GoogleCloudDiscoveryengineV1betaDataStoreBillingEstimation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaDataStoreBillingEstimation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaDataStoreServingConfigDataStore: Stores
+// information regarding the serving configurations at DataStore level.
+type GoogleCloudDiscoveryengineV1betaDataStoreServingConfigDataStore struct {
+	// DisabledForServing: If set true, the DataStore will not be available for
+	// serving search requests.
+	DisabledForServing bool `json:"disabledForServing,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisabledForServing") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDataStoreServingConfigDataStore) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDataStoreServingConfigDataStore
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -18356,30 +18445,6 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestSpellCorrectionSpec struct {
 
 func (s GoogleCloudDiscoveryengineV1betaSearchRequestSpellCorrectionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestSpellCorrectionSpec
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1betaServingConfigDataStore: Stores information
-// regarding the serving configurations at DataStore level.
-type GoogleCloudDiscoveryengineV1betaServingConfigDataStore struct {
-	// DisabledForServing: If set true, the DataStore will not be available for
-	// serving search requests.
-	DisabledForServing bool `json:"disabledForServing,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisabledForServing") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisabledForServing") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1betaServingConfigDataStore) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1betaServingConfigDataStore
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

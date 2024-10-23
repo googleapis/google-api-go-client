@@ -7235,8 +7235,6 @@ type GoogleCloudRetailV2alphaModelModelFeaturesConfig struct {
 	// FrequentlyBoughtTogetherConfig: Additional configs for
 	// frequently-bought-together models.
 	FrequentlyBoughtTogetherConfig *GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig `json:"frequentlyBoughtTogetherConfig,omitempty"`
-	// LlmEmbeddingConfig: Optional. LLM embedding config to use for this model.
-	LlmEmbeddingConfig *GoogleCloudRetailV2alphaModelModelFeaturesConfigLlmEmbeddingConfig `json:"llmEmbeddingConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "FrequentlyBoughtTogetherConfig") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -7253,31 +7251,6 @@ type GoogleCloudRetailV2alphaModelModelFeaturesConfig struct {
 
 func (s GoogleCloudRetailV2alphaModelModelFeaturesConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRetailV2alphaModelModelFeaturesConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRetailV2alphaModelModelFeaturesConfigLlmEmbeddingConfig: Config
-// that turns on usage of llm embeddings as features to the model. Embeddings
-// leverage unstructured text fields like description and title.
-type GoogleCloudRetailV2alphaModelModelFeaturesConfigLlmEmbeddingConfig struct {
-	// LlmEmbeddingVersion: Optional. The LLM embedding version to use. Currently
-	// only `v0` is supported. If not specified, feature will not be turned on.
-	LlmEmbeddingVersion string `json:"llmEmbeddingVersion,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "LlmEmbeddingVersion") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LlmEmbeddingVersion") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudRetailV2alphaModelModelFeaturesConfigLlmEmbeddingConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRetailV2alphaModelModelFeaturesConfigLlmEmbeddingConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

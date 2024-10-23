@@ -2231,6 +2231,9 @@ type Policy struct {
 	// MaintenanceWindow: The maintenance window defining when apps running in the
 	// foreground should be updated.
 	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
+	// PolicyId: An identifier for the policy that will be passed with the app
+	// install feedback sent from the Play Store.
+	PolicyId string `json:"policyId,omitempty"`
 	// ProductAvailabilityPolicy: The availability granted to the device for the
 	// specified products. "all" gives the device access to all products,
 	// regardless of approval status. "all" does not enable automatic visibility of

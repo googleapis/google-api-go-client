@@ -169,6 +169,7 @@ func New(client *http.Client) (*Service, error) {
 	s.InboundSamlSsoProfiles = NewInboundSamlSsoProfilesService(s)
 	s.InboundSsoAssignments = NewInboundSsoAssignmentsService(s)
 	s.OrgUnits = NewOrgUnitsService(s)
+	s.Policies = NewPoliciesService(s)
 	return s, nil
 }
 
@@ -188,6 +189,8 @@ type Service struct {
 	InboundSsoAssignments *InboundSsoAssignmentsService
 
 	OrgUnits *OrgUnitsService
+
+	Policies *PoliciesService
 }
 
 func (s *Service) userAgent() string {
@@ -320,6 +323,15 @@ func NewOrgUnitsMembershipsService(s *Service) *OrgUnitsMembershipsService {
 }
 
 type OrgUnitsMembershipsService struct {
+	s *Service
+}
+
+func NewPoliciesService(s *Service) *PoliciesService {
+	rs := &PoliciesService{s: s}
+	return rs
+}
+
+type PoliciesService struct {
 	s *Service
 }
 
@@ -2898,6 +2910,34 @@ func (s ListOrgMembershipsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListPoliciesResponse: The response message for PoliciesService.ListPolicies.
+type ListPoliciesResponse struct {
+	// NextPageToken: The pagination token to retrieve the next page of results. If
+	// this field is empty, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Policies: The results
+	Policies []*Policy `json:"policies,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPoliciesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListUserInvitationsResponse: Response message for UserInvitation listing
 // request.
 type ListUserInvitationsResponse struct {
@@ -3484,6 +3524,110 @@ func (s OrgMembership) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Policy: A Policy resource binds an instance of a single Setting with the
+// scope of a PolicyQuery. The Setting instance will be applied to all entities
+// that satisfy the query.
+type Policy struct {
+	// Customer: Immutable. Customer that the Policy belongs to. The value is in
+	// the format 'customers/{customerId}'. The `customerId` must begin with "C" To
+	// find your customer ID in Admin Console see
+	// https://support.google.com/a/answer/10070793.
+	Customer string `json:"customer,omitempty"`
+	// Name: Output only. Identifier. The resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the Policy. Format:
+	// policies/{policy}.
+	Name string `json:"name,omitempty"`
+	// PolicyQuery: Required. The PolicyQuery the Setting applies to.
+	PolicyQuery *PolicyQuery `json:"policyQuery,omitempty"`
+	// Setting: Required. The Setting configured by this Policy.
+	Setting *Setting `json:"setting,omitempty"`
+	// Type: Output only. The type of the policy.
+	//
+	// Possible values:
+	//   "POLICY_TYPE_UNSPECIFIED" - Unspecified policy type.
+	//   "SYSTEM" - Policy type denoting the system-configured policies.
+	//   "ADMIN" - Policy type denoting the admin-configurable policies.
+	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Customer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Customer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Policy) MarshalJSON() ([]byte, error) {
+	type NoMethod Policy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyQuery: PolicyQuery
+type PolicyQuery struct {
+	// Group: Immutable. The group that the query applies to. This field is only
+	// set if there is a single value for group that satisfies all clauses of the
+	// query. If no group applies, this will be the empty string.
+	Group string `json:"group,omitempty"`
+	// OrgUnit: Required. Immutable. Non-empty default. The OrgUnit the query
+	// applies to. This field is only set if there is a single value for org_unit
+	// that satisfies all clauses of the query.
+	OrgUnit string `json:"orgUnit,omitempty"`
+	// Query: Immutable. The CEL query that defines which entities the Policy
+	// applies to (ex. a User entity). For details about CEL see
+	// https://opensource.google.com/projects/cel. The OrgUnits the Policy applies
+	// to are represented by a clause like so: entity.org_units.exists(org_unit,
+	// org_unit.org_unit_id == orgUnitId('{orgUnitId}')) The Group the Policy
+	// applies to are represented by a clause like so: entity.groups.exists(group,
+	// group.group_id == groupId('{groupId}')) The Licenses the Policy applies to
+	// are represented by a clause like so: entity.licenses.exists(license, license
+	// in ['/product/{productId}/sku/{skuId}']) The above clauses can be present in
+	// any combination, and used in conjunction with the &&, || and ! operators.
+	// The org_unit and group fields below are helper fields that contain the
+	// corresponding value(s) as the query to make the query easier to use.
+	Query string `json:"query,omitempty"`
+	// SortOrder: Output only. The decimal sort order of this PolicyQuery. The
+	// value is relative to all other policies with the same setting type within
+	// the whole customer. (there are no duplicates within this set).
+	SortOrder float64 `json:"sortOrder,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Group") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Group") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *PolicyQuery) UnmarshalJSON(data []byte) error {
+	type NoMethod PolicyQuery
+	var s1 struct {
+		SortOrder gensupport.JSONFloat64 `json:"sortOrder"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SortOrder = float64(s1.SortOrder)
+	return nil
+}
+
 // PosixGroup: POSIX Group definition to represent a group in a POSIX compliant
 // system. Caution: POSIX groups are deprecated. As of September 26, 2024, you
 // can no longer create new POSIX groups. For more information, see
@@ -3826,6 +3970,30 @@ func (s SecuritySettings) MarshalJSON() ([]byte, error) {
 // SendUserInvitationRequest: A request to send email for inviting target user
 // corresponding to the UserInvitation.
 type SendUserInvitationRequest struct {
+}
+
+// Setting: Setting
+type Setting struct {
+	// Type: Required. Immutable. The type of the Setting. .
+	Type string `json:"type,omitempty"`
+	// Value: Required. The value of the Setting.
+	Value googleapi.RawMessage `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Setting) MarshalJSON() ([]byte, error) {
+	type NoMethod Setting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SignInBehavior: Controls sign-in behavior.
@@ -11220,4 +11388,269 @@ func (c *OrgUnitsMembershipsMoveCall) Do(opts ...googleapi.CallOption) (*Operati
 		return nil, err
 	}
 	return ret, nil
+}
+
+type PoliciesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a Policy
+//
+// - name: The name of the policy to retrieve. Format: "policies/{policy}".
+func (r *PoliciesService) Get(name string) *PoliciesGetCall {
+	c := &PoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PoliciesGetCall) Fields(s ...googleapi.Field) *PoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PoliciesGetCall) IfNoneMatch(entityTag string) *PoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PoliciesGetCall) Context(ctx context.Context) *PoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.policies.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *PoliciesGetCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type PoliciesListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List Policies
+func (r *PoliciesService) List() *PoliciesListCall {
+	c := &PoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// Filter sets the optional parameter "filter": A CEL expression for filtering
+// the results. Policies can be filtered by application with this expression:
+// setting.name = 'settings/gmail.*' Policies can be filtered by setting type
+// with this expression: setting.name = '*.service_status' A maximum of one of
+// the above setting.name clauses can be used. Policies can be filtered by
+// customer with this expression: customer = "customers/{customer}" Where
+// `customer` is the `id` from the Admin SDK `Customer` resource
+// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers).
+// You may use `customers/my_customer` to specify your own organization. When
+// no customer is mentioned it will be default to customers/my_customer. A
+// maximum of one customer clause can be used. The above clauses can only be
+// combined together in a single filter expression with the AND operator.
+func (c *PoliciesListCall) Filter(filter string) *PoliciesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return. The service may return fewer than this value. If omitted
+// (or defaulted to zero) the server will default to 50. The maximum allowed
+// value is 100, though requests with page_size greater than that will be
+// interpreted as 100.
+func (c *PoliciesListCall) PageSize(pageSize int64) *PoliciesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The pagination token
+// received from a prior call to PoliciesService.ListPolicies to retrieve the
+// next page of results. When paginating, all other parameters provided to
+// `ListPoliciesRequest` must match the call that provided the page token.
+func (c *PoliciesListCall) PageToken(pageToken string) *PoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PoliciesListCall) Fields(s ...googleapi.Field) *PoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PoliciesListCall) IfNoneMatch(entityTag string) *PoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PoliciesListCall) Context(ctx context.Context) *PoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/policies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.policies.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPoliciesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PoliciesListCall) Do(opts ...googleapi.CallOption) (*ListPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PoliciesListCall) Pages(ctx context.Context, f func(*ListPoliciesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

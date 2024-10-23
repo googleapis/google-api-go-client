@@ -224,14 +224,7 @@ type AdmissionRule struct {
 	// attestors listed in `require_attestations_by` have valid attestations for
 	// all of the images in the pod spec.
 	//   "ALWAYS_DENY" - This rule denies all pod creations.
-	EvaluationMode string `json:"evaluationMode,omitempty"`
-	// RequireAttestationsBy: Optional. The resource names of the attestors that
-	// must attest to a container image, in the format `projects/*/attestors/*`.
-	// Each attestor must exist before a policy can reference it. To add an
-	// attestor to a policy the principal issuing the policy change request must be
-	// able to read the attestor resource. Note: this field must be non-empty when
-	// the evaluation_mode field specifies REQUIRE_ATTESTATION, otherwise it must
-	// be empty.
+	EvaluationMode        string   `json:"evaluationMode,omitempty"`
 	RequireAttestationsBy []string `json:"requireAttestationsBy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnforcementMode") to
 	// unconditionally include in API requests. By default, fields with empty or

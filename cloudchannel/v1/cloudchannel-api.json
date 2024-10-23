@@ -2183,7 +2183,7 @@
       }
     }
   },
-  "revision": "20240913",
+  "revision": "20241020",
   "rootUrl": "https://cloudchannel.googleapis.com/",
   "schemas": {
     "GoogleCloudChannelV1ActivateEntitlementRequest": {
@@ -5090,6 +5090,10 @@
             "$ref": "GoogleCloudChannelV1alpha1Parameter"
           },
           "type": "array"
+        },
+        "priceReferenceId": {
+          "description": "Optional. Price reference ID for the offer. Optional field only for offers that require additional price information. Used to guarantee that the pricing is consistent between quoting the offer and placing the order. Yet to be implemented: this field is currently not evaluated in the API if populated in a request.",
+          "type": "string"
         },
         "provisionedService": {
           "$ref": "GoogleCloudChannelV1alpha1ProvisionedService",

@@ -456,6 +456,9 @@ type AddonsConfig struct {
 	// whether the addon is enabled or not on the Master, it does not track whether
 	// network policy is enabled for the nodes.
 	NetworkPolicyConfig *NetworkPolicyConfig `json:"networkPolicyConfig,omitempty"`
+	// ParallelstoreCsiDriverConfig: Configuration for the Cloud Storage
+	// Parallelstore CSI driver.
+	ParallelstoreCsiDriverConfig *ParallelstoreCsiDriverConfig `json:"parallelstoreCsiDriverConfig,omitempty"`
 	// RayOperatorConfig: Optional. Configuration for Ray Operator addon.
 	RayOperatorConfig *RayOperatorConfig `json:"rayOperatorConfig,omitempty"`
 	// StatefulHaConfig: Optional. Configuration for the StatefulHA add-on.
@@ -4991,6 +4994,30 @@ func (s OperationProgress) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ParallelstoreCsiDriverConfig: Configuration for the Cloud Storage
+// Parallelstore CSI driver.
+type ParallelstoreCsiDriverConfig struct {
+	// Enabled: Whether the Cloud Storage Parallelstore CSI driver is enabled for
+	// this cluster.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ParallelstoreCsiDriverConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ParallelstoreCsiDriverConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ParentProductConfig: ParentProductConfig is the configuration of the parent
 // product of the cluster. This field is used by Google internal products that
 // are built on top of a GKE cluster and take the ownership of the cluster.
@@ -5484,6 +5511,9 @@ type ReleaseChannelConfig struct {
 	// DefaultVersion: The default version for newly created clusters on the
 	// channel.
 	DefaultVersion string `json:"defaultVersion,omitempty"`
+	// UpgradeTargetVersion: The auto upgrade target version for clusters on the
+	// channel.
+	UpgradeTargetVersion string `json:"upgradeTargetVersion,omitempty"`
 	// ValidVersions: List of valid versions for the channel.
 	ValidVersions []string `json:"validVersions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Channel") to unconditionally

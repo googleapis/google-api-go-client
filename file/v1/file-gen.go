@@ -476,15 +476,18 @@ func (s FileShareConfig) MarshalJSON() ([]byte, error) {
 
 // FixedIOPS: Fixed IOPS (input/output operations per second) parameters.
 type FixedIOPS struct {
-	// MaxReadIops: Required. Maximum raw read IOPS.
+	// MaxIops: Required. Maximum IOPS.
+	MaxIops int64 `json:"maxIops,omitempty,string"`
+	// MaxReadIops: Optional. Deprecated: `max_iops` should be used instead of this
+	// parameter. Maximum raw read IOPS.
 	MaxReadIops int64 `json:"maxReadIops,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "MaxReadIops") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "MaxIops") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MaxReadIops") to include in API
+	// NullFields is a list of field names (e.g. "MaxIops") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -876,17 +879,20 @@ func (s GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata) MarshalJSON(
 
 // IOPSPerTB: IOPS per TB. Filestore defines TB as 1024^4 bytes (TiB).
 type IOPSPerTB struct {
-	// MaxReadIopsPerTb: Required. Maximum read IOPS per TiB.
+	// MaxIopsPerTb: Required. Maximum IOPS per TiB.
+	MaxIopsPerTb int64 `json:"maxIopsPerTb,omitempty,string"`
+	// MaxReadIopsPerTb: Optional. Deprecated: `max_iops_per_tb` should be used
+	// instead of this parameter. Maximum read IOPS per TiB.
 	MaxReadIopsPerTb int64 `json:"maxReadIopsPerTb,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "MaxReadIopsPerTb") to
+	// ForceSendFields is a list of field names (e.g. "MaxIopsPerTb") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MaxReadIopsPerTb") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "MaxIopsPerTb") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

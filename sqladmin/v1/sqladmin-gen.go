@@ -4044,6 +4044,8 @@ type SqlExternalSyncSettingError struct {
 	// tables with the FULL or NOTHING replica identity. Before starting your
 	// migration, either remove the identity or change it to DEFAULT. Note that
 	// this is an error and will block the migration.
+	//   "SELECTED_OBJECTS_NOT_EXIST_ON_SOURCE" - The selected objects don't exist
+	// on the source instance.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Detail") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6398,7 +6400,8 @@ type InstancesListServerCertificatesCall struct {
 // certificate authorities (CAs) for the specified instance. There can be up to
 // three sets of certs listed: the certificate that is currently in use, a
 // future that has been added but not yet used to sign a certificate, and a
-// certificate that has been rotated out.
+// certificate that has been rotated out. For instances not using Certificate
+// Authority Service (CAS) server CA, use ListServerCas instead.
 //
 // - instance: Cloud SQL instance ID. This does not include the project ID.
 // - project: Project ID of the project that contains the instance.

@@ -10054,9 +10054,8 @@ func (r *ProjectsNotificationChannelsService) Delete(name string) *ProjectsNotif
 
 // Force sets the optional parameter "force": If true, the notification channel
 // will be deleted regardless of its use in alert policies (the policies will
-// be updated to remove the channel). If false, channels that are still
-// referenced by an existing alerting policy will fail to be deleted in a
-// delete operation.
+// be updated to remove the channel). If false, this operation will fail if the
+// notification channel is referenced by existing alerting policies.
 func (c *ProjectsNotificationChannelsDeleteCall) Force(force bool) *ProjectsNotificationChannelsDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c

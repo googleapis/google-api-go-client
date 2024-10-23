@@ -4162,6 +4162,12 @@ type GoogleCloudChannelV1alpha1Entitlement struct {
 	// Google Cloud billing subaccounts, the following Parameter may be accepted as
 	// input: - display_name: The display name of the billing subaccount.
 	Parameters []*GoogleCloudChannelV1alpha1Parameter `json:"parameters,omitempty"`
+	// PriceReferenceId: Optional. Price reference ID for the offer. Optional field
+	// only for offers that require additional price information. Used to guarantee
+	// that the pricing is consistent between quoting the offer and placing the
+	// order. Yet to be implemented: this field is currently not evaluated in the
+	// API if populated in a request.
+	PriceReferenceId string `json:"priceReferenceId,omitempty"`
 	// ProvisionedService: Output only. Service provisioning details for the
 	// entitlement.
 	ProvisionedService *GoogleCloudChannelV1alpha1ProvisionedService `json:"provisionedService,omitempty"`

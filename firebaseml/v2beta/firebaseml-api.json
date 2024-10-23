@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20241010",
+  "revision": "20241021",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -1570,6 +1570,7 @@
           "type": "array"
         },
         "similarityTopK": {
+          "deprecated": true,
           "description": "Optional. Number of top k results to return from the selected corpora.",
           "format": "int32",
           "type": "integer"

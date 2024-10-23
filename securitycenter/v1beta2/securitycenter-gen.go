@@ -1020,44 +1020,6 @@ func (s BackupDisasterRecovery) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CelPolicySpec: YAML-based rule that uses CEL, which supports the declaration
-// of variables and a filtering predicate. A vulnerable resource is emitted if
-// the evaluation is false. Given: 1) the resource types as: - resource_types:
-// "compute.googleapis.com/Instance" - resource_types:
-// "compute.googleapis.com/Firewall" 2) the CEL policy spec as: name:
-// bad_instance resource_filters: - name: instance resource_type:
-// compute.googleapis.com/Instance filter: > instance.status == 'RUNNING' &&
-// 'public' in instance.tags.items - name: firewall resource_type:
-// compute.googleapis.com/Firewall filter: > firewall.direction == 'INGRESS' &&
-// !firewall.disabled && firewall.allowed.exists(rule,
-// rule.IPProtocol.upperAscii() in ['TCP', 'ALL'] && rule.ports.exists(port,
-// network.portsInRange(port, '11-256'))) rule: match: - predicate: >
-// instance.networkInterfaces.exists(net, firewall.network == net.network)
-// output: > {'message': 'Compute instance with publicly accessible ports',
-// 'instance': instance.name} Users are able to join resource types together
-// using the exact format as Kubernetes Validating Admission policies.
-type CelPolicySpec struct {
-	// Spec: The CEL policy to evaluate to produce findings. A finding is generated
-	// when the policy validation evaluates to false.
-	Spec string `json:"spec,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Spec") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Spec") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s CelPolicySpec) MarshalJSON() ([]byte, error) {
-	type NoMethod CelPolicySpec
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // CloudArmor: Fields related to Google Cloud Armor findings.
 type CloudArmor struct {
 	// AdaptiveProtection: Information about potential Layer 7 DDoS attacks
@@ -2606,8 +2568,6 @@ type GoogleCloudSecuritycenterV1BulkMuteFindingsResponse struct {
 // configuration to create custom detectors that generate custom findings for
 // resources that you specify.
 type GoogleCloudSecuritycenterV1CustomConfig struct {
-	// CelPolicy: The CEL policy spec attached to the custom module.
-	CelPolicy *CelPolicySpec `json:"celPolicy,omitempty"`
 	// CustomOutput: Custom output properties.
 	CustomOutput *GoogleCloudSecuritycenterV1CustomOutputSpec `json:"customOutput,omitempty"`
 	// Description: Text that describes the vulnerability or misconfiguration that
@@ -2635,13 +2595,13 @@ type GoogleCloudSecuritycenterV1CustomConfig struct {
 	//   "MEDIUM" - Medium severity.
 	//   "LOW" - Low severity.
 	Severity string `json:"severity,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CelPolicy") to
+	// ForceSendFields is a list of field names (e.g. "CustomOutput") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CelPolicy") to include in API
+	// NullFields is a list of field names (e.g. "CustomOutput") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5822,6 +5782,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "EVENT_TRIGGERED_EXECUTION" - T1546
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
 	//   "UNSECURED_CREDENTIALS" - T1552
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
@@ -5838,6 +5799,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
+	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
 	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
@@ -5916,6 +5878,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "EVENT_TRIGGERED_EXECUTION" - T1546
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
 	//   "UNSECURED_CREDENTIALS" - T1552
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
@@ -5932,6 +5895,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
+	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
 	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
@@ -7490,6 +7454,7 @@ type MitreAttack struct {
 	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "EVENT_TRIGGERED_EXECUTION" - T1546
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
 	//   "UNSECURED_CREDENTIALS" - T1552
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
@@ -7506,6 +7471,7 @@ type MitreAttack struct {
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
+	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
 	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
@@ -7584,6 +7550,7 @@ type MitreAttack struct {
 	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "EVENT_TRIGGERED_EXECUTION" - T1546
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
 	//   "UNSECURED_CREDENTIALS" - T1552
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
@@ -7600,6 +7567,7 @@ type MitreAttack struct {
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
+	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
 	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649

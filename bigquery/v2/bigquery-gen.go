@@ -2140,6 +2140,9 @@ func (s Dataset) MarshalJSON() ([]byte, error) {
 
 // DatasetAccess: An object that defines dataset access for an entity.
 type DatasetAccess struct {
+	// Condition: Optional. condition for the binding. If CEL expression in this
+	// field is true, this access binding will be considered
+	Condition *Expr `json:"condition,omitempty"`
 	// Dataset: [Pick one] A grant authorizing all resources of a particular type
 	// in a particular dataset access to this dataset. Only views are supported for
 	// now. The role field is not required when this field is set. If that dataset
@@ -2187,13 +2190,13 @@ type DatasetAccess struct {
 	// view is updated by any user, access to the view needs to be granted again
 	// via an update operation.
 	View *TableReference `json:"view,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Dataset") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Dataset") to include in API
+	// NullFields is a list of field names (e.g. "Condition") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -10468,6 +10471,25 @@ func (r *DatasetsService) Get(projectId string, datasetId string) *DatasetsGetCa
 	return c
 }
 
+// AccessPolicyVersion sets the optional parameter "accessPolicyVersion": The
+// version of the access policy schema to fetch. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// conditional access policy binding in datasets must specify version 3.
+// Dataset with no conditional role bindings in access policy may specify any
+// valid value or leave the field unset. This field will be maped to [IAM
+// Policy version] (https://cloud.google.com/iam/docs/policies#versions) and
+// will be used to fetch policy from IAM. If unset or if 0 or 1 value is used
+// for dataset with conditional bindings, access entry with condition will have
+// role string appended by 'withcond' string followed by a hash value. For
+// example : { "access": [ { "role":
+// "roles/bigquery.dataViewer_with_conditionalbinding_7a34awqsda",
+// "userByEmail": "user@example.com", } ] } Please refer
+// https://cloud.google.com/iam/docs/troubleshooting-withcond for more details.
+func (c *DatasetsGetCall) AccessPolicyVersion(accessPolicyVersion int64) *DatasetsGetCall {
+	c.urlParams_.Set("accessPolicyVersion", fmt.Sprint(accessPolicyVersion))
+	return c
+}
+
 // DatasetView sets the optional parameter "datasetView": Specifies the view
 // that determines which dataset information is returned. By default, metadata
 // and ACL information are returned.
@@ -10595,6 +10617,23 @@ func (r *DatasetsService) Insert(projectId string, dataset *Dataset) *DatasetsIn
 	c := &DatasetsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.dataset = dataset
+	return c
+}
+
+// AccessPolicyVersion sets the optional parameter "accessPolicyVersion": The
+// version of the provided access policy schema. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. This version refers
+// to the schema version of the access policy and not the version of access
+// policy. This field's value can be equal or more than the access policy
+// schema provided in the request. For example, * Requests with conditional
+// access policy binding in datasets must specify version 3. * But dataset with
+// no conditional role bindings in access policy may specify any valid value or
+// leave the field unset. If unset or if 0 or 1 value is used for dataset with
+// conditional bindings, request will be rejected. This field will be maped to
+// IAM Policy version (https://cloud.google.com/iam/docs/policies#versions) and
+// will be used to set policy in IAM.
+func (c *DatasetsInsertCall) AccessPolicyVersion(accessPolicyVersion int64) *DatasetsInsertCall {
+	c.urlParams_.Set("accessPolicyVersion", fmt.Sprint(accessPolicyVersion))
 	return c
 }
 
@@ -10868,6 +10907,26 @@ func (r *DatasetsService) Patch(projectId string, datasetId string, dataset *Dat
 	return c
 }
 
+// AccessPolicyVersion sets the optional parameter "accessPolicyVersion": The
+// version of the provided access policy schema. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. This version refers
+// to the schema version of the access policy and not the version of access
+// policy. This field's value can be equal or more than the access policy
+// schema provided in the request. For example, * Operations updating
+// conditional access policy binding in datasets must specify version 3. Some
+// of the operations are : - Adding a new access policy entry with condition. -
+// Removing an access policy entry with condition. - Updating an access policy
+// entry with condition. * But dataset with no conditional role bindings in
+// access policy may specify any valid value or leave the field unset. If unset
+// or if 0 or 1 value is used for dataset with conditional bindings, request
+// will be rejected. This field will be maped to IAM Policy version
+// (https://cloud.google.com/iam/docs/policies#versions) and will be used to
+// set policy in IAM.
+func (c *DatasetsPatchCall) AccessPolicyVersion(accessPolicyVersion int64) *DatasetsPatchCall {
+	c.urlParams_.Set("accessPolicyVersion", fmt.Sprint(accessPolicyVersion))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -11079,6 +11138,26 @@ func (r *DatasetsService) Update(projectId string, datasetId string, dataset *Da
 	c.projectId = projectId
 	c.datasetId = datasetId
 	c.dataset = dataset
+	return c
+}
+
+// AccessPolicyVersion sets the optional parameter "accessPolicyVersion": The
+// version of the provided access policy schema. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. This version refers
+// to the schema version of the access policy and not the version of access
+// policy. This field's value can be equal or more than the access policy
+// schema provided in the request. For example, * Operations updating
+// conditional access policy binding in datasets must specify version 3. Some
+// of the operations are : - Adding a new access policy entry with condition. -
+// Removing an access policy entry with condition. - Updating an access policy
+// entry with condition. * But dataset with no conditional role bindings in
+// access policy may specify any valid value or leave the field unset. If unset
+// or if 0 or 1 value is used for dataset with conditional bindings, request
+// will be rejected. This field will be maped to IAM Policy version
+// (https://cloud.google.com/iam/docs/policies#versions) and will be used to
+// set policy in IAM.
+func (c *DatasetsUpdateCall) AccessPolicyVersion(accessPolicyVersion int64) *DatasetsUpdateCall {
+	c.urlParams_.Set("accessPolicyVersion", fmt.Sprint(accessPolicyVersion))
 	return c
 }
 

@@ -3944,7 +3944,7 @@ func (s IngestionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InvideoBranding: LINT.IfChange Describes an invideo branding.
+// InvideoBranding: Describes an invideo branding.
 type InvideoBranding struct {
 	// ImageBytes: The bytes the uploaded image. Only used in api to youtube
 	// communication.
@@ -6968,6 +6968,8 @@ func (s SuperStickerMetadata) MarshalJSON() ([]byte, error) {
 }
 
 type TestItem struct {
+	// Etag: Etag for the resource. See https://en.wikipedia.org/wiki/HTTP_ETag.
+	Etag         string                   `json:"etag,omitempty"`
 	FeaturedPart bool                     `json:"featuredPart,omitempty"`
 	Gaia         int64                    `json:"gaia,omitempty,string"`
 	Id           string                   `json:"id,omitempty"`
@@ -6975,15 +6977,15 @@ type TestItem struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "FeaturedPart") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FeaturedPart") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

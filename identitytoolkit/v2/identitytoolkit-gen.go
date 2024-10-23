@@ -1615,8 +1615,23 @@ type GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig struct {
 	// ManagedRules: The managed rules for authentication action based on reCAPTCHA
 	// scores. The rules are shared across providers for a given tenant project.
 	ManagedRules []*GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule `json:"managedRules,omitempty"`
+	// PhoneEnforcementState: The reCAPTCHA config for phone provider, containing
+	// the enforcement status. The phone provider contains all related user flows
+	// protected by reCAPTCHA.
+	//
+	// Possible values:
+	//   "RECAPTCHA_PROVIDER_ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement state has
+	// not been set.
+	//   "OFF" - Unenforced.
+	//   "AUDIT" - reCAPTCHA assessment is created, result is not used to enforce.
+	//   "ENFORCE" - reCAPTCHA assessment is created, result is used to enforce.
+	PhoneEnforcementState string `json:"phoneEnforcementState,omitempty"`
 	// RecaptchaKeys: The reCAPTCHA keys.
 	RecaptchaKeys []*GoogleCloudIdentitytoolkitAdminV2RecaptchaKey `json:"recaptchaKeys,omitempty"`
+	// TollFraudManagedRules: The managed rules for toll fraud provider, containing
+	// the enforcement status. The toll fraud provider contains all SMS related
+	// user flows.
+	TollFraudManagedRules []*GoogleCloudIdentitytoolkitAdminV2RecaptchaTollFraudManagedRule `json:"tollFraudManagedRules,omitempty"`
 	// UseAccountDefender: Whether to use the account defender for reCAPTCHA
 	// assessment. Defaults to `false`.
 	UseAccountDefender bool `json:"useAccountDefender,omitempty"`
@@ -1718,6 +1733,55 @@ func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule) UnmarshalJSON(da
 		return err
 	}
 	s.EndScore = float64(s1.EndScore)
+	return nil
+}
+
+// GoogleCloudIdentitytoolkitAdminV2RecaptchaTollFraudManagedRule: The config
+// for a reCAPTCHA toll fraud assessment managed rule. Models a single interval
+// [start_score, end_score]. The start_score is maximum_allowed_score. End
+// score is 1.0.
+type GoogleCloudIdentitytoolkitAdminV2RecaptchaTollFraudManagedRule struct {
+	// Action: The action taken if the reCAPTCHA score of a request is within the
+	// interval [start_score, end_score].
+	//
+	// Possible values:
+	//   "RECAPTCHA_ACTION_UNSPECIFIED" - The reCAPTCHA action is not specified.
+	//   "BLOCK" - The reCAPTCHA-protected request will be blocked.
+	Action string `json:"action,omitempty"`
+	// StartScore: The start score (inclusive) for an action. A score of 0.0
+	// indicates the safest request (likely legitimate), whereas 1.0 indicates the
+	// riskiest request (likely toll fraud). See
+	// https://cloud.google.com/recaptcha-enterprise/docs/sms-fraud-detection#create-assessment-sms.
+	StartScore float64 `json:"startScore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudIdentitytoolkitAdminV2RecaptchaTollFraudManagedRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2RecaptchaTollFraudManagedRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaTollFraudManagedRule) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudIdentitytoolkitAdminV2RecaptchaTollFraudManagedRule
+	var s1 struct {
+		StartScore gensupport.JSONFloat64 `json:"startScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.StartScore = float64(s1.StartScore)
 	return nil
 }
 
@@ -2538,6 +2602,7 @@ type GoogleCloudIdentitytoolkitV2RecaptchaEnforcementState struct {
 	// Possible values:
 	//   "RECAPTCHA_PROVIDER_UNSPECIFIED" - reCAPTCHA provider not specified
 	//   "EMAIL_PASSWORD_PROVIDER" - Email password provider
+	//   "PHONE_PROVIDER" - Phone auth provider
 	Provider string `json:"provider,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnforcementState") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2680,6 +2745,18 @@ type GoogleCloudIdentitytoolkitV2StartMfaPhoneRequestInfo struct {
 	// AutoRetrievalInfo: Android only. Used by Google Play Services to identify
 	// the app for auto-retrieval.
 	AutoRetrievalInfo *GoogleCloudIdentitytoolkitV2AutoRetrievalInfo `json:"autoRetrievalInfo,omitempty"`
+	// CaptchaResponse: The reCAPTCHA Enterprise token provided by the reCAPTCHA
+	// client-side integration. Required when reCAPTCHA enterprise is enabled.
+	CaptchaResponse string `json:"captchaResponse,omitempty"`
+	// ClientType: The client type, web, android or ios. Required when reCAPTCHA
+	// Enterprise is enabled.
+	//
+	// Possible values:
+	//   "CLIENT_TYPE_UNSPECIFIED" - Client type is not specified.
+	//   "CLIENT_TYPE_WEB" - Client type is web.
+	//   "CLIENT_TYPE_ANDROID" - Client type is android.
+	//   "CLIENT_TYPE_IOS" - Client type is ios.
+	ClientType string `json:"clientType,omitempty"`
 	// IosReceipt: iOS only. Receipt of successful app token validation with APNS.
 	IosReceipt string `json:"iosReceipt,omitempty"`
 	// IosSecret: iOS only. Secret delivered to iOS app via APNS.
@@ -2694,6 +2771,13 @@ type GoogleCloudIdentitytoolkitV2StartMfaPhoneRequestInfo struct {
 	PlayIntegrityToken string `json:"playIntegrityToken,omitempty"`
 	// RecaptchaToken: Web only. Recaptcha solution.
 	RecaptchaToken string `json:"recaptchaToken,omitempty"`
+	// RecaptchaVersion: The reCAPTCHA version of the reCAPTCHA token in the
+	// captcha_response.
+	//
+	// Possible values:
+	//   "RECAPTCHA_VERSION_UNSPECIFIED" - The reCAPTCHA version is not specified.
+	//   "RECAPTCHA_ENTERPRISE" - The reCAPTCHA enterprise.
+	RecaptchaVersion string `json:"recaptchaVersion,omitempty"`
 	// SafetyNetToken: Android only. Used to assert application identity in place
 	// of a recaptcha token. A SafetyNet Token can be generated via the SafetyNet
 	// Android Attestation API

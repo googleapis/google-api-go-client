@@ -1627,6 +1627,19 @@ type GoogleCloudIdentitytoolkitV1SendVerificationCodeRequest struct {
 	// AutoRetrievalInfo: Android only. Used by Google Play Services to identify
 	// the app for auto-retrieval.
 	AutoRetrievalInfo *GoogleCloudIdentitytoolkitV1AutoRetrievalInfo `json:"autoRetrievalInfo,omitempty"`
+	// CaptchaResponse: Optional. The reCAPTCHA Enterprise token provided by the
+	// reCAPTCHA client-side integration. Required when reCAPTCHA enterprise is
+	// enabled.
+	CaptchaResponse string `json:"captchaResponse,omitempty"`
+	// ClientType: Optional. The client type, web, android or ios. Required when
+	// reCAPTCHA Enterprise is enabled.
+	//
+	// Possible values:
+	//   "CLIENT_TYPE_UNSPECIFIED" - Client type is not specified.
+	//   "CLIENT_TYPE_WEB" - Client type is web.
+	//   "CLIENT_TYPE_ANDROID" - Client type is android.
+	//   "CLIENT_TYPE_IOS" - Client type is ios.
+	ClientType string `json:"clientType,omitempty"`
 	// IosReceipt: Receipt of successful iOS app token validation. At least one of
 	// (`ios_receipt` and `ios_secret`), `recaptcha_token`, or `safety_net_token`
 	// must be specified to verify the verification code is being sent on behalf of
@@ -1658,6 +1671,13 @@ type GoogleCloudIdentitytoolkitV1SendVerificationCodeRequest struct {
 	// getRecaptchaParams and the recaptcha token will be generated on user
 	// completion of the recaptcha challenge.
 	RecaptchaToken string `json:"recaptchaToken,omitempty"`
+	// RecaptchaVersion: Optional. The reCAPTCHA version of the reCAPTCHA token in
+	// the captcha_response.
+	//
+	// Possible values:
+	//   "RECAPTCHA_VERSION_UNSPECIFIED" - The reCAPTCHA version is not specified.
+	//   "RECAPTCHA_ENTERPRISE" - The reCAPTCHA enterprise.
+	RecaptchaVersion string `json:"recaptchaVersion,omitempty"`
 	// SafetyNetToken: Android only. Used to assert application identity in place
 	// of a recaptcha token. At least one of (`ios_receipt` and `ios_secret`),
 	// `recaptcha_token`, or `safety_net_token` must be specified to verify the

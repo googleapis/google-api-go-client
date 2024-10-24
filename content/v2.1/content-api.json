@@ -1457,7 +1457,7 @@
               "type": "string"
             },
             "updateMask": {
-              "description": "Required. List of fields being updated.",
+              "description": "Optional. List of fields being updated.",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -4705,7 +4705,7 @@
       }
     }
   },
-  "revision": "20241015",
+  "revision": "20241022",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {

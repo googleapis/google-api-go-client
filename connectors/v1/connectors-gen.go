@@ -1273,6 +1273,9 @@ type ConnectorInfraConfig struct {
 	// ConnectionRatelimitWindowSeconds: The window used for ratelimiting runtime
 	// requests to connections.
 	ConnectionRatelimitWindowSeconds int64 `json:"connectionRatelimitWindowSeconds,omitempty,string"`
+	// ConnectorVersioningEnabled: Indicate whether connector versioning is
+	// enabled.
+	ConnectorVersioningEnabled bool `json:"connectorVersioningEnabled,omitempty"`
 	// DeploymentModel: Indicate whether connector is deployed on GKE/CloudRun
 	//
 	// Possible values:
@@ -4746,11 +4749,15 @@ type RuntimeActionSchema struct {
 	// InputParameters: Output only. List of input parameter metadata for the
 	// action.
 	InputParameters []*InputParameter `json:"inputParameters,omitempty"`
+	// InputSchemaAsString: Output only. Input schema as string.
+	InputSchemaAsString string `json:"inputSchemaAsString,omitempty"`
 	// ResultJsonSchema: Output only. JsonSchema representation of this action's
 	// result metadata
 	ResultJsonSchema *JsonSchema `json:"resultJsonSchema,omitempty"`
 	// ResultMetadata: Output only. List of result field metadata.
 	ResultMetadata []*ResultMetadata `json:"resultMetadata,omitempty"`
+	// ResultSchemaAsString: Output only. Result schema as string.
+	ResultSchemaAsString string `json:"resultSchemaAsString,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -5456,16 +5463,19 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // significant or are specified elsewhere. An API may choose to allow leap
 // seconds. Related types are google.type.Date and `google.protobuf.Timestamp`.
 type TimeOfDay struct {
-	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API may
-	// choose to allow the value "24:00:00" for scenarios like business closing
-	// time.
+	// Hours: Hours of a day in 24 hour format. Must be greater than or equal to 0
+	// and typically must be less than or equal to 23. An API may choose to allow
+	// the value "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
-	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Minutes of an hour. Must be greater than or equal to 0 and less
+	// than or equal to 59.
 	Minutes int64 `json:"minutes,omitempty"`
-	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+	// Nanos: Fractions of seconds, in nanoseconds. Must be greater than or equal
+	// to 0 and less than or equal to 999,999,999.
 	Nanos int64 `json:"nanos,omitempty"`
-	// Seconds: Seconds of minutes of the time. Must normally be from 0 to 59. An
-	// API may allow the value 60 if it allows leap-seconds.
+	// Seconds: Seconds of a minute. Must be greater than or equal to 0 and
+	// typically must be less than or equal to 59. An API may allow the value 60 if
+	// it allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9053,6 +9063,13 @@ func (c *ProjectsLocationsConnectionsRuntimeActionSchemasListCall) PageSize(page
 // PageToken sets the optional parameter "pageToken": Page token.
 func (c *ProjectsLocationsConnectionsRuntimeActionSchemasListCall) PageToken(pageToken string) *ProjectsLocationsConnectionsRuntimeActionSchemasListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// SchemaAsString sets the optional parameter "schemaAsString": Flag to
+// indicate if schema should be returned as string or not
+func (c *ProjectsLocationsConnectionsRuntimeActionSchemasListCall) SchemaAsString(schemaAsString bool) *ProjectsLocationsConnectionsRuntimeActionSchemasListCall {
+	c.urlParams_.Set("schemaAsString", fmt.Sprint(schemaAsString))
 	return c
 }
 

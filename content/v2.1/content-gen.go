@@ -17572,8 +17572,8 @@ func (r *ConversionsourcesService) Patch(merchantId int64, conversionSourceId st
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated.
 func (c *ConversionsourcesPatchCall) UpdateMask(updateMask string) *ConversionsourcesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

@@ -363,6 +363,149 @@ func (s GoogleCloudOrgpolicyV2Constraint) MarshalJSON() ([]byte, error) {
 // `constraints/compute.disableSerialPortAccess`. If it is enforced on a VM
 // instance, serial port connections will not be opened to that instance.
 type GoogleCloudOrgpolicyV2ConstraintBooleanConstraint struct {
+	// CustomConstraintDefinition: Custom constraint definition. This is set only
+	// for Managed Constraints
+	CustomConstraintDefinition *GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition `json:"customConstraintDefinition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomConstraintDefinition")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomConstraintDefinition") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOrgpolicyV2ConstraintBooleanConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOrgpolicyV2ConstraintBooleanConstraint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition: Currently used
+// for Managed Constraints. This represents a subset of fields missing from
+// Constraint proto that are required to describe CustomConstraint
+type GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition struct {
+	// ActionType: Allow or deny type.
+	//
+	// Possible values:
+	//   "ACTION_TYPE_UNSPECIFIED" - Unspecified. Results in an error.
+	//   "ALLOW" - Allowed action type.
+	//   "DENY" - Deny action type.
+	ActionType string `json:"actionType,omitempty"`
+	// Condition: Org policy condition/expression. For example:
+	// `resource.instanceName.matches("[production|test]_.*_(\d)+")` or,
+	// `resource.management.auto_upgrade == true` The max length of the condition
+	// is 1000 characters.
+	Condition string `json:"condition,omitempty"`
+	// MethodTypes: All the operations being applied for this constraint.
+	//
+	// Possible values:
+	//   "METHOD_TYPE_UNSPECIFIED" - Unspecified. Results in an error.
+	//   "CREATE" - Constraint applied when creating the resource.
+	//   "UPDATE" - Constraint applied when updating the resource.
+	//   "DELETE" - Constraint applied when deleting the resource. Not supported
+	// yet.
+	//   "REMOVE_GRANT" - Constraint applied when removing an IAM grant.
+	//   "GOVERN_TAGS" - Constraint applied when enforcing forced tagging.
+	MethodTypes []string `json:"methodTypes,omitempty"`
+	// Parameters: Stores Structure of parameters used by Constraint condition. Key
+	// of map represents name of the parameter.
+	Parameters map[string]GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameter `json:"parameters,omitempty"`
+	// ResourceTypes: The resource instance type on which this policy applies.
+	// Format will be of the form : `/` Example: *
+	// `compute.googleapis.com/Instance`.
+	ResourceTypes []string `json:"resourceTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActionType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActionType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameter: Defines
+// a parameter structure.
+type GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameter struct {
+	// DefaultValue: Sets the value of the parameter in an assignment if no value
+	// is given.
+	DefaultValue interface{} `json:"defaultValue,omitempty"`
+	// Item: Determines the parameter’s value structure. For example, LIST can be
+	// specified by defining type : LIST, and item type as : STRING.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified. Results in an error.
+	//   "LIST" - List parameter type.
+	//   "STRING" - String parameter type.
+	//   "BOOLEAN" - Boolean parameter type.
+	Item string `json:"item,omitempty"`
+	// Metadata: Defines subproperties primarily used by the UI to display
+	// user-friendly information.
+	Metadata *GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameterMetadata `json:"metadata,omitempty"`
+	// Type: Type of the parameter.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified. Results in an error.
+	//   "LIST" - List parameter type.
+	//   "STRING" - String parameter type.
+	//   "BOOLEAN" - Boolean parameter type.
+	Type string `json:"type,omitempty"`
+	// ValidValuesExpr: Provides a CEL expression to specify the acceptable
+	// parameter values during assignment. For example, parameterName in
+	// ("parameterValue1", "parameterValue2")
+	ValidValuesExpr string `json:"validValuesExpr,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameterMetadata:
+// Defines Medata structure.
+type GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameterMetadata struct {
+	// Description: Detailed description of what this `parameter` is and use of it.
+	// Mutable.
+	Description string `json:"description,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameterMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOrgpolicyV2ConstraintCustomConstraintDefinitionParameterMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2ConstraintListConstraint: A constraint that allows or

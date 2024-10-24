@@ -1546,9 +1546,8 @@ type ComputeEnginePreferences struct {
 	// all types are considered, based on available usage data.
 	//
 	// Possible values:
-	//   "PERSISTENT_DISK_TYPE_UNSPECIFIED" - Unspecified (default value).
-	// Selecting this value allows the system to use any disk type according to
-	// reported usage. This a good value to start with.
+	//   "PERSISTENT_DISK_TYPE_UNSPECIFIED" - Unspecified. Fallback to default
+	// value based on context.
 	//   "PERSISTENT_DISK_TYPE_STANDARD" - Standard HDD Persistent Disk.
 	//   "PERSISTENT_DISK_TYPE_BALANCED" - Balanced Persistent Disk.
 	//   "PERSISTENT_DISK_TYPE_SSD" - SSD Persistent Disk.
@@ -1618,9 +1617,8 @@ type ComputeStorageDescriptor struct {
 	// Type: Output only. Disk type backing the storage.
 	//
 	// Possible values:
-	//   "PERSISTENT_DISK_TYPE_UNSPECIFIED" - Unspecified (default value).
-	// Selecting this value allows the system to use any disk type according to
-	// reported usage. This a good value to start with.
+	//   "PERSISTENT_DISK_TYPE_UNSPECIFIED" - Unspecified. Fallback to default
+	// value based on context.
 	//   "PERSISTENT_DISK_TYPE_STANDARD" - Standard HDD Persistent Disk.
 	//   "PERSISTENT_DISK_TYPE_BALANCED" - Balanced Persistent Disk.
 	//   "PERSISTENT_DISK_TYPE_SSD" - SSD Persistent Disk.
@@ -2199,9 +2197,8 @@ type DatabasePreferencesCloudSqlCommon struct {
 	// types are available.
 	//
 	// Possible values:
-	//   "PERSISTENT_DISK_TYPE_UNSPECIFIED" - Unspecified (default value).
-	// Selecting this value allows the system to use any disk type according to
-	// reported usage. This a good value to start with.
+	//   "PERSISTENT_DISK_TYPE_UNSPECIFIED" - Unspecified. Fallback to default
+	// value based on context.
 	//   "PERSISTENT_DISK_TYPE_STANDARD" - Standard HDD Persistent Disk.
 	//   "PERSISTENT_DISK_TYPE_BALANCED" - Balanced Persistent Disk.
 	//   "PERSISTENT_DISK_TYPE_SSD" - SSD Persistent Disk.
@@ -5947,9 +5944,8 @@ type ReportSummaryMachineFinding struct {
 	// AllocatedDiskTypes: Set of disk types allocated to assets.
 	//
 	// Possible values:
-	//   "PERSISTENT_DISK_TYPE_UNSPECIFIED" - Unspecified (default value).
-	// Selecting this value allows the system to use any disk type according to
-	// reported usage. This a good value to start with.
+	//   "PERSISTENT_DISK_TYPE_UNSPECIFIED" - Unspecified. Fallback to default
+	// value based on context.
 	//   "PERSISTENT_DISK_TYPE_STANDARD" - Standard HDD Persistent Disk.
 	//   "PERSISTENT_DISK_TYPE_BALANCED" - Balanced Persistent Disk.
 	//   "PERSISTENT_DISK_TYPE_SSD" - SSD Persistent Disk.

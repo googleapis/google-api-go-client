@@ -3185,13 +3185,14 @@ type LogScope struct {
 	// Description: Optional. Describes this log scope.The maximum length of the
 	// description is 8000 characters.
 	Description string `json:"description,omitempty"`
-	// Name: Output only. The resource name of the log scope.For
+	// Name: Output only. The resource name of the log scope.Log scopes are only
+	// available in the global location. For
 	// example:projects/my-project/locations/global/logScopes/my-log-scope
 	Name string `json:"name,omitempty"`
 	// ResourceNames: Required. Names of one or more parent resources:
 	// projects/[PROJECT_ID]May alternatively be one or more views:
 	// projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW
-	// _ID]A log scope can include a maximum of 50 projects and a maximum of 100
+	// _ID]A log scope can include a maximum of 5 projects and a maximum of 100
 	// resources in total.
 	ResourceNames []string `json:"resourceNames,omitempty"`
 	// UpdateTime: Output only. The last update timestamp of the log scope.
@@ -15413,7 +15414,8 @@ type FoldersLocationsLogScopesPatchCall struct {
 
 // Patch: Updates a log scope.
 //
-//   - name: Output only. The resource name of the log scope.For
+//   - name: Output only. The resource name of the log scope.Log scopes are only
+//     available in the global location. For
 //     example:projects/my-project/locations/global/logScopes/my-log-scope.
 func (r *FoldersLocationsLogScopesService) Patch(name string, logscope *LogScope) *FoldersLocationsLogScopesPatchCall {
 	c := &FoldersLocationsLogScopesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -25459,7 +25461,8 @@ type OrganizationsLocationsLogScopesPatchCall struct {
 
 // Patch: Updates a log scope.
 //
-//   - name: Output only. The resource name of the log scope.For
+//   - name: Output only. The resource name of the log scope.Log scopes are only
+//     available in the global location. For
 //     example:projects/my-project/locations/global/logScopes/my-log-scope.
 func (r *OrganizationsLocationsLogScopesService) Patch(name string, logscope *LogScope) *OrganizationsLocationsLogScopesPatchCall {
 	c := &OrganizationsLocationsLogScopesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -31874,7 +31877,8 @@ type ProjectsLocationsLogScopesPatchCall struct {
 
 // Patch: Updates a log scope.
 //
-//   - name: Output only. The resource name of the log scope.For
+//   - name: Output only. The resource name of the log scope.Log scopes are only
+//     available in the global location. For
 //     example:projects/my-project/locations/global/logScopes/my-log-scope.
 func (r *ProjectsLocationsLogScopesService) Patch(name string, logscope *LogScope) *ProjectsLocationsLogScopesPatchCall {
 	c := &ProjectsLocationsLogScopesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

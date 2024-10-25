@@ -351,6 +351,12 @@ type Attributes struct {
 	// listings](https://support.google.com/merchants/answer/9825611).
 	//   "YOUTUBE_SHOPPING" - [YouTube
 	// Shopping](https://support.google.com/merchants/answer/12362804).
+	//   "YOUTUBE_SHOPPING_CHECKOUT" - Youtube shopping checkout.
+	//   "YOUTUBE_AFFILIATE" - Youtube affiliate.
+	//   "FREE_VEHICLE_LISTINGS" - Free vehicle listings.
+	//   "VEHICLE_ADS" - Vehicle ads.
+	//   "CLOUD_RETAIL" - Cloud retail.
+	//   "LOCAL_CLOUD_RETAIL" - Local cloud retail.
 	PromotionDestinations []string `json:"promotionDestinations,omitempty"`
 	// PromotionDisplayTimePeriod: Optional. `TimePeriod` representation of the
 	// promotion's display dates. This attribute specifies the date and time frame
@@ -789,6 +795,8 @@ type ProductStatusChangeMessage struct {
 	Attribute string `json:"attribute,omitempty"`
 	// Changes: A message to describe the change that happened to the product
 	Changes []*ProductChange `json:"changes,omitempty"`
+	// ExpirationTime: The product expiration time.
+	ExpirationTime string `json:"expirationTime,omitempty"`
 	// ManagingAccount: The account that manages the merchant's account. can be the
 	// same as merchant id if it is standalone account. Format :
 	// `accounts/{service_provider_id}`
@@ -1179,8 +1187,8 @@ func (r *AccountsPromotionsService) List(parent string) *AccountsPromotionsListC
 
 // PageSize sets the optional parameter "pageSize": Output only. The maximum
 // number of promotions to return. The service may return fewer than this
-// value. The maximum value is 1000; values above 1000 will be coerced to 1000.
-// If unspecified, the maximum number of promotions will be returned.
+// value. The maximum value is 250; values above 250 will be coerced to 250. If
+// unspecified, the maximum number of promotions will be returned.
 func (c *AccountsPromotionsListCall) PageSize(pageSize int64) *AccountsPromotionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

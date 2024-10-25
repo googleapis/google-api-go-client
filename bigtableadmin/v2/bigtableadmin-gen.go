@@ -507,8 +507,9 @@ func (s AuthorizedView) MarshalJSON() ([]byte, error) {
 
 // AutomatedBackupPolicy: Defines an automated backup policy for a table
 type AutomatedBackupPolicy struct {
-	// Frequency: Required. How frequently automated backups should occur. The only
-	// supported value at this time is 24 hours.
+	// Frequency: How frequently automated backups should occur. The only supported
+	// value at this time is 24 hours. An undefined frequency is treated as 24
+	// hours.
 	Frequency string `json:"frequency,omitempty"`
 	// RetentionPeriod: Required. How long the automated backups should be
 	// retained. The only supported value at this time is 3 days.
@@ -1853,14 +1854,13 @@ func (s GoogleBigtableAdminV2AuthorizedViewSubsetView) MarshalJSON() ([]byte, er
 
 // GoogleBigtableAdminV2TypeAggregate: A value that combines incremental
 // updates into a summarized value. Data is never directly written or read
-// using type `Aggregate`. Writes will provide either the `input_type` or
-// `state_type`, and reads will always return the `state_type` .
+// using type `Aggregate`. Writes provide either the `input_type` or
+// `state_type`, and reads always return the `state_type` .
 type GoogleBigtableAdminV2TypeAggregate struct {
 	// HllppUniqueCount: HyperLogLogPlusPlusUniqueCount aggregator.
 	HllppUniqueCount *GoogleBigtableAdminV2TypeAggregateHyperLogLogPlusPlusUniqueCount `json:"hllppUniqueCount,omitempty"`
-	// InputType: Type of the inputs that are accumulated by this `Aggregate`,
-	// which must specify a full encoding. Use `AddInput` mutations to accumulate
-	// new inputs.
+	// InputType: Type of the inputs that are accumulated by this `Aggregate`. Use
+	// `AddInput` mutations to accumulate new inputs.
 	InputType *Type `json:"inputType,omitempty"`
 	// Max: Max aggregator.
 	Max *GoogleBigtableAdminV2TypeAggregateMax `json:"max,omitempty"`
@@ -1868,7 +1868,7 @@ type GoogleBigtableAdminV2TypeAggregate struct {
 	Min *GoogleBigtableAdminV2TypeAggregateMin `json:"min,omitempty"`
 	// StateType: Output only. Type that holds the internal accumulator state for
 	// the `Aggregate`. This is a function of the `input_type` and `aggregator`
-	// chosen, and will always specify a full encoding.
+	// chosen.
 	StateType *Type `json:"stateType,omitempty"`
 	// Sum: Sum aggregator.
 	Sum *GoogleBigtableAdminV2TypeAggregateSum `json:"sum,omitempty"`
@@ -1946,7 +1946,7 @@ type GoogleBigtableAdminV2TypeBool struct {
 // GoogleBigtableAdminV2TypeBytes: Bytes Values of type `Bytes` are stored in
 // `Value.bytes_value`.
 type GoogleBigtableAdminV2TypeBytes struct {
-	// Encoding: The encoding to use when converting to/from lower level types.
+	// Encoding: The encoding to use when converting to or from lower level types.
 	Encoding *GoogleBigtableAdminV2TypeBytesEncoding `json:"encoding,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Encoding") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1966,8 +1966,8 @@ func (s GoogleBigtableAdminV2TypeBytes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleBigtableAdminV2TypeBytesEncoding: Rules used to convert to/from lower
-// level types.
+// GoogleBigtableAdminV2TypeBytesEncoding: Rules used to convert to or from
+// lower level types.
 type GoogleBigtableAdminV2TypeBytesEncoding struct {
 	// Raw: Use `Raw` encoding.
 	Raw *GoogleBigtableAdminV2TypeBytesEncodingRaw `json:"raw,omitempty"`
@@ -1989,8 +1989,8 @@ func (s GoogleBigtableAdminV2TypeBytesEncoding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleBigtableAdminV2TypeBytesEncodingRaw: Leaves the value "as-is" *
-// Order-preserving? Yes * Self-delimiting? No * Compatibility? N/A
+// GoogleBigtableAdminV2TypeBytesEncodingRaw: Leaves the value as-is. Sorted
+// mode: all values are supported. Distinct mode: all values are supported.
 type GoogleBigtableAdminV2TypeBytesEncodingRaw struct {
 }
 
@@ -2012,7 +2012,7 @@ type GoogleBigtableAdminV2TypeFloat64 struct {
 // GoogleBigtableAdminV2TypeInt64: Int64 Values of type `Int64` are stored in
 // `Value.int_value`.
 type GoogleBigtableAdminV2TypeInt64 struct {
-	// Encoding: The encoding to use when converting to/from lower level types.
+	// Encoding: The encoding to use when converting to or from lower level types.
 	Encoding *GoogleBigtableAdminV2TypeInt64Encoding `json:"encoding,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Encoding") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2032,8 +2032,8 @@ func (s GoogleBigtableAdminV2TypeInt64) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleBigtableAdminV2TypeInt64Encoding: Rules used to convert to/from lower
-// level types.
+// GoogleBigtableAdminV2TypeInt64Encoding: Rules used to convert to or from
+// lower level types.
 type GoogleBigtableAdminV2TypeInt64Encoding struct {
 	// BigEndianBytes: Use `BigEndianBytes` encoding.
 	BigEndianBytes *GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes `json:"bigEndianBytes,omitempty"`
@@ -2056,9 +2056,9 @@ func (s GoogleBigtableAdminV2TypeInt64Encoding) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes: Encodes the value as
-// an 8-byte big endian twos complement `Bytes` value. * Order-preserving? No
-// (positive values only) * Self-delimiting? Yes * Compatibility? - BigQuery
-// Federation `BINARY` encoding - HBase `Bytes.toBytes` - Java
+// an 8-byte big-endian two's complement value. Sorted mode: non-negative
+// values are supported. Distinct mode: all values are supported. Compatible
+// with: - BigQuery `BINARY` encoding - HBase `Bytes.toBytes` - Java
 // `ByteBuffer.putLong()` with `ByteOrder.BIG_ENDIAN`
 type GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes struct {
 	// BytesType: Deprecated: ignored if set.
@@ -2114,7 +2114,7 @@ func (s GoogleBigtableAdminV2TypeMap) MarshalJSON() ([]byte, error) {
 // GoogleBigtableAdminV2TypeString: String Values of type `String` are stored
 // in `Value.string_value`.
 type GoogleBigtableAdminV2TypeString struct {
-	// Encoding: The encoding to use when converting to/from lower level types.
+	// Encoding: The encoding to use when converting to or from lower level types.
 	Encoding *GoogleBigtableAdminV2TypeStringEncoding `json:"encoding,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Encoding") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2134,8 +2134,8 @@ func (s GoogleBigtableAdminV2TypeString) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleBigtableAdminV2TypeStringEncoding: Rules used to convert to/from lower
-// level types.
+// GoogleBigtableAdminV2TypeStringEncoding: Rules used to convert to or from
+// lower level types.
 type GoogleBigtableAdminV2TypeStringEncoding struct {
 	// Utf8Bytes: Use `Utf8Bytes` encoding.
 	Utf8Bytes *GoogleBigtableAdminV2TypeStringEncodingUtf8Bytes `json:"utf8Bytes,omitempty"`
@@ -2159,10 +2159,10 @@ func (s GoogleBigtableAdminV2TypeStringEncoding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleBigtableAdminV2TypeStringEncodingUtf8Bytes: UTF-8 encoding *
-// Order-preserving? Yes (code point order) * Self-delimiting? No *
-// Compatibility? - BigQuery Federation `TEXT` encoding - HBase `Bytes.toBytes`
-// - Java `String#getBytes(StandardCharsets.UTF_8)`
+// GoogleBigtableAdminV2TypeStringEncodingUtf8Bytes: UTF-8 encoding. Sorted
+// mode: - All values are supported. - Code point order is preserved. Distinct
+// mode: all values are supported. Compatible with: - BigQuery `TEXT` encoding
+// - HBase `Bytes.toBytes` - Java `String#getBytes(StandardCharsets.UTF_8)`
 type GoogleBigtableAdminV2TypeStringEncodingUtf8Bytes struct {
 }
 
@@ -3541,21 +3541,18 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 // stored in Bigtable. It is heavily based on the GoogleSQL standard to help
 // maintain familiarity and consistency across products and features. For
 // compatibility with Bigtable's existing untyped APIs, each `Type` includes an
-// `Encoding` which describes how to convert to/from the underlying data. Each
-// encoding also defines the following properties: * Order-preserving: Does the
-// encoded value sort consistently with the original typed value? Note that
-// Bigtable will always sort data based on the raw encoded value, *not* the
-// decoded type. - Example: BYTES values sort in the same order as their raw
-// encodings. - Counterexample: Encoding INT64 as a fixed-width decimal string
-// does *not* preserve sort order when dealing with negative numbers. `INT64(1)
-// > INT64(-1)`, but `STRING("-00001") > STRING("00001)`. * Self-delimiting: If
-// we concatenate two encoded values, can we always tell where the first one
-// ends and the second one begins? - Example: If we encode INT64s to
-// fixed-width STRINGs, the first value will always contain exactly N digits,
-// possibly preceded by a sign. - Counterexample: If we concatenate two UTF-8
-// encoded STRINGs, we have no way to tell where the first one ends. *
-// Compatibility: Which other systems have matching encoding schemes? For
-// example, does this encoding have a GoogleSQL equivalent? HBase? Java?
+// `Encoding` which describes how to convert to or from the underlying data.
+// Each encoding can operate in one of two modes: - Sorted: In this mode,
+// Bigtable guarantees that `Encode(X) <= Encode(Y)` if and only if `X <= Y`.
+// This is useful anywhere sort order is important, for example when encoding
+// keys. - Distinct: In this mode, Bigtable guarantees that if `X != Y` then
+// `Encode(X) != Encode(Y)`. However, the converse is not guaranteed. For
+// example, both "{'foo': '1', 'bar': '2'}" and "{'bar': '2', 'foo': '1'}" are
+// valid encodings of the same JSON value. The API clearly documents which mode
+// is used wherever an encoding can be configured. Each encoding also documents
+// which values are supported in which modes. For example, when encoding INT64
+// as a numeric STRING, negative numbers cannot be encoded in sorted mode. This
+// is because `INT64(1) > INT64(-1)`, but `STRING("-00001") > STRING("00001")`.
 type Type struct {
 	// AggregateType: Aggregate
 	AggregateType *GoogleBigtableAdminV2TypeAggregate `json:"aggregateType,omitempty"`

@@ -2194,8 +2194,7 @@ type Permission struct {
 	//   "TESTING" - Permission is being tested to check custom role compatibility.
 	//   "NOT_SUPPORTED" - Permission is not supported for custom role use.
 	CustomRolesSupportLevel string `json:"customRolesSupportLevel,omitempty"`
-	// Description: A brief description of what this Permission is used for. This
-	// permission can ONLY be used in predefined roles.
+	// Description: A brief description of what this Permission is used for.
 	Description string `json:"description,omitempty"`
 	// Name: The name of this Permission.
 	Name                  string `json:"name,omitempty"`

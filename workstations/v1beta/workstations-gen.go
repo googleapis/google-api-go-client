@@ -1842,6 +1842,9 @@ type WorkstationCluster struct {
 	// instances associated with this workstation cluster will be created. Must be
 	// part of the subnetwork specified for this workstation cluster.
 	Subnetwork string `json:"subnetwork,omitempty"`
+	// Tags: Optional. Tag keys/values directly bound to this resource. For
+	// example: "123/environment": "production", "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// Uid: Output only. A system-assigned unique identifier for this workstation
 	// cluster.
 	Uid string `json:"uid,omitempty"`

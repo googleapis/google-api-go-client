@@ -772,7 +772,7 @@
       }
     }
   },
-  "revision": "20240821",
+  "revision": "20241009",
   "rootUrl": "https://workloadmanager.googleapis.com/",
   "schemas": {
     "AgentCommand": {
@@ -1029,6 +1029,14 @@
           "description": "The name of execution resource. The format is projects/{project}/locations/{location}/evaluations/{evaluation}/executions/{execution}",
           "type": "string"
         },
+        "ruleResults": {
+          "description": "Output only. execution result summary per rule",
+          "items": {
+            "$ref": "RuleExecutionResult"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "runType": {
           "description": "type represent whether the execution executed directly by user or scheduled according evaluation.schedule field.",
           "enum": [
@@ -1094,6 +1102,20 @@
         },
         "severity": {
           "description": "The severity of violation.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Execution result type of the scanned resource",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "TYPE_PASSED",
+            "TYPE_VIOLATED"
+          ],
+          "enumDescriptions": [
+            "Unknown state",
+            "resource successfully passed the rule",
+            "resource violated the rule"
+          ],
           "type": "string"
         },
         "violationDetails": {
@@ -1833,6 +1855,48 @@
       },
       "type": "object"
     },
+    "RuleExecutionResult": {
+      "description": "Message for execution result summary per rule",
+      "id": "RuleExecutionResult",
+      "properties": {
+        "message": {
+          "description": "Execution message, if any",
+          "type": "string"
+        },
+        "resultCount": {
+          "description": "Number of violations",
+          "format": "int64",
+          "type": "string"
+        },
+        "rule": {
+          "description": "rule name",
+          "type": "string"
+        },
+        "scannedResourceCount": {
+          "description": "Number of total scanned resources",
+          "format": "int64",
+          "type": "string"
+        },
+        "state": {
+          "description": "Output only. The execution status",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "STATE_SUCCESS",
+            "STATE_FAILURE",
+            "STATE_SKIPPED"
+          ],
+          "enumDescriptions": [
+            "Unknown state",
+            "execution completed successfully",
+            "execution completed with failures",
+            "execution was not executed"
+          ],
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "RunEvaluationRequest": {
       "description": "Message for creating a Execution",
       "id": "RunEvaluationRequest",
@@ -2203,6 +2267,10 @@
             "Application central services, enqueue replication server, application server and database."
           ],
           "type": "string"
+        },
+        "isDrSite": {
+          "description": "Optional. Instance is part of a DR site.",
+          "type": "boolean"
         },
         "virtualHostname": {
           "description": "Optional. A virtual hostname of the instance if it has one.",

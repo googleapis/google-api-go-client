@@ -698,6 +698,50 @@ func (s GitRepositoryLink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// HttpBody: Message that represents an arbitrary HTTP body. It should only be
+// used for payload formats that can't be represented as JSON, such as raw
+// binary or an HTML page. This message can be used both in streaming and
+// non-streaming API methods in the request as well as the response. It can be
+// used as a top-level request field, which is convenient if one wants to
+// extract parameters from either the URL or HTTP template into the request
+// fields and also want access to the raw HTTP body. Example: message
+// GetResourceRequest { // A unique request id. string request_id = 1; // The
+// raw HTTP body is bound to this field. google.api.HttpBody http_body = 2; }
+// service ResourceService { rpc GetResource(GetResourceRequest) returns
+// (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody) returns
+// (google.protobuf.Empty); } Example with streaming methods: service
+// CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns (stream
+// google.api.HttpBody); rpc UpdateCalendar(stream google.api.HttpBody) returns
+// (stream google.api.HttpBody); } Use of this type only changes how the
+// request and response bodies are handled, all other features will continue to
+// work unchanged.
+type HttpBody struct {
+	// ContentType: The HTTP Content-Type header value specifying the content type
+	// of the body.
+	ContentType string `json:"contentType,omitempty"`
+	// Data: The HTTP request/response body as raw binary.
+	Data string `json:"data,omitempty"`
+	// Extensions: Application specific response metadata. Must be set in the first
+	// response for streaming APIs.
+	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HttpBody) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpBody
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Installation: Represents an installation of the GitHub App.
 type Installation struct {
 	// Id: ID of the installation in GitHub.
@@ -1052,6 +1096,75 @@ type OperationMetadata struct {
 
 func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProcessGitHubEnterpriseWebhookRequest: RPC request object accepted by the
+// ProcessGitHubEnterpriseWebhook RPC method.
+type ProcessGitHubEnterpriseWebhookRequest struct {
+	// Body: Required. HTTP request body.
+	Body *HttpBody `json:"body,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProcessGitHubEnterpriseWebhookRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ProcessGitHubEnterpriseWebhookRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProcessGitLabEnterpriseWebhookRequest: RPC request object accepted by the
+// ProcessGitLabEnterpriseWebhook RPC method.
+type ProcessGitLabEnterpriseWebhookRequest struct {
+	// Body: Required. HTTP request body.
+	Body *HttpBody `json:"body,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProcessGitLabEnterpriseWebhookRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ProcessGitLabEnterpriseWebhookRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProcessGitLabWebhookRequest: RPC request object accepted by the
+// ProcessGitLabWebhook RPC method.
+type ProcessGitLabWebhookRequest struct {
+	// Body: Required. HTTP request body.
+	Body *HttpBody `json:"body,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProcessGitLabWebhookRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ProcessGitLabWebhookRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2325,6 +2438,109 @@ func (c *ProjectsLocationsConnectionsPatchCall) Do(opts ...googleapi.CallOption)
 	return ret, nil
 }
 
+type ProjectsLocationsConnectionsProcessGitHubEnterpriseWebhookCall struct {
+	s                                     *Service
+	parent                                string
+	processgithubenterprisewebhookrequest *ProcessGitHubEnterpriseWebhookRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// ProcessGitHubEnterpriseWebhook: ProcessGitHubEnterpriseWebhook is called by
+// the external GitHub Enterprise instances for notifying events.
+//
+//   - parent: Project and location where the webhook will be received. Format:
+//     `projects/*/locations/*`.
+func (r *ProjectsLocationsConnectionsService) ProcessGitHubEnterpriseWebhook(parent string, processgithubenterprisewebhookrequest *ProcessGitHubEnterpriseWebhookRequest) *ProjectsLocationsConnectionsProcessGitHubEnterpriseWebhookCall {
+	c := &ProjectsLocationsConnectionsProcessGitHubEnterpriseWebhookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.processgithubenterprisewebhookrequest = processgithubenterprisewebhookrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsProcessGitHubEnterpriseWebhookCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsProcessGitHubEnterpriseWebhookCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsProcessGitHubEnterpriseWebhookCall) Context(ctx context.Context) *ProjectsLocationsConnectionsProcessGitHubEnterpriseWebhookCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsProcessGitHubEnterpriseWebhookCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsProcessGitHubEnterpriseWebhookCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.processgithubenterprisewebhookrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/connections:processGitHubEnterpriseWebhook")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.connections.processGitHubEnterpriseWebhook" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsProcessGitHubEnterpriseWebhookCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsConnectionsGitRepositoryLinksCreateCall struct {
 	s                 *Service
 	parent            string
@@ -3214,6 +3430,212 @@ func (c *ProjectsLocationsConnectionsGitRepositoryLinksListCall) Pages(ctx conte
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabEnterpriseWebhookCall struct {
+	s                                     *Service
+	name                                  string
+	processgitlabenterprisewebhookrequest *ProcessGitLabEnterpriseWebhookRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// ProcessGitLabEnterpriseWebhook: ProcessGitLabEnterpriseWebhook is called by
+// the external GitLab Enterprise instances for notifying events.
+//
+//   - name: The GitRepositoryLink resource where the webhook will be received.
+//     Format: `projects/*/locations/*/connections/*/gitRepositoryLinks/*`.
+func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) ProcessGitLabEnterpriseWebhook(name string, processgitlabenterprisewebhookrequest *ProcessGitLabEnterpriseWebhookRequest) *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabEnterpriseWebhookCall {
+	c := &ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabEnterpriseWebhookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.processgitlabenterprisewebhookrequest = processgitlabenterprisewebhookrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabEnterpriseWebhookCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabEnterpriseWebhookCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabEnterpriseWebhookCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabEnterpriseWebhookCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabEnterpriseWebhookCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabEnterpriseWebhookCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.processgitlabenterprisewebhookrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:processGitLabEnterpriseWebhook")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.processGitLabEnterpriseWebhook" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabEnterpriseWebhookCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabWebhookCall struct {
+	s                           *Service
+	name                        string
+	processgitlabwebhookrequest *ProcessGitLabWebhookRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// ProcessGitLabWebhook: ProcessGitLabWebhook is called by the GitLab.com for
+// notifying events.
+//
+//   - name: The GitRepositoryLink resource where the webhook will be received.
+//     Format: `projects/*/locations/*/connections/*/gitRepositoryLinks/*`.
+func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) ProcessGitLabWebhook(name string, processgitlabwebhookrequest *ProcessGitLabWebhookRequest) *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabWebhookCall {
+	c := &ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabWebhookCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.processgitlabwebhookrequest = processgitlabwebhookrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabWebhookCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabWebhookCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabWebhookCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabWebhookCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabWebhookCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabWebhookCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.processgitlabwebhookrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:processGitLabWebhook")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.processGitLabWebhook" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksProcessGitLabWebhookCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsOperationsCancelCall struct {

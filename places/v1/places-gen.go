@@ -248,6 +248,148 @@ func (s GoogleGeoTypeViewport) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleMapsPlacesV1AddressDescriptor: A relational description of a location.
+// Includes a ranked set of nearby landmarks and precise containing areas and
+// their relationship to the target location.
+type GoogleMapsPlacesV1AddressDescriptor struct {
+	// Areas: A ranked list of containing or adjacent areas. The most recognizable
+	// and precise areas are ranked first.
+	Areas []*GoogleMapsPlacesV1AddressDescriptorArea `json:"areas,omitempty"`
+	// Landmarks: A ranked list of nearby landmarks. The most recognizable and
+	// nearby landmarks are ranked first.
+	Landmarks []*GoogleMapsPlacesV1AddressDescriptorLandmark `json:"landmarks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Areas") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Areas") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1AddressDescriptor) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1AddressDescriptor
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1AddressDescriptorArea: Area information and the area's
+// relationship with the target location. Areas includes precise sublocality,
+// neighborhoods, and large compounds that are useful for describing a
+// location.
+type GoogleMapsPlacesV1AddressDescriptorArea struct {
+	// Containment: Defines the spatial relationship between the target location
+	// and the area.
+	//
+	// Possible values:
+	//   "CONTAINMENT_UNSPECIFIED" - The containment is unspecified.
+	//   "WITHIN" - The target location is within the area region, close to the
+	// center.
+	//   "OUTSKIRTS" - The target location is within the area region, close to the
+	// edge.
+	//   "NEAR" - The target location is outside the area region, but close by.
+	Containment string `json:"containment,omitempty"`
+	// DisplayName: The area's display name.
+	DisplayName *GoogleTypeLocalizedText `json:"displayName,omitempty"`
+	// Name: The area's resource name.
+	Name string `json:"name,omitempty"`
+	// PlaceId: The area's place id.
+	PlaceId string `json:"placeId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Containment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Containment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1AddressDescriptorArea) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1AddressDescriptorArea
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1AddressDescriptorLandmark: Basic landmark information and
+// the landmark's relationship with the target location. Landmarks are
+// prominent places that can be used to describe a location.
+type GoogleMapsPlacesV1AddressDescriptorLandmark struct {
+	// DisplayName: The landmark's display name.
+	DisplayName *GoogleTypeLocalizedText `json:"displayName,omitempty"`
+	// Name: The landmark's resource name.
+	Name string `json:"name,omitempty"`
+	// PlaceId: The landmark's place id.
+	PlaceId string `json:"placeId,omitempty"`
+	// SpatialRelationship: Defines the spatial relationship between the target
+	// location and the landmark.
+	//
+	// Possible values:
+	//   "NEAR" - This is the default relationship when nothing more specific below
+	// applies.
+	//   "WITHIN" - The landmark has a spatial geometry and the target is within
+	// its bounds.
+	//   "BESIDE" - The target is directly adjacent to the landmark.
+	//   "ACROSS_THE_ROAD" - The target is directly opposite the landmark on the
+	// other side of the road.
+	//   "DOWN_THE_ROAD" - On the same route as the landmark but not besides or
+	// across.
+	//   "AROUND_THE_CORNER" - Not on the same route as the landmark but a single
+	// turn away.
+	//   "BEHIND" - Close to the landmark's structure but further away from its
+	// street entrances.
+	SpatialRelationship string `json:"spatialRelationship,omitempty"`
+	// StraightLineDistanceMeters: The straight line distance, in meters, between
+	// the center point of the target and the center point of the landmark. In some
+	// situations, this value can be longer than `travel_distance_meters`.
+	StraightLineDistanceMeters float64 `json:"straightLineDistanceMeters,omitempty"`
+	// TravelDistanceMeters: The travel distance, in meters, along the road network
+	// from the target to the landmark, if known. This value does not take into
+	// account the mode of transportation, such as walking, driving, or biking.
+	TravelDistanceMeters float64 `json:"travelDistanceMeters,omitempty"`
+	// Types: A set of type tags for this landmark. For a complete list of possible
+	// values, see
+	// https://developers.google.com/maps/documentation/places/web-service/place-types.
+	Types []string `json:"types,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1AddressDescriptorLandmark) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1AddressDescriptorLandmark
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleMapsPlacesV1AddressDescriptorLandmark) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleMapsPlacesV1AddressDescriptorLandmark
+	var s1 struct {
+		StraightLineDistanceMeters gensupport.JSONFloat64 `json:"straightLineDistanceMeters"`
+		TravelDistanceMeters       gensupport.JSONFloat64 `json:"travelDistanceMeters"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.StraightLineDistanceMeters = float64(s1.StraightLineDistanceMeters)
+	s.TravelDistanceMeters = float64(s1.TravelDistanceMeters)
+	return nil
+}
+
 // GoogleMapsPlacesV1AuthorAttribution: Information about the author of the UGC
 // data. Used in Photo, and Review.
 type GoogleMapsPlacesV1AuthorAttribution struct {
@@ -1147,6 +1289,11 @@ type GoogleMapsPlacesV1Place struct {
 	// type of the component can change. A particular component may be missing in a
 	// later response.
 	AddressComponents []*GoogleMapsPlacesV1PlaceAddressComponent `json:"addressComponents,omitempty"`
+	// AddressDescriptor: The address descriptor of the place. Address descriptors
+	// include additional information that help describe a location using landmarks
+	// and areas. See address descriptor regional coverage in
+	// https://developers.google.com/maps/documentation/geocoding/address-descriptors/coverage.
+	AddressDescriptor *GoogleMapsPlacesV1AddressDescriptor `json:"addressDescriptor,omitempty"`
 	// AdrFormatAddress: The place's address in adr microformat:
 	// http://microformats.org/wiki/adr.
 	AdrFormatAddress string `json:"adrFormatAddress,omitempty"`
@@ -1331,7 +1478,8 @@ type GoogleMapsPlacesV1Place struct {
 	// offset by fractions of an hour, e.g. X hours and 15 minutes.
 	UtcOffsetMinutes int64 `json:"utcOffsetMinutes,omitempty"`
 	// Viewport: A viewport suitable for displaying the place on an average-sized
-	// map.
+	// map. This viewport should not be used as the physical boundary or the
+	// service area of the business.
 	Viewport *GoogleGeoTypeViewport `json:"viewport,omitempty"`
 	// WebsiteUri: The authoritative website for this place, e.g. a business'
 	// homepage. Note that for places that are part of a chain (e.g. an IKEA

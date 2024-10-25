@@ -1009,6 +1009,7 @@ type Node struct {
 	//   "HIDING" - TPU node is currently hiding.
 	//   "HIDDEN" - TPU node has been hidden.
 	//   "UNHIDING" - TPU node is currently unhiding.
+	//   "UNKNOWN" - TPU node has unknown state after a failed repair.
 	State string `json:"state,omitempty"`
 	// Symptoms: Output only. The Symptoms that have occurred to the TPU Node.
 	Symptoms []*Symptom `json:"symptoms,omitempty"`

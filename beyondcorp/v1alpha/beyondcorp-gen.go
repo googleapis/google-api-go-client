@@ -2957,18 +2957,15 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1alphaEndpointMatcher) MarshalJSON
 // GoogleCloudBeyondcorpSecuritygatewaysV1alphaHub: The Hub message contains
 // information pertaining to the regional data path deployments.
 type GoogleCloudBeyondcorpSecuritygatewaysV1alphaHub struct {
-	// NatGatewayConfig: Optional. NAT gateway setup to ensure enough NAT IP
-	// addresses are available to handle the traffic needed to access the
-	// applications. Allows to explicitly enable or disable the NAT in the Hub
-	// along with the total IPs allocated to handle the capacity limits.
-	NatGatewayConfig *GoogleCloudBeyondcorpSecuritygatewaysV1alphaNatGatewayConfig `json:"natGatewayConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "NatGatewayConfig") to
+	// InternetGateway: Optional. Internet Gateway configuration.
+	InternetGateway *GoogleCloudBeyondcorpSecuritygatewaysV1alphaInternetGateway `json:"internetGateway,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InternetGateway") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "NatGatewayConfig") to include in
+	// NullFields is a list of field names (e.g. "InternetGateway") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2977,6 +2974,29 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1alphaHub struct {
 
 func (s GoogleCloudBeyondcorpSecuritygatewaysV1alphaHub) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1alphaHub
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1alphaInternetGateway: Represents the
+// Internet Gateway configuration.
+type GoogleCloudBeyondcorpSecuritygatewaysV1alphaInternetGateway struct {
+	// AssignedIps: Output only. List of IP addresses assigned to the Cloud NAT.
+	AssignedIps []string `json:"assignedIps,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssignedIps") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssignedIps") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1alphaInternetGateway) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1alphaInternetGateway
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3042,38 +3062,14 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1alphaListSecurityGatewaysResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBeyondcorpSecuritygatewaysV1alphaNatGatewayConfig: Represents the
-// NAT Gateway configuration.
-type GoogleCloudBeyondcorpSecuritygatewaysV1alphaNatGatewayConfig struct {
-	// NatIps: Output only. List of NAT IPs that will be used for establishing
-	// connection to the endpoints.
-	NatIps []string `json:"natIps,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "NatIps") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "NatIps") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudBeyondcorpSecuritygatewaysV1alphaNatGatewayConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1alphaNatGatewayConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudBeyondcorpSecuritygatewaysV1alphaPeering: VPC Peering details.
 type GoogleCloudBeyondcorpSecuritygatewaysV1alphaPeering struct {
 	// DnsZones: Optional. List of DNS zones for DNS peering with the customer VPC
 	// network.
 	DnsZones []string `json:"dnsZones,omitempty"`
-	// TargetVpcNetwork: Required. The name of the Target VPC network name in the
+	// TargetNetwork: Required. The name of the Target VPC network name in the
 	// format: `projects/{project}/global/networks/{network}
-	TargetVpcNetwork string `json:"targetVpcNetwork,omitempty"`
+	TargetNetwork string `json:"targetNetwork,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DnsZones") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3188,6 +3184,8 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGatewayOperationMeta
 // request for creating a VPC peering between Google network and customer
 // networks.
 type GoogleCloudBeyondcorpSecuritygatewaysV1alphaSetPeeringRequest struct {
+	// Peerings: Required. List of Peering connection information.
+	Peerings []*GoogleCloudBeyondcorpSecuritygatewaysV1alphaPeering `json:"peerings,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
 	// know to ignore the request if it has already been completed. The server will
@@ -3203,15 +3201,13 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1alphaSetPeeringRequest struct {
 	// ValidateOnly: Optional. If set, validates request by executing a dry-run
 	// which would not alter the resource in any way.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
-	// VpcPeerings: Required. List of Peering connection information.
-	VpcPeerings []*GoogleCloudBeyondcorpSecuritygatewaysV1alphaPeering `json:"vpcPeerings,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// ForceSendFields is a list of field names (e.g. "Peerings") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// NullFields is a list of field names (e.g. "Peerings") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

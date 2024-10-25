@@ -1962,6 +1962,15 @@ type Mutation struct {
 	// to. If this does not match the current version on the server, the mutation
 	// conflicts.
 	BaseVersion int64 `json:"baseVersion,omitempty,string"`
+	// ConflictResolutionStrategy: The strategy to use when a conflict is detected.
+	// Defaults to `SERVER_VALUE`. If this is set, then
+	// `conflict_detection_strategy` must also be set.
+	//
+	// Possible values:
+	//   "STRATEGY_UNSPECIFIED" - Unspecified. Defaults to `SERVER_VALUE`.
+	//   "SERVER_VALUE" - The server entity is kept.
+	//   "FAIL" - The whole commit request fails.
+	ConflictResolutionStrategy string `json:"conflictResolutionStrategy,omitempty"`
 	// Delete: The key of the entity to delete. The entity may or may not already
 	// exist. Must have a complete key path and must not be reserved/read-only.
 	Delete *Key `json:"delete,omitempty"`
@@ -1974,6 +1983,11 @@ type Mutation struct {
 	// referenced in the mask are updated, others are left untouched. Properties
 	// referenced in the mask but not in the entity are deleted.
 	PropertyMask *PropertyMask `json:"propertyMask,omitempty"`
+	// PropertyTransforms: Optional. The transforms to perform on the entity. This
+	// field can be set only when the operation is `insert`, `update`, or `upsert`.
+	// If present, the transforms are be applied to the entity regardless of the
+	// property mask, in order, after the operation.
+	PropertyTransforms []*PropertyTransform `json:"propertyTransforms,omitempty"`
 	// Update: The entity to update. The entity must already exist. Must have a
 	// complete key path.
 	Update *Entity `json:"update,omitempty"`
@@ -2013,6 +2027,9 @@ type MutationResult struct {
 	// Key: The automatically allocated key. Set only when the mutation allocated a
 	// key.
 	Key *Key `json:"key,omitempty"`
+	// TransformResults: The results of applying each PropertyTransform, in the
+	// same order of the request.
+	TransformResults []*Value `json:"transformResults,omitempty"`
 	// UpdateTime: The update time of the entity on the server after processing the
 	// mutation. If the mutation doesn't change anything on the server, then the
 	// timestamp will be the update timestamp of the current entity. This field
@@ -2292,6 +2309,89 @@ type PropertyReference struct {
 
 func (s PropertyReference) MarshalJSON() ([]byte, error) {
 	type NoMethod PropertyReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PropertyTransform: A transformation of an entity property.
+type PropertyTransform struct {
+	// AppendMissingElements: Appends the given elements in order if they are not
+	// already present in the current property value. If the property is not an
+	// array, or if the property does not yet exist, it is first set to the empty
+	// array. Equivalent numbers of different types (e.g. 3L and 3.0) are
+	// considered equal when checking if a value is missing. NaN is equal to NaN,
+	// and the null value is equal to the null value. If the input contains
+	// multiple equivalent values, only the first will be considered. The
+	// corresponding transform result will be the null value.
+	AppendMissingElements *ArrayValue `json:"appendMissingElements,omitempty"`
+	// Increment: Adds the given value to the property's current value. This must
+	// be an integer or a double value. If the property is not an integer or
+	// double, or if the property does not yet exist, the transformation will set
+	// the property to the given value. If either of the given value or the current
+	// property value are doubles, both values will be interpreted as doubles.
+	// Double arithmetic and representation of double values follows IEEE 754
+	// semantics. If there is positive/negative integer overflow, the property is
+	// resolved to the largest magnitude positive/negative integer.
+	Increment *Value `json:"increment,omitempty"`
+	// Maximum: Sets the property to the maximum of its current value and the given
+	// value. This must be an integer or a double value. If the property is not an
+	// integer or double, or if the property does not yet exist, the transformation
+	// will set the property to the given value. If a maximum operation is applied
+	// where the property and the input value are of mixed types (that is - one is
+	// an integer and one is a double) the property takes on the type of the larger
+	// operand. If the operands are equivalent (e.g. 3 and 3.0), the property does
+	// not change. 0, 0.0, and -0.0 are all zero. The maximum of a zero stored
+	// value and zero input value is always the stored value. The maximum of any
+	// numeric value x and NaN is NaN.
+	Maximum *Value `json:"maximum,omitempty"`
+	// Minimum: Sets the property to the minimum of its current value and the given
+	// value. This must be an integer or a double value. If the property is not an
+	// integer or double, or if the property does not yet exist, the transformation
+	// will set the property to the input value. If a minimum operation is applied
+	// where the property and the input value are of mixed types (that is - one is
+	// an integer and one is a double) the property takes on the type of the
+	// smaller operand. If the operands are equivalent (e.g. 3 and 3.0), the
+	// property does not change. 0, 0.0, and -0.0 are all zero. The minimum of a
+	// zero stored value and zero input value is always the stored value. The
+	// minimum of any numeric value x and NaN is NaN.
+	Minimum *Value `json:"minimum,omitempty"`
+	// Property: Optional. The name of the property. Property paths (a list of
+	// property names separated by dots (`.`)) may be used to refer to properties
+	// inside entity values. For example `foo.bar` means the property `bar` inside
+	// the entity property `foo`. If a property name contains a dot `.` or a
+	// backlslash `\`, then that name must be escaped.
+	Property string `json:"property,omitempty"`
+	// RemoveAllFromArray: Removes all of the given elements from the array in the
+	// property. If the property is not an array, or if the property does not yet
+	// exist, it is set to the empty array. Equivalent numbers of different types
+	// (e.g. 3L and 3.0) are considered equal when deciding whether an element
+	// should be removed. NaN is equal to NaN, and the null value is equal to the
+	// null value. This will remove all equivalent values if there are duplicates.
+	// The corresponding transform result will be the null value.
+	RemoveAllFromArray *ArrayValue `json:"removeAllFromArray,omitempty"`
+	// SetToServerValue: Sets the property to the given server value.
+	//
+	// Possible values:
+	//   "SERVER_VALUE_UNSPECIFIED" - Unspecified. This value must not be used.
+	//   "REQUEST_TIME" - The time at which the server processed the request, with
+	// millisecond precision. If used on multiple properties (same or different
+	// entities) in a transaction, all the properties will get the same server
+	// timestamp.
+	SetToServerValue string `json:"setToServerValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppendMissingElements") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppendMissingElements") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PropertyTransform) MarshalJSON() ([]byte, error) {
+	type NoMethod PropertyTransform
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

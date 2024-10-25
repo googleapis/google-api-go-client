@@ -268,7 +268,7 @@ type GoogleCloudRunV2BinaryAuthorization struct {
 	// https://cloud.google.com/binary-authorization/docs/using-breakglass
 	BreakglassJustification string `json:"breakglassJustification,omitempty"`
 	// Policy: Optional. The path to a binary authorization policy. Format:
-	// projects/{project}/platforms/cloudRun/{policy-name}
+	// `projects/{project}/platforms/cloudRun/{policy-name}`
 	Policy string `json:"policy,omitempty"`
 	// UseDefault: Optional. If True, indicates to use the default project's binary
 	// authorization policy. If False, binary authorization will be disabled.
@@ -2001,7 +2001,7 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// MaxInstanceRequestConcurrency: Optional. Sets the maximum number of requests
 	// that each serving instance can receive. If not specified or 0, defaults to
-	// 80 when requested CPU >= 1 and defaults to 1 when requested CPU < 1.
+	// 80 when requested `CPU >= 1` and defaults to 1 when requested `CPU < 1`.
 	MaxInstanceRequestConcurrency int64 `json:"maxInstanceRequestConcurrency,omitempty"`
 	// NodeSelector: Optional. The node selector for the revision template.
 	NodeSelector *GoogleCloudRunV2NodeSelector `json:"nodeSelector,omitempty"`
@@ -2221,8 +2221,9 @@ type GoogleCloudRunV2Service struct {
 	//   "INGRESS_TRAFFIC_NONE" - No ingress traffic is allowed.
 	Ingress string `json:"ingress,omitempty"`
 	// InvokerIamDisabled: Optional. Disables IAM permission check for
-	// run.routes.invoke for callers of this service. This setting should not be
-	// used with external ingress.
+	// run.routes.invoke for callers of this service. This feature is available by
+	// invitation only. For more information, visit
+	// https://cloud.google.com/run/docs/securing/managing-access#invoker_check.
 	InvokerIamDisabled bool `json:"invokerIamDisabled,omitempty"`
 	// Labels: Optional. Unstructured key value map that can be used to organize
 	// and categorize objects. User-provided labels are shared with Google's
@@ -2370,8 +2371,8 @@ func (s GoogleCloudRunV2Service) MarshalJSON() ([]byte, error) {
 // information see https://cloud.google.com/service-mesh/docs/overview.
 type GoogleCloudRunV2ServiceMesh struct {
 	// Mesh: The Mesh resource name. Format:
-	// projects/{project}/locations/global/meshes/{mesh}, where {project} can be
-	// project id or number.
+	// `projects/{project}/locations/global/meshes/{mesh}`, where `{project}` can
+	// be project id or number.
 	Mesh string `json:"mesh,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Mesh") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2474,9 +2475,9 @@ type GoogleCloudRunV2SubmitBuildRequest struct {
 	// WorkerPool: Optional. Name of the Cloud Build Custom Worker Pool that should
 	// be used to build the function. The format of this field is
 	// `projects/{project}/locations/{region}/workerPools/{workerPool}` where
-	// {project} and {region} are the project id and region respectively where the
-	// worker pool is defined and {workerPool} is the short name of the worker
-	// pool.
+	// `{project}` and `{region}` are the project id and region respectively where
+	// the worker pool is defined and `{workerPool}` is the short name of the
+	// worker pool.
 	WorkerPool string `json:"workerPool,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BuildpackBuild") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2955,8 +2956,8 @@ func (s GoogleCloudRunV2VolumeMount) MarshalJSON() ([]byte, error) {
 // https://cloud.google.com/run/docs/configuring/connecting-vpc.
 type GoogleCloudRunV2VpcAccess struct {
 	// Connector: VPC Access connector name. Format:
-	// projects/{project}/locations/{location}/connectors/{connector}, where
-	// {project} can be project id or number. For more information on sending
+	// `projects/{project}/locations/{location}/connectors/{connector}`, where
+	// `{project}` can be project id or number. For more information on sending
 	// traffic to a VPC network via a connector, visit
 	// https://cloud.google.com/run/docs/configuring/vpc-connectors.
 	Connector string `json:"connector,omitempty"`
@@ -5552,7 +5553,7 @@ type ProjectsLocationsBuildsSubmitCall struct {
 //
 //   - parent: The project and location to build in. Location must be a region,
 //     e.g., 'us-central1' or 'global' if the global builder is to be used.
-//     Format: projects/{project}/locations/{location}.
+//     Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsBuildsService) Submit(parent string, googlecloudrunv2submitbuildrequest *GoogleCloudRunV2SubmitBuildRequest) *ProjectsLocationsBuildsSubmitCall {
 	c := &ProjectsLocationsBuildsSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

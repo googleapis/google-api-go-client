@@ -16023,21 +16023,23 @@ func (s GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSou
 // GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSourceSn
 // ippet: Snippet Source for a Generative Prediction.
 type GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSourceSnippet struct {
+	// Metadata: Metadata of the document.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Text: Text taken from that URI.
 	Text string `json:"text,omitempty"`
 	// Title: Title of the document.
 	Title string `json:"title,omitempty"`
 	// Uri: URI the data is sourced from.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Text") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -19369,21 +19371,23 @@ func (s GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerati
 // GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerativeSou
 // rceSnippet: Snippet Source for a Generative Prediction.
 type GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerativeSourceSnippet struct {
+	// Metadata: Metadata of the document.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Text: Text taken from that URI.
 	Text string `json:"text,omitempty"`
 	// Title: Title of the document.
 	Title string `json:"title,omitempty"`
 	// Uri: URI the data is sourced from.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Text") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

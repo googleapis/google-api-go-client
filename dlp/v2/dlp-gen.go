@@ -1184,8 +1184,8 @@ func (s GooglePrivacyDlpV2BigQueryRegexes) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2BigQueryTable struct {
 	// DatasetId: Dataset ID of the table.
 	DatasetId string `json:"datasetId,omitempty"`
-	// ProjectId: The Google Cloud Platform project ID of the project containing
-	// the table. If omitted, project ID is inferred from the API call.
+	// ProjectId: The Google Cloud project ID of the project containing the table.
+	// If omitted, project ID is inferred from the API call.
 	ProjectId string `json:"projectId,omitempty"`
 	// TableId: Name of the table.
 	TableId string `json:"tableId,omitempty"`
@@ -1241,6 +1241,7 @@ type GooglePrivacyDlpV2BigQueryTableTypes struct {
 	//   "BIG_QUERY_TABLE_TYPE_TABLE" - A normal BigQuery table.
 	//   "BIG_QUERY_TABLE_TYPE_EXTERNAL_BIG_LAKE" - A table that references data
 	// stored in Cloud Storage.
+	//   "BIG_QUERY_TABLE_TYPE_SNAPSHOT" - A snapshot of a BigQuery table.
 	Types []string `json:"types,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Types") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2024,11 +2025,12 @@ type GooglePrivacyDlpV2ColumnDataProfile struct {
 	ColumnType string `json:"columnType,omitempty"`
 	// DataRiskLevel: The data risk level for this column.
 	DataRiskLevel *GooglePrivacyDlpV2DataRiskLevel `json:"dataRiskLevel,omitempty"`
-	// DatasetId: The BigQuery dataset ID.
+	// DatasetId: The BigQuery dataset ID, if the resource profiled is a BigQuery
+	// table.
 	DatasetId string `json:"datasetId,omitempty"`
-	// DatasetLocation: The BigQuery location where the dataset's data is stored.
-	// See https://cloud.google.com/bigquery/docs/locations for supported
-	// locations.
+	// DatasetLocation: If supported, the location where the dataset's data is
+	// stored. See https://cloud.google.com/bigquery/docs/locations for supported
+	// BigQuery locations.
 	DatasetLocation string `json:"datasetLocation,omitempty"`
 	// DatasetProjectId: The Google Cloud project ID that owns the profiled
 	// resource.
@@ -2089,7 +2091,7 @@ type GooglePrivacyDlpV2ColumnDataProfile struct {
 	TableDataProfile string `json:"tableDataProfile,omitempty"`
 	// TableFullResource: The resource name of the resource this column is within.
 	TableFullResource string `json:"tableFullResource,omitempty"`
-	// TableId: The BigQuery table ID.
+	// TableId: The table ID.
 	TableId string `json:"tableId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -9694,7 +9696,8 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	// FailedColumnCount: The number of columns skipped in the table because of an
 	// error.
 	FailedColumnCount int64 `json:"failedColumnCount,omitempty,string"`
-	// FullResource: The resource name of the resource profiled.
+	// FullResource: The Cloud Asset Inventory resource that was profiled in order
+	// to generate this TableDataProfile.
 	// https://cloud.google.com/apis/design/resource_names#full_resource_name
 	FullResource string `json:"fullResource,omitempty"`
 	// LastModifiedTime: The time when this table was last modified
@@ -9743,7 +9746,7 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	// profile_status.status.code is 0, the profile succeeded, otherwise, it
 	// failed.
 	State string `json:"state,omitempty"`
-	// TableId: If the resource is BigQuery, the BigQuery table ID.
+	// TableId: The table ID.
 	TableId string `json:"tableId,omitempty"`
 	// TableSizeBytes: The size of the table when the profile was generated.
 	TableSizeBytes int64 `json:"tableSizeBytes,omitempty,string"`
@@ -10907,16 +10910,19 @@ func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 // allow leap seconds. Related types are google.type.Date and
 // `google.protobuf.Timestamp`.
 type GoogleTypeTimeOfDay struct {
-	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API may
-	// choose to allow the value "24:00:00" for scenarios like business closing
-	// time.
+	// Hours: Hours of a day in 24 hour format. Must be greater than or equal to 0
+	// and typically must be less than or equal to 23. An API may choose to allow
+	// the value "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
-	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Minutes of an hour. Must be greater than or equal to 0 and less
+	// than or equal to 59.
 	Minutes int64 `json:"minutes,omitempty"`
-	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+	// Nanos: Fractions of seconds, in nanoseconds. Must be greater than or equal
+	// to 0 and less than or equal to 999,999,999.
 	Nanos int64 `json:"nanos,omitempty"`
-	// Seconds: Seconds of minutes of the time. Must normally be from 0 to 59. An
-	// API may allow the value 60 if it allows leap-seconds.
+	// Seconds: Seconds of a minute. Must be greater than or equal to 0 and
+	// typically must be less than or equal to 59. An API may allow the value 60 if
+	// it allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

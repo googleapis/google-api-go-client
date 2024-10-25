@@ -339,6 +339,8 @@ type ProductStatusChangeMessage struct {
 	Attribute string `json:"attribute,omitempty"`
 	// Changes: A message to describe the change that happened to the product
 	Changes []*ProductChange `json:"changes,omitempty"`
+	// ExpirationTime: The product expiration time.
+	ExpirationTime string `json:"expirationTime,omitempty"`
 	// ManagingAccount: The account that manages the merchant's account. can be the
 	// same as merchant id if it is standalone account. Format :
 	// `accounts/{service_provider_id}`

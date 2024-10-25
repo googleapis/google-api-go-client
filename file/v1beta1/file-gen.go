@@ -511,15 +511,18 @@ func (s FileShareConfig) MarshalJSON() ([]byte, error) {
 
 // FixedIOPS: Fixed IOPS (input/output operations per second) parameters.
 type FixedIOPS struct {
-	// MaxReadIops: Required. Maximum raw read IOPS.
+	// MaxIops: Required. Maximum raw IOPS.
+	MaxIops int64 `json:"maxIops,omitempty,string"`
+	// MaxReadIops: Optional. Deprecated: `max_iops` should be used instead of this
+	// parameter. Maximum raw read IOPS.
 	MaxReadIops int64 `json:"maxReadIops,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "MaxReadIops") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "MaxIops") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MaxReadIops") to include in API
+	// NullFields is a list of field names (e.g. "MaxIops") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -911,17 +914,20 @@ func (s GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata) MarshalJSON(
 
 // IOPSPerTB: IOPS per TB. Filestore defines TB as 1024^4 bytes (TiB).
 type IOPSPerTB struct {
-	// MaxReadIopsPerTb: Required. Maximum read IOPS per TiB.
+	// MaxIopsPerTb: Required. Maximum IOPS per TiB.
+	MaxIopsPerTb int64 `json:"maxIopsPerTb,omitempty,string"`
+	// MaxReadIopsPerTb: Optional. Deprecated: `max_iops_per_tb` should be used
+	// instead of this parameter. Maximum read IOPS per TiB.
 	MaxReadIopsPerTb int64 `json:"maxReadIopsPerTb,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "MaxReadIopsPerTb") to
+	// ForceSendFields is a list of field names (e.g. "MaxIopsPerTb") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MaxReadIopsPerTb") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "MaxIopsPerTb") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2008,16 +2014,19 @@ func (s Status) MarshalJSON() ([]byte, error) {
 // significant or are specified elsewhere. An API may choose to allow leap
 // seconds. Related types are google.type.Date and `google.protobuf.Timestamp`.
 type TimeOfDay struct {
-	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API may
-	// choose to allow the value "24:00:00" for scenarios like business closing
-	// time.
+	// Hours: Hours of a day in 24 hour format. Must be greater than or equal to 0
+	// and typically must be less than or equal to 23. An API may choose to allow
+	// the value "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
-	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Minutes of an hour. Must be greater than or equal to 0 and less
+	// than or equal to 59.
 	Minutes int64 `json:"minutes,omitempty"`
-	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+	// Nanos: Fractions of seconds, in nanoseconds. Must be greater than or equal
+	// to 0 and less than or equal to 999,999,999.
 	Nanos int64 `json:"nanos,omitempty"`
-	// Seconds: Seconds of minutes of the time. Must normally be from 0 to 59. An
-	// API may allow the value 60 if it allows leap-seconds.
+	// Seconds: Seconds of a minute. Must be greater than or equal to 0 and
+	// typically must be less than or equal to 59. An API may allow the value 60 if
+	// it allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

@@ -2485,7 +2485,11 @@ type EnrollmentToken struct {
 	//   "PERSONAL_USAGE_DISALLOWED" - Personal usage is disallowed
 	//   "PERSONAL_USAGE_DISALLOWED_USERLESS" - Device is not associated with a
 	// single user, and thus both personal usage and corporate identity
-	// authentication are not expected.
+	// authentication are not expected. Important: This setting is mandatory for
+	// dedicated device enrollment and it is a breaking change. This change needs
+	// to be implemented before January 2025.For additional details see the
+	// dedicated device provisioning guide
+	// (https://developers.google.com/android/management/provision-device#company-owned_devices_for_work_use_only).
 	AllowPersonalUsage string `json:"allowPersonalUsage,omitempty"`
 	// Duration: The length of time the enrollment token is valid, ranging from 1
 	// minute to Durations.MAX_VALUE
@@ -5712,7 +5716,11 @@ type SigninDetail struct {
 	//   "PERSONAL_USAGE_DISALLOWED" - Personal usage is disallowed
 	//   "PERSONAL_USAGE_DISALLOWED_USERLESS" - Device is not associated with a
 	// single user, and thus both personal usage and corporate identity
-	// authentication are not expected.
+	// authentication are not expected. Important: This setting is mandatory for
+	// dedicated device enrollment and it is a breaking change. This change needs
+	// to be implemented before January 2025.For additional details see the
+	// dedicated device provisioning guide
+	// (https://developers.google.com/android/management/provision-device#company-owned_devices_for_work_use_only).
 	AllowPersonalUsage string `json:"allowPersonalUsage,omitempty"`
 	// DefaultStatus: Optional. Whether the sign-in URL should be used by default
 	// for the enterprise. The SigninDetail with defaultStatus set to

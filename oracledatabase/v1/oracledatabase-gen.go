@@ -1242,13 +1242,13 @@ type CloudExadataInfrastructureProperties struct {
 	// ComputeCount: Optional. The number of compute servers for the Exadata
 	// Infrastructure.
 	ComputeCount int64 `json:"computeCount,omitempty"`
-	// CpuCount: Optional. The number of enabled CPU cores.
+	// CpuCount: Output only. The number of enabled CPU cores.
 	CpuCount int64 `json:"cpuCount,omitempty"`
 	// CustomerContacts: Optional. The list of customer contacts.
 	CustomerContacts []*CustomerContact `json:"customerContacts,omitempty"`
 	// DataStorageSizeTb: Output only. Size, in terabytes, of the DATA disk group.
 	DataStorageSizeTb float64 `json:"dataStorageSizeTb,omitempty"`
-	// DbNodeStorageSizeGb: Optional. The local node storage allocated in GBs.
+	// DbNodeStorageSizeGb: Output only. The local node storage allocated in GBs.
 	DbNodeStorageSizeGb int64 `json:"dbNodeStorageSizeGb,omitempty"`
 	// DbServerVersion: Output only. The software version of the database servers
 	// (dom0) in the Exadata Infrastructure.
@@ -1264,7 +1264,7 @@ type CloudExadataInfrastructureProperties struct {
 	MaxDbNodeStorageSizeGb int64 `json:"maxDbNodeStorageSizeGb,omitempty"`
 	// MaxMemoryGb: Output only. The total memory available in GBs.
 	MaxMemoryGb int64 `json:"maxMemoryGb,omitempty"`
-	// MemorySizeGb: Optional. The memory allocated in GBs.
+	// MemorySizeGb: Output only. The memory allocated in GBs.
 	MemorySizeGb int64 `json:"memorySizeGb,omitempty"`
 	// MonthlyDbServerVersion: Output only. The monthly software version of the
 	// database servers (dom0) in the Exadata Infrastructure. Example: 20.1.15
@@ -2716,16 +2716,19 @@ func (s Status) MarshalJSON() ([]byte, error) {
 // significant or are specified elsewhere. An API may choose to allow leap
 // seconds. Related types are google.type.Date and `google.protobuf.Timestamp`.
 type TimeOfDay struct {
-	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API may
-	// choose to allow the value "24:00:00" for scenarios like business closing
-	// time.
+	// Hours: Hours of a day in 24 hour format. Must be greater than or equal to 0
+	// and typically must be less than or equal to 23. An API may choose to allow
+	// the value "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
-	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Minutes of an hour. Must be greater than or equal to 0 and less
+	// than or equal to 59.
 	Minutes int64 `json:"minutes,omitempty"`
-	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+	// Nanos: Fractions of seconds, in nanoseconds. Must be greater than or equal
+	// to 0 and less than or equal to 999,999,999.
 	Nanos int64 `json:"nanos,omitempty"`
-	// Seconds: Seconds of minutes of the time. Must normally be from 0 to 59. An
-	// API may allow the value 60 if it allows leap-seconds.
+	// Seconds: Seconds of a minute. Must be greater than or equal to 0 and
+	// typically must be less than or equal to 59. An API may allow the value 60 if
+	// it allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

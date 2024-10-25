@@ -423,6 +423,63 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BoostConfig: A configuration that workstations can boost to.
+type BoostConfig struct {
+	// Accelerators: Optional. A list of the type and count of accelerator cards
+	// attached to the boost instance. Defaults to `none`.
+	Accelerators []*Accelerator `json:"accelerators,omitempty"`
+	// BootDiskSizeGb: Optional. The size of the boot disk for the VM in gigabytes
+	// (GB). The minimum boot disk size is `30` GB. Defaults to `50` GB.
+	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
+	// EnableNestedVirtualization: Optional. Whether to enable nested
+	// virtualization on boosted Cloud Workstations VMs running using this boost
+	// configuration. Defaults to false. Nested virtualization lets you run virtual
+	// machine (VM) instances inside your workstation. Before enabling nested
+	// virtualization, consider the following important considerations. Cloud
+	// Workstations instances are subject to the same restrictions as Compute
+	// Engine instances
+	// (https://cloud.google.com/compute/docs/instances/nested-virtualization/overview#restrictions):
+	// * **Organization policy**: projects, folders, or organizations may be
+	// restricted from creating nested VMs if the **Disable VM nested
+	// virtualization** constraint is enforced in the organization policy. For more
+	// information, see the Compute Engine section, Checking whether nested
+	// virtualization is allowed
+	// (https://cloud.google.com/compute/docs/instances/nested-virtualization/managing-constraint#checking_whether_nested_virtualization_is_allowed).
+	// * **Performance**: nested VMs might experience a 10% or greater decrease in
+	// performance for workloads that are CPU-bound and possibly greater than a 10%
+	// decrease for workloads that are input/output bound. * **Machine Type**:
+	// nested virtualization can only be enabled on boost configurations that
+	// specify a machine_type in the N1 or N2 machine series.
+	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
+	// Id: Optional. Required. The id to be used for the boost configuration.
+	Id string `json:"id,omitempty"`
+	// MachineType: Optional. The type of machine that boosted VM instances will
+	// use—for example, `e2-standard-4`. For more information about machine types
+	// that Cloud Workstations supports, see the list of available machine types
+	// (https://cloud.google.com/workstations/docs/available-machine-types).
+	// Defaults to `e2-standard-4`.
+	MachineType string `json:"machineType,omitempty"`
+	// PoolSize: Optional. The number of boost VMs that the system should keep idle
+	// so that workstations can be boosted quickly. Defaults to `0`.
+	PoolSize int64 `json:"poolSize,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Accelerators") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Accelerators") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BoostConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BoostConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
@@ -634,6 +691,9 @@ type GceInstance struct {
 	// Accelerators: Optional. A list of the type and count of accelerator cards
 	// attached to the instance.
 	Accelerators []*Accelerator `json:"accelerators,omitempty"`
+	// BoostConfigs: Optional. A list of the boost configurations that workstations
+	// created using this workstation configuration are allowed to use.
+	BoostConfigs []*BoostConfig `json:"boostConfigs,omitempty"`
 	// BootDiskSizeGb: Optional. The size of the boot disk for the VM in gigabytes
 	// (GB). The minimum boot disk size is `30` GB. Defaults to `50` GB.
 	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
@@ -1777,6 +1837,9 @@ type WorkstationCluster struct {
 	// instances associated with this workstation cluster will be created. Must be
 	// part of the subnetwork specified for this workstation cluster.
 	Subnetwork string `json:"subnetwork,omitempty"`
+	// Tags: Optional. Tag keys/values directly bound to this resource. For
+	// example: "123/environment": "production", "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// Uid: Output only. A system-assigned unique identifier for this workstation
 	// cluster.
 	Uid string `json:"uid,omitempty"`

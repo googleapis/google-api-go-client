@@ -1039,8 +1039,8 @@ type BackupPlanAssociation struct {
 	// Resource: Required. Immutable. Resource name of workload on which backupplan
 	// is applied
 	Resource string `json:"resource,omitempty"`
-	// ResourceType: Output only. Output Only. Resource type of workload on which
-	// backupplan is applied
+	// ResourceType: Optional. Resource type of workload on which backupplan is
+	// applied
 	ResourceType string `json:"resourceType,omitempty"`
 	// RulesConfigInfo: Output only. The config info related to backup rules.
 	RulesConfigInfo []*RuleConfigInfo `json:"rulesConfigInfo,omitempty"`
@@ -1052,6 +1052,7 @@ type BackupPlanAssociation struct {
 	//   "ACTIVE" - The resource has been created and is fully usable.
 	//   "DELETING" - The resource is being deleted.
 	//   "INACTIVE" - The resource has been created but is not usable.
+	//   "UPDATING" - The resource is being updated.
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. The time when the instance was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -5739,6 +5740,15 @@ func (c *ProjectsLocationsBackupVaultsDeleteCall) Etag(etag string) *ProjectsLoc
 // from this backup vault will also be deleted.
 func (c *ProjectsLocationsBackupVaultsDeleteCall) Force(force bool) *ProjectsLocationsBackupVaultsDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// IgnoreBackupPlanReferences sets the optional parameter
+// "ignoreBackupPlanReferences": If set to true, backupvault deletion will
+// proceed even if there are backup plans referencing the backupvault. The
+// default is 'false'.
+func (c *ProjectsLocationsBackupVaultsDeleteCall) IgnoreBackupPlanReferences(ignoreBackupPlanReferences bool) *ProjectsLocationsBackupVaultsDeleteCall {
+	c.urlParams_.Set("ignoreBackupPlanReferences", fmt.Sprint(ignoreBackupPlanReferences))
 	return c
 }
 

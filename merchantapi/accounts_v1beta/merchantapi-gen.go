@@ -448,7 +448,7 @@ type AddAccountService struct {
 	// (https://support.google.com/merchants/answer/188487) for the account.
 	// Payload for service type Account Aggregation.
 	AccountAggregation *AccountAggregation `json:"accountAggregation,omitempty"`
-	// Provider: Optional. The provider of the service. Format:
+	// Provider: Required. The provider of the service. Format:
 	// `accounts/{account}`
 	Provider string `json:"provider,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccountAggregation") to
@@ -724,6 +724,26 @@ func (s CarrierRate) MarshalJSON() ([]byte, error) {
 
 // ClaimHomepageRequest: Request message for the `ClaimHomepage` method.
 type ClaimHomepageRequest struct {
+	// Overwrite: Optional. When set to `true`, this option removes any existing
+	// claim on the requested website and replaces it with a claim from the account
+	// that makes the request.
+	Overwrite bool `json:"overwrite,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Overwrite") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Overwrite") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClaimHomepageRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ClaimHomepageRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateAndConfigureAccountRequest: Request message for the
@@ -2053,6 +2073,8 @@ type ProductStatusChangeMessage struct {
 	Attribute string `json:"attribute,omitempty"`
 	// Changes: A message to describe the change that happened to the product
 	Changes []*ProductChange `json:"changes,omitempty"`
+	// ExpirationTime: The product expiration time.
+	ExpirationTime string `json:"expirationTime,omitempty"`
 	// ManagingAccount: The account that manages the merchant's account. can be the
 	// same as merchant id if it is standalone account. Format :
 	// `accounts/{service_provider_id}`
@@ -3682,8 +3704,10 @@ func (r *AccountsService) Patch(name string, account *Account) *AccountsPatchCal
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated. The following fields are supported (in both `snake_case` and
+// `lowerCamelCase`): - `account_name` - `adult_content` - `language_code` -
+// `time_zone`
 func (c *AccountsPatchCall) UpdateMask(updateMask string) *AccountsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4120,8 +4144,10 @@ func (r *AccountsBusinessIdentityService) UpdateBusinessIdentity(name string, bu
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated. The following fields are supported (in both `snake_case` and
+// `lowerCamelCase`): - `black_owned` - `latino_owned` - `promotions_consent` -
+// `small_business` - `veteran_owned` - `women_owned`
 func (c *AccountsBusinessIdentityUpdateBusinessIdentityCall) UpdateMask(updateMask string) *AccountsBusinessIdentityUpdateBusinessIdentityCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4339,8 +4365,10 @@ func (r *AccountsBusinessInfoService) UpdateBusinessInfo(name string, businessin
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated. The following fields are supported (in both `snake_case` and
+// `lowerCamelCase`): - `address` - `customer_service` -
+// `korean_business_registration_number`
 func (c *AccountsBusinessInfoUpdateBusinessInfoCall) UpdateMask(updateMask string) *AccountsBusinessInfoUpdateBusinessInfoCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4438,8 +4466,10 @@ type AccountsEmailPreferencesGetEmailPreferencesCall struct {
 }
 
 // GetEmailPreferences: Returns the email preferences for a Merchant Center
-// account user. Use the name=accounts/*/users/me/emailPreferences alias to get
-// preferences for the authenticated user.
+// account user. This service only permits retrieving and updating email
+// preferences for the authenticated user. Use the
+// name=accounts/*/users/me/emailPreferences alias to get preferences for the
+// authenticated user.
 //
 //   - name: The name of the `EmailPreferences` resource. Format:
 //     `accounts/{account}/users/{email}/emailPreferences`.
@@ -4566,7 +4596,8 @@ func (r *AccountsEmailPreferencesService) UpdateEmailPreferences(name string, em
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// fields being updated. The following fields are supported (in both
+// `snake_case` and `lowerCamelCase`): - `news_and_tips`
 func (c *AccountsEmailPreferencesUpdateEmailPreferencesCall) UpdateMask(updateMask string) *AccountsEmailPreferencesUpdateEmailPreferencesCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4998,8 +5029,9 @@ func (r *AccountsHomepageService) UpdateHomepage(name string, homepage *Homepage
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated. The following fields are supported (in both `snake_case` and
+// `lowerCamelCase`): - `uri`
 func (c *AccountsHomepageUpdateHomepageCall) UpdateMask(updateMask string) *AccountsHomepageUpdateHomepageCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7099,7 +7131,9 @@ type AccountsUsersDeleteCall struct {
 }
 
 // Delete: Deletes a Merchant Center account user. Executing this method
-// requires admin access.
+// requires admin access. The user to be deleted can't be the last admin user
+// of that account. Also a user is protected from deletion if it is managed by
+// Business Manager"
 //
 //   - name: The name of the user to delete. Format:
 //     `accounts/{account}/users/{email}` It is also possible to delete the user
@@ -7469,8 +7503,9 @@ func (r *AccountsUsersService) Patch(name string, user *User) *AccountsUsersPatc
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated. The following fields are supported (in both `snake_case` and
+// `lowerCamelCase`): - `access_rights`
 func (c *AccountsUsersPatchCall) UpdateMask(updateMask string) *AccountsUsersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

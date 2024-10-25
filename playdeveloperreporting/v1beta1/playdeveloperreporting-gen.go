@@ -775,6 +775,9 @@ func (s GooglePlayDeveloperReportingV1beta1ErrorCountMetricSet) MarshalJSON() ([
 // resource, the calling user needs the _View app information (read-only)_
 // permission for the app.
 type GooglePlayDeveloperReportingV1beta1ErrorIssue struct {
+	// Annotations: List of annotations for an issue. Annotations provide
+	// additional information that may help in diagnosing and fixing the issue.
+	Annotations []*GooglePlayDeveloperReportingV1beta1IssueAnnotation `json:"annotations,omitempty"`
 	// Cause: Cause of the issue. Depending on the type this can be either: *
 	// APPLICATION_NOT_RESPONDING: the type of ANR that occurred, e.g., 'Input
 	// dispatching timed out'. * CRASH: for Java unhandled exception errors, the
@@ -838,13 +841,13 @@ type GooglePlayDeveloperReportingV1beta1ErrorIssue struct {
 	//   "NON_FATAL" - Non-fatal caused by events that do not immediately cause
 	// crashes, but is likely to lead to one.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Cause") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Cause") to include in API
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1066,6 +1069,34 @@ type GooglePlayDeveloperReportingV1beta1FreshnessInfoFreshness struct {
 
 func (s GooglePlayDeveloperReportingV1beta1FreshnessInfoFreshness) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1FreshnessInfoFreshness
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePlayDeveloperReportingV1beta1IssueAnnotation: Representation of an
+// annotation message for an issue.
+type GooglePlayDeveloperReportingV1beta1IssueAnnotation struct {
+	// Body: Contains the contents of the annotation message.
+	Body string `json:"body,omitempty"`
+	// Category: Category that the annotation belongs to. An annotation will belong
+	// to a single category. Example categories: "Potential fix", "Insight".
+	Category string `json:"category,omitempty"`
+	// Title: Title for the annotation.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePlayDeveloperReportingV1beta1IssueAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1beta1IssueAnnotation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

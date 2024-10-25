@@ -506,8 +506,6 @@ type BackupContext struct {
 	BackupId int64 `json:"backupId,omitempty,string"`
 	// Kind: This is always `sql#backupContext`.
 	Kind string `json:"kind,omitempty"`
-	// Name: The name of the backup. Format: projects/{project}/backups/{backup}
-	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -595,8 +593,8 @@ type BackupRun struct {
 	//
 	// Possible values:
 	//   "SQL_BACKUP_KIND_UNSPECIFIED" - This is an unknown BackupKind.
-	//   "SNAPSHOT" - The snapshot based backups
-	//   "PHYSICAL" - Physical backups
+	//   "SNAPSHOT" - Snapshot-based backups.
+	//   "PHYSICAL" - Physical backups.
 	BackupKind string `json:"backupKind,omitempty"`
 	// Description: The description of this run, only applicable to on-demand
 	// backups.
@@ -2658,28 +2656,18 @@ func (s InstancesReencryptRequest) MarshalJSON() ([]byte, error) {
 
 // InstancesRestoreBackupRequest: Database instance restore backup request.
 type InstancesRestoreBackupRequest struct {
-	// Backup: The name of the backup to restore from in following format:
-	// projects/{project-id}/backups/{backup-uid} Only one of
-	// restore_backup_context or backup can be passed to the input.
-	Backup string `json:"backup,omitempty"`
 	// RestoreBackupContext: Parameters required to perform the restore backup
 	// operation.
 	RestoreBackupContext *RestoreBackupContext `json:"restoreBackupContext,omitempty"`
-	// RestoreInstanceSettings: Optional. Restore instance settings overrides the
-	// instance settings stored as part of the backup. Instance's major database
-	// version cannot be changed and the disk size can only be increased. This
-	// feature is only available for restores to new instances using the backup
-	// name.
-	RestoreInstanceSettings *DatabaseInstance `json:"restoreInstanceSettings,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "RestoreBackupContext") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Backup") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "RestoreBackupContext") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2794,7 +2782,8 @@ type IpConfiguration struct {
 	// ServerCaMode: Specify what type of CA is used for the server certificate.
 	//
 	// Possible values:
-	//   "CA_MODE_UNSPECIFIED" - CA mode is unknown.
+	//   "CA_MODE_UNSPECIFIED" - CA mode is unspecified. It is effectively the same
+	// as `GOOGLE_MANAGED_INTERNAL_CA`.
 	//   "GOOGLE_MANAGED_INTERNAL_CA" - Google-managed self-signed internal CA.
 	//   "GOOGLE_MANAGED_CAS_CA" - Google-managed regional CA part of root CA
 	// hierarchy hosted on Google Cloud's Certificate Authority Service (CAS).
@@ -3181,7 +3170,6 @@ type Operation struct {
 	//   "REENCRYPT" - Re-encrypts CMEK instances with latest key version.
 	//   "SWITCHOVER" - Switches the roles of the primary and replica pair. The
 	// target instance should be the replica.
-	//   "UPDATE_BACKUP" - Update a backup.
 	//   "ACQUIRE_SSRS_LEASE" - Acquire a lease for the setup of SQL Server
 	// Reporting Services (SSRS).
 	//   "RELEASE_SSRS_LEASE" - Release a lease for the setup of SQL Server
@@ -3347,8 +3335,6 @@ type OperationsListResponse struct {
 	// sets. Provide this value in a subsequent request to return the next page of
 	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Warnings: List of warnings that occurred while handling the request.
-	Warnings []*ApiWarning `json:"warnings,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3458,6 +3444,43 @@ func (s PerformDiskShrinkContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PscAutoConnectionConfig: Settings for an automatically-setup Private Service
+// Connect consumer endpoint that is used to connect to a Cloud SQL instance.
+type PscAutoConnectionConfig struct {
+	// ConsumerNetwork: The consumer network of this consumer endpoint. This must
+	// be a resource path that includes both the host project and the network name.
+	// For example, `projects/project1/global/networks/network1`. The consumer host
+	// project of this network might be different from the consumer service
+	// project.
+	ConsumerNetwork string `json:"consumerNetwork,omitempty"`
+	// ConsumerNetworkStatus: The connection policy status of the consumer network.
+	ConsumerNetworkStatus string `json:"consumerNetworkStatus,omitempty"`
+	// ConsumerProject: This is the project ID of consumer service project of this
+	// consumer endpoint. Optional. This is only applicable if consumer_network is
+	// a shared vpc network.
+	ConsumerProject string `json:"consumerProject,omitempty"`
+	// IpAddress: The IP address of the consumer endpoint.
+	IpAddress string `json:"ipAddress,omitempty"`
+	// Status: The connection status of the consumer endpoint.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConsumerNetwork") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsumerNetwork") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscAutoConnectionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscAutoConnectionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PscConfig: PSC settings for a Cloud SQL instance.
 type PscConfig struct {
 	// AllowedConsumerProjects: Optional. The list of consumer projects that are
@@ -3466,6 +3489,10 @@ type PscConfig struct {
 	// project in this list may be represented by a project number (numeric) or by
 	// a project id (alphanumeric).
 	AllowedConsumerProjects []string `json:"allowedConsumerProjects,omitempty"`
+	// PscAutoConnections: Optional. The list of settings for requested Private
+	// Service Connect consumer endpoints that can be used to connect to this Cloud
+	// SQL instance.
+	PscAutoConnections []*PscAutoConnectionConfig `json:"pscAutoConnections,omitempty"`
 	// PscEnabled: Whether PSC connectivity is enabled for this instance.
 	PscEnabled bool `json:"pscEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedConsumerProjects") to
@@ -4017,6 +4044,8 @@ type SqlExternalSyncSettingError struct {
 	// tables with the FULL or NOTHING replica identity. Before starting your
 	// migration, either remove the identity or change it to DEFAULT. Note that
 	// this is an error and will block the migration.
+	//   "SELECTED_OBJECTS_NOT_EXIST_ON_SOURCE" - The selected objects don't exist
+	// on the source instance.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Detail") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6371,7 +6400,8 @@ type InstancesListServerCertificatesCall struct {
 // certificate authorities (CAs) for the specified instance. There can be up to
 // three sets of certs listed: the certificate that is currently in use, a
 // future that has been added but not yet used to sign a certificate, and a
-// certificate that has been rotated out.
+// certificate that has been rotated out. For instances not using Certificate
+// Authority Service (CAS) server CA, use ListServerCas instead.
 //
 // - instance: Cloud SQL instance ID. This does not include the project ID.
 // - project: Project ID of the project that contains the instance.
@@ -6485,8 +6515,8 @@ type InstancesRotateServerCertificateCall struct {
 
 // RotateServerCertificate: Rotates the server certificate version to one
 // previously added with the addServerCertificate method. For instances not
-// using Certificate Authority Service (CAS) server CA, please use
-// RotateServerCa instead.
+// using Certificate Authority Service (CAS) server CA, use RotateServerCa
+// instead.
 //
 // - instance: Cloud SQL instance ID. This does not include the project ID.
 // - project: Project ID of the project that contains the instance.
@@ -6706,8 +6736,8 @@ type InstancesAddServerCaCall struct {
 // version was previously added but never used in a certificate rotation, this
 // operation replaces that version. There cannot be more than one CA version
 // waiting to be rotated in. For instances that have enabled Certificate
-// Authority Service (CAS) based server CA, please use AddServerCertificate to
-// add a new server certificate.
+// Authority Service (CAS) based server CA, use AddServerCertificate to add a
+// new server certificate.
 //
 // - instance: Cloud SQL instance ID. This does not include the project ID.
 // - project: Project ID of the project that contains the instance.
@@ -6811,8 +6841,8 @@ type InstancesAddServerCertificateCall struct {
 // Required to prepare for a certificate rotation. If a server certificate
 // version was previously added but never used in a certificate rotation, this
 // operation replaces that version. There cannot be more than one certificate
-// version waiting to be rotated in. For instances not using CAS server CA,
-// please use AddServerCa instead.
+// version waiting to be rotated in. For instances not using CAS server CA, use
+// AddServerCa instead.
 //
 // - instance: Cloud SQL instance ID. This does not include the project ID.
 // - project: Project ID of the project that contains the instance.
@@ -7027,35 +7057,6 @@ func (r *InstancesService) Delete(project string, instance string) *InstancesDel
 	c := &InstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
-	return c
-}
-
-// EnableFinalBackup sets the optional parameter "enableFinalBackup": Flag to
-// opt-in for final backup. By default, it is turned off.
-func (c *InstancesDeleteCall) EnableFinalBackup(enableFinalBackup bool) *InstancesDeleteCall {
-	c.urlParams_.Set("enableFinalBackup", fmt.Sprint(enableFinalBackup))
-	return c
-}
-
-// FinalBackupDescription sets the optional parameter "finalBackupDescription":
-// The description of the final backup.
-func (c *InstancesDeleteCall) FinalBackupDescription(finalBackupDescription string) *InstancesDeleteCall {
-	c.urlParams_.Set("finalBackupDescription", finalBackupDescription)
-	return c
-}
-
-// FinalBackupExpiryTime sets the optional parameter "finalBackupExpiryTime":
-// Final Backup expiration time. Timestamp in UTC of when this resource is
-// considered expired.
-func (c *InstancesDeleteCall) FinalBackupExpiryTime(finalBackupExpiryTime string) *InstancesDeleteCall {
-	c.urlParams_.Set("finalBackupExpiryTime", finalBackupExpiryTime)
-	return c
-}
-
-// FinalBackupTtlDays sets the optional parameter "finalBackupTtlDays":
-// Retention period of the final backup.
-func (c *InstancesDeleteCall) FinalBackupTtlDays(finalBackupTtlDays int64) *InstancesDeleteCall {
-	c.urlParams_.Set("finalBackupTtlDays", fmt.Sprint(finalBackupTtlDays))
 	return c
 }
 
@@ -8910,7 +8911,7 @@ type InstancesRotateServerCaCall struct {
 // RotateServerCa: Rotates the server certificate to one signed by the
 // Certificate Authority (CA) version previously added with the addServerCA
 // method. For instances that have enabled Certificate Authority Service (CAS)
-// based server CA, please use RotateServerCertificate to rotate the server
+// based server CA, use RotateServerCertificate to rotate the server
 // certificate.
 //
 // - instance: Cloud SQL instance ID. This does not include the project ID.
@@ -9751,15 +9752,6 @@ type OperationsListCall struct {
 func (r *OperationsService) List(project string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
-	return c
-}
-
-// Filter sets the optional parameter "filter": A filter string that follows
-// the rules of EBNF grammar
-// (https://google.aip.dev/assets/misc/ebnf-filtering.txt). Cloud SQL provides
-// filters for status, operationType, and startTime.
-func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
-	c.urlParams_.Set("filter", filter)
 	return c
 }
 

@@ -168,6 +168,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.Memberships = NewProjectsLocationsMembershipsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	return rs
 }
@@ -175,7 +176,30 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	Memberships *ProjectsLocationsMembershipsService
+
 	Operations *ProjectsLocationsOperationsService
+}
+
+func NewProjectsLocationsMembershipsService(s *Service) *ProjectsLocationsMembershipsService {
+	rs := &ProjectsLocationsMembershipsService{s: s}
+	rs.Features = NewProjectsLocationsMembershipsFeaturesService(s)
+	return rs
+}
+
+type ProjectsLocationsMembershipsService struct {
+	s *Service
+
+	Features *ProjectsLocationsMembershipsFeaturesService
+}
+
+func NewProjectsLocationsMembershipsFeaturesService(s *Service) *ProjectsLocationsMembershipsFeaturesService {
+	rs := &ProjectsLocationsMembershipsFeaturesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsMembershipsFeaturesService struct {
+	s *Service
 }
 
 func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
@@ -187,8 +211,1281 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+// AppDevExperienceState: State for App Dev Exp Feature.
+type AppDevExperienceState struct {
+	// NetworkingInstallSucceeded: Status of subcomponent that detects configured
+	// Service Mesh resources.
+	NetworkingInstallSucceeded *AppDevExperienceStatus `json:"networkingInstallSucceeded,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NetworkingInstallSucceeded")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NetworkingInstallSucceeded") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppDevExperienceState) MarshalJSON() ([]byte, error) {
+	type NoMethod AppDevExperienceState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AppDevExperienceStatus: Status specifies state for the subcomponent.
+type AppDevExperienceStatus struct {
+	// Code: Code specifies AppDevExperienceFeature's subcomponent ready state.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - Not set.
+	//   "OK" - AppDevExperienceFeature's specified subcomponent is ready.
+	//   "FAILED" - AppDevExperienceFeature's specified subcomponent ready state is
+	// false. This means AppDevExperienceFeature has encountered an issue that
+	// blocks all, or a portion, of its normal operation. See the `description` for
+	// more details.
+	//   "UNKNOWN" - AppDevExperienceFeature's specified subcomponent has a pending
+	// or unknown state.
+	Code string `json:"code,omitempty"`
+	// Description: Description is populated if Code is Failed, explaining why it
+	// has failed.
+	Description string `json:"description,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppDevExperienceStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod AppDevExperienceStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// CloudBuildSpec: **Cloud Build**: Configurations for each Cloud Build enabled
+// cluster.
+type CloudBuildSpec struct {
+	// SecurityPolicy: Whether it is allowed to run the privileged builds on the
+	// cluster or not.
+	//
+	// Possible values:
+	//   "SECURITY_POLICY_UNSPECIFIED" - Unspecified policy
+	//   "NON_PRIVILEGED" - Privileged build pods are disallowed
+	//   "PRIVILEGED" - Privileged build pods are allowed
+	SecurityPolicy string `json:"securityPolicy,omitempty"`
+	// Version: Version of the cloud build software on the cluster.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SecurityPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SecurityPolicy") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudBuildSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudBuildSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeGKEUpgrade: GKEUpgrade represents a GKE provided upgrade,
+// e.g., control plane upgrade.
+type ClusterUpgradeGKEUpgrade struct {
+	// Name: Name of the upgrade, e.g., "k8s_control_plane".
+	Name string `json:"name,omitempty"`
+	// Version: Version of the upgrade, e.g., "1.22.1-gke.100".
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClusterUpgradeGKEUpgrade) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeGKEUpgrade
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeIgnoredMembership: IgnoredMembership represents a membership
+// ignored by the feature. A membership can be ignored because it was manually
+// upgraded to a newer version than RC default.
+type ClusterUpgradeIgnoredMembership struct {
+	// IgnoredTime: Time when the membership was first set to ignored.
+	IgnoredTime string `json:"ignoredTime,omitempty"`
+	// Reason: Reason why the membership is ignored.
+	Reason string `json:"reason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IgnoredTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IgnoredTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClusterUpgradeIgnoredMembership) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeIgnoredMembership
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeMembershipGKEUpgradeState: MembershipGKEUpgradeState is a
+// GKEUpgrade and its state per-membership.
+type ClusterUpgradeMembershipGKEUpgradeState struct {
+	// Status: Status of the upgrade.
+	Status *ClusterUpgradeUpgradeStatus `json:"status,omitempty"`
+	// Upgrade: Which upgrade to track the state.
+	Upgrade *ClusterUpgradeGKEUpgrade `json:"upgrade,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Status") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClusterUpgradeMembershipGKEUpgradeState) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeMembershipGKEUpgradeState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeState: Per-membership state for this feature.
+type ClusterUpgradeState struct {
+	// Ignored: Whether this membership is ignored by the feature. For example,
+	// manually upgraded clusters can be ignored if they are newer than the default
+	// versions of its release channel.
+	Ignored *ClusterUpgradeIgnoredMembership `json:"ignored,omitempty"`
+	// Upgrades: Actual upgrade state against desired.
+	Upgrades []*ClusterUpgradeMembershipGKEUpgradeState `json:"upgrades,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Ignored") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Ignored") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClusterUpgradeState) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ClusterUpgradeUpgradeStatus: UpgradeStatus provides status information for
+// each upgrade.
+type ClusterUpgradeUpgradeStatus struct {
+	// Code: Status code of the upgrade.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - Required by https://linter.aip.dev/126/unspecified.
+	//   "INELIGIBLE" - The upgrade is ineligible. At the scope level, this means
+	// the upgrade is ineligible for all the clusters in the scope.
+	//   "PENDING" - The upgrade is pending. At the scope level, this means the
+	// upgrade is pending for all the clusters in the scope.
+	//   "IN_PROGRESS" - The upgrade is in progress. At the scope level, this means
+	// the upgrade is in progress for at least one cluster in the scope.
+	//   "SOAKING" - The upgrade has finished and is soaking until the soaking time
+	// is up. At the scope level, this means at least one cluster is in soaking
+	// while the rest are either soaking or complete.
+	//   "FORCED_SOAKING" - A cluster will be forced to enter soaking if an upgrade
+	// doesn't finish within a certain limit, despite it's actual status.
+	//   "COMPLETE" - The upgrade has passed all post conditions (soaking). At the
+	// scope level, this means all eligible clusters are in COMPLETE status.
+	Code string `json:"code,omitempty"`
+	// Reason: Reason for this status.
+	Reason string `json:"reason,omitempty"`
+	// UpdateTime: Last timestamp the status was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClusterUpgradeUpgradeStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterUpgradeUpgradeStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementBinauthzConfig: Configuration for Binauthz.
+type ConfigManagementBinauthzConfig struct {
+	// Enabled: Whether binauthz is enabled in this cluster.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementBinauthzConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementBinauthzConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementBinauthzState: State for Binauthz.
+type ConfigManagementBinauthzState struct {
+	// Version: The version of binauthz that is installed.
+	Version *ConfigManagementBinauthzVersion `json:"version,omitempty"`
+	// Webhook: The state of the binauthz webhook.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	Webhook string `json:"webhook,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Version") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Version") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementBinauthzState) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementBinauthzState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementBinauthzVersion: The version of binauthz.
+type ConfigManagementBinauthzVersion struct {
+	// WebhookVersion: The version of the binauthz webhook.
+	WebhookVersion string `json:"webhookVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WebhookVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WebhookVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementBinauthzVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementBinauthzVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementConfigSync: Configuration for Config Sync
+type ConfigManagementConfigSync struct {
+	// AllowVerticalScale: Set to true to allow the vertical scaling. Defaults to
+	// false which disallows vertical scaling. This field is deprecated.
+	AllowVerticalScale bool `json:"allowVerticalScale,omitempty"`
+	// Enabled: Enables the installation of ConfigSync. If set to true, ConfigSync
+	// resources will be created and the other ConfigSync fields will be applied if
+	// exist. If set to false, all other ConfigSync fields will be ignored,
+	// ConfigSync resources will be deleted. If omitted, ConfigSync resources will
+	// be managed depends on the presence of the git or oci field.
+	Enabled bool `json:"enabled,omitempty"`
+	// Git: Git repo configuration for the cluster.
+	Git *ConfigManagementGitConfig `json:"git,omitempty"`
+	// MetricsGcpServiceAccountEmail: The Email of the Google Cloud Service Account
+	// (GSA) used for exporting Config Sync metrics to Cloud Monitoring and Cloud
+	// Monarch when Workload Identity is enabled. The GSA should have the
+	// Monitoring Metric Writer (roles/monitoring.metricWriter) IAM role. The
+	// Kubernetes ServiceAccount `default` in the namespace
+	// `config-management-monitoring` should be bound to the GSA.
+	MetricsGcpServiceAccountEmail string `json:"metricsGcpServiceAccountEmail,omitempty"`
+	// Oci: OCI repo configuration for the cluster.
+	Oci *ConfigManagementOciConfig `json:"oci,omitempty"`
+	// PreventDrift: Set to true to enable the Config Sync admission webhook to
+	// prevent drifts. If set to `false`, disables the Config Sync admission
+	// webhook and does not prevent drifts.
+	PreventDrift bool `json:"preventDrift,omitempty"`
+	// SourceFormat: Specifies whether the Config Sync Repo is in "hierarchical" or
+	// "unstructured" mode.
+	SourceFormat string `json:"sourceFormat,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowVerticalScale") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowVerticalScale") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementConfigSync) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementConfigSync
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementConfigSyncDeploymentState: The state of ConfigSync's
+// deployment on a cluster.
+type ConfigManagementConfigSyncDeploymentState struct {
+	// AdmissionWebhook: Deployment state of admission-webhook.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	AdmissionWebhook string `json:"admissionWebhook,omitempty"`
+	// GitSync: Deployment state of the git-sync pod.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	GitSync string `json:"gitSync,omitempty"`
+	// Importer: Deployment state of the importer pod.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	Importer string `json:"importer,omitempty"`
+	// Monitor: Deployment state of the monitor pod.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	Monitor string `json:"monitor,omitempty"`
+	// OtelCollector: Deployment state of otel-collector
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	OtelCollector string `json:"otelCollector,omitempty"`
+	// ReconcilerManager: Deployment state of reconciler-manager pod.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	ReconcilerManager string `json:"reconcilerManager,omitempty"`
+	// ResourceGroupControllerManager: Deployment state of
+	// resource-group-controller-manager
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	ResourceGroupControllerManager string `json:"resourceGroupControllerManager,omitempty"`
+	// RootReconciler: Deployment state of root-reconciler.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	RootReconciler string `json:"rootReconciler,omitempty"`
+	// Syncer: Deployment state of the syncer pod.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	Syncer string `json:"syncer,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdmissionWebhook") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdmissionWebhook") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementConfigSyncDeploymentState) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementConfigSyncDeploymentState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementConfigSyncError: Errors pertaining to the installation of
+// Config Sync
+type ConfigManagementConfigSyncError struct {
+	// ErrorMessage: A string representing the user facing error message
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorMessage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementConfigSyncError) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementConfigSyncError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementConfigSyncState: State information for ConfigSync.
+type ConfigManagementConfigSyncState struct {
+	// ClusterLevelStopSyncingState: Whether syncing resources to the cluster is
+	// stopped at the cluster level.
+	//
+	// Possible values:
+	//   "STOP_SYNCING_STATE_UNSPECIFIED" - State cannot be determined
+	//   "NOT_STOPPED" - Syncing resources to the cluster is not stopped at the
+	// cluster level.
+	//   "PENDING" - Some reconcilers stop syncing resources to the cluster, while
+	// others are still syncing.
+	//   "STOPPED" - Syncing resources to the cluster is stopped at the cluster
+	// level.
+	ClusterLevelStopSyncingState string `json:"clusterLevelStopSyncingState,omitempty"`
+	// DeploymentState: Information about the deployment of ConfigSync, including
+	// the version. of the various Pods deployed
+	DeploymentState *ConfigManagementConfigSyncDeploymentState `json:"deploymentState,omitempty"`
+	// Errors: Errors pertaining to the installation of Config Sync.
+	Errors []*ConfigManagementConfigSyncError `json:"errors,omitempty"`
+	// ReposyncCrd: The state of the Reposync CRD
+	//
+	// Possible values:
+	//   "CRD_STATE_UNSPECIFIED" - CRD's state cannot be determined
+	//   "NOT_INSTALLED" - CRD is not installed
+	//   "INSTALLED" - CRD is installed
+	//   "TERMINATING" - CRD is terminating (i.e., it has been deleted and is
+	// cleaning up)
+	//   "INSTALLING" - CRD is installing
+	ReposyncCrd string `json:"reposyncCrd,omitempty"`
+	// RootsyncCrd: The state of the RootSync CRD
+	//
+	// Possible values:
+	//   "CRD_STATE_UNSPECIFIED" - CRD's state cannot be determined
+	//   "NOT_INSTALLED" - CRD is not installed
+	//   "INSTALLED" - CRD is installed
+	//   "TERMINATING" - CRD is terminating (i.e., it has been deleted and is
+	// cleaning up)
+	//   "INSTALLING" - CRD is installing
+	RootsyncCrd string `json:"rootsyncCrd,omitempty"`
+	// State: The state of CS This field summarizes the other fields in this
+	// message.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - CS's state cannot be determined.
+	//   "CONFIG_SYNC_NOT_INSTALLED" - CS is not installed.
+	//   "CONFIG_SYNC_INSTALLED" - The expected CS version is installed
+	// successfully.
+	//   "CONFIG_SYNC_ERROR" - CS encounters errors.
+	//   "CONFIG_SYNC_PENDING" - CS is installing or terminating.
+	State string `json:"state,omitempty"`
+	// SyncState: The state of ConfigSync's process to sync configs to a cluster.
+	SyncState *ConfigManagementSyncState `json:"syncState,omitempty"`
+	// Version: The version of ConfigSync deployed.
+	Version *ConfigManagementConfigSyncVersion `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ClusterLevelStopSyncingState") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClusterLevelStopSyncingState") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementConfigSyncState) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementConfigSyncState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementConfigSyncVersion: Specific versioning information
+// pertaining to ConfigSync's Pods.
+type ConfigManagementConfigSyncVersion struct {
+	// AdmissionWebhook: Version of the deployed admission-webhook pod.
+	AdmissionWebhook string `json:"admissionWebhook,omitempty"`
+	// GitSync: Version of the deployed git-sync pod.
+	GitSync string `json:"gitSync,omitempty"`
+	// Importer: Version of the deployed importer pod.
+	Importer string `json:"importer,omitempty"`
+	// Monitor: Version of the deployed monitor pod.
+	Monitor string `json:"monitor,omitempty"`
+	// OtelCollector: Version of the deployed otel-collector pod
+	OtelCollector string `json:"otelCollector,omitempty"`
+	// ReconcilerManager: Version of the deployed reconciler-manager pod.
+	ReconcilerManager string `json:"reconcilerManager,omitempty"`
+	// ResourceGroupControllerManager: Version of the deployed
+	// resource-group-controller-manager pod
+	ResourceGroupControllerManager string `json:"resourceGroupControllerManager,omitempty"`
+	// RootReconciler: Version of the deployed reconciler container in
+	// root-reconciler pod.
+	RootReconciler string `json:"rootReconciler,omitempty"`
+	// Syncer: Version of the deployed syncer pod.
+	Syncer string `json:"syncer,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdmissionWebhook") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdmissionWebhook") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementConfigSyncVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementConfigSyncVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementErrorResource: Model for a config file in the git repo with
+// an associated Sync error.
+type ConfigManagementErrorResource struct {
+	// ResourceGvk: Group/version/kind of the resource that is causing an error
+	ResourceGvk *ConfigManagementGroupVersionKind `json:"resourceGvk,omitempty"`
+	// ResourceName: Metadata name of the resource that is causing an error
+	ResourceName string `json:"resourceName,omitempty"`
+	// ResourceNamespace: Namespace of the resource that is causing an error
+	ResourceNamespace string `json:"resourceNamespace,omitempty"`
+	// SourcePath: Path in the git repo of the erroneous config
+	SourcePath string `json:"sourcePath,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceGvk") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceGvk") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementErrorResource) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementErrorResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementGatekeeperDeploymentState: State of Policy Controller
+// installation.
+type ConfigManagementGatekeeperDeploymentState struct {
+	// GatekeeperAudit: Status of gatekeeper-audit deployment.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	GatekeeperAudit string `json:"gatekeeperAudit,omitempty"`
+	// GatekeeperControllerManagerState: Status of gatekeeper-controller-manager
+	// pod.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	GatekeeperControllerManagerState string `json:"gatekeeperControllerManagerState,omitempty"`
+	// GatekeeperMutation: Status of the pod serving the mutation webhook.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	GatekeeperMutation string `json:"gatekeeperMutation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GatekeeperAudit") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GatekeeperAudit") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementGatekeeperDeploymentState) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementGatekeeperDeploymentState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementGitConfig: Git repo configuration for a single cluster.
+type ConfigManagementGitConfig struct {
+	// GcpServiceAccountEmail: The Google Cloud Service Account Email used for auth
+	// when secret_type is gcpServiceAccount.
+	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
+	// HttpsProxy: URL for the HTTPS proxy to be used when communicating with the
+	// Git repo.
+	HttpsProxy string `json:"httpsProxy,omitempty"`
+	// PolicyDir: The path within the Git repository that represents the top level
+	// of the repo to sync. Default: the root directory of the repository.
+	PolicyDir string `json:"policyDir,omitempty"`
+	// SecretType: Type of secret configured for access to the Git repo. Must be
+	// one of ssh, cookiefile, gcenode, token, gcpserviceaccount or none. The
+	// validation of this is case-sensitive. Required.
+	SecretType string `json:"secretType,omitempty"`
+	// SyncBranch: The branch of the repository to sync from. Default: master.
+	SyncBranch string `json:"syncBranch,omitempty"`
+	// SyncRepo: The URL of the Git repository to use as the source of truth.
+	SyncRepo string `json:"syncRepo,omitempty"`
+	// SyncRev: Git revision (tag or hash) to check out. Default HEAD.
+	SyncRev string `json:"syncRev,omitempty"`
+	// SyncWaitSecs: Period in seconds between consecutive syncs. Default: 15.
+	SyncWaitSecs int64 `json:"syncWaitSecs,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "GcpServiceAccountEmail") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcpServiceAccountEmail") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementGitConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementGitConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementGroupVersionKind: A Kubernetes object's GVK.
+type ConfigManagementGroupVersionKind struct {
+	// Group: Kubernetes Group
+	Group string `json:"group,omitempty"`
+	// Kind: Kubernetes Kind
+	Kind string `json:"kind,omitempty"`
+	// Version: Kubernetes Version
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Group") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Group") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementGroupVersionKind) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementGroupVersionKind
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementHierarchyControllerConfig: Configuration for Hierarchy
+// Controller.
+type ConfigManagementHierarchyControllerConfig struct {
+	// EnableHierarchicalResourceQuota: Whether hierarchical resource quota is
+	// enabled in this cluster.
+	EnableHierarchicalResourceQuota bool `json:"enableHierarchicalResourceQuota,omitempty"`
+	// EnablePodTreeLabels: Whether pod tree labels are enabled in this cluster.
+	EnablePodTreeLabels bool `json:"enablePodTreeLabels,omitempty"`
+	// Enabled: Whether Hierarchy Controller is enabled in this cluster.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableHierarchicalResourceQuota") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableHierarchicalResourceQuota")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementHierarchyControllerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementHierarchyControllerConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementHierarchyControllerDeploymentState: Deployment state for
+// Hierarchy Controller
+type ConfigManagementHierarchyControllerDeploymentState struct {
+	// Extension: The deployment state for Hierarchy Controller extension (e.g.
+	// v0.7.0-hc.1).
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	Extension string `json:"extension,omitempty"`
+	// Hnc: The deployment state for open source HNC (e.g. v0.7.0-hc.0).
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	Hnc string `json:"hnc,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Extension") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Extension") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementHierarchyControllerDeploymentState) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementHierarchyControllerDeploymentState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementHierarchyControllerState: State for Hierarchy Controller.
+type ConfigManagementHierarchyControllerState struct {
+	// State: The deployment state for Hierarchy Controller.
+	State *ConfigManagementHierarchyControllerDeploymentState `json:"state,omitempty"`
+	// Version: The version for Hierarchy Controller.
+	Version *ConfigManagementHierarchyControllerVersion `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementHierarchyControllerState) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementHierarchyControllerState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementHierarchyControllerVersion: Version for Hierarchy
+// Controller.
+type ConfigManagementHierarchyControllerVersion struct {
+	// Extension: Version for Hierarchy Controller extension.
+	Extension string `json:"extension,omitempty"`
+	// Hnc: Version for open source HNC.
+	Hnc string `json:"hnc,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Extension") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Extension") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementHierarchyControllerVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementHierarchyControllerVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementInstallError: Errors pertaining to the installation of ACM.
+type ConfigManagementInstallError struct {
+	// ErrorMessage: A string representing the user facing error message.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorMessage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementInstallError) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementInstallError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementOciConfig: OCI repo configuration for a single cluster.
+type ConfigManagementOciConfig struct {
+	// GcpServiceAccountEmail: The Google Cloud Service Account Email used for auth
+	// when secret_type is gcpServiceAccount.
+	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
+	// PolicyDir: The absolute path of the directory that contains the local
+	// resources. Default: the root directory of the image.
+	PolicyDir string `json:"policyDir,omitempty"`
+	// SecretType: Type of secret configured for access to the Git repo.
+	SecretType string `json:"secretType,omitempty"`
+	// SyncRepo: The OCI image repository URL for the package to sync from. e.g.
+	// `LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY_NAME/PACKAGE_NAME`.
+	SyncRepo string `json:"syncRepo,omitempty"`
+	// SyncWaitSecs: Period in seconds between consecutive syncs. Default: 15.
+	SyncWaitSecs int64 `json:"syncWaitSecs,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "GcpServiceAccountEmail") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcpServiceAccountEmail") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementOciConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementOciConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementOperatorState: State information for an ACM's Operator.
+type ConfigManagementOperatorState struct {
+	// DeploymentState: The state of the Operator's deployment.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Deployment's state cannot be determined.
+	//   "NOT_INSTALLED" - Deployment is not installed.
+	//   "INSTALLED" - Deployment is installed.
+	//   "ERROR" - Deployment was attempted to be installed, but has errors.
+	//   "PENDING" - Deployment is installing or terminating
+	DeploymentState string `json:"deploymentState,omitempty"`
+	// Errors: Install errors.
+	Errors []*ConfigManagementInstallError `json:"errors,omitempty"`
+	// Version: The semenatic version number of the operator.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeploymentState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeploymentState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementOperatorState) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementOperatorState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementPolicyController: Configuration for Policy Controller
+type ConfigManagementPolicyController struct {
+	// AuditIntervalSeconds: Sets the interval for Policy Controller Audit Scans
+	// (in seconds). When set to 0, this disables audit functionality altogether.
+	AuditIntervalSeconds int64 `json:"auditIntervalSeconds,omitempty,string"`
+	// Enabled: Enables the installation of Policy Controller. If false, the rest
+	// of PolicyController fields take no effect.
+	Enabled bool `json:"enabled,omitempty"`
+	// ExemptableNamespaces: The set of namespaces that are excluded from Policy
+	// Controller checks. Namespaces do not need to currently exist on the cluster.
+	ExemptableNamespaces []string `json:"exemptableNamespaces,omitempty"`
+	// LogDeniesEnabled: Logs all denies and dry run failures.
+	LogDeniesEnabled bool `json:"logDeniesEnabled,omitempty"`
+	// Monitoring: Monitoring specifies the configuration of monitoring.
+	Monitoring *ConfigManagementPolicyControllerMonitoring `json:"monitoring,omitempty"`
+	// MutationEnabled: Enable or disable mutation in policy controller. If true,
+	// mutation CRDs, webhook and controller deployment will be deployed to the
+	// cluster.
+	MutationEnabled bool `json:"mutationEnabled,omitempty"`
+	// ReferentialRulesEnabled: Enables the ability to use Constraint Templates
+	// that reference to objects other than the object currently being evaluated.
+	ReferentialRulesEnabled bool `json:"referentialRulesEnabled,omitempty"`
+	// TemplateLibraryInstalled: Installs the default template library along with
+	// Policy Controller.
+	TemplateLibraryInstalled bool `json:"templateLibraryInstalled,omitempty"`
+	// UpdateTime: Output only. Last time this membership spec was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuditIntervalSeconds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuditIntervalSeconds") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementPolicyController) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementPolicyController
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementPolicyControllerMigration: State for the migration of
+// PolicyController from ACM -> PoCo Hub.
+type ConfigManagementPolicyControllerMigration struct {
+	// CopyTime: Last time this membership spec was copied to PoCo feature.
+	CopyTime string `json:"copyTime,omitempty"`
+	// Stage: Stage of the migration.
+	//
+	// Possible values:
+	//   "STAGE_UNSPECIFIED" - Unknown state of migration.
+	//   "ACM_MANAGED" - ACM Hub/Operator manages policycontroller. No migration
+	// yet completed.
+	//   "POCO_MANAGED" - All migrations steps complete; Poco Hub now manages
+	// policycontroller.
+	Stage string `json:"stage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CopyTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CopyTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementPolicyControllerMigration) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementPolicyControllerMigration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementPolicyControllerMonitoring: PolicyControllerMonitoring
+// specifies the backends Policy Controller should export metrics to. For
+// example, to specify metrics should be exported to Cloud Monitoring and
+// Prometheus, specify backends: ["cloudmonitoring", "prometheus"]
+type ConfigManagementPolicyControllerMonitoring struct {
+	// Backends: Specifies the list of backends Policy Controller will export to.
+	// An empty list would effectively disable metrics export.
+	//
+	// Possible values:
+	//   "MONITORING_BACKEND_UNSPECIFIED" - Backend cannot be determined
+	//   "PROMETHEUS" - Prometheus backend for monitoring
+	//   "CLOUD_MONITORING" - Stackdriver/Cloud Monitoring backend for monitoring
+	Backends []string `json:"backends,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Backends") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Backends") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementPolicyControllerMonitoring) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementPolicyControllerMonitoring
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementPolicyControllerState: State for PolicyControllerState.
+type ConfigManagementPolicyControllerState struct {
+	// DeploymentState: The state about the policy controller installation.
+	DeploymentState *ConfigManagementGatekeeperDeploymentState `json:"deploymentState,omitempty"`
+	// Migration: Record state of ACM -> PoCo Hub migration for this feature.
+	Migration *ConfigManagementPolicyControllerMigration `json:"migration,omitempty"`
+	// Version: The version of Gatekeeper Policy Controller deployed.
+	Version *ConfigManagementPolicyControllerVersion `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeploymentState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeploymentState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementPolicyControllerState) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementPolicyControllerState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementPolicyControllerVersion: The build version of Gatekeeper
+// Policy Controller is using.
+type ConfigManagementPolicyControllerVersion struct {
+	// Version: The gatekeeper image tag that is composed of ACM version, git tag,
+	// build number.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Version") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Version") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementPolicyControllerVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementPolicyControllerVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementSpec: **Anthos Config Management**: Configuration for a
+// single cluster. Intended to parallel the ConfigManagement CR.
+type ConfigManagementSpec struct {
+	// Binauthz: Binauthz conifguration for the cluster. Deprecated: This field
+	// will be ignored and should not be set.
+	Binauthz *ConfigManagementBinauthzConfig `json:"binauthz,omitempty"`
+	// Cluster: The user-specified cluster name used by Config Sync
+	// cluster-name-selector annotation or ClusterSelector, for applying configs to
+	// only a subset of clusters. Omit this field if the cluster's fleet membership
+	// name is used by Config Sync cluster-name-selector annotation or
+	// ClusterSelector. Set this field if a name different from the cluster's fleet
+	// membership name is used by Config Sync cluster-name-selector annotation or
+	// ClusterSelector.
+	Cluster string `json:"cluster,omitempty"`
+	// ConfigSync: Config Sync configuration for the cluster.
+	ConfigSync *ConfigManagementConfigSync `json:"configSync,omitempty"`
+	// HierarchyController: Hierarchy Controller configuration for the cluster.
+	// Deprecated: Configuring Hierarchy Controller through the configmanagement
+	// feature is no longer recommended. Use
+	// https://github.com/kubernetes-sigs/hierarchical-namespaces instead.
+	HierarchyController *ConfigManagementHierarchyControllerConfig `json:"hierarchyController,omitempty"`
+	// Management: Enables automatic Feature management.
+	//
+	// Possible values:
+	//   "MANAGEMENT_UNSPECIFIED" - Unspecified
+	//   "MANAGEMENT_AUTOMATIC" - Google will manage the Feature for the cluster.
+	//   "MANAGEMENT_MANUAL" - User will manually manage the Feature for the
+	// cluster.
+	Management string `json:"management,omitempty"`
+	// PolicyController: Policy Controller configuration for the cluster.
+	// Deprecated: Configuring Policy Controller through the configmanagement
+	// feature is no longer recommended. Use the policycontroller feature instead.
+	PolicyController *ConfigManagementPolicyController `json:"policyController,omitempty"`
+	// Version: Version of ACM installed.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Binauthz") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Binauthz") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementState: **Anthos Config Management**: State for a single
+// cluster.
+type ConfigManagementState struct {
+	// BinauthzState: Binauthz status.
+	BinauthzState *ConfigManagementBinauthzState `json:"binauthzState,omitempty"`
+	// ClusterName: This field is set to the `cluster_name` field of the Membership
+	// Spec if it is not empty. Otherwise, it is set to the cluster's fleet
+	// membership name.
+	ClusterName string `json:"clusterName,omitempty"`
+	// ConfigSyncState: Current sync status.
+	ConfigSyncState *ConfigManagementConfigSyncState `json:"configSyncState,omitempty"`
+	// HierarchyControllerState: Hierarchy Controller status.
+	HierarchyControllerState *ConfigManagementHierarchyControllerState `json:"hierarchyControllerState,omitempty"`
+	// MembershipSpec: Membership configuration in the cluster. This represents the
+	// actual state in the cluster, while the MembershipSpec in the FeatureSpec
+	// represents the intended state.
+	MembershipSpec *ConfigManagementSpec `json:"membershipSpec,omitempty"`
+	// OperatorState: Current install status of ACM's Operator.
+	OperatorState *ConfigManagementOperatorState `json:"operatorState,omitempty"`
+	// PolicyControllerState: PolicyController status.
+	PolicyControllerState *ConfigManagementPolicyControllerState `json:"policyControllerState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BinauthzState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BinauthzState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementState) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementSyncError: An ACM created error representing a problem
+// syncing configurations.
+type ConfigManagementSyncError struct {
+	// Code: An ACM defined error code
+	Code string `json:"code,omitempty"`
+	// ErrorMessage: A description of the error
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// ErrorResources: A list of config(s) associated with the error, if any
+	ErrorResources []*ConfigManagementErrorResource `json:"errorResources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementSyncError) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementSyncError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigManagementSyncState: State indicating an ACM's progress syncing
+// configurations to a cluster.
+type ConfigManagementSyncState struct {
+	// Code: Sync status code.
+	//
+	// Possible values:
+	//   "SYNC_CODE_UNSPECIFIED" - Config Sync cannot determine a sync code
+	//   "SYNCED" - Config Sync successfully synced the git Repo with the cluster
+	//   "PENDING" - Config Sync is in the progress of syncing a new change
+	//   "ERROR" - Indicates an error configuring Config Sync, and user action is
+	// required
+	//   "NOT_CONFIGURED" - Config Sync has been installed but not configured
+	//   "NOT_INSTALLED" - Config Sync has not been installed
+	//   "UNAUTHORIZED" - Error authorizing with the cluster
+	//   "UNREACHABLE" - Cluster could not be reached
+	Code string `json:"code,omitempty"`
+	// Errors: A list of errors resulting from problematic configs. This list will
+	// be truncated after 100 errors, although it is unlikely for that many errors
+	// to simultaneously exist.
+	Errors []*ConfigManagementSyncError `json:"errors,omitempty"`
+	// ImportToken: Token indicating the state of the importer.
+	ImportToken string `json:"importToken,omitempty"`
+	// LastSync: Deprecated: use last_sync_time instead. Timestamp of when ACM last
+	// successfully synced the repo. The time format is specified in
+	// https://golang.org/pkg/time/#Time.String
+	LastSync string `json:"lastSync,omitempty"`
+	// LastSyncTime: Timestamp type of when ACM last successfully synced the repo.
+	LastSyncTime string `json:"lastSyncTime,omitempty"`
+	// SourceToken: Token indicating the state of the repo.
+	SourceToken string `json:"sourceToken,omitempty"`
+	// SyncToken: Token indicating the state of the syncer.
+	SyncToken string `json:"syncToken,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigManagementSyncState) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigManagementSyncState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -198,6 +1495,108 @@ type CancelOperationRequest struct {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// FeatureConfigRef: Information of the FeatureConfig applied on the
+// MembershipFeature.
+type FeatureConfigRef struct {
+	// Config: Input only. Resource name of FeatureConfig, in the format:
+	// `projects/{project}/locations/global/featureConfigs/{feature_config}`.
+	Config string `json:"config,omitempty"`
+	// ConfigUpdateTime: Output only. When the FeatureConfig was last applied and
+	// copied to FeatureSpec.
+	ConfigUpdateTime string `json:"configUpdateTime,omitempty"`
+	// Uuid: Output only. An id that uniquely identify a FeatureConfig object.
+	Uuid string `json:"uuid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FeatureConfigRef) MarshalJSON() ([]byte, error) {
+	type NoMethod FeatureConfigRef
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FeatureSpec: FeatureSpec contains user input per-feature spec information.
+type FeatureSpec struct {
+	// Cloudbuild: Cloudbuild-specific FeatureSpec.
+	Cloudbuild *CloudBuildSpec `json:"cloudbuild,omitempty"`
+	// Configmanagement: Config Management FeatureSpec.
+	Configmanagement *ConfigManagementSpec `json:"configmanagement,omitempty"`
+	// Identityservice: IdentityService FeatureSpec.
+	Identityservice *IdentityServiceSpec `json:"identityservice,omitempty"`
+	// Origin: Whether this per-Feature spec was inherited from a fleet-level
+	// default. This field can be updated by users by either overriding a Feature
+	// config (updated to USER implicitly) or setting to FLEET explicitly.
+	Origin *Origin `json:"origin,omitempty"`
+	// Policycontroller: Policycontroller-specific FeatureSpec.
+	Policycontroller *PolicyControllerSpec `json:"policycontroller,omitempty"`
+	// Servicemesh: ServiceMesh Feature Spec.
+	Servicemesh *ServiceMeshSpec `json:"servicemesh,omitempty"`
+	// Workloadcertificate: Workloadcertificate-specific FeatureSpec.
+	Workloadcertificate *WorkloadCertificateSpec `json:"workloadcertificate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cloudbuild") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cloudbuild") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FeatureSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod FeatureSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FeatureState: FeatureState contains high-level state information and
+// per-feature state information for this MembershipFeature.
+type FeatureState struct {
+	// Appdevexperience: Appdevexperience specific state.
+	Appdevexperience *AppDevExperienceState `json:"appdevexperience,omitempty"`
+	// Clusterupgrade: Cluster upgrade state.
+	Clusterupgrade *ClusterUpgradeState `json:"clusterupgrade,omitempty"`
+	// Configmanagement: Config Management state
+	Configmanagement *ConfigManagementState `json:"configmanagement,omitempty"`
+	// Identityservice: Identity service state
+	Identityservice *IdentityServiceState `json:"identityservice,omitempty"`
+	// Metering: Metering state
+	Metering *MeteringState `json:"metering,omitempty"`
+	// Policycontroller: Policy Controller state
+	Policycontroller *PolicyControllerState `json:"policycontroller,omitempty"`
+	// Servicemesh: Service mesh state
+	Servicemesh *ServiceMeshState `json:"servicemesh,omitempty"`
+	// State: The high-level state of this MembershipFeature.
+	State *State `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Appdevexperience") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Appdevexperience") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FeatureState) MarshalJSON() ([]byte, error) {
+	type NoMethod FeatureState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that is
@@ -234,6 +1633,552 @@ func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// IdentityServiceAuthMethod: Configuration of an auth method for a
+// member/cluster. Only one authentication method (e.g., OIDC and LDAP) can be
+// set per AuthMethod.
+type IdentityServiceAuthMethod struct {
+	// AzureadConfig: AzureAD specific Configuration.
+	AzureadConfig *IdentityServiceAzureADConfig `json:"azureadConfig,omitempty"`
+	// GoogleConfig: GoogleConfig specific configuration
+	GoogleConfig *IdentityServiceGoogleConfig `json:"googleConfig,omitempty"`
+	// LdapConfig: LDAP specific configuration.
+	LdapConfig *IdentityServiceLdapConfig `json:"ldapConfig,omitempty"`
+	// Name: Identifier for auth config.
+	Name string `json:"name,omitempty"`
+	// OidcConfig: OIDC specific configuration.
+	OidcConfig *IdentityServiceOidcConfig `json:"oidcConfig,omitempty"`
+	// Proxy: Proxy server address to use for auth method.
+	Proxy string `json:"proxy,omitempty"`
+	// SamlConfig: SAML specific configuration.
+	SamlConfig *IdentityServiceSamlConfig `json:"samlConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AzureadConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AzureadConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceAuthMethod) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceAuthMethod
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceAzureADConfig: Configuration for the AzureAD Auth flow.
+type IdentityServiceAzureADConfig struct {
+	// ClientId: ID for the registered client application that makes authentication
+	// requests to the Azure AD identity provider.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Input only. Unencrypted AzureAD client secret will be passed
+	// to the GKE Hub CLH.
+	ClientSecret string `json:"clientSecret,omitempty"`
+	// EncryptedClientSecret: Output only. Encrypted AzureAD client secret.
+	EncryptedClientSecret string `json:"encryptedClientSecret,omitempty"`
+	// GroupFormat: Optional. Format of the AzureAD groups that the client wants
+	// for auth.
+	GroupFormat string `json:"groupFormat,omitempty"`
+	// KubectlRedirectUri: The redirect URL that kubectl uses for authorization.
+	KubectlRedirectUri string `json:"kubectlRedirectUri,omitempty"`
+	// Tenant: Kind of Azure AD account to be authenticated. Supported values are
+	// or for accounts belonging to a specific tenant.
+	Tenant string `json:"tenant,omitempty"`
+	// UserClaim: Optional. Claim in the AzureAD ID Token that holds the user
+	// details.
+	UserClaim string `json:"userClaim,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceAzureADConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceAzureADConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceDiagnosticInterface: Configuration options for the AIS
+// diagnostic interface.
+type IdentityServiceDiagnosticInterface struct {
+	// Enabled: Determines whether to enable the diagnostic interface.
+	Enabled bool `json:"enabled,omitempty"`
+	// ExpirationTime: Determines the expiration time of the diagnostic interface
+	// enablement. When reached, requests to the interface would be automatically
+	// rejected.
+	ExpirationTime string `json:"expirationTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceDiagnosticInterface) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceDiagnosticInterface
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceGoogleConfig: Configuration for the Google Plugin Auth flow.
+type IdentityServiceGoogleConfig struct {
+	// Disable: Disable automatic configuration of Google Plugin on supported
+	// platforms.
+	Disable bool `json:"disable,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Disable") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Disable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceGoogleConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceGoogleConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceGroupConfig: Contains the properties for locating and
+// authenticating groups in the directory.
+type IdentityServiceGroupConfig struct {
+	// BaseDn: Required. The location of the subtree in the LDAP directory to
+	// search for group entries.
+	BaseDn string `json:"baseDn,omitempty"`
+	// Filter: Optional. Optional filter to be used when searching for groups a
+	// user belongs to. This can be used to explicitly match only certain groups in
+	// order to reduce the amount of groups returned for each user. This defaults
+	// to "(objectClass=Group)".
+	Filter string `json:"filter,omitempty"`
+	// IdAttribute: Optional. The identifying name of each group a user belongs to.
+	// For example, if this is set to "distinguishedName" then RBACs and other
+	// group expectations should be written as full DNs. This defaults to
+	// "distinguishedName".
+	IdAttribute string `json:"idAttribute,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseDn") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseDn") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceGroupConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceGroupConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceIdentityServiceOptions: Holds non-protocol-related
+// configuration options.
+type IdentityServiceIdentityServiceOptions struct {
+	// DiagnosticInterface: Configuration options for the AIS diagnostic interface.
+	DiagnosticInterface *IdentityServiceDiagnosticInterface `json:"diagnosticInterface,omitempty"`
+	// SessionDuration: Determines the lifespan of STS tokens issued by Anthos
+	// Identity Service.
+	SessionDuration string `json:"sessionDuration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DiagnosticInterface") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiagnosticInterface") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceIdentityServiceOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceIdentityServiceOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceLdapConfig: Configuration for the LDAP Auth flow.
+type IdentityServiceLdapConfig struct {
+	// Group: Optional. Contains the properties for locating and authenticating
+	// groups in the directory.
+	Group *IdentityServiceGroupConfig `json:"group,omitempty"`
+	// Server: Required. Server settings for the external LDAP server.
+	Server *IdentityServiceServerConfig `json:"server,omitempty"`
+	// ServiceAccount: Required. Contains the credentials of the service account
+	// which is authorized to perform the LDAP search in the directory. The
+	// credentials can be supplied by the combination of the DN and password or the
+	// client certificate.
+	ServiceAccount *IdentityServiceServiceAccountConfig `json:"serviceAccount,omitempty"`
+	// User: Required. Defines where users exist in the LDAP directory.
+	User *IdentityServiceUserConfig `json:"user,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Group") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Group") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceLdapConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceLdapConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceOidcConfig: Configuration for OIDC Auth flow.
+type IdentityServiceOidcConfig struct {
+	// CertificateAuthorityData: PEM-encoded CA for OIDC provider.
+	CertificateAuthorityData string `json:"certificateAuthorityData,omitempty"`
+	// ClientId: ID for OIDC client application.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Input only. Unencrypted OIDC client secret will be passed to
+	// the GKE Hub CLH.
+	ClientSecret string `json:"clientSecret,omitempty"`
+	// DeployCloudConsoleProxy: Flag to denote if reverse proxy is used to connect
+	// to auth provider. This flag should be set to true when provider is not
+	// reachable by Google Cloud Console.
+	DeployCloudConsoleProxy bool `json:"deployCloudConsoleProxy,omitempty"`
+	// EnableAccessToken: Enable access token.
+	EnableAccessToken bool `json:"enableAccessToken,omitempty"`
+	// EncryptedClientSecret: Output only. Encrypted OIDC Client secret
+	EncryptedClientSecret string `json:"encryptedClientSecret,omitempty"`
+	// ExtraParams: Comma-separated list of key-value pairs.
+	ExtraParams string `json:"extraParams,omitempty"`
+	// GroupPrefix: Prefix to prepend to group name.
+	GroupPrefix string `json:"groupPrefix,omitempty"`
+	// GroupsClaim: Claim in OIDC ID token that holds group information.
+	GroupsClaim string `json:"groupsClaim,omitempty"`
+	// IssuerUri: URI for the OIDC provider. This should point to the level below
+	// .well-known/openid-configuration.
+	IssuerUri string `json:"issuerUri,omitempty"`
+	// KubectlRedirectUri: Registered redirect uri to redirect users going through
+	// OAuth flow using kubectl plugin.
+	KubectlRedirectUri string `json:"kubectlRedirectUri,omitempty"`
+	// Scopes: Comma-separated list of identifiers.
+	Scopes string `json:"scopes,omitempty"`
+	// UserClaim: Claim in OIDC ID token that holds username.
+	UserClaim string `json:"userClaim,omitempty"`
+	// UserPrefix: Prefix to prepend to user name.
+	UserPrefix string `json:"userPrefix,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CertificateAuthorityData")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CertificateAuthorityData") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceOidcConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceOidcConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceSamlConfig: Configuration for the SAML Auth flow.
+type IdentityServiceSamlConfig struct {
+	// AttributeMapping: Optional. The mapping of additional user attributes like
+	// nickname, birthday and address etc.. `key` is the name of this additional
+	// attribute. `value` is a string presenting as CEL(common expression language,
+	// go/cel) used for getting the value from the resources. Take nickname as an
+	// example, in this case, `key` is "attribute.nickname" and `value` is
+	// "assertion.nickname".
+	AttributeMapping map[string]string `json:"attributeMapping,omitempty"`
+	// GroupPrefix: Optional. Prefix to prepend to group name.
+	GroupPrefix string `json:"groupPrefix,omitempty"`
+	// GroupsAttribute: Optional. The SAML attribute to read groups from. This
+	// value is expected to be a string and will be passed along as-is (with the
+	// option of being prefixed by the `group_prefix`).
+	GroupsAttribute string `json:"groupsAttribute,omitempty"`
+	// IdentityProviderCertificates: Required. The list of IdP certificates to
+	// validate the SAML response against.
+	IdentityProviderCertificates []string `json:"identityProviderCertificates,omitempty"`
+	// IdentityProviderId: Required. The entity ID of the SAML IdP.
+	IdentityProviderId string `json:"identityProviderId,omitempty"`
+	// IdentityProviderSsoUri: Required. The URI where the SAML IdP exposes the SSO
+	// service.
+	IdentityProviderSsoUri string `json:"identityProviderSsoUri,omitempty"`
+	// UserAttribute: Optional. The SAML attribute to read username from. If
+	// unspecified, the username will be read from the NameID element of the
+	// assertion in SAML response. This value is expected to be a string and will
+	// be passed along as-is (with the option of being prefixed by the
+	// `user_prefix`).
+	UserAttribute string `json:"userAttribute,omitempty"`
+	// UserPrefix: Optional. Prefix to prepend to user name.
+	UserPrefix string `json:"userPrefix,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttributeMapping") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttributeMapping") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceSamlConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceSamlConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceServerConfig: Server settings for the external LDAP server.
+type IdentityServiceServerConfig struct {
+	// CertificateAuthorityData: Optional. Contains a Base64 encoded, PEM formatted
+	// certificate authority certificate for the LDAP server. This must be provided
+	// for the "ldaps" and "startTLS" connections.
+	CertificateAuthorityData string `json:"certificateAuthorityData,omitempty"`
+	// ConnectionType: Optional. Defines the connection type to communicate with
+	// the LDAP server. If `starttls` or `ldaps` is specified, the
+	// certificate_authority_data should not be empty.
+	ConnectionType string `json:"connectionType,omitempty"`
+	// Host: Required. Defines the hostname or IP of the LDAP server. Port is
+	// optional and will default to 389, if unspecified. For example,
+	// "ldap.server.example" or "10.10.10.10:389".
+	Host string `json:"host,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CertificateAuthorityData")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CertificateAuthorityData") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceServerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceServerConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceServiceAccountConfig: Contains the credentials of the service
+// account which is authorized to perform the LDAP search in the directory. The
+// credentials can be supplied by the combination of the DN and password or the
+// client certificate.
+type IdentityServiceServiceAccountConfig struct {
+	// SimpleBindCredentials: Credentials for basic auth.
+	SimpleBindCredentials *IdentityServiceSimpleBindCredentials `json:"simpleBindCredentials,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SimpleBindCredentials") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SimpleBindCredentials") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceServiceAccountConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceServiceAccountConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceSimpleBindCredentials: The structure holds the LDAP simple
+// binding credential.
+type IdentityServiceSimpleBindCredentials struct {
+	// Dn: Required. The distinguished name(DN) of the service account object/user.
+	Dn string `json:"dn,omitempty"`
+	// EncryptedPassword: Output only. The encrypted password of the service
+	// account object/user.
+	EncryptedPassword string `json:"encryptedPassword,omitempty"`
+	// Password: Required. Input only. The password of the service account
+	// object/user.
+	Password string `json:"password,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Dn") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Dn") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceSimpleBindCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceSimpleBindCredentials
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceSpec: **IdentityService**: Configuration for a single
+// membership.
+type IdentityServiceSpec struct {
+	// AuthMethods: A member may support multiple auth methods.
+	AuthMethods []*IdentityServiceAuthMethod `json:"authMethods,omitempty"`
+	// IdentityServiceOptions: Optional. non-protocol-related configuration
+	// options.
+	IdentityServiceOptions *IdentityServiceIdentityServiceOptions `json:"identityServiceOptions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthMethods") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthMethods") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceState: **IdentityService**: State for a single membership,
+// analyzed and reported by feature controller.
+type IdentityServiceState struct {
+	// FailureReason: The reason of the failure.
+	FailureReason string `json:"failureReason,omitempty"`
+	// InstalledVersion: Installed AIS version. This is the AIS version installed
+	// on this member. The values makes sense iff state is OK.
+	InstalledVersion string `json:"installedVersion,omitempty"`
+	// MemberConfig: Last reconciled membership configuration
+	MemberConfig *IdentityServiceSpec `json:"memberConfig,omitempty"`
+	// State: Deployment state on this member
+	//
+	// Possible values:
+	//   "DEPLOYMENT_STATE_UNSPECIFIED" - Unspecified state
+	//   "OK" - deployment succeeds
+	//   "ERROR" - Failure with error.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FailureReason") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailureReason") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceState) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceUserConfig: Defines where users exist in the LDAP directory.
+type IdentityServiceUserConfig struct {
+	// BaseDn: Required. The location of the subtree in the LDAP directory to
+	// search for user entries.
+	BaseDn string `json:"baseDn,omitempty"`
+	// Filter: Optional. Filter to apply when searching for the user. This can be
+	// used to further restrict the user accounts which are allowed to login. This
+	// defaults to "(objectClass=User)".
+	Filter string `json:"filter,omitempty"`
+	// IdAttribute: Optional. Determines which attribute to use as the user's
+	// identity after they are authenticated. This is distinct from the
+	// loginAttribute field to allow users to login with a username, but then have
+	// their actual identifier be an email address or full Distinguished Name (DN).
+	// For example, setting loginAttribute to "sAMAccountName" and
+	// identifierAttribute to "userPrincipalName" would allow a user to login as
+	// "bsmith", but actual RBAC policies for the user would be written as
+	// "bsmith@example.com". Using "userPrincipalName" is recommended since this
+	// will be unique for each user. This defaults to "userPrincipalName".
+	IdAttribute string `json:"idAttribute,omitempty"`
+	// LoginAttribute: Optional. The name of the attribute which matches against
+	// the input username. This is used to find the user in the LDAP database e.g.
+	// "(=)" and is combined with the optional filter field. This defaults to
+	// "userPrincipalName".
+	LoginAttribute string `json:"loginAttribute,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseDn") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseDn") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdentityServiceUserConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceUserConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LifecycleState: LifecycleState describes the state of a MembershipFeature
+// *resource* in the GkeHub API. See `FeatureState` for the "running state" of
+// the MembershipFeature.
+type LifecycleState struct {
+	// State: Output only. The current state of the Feature resource in the Hub
+	// API.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State is unknown or not set.
+	//   "ENABLING" - The MembershipFeature is being enabled, and the
+	// MembershipFeature resource is being created. Once complete, the
+	// corresponding MembershipFeature will be enabled in this Hub.
+	//   "ACTIVE" - The MembershipFeature is enabled in this Hub, and the
+	// MembershipFeature resource is fully available.
+	//   "DISABLING" - The MembershipFeature is being disabled in this Hub, and the
+	// MembershipFeature resource is being deleted.
+	//   "UPDATING" - The MembershipFeature resource is being updated.
+	//   "SERVICE_UPDATING" - The MembershipFeature resource is being updated by
+	// the Hub Service.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LifecycleState) MarshalJSON() ([]byte, error) {
+	type NoMethod LifecycleState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListLocationsResponse: The response message for Locations.ListLocations.
 type ListLocationsResponse struct {
 	// Locations: A list of locations that matches the specified filter in the
@@ -259,6 +2204,39 @@ type ListLocationsResponse struct {
 
 func (s ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListMembershipFeaturesResponse: Response message for the
+// `GkeHubFeature.ListMembershipFeatures` method.
+type ListMembershipFeaturesResponse struct {
+	// MembershipFeatures: The list of matching MembershipFeatures.
+	MembershipFeatures []*MembershipFeature `json:"membershipFeatures,omitempty"`
+	// NextPageToken: A token to request the next page of resources from the
+	// `ListMembershipFeatures` method. The value of an empty string means that
+	// there are no more resources to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: List of locations that could not be reached while fetching this
+	// list.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "MembershipFeatures") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MembershipFeatures") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListMembershipFeaturesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMembershipFeaturesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -328,6 +2306,95 @@ func (s Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MembershipFeature: MembershipFeature represents the settings and status of a
+// Fleet Feature enabled on a single Fleet Membership.
+type MembershipFeature struct {
+	// CreateTime: Output only. When the MembershipFeature resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DeleteTime: Output only. When the MembershipFeature resource was deleted.
+	DeleteTime string `json:"deleteTime,omitempty"`
+	// FeatureConfigRef: Reference information for a FeatureConfig applied on the
+	// MembershipFeature.
+	FeatureConfigRef *FeatureConfigRef `json:"featureConfigRef,omitempty"`
+	// Labels: GCP labels for this MembershipFeature.
+	Labels map[string]string `json:"labels,omitempty"`
+	// LifecycleState: Output only. Lifecycle information of the resource itself.
+	LifecycleState *LifecycleState `json:"lifecycleState,omitempty"`
+	// Name: Output only. The resource name of the membershipFeature, in the
+	// format:
+	// `projects/{project}/locations/{location}/memberships/{membership}/features/{f
+	// eature}`. Note that `membershipFeatures` is shortened to `features` in the
+	// resource name. (see http://go/aip/122#collection-identifiers)
+	Name string `json:"name,omitempty"`
+	// Spec: Spec of this membershipFeature.
+	Spec *FeatureSpec `json:"spec,omitempty"`
+	// State: Output only. State of the this membershipFeature.
+	State *FeatureState `json:"state,omitempty"`
+	// UpdateTime: Output only. When the MembershipFeature resource was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MembershipFeature) MarshalJSON() ([]byte, error) {
+	type NoMethod MembershipFeature
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MeteringState: **Metering**: State for a single membership, analyzed and
+// reported by feature controller.
+type MeteringState struct {
+	// LastMeasurementTime: The time stamp of the most recent measurement of the
+	// number of vCPUs in the cluster.
+	LastMeasurementTime string `json:"lastMeasurementTime,omitempty"`
+	// PreciseLastMeasuredClusterVcpuCapacity: The vCPUs capacity in the cluster
+	// according to the most recent measurement (1/1000 precision).
+	PreciseLastMeasuredClusterVcpuCapacity float64 `json:"preciseLastMeasuredClusterVcpuCapacity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LastMeasurementTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LastMeasurementTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MeteringState) MarshalJSON() ([]byte, error) {
+	type NoMethod MeteringState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *MeteringState) UnmarshalJSON(data []byte) error {
+	type NoMethod MeteringState
+	var s1 struct {
+		PreciseLastMeasuredClusterVcpuCapacity gensupport.JSONFloat64 `json:"preciseLastMeasuredClusterVcpuCapacity"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.PreciseLastMeasuredClusterVcpuCapacity = float64(s1.PreciseLastMeasuredClusterVcpuCapacity)
+	return nil
+}
+
 // Operation: This resource represents a long-running operation that is the
 // result of a network API call.
 type Operation struct {
@@ -372,6 +2439,1021 @@ type Operation struct {
 
 func (s Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OperationMetadata: Metadata of the long-running operation.
+type OperationMetadata struct {
+	// ApiVersion: Output only. API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+	// CancelRequested: Output only. Identifies whether the user has requested
+	// cancellation of the operation. Operations that have successfully been
+	// cancelled have Operation.error value with a google.rpc.Status.code of 1,
+	// corresponding to `Code.CANCELLED`.
+	CancelRequested bool `json:"cancelRequested,omitempty"`
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+	// StatusDetail: Output only. Human-readable status of the operation, if any.
+	StatusDetail string `json:"statusDetail,omitempty"`
+	// Target: Output only. Server-defined resource path for the target of the
+	// operation.
+	Target string `json:"target,omitempty"`
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Origin: Origin defines where this FeatureSpec originated from.
+type Origin struct {
+	// Type: Type specifies which type of origin is set.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unknown or not set.
+	//   "FLEET" - Per-Feature spec was inherited from the fleet-level default.
+	//   "FLEET_OUT_OF_SYNC" - Per-Feature spec was inherited from the fleet-level
+	// default but is now out of sync with the current default.
+	//   "USER" - Per-Feature spec was inherited from a user specification.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Origin) MarshalJSON() ([]byte, error) {
+	type NoMethod Origin
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerBundleInstallSpec: BundleInstallSpec is the specification
+// configuration for a single managed bundle.
+type PolicyControllerBundleInstallSpec struct {
+	// ExemptedNamespaces: the set of namespaces to be exempted from the bundle
+	ExemptedNamespaces []string `json:"exemptedNamespaces,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExemptedNamespaces") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExemptedNamespaces") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyControllerBundleInstallSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerBundleInstallSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerHubConfig: Configuration for Policy Controller
+type PolicyControllerHubConfig struct {
+	// AuditIntervalSeconds: Sets the interval for Policy Controller Audit Scans
+	// (in seconds). When set to 0, this disables audit functionality altogether.
+	AuditIntervalSeconds int64 `json:"auditIntervalSeconds,omitempty,string"`
+	// ConstraintViolationLimit: The maximum number of audit violations to be
+	// stored in a constraint. If not set, the internal default (currently 20) will
+	// be used.
+	ConstraintViolationLimit int64 `json:"constraintViolationLimit,omitempty,string"`
+	// DeploymentConfigs: Map of deployment configs to deployments
+	// (“admission”, “audit”, “mutation”).
+	DeploymentConfigs map[string]PolicyControllerPolicyControllerDeploymentConfig `json:"deploymentConfigs,omitempty"`
+	// ExemptableNamespaces: The set of namespaces that are excluded from Policy
+	// Controller checks. Namespaces do not need to currently exist on the cluster.
+	ExemptableNamespaces []string `json:"exemptableNamespaces,omitempty"`
+	// InstallSpec: The install_spec represents the intended state specified by the
+	// latest request that mutated install_spec in the feature spec, not the
+	// lifecycle state of the feature observed by the Hub feature controller that
+	// is reported in the feature state.
+	//
+	// Possible values:
+	//   "INSTALL_SPEC_UNSPECIFIED" - Spec is unknown.
+	//   "INSTALL_SPEC_NOT_INSTALLED" - Request to uninstall Policy Controller.
+	//   "INSTALL_SPEC_ENABLED" - Request to install and enable Policy Controller.
+	//   "INSTALL_SPEC_SUSPENDED" - Request to suspend Policy Controller i.e. its
+	// webhooks. If Policy Controller is not installed, it will be installed but
+	// suspended.
+	//   "INSTALL_SPEC_DETACHED" - Request to stop all reconciliation actions by
+	// PoCo Hub controller. This is a breakglass mechanism to stop PoCo Hub from
+	// affecting cluster resources.
+	InstallSpec string `json:"installSpec,omitempty"`
+	// LogDeniesEnabled: Logs all denies and dry run failures.
+	LogDeniesEnabled bool `json:"logDeniesEnabled,omitempty"`
+	// Monitoring: Monitoring specifies the configuration of monitoring.
+	Monitoring *PolicyControllerMonitoringConfig `json:"monitoring,omitempty"`
+	// MutationEnabled: Enables the ability to mutate resources using Policy
+	// Controller.
+	MutationEnabled bool `json:"mutationEnabled,omitempty"`
+	// PolicyContent: Specifies the desired policy content on the cluster
+	PolicyContent *PolicyControllerPolicyContentSpec `json:"policyContent,omitempty"`
+	// ReferentialRulesEnabled: Enables the ability to use Constraint Templates
+	// that reference to objects other than the object currently being evaluated.
+	ReferentialRulesEnabled bool `json:"referentialRulesEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuditIntervalSeconds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuditIntervalSeconds") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyControllerHubConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerHubConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerMonitoringConfig: MonitoringConfig specifies the backends
+// Policy Controller should export metrics to. For example, to specify metrics
+// should be exported to Cloud Monitoring and Prometheus, specify backends:
+// ["cloudmonitoring", "prometheus"]
+type PolicyControllerMonitoringConfig struct {
+	// Backends: Specifies the list of backends Policy Controller will export to.
+	// An empty list would effectively disable metrics export.
+	//
+	// Possible values:
+	//   "MONITORING_BACKEND_UNSPECIFIED" - Backend cannot be determined
+	//   "PROMETHEUS" - Prometheus backend for monitoring
+	//   "CLOUD_MONITORING" - Stackdriver/Cloud Monitoring backend for monitoring
+	Backends []string `json:"backends,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Backends") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Backends") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyControllerMonitoringConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerMonitoringConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerOnClusterState: OnClusterState represents the state of a
+// sub-component of Policy Controller.
+type PolicyControllerOnClusterState struct {
+	// Details: Surface potential errors or information logs.
+	Details string `json:"details,omitempty"`
+	// State: The lifecycle state of this component.
+	//
+	// Possible values:
+	//   "LIFECYCLE_STATE_UNSPECIFIED" - The lifecycle state is unspecified.
+	//   "NOT_INSTALLED" - The PC does not exist on the given cluster, and no k8s
+	// resources of any type that are associated with the PC should exist there.
+	// The cluster does not possess a membership with the PCH.
+	//   "INSTALLING" - The PCH possesses a Membership, however the PC is not fully
+	// installed on the cluster. In this state the hub can be expected to be taking
+	// actions to install the PC on the cluster.
+	//   "ACTIVE" - The PC is fully installed on the cluster and in an operational
+	// mode. In this state PCH will be reconciling state with the PC, and the PC
+	// will be performing it's operational tasks per that software. Entering a
+	// READY state requires that the hub has confirmed the PC is installed and its
+	// pods are operational with the version of the PC the PCH expects.
+	//   "UPDATING" - The PC is fully installed, but in the process of changing the
+	// configuration (including changing the version of PC either up and down, or
+	// modifying the manifests of PC) of the resources running on the cluster. The
+	// PCH has a Membership, is aware of the version the cluster should be running
+	// in, but has not confirmed for itself that the PC is running with that
+	// version.
+	//   "DECOMMISSIONING" - The PC may have resources on the cluster, but the PCH
+	// wishes to remove the Membership. The Membership still exists.
+	//   "CLUSTER_ERROR" - The PC is not operational, and the PCH is unable to act
+	// to make it operational. Entering a CLUSTER_ERROR state happens automatically
+	// when the PCH determines that a PC installed on the cluster is non-operative
+	// or that the cluster does not meet requirements set for the PCH to administer
+	// the cluster but has nevertheless been given an instruction to do so (such as
+	// ‘install').
+	//   "HUB_ERROR" - In this state, the PC may still be operational, and only the
+	// PCH is unable to act. The hub should not issue instructions to change the PC
+	// state, or otherwise interfere with the on-cluster resources. Entering a
+	// HUB_ERROR state happens automatically when the PCH determines the hub is in
+	// an unhealthy state and it wishes to ‘take hands off' to avoid corrupting
+	// the PC or other data.
+	//   "SUSPENDED" - Policy Controller (PC) is installed but suspended. This
+	// means that the policies are not enforced, but violations are still recorded
+	// (through audit).
+	//   "DETACHED" - PoCo Hub is not taking any action to reconcile cluster
+	// objects. Changes to those objects will not be overwritten by PoCo Hub.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Details") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyControllerOnClusterState) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerOnClusterState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerPolicyContentSpec: PolicyContentSpec defines the user's
+// desired content configuration on the cluster.
+type PolicyControllerPolicyContentSpec struct {
+	// Bundles: map of bundle name to BundleInstallSpec. The bundle name maps to
+	// the `bundleName` key in the `policycontroller.gke.io/constraintData`
+	// annotation on a constraint.
+	Bundles map[string]PolicyControllerBundleInstallSpec `json:"bundles,omitempty"`
+	// TemplateLibrary: Configures the installation of the Template Library.
+	TemplateLibrary *PolicyControllerTemplateLibraryConfig `json:"templateLibrary,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bundles") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bundles") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyControllerPolicyContentSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerPolicyContentSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerPolicyContentState: The state of the policy controller
+// policy content
+type PolicyControllerPolicyContentState struct {
+	// BundleStates: The state of the any bundles included in the chosen version of
+	// the manifest
+	BundleStates map[string]PolicyControllerOnClusterState `json:"bundleStates,omitempty"`
+	// ReferentialSyncConfigState: The state of the referential data sync
+	// configuration. This could represent the state of either the syncSet
+	// object(s) or the config object, depending on the version of PoCo configured
+	// by the user.
+	ReferentialSyncConfigState *PolicyControllerOnClusterState `json:"referentialSyncConfigState,omitempty"`
+	// TemplateLibraryState: The state of the template library
+	TemplateLibraryState *PolicyControllerOnClusterState `json:"templateLibraryState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BundleStates") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BundleStates") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyControllerPolicyContentState) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerPolicyContentState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerPolicyControllerDeploymentConfig: Deployment-specific
+// configuration.
+type PolicyControllerPolicyControllerDeploymentConfig struct {
+	// ContainerResources: Container resource requirements.
+	ContainerResources *PolicyControllerResourceRequirements `json:"containerResources,omitempty"`
+	// PodAffinity: Pod affinity configuration.
+	//
+	// Possible values:
+	//   "AFFINITY_UNSPECIFIED" - No affinity configuration has been specified.
+	//   "NO_AFFINITY" - Affinity configurations will be removed from the
+	// deployment.
+	//   "ANTI_AFFINITY" - Anti-affinity configuration will be applied to this
+	// deployment. Default for admissions deployment.
+	PodAffinity string `json:"podAffinity,omitempty"`
+	// PodAntiAffinity: Pod anti-affinity enablement. Deprecated: use
+	// `pod_affinity` instead.
+	PodAntiAffinity bool `json:"podAntiAffinity,omitempty"`
+	// PodTolerations: Pod tolerations of node taints.
+	PodTolerations []*PolicyControllerToleration `json:"podTolerations,omitempty"`
+	// ReplicaCount: Pod replica count.
+	ReplicaCount int64 `json:"replicaCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ContainerResources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContainerResources") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyControllerPolicyControllerDeploymentConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerPolicyControllerDeploymentConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerResourceList: ResourceList contains container resource
+// requirements.
+type PolicyControllerResourceList struct {
+	// Cpu: CPU requirement expressed in Kubernetes resource units.
+	Cpu string `json:"cpu,omitempty"`
+	// Memory: Memory requirement expressed in Kubernetes resource units.
+	Memory string `json:"memory,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cpu") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cpu") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyControllerResourceList) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerResourceList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerResourceRequirements: ResourceRequirements describes the
+// compute resource requirements.
+type PolicyControllerResourceRequirements struct {
+	// Limits: Limits describes the maximum amount of compute resources allowed for
+	// use by the running container.
+	Limits *PolicyControllerResourceList `json:"limits,omitempty"`
+	// Requests: Requests describes the amount of compute resources reserved for
+	// the container by the kube-scheduler.
+	Requests *PolicyControllerResourceList `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Limits") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Limits") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyControllerResourceRequirements) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerResourceRequirements
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerSpec: **Policy Controller**: Configuration for a single
+// cluster. Intended to parallel the PolicyController CR.
+type PolicyControllerSpec struct {
+	// PolicyControllerHubConfig: Policy Controller configuration for the cluster.
+	PolicyControllerHubConfig *PolicyControllerHubConfig `json:"policyControllerHubConfig,omitempty"`
+	// Version: Version of Policy Controller installed.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PolicyControllerHubConfig")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PolicyControllerHubConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyControllerSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerState: **Policy Controller**: State for a single cluster.
+type PolicyControllerState struct {
+	// ComponentStates: Currently these include (also serving as map keys): 1.
+	// "admission" 2. "audit" 3. "mutation"
+	ComponentStates map[string]PolicyControllerOnClusterState `json:"componentStates,omitempty"`
+	// PolicyContentState: The overall content state observed by the Hub Feature
+	// controller.
+	PolicyContentState *PolicyControllerPolicyContentState `json:"policyContentState,omitempty"`
+	// State: The overall Policy Controller lifecycle state observed by the Hub
+	// Feature controller.
+	//
+	// Possible values:
+	//   "LIFECYCLE_STATE_UNSPECIFIED" - The lifecycle state is unspecified.
+	//   "NOT_INSTALLED" - The PC does not exist on the given cluster, and no k8s
+	// resources of any type that are associated with the PC should exist there.
+	// The cluster does not possess a membership with the PCH.
+	//   "INSTALLING" - The PCH possesses a Membership, however the PC is not fully
+	// installed on the cluster. In this state the hub can be expected to be taking
+	// actions to install the PC on the cluster.
+	//   "ACTIVE" - The PC is fully installed on the cluster and in an operational
+	// mode. In this state PCH will be reconciling state with the PC, and the PC
+	// will be performing it's operational tasks per that software. Entering a
+	// READY state requires that the hub has confirmed the PC is installed and its
+	// pods are operational with the version of the PC the PCH expects.
+	//   "UPDATING" - The PC is fully installed, but in the process of changing the
+	// configuration (including changing the version of PC either up and down, or
+	// modifying the manifests of PC) of the resources running on the cluster. The
+	// PCH has a Membership, is aware of the version the cluster should be running
+	// in, but has not confirmed for itself that the PC is running with that
+	// version.
+	//   "DECOMMISSIONING" - The PC may have resources on the cluster, but the PCH
+	// wishes to remove the Membership. The Membership still exists.
+	//   "CLUSTER_ERROR" - The PC is not operational, and the PCH is unable to act
+	// to make it operational. Entering a CLUSTER_ERROR state happens automatically
+	// when the PCH determines that a PC installed on the cluster is non-operative
+	// or that the cluster does not meet requirements set for the PCH to administer
+	// the cluster but has nevertheless been given an instruction to do so (such as
+	// ‘install').
+	//   "HUB_ERROR" - In this state, the PC may still be operational, and only the
+	// PCH is unable to act. The hub should not issue instructions to change the PC
+	// state, or otherwise interfere with the on-cluster resources. Entering a
+	// HUB_ERROR state happens automatically when the PCH determines the hub is in
+	// an unhealthy state and it wishes to ‘take hands off' to avoid corrupting
+	// the PC or other data.
+	//   "SUSPENDED" - Policy Controller (PC) is installed but suspended. This
+	// means that the policies are not enforced, but violations are still recorded
+	// (through audit).
+	//   "DETACHED" - PoCo Hub is not taking any action to reconcile cluster
+	// objects. Changes to those objects will not be overwritten by PoCo Hub.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ComponentStates") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComponentStates") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyControllerState) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerTemplateLibraryConfig: The config specifying which default
+// library templates to install.
+type PolicyControllerTemplateLibraryConfig struct {
+	// Installation: Configures the manner in which the template library is
+	// installed on the cluster.
+	//
+	// Possible values:
+	//   "INSTALLATION_UNSPECIFIED" - No installation strategy has been specified.
+	//   "NOT_INSTALLED" - Do not install the template library.
+	//   "ALL" - Install the entire template library.
+	Installation string `json:"installation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Installation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Installation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyControllerTemplateLibraryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerTemplateLibraryConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerToleration: Toleration of a node taint.
+type PolicyControllerToleration struct {
+	// Effect: Matches a taint effect.
+	Effect string `json:"effect,omitempty"`
+	// Key: Matches a taint key (not necessarily unique).
+	Key string `json:"key,omitempty"`
+	// Operator: Matches a taint operator.
+	Operator string `json:"operator,omitempty"`
+	// Value: Matches a taint value.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Effect") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Effect") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyControllerToleration) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerToleration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceMeshAnalysisMessage: AnalysisMessage is a single message produced by
+// an analyzer, and it used to communicate to the end user about the state of
+// their Service Mesh configuration.
+type ServiceMeshAnalysisMessage struct {
+	// Args: A UI can combine these args with a template (based on
+	// message_base.type) to produce an internationalized message.
+	Args googleapi.RawMessage `json:"args,omitempty"`
+	// Description: A human readable description of what the error means. It is
+	// suitable for non-internationalize display purposes.
+	Description string `json:"description,omitempty"`
+	// MessageBase: Details common to all types of Istio and ServiceMesh analysis
+	// messages.
+	MessageBase *ServiceMeshAnalysisMessageBase `json:"messageBase,omitempty"`
+	// ResourcePaths: A list of strings specifying the resource identifiers that
+	// were the cause of message generation. A "path" here may be: * MEMBERSHIP_ID
+	// if the cause is a specific member cluster *
+	// MEMBERSHIP_ID/(NAMESPACE\/)?RESOURCETYPE/NAME if the cause is a resource in
+	// a cluster
+	ResourcePaths []string `json:"resourcePaths,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Args") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceMeshAnalysisMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshAnalysisMessage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceMeshAnalysisMessageBase: AnalysisMessageBase describes some common
+// information that is needed for all messages.
+type ServiceMeshAnalysisMessageBase struct {
+	// DocumentationUrl: A url pointing to the Service Mesh or Istio documentation
+	// for this specific error type.
+	DocumentationUrl string `json:"documentationUrl,omitempty"`
+	// Level: Represents how severe a message is.
+	//
+	// Possible values:
+	//   "LEVEL_UNSPECIFIED" - Illegal. Same
+	// istio.analysis.v1alpha1.AnalysisMessageBase.Level.UNKNOWN.
+	//   "ERROR" - ERROR represents a misconfiguration that must be fixed.
+	//   "WARNING" - WARNING represents a misconfiguration that should be fixed.
+	//   "INFO" - INFO represents an informational finding.
+	Level string `json:"level,omitempty"`
+	// Type: Represents the specific type of a message.
+	Type *ServiceMeshType `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DocumentationUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocumentationUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceMeshAnalysisMessageBase) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshAnalysisMessageBase
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceMeshCondition: Condition being reported.
+type ServiceMeshCondition struct {
+	// Code: Unique identifier of the condition which describes the condition
+	// recognizable to the user.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - Default Unspecified code
+	//   "MESH_IAM_PERMISSION_DENIED" - Mesh IAM permission denied error code
+	//   "MESH_IAM_CROSS_PROJECT_PERMISSION_DENIED" - Permission denied error code
+	// for cross-project
+	//   "CNI_CONFIG_UNSUPPORTED" - CNI config unsupported error code
+	//   "GKE_SANDBOX_UNSUPPORTED" - GKE sandbox unsupported error code
+	//   "NODEPOOL_WORKLOAD_IDENTITY_FEDERATION_REQUIRED" - Nodepool workload
+	// identity federation required error code
+	//   "CNI_INSTALLATION_FAILED" - CNI installation failed error code
+	//   "CNI_POD_UNSCHEDULABLE" - CNI pod unschedulable error code
+	//   "CLUSTER_HAS_ZERO_NODES" - Cluster has zero node code
+	//   "UNSUPPORTED_MULTIPLE_CONTROL_PLANES" - Multiple control planes
+	// unsupported error code
+	//   "VPCSC_GA_SUPPORTED" - VPC-SC GA is supported for this control plane.
+	//   "DEPRECATED_SPEC_CONTROL_PLANE_MANAGEMENT" - User is using deprecated
+	// ControlPlaneManagement and they have not yet set Management.
+	//   "DEPRECATED_SPEC_CONTROL_PLANE_MANAGEMENT_SAFE" - User is using deprecated
+	// ControlPlaneManagement and they have already set Management.
+	//   "CONFIG_APPLY_INTERNAL_ERROR" - Configuration (Istio/k8s resources) failed
+	// to apply due to internal error.
+	//   "CONFIG_VALIDATION_ERROR" - Configuration failed to be applied due to
+	// being invalid.
+	//   "CONFIG_VALIDATION_WARNING" - Encountered configuration(s) with possible
+	// unintended behavior or invalid configuration. These configs may not have
+	// been applied.
+	//   "QUOTA_EXCEEDED_BACKEND_SERVICES" - BackendService quota exceeded error
+	// code.
+	//   "QUOTA_EXCEEDED_HEALTH_CHECKS" - HealthCheck quota exceeded error code.
+	//   "QUOTA_EXCEEDED_HTTP_ROUTES" - HTTPRoute quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TCP_ROUTES" - TCPRoute quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TLS_ROUTES" - TLS routes quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TRAFFIC_POLICIES" - TrafficPolicy quota exceeded error
+	// code.
+	//   "QUOTA_EXCEEDED_ENDPOINT_POLICIES" - EndpointPolicy quota exceeded error
+	// code.
+	//   "QUOTA_EXCEEDED_GATEWAYS" - Gateway quota exceeded error code.
+	//   "QUOTA_EXCEEDED_MESHES" - Mesh quota exceeded error code.
+	//   "QUOTA_EXCEEDED_SERVER_TLS_POLICIES" - ServerTLSPolicy quota exceeded
+	// error code.
+	//   "QUOTA_EXCEEDED_CLIENT_TLS_POLICIES" - ClientTLSPolicy quota exceeded
+	// error code.
+	//   "QUOTA_EXCEEDED_SERVICE_LB_POLICIES" - ServiceLBPolicy quota exceeded
+	// error code.
+	//   "QUOTA_EXCEEDED_HTTP_FILTERS" - HTTPFilter quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TCP_FILTERS" - TCPFilter quota exceeded error code.
+	//   "QUOTA_EXCEEDED_NETWORK_ENDPOINT_GROUPS" - NetworkEndpointGroup quota
+	// exceeded error code.
+	//   "MODERNIZATION_SCHEDULED" - Modernization is scheduled for a cluster.
+	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
+	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.
+	//   "MODERNIZATION_ABORTED" - Modernization is aborted for a cluster.
+	Code string `json:"code,omitempty"`
+	// Details: A short summary about the issue.
+	Details string `json:"details,omitempty"`
+	// DocumentationLink: Links contains actionable information.
+	DocumentationLink string `json:"documentationLink,omitempty"`
+	// Severity: Severity level of the condition.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity
+	//   "ERROR" - Indicates an issue that prevents the mesh from operating
+	// correctly
+	//   "WARNING" - Indicates a setting is likely wrong, but the mesh is still
+	// able to operate
+	//   "INFO" - An informational message, not requiring any action
+	Severity string `json:"severity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceMeshCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceMeshControlPlaneManagement: Status of control plane management.
+type ServiceMeshControlPlaneManagement struct {
+	// Details: Explanation of state.
+	Details []*ServiceMeshStatusDetails `json:"details,omitempty"`
+	// Implementation: Output only. Implementation of managed control plane.
+	//
+	// Possible values:
+	//   "IMPLEMENTATION_UNSPECIFIED" - Unspecified
+	//   "ISTIOD" - A Google build of istiod is used for the managed control plane.
+	//   "TRAFFIC_DIRECTOR" - Traffic director is used for the managed control
+	// plane.
+	//   "UPDATING" - The control plane implementation is being updated.
+	Implementation string `json:"implementation,omitempty"`
+	// State: LifecycleState of control plane management.
+	//
+	// Possible values:
+	//   "LIFECYCLE_STATE_UNSPECIFIED" - Unspecified
+	//   "DISABLED" - DISABLED means that the component is not enabled.
+	//   "FAILED_PRECONDITION" - FAILED_PRECONDITION means that provisioning cannot
+	// proceed because of some characteristic of the member cluster.
+	//   "PROVISIONING" - PROVISIONING means that provisioning is in progress.
+	//   "ACTIVE" - ACTIVE means that the component is ready for use.
+	//   "STALLED" - STALLED means that provisioning could not be done.
+	//   "NEEDS_ATTENTION" - NEEDS_ATTENTION means that the component is ready, but
+	// some user intervention is required. (For example that the user should
+	// migrate workloads to a new control plane revision.)
+	//   "DEGRADED" - DEGRADED means that the component is ready, but operating in
+	// a degraded state.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Details") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceMeshControlPlaneManagement) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshControlPlaneManagement
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceMeshDataPlaneManagement: Status of data plane management. Only
+// reported per-member.
+type ServiceMeshDataPlaneManagement struct {
+	// Details: Explanation of the status.
+	Details []*ServiceMeshStatusDetails `json:"details,omitempty"`
+	// State: Lifecycle status of data plane management.
+	//
+	// Possible values:
+	//   "LIFECYCLE_STATE_UNSPECIFIED" - Unspecified
+	//   "DISABLED" - DISABLED means that the component is not enabled.
+	//   "FAILED_PRECONDITION" - FAILED_PRECONDITION means that provisioning cannot
+	// proceed because of some characteristic of the member cluster.
+	//   "PROVISIONING" - PROVISIONING means that provisioning is in progress.
+	//   "ACTIVE" - ACTIVE means that the component is ready for use.
+	//   "STALLED" - STALLED means that provisioning could not be done.
+	//   "NEEDS_ATTENTION" - NEEDS_ATTENTION means that the component is ready, but
+	// some user intervention is required. (For example that the user should
+	// migrate workloads to a new control plane revision.)
+	//   "DEGRADED" - DEGRADED means that the component is ready, but operating in
+	// a degraded state.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Details") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceMeshDataPlaneManagement) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshDataPlaneManagement
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceMeshSpec: **Service Mesh**: Spec for a single Membership for the
+// servicemesh feature
+type ServiceMeshSpec struct {
+	// ConfigApi: Optional. Specifies the API that will be used for configuring the
+	// mesh workloads.
+	//
+	// Possible values:
+	//   "CONFIG_API_UNSPECIFIED" - Unspecified
+	//   "CONFIG_API_ISTIO" - Use the Istio API for configuration.
+	//   "CONFIG_API_GATEWAY" - Use the K8s Gateway API for configuration.
+	ConfigApi string `json:"configApi,omitempty"`
+	// ControlPlane: Deprecated: use `management` instead Enables automatic control
+	// plane management.
+	//
+	// Possible values:
+	//   "CONTROL_PLANE_MANAGEMENT_UNSPECIFIED" - Unspecified
+	//   "AUTOMATIC" - Google should provision a control plane revision and make it
+	// available in the cluster. Google will enroll this revision in a release
+	// channel and keep it up to date. The control plane revision may be a managed
+	// service, or a managed install.
+	//   "MANUAL" - User will manually configure the control plane (e.g. via CLI,
+	// or via the ControlPlaneRevision KRM API)
+	ControlPlane string `json:"controlPlane,omitempty"`
+	// DefaultChannel: Determines which release channel to use for default
+	// injection and service mesh APIs.
+	//
+	// Possible values:
+	//   "CHANNEL_UNSPECIFIED" - Unspecified
+	//   "RAPID" - RAPID channel is offered on an early access basis for customers
+	// who want to test new releases.
+	//   "REGULAR" - REGULAR channel is intended for production users who want to
+	// take advantage of new features.
+	//   "STABLE" - STABLE channel includes versions that are known to be stable
+	// and reliable in production.
+	DefaultChannel string `json:"defaultChannel,omitempty"`
+	// Management: Optional. Enables automatic Service Mesh management.
+	//
+	// Possible values:
+	//   "MANAGEMENT_UNSPECIFIED" - Unspecified
+	//   "MANAGEMENT_AUTOMATIC" - Google should manage my Service Mesh for the
+	// cluster.
+	//   "MANAGEMENT_MANUAL" - User will manually configure their service mesh
+	// components.
+	Management string `json:"management,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConfigApi") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConfigApi") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceMeshSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceMeshState: **Service Mesh**: State for a single Membership, as
+// analyzed by the Service Mesh Hub Controller.
+type ServiceMeshState struct {
+	// AnalysisMessages: Output only. Results of running Service Mesh analyzers.
+	AnalysisMessages []*ServiceMeshAnalysisMessage `json:"analysisMessages,omitempty"`
+	// Conditions: Output only. List of conditions reported for this membership.
+	Conditions []*ServiceMeshCondition `json:"conditions,omitempty"`
+	// ConfigApiVersion: The API version (i.e. Istio CRD version) for configuring
+	// service mesh in this cluster. This version is influenced by the
+	// `default_channel` field.
+	ConfigApiVersion string `json:"configApiVersion,omitempty"`
+	// ControlPlaneManagement: Output only. Status of control plane management
+	ControlPlaneManagement *ServiceMeshControlPlaneManagement `json:"controlPlaneManagement,omitempty"`
+	// DataPlaneManagement: Output only. Status of data plane management.
+	DataPlaneManagement *ServiceMeshDataPlaneManagement `json:"dataPlaneManagement,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnalysisMessages") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnalysisMessages") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceMeshState) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceMeshStatusDetails: Structured and human-readable details for a
+// status.
+type ServiceMeshStatusDetails struct {
+	// Code: A machine-readable code that further describes a broad status.
+	Code string `json:"code,omitempty"`
+	// Details: Human-readable explanation of code.
+	Details string `json:"details,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceMeshStatusDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshStatusDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceMeshType: A unique identifier for the type of message. Display_name
+// is intended to be human-readable, code is intended to be machine readable.
+// There should be a one-to-one mapping between display_name and code. (i.e. do
+// not re-use display_names or codes between message types.) See
+// istio.analysis.v1alpha1.AnalysisMessageBase.Type
+type ServiceMeshType struct {
+	// Code: A 7 character code matching `^IST[0-9]{4}$` or `^ASM[0-9]{4}$`,
+	// intended to uniquely identify the message type. (e.g. "IST0001" is mapped to
+	// the "InternalError" message type.)
+	Code string `json:"code,omitempty"`
+	// DisplayName: A human-readable name for the message type. e.g.
+	// "InternalError", "PodMissingProxy". This should be the same for all messages
+	// of the same type. (This corresponds to the `name` field in open-source
+	// Istio.)
+	DisplayName string `json:"displayName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceMeshType) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// State: High-level state of a MembershipFeature.
+type State struct {
+	// Code: The high-level, machine-readable status of this MembershipFeature.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - Unknown or not set.
+	//   "OK" - The MembershipFeature is operating normally.
+	//   "WARNING" - The MembershipFeature has encountered an issue, and is
+	// operating in a degraded state. The MembershipFeature may need intervention
+	// to return to normal operation. See the description and any associated
+	// MembershipFeature-specific details for more information.
+	//   "ERROR" - The MembershipFeature is not operating or is in a severely
+	// degraded state. The MembershipFeature may need intervention to return to
+	// normal operation. See the description and any associated
+	// MembershipFeature-specific details for more information.
+	Code string `json:"code,omitempty"`
+	// Description: A human-readable description of the current status.
+	Description string `json:"description,omitempty"`
+	// UpdateTime: The time this status and any related Feature-specific details
+	// were updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s State) MarshalJSON() ([]byte, error) {
+	type NoMethod State
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadCertificateSpec: **WorkloadCertificate**: The membership-specific
+// input for WorkloadCertificate feature.
+type WorkloadCertificateSpec struct {
+	// CertificateManagement: CertificateManagement specifies workload certificate
+	// management.
+	//
+	// Possible values:
+	//   "CERTIFICATE_MANAGEMENT_UNSPECIFIED" - Disable workload certificate
+	// feature.
+	//   "DISABLED" - Disable workload certificate feature.
+	//   "ENABLED" - Enable workload certificate feature.
+	CertificateManagement string `json:"certificateManagement,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CertificateManagement") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CertificateManagement") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkloadCertificateSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadCertificateSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -633,6 +3715,624 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsMembershipsFeaturesCreateCall struct {
+	s                 *Service
+	parent            string
+	membershipfeature *MembershipFeature
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Create: Creates membershipFeature under a given parent.
+//
+//   - parent: The name of parent where the MembershipFeature will be created.
+//     Specified in the format `projects/*/locations/*/memberships/*`.
+func (r *ProjectsLocationsMembershipsFeaturesService) Create(parent string, membershipfeature *MembershipFeature) *ProjectsLocationsMembershipsFeaturesCreateCall {
+	c := &ProjectsLocationsMembershipsFeaturesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.membershipfeature = membershipfeature
+	return c
+}
+
+// FeatureId sets the optional parameter "featureId": Required. The ID of the
+// membership_feature to create.
+func (c *ProjectsLocationsMembershipsFeaturesCreateCall) FeatureId(featureId string) *ProjectsLocationsMembershipsFeaturesCreateCall {
+	c.urlParams_.Set("featureId", featureId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": Idempotent request UUID.
+func (c *ProjectsLocationsMembershipsFeaturesCreateCall) RequestId(requestId string) *ProjectsLocationsMembershipsFeaturesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMembershipsFeaturesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsFeaturesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMembershipsFeaturesCreateCall) Context(ctx context.Context) *ProjectsLocationsMembershipsFeaturesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMembershipsFeaturesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsFeaturesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.membershipfeature)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+parent}/features")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.features.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsFeaturesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMembershipsFeaturesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Removes a membershipFeature.
+//
+//   - name: The name of the membershipFeature to be deleted. Specified in the
+//     format `projects/*/locations/*/memberships/*/features/*`.
+func (r *ProjectsLocationsMembershipsFeaturesService) Delete(name string) *ProjectsLocationsMembershipsFeaturesDeleteCall {
+	c := &ProjectsLocationsMembershipsFeaturesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": Idempotent request UUID.
+func (c *ProjectsLocationsMembershipsFeaturesDeleteCall) RequestId(requestId string) *ProjectsLocationsMembershipsFeaturesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMembershipsFeaturesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsFeaturesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMembershipsFeaturesDeleteCall) Context(ctx context.Context) *ProjectsLocationsMembershipsFeaturesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMembershipsFeaturesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsFeaturesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.features.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsFeaturesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMembershipsFeaturesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: ========= MembershipFeature Services ========= Gets details of a
+// membershipFeature.
+//
+//   - name: The MembershipFeature resource name in the format
+//     `projects/*/locations/*/memberships/*/features/*`.
+func (r *ProjectsLocationsMembershipsFeaturesService) Get(name string) *ProjectsLocationsMembershipsFeaturesGetCall {
+	c := &ProjectsLocationsMembershipsFeaturesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMembershipsFeaturesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsFeaturesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMembershipsFeaturesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsMembershipsFeaturesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMembershipsFeaturesGetCall) Context(ctx context.Context) *ProjectsLocationsMembershipsFeaturesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMembershipsFeaturesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsFeaturesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.features.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *MembershipFeature.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsMembershipsFeaturesGetCall) Do(opts ...googleapi.CallOption) (*MembershipFeature, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &MembershipFeature{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsMembershipsFeaturesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists MembershipFeatures in a given project and location.
+//
+//   - parent: The parent where the MembershipFeature will be listed. In the
+//     format: `projects/*/locations/*/memberships/*`.
+func (r *ProjectsLocationsMembershipsFeaturesService) List(parent string) *ProjectsLocationsMembershipsFeaturesListCall {
+	c := &ProjectsLocationsMembershipsFeaturesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Lists MembershipFeatures that
+// match the filter expression, following the syntax outlined in
+// https://google.aip.dev/160. Examples: - Feature with the name "helloworld"
+// in project "foo-proj" and membership "member-bar": name =
+// "projects/foo-proj/locations/global/memberships/member-bar/features/helloworl
+// d" - Features that have a label called `foo`: labels.foo:* - Features that
+// have a label called `foo` whose value is `bar`: labels.foo = bar
+func (c *ProjectsLocationsMembershipsFeaturesListCall) Filter(filter string) *ProjectsLocationsMembershipsFeaturesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": One or more fields to compare
+// and use to sort the output. See https://google.aip.dev/132#ordering.
+func (c *ProjectsLocationsMembershipsFeaturesListCall) OrderBy(orderBy string) *ProjectsLocationsMembershipsFeaturesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": When requesting a 'page' of
+// resources, `page_size` specifies number of resources to return. If
+// unspecified or set to 0, all resources will be returned.
+func (c *ProjectsLocationsMembershipsFeaturesListCall) PageSize(pageSize int64) *ProjectsLocationsMembershipsFeaturesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned by
+// previous call to `ListFeatures` which specifies the position in the list
+// from where to continue listing the resources.
+func (c *ProjectsLocationsMembershipsFeaturesListCall) PageToken(pageToken string) *ProjectsLocationsMembershipsFeaturesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMembershipsFeaturesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsFeaturesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsMembershipsFeaturesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsMembershipsFeaturesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMembershipsFeaturesListCall) Context(ctx context.Context) *ProjectsLocationsMembershipsFeaturesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMembershipsFeaturesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsFeaturesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+parent}/features")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.features.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMembershipFeaturesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsFeaturesListCall) Do(opts ...googleapi.CallOption) (*ListMembershipFeaturesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMembershipFeaturesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsMembershipsFeaturesListCall) Pages(ctx context.Context, f func(*ListMembershipFeaturesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsMembershipsFeaturesPatchCall struct {
+	s                 *Service
+	nameid            string
+	membershipfeature *MembershipFeature
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Patch: Updates an existing MembershipFeature.
+//
+//   - name: Output only. The resource name of the membershipFeature, in the
+//     format:
+//     `projects/{project}/locations/{location}/memberships/{membership}/features/
+//     {feature}`. Note that `membershipFeatures` is shortened to `features` in
+//     the resource name. (see http://go/aip/122#collection-identifiers).
+func (r *ProjectsLocationsMembershipsFeaturesService) Patch(nameid string, membershipfeature *MembershipFeature) *ProjectsLocationsMembershipsFeaturesPatchCall {
+	c := &ProjectsLocationsMembershipsFeaturesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.membershipfeature = membershipfeature
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to true, and
+// the MembershipFeature is not found, a new MembershipFeature will be created.
+// In this situation, `update_mask` is ignored.
+func (c *ProjectsLocationsMembershipsFeaturesPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsMembershipsFeaturesPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": Idempotent request UUID.
+func (c *ProjectsLocationsMembershipsFeaturesPatchCall) RequestId(requestId string) *ProjectsLocationsMembershipsFeaturesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Mask of
+// fields to update.
+func (c *ProjectsLocationsMembershipsFeaturesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMembershipsFeaturesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMembershipsFeaturesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsFeaturesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMembershipsFeaturesPatchCall) Context(ctx context.Context) *ProjectsLocationsMembershipsFeaturesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMembershipsFeaturesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsFeaturesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.membershipfeature)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.features.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsFeaturesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsOperationsCancelCall struct {

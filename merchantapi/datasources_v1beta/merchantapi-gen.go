@@ -219,6 +219,9 @@ type DataSource struct {
 	// LocalInventoryDataSource: Required. The local inventory
 	// (https://support.google.com/merchants/answer/7023001) data source.
 	LocalInventoryDataSource *LocalInventoryDataSource `json:"localInventoryDataSource,omitempty"`
+	// MerchantReviewDataSource: Required. The merchant review
+	// (https://support.google.com/merchants/answer/7045996) data source.
+	MerchantReviewDataSource *MerchantReviewDataSource `json:"merchantReviewDataSource,omitempty"`
 	// Name: Identifier. The name of the data source. Format:
 	// `{datasource.name=accounts/{account}/dataSources/{datasource}}`
 	Name string `json:"name,omitempty"`
@@ -226,6 +229,9 @@ type DataSource struct {
 	// (https://support.google.com/merchants/answer/7439058) for local and online
 	// products.
 	PrimaryProductDataSource *PrimaryProductDataSource `json:"primaryProductDataSource,omitempty"`
+	// ProductReviewDataSource: Required. The product review
+	// (https://support.google.com/merchants/answer/7045996) data source.
+	ProductReviewDataSource *ProductReviewDataSource `json:"productReviewDataSource,omitempty"`
 	// PromotionDataSource: Required. The promotion
 	// (https://support.google.com/merchants/answer/2906014) data source.
 	PromotionDataSource *PromotionDataSource `json:"promotionDataSource,omitempty"`
@@ -590,6 +596,10 @@ func (s LocalInventoryDataSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MerchantReviewDataSource: The merchant review data source.
+type MerchantReviewDataSource struct {
+}
+
 // PrimaryProductDataSource: The primary data source for local and online
 // products.
 type PrimaryProductDataSource struct {
@@ -708,6 +718,10 @@ func (s ProductChange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ProductReviewDataSource: The product review data source.
+type ProductReviewDataSource struct {
+}
+
 // ProductStatusChangeMessage: The message that the merchant will receive to
 // notify about product status change event
 type ProductStatusChangeMessage struct {
@@ -723,6 +737,8 @@ type ProductStatusChangeMessage struct {
 	Attribute string `json:"attribute,omitempty"`
 	// Changes: A message to describe the change that happened to the product
 	Changes []*ProductChange `json:"changes,omitempty"`
+	// ExpirationTime: The product expiration time.
+	ExpirationTime string `json:"expirationTime,omitempty"`
 	// ManagingAccount: The account that manages the merchant's account. can be the
 	// same as merchant id if it is standalone account. Format :
 	// `accounts/{service_provider_id}`
@@ -816,7 +832,9 @@ func (s RegionalInventoryDataSource) MarshalJSON() ([]byte, error) {
 }
 
 // SupplementalProductDataSource: The supplemental data source for local and
-// online products.
+// online products. After creation, you should make sure to link the
+// supplemental product data source into one or more primary product data
+// sources.
 type SupplementalProductDataSource struct {
 	// ContentLanguage: Optional. Immutable. The two-letter ISO 639-1 language of
 	// the items in the data source. `feedLabel` and `contentLanguage` must be
@@ -831,9 +849,9 @@ type SupplementalProductDataSource struct {
 	// (https://developers.google.com/shopping-content/guides/products/feed-labels).
 	// `feedLabel` and `contentLanguage` must be either both set or unset for data
 	// sources with product content type. They must be set for data sources with a
-	// file input. If set, the data source will only accept products matching this
-	// combination. If unset, the data source will accept produts without that
-	// restriction.
+	// file input. The fields must be unset for data sources without file input. If
+	// set, the data source will only accept products matching this combination. If
+	// unset, the data source will accept produts without that restriction.
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// ReferencingPrimaryDataSources: Output only. The (unordered and deduplicated)
 	// list of all primary data sources linked to this data source in either
@@ -862,16 +880,19 @@ func (s SupplementalProductDataSource) MarshalJSON() ([]byte, error) {
 // significant or are specified elsewhere. An API may choose to allow leap
 // seconds. Related types are google.type.Date and `google.protobuf.Timestamp`.
 type TimeOfDay struct {
-	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API may
-	// choose to allow the value "24:00:00" for scenarios like business closing
-	// time.
+	// Hours: Hours of a day in 24 hour format. Must be greater than or equal to 0
+	// and typically must be less than or equal to 23. An API may choose to allow
+	// the value "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
-	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Minutes of an hour. Must be greater than or equal to 0 and less
+	// than or equal to 59.
 	Minutes int64 `json:"minutes,omitempty"`
-	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+	// Nanos: Fractions of seconds, in nanoseconds. Must be greater than or equal
+	// to 0 and less than or equal to 999,999,999.
 	Nanos int64 `json:"nanos,omitempty"`
-	// Seconds: Seconds of minutes of the time. Must normally be from 0 to 59. An
-	// API may allow the value 60 if it allows leap-seconds.
+	// Seconds: Seconds of a minute. Must be greater than or equal to 0 and
+	// typically must be less than or equal to 59. An API may allow the value 60 if
+	// it allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

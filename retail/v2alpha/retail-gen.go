@@ -5586,11 +5586,10 @@ type GoogleCloudRetailV2alphaProduct struct {
 	// where "key" is the key of a custom attribute, as specified in attributes.
 	// For Type.PRIMARY and Type.COLLECTION, the following fields are always
 	// returned in SearchResponse by default: * name For Type.VARIANT, the
-	// following fields are always returned in by default: * name * color_info The
-	// maximum number of paths is 30. Otherwise, an INVALID_ARGUMENT error is
-	// returned. Note: Returning more fields in SearchResponse can increase
-	// response payload size and serving latency. This field is deprecated. Use the
-	// retrievable site-wide control instead.
+	// following fields are always returned in by default: * name * color_info
+	// Note: Returning more fields in SearchResponse can increase response payload
+	// size and serving latency. This field is deprecated. Use the retrievable
+	// site-wide control instead.
 	RetrievableFields string `json:"retrievableFields,omitempty"`
 	// Sizes: The size of the product. To represent different size systems or size
 	// types, consider using this format: [[[size_system:]size_type:]size_value].

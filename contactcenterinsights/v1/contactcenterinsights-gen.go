@@ -4163,7 +4163,8 @@ type GoogleCloudContactcenterinsightsV1QaAnswer struct {
 	// Conversation: The conversation the answer applies to.
 	Conversation string `json:"conversation,omitempty"`
 	// PotentialScore: The maximum potential score of the question. If the question
-	// was answered using `na_value`, this field will be zero.
+	// was answered using `na_value`, this field will be zero. Deprecated: Use
+	// AnswerValue.potential_score instead.
 	PotentialScore float64 `json:"potentialScore,omitempty"`
 	// QaQuestion: The QaQuestion answered by this answer.
 	QaQuestion string `json:"qaQuestion,omitempty"`
@@ -4248,9 +4249,14 @@ type GoogleCloudContactcenterinsightsV1QaAnswerAnswerValue struct {
 	Key string `json:"key,omitempty"`
 	// NaValue: A value of "Not Applicable (N/A)".
 	NaValue bool `json:"naValue,omitempty"`
+	// NormalizedScore: Output only. Normalized score of the questions. Calculated
+	// as score / potential_score iff potential_score != 0 else 0
+	NormalizedScore float64 `json:"normalizedScore,omitempty"`
 	// NumValue: Numerical value.
 	NumValue float64 `json:"numValue,omitempty"`
-	// Score: Numerical score of the answer.
+	// PotentialScore: Output only. The maximum potential score of the question.
+	PotentialScore float64 `json:"potentialScore,omitempty"`
+	// Score: Output only. Numerical score of the answer.
 	Score float64 `json:"score,omitempty"`
 	// StrValue: String value.
 	StrValue string `json:"strValue,omitempty"`
@@ -4275,15 +4281,19 @@ func (s GoogleCloudContactcenterinsightsV1QaAnswerAnswerValue) MarshalJSON() ([]
 func (s *GoogleCloudContactcenterinsightsV1QaAnswerAnswerValue) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleCloudContactcenterinsightsV1QaAnswerAnswerValue
 	var s1 struct {
-		NumValue gensupport.JSONFloat64 `json:"numValue"`
-		Score    gensupport.JSONFloat64 `json:"score"`
+		NormalizedScore gensupport.JSONFloat64 `json:"normalizedScore"`
+		NumValue        gensupport.JSONFloat64 `json:"numValue"`
+		PotentialScore  gensupport.JSONFloat64 `json:"potentialScore"`
+		Score           gensupport.JSONFloat64 `json:"score"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.NormalizedScore = float64(s1.NormalizedScore)
 	s.NumValue = float64(s1.NumValue)
+	s.PotentialScore = float64(s1.PotentialScore)
 	s.Score = float64(s1.Score)
 	return nil
 }
@@ -8388,7 +8398,8 @@ type GoogleCloudContactcenterinsightsV1alpha1QaAnswer struct {
 	// Conversation: The conversation the answer applies to.
 	Conversation string `json:"conversation,omitempty"`
 	// PotentialScore: The maximum potential score of the question. If the question
-	// was answered using `na_value`, this field will be zero.
+	// was answered using `na_value`, this field will be zero. Deprecated: Use
+	// AnswerValue.potential_score instead.
 	PotentialScore float64 `json:"potentialScore,omitempty"`
 	// QaQuestion: The QaQuestion answered by this answer.
 	QaQuestion string `json:"qaQuestion,omitempty"`
@@ -8473,9 +8484,14 @@ type GoogleCloudContactcenterinsightsV1alpha1QaAnswerAnswerValue struct {
 	Key string `json:"key,omitempty"`
 	// NaValue: A value of "Not Applicable (N/A)".
 	NaValue bool `json:"naValue,omitempty"`
+	// NormalizedScore: Output only. Normalized score of the questions. Calculated
+	// as score / potential_score iff potential_score != 0 else 0
+	NormalizedScore float64 `json:"normalizedScore,omitempty"`
 	// NumValue: Numerical value.
 	NumValue float64 `json:"numValue,omitempty"`
-	// Score: Numerical score of the answer.
+	// PotentialScore: Output only. The maximum potential score of the question.
+	PotentialScore float64 `json:"potentialScore,omitempty"`
+	// Score: Output only. Numerical score of the answer.
 	Score float64 `json:"score,omitempty"`
 	// StrValue: String value.
 	StrValue string `json:"strValue,omitempty"`
@@ -8500,15 +8516,19 @@ func (s GoogleCloudContactcenterinsightsV1alpha1QaAnswerAnswerValue) MarshalJSON
 func (s *GoogleCloudContactcenterinsightsV1alpha1QaAnswerAnswerValue) UnmarshalJSON(data []byte) error {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1QaAnswerAnswerValue
 	var s1 struct {
-		NumValue gensupport.JSONFloat64 `json:"numValue"`
-		Score    gensupport.JSONFloat64 `json:"score"`
+		NormalizedScore gensupport.JSONFloat64 `json:"normalizedScore"`
+		NumValue        gensupport.JSONFloat64 `json:"numValue"`
+		PotentialScore  gensupport.JSONFloat64 `json:"potentialScore"`
+		Score           gensupport.JSONFloat64 `json:"score"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.NormalizedScore = float64(s1.NormalizedScore)
 	s.NumValue = float64(s1.NumValue)
+	s.PotentialScore = float64(s1.PotentialScore)
 	s.Score = float64(s1.Score)
 	return nil
 }

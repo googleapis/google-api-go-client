@@ -1184,8 +1184,8 @@ func (s GooglePrivacyDlpV2BigQueryRegexes) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2BigQueryTable struct {
 	// DatasetId: Dataset ID of the table.
 	DatasetId string `json:"datasetId,omitempty"`
-	// ProjectId: The Google Cloud Platform project ID of the project containing
-	// the table. If omitted, project ID is inferred from the API call.
+	// ProjectId: The Google Cloud project ID of the project containing the table.
+	// If omitted, project ID is inferred from the API call.
 	ProjectId string `json:"projectId,omitempty"`
 	// TableId: Name of the table.
 	TableId string `json:"tableId,omitempty"`
@@ -1241,6 +1241,7 @@ type GooglePrivacyDlpV2BigQueryTableTypes struct {
 	//   "BIG_QUERY_TABLE_TYPE_TABLE" - A normal BigQuery table.
 	//   "BIG_QUERY_TABLE_TYPE_EXTERNAL_BIG_LAKE" - A table that references data
 	// stored in Cloud Storage.
+	//   "BIG_QUERY_TABLE_TYPE_SNAPSHOT" - A snapshot of a BigQuery table.
 	Types []string `json:"types,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Types") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

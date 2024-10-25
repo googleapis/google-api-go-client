@@ -286,8 +286,8 @@ type GoogleCloudAiplatformV1beta1Candidate struct {
 	//   "SAFETY" - Token generation stopped because the content potentially
 	// contains safety violations. NOTE: When streaming, content is empty if
 	// content filters blocks the output.
-	//   "RECITATION" - Token generation stopped because the content potentially
-	// contains copyright violations.
+	//   "RECITATION" - The token generation stopped because of potential
+	// recitation.
 	//   "OTHER" - All other reasons that stopped the token generation.
 	//   "BLOCKLIST" - Token generation stopped because the content contains
 	// forbidden terms.

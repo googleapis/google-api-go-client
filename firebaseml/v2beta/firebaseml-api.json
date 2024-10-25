@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20241021",
+  "revision": "20241022",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -291,7 +291,7 @@
             "Token generation reached a natural stopping point or a configured stop sequence.",
             "Token generation reached the configured maximum output tokens.",
             "Token generation stopped because the content potentially contains safety violations. NOTE: When streaming, content is empty if content filters blocks the output.",
-            "Token generation stopped because the content potentially contains copyright violations.",
+            "The token generation stopped because of potential recitation.",
             "All other reasons that stopped the token generation.",
             "Token generation stopped because the content contains forbidden terms.",
             "Token generation stopped for potentially containing prohibited content.",

@@ -3192,7 +3192,7 @@ type LogScope struct {
 	// ResourceNames: Required. Names of one or more parent resources:
 	// projects/[PROJECT_ID]May alternatively be one or more views:
 	// projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW
-	// _ID]A log scope can include a maximum of 50 projects and a maximum of 100
+	// _ID]A log scope can include a maximum of 5 projects and a maximum of 100
 	// resources in total.
 	ResourceNames []string `json:"resourceNames,omitempty"`
 	// UpdateTime: Output only. The last update timestamp of the log scope.

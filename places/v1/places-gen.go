@@ -344,12 +344,13 @@ type GoogleMapsPlacesV1AddressDescriptorLandmark struct {
 	//   "BEHIND" - Close to the landmark's structure but further away from its
 	// street entrances.
 	SpatialRelationship string `json:"spatialRelationship,omitempty"`
-	// StraightLineDistanceMeters: The straight line distance in meters between the
-	// target location and the landmark.
+	// StraightLineDistanceMeters: The straight line distance, in meters, between
+	// the center point of the target and the center point of the landmark. In some
+	// situations, this value can be longer than `travel_distance_meters`.
 	StraightLineDistanceMeters float64 `json:"straightLineDistanceMeters,omitempty"`
-	// TravelDistanceMeters: The travel distance in meters along the road network
-	// if known. This does not take into account the mode of transportation
-	// (walking/driving).
+	// TravelDistanceMeters: The travel distance, in meters, along the road network
+	// from the target to the landmark, if known. This value does not take into
+	// account the mode of transportation, such as walking, driving, or biking.
 	TravelDistanceMeters float64 `json:"travelDistanceMeters,omitempty"`
 	// Types: A set of type tags for this landmark. For a complete list of possible
 	// values, see

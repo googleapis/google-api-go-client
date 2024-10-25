@@ -2073,6 +2073,8 @@ type ProductStatusChangeMessage struct {
 	Attribute string `json:"attribute,omitempty"`
 	// Changes: A message to describe the change that happened to the product
 	Changes []*ProductChange `json:"changes,omitempty"`
+	// ExpirationTime: The product expiration time.
+	ExpirationTime string `json:"expirationTime,omitempty"`
 	// ManagingAccount: The account that manages the merchant's account. can be the
 	// same as merchant id if it is standalone account. Format :
 	// `accounts/{service_provider_id}`
@@ -3702,8 +3704,10 @@ func (r *AccountsService) Patch(name string, account *Account) *AccountsPatchCal
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated. The following fields are supported (in both `snake_case` and
+// `lowerCamelCase`): - `account_name` - `adult_content` - `language_code` -
+// `time_zone`
 func (c *AccountsPatchCall) UpdateMask(updateMask string) *AccountsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4140,8 +4144,10 @@ func (r *AccountsBusinessIdentityService) UpdateBusinessIdentity(name string, bu
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated. The following fields are supported (in both `snake_case` and
+// `lowerCamelCase`): - `black_owned` - `latino_owned` - `promotions_consent` -
+// `small_business` - `veteran_owned` - `women_owned`
 func (c *AccountsBusinessIdentityUpdateBusinessIdentityCall) UpdateMask(updateMask string) *AccountsBusinessIdentityUpdateBusinessIdentityCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4359,8 +4365,10 @@ func (r *AccountsBusinessInfoService) UpdateBusinessInfo(name string, businessin
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated. The following fields are supported (in both `snake_case` and
+// `lowerCamelCase`): - `address` - `customer_service` -
+// `korean_business_registration_number`
 func (c *AccountsBusinessInfoUpdateBusinessInfoCall) UpdateMask(updateMask string) *AccountsBusinessInfoUpdateBusinessInfoCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4588,7 +4596,8 @@ func (r *AccountsEmailPreferencesService) UpdateEmailPreferences(name string, em
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// fields being updated. The following fields are supported (in both
+// `snake_case` and `lowerCamelCase`): - `news_and_tips`
 func (c *AccountsEmailPreferencesUpdateEmailPreferencesCall) UpdateMask(updateMask string) *AccountsEmailPreferencesUpdateEmailPreferencesCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5020,8 +5029,9 @@ func (r *AccountsHomepageService) UpdateHomepage(name string, homepage *Homepage
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated. The following fields are supported (in both `snake_case` and
+// `lowerCamelCase`): - `uri`
 func (c *AccountsHomepageUpdateHomepageCall) UpdateMask(updateMask string) *AccountsHomepageUpdateHomepageCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7493,8 +7503,9 @@ func (r *AccountsUsersService) Patch(name string, user *User) *AccountsUsersPatc
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated. The following fields are supported (in both `snake_case` and
+// `lowerCamelCase`): - `access_rights`
 func (c *AccountsUsersPatchCall) UpdateMask(updateMask string) *AccountsUsersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

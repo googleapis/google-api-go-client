@@ -2038,6 +2038,9 @@ type GoogleChromeManagementV1InstalledApp struct {
 	OsUserCount int64 `json:"osUserCount,omitempty,string"`
 	// Permissions: Output only. Permissions of the installed app.
 	Permissions []string `json:"permissions,omitempty"`
+	// RiskAssessment: Output only. If available, the risk assessment data about
+	// this extension.
+	RiskAssessment *GoogleChromeManagementV1RiskAssessmentData `json:"riskAssessment,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2672,6 +2675,105 @@ type GoogleChromeManagementV1PrinterReport struct {
 
 func (s GoogleChromeManagementV1PrinterReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1PrinterReport
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1RiskAssessment: Risk assessment for a Chrome
+// extension.
+type GoogleChromeManagementV1RiskAssessment struct {
+	// Assessment: Risk assessment for the extension. Currently, this is a
+	// numerical value, and higher values denote higher risk.
+	Assessment string `json:"assessment,omitempty"`
+	// DetailsUrl: A URL that a user can navigate to for more information about the
+	// risk assessment.
+	DetailsUrl string `json:"detailsUrl,omitempty"`
+	// Version: The version of the extension that this assessment applies to.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Assessment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Assessment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1RiskAssessment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1RiskAssessment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1RiskAssessmentData: Risk assessment data about an
+// extension/app.
+type GoogleChromeManagementV1RiskAssessmentData struct {
+	// Entries: Individual risk assessments.
+	Entries []*GoogleChromeManagementV1RiskAssessmentEntry `json:"entries,omitempty"`
+	// OverallRiskLevel: Overall assessed risk level across all entries. This will
+	// be the highest risk level from all entries.
+	//
+	// Possible values:
+	//   "RISK_LEVEL_UNSPECIFIED" - Risk level not specified.
+	//   "RISK_LEVEL_LOW" - Extension that represents a low risk.
+	//   "RISK_LEVEL_MEDIUM" - Extension that represents a medium risk.
+	//   "RISK_LEVEL_HIGH" - Extension that represents a high risk.
+	OverallRiskLevel string `json:"overallRiskLevel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Entries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Entries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1RiskAssessmentData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1RiskAssessmentData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1RiskAssessmentEntry: One risk assessment entry.
+type GoogleChromeManagementV1RiskAssessmentEntry struct {
+	// Provider: The risk assessment provider from which this entry comes from.
+	//
+	// Possible values:
+	//   "RISK_ASSESSMENT_PROVIDER_UNSPECIFIED" - Default value when no provider is
+	// specified.
+	//   "RISK_ASSESSMENT_PROVIDER_CRXCAVATOR" - CRXcavator.
+	//   "RISK_ASSESSMENT_PROVIDER_SPIN_AI" - Spin.Ai.
+	Provider string `json:"provider,omitempty"`
+	// RiskAssessment: The details of the provider's risk assessment.
+	RiskAssessment *GoogleChromeManagementV1RiskAssessment `json:"riskAssessment,omitempty"`
+	// RiskLevel: The bucketed risk level for the risk assessment.
+	//
+	// Possible values:
+	//   "RISK_LEVEL_UNSPECIFIED" - Risk level not specified.
+	//   "RISK_LEVEL_LOW" - Extension that represents a low risk.
+	//   "RISK_LEVEL_MEDIUM" - Extension that represents a medium risk.
+	//   "RISK_LEVEL_HIGH" - Extension that represents a high risk.
+	RiskLevel string `json:"riskLevel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Provider") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Provider") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1RiskAssessmentEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1RiskAssessmentEntry
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5615,7 +5717,8 @@ func (r *CustomersReportsService) CountInstalledApps(customer string) *Customers
 // AND-separated fields in EBNF syntax. Note: OR operations are not supported
 // in this filter. Supported filter fields: * app_name * app_type *
 // install_type * number_of_permissions * total_install_count *
-// latest_profile_active_date * permission_name * app_id * manifest_versions
+// latest_profile_active_date * permission_name * app_id * manifest_versions *
+// risk_score
 func (c *CustomersReportsCountInstalledAppsCall) Filter(filter string) *CustomersReportsCountInstalledAppsCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5623,7 +5726,8 @@ func (c *CustomersReportsCountInstalledAppsCall) Filter(filter string) *Customer
 
 // OrderBy sets the optional parameter "orderBy": Field used to order results.
 // Supported order by fields: * app_name * app_type * install_type *
-// number_of_permissions * total_install_count * app_id * manifest_versions
+// number_of_permissions * total_install_count * app_id * manifest_versions *
+// risk_score
 func (c *CustomersReportsCountInstalledAppsCall) OrderBy(orderBy string) *CustomersReportsCountInstalledAppsCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

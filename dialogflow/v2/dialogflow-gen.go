@@ -10839,6 +10839,9 @@ type GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionQueryConfig struc
 	// filtered when generating suggestions. If unspecified, no messages will be
 	// dropped.
 	ContextFilterSettings *GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionQueryConfigContextFilterSettings `json:"contextFilterSettings,omitempty"`
+	// ContextSize: Optional. The number of recent messages to include in the
+	// context. Supported features: KNOWLEDGE_ASSIST.
+	ContextSize int64 `json:"contextSize,omitempty"`
 	// DialogflowQuerySource: Query from Dialogflow agent. It is used by
 	// DIALOGFLOW_ASSIST.
 	DialogflowQuerySource *GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionQueryConfigDialogflowQuerySource `json:"dialogflowQuerySource,omitempty"`
@@ -11627,6 +11630,9 @@ type GoogleCloudDialogflowV2InputAudioConfig struct {
 	// If you specify both `phrase_hints` () and `speech_contexts` (), Dialogflow
 	// will treat the `phrase_hints` () as a single additional `SpeechContext` ().
 	PhraseHints []string `json:"phraseHints,omitempty"`
+	// PhraseSets: A collection of phrase set resources to use for speech
+	// adaptation.
+	PhraseSets []string `json:"phraseSets,omitempty"`
 	// SampleRateHertz: Required. Sample rate (in Hertz) of the audio content sent
 	// in the query. Refer to Cloud Speech API documentation
 	// (https://cloud.google.com/speech-to-text/docs/basics) for more details.
@@ -12985,21 +12991,23 @@ func (s GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSou
 // GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSourceSn
 // ippet: Snippet Source for a Generative Prediction.
 type GoogleCloudDialogflowV2KnowledgeAssistAnswerKnowledgeAnswerGenerativeSourceSnippet struct {
+	// Metadata: Metadata of the document.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Text: Text taken from that URI.
 	Text string `json:"text,omitempty"`
 	// Title: Title of the document.
 	Title string `json:"title,omitempty"`
 	// Uri: URI the data is sourced from.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Text") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -14312,19 +14320,21 @@ func (s GoogleCloudDialogflowV2SearchKnowledgeAnswer) MarshalJSON() ([]byte, err
 // GoogleCloudDialogflowV2SearchKnowledgeAnswerAnswerSource: The sources of the
 // answers.
 type GoogleCloudDialogflowV2SearchKnowledgeAnswerAnswerSource struct {
+	// Metadata: Metadata associated with the article.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Snippet: The relevant snippet of the article.
 	Snippet string `json:"snippet,omitempty"`
 	// Title: The title of the article.
 	Title string `json:"title,omitempty"`
 	// Uri: The URI of the article.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Snippet") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Snippet") to include in API
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -14346,6 +14356,16 @@ type GoogleCloudDialogflowV2SearchKnowledgeRequest struct {
 	// ConversationProfile: Required. The conversation profile used to configure
 	// the search. Format: `projects//locations//conversationProfiles/`.
 	ConversationProfile string `json:"conversationProfile,omitempty"`
+	// EndUserMetadata: Optional. Information about the end-user to improve the
+	// relevance and accuracy of generative answers. This will be interpreted and
+	// used by a language model, so, for good results, the data should be
+	// self-descriptive, and in a simple structure. Example: ```json {
+	// "subscription plan": "Business Premium Plus", "devices owned": [ {"model":
+	// "Google Pixel 7"}, {"model": "Google Pixel Tablet"} ] } ```
+	EndUserMetadata googleapi.RawMessage `json:"endUserMetadata,omitempty"`
+	// ExactSearch: Optional. Whether to search the query exactly without query
+	// rewrite.
+	ExactSearch bool `json:"exactSearch,omitempty"`
 	// LatestMessage: Optional. The name of the latest conversation message when
 	// the request is triggered. Format:
 	// `projects//locations//conversations//messages/`.
@@ -14355,6 +14375,17 @@ type GoogleCloudDialogflowV2SearchKnowledgeRequest struct {
 	Parent string `json:"parent,omitempty"`
 	// Query: Required. The natural language text query for knowledge search.
 	Query *GoogleCloudDialogflowV2TextInput `json:"query,omitempty"`
+	// QuerySource: Optional. The source of the query in the request.
+	//
+	// Possible values:
+	//   "QUERY_SOURCE_UNSPECIFIED" - Unknown query source.
+	//   "AGENT_QUERY" - The query is from agents.
+	//   "SUGGESTED_QUERY" - The query is a suggested query from
+	// Participants.SuggestKnowledgeAssist.
+	QuerySource string `json:"querySource,omitempty"`
+	// SearchConfig: Optional. Configuration specific to search queries with data
+	// stores.
+	SearchConfig *GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfig `json:"searchConfig,omitempty"`
 	// SessionId: Required. The ID of the search session. The session_id can be
 	// combined with Dialogflow V3 Agent ID retrieved from conversation profile or
 	// on its own to identify a search session. The search history of the same
@@ -14378,6 +14409,278 @@ type GoogleCloudDialogflowV2SearchKnowledgeRequest struct {
 
 func (s GoogleCloudDialogflowV2SearchKnowledgeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2SearchKnowledgeRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfig: Configuration
+// specific to search queries with data stores.
+type GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfig struct {
+	// BoostSpecs: Optional. Boost specifications for data stores.
+	BoostSpecs []*GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecs `json:"boostSpecs,omitempty"`
+	// FilterSpecs: Optional. Filter specification for data store queries.
+	FilterSpecs []*GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigFilterSpecs `json:"filterSpecs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoostSpecs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoostSpecs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecs: Boost
+// specifications for data stores.
+type GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecs struct {
+	// DataStores: Optional. Data Stores where the boosting configuration is
+	// applied. The full names of the referenced data stores. Formats:
+	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
+	// {data_store}`
+	// `projects/{project}/locations/{location}/dataStores/{data_store}
+	DataStores []string `json:"dataStores,omitempty"`
+	// Spec: Optional. A list of boosting specifications.
+	Spec []*GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpec `json:"spec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStores") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStores") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecs) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecs
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpec:
+//
+//	Boost specification to boost certain documents. A copy of
+//
+// google.cloud.discoveryengine.v1main.BoostSpec, field documentation is
+// available at
+// https://cloud.google.com/generative-ai-app-builder/docs/reference/rest/v1alpha/BoostSpec
+type GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpec struct {
+	// ConditionBoostSpecs: Optional. Condition boost specifications. If a document
+	// matches multiple conditions in the specifictions, boost scores from these
+	// specifications are all applied and combined in a non-linear way. Maximum
+	// number of specifications is 20.
+	ConditionBoostSpecs []*GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpec `json:"conditionBoostSpecs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConditionBoostSpecs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConditionBoostSpecs") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecC
+// onditionBoostSpec: Boost applies to documents which match a condition.
+type GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpec struct {
+	// Boost: Optional. Strength of the condition boost, which should be in [-1,
+	// 1]. Negative boost means demotion. Default is 0.0. Setting to 1.0 gives the
+	// document a big promotion. However, it does not necessarily mean that the
+	// boosted document will be the top result at all times, nor that other
+	// documents will be excluded. Results could still be shown even when none of
+	// them matches the condition. And results that are significantly more relevant
+	// to the search query can still trump your heavily favored but irrelevant
+	// documents. Setting to -1.0 gives the document a big demotion. However,
+	// results that are deeply relevant might still be shown. The document will
+	// have an upstream battle to get a fairly high ranking, but it is not blocked
+	// out completely. Setting to 0.0 means no boost applied. The boosting
+	// condition is ignored.
+	Boost float64 `json:"boost,omitempty"`
+	// BoostControlSpec: Optional. Complex specification for custom ranking based
+	// on customer defined attribute value.
+	BoostControlSpec *GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpecBoostControlSpec `json:"boostControlSpec,omitempty"`
+	// Condition: Optional. An expression which specifies a boost condition. The
+	// syntax and supported fields are the same as a filter expression. Examples: *
+	// To boost documents with document ID "doc_1" or "doc_2", and color "Red" or
+	// "Blue": * (id: ANY("doc_1", "doc_2")) AND (color: ANY("Red","Blue"))
+	Condition string `json:"condition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Boost") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Boost") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpec
+	var s1 struct {
+		Boost gensupport.JSONFloat64 `json:"boost"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Boost = float64(s1.Boost)
+	return nil
+}
+
+// GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecC
+// onditionBoostSpecBoostControlSpec: Specification for custom ranking based on
+// customer specified attribute value. It provides more controls for customized
+// ranking than the simple (condition, boost) combination above.
+type GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpecBoostControlSpec struct {
+	// AttributeType: Optional. The attribute type to be used to determine the
+	// boost amount. The attribute value can be derived from the field value of the
+	// specified field_name. In the case of numerical it is straightforward i.e.
+	// attribute_value = numerical_field_value. In the case of freshness however,
+	// attribute_value = (time.now() - datetime_field_value).
+	//
+	// Possible values:
+	//   "ATTRIBUTE_TYPE_UNSPECIFIED" - Unspecified AttributeType.
+	//   "NUMERICAL" - The value of the numerical field will be used to dynamically
+	// update the boost amount. In this case, the attribute_value (the x value) of
+	// the control point will be the actual value of the numerical field for which
+	// the boost_amount is specified.
+	//   "FRESHNESS" - For the freshness use case the attribute value will be the
+	// duration between the current time and the date in the datetime field
+	// specified. The value must be formatted as an XSD `dayTimeDuration` value (a
+	// restricted subset of an ISO 8601 duration value). The pattern for this is:
+	// `nDnM]`. E.g. `5D`, `3DT12H30M`, `T24H`.
+	AttributeType string `json:"attributeType,omitempty"`
+	// ControlPoints: Optional. The control points used to define the curve. The
+	// monotonic function (defined through the interpolation_type above) passes
+	// through the control points listed here.
+	ControlPoints []*GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpecBoostControlSpecControlPoint `json:"controlPoints,omitempty"`
+	// FieldName: Optional. The name of the field whose value will be used to
+	// determine the boost amount.
+	FieldName string `json:"fieldName,omitempty"`
+	// InterpolationType: Optional. The interpolation type to be applied to connect
+	// the control points listed below.
+	//
+	// Possible values:
+	//   "INTERPOLATION_TYPE_UNSPECIFIED" - Interpolation type is unspecified. In
+	// this case, it defaults to Linear.
+	//   "LINEAR" - Piecewise linear interpolation will be applied.
+	InterpolationType string `json:"interpolationType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttributeType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttributeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpecBoostControlSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpecBoostControlSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecC
+// onditionBoostSpecBoostControlSpecControlPoint: The control points used to
+// define the curve. The curve defined through these control points can only be
+// monotonically increasing or decreasing(constant values are acceptable).
+type GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpecBoostControlSpecControlPoint struct {
+	// AttributeValue: Optional. Can be one of: 1. The numerical field value. 2.
+	// The duration spec for freshness: The value must be formatted as an XSD
+	// `dayTimeDuration` value (a restricted subset of an ISO 8601 duration value).
+	// The pattern for this is: `nDnM]`.
+	AttributeValue string `json:"attributeValue,omitempty"`
+	// BoostAmount: Optional. The value between -1 to 1 by which to boost the score
+	// if the attribute_value evaluates to the value specified above.
+	BoostAmount float64 `json:"boostAmount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttributeValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttributeValue") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpecBoostControlSpecControlPoint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpecBoostControlSpecControlPoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpecBoostControlSpecControlPoint) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpecConditionBoostSpecBoostControlSpecControlPoint
+	var s1 struct {
+		BoostAmount gensupport.JSONFloat64 `json:"boostAmount"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BoostAmount = float64(s1.BoostAmount)
+	return nil
+}
+
+// GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigFilterSpecs: Filter
+// specification for data store queries.
+type GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigFilterSpecs struct {
+	// DataStores: Optional. The data store where the filter configuration is
+	// applied. Full resource name of data store, such as
+	// projects/{project}/locations/{location}/collections/{collectionId}/
+	// dataStores/{dataStoreId}.
+	DataStores []string `json:"dataStores,omitempty"`
+	// Filter: Optional. The filter expression to be applied. Expression syntax is
+	// documented at
+	// https://cloud.google.com/generative-ai-app-builder/docs/filter-search-metadata#filter-expression-syntax
+	Filter string `json:"filter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStores") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStores") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigFilterSpecs) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigFilterSpecs
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -14929,6 +15232,9 @@ type GoogleCloudDialogflowV2SpeechToTextConfig struct {
 	// (https://cloud.google.com/dialogflow/cx/docs/concept/agent#settings-speech)
 	// for model selection.
 	Model string `json:"model,omitempty"`
+	// PhraseSets: List of names of Cloud Speech phrase sets that are used for
+	// transcription.
+	PhraseSets []string `json:"phraseSets,omitempty"`
 	// SampleRateHertz: Sample rate (in Hertz) of the audio content sent in the
 	// query. Refer to Cloud Speech API documentation
 	// (https://cloud.google.com/speech-to-text/docs/basics) for more details.
@@ -18532,21 +18838,23 @@ func (s GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerati
 // GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerativeSou
 // rceSnippet: Snippet Source for a Generative Prediction.
 type GoogleCloudDialogflowV2beta1KnowledgeAssistAnswerKnowledgeAnswerGenerativeSourceSnippet struct {
+	// Metadata: Metadata of the document.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Text: Text taken from that URI.
 	Text string `json:"text,omitempty"`
 	// Title: Title of the document.
 	Title string `json:"title,omitempty"`
 	// Uri: URI the data is sourced from.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Text") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

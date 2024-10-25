@@ -941,11 +941,6 @@ func (s BatchWriteResponse) MarshalJSON() ([]byte, error) {
 
 // BeginTransactionRequest: The request for BeginTransaction.
 type BeginTransactionRequest struct {
-	// MutationKey: Optional. Required for read-write transactions on a multiplexed
-	// session that commit mutations but do not perform any reads or queries.
-	// Clients should randomly select one of the mutations from the mutation set
-	// and send it as a part of this request.
-	MutationKey *Mutation `json:"mutationKey,omitempty"`
 	// Options: Required. Options for the new transaction.
 	Options *TransactionOptions `json:"options,omitempty"`
 	// RequestOptions: Common options for this request. Priority is ignored for
@@ -953,13 +948,13 @@ type BeginTransactionRequest struct {
 	// do anything. To set the priority for a transaction, set it on the reads and
 	// writes that are part of this transaction instead.
 	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MutationKey") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Options") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MutationKey") to include in API
+	// NullFields is a list of field names (e.g. "Options") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1176,11 +1171,6 @@ type CommitRequest struct {
 	// Mutations: The mutations to be executed when this transaction commits. All
 	// mutations are applied atomically, in the order they appear in this list.
 	Mutations []*Mutation `json:"mutations,omitempty"`
-	// PrecommitToken: Optional. If the read-write transaction was executed on a
-	// multiplexed session, the precommit token with the highest sequence number
-	// received in this transaction attempt, should be included here. Failing to do
-	// so will result in a FailedPrecondition error.
-	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 	// RequestOptions: Common options for this request.
 	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// ReturnCommitStats: If `true`, then statistics related to the transaction
@@ -1222,9 +1212,6 @@ type CommitResponse struct {
 	// CommitTimestamp: The Cloud Spanner timestamp at which the transaction
 	// committed.
 	CommitTimestamp string `json:"commitTimestamp,omitempty"`
-	// PrecommitToken: If specified, transaction has not committed yet. Clients
-	// must retry the commit with the new precommit token.
-	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2333,11 +2320,6 @@ func (s ExecuteBatchDmlRequest) MarshalJSON() ([]byte, error) {
 // the third statement failed, and the fourth and fifth statements were not
 // executed.
 type ExecuteBatchDmlResponse struct {
-	// PrecommitToken: Optional. A precommit token will be included if the
-	// read-write transaction is on a multiplexed session. The precommit token with
-	// the highest sequence number from this transaction attempt should be passed
-	// to the Commit request for this transaction.
-	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 	// ResultSets: One ResultSet for each statement in the request that ran
 	// successfully, in the same order as the statements in the request. Each
 	// ResultSet does not contain any rows. The ResultSetStats in each ResultSet
@@ -2350,15 +2332,15 @@ type ExecuteBatchDmlResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "PrecommitToken") to
+	// ForceSendFields is a list of field names (e.g. "ResultSets") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PrecommitToken") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ResultSets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4207,11 +4189,6 @@ type PartialResultSet struct {
 	// Metadata: Metadata about the result set, such as row type information. Only
 	// present in the first response.
 	Metadata *ResultSetMetadata `json:"metadata,omitempty"`
-	// PrecommitToken: Optional. A precommit token will be included if the
-	// read-write transaction is on a multiplexed session. The precommit token with
-	// the highest sequence number from this transaction attempt should be passed
-	// to the Commit request for this transaction.
-	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 	// ResumeToken: Streaming calls might be interrupted for a variety of reasons,
 	// such as TCP connection loss. If this occurs, the stream of results can be
 	// resumed by re-sending the original request and including `resume_token`.
@@ -4988,10 +4965,6 @@ func (s ReadRequest) MarshalJSON() ([]byte, error) {
 // ReadWrite: Message type to initiate a read-write transaction. Currently this
 // transaction type has no options.
 type ReadWrite struct {
-	// MultiplexedSessionPreviousTransactionId: Optional. Clients should pass the
-	// transaction ID of the previous transaction attempt that was aborted if this
-	// transaction is being executed on a multiplexed session.
-	MultiplexedSessionPreviousTransactionId string `json:"multiplexedSessionPreviousTransactionId,omitempty"`
 	// ReadLockMode: Read lock mode for the transaction.
 	//
 	// Possible values:
@@ -5004,18 +4977,16 @@ type ReadWrite struct {
 	// commit to validate that read/queried data has not changed since the
 	// transaction started.
 	ReadLockMode string `json:"readLockMode,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "MultiplexedSessionPreviousTransactionId") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted from
-	// API requests. See
+	// ForceSendFields is a list of field names (e.g. "ReadLockMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g.
-	// "MultiplexedSessionPreviousTransactionId") to include in API requests with
-	// the JSON null value. By default, fields with empty values are omitted from
-	// API requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields
-	// for more details.
+	// NullFields is a list of field names (e.g. "ReadLockMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
@@ -5355,11 +5326,6 @@ func (s RestoreInfo) MarshalJSON() ([]byte, error) {
 type ResultSet struct {
 	// Metadata: Metadata about the result set, such as row type information.
 	Metadata *ResultSetMetadata `json:"metadata,omitempty"`
-	// PrecommitToken: Optional. A precommit token will be included if the
-	// read-write transaction is on a multiplexed session. The precommit token with
-	// the highest sequence number from this transaction attempt should be passed
-	// to the Commit request for this transaction.
-	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 	// Rows: Each element in `rows` is a row whose format is defined by
 	// metadata.row_type. The ith element in each row matches the ith field in
 	// metadata.row_type. Elements are encoded based on type as described here.
@@ -10166,8 +10132,7 @@ type ProjectsInstancesBackupsGetIamPolicyCall struct {
 // not have a policy set. Authorization requires
 // `spanner.databases.getIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.getIamPolicy` permission on
-// resource. For backup schedules, authorization requires
-// `spanner.backupSchedules.getIamPolicy` permission on resource.
+// resource.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
 //     being retrieved. The format is `projects//instances/` for instance
@@ -10569,8 +10534,7 @@ type ProjectsInstancesBackupsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Authorization requires
 // `spanner.databases.setIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.setIamPolicy` permission on
-// resource. For backup schedules, authorization requires
-// `spanner.backupSchedules.setIamPolicy` permission on resource.
+// resource.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
 //     being set. The format is `projects//instances/` for instance resources and
@@ -10679,10 +10643,7 @@ type ProjectsInstancesBackupsTestIamPermissionsCall struct {
 // `spanner.databases.list` permission on the containing Cloud Spanner
 // instance. Otherwise returns an empty set of permissions. Calling this method
 // on a backup that does not exist will result in a NOT_FOUND error if the user
-// has `spanner.backups.list` permission on the containing instance. Calling
-// this method on a backup schedule that does not exist will result in a
-// NOT_FOUND error if the user has `spanner.backupSchedules.list` permission on
-// the containing database.
+// has `spanner.backups.list` permission on the containing instance.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which permissions are
 //     being tested. The format is `projects//instances/` for instance resources
@@ -11967,8 +11928,7 @@ type ProjectsInstancesDatabasesGetIamPolicyCall struct {
 // not have a policy set. Authorization requires
 // `spanner.databases.getIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.getIamPolicy` permission on
-// resource. For backup schedules, authorization requires
-// `spanner.backupSchedules.getIamPolicy` permission on resource.
+// resource.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
 //     being retrieved. The format is `projects//instances/` for instance
@@ -12610,8 +12570,7 @@ type ProjectsInstancesDatabasesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Authorization requires
 // `spanner.databases.setIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.setIamPolicy` permission on
-// resource. For backup schedules, authorization requires
-// `spanner.backupSchedules.setIamPolicy` permission on resource.
+// resource.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
 //     being set. The format is `projects//instances/` for instance resources and
@@ -12720,10 +12679,7 @@ type ProjectsInstancesDatabasesTestIamPermissionsCall struct {
 // `spanner.databases.list` permission on the containing Cloud Spanner
 // instance. Otherwise returns an empty set of permissions. Calling this method
 // on a backup that does not exist will result in a NOT_FOUND error if the user
-// has `spanner.backups.list` permission on the containing instance. Calling
-// this method on a backup schedule that does not exist will result in a
-// NOT_FOUND error if the user has `spanner.backupSchedules.list` permission on
-// the containing database.
+// has `spanner.backups.list` permission on the containing instance.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which permissions are
 //     being tested. The format is `projects//instances/` for instance resources
@@ -13251,8 +13207,7 @@ type ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall struct {
 // not have a policy set. Authorization requires
 // `spanner.databases.getIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.getIamPolicy` permission on
-// resource. For backup schedules, authorization requires
-// `spanner.backupSchedules.getIamPolicy` permission on resource.
+// resource.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
 //     being retrieved. The format is `projects//instances/` for instance
@@ -13621,8 +13576,7 @@ type ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Authorization requires
 // `spanner.databases.setIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.setIamPolicy` permission on
-// resource. For backup schedules, authorization requires
-// `spanner.backupSchedules.setIamPolicy` permission on resource.
+// resource.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
 //     being set. The format is `projects//instances/` for instance resources and
@@ -13731,10 +13685,7 @@ type ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall struct {
 // `spanner.databases.list` permission on the containing Cloud Spanner
 // instance. Otherwise returns an empty set of permissions. Calling this method
 // on a backup that does not exist will result in a NOT_FOUND error if the user
-// has `spanner.backups.list` permission on the containing instance. Calling
-// this method on a backup schedule that does not exist will result in a
-// NOT_FOUND error if the user has `spanner.backupSchedules.list` permission on
-// the containing database.
+// has `spanner.backups.list` permission on the containing instance.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which permissions are
 //     being tested. The format is `projects//instances/` for instance resources
@@ -13990,10 +13941,7 @@ type ProjectsInstancesDatabasesDatabaseRolesTestIamPermissionsCall struct {
 // `spanner.databases.list` permission on the containing Cloud Spanner
 // instance. Otherwise returns an empty set of permissions. Calling this method
 // on a backup that does not exist will result in a NOT_FOUND error if the user
-// has `spanner.backups.list` permission on the containing instance. Calling
-// this method on a backup schedule that does not exist will result in a
-// NOT_FOUND error if the user has `spanner.backupSchedules.list` permission on
-// the containing database.
+// has `spanner.backups.list` permission on the containing instance.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which permissions are
 //     being tested. The format is `projects//instances/` for instance resources

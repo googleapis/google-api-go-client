@@ -3312,7 +3312,7 @@
       }
     }
   },
-  "revision": "20241015",
+  "revision": "20241021",
   "rootUrl": "https://contactcenterinsights.googleapis.com/",
   "schemas": {
     "GoogleCloudContactcenterinsightsV1Analysis": {
@@ -6214,7 +6214,8 @@
           "type": "string"
         },
         "potentialScore": {
-          "description": "The maximum potential score of the question. If the question was answered using `na_value`, this field will be zero.",
+          "deprecated": true,
+          "description": "The maximum potential score of the question. If the question was answered using `na_value`, this field will be zero. Deprecated: Use AnswerValue.potential_score instead.",
           "format": "double",
           "type": "number"
         },
@@ -6277,14 +6278,27 @@
           "description": "A value of \"Not Applicable (N/A)\".",
           "type": "boolean"
         },
+        "normalizedScore": {
+          "description": "Output only. Normalized score of the questions. Calculated as score / potential_score iff potential_score != 0 else 0",
+          "format": "double",
+          "readOnly": true,
+          "type": "number"
+        },
         "numValue": {
           "description": "Numerical value.",
           "format": "double",
           "type": "number"
         },
-        "score": {
-          "description": "Numerical score of the answer.",
+        "potentialScore": {
+          "description": "Output only. The maximum potential score of the question.",
           "format": "double",
+          "readOnly": true,
+          "type": "number"
+        },
+        "score": {
+          "description": "Output only. Numerical score of the answer.",
+          "format": "double",
+          "readOnly": true,
           "type": "number"
         },
         "strValue": {
@@ -9451,7 +9465,8 @@
           "type": "string"
         },
         "potentialScore": {
-          "description": "The maximum potential score of the question. If the question was answered using `na_value`, this field will be zero.",
+          "deprecated": true,
+          "description": "The maximum potential score of the question. If the question was answered using `na_value`, this field will be zero. Deprecated: Use AnswerValue.potential_score instead.",
           "format": "double",
           "type": "number"
         },
@@ -9514,14 +9529,27 @@
           "description": "A value of \"Not Applicable (N/A)\".",
           "type": "boolean"
         },
+        "normalizedScore": {
+          "description": "Output only. Normalized score of the questions. Calculated as score / potential_score iff potential_score != 0 else 0",
+          "format": "double",
+          "readOnly": true,
+          "type": "number"
+        },
         "numValue": {
           "description": "Numerical value.",
           "format": "double",
           "type": "number"
         },
-        "score": {
-          "description": "Numerical score of the answer.",
+        "potentialScore": {
+          "description": "Output only. The maximum potential score of the question.",
           "format": "double",
+          "readOnly": true,
+          "type": "number"
+        },
+        "score": {
+          "description": "Output only. Numerical score of the answer.",
+          "format": "double",
+          "readOnly": true,
           "type": "number"
         },
         "strValue": {

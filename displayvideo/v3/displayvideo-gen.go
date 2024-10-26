@@ -1068,71 +1068,76 @@ func (s AdUrl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Adloox: Details of Adloox settings.
+// Adloox: Details of Adloox brand safety settings.
 type Adloox struct {
-	// AdultExplicitSexualContent: Optional. Adult explicit sexual content.
+	// AdultExplicitSexualContent: Optional. Adult and Explicit Sexual Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
 	//
 	// Possible values:
 	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any GARM risk level option.
+	// doesn't specify any GARM risk exclusion option.
 	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
 	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
-	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
-	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
-	// and Floor).
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
 	AdultExplicitSexualContent string `json:"adultExplicitSexualContent,omitempty"`
-	// ArmsAmmunitionContent: Optional. Arms ammunition content.
+	// ArmsAmmunitionContent: Optional. Arms and Ammunition Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
 	//
 	// Possible values:
 	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any GARM risk level option.
+	// doesn't specify any GARM risk exclusion option.
 	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
 	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
-	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
-	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
-	// and Floor).
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
 	ArmsAmmunitionContent string `json:"armsAmmunitionContent,omitempty"`
 	// CrimeHarmfulActsIndividualsSocietyHumanRightsViolationsContent: Optional.
-	// Crime harmful acts to individuals society human rights violations content.
+	// Crime and Harmful Acts Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
 	//
 	// Possible values:
 	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any GARM risk level option.
+	// doesn't specify any GARM risk exclusion option.
 	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
 	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
-	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
-	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
-	// and Floor).
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
 	CrimeHarmfulActsIndividualsSocietyHumanRightsViolationsContent string `json:"crimeHarmfulActsIndividualsSocietyHumanRightsViolationsContent,omitempty"`
-	// DeathInjuryMilitaryConflictContent: Optional. Death injury military conflict
-	// content.
+	// DeathInjuryMilitaryConflictContent: Optional. Death, Injury, or Military
+	// Conflict Content GARM (https://wfanet.org/leadership/garm/about-garm) risk
+	// ranges to exclude.
 	//
 	// Possible values:
 	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any GARM risk level option.
+	// doesn't specify any GARM risk exclusion option.
 	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
 	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
-	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
-	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
-	// and Floor).
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
 	DeathInjuryMilitaryConflictContent string `json:"deathInjuryMilitaryConflictContent,omitempty"`
-	// DebatedSensitiveSocialIssueContent: Optional. Debated sensitive social issue
-	// content.
+	// DebatedSensitiveSocialIssueContent: Optional. Debated Sensitive Social Issue
+	// Content GARM (https://wfanet.org/leadership/garm/about-garm) risk ranges to
+	// exclude.
 	//
 	// Possible values:
 	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any GARM risk level option.
+	// doesn't specify any GARM risk exclusion option.
 	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
 	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
-	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
-	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
-	// and Floor).
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
 	DebatedSensitiveSocialIssueContent string `json:"debatedSensitiveSocialIssueContent,omitempty"`
-	// DisplayIabViewability: Optional. Display IAB viewability.
+	// DisplayIabViewability: Optional. IAB viewability threshold for display ads.
 	//
 	// Possible values:
-	//   "DISPLAY_IAB_VIEWABILITY_UNSPECIFIED" - This enum is only a placeholder
-	// and it doesn't specify any display viewability options.
+	//   "DISPLAY_IAB_VIEWABILITY_UNSPECIFIED" - Default value when not specified
+	// or is unknown in this version.
 	//   "DISPLAY_IAB_VIEWABILITY_10" - 10%+ in view (IAB display viewability
 	// standard).
 	//   "DISPLAY_IAB_VIEWABILITY_20" - 20%+ in view (IAB display viewability
@@ -1144,11 +1149,11 @@ type Adloox struct {
 	//   "DISPLAY_IAB_VIEWABILITY_75" - 75%+ in view (IAB display viewability
 	// standard).
 	DisplayIabViewability string `json:"displayIabViewability,omitempty"`
-	// ExcludedAdlooxCategories: Adloox's brand safety settings.
+	// ExcludedAdlooxCategories: Adloox categories to exclude.
 	//
 	// Possible values:
-	//   "ADLOOX_UNSPECIFIED" - This enum is only a placeholder and it doesn't
-	// specify any Adloox option.
+	//   "ADLOOX_UNSPECIFIED" - Default value when a Adloox category is not
+	// specified or is unknown in this version.
 	//   "ADULT_CONTENT_HARD" - Adult content (hard).
 	//   "ADULT_CONTENT_SOFT" - Adult content (soft).
 	//   "ILLEGAL_CONTENT" - Illegal content.
@@ -1158,97 +1163,105 @@ type Adloox struct {
 	//   "LOW_VIEWABILITY_DOMAINS" - Low viewability domains.
 	//   "FRAUD" - Fraud.
 	ExcludedAdlooxCategories []string `json:"excludedAdlooxCategories,omitempty"`
-	// ExcludedFraudIvtMfaCategories: Optional. Adloox's fraud IVT MFA settings.
+	// ExcludedFraudIvtMfaCategories: Optional. Adloox's fraud IVT MFA categories
+	// to exclude.
 	//
 	// Possible values:
-	//   "FRAUD_IVT_MFA_CATEGORY_UNSPECIFIED" - This enum is only a placeholder and
-	// it doesn't specify any fraud IVT MFA categories.
+	//   "FRAUD_IVT_MFA_CATEGORY_UNSPECIFIED" - Default value when a Adloox Fraud,
+	// IVT, MFA category is not specified or is unknown in this version.
 	//   "FRAUD_IVT_MFA" - FRAUD, IVT, MFA.
 	ExcludedFraudIvtMfaCategories []string `json:"excludedFraudIvtMfaCategories,omitempty"`
-	// HateSpeechActsAggressionContent: Optional. Hate speech acts of aggression
-	// content.
+	// HateSpeechActsAggressionContent: Optional. Hate Speech and Acts of
+	// Aggression Content GARM (https://wfanet.org/leadership/garm/about-garm) risk
+	// ranges to exclude.
 	//
 	// Possible values:
 	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any GARM risk level option.
+	// doesn't specify any GARM risk exclusion option.
 	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
 	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
-	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
-	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
-	// and Floor).
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
 	HateSpeechActsAggressionContent string `json:"hateSpeechActsAggressionContent,omitempty"`
-	// IllegalDrugsTobaccoEcigarettesVapingAlcoholContent: Optional. Illegal drugs
-	// tobacco ecigarettes vaping alcohol content.
+	// IllegalDrugsTobaccoEcigarettesVapingAlcoholContent: Optional. Illegal
+	// Drugs/Alcohol Content GARM (https://wfanet.org/leadership/garm/about-garm)
+	// risk ranges to exclude.
 	//
 	// Possible values:
 	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any GARM risk level option.
+	// doesn't specify any GARM risk exclusion option.
 	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
 	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
-	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
-	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
-	// and Floor).
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
 	IllegalDrugsTobaccoEcigarettesVapingAlcoholContent string `json:"illegalDrugsTobaccoEcigarettesVapingAlcoholContent,omitempty"`
-	// MisinformationContent: Optional. Misinformation content.
+	// MisinformationContent: Optional. Misinformation Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
 	//
 	// Possible values:
 	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any GARM risk level option.
+	// doesn't specify any GARM risk exclusion option.
 	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
 	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
-	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
-	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
-	// and Floor).
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
 	MisinformationContent string `json:"misinformationContent,omitempty"`
-	// ObscenityProfanityContent: Optional. Obscenity profanity content.
+	// ObscenityProfanityContent: Optional. Obscenity and Profanity Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
 	//
 	// Possible values:
 	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any GARM risk level option.
+	// doesn't specify any GARM risk exclusion option.
 	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
 	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
-	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
-	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
-	// and Floor).
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
 	ObscenityProfanityContent string `json:"obscenityProfanityContent,omitempty"`
-	// OnlinePiracyContent: Optional. Online piracy content.
+	// OnlinePiracyContent: Optional. Online Piracy Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
 	//
 	// Possible values:
 	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any GARM risk level option.
+	// doesn't specify any GARM risk exclusion option.
 	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
 	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
-	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
-	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
-	// and Floor).
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
 	OnlinePiracyContent string `json:"onlinePiracyContent,omitempty"`
-	// SpamHarmfulContent: Optional. Spam harmful content.
+	// SpamHarmfulContent: Optional. Spam or Harmful Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
 	//
 	// Possible values:
 	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any GARM risk level option.
+	// doesn't specify any GARM risk exclusion option.
 	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
 	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
-	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
-	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
-	// and Floor).
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
 	SpamHarmfulContent string `json:"spamHarmfulContent,omitempty"`
-	// TerrorismContent: Optional. Terrorism content.
+	// TerrorismContent: Optional. Terrorism Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
 	//
 	// Possible values:
 	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
-	// doesn't specify any GARM risk level option.
+	// doesn't specify any GARM risk exclusion option.
 	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
 	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
-	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude high, medium, and floor risk.
-	//   "GARM_RISK_EXCLUSION_LOW" - Exclude All Level of Risk (Low, Medium, High
-	// and Floor).
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
 	TerrorismContent string `json:"terrorismContent,omitempty"`
-	// VideoIabViewability: Optional. Video IAB viewability.
+	// VideoIabViewability: Optional. IAB viewability threshold for video ads.
 	//
 	// Possible values:
-	//   "VIDEO_IAB_VIEWABILITY_UNSPECIFIED" - This enum is only a placeholder and
-	// it doesn't specify any video viewability options.
+	//   "VIDEO_IAB_VIEWABILITY_UNSPECIFIED" - Default value when not specified or
+	// is unknown in this version.
 	//   "VIDEO_IAB_VIEWABILITY_10" - 10%+ in view (IAB video viewability
 	// standard).
 	//   "VIDEO_IAB_VIEWABILITY_20" - 20%+ in view (IAB video viewability
@@ -1286,8 +1299,7 @@ type Advertiser struct {
 	// AdvertiserId: Output only. The unique ID of the advertiser. Assigned by the
 	// system.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
-	// BillingConfig: Optional. Required. Billing related settings of the
-	// advertiser.
+	// BillingConfig: Required. Billing related settings of the advertiser.
 	BillingConfig *AdvertiserBillingConfig `json:"billingConfig,omitempty"`
 	// CreativeConfig: Required. Creative related settings of the advertiser.
 	CreativeConfig *AdvertiserCreativeConfig `json:"creativeConfig,omitempty"`
@@ -1389,7 +1401,7 @@ func (s AdvertiserAdServerConfig) MarshalJSON() ([]byte, error) {
 
 // AdvertiserBillingConfig: Billing related settings of an advertiser.
 type AdvertiserBillingConfig struct {
-	// BillingProfileId: Optional. The ID of a billing profile assigned to the
+	// BillingProfileId: Required. The ID of a billing profile assigned to the
 	// advertiser.
 	BillingProfileId int64 `json:"billingProfileId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "BillingProfileId") to

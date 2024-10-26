@@ -1172,7 +1172,7 @@
       }
     }
   },
-  "revision": "20241022",
+  "revision": "20241023",
   "rootUrl": "https://chromemanagement.googleapis.com/",
   "schemas": {
     "GoogleChromeManagementV1AndroidAppInfo": {
@@ -3429,7 +3429,7 @@
       "id": "GoogleChromeManagementV1RiskAssessment",
       "properties": {
         "assessment": {
-          "description": "Risk assessment for the extension. Currently, this is a numerical value, and higher values denote higher risk.",
+          "description": "Risk assessment for the extension. Currently, this is a numerical value, and its interpretation is specific to each risk assessment provider.",
           "type": "string"
         },
         "detailsUrl": {

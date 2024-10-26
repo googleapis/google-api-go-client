@@ -380,6 +380,9 @@ type AccessSettings struct {
 	// ReauthSettings: Optional. Reauth settings applied to user access on a given
 	// AccessScope.
 	ReauthSettings *ReauthSettings `json:"reauthSettings,omitempty"`
+	// SessionSettings: Optional. Session settings applied to user access on a
+	// given AccessScope. Migrated from ReauthSettings
+	SessionSettings *SessionSettings `json:"sessionSettings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessLevels") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1188,7 +1191,7 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 }
 
 // GcpUserAccessBinding: Restricts access to Cloud Console and Google Cloud
-// APIs for a set of users using Context-Aware Access.
+// APIs for a set of users using Context-Aware Access. Next ID: 11
 type GcpUserAccessBinding struct {
 	// AccessLevels: Optional. Access level that a user must have to be granted
 	// access. Only one access level is supported, not multiple. This repeated
@@ -2182,6 +2185,58 @@ type ServicePerimeterConfig struct {
 
 func (s ServicePerimeterConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ServicePerimeterConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SessionSettings: Stores settings related to Google Cloud Session Length
+// including session duration, the type of challenge (i.e. method) they should
+// face when their session expires, and other related settings.
+type SessionSettings struct {
+	// MaxInactivity: Optional. How long a user is allowed to take between actions
+	// before a new access token must be issued. Presently only set for Cloud Apps.
+	MaxInactivity string `json:"maxInactivity,omitempty"`
+	// SessionLength: Optional. The session length. Setting this field to zero is
+	// equal to disabling. Session. Also can set infinite session by flipping the
+	// enabled bit to false below. If use_oidc_max_age is true, for OIDC apps, the
+	// session length will be the minimum of this field and OIDC max_age param.
+	SessionLength string `json:"sessionLength,omitempty"`
+	// SessionLengthEnabled: Optional. Big red button to turn off GCSL. When false,
+	// all fields set above will be disregarded and the session length is basically
+	// infinite.
+	SessionLengthEnabled bool `json:"sessionLengthEnabled,omitempty"`
+	// SessionReauthMethod: Optional. Session method when users GCP session is up.
+	//
+	// Possible values:
+	//   "SESSION_REAUTH_METHOD_UNSPECIFIED" - If method undefined in API, we will
+	// use LOGIN by default.
+	//   "LOGIN" - The user will prompted to perform regular login. Users who are
+	// enrolled for two-step verification and haven't chosen to "Remember this
+	// computer" will be prompted for their second factor.
+	//   "SECURITY_KEY" - The user will be prompted to autheticate using their
+	// security key. If no security key has been configured, then we will fallback
+	// to LOGIN.
+	//   "PASSWORD" - The user will be prompted for their password.
+	SessionReauthMethod string `json:"sessionReauthMethod,omitempty"`
+	// UseOidcMaxAge: Optional. Only useful for OIDC apps. When false, the OIDC
+	// max_age param, if passed in the authentication request will be ignored. When
+	// true, the re-auth period will be the minimum of the session_length field and
+	// the max_age OIDC param.
+	UseOidcMaxAge bool `json:"useOidcMaxAge,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxInactivity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxInactivity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SessionSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod SessionSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6605,11 +6660,11 @@ func (r *OrganizationsGcpUserAccessBindingsService) Patch(name string, gcpuserac
 // not certain repeated settings in the update request overwrite or append to
 // existing settings on the binding. If true, then append. Otherwise overwrite.
 // So far, only scoped_access_settings supports appending. Global
-// access_levels, dry_run_access_levels, and reauth_settings are not compatible
-// with append functionality, and the request will return an error if
-// append=true when these settings are in the update_mask. The request will
-// also return an error if append=true when "scoped_access_settings" is not set
-// in the update_mask.
+// access_levels, dry_run_access_levels, reauth_settings, and session_settings
+// are not compatible with append functionality, and the request will return an
+// error if append=true when these settings are in the update_mask. The request
+// will also return an error if append=true when "scoped_access_settings" is
+// not set in the update_mask.
 func (c *OrganizationsGcpUserAccessBindingsPatchCall) Append(append bool) *OrganizationsGcpUserAccessBindingsPatchCall {
 	c.urlParams_.Set("append", fmt.Sprint(append))
 	return c
@@ -6618,8 +6673,9 @@ func (c *OrganizationsGcpUserAccessBindingsPatchCall) Append(append bool) *Organ
 // UpdateMask sets the optional parameter "updateMask": Required. Only the
 // fields specified in this mask are updated. Because name and group_key cannot
 // be changed, update_mask is required and may only contain the following
-// fields: `access_levels`, `dry_run_access_levels`, `reauth_settings`,
-// `scoped_access_settings`. update_mask { paths: "access_levels" }
+// fields: `access_levels`, `dry_run_access_levels`, `reauth_settings`
+// `session_settings`, `scoped_access_settings`. update_mask { paths:
+// "access_levels" }
 func (c *OrganizationsGcpUserAccessBindingsPatchCall) UpdateMask(updateMask string) *OrganizationsGcpUserAccessBindingsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

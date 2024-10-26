@@ -2681,7 +2681,7 @@
       }
     }
   },
-  "revision": "20241017",
+  "revision": "20241024",
   "rootUrl": "https://walletobjects.googleapis.com/",
   "schemas": {
     "ActivationOptions": {
@@ -5378,6 +5378,7 @@
             "GENERIC_HOME_INSURANCE",
             "GENERIC_ENTRY_TICKET",
             "GENERIC_RECEIPT",
+            "GENERIC_LOYALTY_CARD",
             "GENERIC_OTHER"
           ],
           "enumDescriptions": [
@@ -5393,6 +5394,7 @@
             "Home-insurance cards",
             "Entry tickets",
             "Receipts",
+            "Loyalty cards. Please note that it is advisable to use a dedicated Loyalty card pass type instead of this generic type. A dedicated loyalty card pass type offers more features and functionality than a generic pass type.",
             "Other type"
           ],
           "type": "string"

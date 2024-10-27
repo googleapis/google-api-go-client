@@ -2013,7 +2013,7 @@
       }
     }
   },
-  "revision": "20241002",
+  "revision": "20241021",
   "rootUrl": "https://netapp.googleapis.com/",
   "schemas": {
     "ActiveDirectory": {
@@ -2143,42 +2143,6 @@
         "username": {
           "description": "Required. Username of the Active Directory domain administrator.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "AssetLocation": {
-      "description": "Provides the mapping of a cloud asset to a direct physical location or to a proxy that defines the location on its behalf.",
-      "id": "AssetLocation",
-      "properties": {
-        "ccfeRmsPath": {
-          "description": "Spanner path of the CCFE RMS database. It is only applicable for CCFE tenants that use CCFE RMS for storing resource metadata.",
-          "type": "string"
-        },
-        "expected": {
-          "$ref": "IsolationExpectations",
-          "description": "Defines the customer expectation around ZI/ZS for this asset and ZI/ZS state of the region at the time of asset creation."
-        },
-        "extraParameters": {
-          "description": "Defines extra parameters required for specific asset types.",
-          "items": {
-            "$ref": "ExtraParameter"
-          },
-          "type": "array"
-        },
-        "locationData": {
-          "description": "Contains all kinds of physical location definitions for this asset.",
-          "items": {
-            "$ref": "LocationData"
-          },
-          "type": "array"
-        },
-        "parentAsset": {
-          "description": "Defines parents assets if any in order to allow later generation of child_asset_location data via child assets.",
-          "items": {
-            "$ref": "CloudAsset"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -2420,47 +2384,10 @@
       },
       "type": "object"
     },
-    "BlobstoreLocation": {
-      "description": "Policy ID that identified data placement in Blobstore as per go/blobstore-user-guide#data-metadata-placement-and-failure-domains",
-      "id": "BlobstoreLocation",
-      "properties": {
-        "policyId": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "CancelOperationRequest": {
       "description": "The request message for Operations.CancelOperation.",
       "id": "CancelOperationRequest",
       "properties": {},
-      "type": "object"
-    },
-    "CloudAsset": {
-      "id": "CloudAsset",
-      "properties": {
-        "assetName": {
-          "type": "string"
-        },
-        "assetType": {
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "CloudAssetComposition": {
-      "id": "CloudAssetComposition",
-      "properties": {
-        "childAsset": {
-          "items": {
-            "$ref": "CloudAsset"
-          },
-          "type": "array"
-        }
-      },
       "type": "object"
     },
     "DailySchedule": {
@@ -2508,18 +2435,6 @@
       },
       "type": "object"
     },
-    "DirectLocationAssignment": {
-      "id": "DirectLocationAssignment",
-      "properties": {
-        "location": {
-          "items": {
-            "$ref": "LocationAssignment"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "EncryptVolumesRequest": {
       "description": "EncryptVolumesRequest specifies the KMS config to encrypt existing volumes.",
       "id": "EncryptVolumesRequest",
@@ -2536,17 +2451,6 @@
             "$ref": "SimpleExportPolicyRule"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "ExtraParameter": {
-      "description": "Defines parameters that should only be used for specific asset types.",
-      "id": "ExtraParameter",
-      "properties": {
-        "regionalMigDistributionPolicy": {
-          "$ref": "RegionalMigDistributionPolicy",
-          "description": "Details about zones used by regional compute.googleapis.com/InstanceGroupManager to create instances."
         }
       },
       "type": "object"
@@ -2570,131 +2474,6 @@
           "description": "The maximum number of Snapshots to keep for the hourly schedule",
           "format": "double",
           "type": "number"
-        }
-      },
-      "type": "object"
-    },
-    "IsolationExpectations": {
-      "id": "IsolationExpectations",
-      "properties": {
-        "requirementOverride": {
-          "$ref": "RequirementOverride",
-          "description": "Explicit overrides for ZI and ZS requirements to be used for resources that should be excluded from ZI/ZS verification logic."
-        },
-        "ziOrgPolicy": {
-          "enum": [
-            "ZI_UNSPECIFIED",
-            "ZI_UNKNOWN",
-            "ZI_NOT_REQUIRED",
-            "ZI_PREFERRED",
-            "ZI_REQUIRED"
-          ],
-          "enumDescriptions": [
-            "",
-            "To be used if tracking is not available",
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
-        },
-        "ziRegionPolicy": {
-          "enum": [
-            "ZI_REGION_POLICY_UNSPECIFIED",
-            "ZI_REGION_POLICY_UNKNOWN",
-            "ZI_REGION_POLICY_NOT_SET",
-            "ZI_REGION_POLICY_FAIL_OPEN",
-            "ZI_REGION_POLICY_FAIL_CLOSED"
-          ],
-          "enumDescriptions": [
-            "",
-            "To be used if tracking is not available",
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
-        },
-        "ziRegionState": {
-          "enum": [
-            "ZI_REGION_UNSPECIFIED",
-            "ZI_REGION_UNKNOWN",
-            "ZI_REGION_NOT_ENABLED",
-            "ZI_REGION_ENABLED"
-          ],
-          "enumDescriptions": [
-            "",
-            "To be used if tracking is not available",
-            "",
-            ""
-          ],
-          "type": "string"
-        },
-        "zoneIsolation": {
-          "deprecated": true,
-          "description": "Deprecated: use zi_org_policy, zi_region_policy and zi_region_state instead for setting ZI expectations as per go/zicy-publish-physical-location.",
-          "enum": [
-            "ZI_UNSPECIFIED",
-            "ZI_UNKNOWN",
-            "ZI_NOT_REQUIRED",
-            "ZI_PREFERRED",
-            "ZI_REQUIRED"
-          ],
-          "enumDescriptions": [
-            "",
-            "To be used if tracking is not available",
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
-        },
-        "zoneSeparation": {
-          "deprecated": true,
-          "description": "Deprecated: use zs_org_policy, and zs_region_stateinstead for setting Zs expectations as per go/zicy-publish-physical-location.",
-          "enum": [
-            "ZS_UNSPECIFIED",
-            "ZS_UNKNOWN",
-            "ZS_NOT_REQUIRED",
-            "ZS_REQUIRED"
-          ],
-          "enumDescriptions": [
-            "",
-            "To be used if tracking is not available",
-            "",
-            ""
-          ],
-          "type": "string"
-        },
-        "zsOrgPolicy": {
-          "enum": [
-            "ZS_UNSPECIFIED",
-            "ZS_UNKNOWN",
-            "ZS_NOT_REQUIRED",
-            "ZS_REQUIRED"
-          ],
-          "enumDescriptions": [
-            "",
-            "To be used if tracking is not available",
-            "",
-            ""
-          ],
-          "type": "string"
-        },
-        "zsRegionState": {
-          "enum": [
-            "ZS_REGION_UNSPECIFIED",
-            "ZS_REGION_UNKNOWN",
-            "ZS_REGION_NOT_ENABLED",
-            "ZS_REGION_ENABLED"
-          ],
-          "enumDescriptions": [
-            "",
-            "To be used if tracking of the asset ZS-bit is not available",
-            "",
-            ""
-          ],
-          "type": "string"
         }
       },
       "type": "object"
@@ -3074,64 +2853,6 @@
       },
       "type": "object"
     },
-    "LocationAssignment": {
-      "id": "LocationAssignment",
-      "properties": {
-        "location": {
-          "type": "string"
-        },
-        "locationType": {
-          "enum": [
-            "UNSPECIFIED",
-            "CLUSTER",
-            "POP",
-            "CLOUD_ZONE",
-            "CLOUD_REGION",
-            "MULTI_REGION_GEO",
-            "MULTI_REGION_JURISDICTION",
-            "GLOBAL",
-            "OTHER"
-          ],
-          "enumDescriptions": [
-            "",
-            "1-10: Physical failure domains.",
-            "",
-            "11-20: Logical failure domains.",
-            "",
-            "",
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "LocationData": {
-      "id": "LocationData",
-      "properties": {
-        "blobstoreLocation": {
-          "$ref": "BlobstoreLocation"
-        },
-        "childAssetLocation": {
-          "$ref": "CloudAssetComposition"
-        },
-        "directLocation": {
-          "$ref": "DirectLocationAssignment"
-        },
-        "gcpProjectProxy": {
-          "$ref": "TenantProjectProxy"
-        },
-        "placerLocation": {
-          "$ref": "PlacerLocation"
-        },
-        "spannerLocation": {
-          "$ref": "SpannerLocation"
-        }
-      },
-      "type": "object"
-    },
     "LocationMetadata": {
       "description": "Metadata for a given google.cloud.location.Location.",
       "id": "LocationMetadata",
@@ -3301,36 +3022,6 @@
       },
       "type": "object"
     },
-    "PlacerLocation": {
-      "description": "Message describing that the location of the customer resource is tied to placer allocations",
-      "id": "PlacerLocation",
-      "properties": {
-        "placerConfig": {
-          "description": "Directory with a config related to it in placer (e.g. \"/placer/prod/home/my-root/my-dir\")",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "RegionalMigDistributionPolicy": {
-      "description": "To be used for specifying the intended distribution of regional compute.googleapis.com/InstanceGroupManager instances",
-      "id": "RegionalMigDistributionPolicy",
-      "properties": {
-        "targetShape": {
-          "description": "The shape in which the group converges around distribution of resources. Instance of proto2 enum",
-          "format": "int32",
-          "type": "integer"
-        },
-        "zones": {
-          "description": "Cloud zones used by regional MIG to create instances.",
-          "items": {
-            "$ref": "ZoneConfiguration"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "Replication": {
       "description": "Replication is a nested resource under Volume, that describes a cross-region replication relationship between 2 volumes in different regions.",
       "id": "Replication",
@@ -3455,44 +3146,6 @@
           "$ref": "TransferStats",
           "description": "Output only. Replication transfer statistics.",
           "readOnly": true
-        }
-      },
-      "type": "object"
-    },
-    "RequirementOverride": {
-      "id": "RequirementOverride",
-      "properties": {
-        "ziOverride": {
-          "enum": [
-            "ZI_UNSPECIFIED",
-            "ZI_UNKNOWN",
-            "ZI_NOT_REQUIRED",
-            "ZI_PREFERRED",
-            "ZI_REQUIRED"
-          ],
-          "enumDescriptions": [
-            "",
-            "To be used if tracking is not available",
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
-        },
-        "zsOverride": {
-          "enum": [
-            "ZS_UNSPECIFIED",
-            "ZS_UNKNOWN",
-            "ZS_NOT_REQUIRED",
-            "ZS_REQUIRED"
-          ],
-          "enumDescriptions": [
-            "",
-            "To be used if tracking is not available",
-            "",
-            ""
-          ],
-          "type": "string"
         }
       },
       "type": "object"
@@ -3687,26 +3340,6 @@
       },
       "type": "object"
     },
-    "SpannerLocation": {
-      "id": "SpannerLocation",
-      "properties": {
-        "backupName": {
-          "description": "Set of backups used by the resource with name in the same format as what is available at http://table/spanner_automon.backup_metadata",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "dbName": {
-          "description": "Set of databases used by the resource in format /span//",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "Status": {
       "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
       "id": "Status",
@@ -3894,18 +3527,6 @@
       "description": "SwitchActiveReplicaZoneRequest switch the active/replica zone for a regional storagePool.",
       "id": "SwitchActiveReplicaZoneRequest",
       "properties": {},
-      "type": "object"
-    },
-    "TenantProjectProxy": {
-      "id": "TenantProjectProxy",
-      "properties": {
-        "projectNumbers": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
       "type": "object"
     },
     "TieringPolicy": {
@@ -4319,15 +3940,6 @@
           "description": "The maximum number of Snapshots to keep for the hourly schedule",
           "format": "double",
           "type": "number"
-        }
-      },
-      "type": "object"
-    },
-    "ZoneConfiguration": {
-      "id": "ZoneConfiguration",
-      "properties": {
-        "zone": {
-          "type": "string"
         }
       },
       "type": "object"

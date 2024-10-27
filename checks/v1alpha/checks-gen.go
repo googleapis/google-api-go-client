@@ -797,6 +797,8 @@ type GoogleChecksReportV1alphaCheckDataTypeEvidence struct {
 	// sender, recipients, and the content of the email.
 	//   "DATA_TYPE_TEXT_MESSAGES" - A user's text messages including the sender,
 	// recipients, and the content of the message.
+	//   "DATA_TYPE_OTHER_IN_APP_MESSAGES" - Any other types of messages. For
+	// example, instant messages or chat content.
 	//   "DATA_TYPE_PHOTOS" - A user's photos.
 	//   "DATA_TYPE_VIDEOS" - A user's videos.
 	//   "DATA_TYPE_VOICE_OR_SOUND_RECORDINGS" - A user's voice such as a voicemail
@@ -1263,6 +1265,8 @@ type GoogleChecksReportV1alphaDataMonitoringDataTypeResult struct {
 	// sender, recipients, and the content of the email.
 	//   "DATA_TYPE_TEXT_MESSAGES" - A user's text messages including the sender,
 	// recipients, and the content of the message.
+	//   "DATA_TYPE_OTHER_IN_APP_MESSAGES" - Any other types of messages. For
+	// example, instant messages or chat content.
 	//   "DATA_TYPE_PHOTOS" - A user's photos.
 	//   "DATA_TYPE_VIDEOS" - A user's videos.
 	//   "DATA_TYPE_VOICE_OR_SOUND_RECORDINGS" - A user's voice such as a voicemail

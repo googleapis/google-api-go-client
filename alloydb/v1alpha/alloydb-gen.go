@@ -3662,6 +3662,9 @@ type StorageDatabasecenterPartnerapiV1mainRetentionSettings struct {
 	//   "RETENTION_UNIT_OTHER" - For rest of the other category
 	RetentionUnit      string `json:"retentionUnit,omitempty"`
 	TimeBasedRetention string `json:"timeBasedRetention,omitempty"`
+	// TimestampBasedRetentionTime: Timestamp based retention period i.e.
+	// 2024-05-01T00:00:00Z
+	TimestampBasedRetentionTime string `json:"timestampBasedRetentionTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DurationBasedRetention") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

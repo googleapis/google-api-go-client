@@ -4783,7 +4783,7 @@
       }
     }
   },
-  "revision": "20241009",
+  "revision": "20241017",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "ActivateConsentRequest": {
@@ -7185,7 +7185,7 @@
           "description": "Optional. Schemas used to parse messages in this store, if schematized parsing is desired."
         },
         "segmentTerminator": {
-          "description": "Byte(s) to use as the segment terminator. If this is unset, '\\r' is used as segment terminator, matching the HL7 version 2 specification.",
+          "description": "Optional. Byte(s) to use as the segment terminator. If this is unset, '\\r' is used as segment terminator, matching the HL7 version 2 specification.",
           "format": "byte",
           "type": "string"
         },

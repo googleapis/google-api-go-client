@@ -591,7 +591,7 @@
       }
     }
   },
-  "revision": "20241009",
+  "revision": "20241016",
   "rootUrl": "https://networkmanagement.googleapis.com/",
   "schemas": {
     "AbortInfo": {
@@ -616,6 +616,7 @@
             "PERMISSION_DENIED",
             "PERMISSION_DENIED_NO_CLOUD_NAT_CONFIGS",
             "PERMISSION_DENIED_NO_NEG_ENDPOINT_CONFIGS",
+            "PERMISSION_DENIED_NO_CLOUD_ROUTER_CONFIGS",
             "NO_SOURCE_LOCATION",
             "INVALID_ARGUMENT",
             "TRACE_TOO_LONG",
@@ -672,6 +673,7 @@
             false,
             false,
             false,
+            false,
             false
           ],
           "enumDescriptions": [
@@ -690,6 +692,7 @@
             "Aborted because user lacks permission to access all or part of the network configurations required to run the test.",
             "Aborted because user lacks permission to access Cloud NAT configs required to run the test.",
             "Aborted because user lacks permission to access Network endpoint group endpoint configs required to run the test.",
+            "Aborted because user lacks permission to access Cloud Router configs required to run the test.",
             "Aborted because no valid source or destination endpoint is derived from the input test request.",
             "Aborted because the source or destination endpoint specified in the request is invalid. Some examples: - The request might contain malformed resource URI, project ID, or IP address. - The request might contain inconsistent information (for example, the request might include both the instance and the network, but the instance might not have a NIC in that network).",
             "Aborted because the number of steps in the trace exceeds a certain limit. It might be caused by a routing loop.",

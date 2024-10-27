@@ -248,6 +248,8 @@ type AbortInfo struct {
 	//   "PERMISSION_DENIED_NO_NEG_ENDPOINT_CONFIGS" - Aborted because user lacks
 	// permission to access Network endpoint group endpoint configs required to run
 	// the test.
+	//   "PERMISSION_DENIED_NO_CLOUD_ROUTER_CONFIGS" - Aborted because user lacks
+	// permission to access Cloud Router configs required to run the test.
 	//   "NO_SOURCE_LOCATION" - Aborted because no valid source or destination
 	// endpoint is derived from the input test request.
 	//   "INVALID_ARGUMENT" - Aborted because the source or destination endpoint

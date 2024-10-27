@@ -137,6 +137,7 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.Catalog = NewCatalogService(s)
 	s.Entries = NewEntriesService(s)
+	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
 	return s, nil
 }
@@ -149,6 +150,8 @@ type Service struct {
 	Catalog *CatalogService
 
 	Entries *EntriesService
+
+	Organizations *OrganizationsService
 
 	Projects *ProjectsService
 }
@@ -175,6 +178,27 @@ func NewEntriesService(s *Service) *EntriesService {
 }
 
 type EntriesService struct {
+	s *Service
+}
+
+func NewOrganizationsService(s *Service) *OrganizationsService {
+	rs := &OrganizationsService{s: s}
+	rs.Locations = NewOrganizationsLocationsService(s)
+	return rs
+}
+
+type OrganizationsService struct {
+	s *Service
+
+	Locations *OrganizationsLocationsService
+}
+
+func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
+	rs := &OrganizationsLocationsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsService struct {
 	s *Service
 }
 
@@ -1509,6 +1533,12 @@ type GoogleCloudDatacatalogV1EntryGroup struct {
 	// The entry group itself and its child resources might not be stored in the
 	// location specified in its name.
 	Name string `json:"name,omitempty"`
+	// TransferredToDataplex: Optional. When set to [true], it means DataCatalog
+	// EntryGroup was transferred to Dataplex Catalog Service. It makes EntryGroup
+	// and its Entries to be read-only in DataCatalog. However, new Tags on
+	// EntryGroup and its Entries can be created. After setting the flag to [true]
+	// it cannot be unset.
+	TransferredToDataplex bool `json:"transferredToDataplex,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2133,6 +2163,50 @@ func (s GoogleCloudDatacatalogV1LookerSystemSpec) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDatacatalogV1MigrationConfig: The configuration related to the
+// migration to Dataplex applied to an organization or project. It is the
+// response message for SetConfig and RetrieveEffectiveConfig.
+type GoogleCloudDatacatalogV1MigrationConfig struct {
+	// CatalogUiExperience: Opt-in status for the UI switch to Dataplex.
+	//
+	// Possible values:
+	//   "CATALOG_UI_EXPERIENCE_UNSPECIFIED" - Default value. The default UI is
+	// Dataplex.
+	//   "CATALOG_UI_EXPERIENCE_ENABLED" - The UI is Dataplex.
+	//   "CATALOG_UI_EXPERIENCE_DISABLED" - The UI is Data Catalog.
+	CatalogUiExperience string `json:"catalogUiExperience,omitempty"`
+	// TagTemplateMigration: Opt-in status for the migration of Tag Templates to
+	// Dataplex.
+	//
+	// Possible values:
+	//   "TAG_TEMPLATE_MIGRATION_UNSPECIFIED" - Default value. Migration of Tag
+	// Templates from Data Catalog to Dataplex is not performed.
+	//   "TAG_TEMPLATE_MIGRATION_ENABLED" - Migration of Tag Templates from Data
+	// Catalog to Dataplex is enabled.
+	//   "TAG_TEMPLATE_MIGRATION_DISABLED" - Migration of Tag Templates from Data
+	// Catalog to Dataplex is disabled.
+	TagTemplateMigration string `json:"tagTemplateMigration,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CatalogUiExperience") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CatalogUiExperience") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDatacatalogV1MigrationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1MigrationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDatacatalogV1ModelSpec: Specification that applies to a model.
 // Valid only for entries with the `MODEL` type.
 type GoogleCloudDatacatalogV1ModelSpec struct {
@@ -2199,6 +2273,36 @@ type GoogleCloudDatacatalogV1ModifyEntryOverviewRequest struct {
 
 func (s GoogleCloudDatacatalogV1ModifyEntryOverviewRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ModifyEntryOverviewRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1OrganizationConfig: The configuration related to the
+// migration from Data Catalog to Dataplex that has been applied to an
+// organization and any projects under it. It is the response message for
+// RetrieveConfig.
+type GoogleCloudDatacatalogV1OrganizationConfig struct {
+	// Config: Map of organizations and project resource names and their
+	// configuration. The format for the map keys is
+	// `organizations/{organizationId}` or `projects/{projectId}`.
+	Config map[string]GoogleCloudDatacatalogV1MigrationConfig `json:"config,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDatacatalogV1OrganizationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1OrganizationConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2976,6 +3080,45 @@ func (s GoogleCloudDatacatalogV1ServiceSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDatacatalogV1SetConfigRequest: Request message for SetConfig.
+type GoogleCloudDatacatalogV1SetConfigRequest struct {
+	// CatalogUiExperience: Opt-in status for the UI switch to Dataplex.
+	//
+	// Possible values:
+	//   "CATALOG_UI_EXPERIENCE_UNSPECIFIED" - Default value. The default UI is
+	// Dataplex.
+	//   "CATALOG_UI_EXPERIENCE_ENABLED" - The UI is Dataplex.
+	//   "CATALOG_UI_EXPERIENCE_DISABLED" - The UI is Data Catalog.
+	CatalogUiExperience string `json:"catalogUiExperience,omitempty"`
+	// TagTemplateMigration: Opt-in status for the migration of Tag Templates to
+	// Dataplex.
+	//
+	// Possible values:
+	//   "TAG_TEMPLATE_MIGRATION_UNSPECIFIED" - Default value. Migration of Tag
+	// Templates from Data Catalog to Dataplex is not performed.
+	//   "TAG_TEMPLATE_MIGRATION_ENABLED" - Migration of Tag Templates from Data
+	// Catalog to Dataplex is enabled.
+	//   "TAG_TEMPLATE_MIGRATION_DISABLED" - Migration of Tag Templates from Data
+	// Catalog to Dataplex is disabled.
+	TagTemplateMigration string `json:"tagTemplateMigration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CatalogUiExperience") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CatalogUiExperience") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDatacatalogV1SetConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1SetConfigRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDatacatalogV1SqlDatabaseSystemSpec: Specification that applies to
 // entries that are part `SQL_DATABASE` system (user_specified_type)
 type GoogleCloudDatacatalogV1SqlDatabaseSystemSpec struct {
@@ -3122,6 +3265,20 @@ type GoogleCloudDatacatalogV1Tag struct {
 	// schema. To attach a tag to a nested column, separate column names with a dot
 	// (`.`). Example: `column.nested_column`.
 	Column string `json:"column,omitempty"`
+	// DataplexTransferStatus: Output only. Denotes the transfer status of the Tag
+	// Template.
+	//
+	// Possible values:
+	//   "DATAPLEX_TRANSFER_STATUS_UNSPECIFIED" - Default value. TagTemplate and
+	// its tags are only visible and editable in DataCatalog.
+	//   "MIGRATED" - TagTemplate and its tags are auto-copied to Dataplex service.
+	// Visible in both services. Editable in DataCatalog, read-only in Dataplex.
+	// Deprecated: Individual TagTemplate migration is deprecated in favor of
+	// organization or project wide TagTemplate migration opt-in.
+	//   "TRANSFERRED" - TagTemplate and its tags are auto-copied to Dataplex
+	// service. Visible in both services. Editable in Dataplex, read-only in
+	// DataCatalog.
+	DataplexTransferStatus string `json:"dataplexTransferStatus,omitempty"`
 	// Fields: Required. Maps the ID of a tag field to its value and additional
 	// information about that field. Tag template defines valid field IDs. A tag
 	// must have at least 1 field and at most 500 fields.
@@ -3256,6 +3413,9 @@ type GoogleCloudDatacatalogV1TagTemplate struct {
 	// Visible in both services. Editable in DataCatalog, read-only in Dataplex.
 	// Deprecated: Individual TagTemplate migration is deprecated in favor of
 	// organization or project wide TagTemplate migration opt-in.
+	//   "TRANSFERRED" - TagTemplate and its tags are auto-copied to Dataplex
+	// service. Visible in both services. Editable in Dataplex, read-only in
+	// DataCatalog.
 	DataplexTransferStatus string `json:"dataplexTransferStatus,omitempty"`
 	// DisplayName: Display name for this template. Defaults to an empty string.
 	// The name must contain only Unicode letters, numbers (0-9), underscores (_),
@@ -4255,6 +4415,546 @@ func (c *EntriesLookupCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataca
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudDatacatalogV1Entry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsLocationsRetrieveConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrieveConfig: Retrieves the configuration related to the migration from
+// Data Catalog to Dataplex for a specific organization, including all the
+// projects under it which have a separate configuration set.
+//
+// - name: The organization whose config is being retrieved.
+func (r *OrganizationsLocationsService) RetrieveConfig(name string) *OrganizationsLocationsRetrieveConfigCall {
+	c := &OrganizationsLocationsRetrieveConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsRetrieveConfigCall) Fields(s ...googleapi.Field) *OrganizationsLocationsRetrieveConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsRetrieveConfigCall) IfNoneMatch(entityTag string) *OrganizationsLocationsRetrieveConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsRetrieveConfigCall) Context(ctx context.Context) *OrganizationsLocationsRetrieveConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsRetrieveConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsRetrieveConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:retrieveConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.organizations.locations.retrieveConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogV1OrganizationConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsRetrieveConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogV1OrganizationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDatacatalogV1OrganizationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsLocationsRetrieveEffectiveConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrieveEffectiveConfig: Retrieves the effective configuration related to
+// the migration from Data Catalog to Dataplex for a specific organization or
+// project. If there is no specific configuration set for the resource, the
+// setting is checked hierarchicahlly through the ancestors of the resource,
+// starting from the resource itself.
+//
+// - name: The resource whose effective config is being retrieved.
+func (r *OrganizationsLocationsService) RetrieveEffectiveConfig(name string) *OrganizationsLocationsRetrieveEffectiveConfigCall {
+	c := &OrganizationsLocationsRetrieveEffectiveConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsRetrieveEffectiveConfigCall) Fields(s ...googleapi.Field) *OrganizationsLocationsRetrieveEffectiveConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsRetrieveEffectiveConfigCall) IfNoneMatch(entityTag string) *OrganizationsLocationsRetrieveEffectiveConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsRetrieveEffectiveConfigCall) Context(ctx context.Context) *OrganizationsLocationsRetrieveEffectiveConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsRetrieveEffectiveConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsRetrieveEffectiveConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:retrieveEffectiveConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.organizations.locations.retrieveEffectiveConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogV1MigrationConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsRetrieveEffectiveConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogV1MigrationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDatacatalogV1MigrationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsLocationsSetConfigCall struct {
+	s                                        *Service
+	name                                     string
+	googleclouddatacatalogv1setconfigrequest *GoogleCloudDatacatalogV1SetConfigRequest
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// SetConfig: Sets the configuration related to the migration to Dataplex for
+// an organization or project.
+//
+// - name: The organization or project whose config is being specified.
+func (r *OrganizationsLocationsService) SetConfig(name string, googleclouddatacatalogv1setconfigrequest *GoogleCloudDatacatalogV1SetConfigRequest) *OrganizationsLocationsSetConfigCall {
+	c := &OrganizationsLocationsSetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddatacatalogv1setconfigrequest = googleclouddatacatalogv1setconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsSetConfigCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSetConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsSetConfigCall) Context(ctx context.Context) *OrganizationsLocationsSetConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsSetConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSetConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatacatalogv1setconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:setConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.organizations.locations.setConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogV1MigrationConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSetConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogV1MigrationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDatacatalogV1MigrationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsRetrieveEffectiveConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// RetrieveEffectiveConfig: Retrieves the effective configuration related to
+// the migration from Data Catalog to Dataplex for a specific organization or
+// project. If there is no specific configuration set for the resource, the
+// setting is checked hierarchicahlly through the ancestors of the resource,
+// starting from the resource itself.
+//
+// - name: The resource whose effective config is being retrieved.
+func (r *ProjectsLocationsService) RetrieveEffectiveConfig(name string) *ProjectsLocationsRetrieveEffectiveConfigCall {
+	c := &ProjectsLocationsRetrieveEffectiveConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRetrieveEffectiveConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsRetrieveEffectiveConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRetrieveEffectiveConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsRetrieveEffectiveConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRetrieveEffectiveConfigCall) Context(ctx context.Context) *ProjectsLocationsRetrieveEffectiveConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRetrieveEffectiveConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRetrieveEffectiveConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:retrieveEffectiveConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.projects.locations.retrieveEffectiveConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogV1MigrationConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRetrieveEffectiveConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogV1MigrationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDatacatalogV1MigrationConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsSetConfigCall struct {
+	s                                        *Service
+	name                                     string
+	googleclouddatacatalogv1setconfigrequest *GoogleCloudDatacatalogV1SetConfigRequest
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// SetConfig: Sets the configuration related to the migration to Dataplex for
+// an organization or project.
+//
+// - name: The organization or project whose config is being specified.
+func (r *ProjectsLocationsService) SetConfig(name string, googleclouddatacatalogv1setconfigrequest *GoogleCloudDatacatalogV1SetConfigRequest) *ProjectsLocationsSetConfigCall {
+	c := &ProjectsLocationsSetConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddatacatalogv1setconfigrequest = googleclouddatacatalogv1setconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSetConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsSetConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSetConfigCall) Context(ctx context.Context) *ProjectsLocationsSetConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSetConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSetConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddatacatalogv1setconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:setConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datacatalog.projects.locations.setConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDatacatalogV1MigrationConfig.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSetConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDatacatalogV1MigrationConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDatacatalogV1MigrationConfig{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

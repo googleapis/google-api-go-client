@@ -260,6 +260,8 @@ type AbortInfo struct {
 	//   "PERMISSION_DENIED_NO_NEG_ENDPOINT_CONFIGS" - Aborted because user lacks
 	// permission to access Network endpoint group endpoint configs required to run
 	// the test.
+	//   "PERMISSION_DENIED_NO_CLOUD_ROUTER_CONFIGS" - Aborted because user lacks
+	// permission to access Cloud Router configs required to run the test.
 	//   "NO_SOURCE_LOCATION" - Aborted because no valid source or destination
 	// endpoint is derived from the input test request.
 	//   "INVALID_ARGUMENT" - Aborted because the source or destination endpoint
@@ -647,10 +649,6 @@ type CloudRunRevisionInfo struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Location: Location in which this revision is deployed.
 	Location string `json:"location,omitempty"`
-	// ServiceName: ID of Cloud Run Service this revision belongs to. Was never
-	// set, is not exported to v1 proto and public protos. Do not export to v1beta1
-	// public proto.
-	ServiceName string `json:"serviceName,omitempty"`
 	// ServiceUri: URI of Cloud Run service this revision belongs to.
 	ServiceUri string `json:"serviceUri,omitempty"`
 	// Uri: URI of a Cloud Run revision.
@@ -3054,6 +3052,15 @@ type VpcFlowLogsConfig struct {
 	//   "ENABLED" - When ENABLED, this configuration will generate logs.
 	//   "DISABLED" - When DISABLED, this configuration will not generate logs.
 	State string `json:"state,omitempty"`
+	// TargetResourceState: Output only. A diagnostic bit - describes the state of
+	// the configured target resource for diagnostic purposes.
+	//
+	// Possible values:
+	//   "TARGET_RESOURCE_STATE_UNSPECIFIED" - Unspecified target resource state.
+	//   "TARGET_RESOURCE_EXISTS" - Indicates that the target resource exists.
+	//   "TARGET_RESOURCE_DOES_NOT_EXIST" - Indicates that the target resource does
+	// not exist.
+	TargetResourceState string `json:"targetResourceState,omitempty"`
 	// UpdateTime: Output only. The time the config was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// VpnTunnel: Traffic will be logged from the VPN Tunnel. Format:

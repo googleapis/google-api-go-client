@@ -4694,6 +4694,9 @@ type SslConfig struct {
 	//   "SERVER_ONLY" - Only 'ca_certificate' specified.
 	//   "SERVER_CLIENT" - Both server ('ca_certificate'), and client
 	// ('client_key', 'client_certificate') specified.
+	//   "REQUIRED" - Mandates SSL encryption for all connections. This doesn’t
+	// require certificate verification.
+	//   "NONE" - Connection is not encrypted.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
 	// unconditionally include in API requests. By default, fields with empty or

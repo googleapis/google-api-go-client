@@ -929,6 +929,15 @@ type MultiNodeParams struct {
 	// "np-2". If this field is not provided we use queued_resource_id as the
 	// node_id_prefix.
 	NodeIdPrefix string `json:"nodeIdPrefix,omitempty"`
+	// WorkloadType: Optional. The workload type for the multi-node request.
+	//
+	// Possible values:
+	//   "WORKLOAD_TYPE_UNSPECIFIED" - Not specified.
+	//   "THROUGHPUT_OPTIMIZED" - All of the nodes are available most of the time.
+	// Recommended for training workloads.
+	//   "AVAILABILITY_OPTIMIZED" - Most of the nodes are available all of the
+	// time. Recommended for serving workloads.
+	WorkloadType string `json:"workloadType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NodeCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

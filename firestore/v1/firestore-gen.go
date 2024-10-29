@@ -1383,8 +1383,8 @@ type FindNearest struct {
 	// similar documents will be returned. The behavior of the specified
 	// `distance_measure` will affect the meaning of the distance threshold. Since
 	// DOT_PRODUCT distances increase when the vectors are more similar, the
-	// comparison is inverted. For EUCLIDEAN, COSINE: WHERE distance <=
-	// distance_threshold For DOT_PRODUCT: WHERE distance >= distance_threshold
+	// comparison is inverted. * For EUCLIDEAN, COSINE: WHERE distance <=
+	// distance_threshold * For DOT_PRODUCT: WHERE distance >= distance_threshold
 	DistanceThreshold float64 `json:"distanceThreshold,omitempty"`
 	// Limit: Required. The number of nearest neighbors to return. Must be a
 	// positive integer of no more than 1000.
@@ -3796,7 +3796,7 @@ func (s StructuredAggregationQuery) MarshalJSON() ([]byte, error) {
 
 // StructuredQuery: A Firestore query. The query stages are executed in the
 // following order: 1. from 2. where 3. select 4. order_by + start_at + end_at
-// 5. offset 6. limit
+// 5. offset 6. limit 7. find_nearest
 type StructuredQuery struct {
 	// EndAt: A potential prefix of a position in the result set to end the query
 	// at. This is similar to `START_AT` but with it controlling the end position

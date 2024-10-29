@@ -227,6 +227,15 @@ type Assignment struct {
 	// Assignee: The resource which will use the reservation. E.g.
 	// `projects/myproject`, `folders/123`, or `organizations/456`.
 	Assignee string `json:"assignee,omitempty"`
+	// EnableGeminiInBigquery: Optional. This field controls if "Gemini in
+	// BigQuery" (https://cloud.google.com/gemini/docs/bigquery/overview) features
+	// should be enabled for this reservation assignment, which is not on by
+	// default. "Gemini in BigQuery" has a distinct compliance posture from
+	// BigQuery. If this field is set to true, the assignment job type is QUERY,
+	// and the parent reservation edition is ENTERPRISE_PLUS, then the assignment
+	// will give the grantee project/organization access to "Gemini in BigQuery"
+	// features.
+	EnableGeminiInBigquery bool `json:"enableGeminiInBigquery,omitempty"`
 	// JobType: Which type of jobs will use the reservation.
 	//
 	// Possible values:
@@ -280,7 +289,10 @@ func (s Assignment) MarshalJSON() ([]byte, error) {
 // Autoscale: Auto scaling settings.
 type Autoscale struct {
 	// CurrentSlots: Output only. The slot capacity added to this reservation when
-	// autoscale happens. Will be between [0, max_slots].
+	// autoscale happens. Will be between [0, max_slots]. Note: after users reduce
+	// max_slots, it may take a while before it can be propagated, so current_slots
+	// may stay in the original value and could be larger than max_slots for that
+	// brief period (less than one minute)
 	CurrentSlots int64 `json:"currentSlots,omitempty,string"`
 	// MaxSlots: Number of slots to be scaled when needed.
 	MaxSlots int64 `json:"maxSlots,omitempty,string"`
@@ -670,6 +682,10 @@ type Reservation struct {
 	// If true, a query or pipeline job using this reservation will execute with
 	// the slot capacity specified in the slot_capacity field at most.
 	IgnoreIdleSlots bool `json:"ignoreIdleSlots,omitempty"`
+	// Labels: Optional. The labels associated with this reservation. You can use
+	// these to organize and group your reservations. You can set this property
+	// when inserting or updating a reservation.
+	Labels map[string]string `json:"labels,omitempty"`
 	// MultiRegionAuxiliary: Applicable only for reservations located within one of
 	// the BigQuery multi-regions (US or EU). If set to true, this reservation is
 	// placed in the organization's secondary region which is designated for

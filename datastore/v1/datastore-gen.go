@@ -807,6 +807,84 @@ func (s Filter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FindNearest: Nearest Neighbors search config. The ordering provided by
+// FindNearest supersedes the order_by stage. If multiple documents have the
+// same vector distance, the returned document order is not guaranteed to be
+// stable between queries.
+type FindNearest struct {
+	// DistanceMeasure: Required. The Distance Measure to use, required.
+	//
+	// Possible values:
+	//   "DISTANCE_MEASURE_UNSPECIFIED" - Should not be set.
+	//   "EUCLIDEAN" - Measures the EUCLIDEAN distance between the vectors. See
+	// [Euclidean](https://en.wikipedia.org/wiki/Euclidean_distance) to learn more.
+	// The resulting distance decreases the more similar two vectors are.
+	//   "COSINE" - COSINE distance compares vectors based on the angle between
+	// them, which allows you to measure similarity that isn't based on the vectors
+	// magnitude. We recommend using DOT_PRODUCT with unit normalized vectors
+	// instead of COSINE distance, which is mathematically equivalent with better
+	// performance. See [Cosine
+	// Similarity](https://en.wikipedia.org/wiki/Cosine_similarity) to learn more
+	// about COSINE similarity and COSINE distance. The resulting COSINE distance
+	// decreases the more similar two vectors are.
+	//   "DOT_PRODUCT" - Similar to cosine but is affected by the magnitude of the
+	// vectors. See [Dot Product](https://en.wikipedia.org/wiki/Dot_product) to
+	// learn more. The resulting distance increases the more similar two vectors
+	// are.
+	DistanceMeasure string `json:"distanceMeasure,omitempty"`
+	// DistanceResultProperty: Optional. Optional name of the field to output the
+	// result of the vector distance calculation. Must conform to entity property
+	// limitations.
+	DistanceResultProperty string `json:"distanceResultProperty,omitempty"`
+	// DistanceThreshold: Optional. Option to specify a threshold for which no less
+	// similar documents will be returned. The behavior of the specified
+	// `distance_measure` will affect the meaning of the distance threshold. Since
+	// DOT_PRODUCT distances increase when the vectors are more similar, the
+	// comparison is inverted. * For EUCLIDEAN, COSINE: WHERE distance <=
+	// distance_threshold * For DOT_PRODUCT: WHERE distance >= distance_threshold
+	DistanceThreshold float64 `json:"distanceThreshold,omitempty"`
+	// Limit: Required. The number of nearest neighbors to return. Must be a
+	// positive integer of no more than 100.
+	Limit int64 `json:"limit,omitempty"`
+	// QueryVector: Required. The query vector that we are searching on. Must be a
+	// vector of no more than 2048 dimensions.
+	QueryVector *Value `json:"queryVector,omitempty"`
+	// VectorProperty: Required. An indexed vector property to search upon. Only
+	// documents which contain vectors whose dimensionality match the query_vector
+	// can be returned.
+	VectorProperty *PropertyReference `json:"vectorProperty,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DistanceMeasure") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DistanceMeasure") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FindNearest) MarshalJSON() ([]byte, error) {
+	type NoMethod FindNearest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *FindNearest) UnmarshalJSON(data []byte) error {
+	type NoMethod FindNearest
+	var s1 struct {
+		DistanceThreshold gensupport.JSONFloat64 `json:"distanceThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DistanceThreshold = float64(s1.DistanceThreshold)
+	return nil
+}
+
 // GoogleDatastoreAdminV1CommonMetadata: Metadata common to all Datastore Admin
 // operations.
 type GoogleDatastoreAdminV1CommonMetadata struct {
@@ -2395,7 +2473,9 @@ func (s PropertyTransform) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Query: A query for entities.
+// Query: A query for entities. The query stages are executed in the following
+// order: 1. kind 2. filter 3. projection 4. order + start_cursor + end_cursor
+// 5. offset 6. limit 7. find_nearest
 type Query struct {
 	// DistinctOn: The properties to make distinct. The query results will contain
 	// the first result for each distinct combination of values for the given
@@ -2409,6 +2489,10 @@ type Query struct {
 	EndCursor string `json:"endCursor,omitempty"`
 	// Filter: The filter to apply.
 	Filter *Filter `json:"filter,omitempty"`
+	// FindNearest: Optional. A potential Nearest Neighbors Search. Applies after
+	// all other filters and ordering. Finds the closest vector embeddings to the
+	// given query vector.
+	FindNearest *FindNearest `json:"findNearest,omitempty"`
 	// Kind: The kinds to query (if empty, returns entities of all kinds).
 	// Currently at most 1 kind may be specified.
 	Kind []*KindExpression `json:"kind,omitempty"`

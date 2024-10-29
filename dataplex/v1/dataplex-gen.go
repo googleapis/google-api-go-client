@@ -1817,6 +1817,218 @@ func (s GoogleCloudDataplexV1DataAttributeBindingPath) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1DataDiscoveryResult: The output of a data discovery
+// scan.
+type GoogleCloudDataplexV1DataDiscoveryResult struct {
+	// BigqueryPublishing: Output only. Configuration for metadata publishing.
+	BigqueryPublishing *GoogleCloudDataplexV1DataDiscoveryResultBigQueryPublishing `json:"bigqueryPublishing,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BigqueryPublishing") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BigqueryPublishing") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDiscoveryResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDiscoveryResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataDiscoveryResultBigQueryPublishing: Describes
+// BigQuery publishing configurations.
+type GoogleCloudDataplexV1DataDiscoveryResultBigQueryPublishing struct {
+	// Dataset: Output only. The BigQuery dataset to publish to. It takes the form
+	// projects/{project_id}/datasets/{dataset_id}. If not set, the service creates
+	// a default publishing dataset.
+	Dataset string `json:"dataset,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Dataset") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Dataset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDiscoveryResultBigQueryPublishing) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDiscoveryResultBigQueryPublishing
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataDiscoverySpec: Spec for a data discovery scan.
+type GoogleCloudDataplexV1DataDiscoverySpec struct {
+	// BigqueryPublishingConfig: Optional. Configuration for metadata publishing.
+	BigqueryPublishingConfig *GoogleCloudDataplexV1DataDiscoverySpecBigQueryPublishingConfig `json:"bigqueryPublishingConfig,omitempty"`
+	// StorageConfig: Cloud Storage related configurations.
+	StorageConfig *GoogleCloudDataplexV1DataDiscoverySpecStorageConfig `json:"storageConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BigqueryPublishingConfig")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BigqueryPublishingConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDiscoverySpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDiscoverySpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataDiscoverySpecBigQueryPublishingConfig: Describes
+// BigQuery publishing configurations.
+type GoogleCloudDataplexV1DataDiscoverySpecBigQueryPublishingConfig struct {
+	// Connection: Optional. The BigQuery connection used to create BigLake tables.
+	// Must be in the form
+	// projects/{project_id}/locations/{location_id}/connections/{connection_id}
+	Connection string `json:"connection,omitempty"`
+	// TableType: Optional. Determines whether to publish discovered tables as
+	// BigLake external tables or non-BigLake external tables.
+	//
+	// Possible values:
+	//   "TABLE_TYPE_UNSPECIFIED" - Table type unspecified.
+	//   "EXTERNAL" - Default. Discovered tables are published as BigQuery external
+	// tables whose data is accessed using the credentials of the user querying the
+	// table.
+	//   "BIGLAKE" - Discovered tables are published as BigLake external tables
+	// whose data is accessed using the credentials of the associated BigQuery
+	// connection.
+	TableType string `json:"tableType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Connection") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Connection") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDiscoverySpecBigQueryPublishingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDiscoverySpecBigQueryPublishingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataDiscoverySpecStorageConfig: Configurations related
+// to Cloud Storage as the data source.
+type GoogleCloudDataplexV1DataDiscoverySpecStorageConfig struct {
+	// CsvOptions: Optional. Configuration for CSV data.
+	CsvOptions *GoogleCloudDataplexV1DataDiscoverySpecStorageConfigCsvOptions `json:"csvOptions,omitempty"`
+	// ExcludePatterns: Optional. Defines the data to exclude during discovery.
+	// Provide a list of patterns that identify the data to exclude. For Cloud
+	// Storage bucket assets, these patterns are interpreted as glob patterns used
+	// to match object names. For BigQuery dataset assets, these patterns are
+	// interpreted as patterns to match table names.
+	ExcludePatterns []string `json:"excludePatterns,omitempty"`
+	// IncludePatterns: Optional. Defines the data to include during discovery when
+	// only a subset of the data should be considered. Provide a list of patterns
+	// that identify the data to include. For Cloud Storage bucket assets, these
+	// patterns are interpreted as glob patterns used to match object names. For
+	// BigQuery dataset assets, these patterns are interpreted as patterns to match
+	// table names.
+	IncludePatterns []string `json:"includePatterns,omitempty"`
+	// JsonOptions: Optional. Configuration for JSON data.
+	JsonOptions *GoogleCloudDataplexV1DataDiscoverySpecStorageConfigJsonOptions `json:"jsonOptions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CsvOptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CsvOptions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDiscoverySpecStorageConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDiscoverySpecStorageConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataDiscoverySpecStorageConfigCsvOptions: Describes CSV
+// and similar semi-structured data formats.
+type GoogleCloudDataplexV1DataDiscoverySpecStorageConfigCsvOptions struct {
+	// Delimiter: Optional. The delimiter that is used to separate values. The
+	// default is , (comma).
+	Delimiter string `json:"delimiter,omitempty"`
+	// Encoding: Optional. The character encoding of the data. The default is
+	// UTF-8.
+	Encoding string `json:"encoding,omitempty"`
+	// HeaderRows: Optional. The number of rows to interpret as header rows that
+	// should be skipped when reading data rows.
+	HeaderRows int64 `json:"headerRows,omitempty"`
+	// Quote: Optional. The character used to quote column values. Accepts "
+	// (double quotation mark) or ' (single quotation mark). If unspecified,
+	// defaults to " (double quotation mark).
+	Quote string `json:"quote,omitempty"`
+	// TypeInferenceDisabled: Optional. Whether to disable the inference of data
+	// types for CSV data. If true, all columns are registered as strings.
+	TypeInferenceDisabled bool `json:"typeInferenceDisabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Delimiter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Delimiter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDiscoverySpecStorageConfigCsvOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDiscoverySpecStorageConfigCsvOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataDiscoverySpecStorageConfigJsonOptions: Describes
+// JSON data format.
+type GoogleCloudDataplexV1DataDiscoverySpecStorageConfigJsonOptions struct {
+	// Encoding: Optional. The character encoding of the data. The default is
+	// UTF-8.
+	Encoding string `json:"encoding,omitempty"`
+	// TypeInferenceDisabled: Optional. Whether to disable the inference of data
+	// types for JSON data. If true, all columns are registered as their primitive
+	// types (strings, number, or boolean).
+	TypeInferenceDisabled bool `json:"typeInferenceDisabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Encoding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Encoding") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDiscoverySpecStorageConfigJsonOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDiscoverySpecStorageConfigJsonOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1DataProfileResult: DataProfileResult defines the output
 // of DataProfileScan. Each field of the table will have field type specific
 // profile result.
@@ -3253,6 +3465,10 @@ type GoogleCloudDataplexV1DataScan struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Data: Required. The data source for DataScan.
 	Data *GoogleCloudDataplexV1DataSource `json:"data,omitempty"`
+	// DataDiscoveryResult: Output only. The result of a data discovery scan.
+	DataDiscoveryResult *GoogleCloudDataplexV1DataDiscoveryResult `json:"dataDiscoveryResult,omitempty"`
+	// DataDiscoverySpec: Settings for a data discovery scan.
+	DataDiscoverySpec *GoogleCloudDataplexV1DataDiscoverySpec `json:"dataDiscoverySpec,omitempty"`
 	// DataProfileResult: Output only. The result of a data profile scan.
 	DataProfileResult *GoogleCloudDataplexV1DataProfileResult `json:"dataProfileResult,omitempty"`
 	// DataProfileSpec: Settings for a data profile scan.
@@ -3294,6 +3510,7 @@ type GoogleCloudDataplexV1DataScan struct {
 	//   "DATA_SCAN_TYPE_UNSPECIFIED" - The data scan type is unspecified.
 	//   "DATA_QUALITY" - Data quality scan.
 	//   "DATA_PROFILE" - Data profile scan.
+	//   "DATA_DISCOVERY" - Data discovery scan.
 	Type string `json:"type,omitempty"`
 	// Uid: Output only. System generated globally unique ID for the scan. This ID
 	// will be different if the scan is deleted and re-created with the same name.
@@ -3680,6 +3897,10 @@ func (s GoogleCloudDataplexV1DataScanExecutionStatus) MarshalJSON() ([]byte, err
 type GoogleCloudDataplexV1DataScanJob struct {
 	// CreateTime: Output only. The time when the DataScanJob was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataDiscoveryResult: Output only. The result of a data discovery scan.
+	DataDiscoveryResult *GoogleCloudDataplexV1DataDiscoveryResult `json:"dataDiscoveryResult,omitempty"`
+	// DataDiscoverySpec: Output only. Settings for a data discovery scan.
+	DataDiscoverySpec *GoogleCloudDataplexV1DataDiscoverySpec `json:"dataDiscoverySpec,omitempty"`
 	// DataProfileResult: Output only. The result of a data profile scan.
 	DataProfileResult *GoogleCloudDataplexV1DataProfileResult `json:"dataProfileResult,omitempty"`
 	// DataProfileSpec: Output only. Settings for a data profile scan.
@@ -3717,6 +3938,7 @@ type GoogleCloudDataplexV1DataScanJob struct {
 	//   "DATA_SCAN_TYPE_UNSPECIFIED" - The data scan type is unspecified.
 	//   "DATA_QUALITY" - Data quality scan.
 	//   "DATA_PROFILE" - Data profile scan.
+	//   "DATA_DISCOVERY" - Data discovery scan.
 	Type string `json:"type,omitempty"`
 	// Uid: Output only. System generated globally unique ID for the DataScanJob.
 	Uid string `json:"uid,omitempty"`

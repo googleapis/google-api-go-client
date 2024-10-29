@@ -2631,6 +2631,10 @@ type GoogleCloudDocumentaiV1beta3DatasetSchema struct {
 	// `projects/{project}/locations/{location}/processors/{processor}/dataset/datas
 	// etSchema`
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

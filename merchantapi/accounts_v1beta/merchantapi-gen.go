@@ -685,7 +685,8 @@ func (s BusinessInfo) MarshalJSON() ([]byte, error) {
 }
 
 // CarrierRate: A list of carrier rates that can be referred to by `main_table`
-// or `single_value`.
+// or `single_value`. Supported carrier services are defined in
+// https://support.google.com/merchants/answer/12577710?hl=en&ref_topic=12570808&sjid=10662598224319463032-NC#zippy=%2Cdelivery-cost-rate-type%2Ccarrier-rate-au-de-uk-and-us-only.
 type CarrierRate struct {
 	// Carrier: Required. Carrier service, such as "UPS" or "Fedex".
 	Carrier string `json:"carrier,omitempty"`
@@ -2978,7 +2979,8 @@ func (s Warehouse) MarshalJSON() ([]byte, error) {
 // the selected carrier. When set, no other transit time related field in
 // `delivery_time` should be set.
 type WarehouseBasedDeliveryTime struct {
-	// Carrier: Required. Carrier, such as "UPS" or "Fedex".
+	// Carrier: Required. Carrier, such as "UPS" or "Fedex". supported carriers
+	// (https://support.google.com/merchants/answer/7050921#zippy=%2Ccarrier-rates-au-de-uk-and-us-only)
 	Carrier string `json:"carrier,omitempty"`
 	// CarrierService: Required. Carrier service, such as "ground" or "2 days".
 	// The name of the service must be in the eddSupportedServices list.

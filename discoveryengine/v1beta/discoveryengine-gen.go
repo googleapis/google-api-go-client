@@ -250,6 +250,7 @@ type ProjectsLocationsCollectionsDataConnectorOperationsService struct {
 func NewProjectsLocationsCollectionsDataStoresService(s *Service) *ProjectsLocationsCollectionsDataStoresService {
 	rs := &ProjectsLocationsCollectionsDataStoresService{s: s}
 	rs.Branches = NewProjectsLocationsCollectionsDataStoresBranchesService(s)
+	rs.CompletionConfig = NewProjectsLocationsCollectionsDataStoresCompletionConfigService(s)
 	rs.CompletionSuggestions = NewProjectsLocationsCollectionsDataStoresCompletionSuggestionsService(s)
 	rs.Controls = NewProjectsLocationsCollectionsDataStoresControlsService(s)
 	rs.Conversations = NewProjectsLocationsCollectionsDataStoresConversationsService(s)
@@ -269,6 +270,8 @@ type ProjectsLocationsCollectionsDataStoresService struct {
 	s *Service
 
 	Branches *ProjectsLocationsCollectionsDataStoresBranchesService
+
+	CompletionConfig *ProjectsLocationsCollectionsDataStoresCompletionConfigService
 
 	CompletionSuggestions *ProjectsLocationsCollectionsDataStoresCompletionSuggestionsService
 
@@ -325,6 +328,15 @@ func NewProjectsLocationsCollectionsDataStoresBranchesOperationsService(s *Servi
 }
 
 type ProjectsLocationsCollectionsDataStoresBranchesOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCollectionsDataStoresCompletionConfigService(s *Service) *ProjectsLocationsCollectionsDataStoresCompletionConfigService {
+	rs := &ProjectsLocationsCollectionsDataStoresCompletionConfigService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsDataStoresCompletionConfigService struct {
 	s *Service
 }
 
@@ -510,6 +522,7 @@ type ProjectsLocationsCollectionsDataStoresUserEventsService struct {
 
 func NewProjectsLocationsCollectionsEnginesService(s *Service) *ProjectsLocationsCollectionsEnginesService {
 	rs := &ProjectsLocationsCollectionsEnginesService{s: s}
+	rs.CompletionConfig = NewProjectsLocationsCollectionsEnginesCompletionConfigService(s)
 	rs.Controls = NewProjectsLocationsCollectionsEnginesControlsService(s)
 	rs.Conversations = NewProjectsLocationsCollectionsEnginesConversationsService(s)
 	rs.Operations = NewProjectsLocationsCollectionsEnginesOperationsService(s)
@@ -521,6 +534,8 @@ func NewProjectsLocationsCollectionsEnginesService(s *Service) *ProjectsLocation
 type ProjectsLocationsCollectionsEnginesService struct {
 	s *Service
 
+	CompletionConfig *ProjectsLocationsCollectionsEnginesCompletionConfigService
+
 	Controls *ProjectsLocationsCollectionsEnginesControlsService
 
 	Conversations *ProjectsLocationsCollectionsEnginesConversationsService
@@ -530,6 +545,15 @@ type ProjectsLocationsCollectionsEnginesService struct {
 	ServingConfigs *ProjectsLocationsCollectionsEnginesServingConfigsService
 
 	Sessions *ProjectsLocationsCollectionsEnginesSessionsService
+}
+
+func NewProjectsLocationsCollectionsEnginesCompletionConfigService(s *Service) *ProjectsLocationsCollectionsEnginesCompletionConfigService {
+	rs := &ProjectsLocationsCollectionsEnginesCompletionConfigService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsEnginesCompletionConfigService struct {
+	s *Service
 }
 
 func NewProjectsLocationsCollectionsEnginesControlsService(s *Service) *ProjectsLocationsCollectionsEnginesControlsService {
@@ -601,6 +625,7 @@ type ProjectsLocationsCollectionsOperationsService struct {
 func NewProjectsLocationsDataStoresService(s *Service) *ProjectsLocationsDataStoresService {
 	rs := &ProjectsLocationsDataStoresService{s: s}
 	rs.Branches = NewProjectsLocationsDataStoresBranchesService(s)
+	rs.CompletionConfig = NewProjectsLocationsDataStoresCompletionConfigService(s)
 	rs.CompletionSuggestions = NewProjectsLocationsDataStoresCompletionSuggestionsService(s)
 	rs.Controls = NewProjectsLocationsDataStoresControlsService(s)
 	rs.Conversations = NewProjectsLocationsDataStoresConversationsService(s)
@@ -619,6 +644,8 @@ type ProjectsLocationsDataStoresService struct {
 	s *Service
 
 	Branches *ProjectsLocationsDataStoresBranchesService
+
+	CompletionConfig *ProjectsLocationsDataStoresCompletionConfigService
 
 	CompletionSuggestions *ProjectsLocationsDataStoresCompletionSuggestionsService
 
@@ -673,6 +700,15 @@ func NewProjectsLocationsDataStoresBranchesOperationsService(s *Service) *Projec
 }
 
 type ProjectsLocationsDataStoresBranchesOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDataStoresCompletionConfigService(s *Service) *ProjectsLocationsDataStoresCompletionConfigService {
+	rs := &ProjectsLocationsDataStoresCompletionConfigService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDataStoresCompletionConfigService struct {
 	s *Service
 }
 
@@ -931,6 +967,355 @@ type ProjectsOperationsService struct {
 	s *Service
 }
 
+// GoogleApiDistribution: `Distribution` contains summary statistics for a
+// population of values. It optionally contains a histogram representing the
+// distribution of those values across a set of buckets. The summary statistics
+// are the count, mean, sum of the squared deviation from the mean, the
+// minimum, and the maximum of the set of population of values. The histogram
+// is based on a sequence of buckets and gives a count of values that fall into
+// each bucket. The boundaries of the buckets are given either explicitly or by
+// formulas for buckets of fixed or exponentially increasing widths. Although
+// it is not forbidden, it is generally a bad idea to include non-finite values
+// (infinities or NaNs) in the population of values, as this will render the
+// `mean` and `sum_of_squared_deviation` fields meaningless.
+type GoogleApiDistribution struct {
+	// BucketCounts: The number of values in each bucket of the histogram, as
+	// described in `bucket_options`. If the distribution does not have a
+	// histogram, then omit this field. If there is a histogram, then the sum of
+	// the values in `bucket_counts` must equal the value in the `count` field of
+	// the distribution. If present, `bucket_counts` should contain N values, where
+	// N is the number of buckets specified in `bucket_options`. If you supply
+	// fewer than N values, the remaining values are assumed to be 0. The order of
+	// the values in `bucket_counts` follows the bucket numbering schemes described
+	// for the three bucket types. The first value must be the count for the
+	// underflow bucket (number 0). The next N-2 values are the counts for the
+	// finite buckets (number 1 through N-2). The N'th value in `bucket_counts` is
+	// the count for the overflow bucket (number N-1).
+	BucketCounts googleapi.Int64s `json:"bucketCounts,omitempty"`
+	// BucketOptions: Defines the histogram bucket boundaries. If the distribution
+	// does not contain a histogram, then omit this field.
+	BucketOptions *GoogleApiDistributionBucketOptions `json:"bucketOptions,omitempty"`
+	// Count: The number of values in the population. Must be non-negative. This
+	// value must equal the sum of the values in `bucket_counts` if a histogram is
+	// provided.
+	Count int64 `json:"count,omitempty,string"`
+	// Exemplars: Must be in increasing order of `value` field.
+	Exemplars []*GoogleApiDistributionExemplar `json:"exemplars,omitempty"`
+	// Mean: The arithmetic mean of the values in the population. If `count` is
+	// zero then this field must be zero.
+	Mean float64 `json:"mean,omitempty"`
+	// Range: If specified, contains the range of the population values. The field
+	// must not be present if the `count` is zero.
+	Range *GoogleApiDistributionRange `json:"range,omitempty"`
+	// SumOfSquaredDeviation: The sum of squared deviations from the mean of the
+	// values in the population. For values x_i this is: Sumi=1..n ((x_i - mean)^2)
+	// Knuth, "The Art of Computer Programming", Vol. 2, page 232, 3rd edition
+	// describes Welford's method for accumulating this sum in one pass. If `count`
+	// is zero then this field must be zero.
+	SumOfSquaredDeviation float64 `json:"sumOfSquaredDeviation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BucketCounts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BucketCounts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiDistribution) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiDistribution
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleApiDistribution) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleApiDistribution
+	var s1 struct {
+		Mean                  gensupport.JSONFloat64 `json:"mean"`
+		SumOfSquaredDeviation gensupport.JSONFloat64 `json:"sumOfSquaredDeviation"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Mean = float64(s1.Mean)
+	s.SumOfSquaredDeviation = float64(s1.SumOfSquaredDeviation)
+	return nil
+}
+
+// GoogleApiDistributionBucketOptions: `BucketOptions` describes the bucket
+// boundaries used to create a histogram for the distribution. The buckets can
+// be in a linear sequence, an exponential sequence, or each bucket can be
+// specified explicitly. `BucketOptions` does not include the number of values
+// in each bucket. A bucket has an inclusive lower bound and exclusive upper
+// bound for the values that are counted for that bucket. The upper bound of a
+// bucket must be strictly greater than the lower bound. The sequence of N
+// buckets for a distribution consists of an underflow bucket (number 0), zero
+// or more finite buckets (number 1 through N - 2) and an overflow bucket
+// (number N - 1). The buckets are contiguous: the lower bound of bucket i (i >
+// 0) is the same as the upper bound of bucket i - 1. The buckets span the
+// whole range of finite values: lower bound of the underflow bucket is
+// -infinity and the upper bound of the overflow bucket is +infinity. The
+// finite buckets are so-called because both bounds are finite.
+type GoogleApiDistributionBucketOptions struct {
+	// ExplicitBuckets: The explicit buckets.
+	ExplicitBuckets *GoogleApiDistributionBucketOptionsExplicit `json:"explicitBuckets,omitempty"`
+	// ExponentialBuckets: The exponential buckets.
+	ExponentialBuckets *GoogleApiDistributionBucketOptionsExponential `json:"exponentialBuckets,omitempty"`
+	// LinearBuckets: The linear bucket.
+	LinearBuckets *GoogleApiDistributionBucketOptionsLinear `json:"linearBuckets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExplicitBuckets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExplicitBuckets") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiDistributionBucketOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiDistributionBucketOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiDistributionBucketOptionsExplicit: Specifies a set of buckets with
+// arbitrary widths. There are `size(bounds) + 1` (= N) buckets. Bucket `i` has
+// the following boundaries: Upper bound (0 <= i < N-1): bounds[i] Lower bound
+// (1 <= i < N); bounds[i - 1] The `bounds` field must contain at least one
+// element. If `bounds` has only one element, then there are no finite buckets,
+// and that single element is the common boundary of the overflow and underflow
+// buckets.
+type GoogleApiDistributionBucketOptionsExplicit struct {
+	// Bounds: The values must be monotonically increasing.
+	Bounds []float64 `json:"bounds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bounds") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bounds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiDistributionBucketOptionsExplicit) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiDistributionBucketOptionsExplicit
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleApiDistributionBucketOptionsExplicit) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleApiDistributionBucketOptionsExplicit
+	var s1 struct {
+		Bounds []gensupport.JSONFloat64 `json:"bounds"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Bounds = make([]float64, len(s1.Bounds))
+	for i := range s1.Bounds {
+		s.Bounds[i] = float64(s1.Bounds[i])
+	}
+	return nil
+}
+
+// GoogleApiDistributionBucketOptionsExponential: Specifies an exponential
+// sequence of buckets that have a width that is proportional to the value of
+// the lower bound. Each bucket represents a constant relative uncertainty on a
+// specific value in the bucket. There are `num_finite_buckets + 2` (= N)
+// buckets. Bucket `i` has the following boundaries: Upper bound (0 <= i <
+// N-1): scale * (growth_factor ^ i). Lower bound (1 <= i < N): scale *
+// (growth_factor ^ (i - 1)).
+type GoogleApiDistributionBucketOptionsExponential struct {
+	// GrowthFactor: Must be greater than 1.
+	GrowthFactor float64 `json:"growthFactor,omitempty"`
+	// NumFiniteBuckets: Must be greater than 0.
+	NumFiniteBuckets int64 `json:"numFiniteBuckets,omitempty"`
+	// Scale: Must be greater than 0.
+	Scale float64 `json:"scale,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GrowthFactor") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GrowthFactor") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiDistributionBucketOptionsExponential) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiDistributionBucketOptionsExponential
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleApiDistributionBucketOptionsExponential) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleApiDistributionBucketOptionsExponential
+	var s1 struct {
+		GrowthFactor gensupport.JSONFloat64 `json:"growthFactor"`
+		Scale        gensupport.JSONFloat64 `json:"scale"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.GrowthFactor = float64(s1.GrowthFactor)
+	s.Scale = float64(s1.Scale)
+	return nil
+}
+
+// GoogleApiDistributionBucketOptionsLinear: Specifies a linear sequence of
+// buckets that all have the same width (except overflow and underflow). Each
+// bucket represents a constant absolute uncertainty on the specific value in
+// the bucket. There are `num_finite_buckets + 2` (= N) buckets. Bucket `i` has
+// the following boundaries: Upper bound (0 <= i < N-1): offset + (width * i).
+// Lower bound (1 <= i < N): offset + (width * (i - 1)).
+type GoogleApiDistributionBucketOptionsLinear struct {
+	// NumFiniteBuckets: Must be greater than 0.
+	NumFiniteBuckets int64 `json:"numFiniteBuckets,omitempty"`
+	// Offset: Lower bound of the first bucket.
+	Offset float64 `json:"offset,omitempty"`
+	// Width: Must be greater than 0.
+	Width float64 `json:"width,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NumFiniteBuckets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NumFiniteBuckets") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiDistributionBucketOptionsLinear) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiDistributionBucketOptionsLinear
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleApiDistributionBucketOptionsLinear) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleApiDistributionBucketOptionsLinear
+	var s1 struct {
+		Offset gensupport.JSONFloat64 `json:"offset"`
+		Width  gensupport.JSONFloat64 `json:"width"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Offset = float64(s1.Offset)
+	s.Width = float64(s1.Width)
+	return nil
+}
+
+// GoogleApiDistributionExemplar: Exemplars are example points that may be used
+// to annotate aggregated distribution values. They are metadata that gives
+// information about a particular value added to a Distribution bucket, such as
+// a trace ID that was active when a value was added. They may contain further
+// information, such as a example values and timestamps, origin, etc.
+type GoogleApiDistributionExemplar struct {
+	// Attachments: Contextual information about the example value. Examples are:
+	// Trace: type.googleapis.com/google.monitoring.v3.SpanContext Literal string:
+	// type.googleapis.com/google.protobuf.StringValue Labels dropped during
+	// aggregation: type.googleapis.com/google.monitoring.v3.DroppedLabels There
+	// may be only a single attachment of any given message type in a single
+	// exemplar, and this is enforced by the system.
+	Attachments []googleapi.RawMessage `json:"attachments,omitempty"`
+	// Timestamp: The observation (sampling) time of the above value.
+	Timestamp string `json:"timestamp,omitempty"`
+	// Value: Value of the exemplar point. This value determines to which bucket
+	// the exemplar belongs.
+	Value float64 `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attachments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attachments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiDistributionExemplar) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiDistributionExemplar
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleApiDistributionExemplar) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleApiDistributionExemplar
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
+}
+
+// GoogleApiDistributionRange: The range of the population values.
+type GoogleApiDistributionRange struct {
+	// Max: The maximum of the population values.
+	Max float64 `json:"max,omitempty"`
+	// Min: The minimum of the population values.
+	Min float64 `json:"min,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Max") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Max") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiDistributionRange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiDistributionRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleApiDistributionRange) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleApiDistributionRange
+	var s1 struct {
+		Max gensupport.JSONFloat64 `json:"max"`
+		Min gensupport.JSONFloat64 `json:"min"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Max = float64(s1.Max)
+	s.Min = float64(s1.Min)
+	return nil
+}
+
 // GoogleApiHttpBody: Message that represents an arbitrary HTTP body. It should
 // only be used for payload formats that can't be represented as JSON, such as
 // raw binary or an HTML page. This message can be used both in streaming and
@@ -975,6 +1360,107 @@ type GoogleApiHttpBody struct {
 
 func (s GoogleApiHttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiHttpBody
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiMetric: A specific metric, identified by specifying values for all
+// of the labels of a `MetricDescriptor`.
+type GoogleApiMetric struct {
+	// Labels: The set of label values that uniquely identify this metric. All
+	// labels listed in the `MetricDescriptor` must be assigned values.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Type: An existing metric type, see google.api.MetricDescriptor. For example,
+	// `custom.googleapis.com/invoice/paid/amount`.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiMetric) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiMetric
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiMonitoredResource: An object representing a resource that can be
+// used for monitoring, logging, billing, or other purposes. Examples include
+// virtual machine instances, databases, and storage devices such as disks. The
+// `type` field identifies a MonitoredResourceDescriptor object that describes
+// the resource's schema. Information in the `labels` field identifies the
+// actual resource and its attributes according to the schema. For example, a
+// particular Compute Engine VM instance could be represented by the following
+// object, because the MonitoredResourceDescriptor for "gce_instance" has
+// labels "project_id", "instance_id" and "zone": { "type":
+// "gce_instance", "labels": { "project_id": "my-project", "instance_id":
+// "12345678901234", "zone": "us-central1-a" }}
+type GoogleApiMonitoredResource struct {
+	// Labels: Required. Values for all of the labels listed in the associated
+	// monitored resource descriptor. For example, Compute Engine VM instances use
+	// the labels "project_id", "instance_id", and "zone".
+	Labels map[string]string `json:"labels,omitempty"`
+	// Type: Required. The monitored resource type. This field must match the
+	// `type` field of a MonitoredResourceDescriptor object. For example, the type
+	// of a Compute Engine VM instance is `gce_instance`. Some descriptors include
+	// the service name in the type; for example, the type of a Datastream stream
+	// is `datastream.googleapis.com/Stream`.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiMonitoredResource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiMonitoredResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiMonitoredResourceMetadata: Auxiliary metadata for a
+// MonitoredResource object. MonitoredResource objects contain the minimum set
+// of information to uniquely identify a monitored resource instance. There is
+// some other useful auxiliary metadata. Monitoring and Logging use an
+// ingestion pipeline to extract metadata for cloud resources of all types, and
+// store the metadata in this message.
+type GoogleApiMonitoredResourceMetadata struct {
+	// SystemLabels: Output only. Values for predefined system metadata labels.
+	// System labels are a kind of metadata extracted by Google, including
+	// "machine_image", "vpc", "subnet_id", "security_group", "name", etc. System
+	// label values can be only strings, Boolean values, or a list of strings. For
+	// example: { "name": "my-test-instance", "security_group": ["a", "b", "c"],
+	// "spot_instance": false }
+	SystemLabels googleapi.RawMessage `json:"systemLabels,omitempty"`
+	// UserLabels: Output only. A map of user-defined metadata labels.
+	UserLabels map[string]string `json:"userLabels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SystemLabels") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SystemLabels") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiMonitoredResourceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiMonitoredResourceMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4316,6 +4802,29 @@ func (s GoogleCloudDiscoveryengineV1alphaControlSynonymsAction) MarshalJSON() ([
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries: The historical crawl
+// rate timeseries data, used for monitoring.
+type GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries struct {
+	// QpsTimeSeries: The QPS of the crawl rate.
+	QpsTimeSeries *GoogleMonitoringV3TimeSeries `json:"qpsTimeSeries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "QpsTimeSeries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "QpsTimeSeries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaCreateDataStoreMetadata: Metadata related
 // to the progress of the DataStoreService.CreateDataStore operation. This will
 // be returned by the google.longrunning.Operation.metadata field.
@@ -4677,6 +5186,39 @@ type GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDataStoreServingConfigDataStore
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDedicatedCrawlRateTimeSeries: The
+// historical dedicated crawl rate timeseries data, used for monitoring.
+// Dedicated crawl is used by Vertex AI to crawl the user's website when
+// dedicate crawl is set.
+type GoogleCloudDiscoveryengineV1alphaDedicatedCrawlRateTimeSeries struct {
+	// AutoRefreshCrawlRate: Vertex AI's dedicated crawl rate time series of
+	// auto-refresh, which is the crawl rate of Google-CloudVertexBot when dedicate
+	// crawl is set, and the crawl rate is for best effort use cases like
+	// refreshing urls periodically.
+	AutoRefreshCrawlRate *GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries `json:"autoRefreshCrawlRate,omitempty"`
+	// UserTriggeredCrawlRate: Vertex AI's dedicated crawl rate time series of user
+	// triggered crawl, which is the crawl rate of Google-CloudVertexBot when
+	// dedicate crawl is set, and user triggered crawl rate is for deterministic
+	// use cases like crawling urls or sitemaps specified by users.
+	UserTriggeredCrawlRate *GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries `json:"userTriggeredCrawlRate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AutoRefreshCrawlRate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoRefreshCrawlRate") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDedicatedCrawlRateTimeSeries) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDedicatedCrawlRateTimeSeries
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6290,6 +6832,79 @@ type GoogleCloudDiscoveryengineV1alphaNaturalLanguageQueryUnderstandingConfig st
 
 func (s GoogleCloudDiscoveryengineV1alphaNaturalLanguageQueryUnderstandingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaNaturalLanguageQueryUnderstandingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaObtainCrawlRateResponse: Response message
+// for CrawlRateManagementService.ObtainCrawlRate method. The response contains
+// organcic or dedicated crawl rate time series data for monitoring, depending
+// on whether dedicated crawl rate is set.
+type GoogleCloudDiscoveryengineV1alphaObtainCrawlRateResponse struct {
+	// DedicatedCrawlRateTimeSeries: The historical dedicated crawl rate timeseries
+	// data, used for monitoring.
+	DedicatedCrawlRateTimeSeries *GoogleCloudDiscoveryengineV1alphaDedicatedCrawlRateTimeSeries `json:"dedicatedCrawlRateTimeSeries,omitempty"`
+	// Error: Errors from service when handling the request.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// OrganicCrawlRateTimeSeries: The historical organic crawl rate timeseries
+	// data, used for monitoring.
+	OrganicCrawlRateTimeSeries *GoogleCloudDiscoveryengineV1alphaOrganicCrawlRateTimeSeries `json:"organicCrawlRateTimeSeries,omitempty"`
+	// State: Output only. The state of the response.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unspecified.
+	//   "SUCCEEDED" - The state is successful.
+	//   "FAILED" - The state is failed.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DedicatedCrawlRateTimeSeries") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DedicatedCrawlRateTimeSeries") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaObtainCrawlRateResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaObtainCrawlRateResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaOrganicCrawlRateTimeSeries: The historical
+// organic crawl rate timeseries data, used for monitoring. Organic crawl is
+// auto-determined by Google to crawl the user's website when dedicate crawl is
+// not set. Crawl rate is the QPS of crawl request Google sends to the user's
+// website.
+type GoogleCloudDiscoveryengineV1alphaOrganicCrawlRateTimeSeries struct {
+	// GoogleOrganicCrawlRate: Google's organic crawl rate time series, which is
+	// the sum of all googlebots' crawl rate. Please refer to
+	// https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers
+	// for more details about googlebots.
+	GoogleOrganicCrawlRate *GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries `json:"googleOrganicCrawlRate,omitempty"`
+	// VertexAiOrganicCrawlRate: Vertex AI's organic crawl rate time series, which
+	// is the crawl rate of Google-CloudVertexBot when dedicate crawl is not set.
+	// Please refer to
+	// https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers#google-cloudvertexbot
+	// for more details about Google-CloudVertexBot.
+	VertexAiOrganicCrawlRate *GoogleCloudDiscoveryengineV1alphaCrawlRateTimeSeries `json:"vertexAiOrganicCrawlRate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GoogleOrganicCrawlRate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoogleOrganicCrawlRate") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaOrganicCrawlRateTimeSeries) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaOrganicCrawlRateTimeSeries
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8573,6 +9188,321 @@ func (s GoogleCloudDiscoveryengineV1alphaWorkspaceConfig) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequest: Request
+// message for CompletionService.AdvancedCompleteQuery method. .
+type GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequest struct {
+	// BoostSpec: Optional. Specification to boost suggestions matching the
+	// condition.
+	BoostSpec *GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequestBoostSpec `json:"boostSpec,omitempty"`
+	// IncludeTailSuggestions: Indicates if tail suggestions should be returned if
+	// there are no suggestions that match the full query. Even if set to true, if
+	// there are suggestions that match the full query, those are returned and no
+	// tail suggestions are returned.
+	IncludeTailSuggestions bool `json:"includeTailSuggestions,omitempty"`
+	// Query: Required. The typeahead input used to fetch suggestions. Maximum
+	// length is 128 characters. The query can not be empty for most of the
+	// suggestion types. If it is empty, an `INVALID_ARGUMENT` error is returned.
+	// The exception is when the suggestion_types contains only the type
+	// `RECENT_SEARCH`, the query can be an empty string. The is called "zero
+	// prefix" feature, which returns user's recently searched queries given the
+	// empty query.
+	Query string `json:"query,omitempty"`
+	// QueryModel: Specifies the autocomplete data model. This overrides any model
+	// specified in the Configuration > Autocomplete section of the Cloud console.
+	// Currently supported values: * `document` - Using suggestions generated from
+	// user-imported documents. * `search-history` - Using suggestions generated
+	// from the past history of SearchService.Search API calls. Do not use it when
+	// there is no traffic for Search API. * `user-event` - Using suggestions
+	// generated from user-imported search events. * `document-completable` - Using
+	// suggestions taken directly from user-imported document fields marked as
+	// completable. Default values: * `document` is the default model for regular
+	// dataStores. * `search-history` is the default model for site search
+	// dataStores.
+	QueryModel string `json:"queryModel,omitempty"`
+	// SuggestionTypes: Optional. Suggestion types to return. If empty or
+	// unspecified, query suggestions are returned. Only one suggestion type is
+	// supported at the moment.
+	//
+	// Possible values:
+	//   "SUGGESTION_TYPE_UNSPECIFIED" - Default value.
+	//   "QUERY" - Returns query suggestions.
+	//   "PEOPLE" - Returns people suggestions.
+	//   "CONTENT" - Returns content suggestions.
+	//   "RECENT_SEARCH" - Returns recent search suggestions.
+	//   "GOOGLE_WORKSPACE" - Returns Google Workspace suggestions.
+	SuggestionTypes []string `json:"suggestionTypes,omitempty"`
+	// UserInfo: Optional. Information about the end user. This should be the same
+	// identifier information as UserEvent.user_info and SearchRequest.user_info.
+	UserInfo *GoogleCloudDiscoveryengineV1betaUserInfo `json:"userInfo,omitempty"`
+	// UserPseudoId: A unique identifier for tracking visitors. For example, this
+	// could be implemented with an HTTP cookie, which should be able to uniquely
+	// identify a visitor on a single device. This unique identifier should not
+	// change if the visitor logs in or out of the website. This field should NOT
+	// have a fixed value such as `unknown_visitor`. This should be the same
+	// identifier as UserEvent.user_pseudo_id and SearchRequest.user_pseudo_id. The
+	// field must be a UTF-8 encoded string with a length limit of 128
+	UserPseudoId string `json:"userPseudoId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoostSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoostSpec") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequestBoostSpec:
+// Specification to boost suggestions based on the condtion of the suggestion.
+type GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequestBoostSpec struct {
+	// ConditionBoostSpecs: Condition boost specifications. If a suggestion matches
+	// multiple conditions in the specifictions, boost values from these
+	// specifications are all applied and combined in a non-linear way. Maximum
+	// number of specifications is 20. Note: Currently only support language
+	// condition boost.
+	ConditionBoostSpecs []*GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequestBoostSpecConditionBoostSpec `json:"conditionBoostSpecs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConditionBoostSpecs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConditionBoostSpecs") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequestBoostSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequestBoostSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequestBoostSpecConditio
+// nBoostSpec: Boost applies to suggestions which match a condition.
+type GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequestBoostSpecConditionBoostSpec struct {
+	// Boost: Strength of the boost, which should be in [-1, 1]. Negative boost
+	// means demotion. Default is 0.0. Setting to 1.0 gives the suggestions a big
+	// promotion. However, it does not necessarily mean that the top result will be
+	// a boosted suggestion. Setting to -1.0 gives the suggestions a big demotion.
+	// However, other suggestions that are relevant might still be shown. Setting
+	// to 0.0 means no boost applied. The boosting condition is ignored.
+	Boost float64 `json:"boost,omitempty"`
+	// Condition: An expression which specifies a boost condition. The syntax is
+	// the same as filter expression syntax
+	// (https://cloud.google.com/generative-ai-app-builder/docs/filter-search-metadata#filter-expression-syntax).
+	// Currently, the only supported condition is a list of BCP-47 lang codes.
+	// Example: * To boost suggestions in languages `en` or `fr`: `(lang_code:
+	// ANY("en", "fr"))`
+	Condition string `json:"condition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Boost") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Boost") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequestBoostSpecConditionBoostSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequestBoostSpecConditionBoostSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequestBoostSpecConditionBoostSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequestBoostSpecConditionBoostSpec
+	var s1 struct {
+		Boost gensupport.JSONFloat64 `json:"boost"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Boost = float64(s1.Boost)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponse: Response
+// message for CompletionService.AdvancedCompleteQuery method.
+type GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponse struct {
+	// ContentSuggestions: Results of the matched content suggestions. The result
+	// list is ordered and the first result is the top suggestion.
+	ContentSuggestions []*GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseContentSuggestion `json:"contentSuggestions,omitempty"`
+	// PeopleSuggestions: Results of the matched people suggestions. The result
+	// list is ordered and the first result is the top suggestion.
+	PeopleSuggestions []*GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponsePersonSuggestion `json:"peopleSuggestions,omitempty"`
+	// QuerySuggestions: Results of the matched query suggestions. The result list
+	// is ordered and the first result is a top suggestion.
+	QuerySuggestions []*GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseQuerySuggestion `json:"querySuggestions,omitempty"`
+	// RecentSearchSuggestions: Results of the matched "recent search" suggestions.
+	// The result list is ordered and the first result is the top suggestion.
+	RecentSearchSuggestions []*GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseRecentSearchSuggestion `json:"recentSearchSuggestions,omitempty"`
+	// TailMatchTriggered: True if the returned suggestions are all tail
+	// suggestions. For tail matching to be triggered, include_tail_suggestions in
+	// the request must be true and there must be no suggestions that match the
+	// full query.
+	TailMatchTriggered bool `json:"tailMatchTriggered,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ContentSuggestions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentSuggestions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseContentSuggestio
+// n: Suggestions as content.
+type GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseContentSuggestion struct {
+	// ContentType: The type of the content suggestion.
+	//
+	// Possible values:
+	//   "CONTENT_TYPE_UNSPECIFIED" - Default value.
+	//   "GOOGLE_WORKSPACE" - The suggestion is from a Google Workspace source.
+	//   "THIRD_PARTY" - The suggestion is from a third party source.
+	ContentType string `json:"contentType,omitempty"`
+	// DataStore: The name of the dataStore that this suggestion belongs to.
+	DataStore string `json:"dataStore,omitempty"`
+	// Document: The document data snippet in the suggestion. Only a subset of
+	// fields will be populated.
+	Document *GoogleCloudDiscoveryengineV1betaDocument `json:"document,omitempty"`
+	// Suggestion: The suggestion for the query.
+	Suggestion string `json:"suggestion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseContentSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseContentSuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponsePersonSuggestion
+// : Suggestions as people.
+type GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponsePersonSuggestion struct {
+	// DataStore: The name of the dataStore that this suggestion belongs to.
+	DataStore string `json:"dataStore,omitempty"`
+	// Document: The document data snippet in the suggestion. Only a subset of
+	// fields is populated.
+	Document *GoogleCloudDiscoveryengineV1betaDocument `json:"document,omitempty"`
+	// PersonType: The type of the person.
+	//
+	// Possible values:
+	//   "PERSON_TYPE_UNSPECIFIED" - Default value.
+	//   "CLOUD_IDENTITY" - The suggestion is from a GOOGLE_IDENTITY source.
+	//   "THIRD_PARTY_IDENTITY" - The suggestion is from a THIRD_PARTY_IDENTITY
+	// source.
+	PersonType string `json:"personType,omitempty"`
+	// Suggestion: The suggestion for the query.
+	Suggestion string `json:"suggestion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponsePersonSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponsePersonSuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseQuerySuggestion:
+//
+//	Suggestions as search queries.
+type GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseQuerySuggestion struct {
+	// CompletableFieldPaths: The unique document field paths that serve as the
+	// source of this suggestion if it was generated from completable fields. This
+	// field is only populated for the document-completable model.
+	CompletableFieldPaths []string `json:"completableFieldPaths,omitempty"`
+	// DataStore: The name of the dataStore that this suggestion belongs to.
+	DataStore []string `json:"dataStore,omitempty"`
+	// Suggestion: The suggestion for the query.
+	Suggestion string `json:"suggestion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CompletableFieldPaths") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CompletableFieldPaths") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseQuerySuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseQuerySuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseRecentSearchSugg
+// estion: Suggestions from recent search history.
+type GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseRecentSearchSuggestion struct {
+	// RecentSearchTime: The time when this recent rearch happened.
+	RecentSearchTime string `json:"recentSearchTime,omitempty"`
+	// Suggestion: The suggestion for the query.
+	Suggestion string `json:"suggestion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RecentSearchTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RecentSearchTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseRecentSearchSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponseRecentSearchSuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig: Configuration data
 // for advance site search.
 type GoogleCloudDiscoveryengineV1betaAdvancedSiteSearchConfig struct {
@@ -8761,6 +9691,8 @@ type GoogleCloudDiscoveryengineV1betaAnswerQueryRequest struct {
 	// calling ConversationalSearchService.GetAnswer or
 	// ConversationalSearchService.GetSession method.
 	AsynchronousMode bool `json:"asynchronousMode,omitempty"`
+	// GroundingSpec: Optional. Grounding specification.
+	GroundingSpec *GoogleCloudDiscoveryengineV1betaAnswerQueryRequestGroundingSpec `json:"groundingSpec,omitempty"`
 	// Query: Required. Current user query.
 	Query *GoogleCloudDiscoveryengineV1betaQuery `json:"query,omitempty"`
 	// QueryUnderstandingSpec: Query understanding specification.
@@ -8922,6 +9854,40 @@ type GoogleCloudDiscoveryengineV1betaAnswerQueryRequestAnswerGenerationSpecPromp
 
 func (s GoogleCloudDiscoveryengineV1betaAnswerQueryRequestAnswerGenerationSpecPromptSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaAnswerQueryRequestAnswerGenerationSpecPromptSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaAnswerQueryRequestGroundingSpec: Grounding
+// specification.
+type GoogleCloudDiscoveryengineV1betaAnswerQueryRequestGroundingSpec struct {
+	// FilteringLevel: Optional. Specifies whether to enable the filtering based on
+	// grounding score and at what level.
+	//
+	// Possible values:
+	//   "FILTERING_LEVEL_UNSPECIFIED" - Default is no filter
+	//   "FILTERING_LEVEL_LOW" - Filter answers based on a low threshold.
+	//   "FILTERING_LEVEL_HIGH" - Filter answers based on a high threshold.
+	FilteringLevel string `json:"filteringLevel,omitempty"`
+	// IncludeGroundingSupports: Optional. Specifies whether to include
+	// grounding_supports in the answer. The default value is `false`. When this
+	// field is set to `true`, returned answer will have `grounding_score` and will
+	// contain GroundingSupports for each claim.
+	IncludeGroundingSupports bool `json:"includeGroundingSupports,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FilteringLevel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FilteringLevel") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaAnswerQueryRequestGroundingSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaAnswerQueryRequestGroundingSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -18202,11 +19168,12 @@ type GoogleCloudDiscoveryengineV1betaUserEvent struct {
 	// `search`: Search for Documents. * `view-item`: Detailed page view of a
 	// Document. * `view-item-list`: View of a panel or ordered list of Documents.
 	// * `view-home-page`: View of the home page. * `view-category-page`: View of a
-	// category page, e.g. Home > Men > Jeans Retail-related values: *
-	// `add-to-cart`: Add an item(s) to cart, e.g. in Retail online shopping *
-	// `purchase`: Purchase an item(s) Media-related values: * `media-play`:
-	// Start/resume watching a video, playing a song, etc. * `media-complete`:
-	// Finished or stopped midway through a video, song, etc.
+	// category page, e.g. Home > Men > Jeans * `add-feedback`: Add a user
+	// feedback. Retail-related values: * `add-to-cart`: Add an item(s) to cart,
+	// e.g. in Retail online shopping * `purchase`: Purchase an item(s)
+	// Media-related values: * `media-play`: Start/resume watching a video, playing
+	// a song, etc. * `media-complete`: Finished or stopped midway through a video,
+	// song, etc.
 	EventType string `json:"eventType,omitempty"`
 	// Filter: The filter syntax consists of an expression language for
 	// constructing a predicate from one or more fields of the documents being
@@ -18438,6 +19405,198 @@ type GoogleLongrunningOperation struct {
 func (s GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMonitoringV3Point: A single data point in a time series.
+type GoogleMonitoringV3Point struct {
+	// Interval: The time interval to which the data point applies. For `GAUGE`
+	// metrics, the start time is optional, but if it is supplied, it must equal
+	// the end time. For `DELTA` metrics, the start and end time should specify a
+	// non-zero interval, with subsequent points specifying contiguous and
+	// non-overlapping intervals. For `CUMULATIVE` metrics, the start and end time
+	// should specify a non-zero interval, with subsequent points specifying the
+	// same start time and increasing end times, until an event resets the
+	// cumulative value to zero and sets a new start time for the following points.
+	Interval *GoogleMonitoringV3TimeInterval `json:"interval,omitempty"`
+	// Value: The value of the data point.
+	Value *GoogleMonitoringV3TypedValue `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Interval") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Interval") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMonitoringV3Point) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMonitoringV3Point
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMonitoringV3TimeInterval: A time interval extending just after a start
+// time through an end time. If the start time is the same as the end time,
+// then the interval represents a single point in time.
+type GoogleMonitoringV3TimeInterval struct {
+	// EndTime: Required. The end of the time interval.
+	EndTime string `json:"endTime,omitempty"`
+	// StartTime: Optional. The beginning of the time interval. The default value
+	// for the start time is the end time. The start time must not be later than
+	// the end time.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMonitoringV3TimeInterval) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMonitoringV3TimeInterval
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMonitoringV3TimeSeries: A collection of data points that describes the
+// time-varying values of a metric. A time series is identified by a
+// combination of a fully-specified monitored resource and a fully-specified
+// metric. This type is used for both listing and creating time series.
+type GoogleMonitoringV3TimeSeries struct {
+	// Description: Input only. A detailed description of the time series that will
+	// be associated with the google.api.MetricDescriptor for the metric. Once set,
+	// this field cannot be changed through CreateTimeSeries.
+	Description string `json:"description,omitempty"`
+	// Metadata: Output only. The associated monitored resource metadata. When
+	// reading a time series, this field will include metadata labels that are
+	// explicitly named in the reduction. When creating a time series, this field
+	// is ignored.
+	Metadata *GoogleApiMonitoredResourceMetadata `json:"metadata,omitempty"`
+	// Metric: The associated metric. A fully-specified metric used to identify the
+	// time series.
+	Metric *GoogleApiMetric `json:"metric,omitempty"`
+	// MetricKind: The metric kind of the time series. When listing time series,
+	// this metric kind might be different from the metric kind of the associated
+	// metric if this time series is an alignment or reduction of other time
+	// series. When creating a time series, this field is optional. If present, it
+	// must be the same as the metric kind of the associated metric. If the
+	// associated metric's descriptor must be auto-created, then this field
+	// specifies the metric kind of the new descriptor and must be either `GAUGE`
+	// (the default) or `CUMULATIVE`.
+	//
+	// Possible values:
+	//   "METRIC_KIND_UNSPECIFIED" - Do not use this default value.
+	//   "GAUGE" - An instantaneous measurement of a value.
+	//   "DELTA" - The change in a value during a time interval.
+	//   "CUMULATIVE" - A value accumulated over a time interval. Cumulative
+	// measurements in a time series should have the same start time and increasing
+	// end times, until an event resets the cumulative value to zero and sets a new
+	// start time for the following points.
+	MetricKind string `json:"metricKind,omitempty"`
+	// Points: The data points of this time series. When listing time series,
+	// points are returned in reverse time order. When creating a time series, this
+	// field must contain exactly one point and the point's type must be the same
+	// as the value type of the associated metric. If the associated metric's
+	// descriptor must be auto-created, then the value type of the descriptor is
+	// determined by the point's type, which must be `BOOL`, `INT64`, `DOUBLE`, or
+	// `DISTRIBUTION`.
+	Points []*GoogleMonitoringV3Point `json:"points,omitempty"`
+	// Resource: The associated monitored resource. Custom metrics can use only
+	// certain monitored resource types in their time series data. For more
+	// information, see Monitored resources for custom metrics
+	// (https://cloud.google.com/monitoring/custom-metrics/creating-metrics#custom-metric-resources).
+	Resource *GoogleApiMonitoredResource `json:"resource,omitempty"`
+	// Unit: The units in which the metric value is reported. It is only applicable
+	// if the `value_type` is `INT64`, `DOUBLE`, or `DISTRIBUTION`. The `unit`
+	// defines the representation of the stored metric values. This field can only
+	// be changed through CreateTimeSeries when it is empty.
+	Unit string `json:"unit,omitempty"`
+	// ValueType: The value type of the time series. When listing time series, this
+	// value type might be different from the value type of the associated metric
+	// if this time series is an alignment or reduction of other time series. When
+	// creating a time series, this field is optional. If present, it must be the
+	// same as the type of the data in the `points` field.
+	//
+	// Possible values:
+	//   "VALUE_TYPE_UNSPECIFIED" - Do not use this default value.
+	//   "BOOL" - The value is a boolean. This value type can be used only if the
+	// metric kind is `GAUGE`.
+	//   "INT64" - The value is a signed 64-bit integer.
+	//   "DOUBLE" - The value is a double precision floating point number.
+	//   "STRING" - The value is a text string. This value type can be used only if
+	// the metric kind is `GAUGE`.
+	//   "DISTRIBUTION" - The value is a `Distribution`.
+	//   "MONEY" - The value is money.
+	ValueType string `json:"valueType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMonitoringV3TimeSeries) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMonitoringV3TimeSeries
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMonitoringV3TypedValue: A single strongly-typed value.
+type GoogleMonitoringV3TypedValue struct {
+	// BoolValue: A Boolean value: `true` or `false`.
+	BoolValue bool `json:"boolValue,omitempty"`
+	// DistributionValue: A distribution value.
+	DistributionValue *GoogleApiDistribution `json:"distributionValue,omitempty"`
+	// DoubleValue: A 64-bit double-precision floating-point number. Its magnitude
+	// is approximately ±10±300 and it has 16 significant digits of precision.
+	DoubleValue float64 `json:"doubleValue,omitempty"`
+	// Int64Value: A 64-bit integer. Its range is approximately ±9.2x1018.
+	Int64Value int64 `json:"int64Value,omitempty,string"`
+	// StringValue: A variable-length string value.
+	StringValue string `json:"stringValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMonitoringV3TypedValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMonitoringV3TypedValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleMonitoringV3TypedValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleMonitoringV3TypedValue
+	var s1 struct {
+		DoubleValue gensupport.JSONFloat64 `json:"doubleValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DoubleValue = float64(s1.DoubleValue)
+	return nil
 }
 
 // GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
@@ -21221,6 +22380,113 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesOperationsListCall) Pages
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsCollectionsDataStoresCompletionConfigCompleteQueryCall struct {
+	s                                                            *Service
+	completionConfig                                             string
+	googleclouddiscoveryenginev1betaadvancedcompletequeryrequest *GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequest
+	urlParams_                                                   gensupport.URLParams
+	ctx_                                                         context.Context
+	header_                                                      http.Header
+}
+
+// CompleteQuery: Completes the user input with advanced keyword suggestions.
+//
+//   - completionConfig: The completion_config of the parent dataStore or engine
+//     resource name for which the completion is performed, such as
+//     `projects/*/locations/global/collections/default_collection/dataStores/*/co
+//     mpletionConfig`
+//     `projects/*/locations/global/collections/default_collection/engines/*/compl
+//     etionConfig`.
+func (r *ProjectsLocationsCollectionsDataStoresCompletionConfigService) CompleteQuery(completionConfig string, googleclouddiscoveryenginev1betaadvancedcompletequeryrequest *GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequest) *ProjectsLocationsCollectionsDataStoresCompletionConfigCompleteQueryCall {
+	c := &ProjectsLocationsCollectionsDataStoresCompletionConfigCompleteQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.completionConfig = completionConfig
+	c.googleclouddiscoveryenginev1betaadvancedcompletequeryrequest = googleclouddiscoveryenginev1betaadvancedcompletequeryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresCompletionConfigCompleteQueryCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresCompletionConfigCompleteQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresCompletionConfigCompleteQueryCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresCompletionConfigCompleteQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresCompletionConfigCompleteQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresCompletionConfigCompleteQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1betaadvancedcompletequeryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+completionConfig}:completeQuery")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"completionConfig": c.completionConfig,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.completionConfig.completeQuery" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresCompletionConfigCompleteQueryCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsCollectionsDataStoresCompletionSuggestionsImportCall struct {
@@ -24900,6 +26166,142 @@ func (c *ProjectsLocationsCollectionsDataStoresServingConfigsSearchCall) Do(opts
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCollectionsDataStoresServingConfigsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1betaSearchResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googleclouddiscoveryenginev1betasearchrequest.PageToken = pt }(c.googleclouddiscoveryenginev1betasearchrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googleclouddiscoveryenginev1betasearchrequest.PageToken = x.NextPageToken
+	}
+}
+
+type ProjectsLocationsCollectionsDataStoresServingConfigsSearchLiteCall struct {
+	s                                             *Service
+	servingConfig                                 string
+	googleclouddiscoveryenginev1betasearchrequest *GoogleCloudDiscoveryengineV1betaSearchRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// SearchLite: Performs a search. Similar to the SearchService.Search method,
+// but a lite version that allows API key for authentication, where OAuth and
+// IAM checks are not required. Only public website search is supported by this
+// method. If data stores and engines not associated with public website search
+// are specified, a `FAILED_PRECONDITION` error is returned. This method can be
+// used for easy onboarding without having to implement an authentication
+// backend. However, it is strongly recommended to use SearchService.Search
+// instead with required OAuth and IAM checks to provide better data security.
+//
+//   - servingConfig: The resource name of the Search serving config, such as
+//     `projects/*/locations/global/collections/default_collection/engines/*/servi
+//     ngConfigs/default_serving_config`, or
+//     `projects/*/locations/global/collections/default_collection/dataStores/defa
+//     ult_data_store/servingConfigs/default_serving_config`. This field is used
+//     to identify the serving configuration name, set of models used to make the
+//     search.
+func (r *ProjectsLocationsCollectionsDataStoresServingConfigsService) SearchLite(servingConfig string, googleclouddiscoveryenginev1betasearchrequest *GoogleCloudDiscoveryengineV1betaSearchRequest) *ProjectsLocationsCollectionsDataStoresServingConfigsSearchLiteCall {
+	c := &ProjectsLocationsCollectionsDataStoresServingConfigsSearchLiteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.servingConfig = servingConfig
+	c.googleclouddiscoveryenginev1betasearchrequest = googleclouddiscoveryenginev1betasearchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsSearchLiteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresServingConfigsSearchLiteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsSearchLiteCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresServingConfigsSearchLiteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsSearchLiteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsSearchLiteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1betasearchrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+servingConfig}:searchLite")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"servingConfig": c.servingConfig,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.servingConfigs.searchLite" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaSearchResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsSearchLiteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaSearchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaSearchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsDataStoresServingConfigsSearchLiteCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1betaSearchResponse) error) error {
 	c.ctx_ = ctx
 	defer func(pt string) { c.googleclouddiscoveryenginev1betasearchrequest.PageToken = pt }(c.googleclouddiscoveryenginev1betasearchrequest.PageToken)
 	for {
@@ -28968,6 +30370,113 @@ func (c *ProjectsLocationsCollectionsEnginesTuneCall) Do(opts ...googleapi.CallO
 	return ret, nil
 }
 
+type ProjectsLocationsCollectionsEnginesCompletionConfigCompleteQueryCall struct {
+	s                                                            *Service
+	completionConfig                                             string
+	googleclouddiscoveryenginev1betaadvancedcompletequeryrequest *GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequest
+	urlParams_                                                   gensupport.URLParams
+	ctx_                                                         context.Context
+	header_                                                      http.Header
+}
+
+// CompleteQuery: Completes the user input with advanced keyword suggestions.
+//
+//   - completionConfig: The completion_config of the parent dataStore or engine
+//     resource name for which the completion is performed, such as
+//     `projects/*/locations/global/collections/default_collection/dataStores/*/co
+//     mpletionConfig`
+//     `projects/*/locations/global/collections/default_collection/engines/*/compl
+//     etionConfig`.
+func (r *ProjectsLocationsCollectionsEnginesCompletionConfigService) CompleteQuery(completionConfig string, googleclouddiscoveryenginev1betaadvancedcompletequeryrequest *GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequest) *ProjectsLocationsCollectionsEnginesCompletionConfigCompleteQueryCall {
+	c := &ProjectsLocationsCollectionsEnginesCompletionConfigCompleteQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.completionConfig = completionConfig
+	c.googleclouddiscoveryenginev1betaadvancedcompletequeryrequest = googleclouddiscoveryenginev1betaadvancedcompletequeryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesCompletionConfigCompleteQueryCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesCompletionConfigCompleteQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesCompletionConfigCompleteQueryCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesCompletionConfigCompleteQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesCompletionConfigCompleteQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesCompletionConfigCompleteQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1betaadvancedcompletequeryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+completionConfig}:completeQuery")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"completionConfig": c.completionConfig,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.completionConfig.completeQuery" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesCompletionConfigCompleteQueryCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsCollectionsEnginesControlsCreateCall struct {
 	s                                       *Service
 	parent                                  string
@@ -31223,6 +32732,142 @@ func (c *ProjectsLocationsCollectionsEnginesServingConfigsSearchCall) Do(opts ..
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCollectionsEnginesServingConfigsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1betaSearchResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googleclouddiscoveryenginev1betasearchrequest.PageToken = pt }(c.googleclouddiscoveryenginev1betasearchrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googleclouddiscoveryenginev1betasearchrequest.PageToken = x.NextPageToken
+	}
+}
+
+type ProjectsLocationsCollectionsEnginesServingConfigsSearchLiteCall struct {
+	s                                             *Service
+	servingConfig                                 string
+	googleclouddiscoveryenginev1betasearchrequest *GoogleCloudDiscoveryengineV1betaSearchRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// SearchLite: Performs a search. Similar to the SearchService.Search method,
+// but a lite version that allows API key for authentication, where OAuth and
+// IAM checks are not required. Only public website search is supported by this
+// method. If data stores and engines not associated with public website search
+// are specified, a `FAILED_PRECONDITION` error is returned. This method can be
+// used for easy onboarding without having to implement an authentication
+// backend. However, it is strongly recommended to use SearchService.Search
+// instead with required OAuth and IAM checks to provide better data security.
+//
+//   - servingConfig: The resource name of the Search serving config, such as
+//     `projects/*/locations/global/collections/default_collection/engines/*/servi
+//     ngConfigs/default_serving_config`, or
+//     `projects/*/locations/global/collections/default_collection/dataStores/defa
+//     ult_data_store/servingConfigs/default_serving_config`. This field is used
+//     to identify the serving configuration name, set of models used to make the
+//     search.
+func (r *ProjectsLocationsCollectionsEnginesServingConfigsService) SearchLite(servingConfig string, googleclouddiscoveryenginev1betasearchrequest *GoogleCloudDiscoveryengineV1betaSearchRequest) *ProjectsLocationsCollectionsEnginesServingConfigsSearchLiteCall {
+	c := &ProjectsLocationsCollectionsEnginesServingConfigsSearchLiteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.servingConfig = servingConfig
+	c.googleclouddiscoveryenginev1betasearchrequest = googleclouddiscoveryenginev1betasearchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsSearchLiteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsEnginesServingConfigsSearchLiteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsSearchLiteCall) Context(ctx context.Context) *ProjectsLocationsCollectionsEnginesServingConfigsSearchLiteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsSearchLiteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsSearchLiteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1betasearchrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+servingConfig}:searchLite")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"servingConfig": c.servingConfig,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.engines.servingConfigs.searchLite" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaSearchResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsSearchLiteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaSearchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaSearchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCollectionsEnginesServingConfigsSearchLiteCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1betaSearchResponse) error) error {
 	c.ctx_ = ctx
 	defer func(pt string) { c.googleclouddiscoveryenginev1betasearchrequest.PageToken = pt }(c.googleclouddiscoveryenginev1betasearchrequest.PageToken)
 	for {
@@ -34428,6 +36073,113 @@ func (c *ProjectsLocationsDataStoresBranchesOperationsListCall) Pages(ctx contex
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsDataStoresCompletionConfigCompleteQueryCall struct {
+	s                                                            *Service
+	completionConfig                                             string
+	googleclouddiscoveryenginev1betaadvancedcompletequeryrequest *GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequest
+	urlParams_                                                   gensupport.URLParams
+	ctx_                                                         context.Context
+	header_                                                      http.Header
+}
+
+// CompleteQuery: Completes the user input with advanced keyword suggestions.
+//
+//   - completionConfig: The completion_config of the parent dataStore or engine
+//     resource name for which the completion is performed, such as
+//     `projects/*/locations/global/collections/default_collection/dataStores/*/co
+//     mpletionConfig`
+//     `projects/*/locations/global/collections/default_collection/engines/*/compl
+//     etionConfig`.
+func (r *ProjectsLocationsDataStoresCompletionConfigService) CompleteQuery(completionConfig string, googleclouddiscoveryenginev1betaadvancedcompletequeryrequest *GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryRequest) *ProjectsLocationsDataStoresCompletionConfigCompleteQueryCall {
+	c := &ProjectsLocationsDataStoresCompletionConfigCompleteQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.completionConfig = completionConfig
+	c.googleclouddiscoveryenginev1betaadvancedcompletequeryrequest = googleclouddiscoveryenginev1betaadvancedcompletequeryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresCompletionConfigCompleteQueryCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresCompletionConfigCompleteQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresCompletionConfigCompleteQueryCall) Context(ctx context.Context) *ProjectsLocationsDataStoresCompletionConfigCompleteQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresCompletionConfigCompleteQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresCompletionConfigCompleteQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1betaadvancedcompletequeryrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+completionConfig}:completeQuery")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"completionConfig": c.completionConfig,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.completionConfig.completeQuery" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresCompletionConfigCompleteQueryCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsDataStoresCompletionSuggestionsImportCall struct {
@@ -37736,6 +39488,142 @@ func (c *ProjectsLocationsDataStoresServingConfigsSearchCall) Do(opts ...googlea
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsDataStoresServingConfigsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1betaSearchResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googleclouddiscoveryenginev1betasearchrequest.PageToken = pt }(c.googleclouddiscoveryenginev1betasearchrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googleclouddiscoveryenginev1betasearchrequest.PageToken = x.NextPageToken
+	}
+}
+
+type ProjectsLocationsDataStoresServingConfigsSearchLiteCall struct {
+	s                                             *Service
+	servingConfig                                 string
+	googleclouddiscoveryenginev1betasearchrequest *GoogleCloudDiscoveryengineV1betaSearchRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// SearchLite: Performs a search. Similar to the SearchService.Search method,
+// but a lite version that allows API key for authentication, where OAuth and
+// IAM checks are not required. Only public website search is supported by this
+// method. If data stores and engines not associated with public website search
+// are specified, a `FAILED_PRECONDITION` error is returned. This method can be
+// used for easy onboarding without having to implement an authentication
+// backend. However, it is strongly recommended to use SearchService.Search
+// instead with required OAuth and IAM checks to provide better data security.
+//
+//   - servingConfig: The resource name of the Search serving config, such as
+//     `projects/*/locations/global/collections/default_collection/engines/*/servi
+//     ngConfigs/default_serving_config`, or
+//     `projects/*/locations/global/collections/default_collection/dataStores/defa
+//     ult_data_store/servingConfigs/default_serving_config`. This field is used
+//     to identify the serving configuration name, set of models used to make the
+//     search.
+func (r *ProjectsLocationsDataStoresServingConfigsService) SearchLite(servingConfig string, googleclouddiscoveryenginev1betasearchrequest *GoogleCloudDiscoveryengineV1betaSearchRequest) *ProjectsLocationsDataStoresServingConfigsSearchLiteCall {
+	c := &ProjectsLocationsDataStoresServingConfigsSearchLiteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.servingConfig = servingConfig
+	c.googleclouddiscoveryenginev1betasearchrequest = googleclouddiscoveryenginev1betasearchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresServingConfigsSearchLiteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresServingConfigsSearchLiteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresServingConfigsSearchLiteCall) Context(ctx context.Context) *ProjectsLocationsDataStoresServingConfigsSearchLiteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresServingConfigsSearchLiteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresServingConfigsSearchLiteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1betasearchrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+servingConfig}:searchLite")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"servingConfig": c.servingConfig,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.servingConfigs.searchLite" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1betaSearchResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresServingConfigsSearchLiteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1betaSearchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1betaSearchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDataStoresServingConfigsSearchLiteCall) Pages(ctx context.Context, f func(*GoogleCloudDiscoveryengineV1betaSearchResponse) error) error {
 	c.ctx_ = ctx
 	defer func(pt string) { c.googleclouddiscoveryenginev1betasearchrequest.PageToken = pt }(c.googleclouddiscoveryenginev1betasearchrequest.PageToken)
 	for {

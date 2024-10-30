@@ -8897,7 +8897,8 @@ func (s ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
 
 // SetFindingStateRequest: Request message for updating a finding's state.
 type SetFindingStateRequest struct {
-	// StartTime: Required. The time at which the updated state takes effect.
+	// StartTime: Optional. The time at which the updated state takes effect. If
+	// not set uses the current time.
 	StartTime string `json:"startTime,omitempty"`
 	// State: Required. The desired State of the finding.
 	//

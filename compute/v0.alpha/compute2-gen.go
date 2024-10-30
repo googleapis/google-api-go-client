@@ -34543,7 +34543,8 @@ type InstancesAddNetworkInterfaceCall struct {
 	header_          http.Header
 }
 
-// AddNetworkInterface: Adds a network interface to an instance.
+// AddNetworkInterface: Adds one dynamic network interface to an active
+// instance.
 //
 //   - instance: The instance name for this request stored as resource_id. Name
 //     should conform to RFC1035 or be an unsigned long integer.
@@ -35531,16 +35532,15 @@ type InstancesDeleteNetworkInterfaceCall struct {
 	header_    http.Header
 }
 
-// DeleteNetworkInterface: Deletes one network interface from an active
+// DeleteNetworkInterface: Deletes one dynamic network interface from an active
 // instance. InstancesDeleteNetworkInterfaceRequest indicates: - instance from
-// which to delete, using project+zone+resource_id fields; - network interface
-// to be deleted, using network_interface_name field; Only VLAN interface
-// deletion is supported for now.
+// which to delete, using project+zone+resource_id fields; - dynamic network
+// interface to be deleted, using network_interface_name field;
 //
 //   - instance: The instance name for this request stored as resource_id. Name
 //     should conform to RFC1035 or be an unsigned long integer.
-//   - networkInterfaceName: The name of the network interface to be deleted from
-//     the instance. Only VLAN network interface deletion is supported.
+//   - networkInterfaceName: The name of the dynamic network interface to be
+//     deleted from the instance.
 //   - project: Project ID for this request.
 //   - zone: The name of the zone for this request.
 func (r *InstancesService) DeleteNetworkInterface(project string, zone string, instance string, networkInterfaceName string) *InstancesDeleteNetworkInterfaceCall {
@@ -36552,7 +36552,9 @@ func (c *InstancesGetSerialPortOutputCall) Port(port int64) *InstancesGetSerialP
 // adjusted start position is returned as the `start` property value. You can
 // also provide a negative start position, which translates to the most recent
 // number of bytes written to the serial port. For example, -3 is interpreted
-// as the most recent 3 bytes written to the serial console.
+// as the most recent 3 bytes written to the serial console. Note that the
+// negative start is bounded by the retained buffer size, and the returned
+// serial console output will not exceed the max buffer size.
 func (c *InstancesGetSerialPortOutputCall) Start(start int64) *InstancesGetSerialPortOutputCall {
 	c.urlParams_.Set("start", fmt.Sprint(start))
 	return c

@@ -1216,6 +1216,10 @@ func (s GoogleMapsPlacesV1FuelOptionsFuelPrice) MarshalJSON() ([]byte, error) {
 type GoogleMapsPlacesV1Photo struct {
 	// AuthorAttributions: This photo's authors.
 	AuthorAttributions []*GoogleMapsPlacesV1AuthorAttribution `json:"authorAttributions,omitempty"`
+	// FlagContentUri: A link where users can flag a problem with the photo.
+	FlagContentUri string `json:"flagContentUri,omitempty"`
+	// GoogleMapsUri: A link to show the photo on Google Maps.
+	GoogleMapsUri string `json:"googleMapsUri,omitempty"`
 	// HeightPx: The maximum available height, in pixels.
 	HeightPx int64 `json:"heightPx,omitempty"`
 	// Name: Identifier. A reference representing this place photo which may be
@@ -1363,6 +1367,8 @@ type GoogleMapsPlacesV1Place struct {
 	GoodForGroups bool `json:"goodForGroups,omitempty"`
 	// GoodForWatchingSports: Place is suitable for watching sports.
 	GoodForWatchingSports bool `json:"goodForWatchingSports,omitempty"`
+	// GoogleMapsLinks: Links to trigger different Google Maps actions.
+	GoogleMapsLinks *GoogleMapsPlacesV1PlaceGoogleMapsLinks `json:"googleMapsLinks,omitempty"`
 	// GoogleMapsUri: A URL providing more information about this place.
 	GoogleMapsUri string `json:"googleMapsUri,omitempty"`
 	// IconBackgroundColor: Background color for icon_mask in hex format, e.g.
@@ -1590,6 +1596,8 @@ type GoogleMapsPlacesV1PlaceAreaSummary struct {
 	// ContentBlocks: Content blocks that compose the area summary. Each block has
 	// a separate topic about the area.
 	ContentBlocks []*GoogleMapsPlacesV1ContentBlock `json:"contentBlocks,omitempty"`
+	// FlagContentUri: A link where users can flag a problem with the summary.
+	FlagContentUri string `json:"flagContentUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContentBlocks") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1639,8 +1647,14 @@ func (s GoogleMapsPlacesV1PlaceAttribution) MarshalJSON() ([]byte, error) {
 type GoogleMapsPlacesV1PlaceGenerativeSummary struct {
 	// Description: The detailed description of the place.
 	Description *GoogleTypeLocalizedText `json:"description,omitempty"`
+	// DescriptionFlagContentUri: A link where users can flag a problem with the
+	// description summary.
+	DescriptionFlagContentUri string `json:"descriptionFlagContentUri,omitempty"`
 	// Overview: The overview of the place.
 	Overview *GoogleTypeLocalizedText `json:"overview,omitempty"`
+	// OverviewFlagContentUri: A link where users can flag a problem with the
+	// overview summary.
+	OverviewFlagContentUri string `json:"overviewFlagContentUri,omitempty"`
 	// References: References that are used to generate the summary description.
 	References *GoogleMapsPlacesV1References `json:"references,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -1658,6 +1672,44 @@ type GoogleMapsPlacesV1PlaceGenerativeSummary struct {
 
 func (s GoogleMapsPlacesV1PlaceGenerativeSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlaceGenerativeSummary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1PlaceGoogleMapsLinks: Links to trigger different Google
+// Maps actions.
+type GoogleMapsPlacesV1PlaceGoogleMapsLinks struct {
+	// DirectionsUri: A link to show the directions to the place. The link only
+	// populates the destination location and uses the default travel mode `DRIVE`.
+	DirectionsUri string `json:"directionsUri,omitempty"`
+	// PhotosUri: A link to show photos of this place. This link is currently not
+	// supported on Google Maps Mobile and only works on the web version of Google
+	// Maps.
+	PhotosUri string `json:"photosUri,omitempty"`
+	// PlaceUri: A link to show this place.
+	PlaceUri string `json:"placeUri,omitempty"`
+	// ReviewsUri: A link to show reviews of this place. This link is currently not
+	// supported on Google Maps Mobile and only works on the web version of Google
+	// Maps.
+	ReviewsUri string `json:"reviewsUri,omitempty"`
+	// WriteAReviewUri: A link to write a review for this place. This link is
+	// currently not supported on Google Maps Mobile and only works on the web
+	// version of Google Maps.
+	WriteAReviewUri string `json:"writeAReviewUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DirectionsUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DirectionsUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1PlaceGoogleMapsLinks) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1PlaceGoogleMapsLinks
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1995,6 +2047,10 @@ func (s GoogleMapsPlacesV1References) MarshalJSON() ([]byte, error) {
 type GoogleMapsPlacesV1Review struct {
 	// AuthorAttribution: This review's author.
 	AuthorAttribution *GoogleMapsPlacesV1AuthorAttribution `json:"authorAttribution,omitempty"`
+	// FlagContentUri: A link where users can flag a problem with the review.
+	FlagContentUri string `json:"flagContentUri,omitempty"`
+	// GoogleMapsUri: A link to show the review on Google Maps.
+	GoogleMapsUri string `json:"googleMapsUri,omitempty"`
 	// Name: A reference representing this place review which may be used to look
 	// up this place review again (also called the API "resource" name:
 	// `places/{place_id}/reviews/{review}`).
@@ -2156,21 +2212,28 @@ func (s GoogleMapsPlacesV1RoutingParameters) MarshalJSON() ([]byte, error) {
 // or the `searchAlongRouteParameters.polyline.encodedPolyline` parameter in
 // the request causes an error.
 type GoogleMapsPlacesV1RoutingSummary struct {
+	// DirectionsUri: A link to show directions on Google Maps using the waypoints
+	// from the given routing summary. The route generated by this link is not
+	// guaranteed to be the same as the route used to generate the routing summary.
+	// The link uses information provided in the request, from fields including
+	// `routingParameters` and `searchAlongRouteParameters` when applicable, to
+	// generate the directions link.
+	DirectionsUri string `json:"directionsUri,omitempty"`
 	// Legs: The legs of the trip. When you calculate travel duration and distance
 	// from a set origin, `legs` contains a single leg containing the duration and
 	// distance from the origin to the destination. When you do a search along
 	// route, `legs` contains two legs: one from the origin to place, and one from
 	// the place to the destination.
 	Legs []*GoogleMapsPlacesV1RoutingSummaryLeg `json:"legs,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Legs") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DirectionsUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Legs") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "DirectionsUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2674,6 +2737,9 @@ type GoogleMapsPlacesV1SearchTextResponse struct {
 	// empty entry. This list will have as many entries as the list of places if
 	// requested.
 	RoutingSummaries []*GoogleMapsPlacesV1RoutingSummary `json:"routingSummaries,omitempty"`
+	// SearchUri: A link allows the user to search with the same text query as
+	// specified in the request on Google Maps.
+	SearchUri string `json:"searchUri,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

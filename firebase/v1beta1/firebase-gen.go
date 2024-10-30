@@ -481,9 +481,11 @@ type AndroidApp struct {
 	// (https://google.aip.dev/154#declarative-friendly-resources). This etag is
 	// strongly validated.
 	Etag string `json:"etag,omitempty"`
-	// ExpireTime: Output only. Timestamp of when the App will be considered
-	// expired and cannot be undeleted. This value is only provided if the App is
-	// in the `DELETED` state.
+	// ExpireTime: Output only. If the App has been removed from the Project, this
+	// is the timestamp of when the App is considered expired and will be
+	// permanently deleted. After this time, the App cannot be undeleted (that is,
+	// restored to the Project). This value is only provided if the App is in the
+	// `DELETED` state.
 	ExpireTime string `json:"expireTime,omitempty"`
 	// Name: The resource name of the AndroidApp, in the format: projects/
 	// PROJECT_IDENTIFIER/androidApps/APP_ID * PROJECT_IDENTIFIER: the parent
@@ -695,9 +697,11 @@ type FirebaseAppInfo struct {
 	AppId string `json:"appId,omitempty"`
 	// DisplayName: The user-assigned display name of the Firebase App.
 	DisplayName string `json:"displayName,omitempty"`
-	// ExpireTime: Output only. Timestamp of when the App will be considered
-	// expired and cannot be undeleted. This value is only provided if the App is
-	// in the `DELETED` state.
+	// ExpireTime: Output only. If the App has been removed from the Project, this
+	// is the timestamp of when the App is considered expired and will be
+	// permanently deleted. After this time, the App cannot be undeleted (that is,
+	// restored to the Project). This value is only provided if the App is in the
+	// `DELETED` state.
 	ExpireTime string `json:"expireTime,omitempty"`
 	// Name: The resource name of the Firebase App, in the format:
 	// projects/PROJECT_ID /iosApps/APP_ID or
@@ -867,9 +871,11 @@ type IosApp struct {
 	// (https://google.aip.dev/154#declarative-friendly-resources). This etag is
 	// strongly validated.
 	Etag string `json:"etag,omitempty"`
-	// ExpireTime: Output only. Timestamp of when the App will be considered
-	// expired and cannot be undeleted. This value is only provided if the App is
-	// in the `DELETED` state.
+	// ExpireTime: Output only. If the App has been removed from the Project, this
+	// is the timestamp of when the App is considered expired and will be
+	// permanently deleted. After this time, the App cannot be undeleted (that is,
+	// restored to the Project). This value is only provided if the App is in the
+	// `DELETED` state.
 	ExpireTime string `json:"expireTime,omitempty"`
 	// Name: The resource name of the IosApp, in the format:
 	// projects/PROJECT_IDENTIFIER /iosApps/APP_ID * PROJECT_IDENTIFIER: the parent
@@ -1364,9 +1370,9 @@ type RemoveAndroidAppRequest struct {
 	Etag string `json:"etag,omitempty"`
 	// Immediate: Determines whether to _immediately_ delete the AndroidApp. If set
 	// to true, the App is immediately deleted from the Project and cannot be
-	// restored to the Project. If not set, defaults to false, which means the App
-	// will be set to expire in 30 days. Within the 30 days, the App may be
-	// restored to the Project using UndeleteAndroidApp.
+	// undeleted (that is, restored to the Project). If not set, defaults to false,
+	// which means the App will be set to expire in 30 days. Within the 30 days,
+	// the App may be restored to the Project using UndeleteAndroidApp.
 	Immediate bool `json:"immediate,omitempty"`
 	// ValidateOnly: If set to true, the request is only validated. The App will
 	// _not_ be removed.
@@ -1397,10 +1403,10 @@ type RemoveIosAppRequest struct {
 	// ensures that the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 	// Immediate: Determines whether to _immediately_ delete the IosApp. If set to
-	// true, the App is immediately deleted from the Project and cannot be restored
-	// to the Project. If not set, defaults to false, which means the App will be
-	// set to expire in 30 days. Within the 30 days, the App may be restored to the
-	// Project using UndeleteIosApp
+	// true, the App is immediately deleted from the Project and cannot be
+	// undeleted (that is, restored to the Project). If not set, defaults to false,
+	// which means the App will be set to expire in 30 days. Within the 30 days,
+	// the App may be restored to the Project using UndeleteIosApp
 	Immediate bool `json:"immediate,omitempty"`
 	// ValidateOnly: If set to true, the request is only validated. The App will
 	// _not_ be removed.
@@ -1431,10 +1437,10 @@ type RemoveWebAppRequest struct {
 	// ensures that the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 	// Immediate: Determines whether to _immediately_ delete the WebApp. If set to
-	// true, the App is immediately deleted from the Project and cannot be restored
-	// to the Project. If not set, defaults to false, which means the App will be
-	// set to expire in 30 days. Within the 30 days, the App may be restored to the
-	// Project using UndeleteWebApp
+	// true, the App is immediately deleted from the Project and cannot be
+	// undeleted (that is, restored to the Project). If not set, defaults to false,
+	// which means the App will be set to expire in 30 days. Within the 30 days,
+	// the App may be restored to the Project using UndeleteWebApp
 	Immediate bool `json:"immediate,omitempty"`
 	// ValidateOnly: If set to true, the request is only validated. The App will
 	// _not_ be removed.
@@ -1750,9 +1756,11 @@ type WebApp struct {
 	// (https://google.aip.dev/154#declarative-friendly-resources). This etag is
 	// strongly validated.
 	Etag string `json:"etag,omitempty"`
-	// ExpireTime: Output only. Timestamp of when the App will be considered
-	// expired and cannot be undeleted. This value is only provided if the App is
-	// in the `DELETED` state.
+	// ExpireTime: Output only. If the App has been removed from the Project, this
+	// is the timestamp of when the App is considered expired and will be
+	// permanently deleted. After this time, the App cannot be undeleted (that is,
+	// restored to the Project). This value is only provided if the App is in the
+	// `DELETED` state.
 	ExpireTime string `json:"expireTime,omitempty"`
 	// Name: The resource name of the WebApp, in the format:
 	// projects/PROJECT_IDENTIFIER /webApps/APP_ID * PROJECT_IDENTIFIER: the parent

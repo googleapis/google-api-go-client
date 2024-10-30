@@ -1259,16 +1259,16 @@ type GoogleIamAdminV1WorkforcePoolProviderOidc struct {
 	// ClientId: Required. The client ID. Must match the audience claim of the JWT
 	// issued by the identity provider.
 	ClientId string `json:"clientId,omitempty"`
-	// ClientSecret: The optional client secret. Required to enable Authorization
-	// Code flow for web sign-in.
+	// ClientSecret: Optional. The optional client secret. Required to enable
+	// Authorization Code flow for web sign-in.
 	ClientSecret *GoogleIamAdminV1WorkforcePoolProviderOidcClientSecret `json:"clientSecret,omitempty"`
 	// IssuerUri: Required. The OIDC issuer URI. Must be a valid URI using the
 	// `https` scheme.
 	IssuerUri string `json:"issuerUri,omitempty"`
-	// JwksJson: OIDC JWKs in JSON String format. For details on the definition of
-	// a JWK, see https://tools.ietf.org/html/rfc7517. If not set, the `jwks_uri`
-	// from the discovery document(fetched from the .well-known path of the
-	// `issuer_uri`) will be used. Currently, RSA and EC asymmetric keys are
+	// JwksJson: Optional. OIDC JWKs in JSON String format. For details on the
+	// definition of a JWK, see https://tools.ietf.org/html/rfc7517. If not set,
+	// the `jwks_uri` from the discovery document(fetched from the .well-known path
+	// of the `issuer_uri`) will be used. Currently, RSA and EC asymmetric keys are
 	// supported. The JWK must use following format and include only the following
 	// fields: { "keys": [ { "kty": "RSA/EC", "alg": "", "use": "sig", "kid": "",
 	// "n": "", "e": "", "x": "", "y": "", "crv": "" } ] }
@@ -1321,8 +1321,8 @@ func (s GoogleIamAdminV1WorkforcePoolProviderOidcClientSecret) MarshalJSON() ([]
 // GoogleIamAdminV1WorkforcePoolProviderOidcClientSecretValue: Representation
 // of the value of the client secret.
 type GoogleIamAdminV1WorkforcePoolProviderOidcClientSecretValue struct {
-	// PlainText: Input only. The plain text of the client secret value. For
-	// security reasons, this field is only used for input and will never be
+	// PlainText: Optional. Input only. The plain text of the client secret value.
+	// For security reasons, this field is only used for input and will never be
 	// populated in any response.
 	PlainText string `json:"plainText,omitempty"`
 	// Thumbprint: Output only. A thumbprint to represent the current client secret
@@ -1349,7 +1349,7 @@ func (s GoogleIamAdminV1WorkforcePoolProviderOidcClientSecretValue) MarshalJSON(
 // GoogleIamAdminV1WorkforcePoolProviderOidcWebSsoConfig: Configuration for web
 // single sign-on for the OIDC provider.
 type GoogleIamAdminV1WorkforcePoolProviderOidcWebSsoConfig struct {
-	// AdditionalScopes: Additional scopes to request for in the OIDC
+	// AdditionalScopes: Optional. Additional scopes to request for in the OIDC
 	// authentication request on top of scopes requested by default. By default,
 	// the `openid`, `profile` and `email` scopes that are supported by the
 	// identity provider are requested. Each additional scope may be at most 256
@@ -3233,15 +3233,15 @@ type WorkforcePool struct {
 	// restricted to given set of services or programmatic sign-in can be disabled
 	// for pool users.
 	AccessRestrictions *AccessRestrictions `json:"accessRestrictions,omitempty"`
-	// Description: A user-specified description of the pool. Cannot exceed 256
-	// characters.
+	// Description: Optional. A user-specified description of the pool. Cannot
+	// exceed 256 characters.
 	Description string `json:"description,omitempty"`
-	// Disabled: Disables the workforce pool. You cannot use a disabled pool to
-	// exchange tokens, or use existing tokens to access resources. If the pool is
-	// re-enabled, existing tokens grant access again.
+	// Disabled: Optional. Disables the workforce pool. You cannot use a disabled
+	// pool to exchange tokens, or use existing tokens to access resources. If the
+	// pool is re-enabled, existing tokens grant access again.
 	Disabled bool `json:"disabled,omitempty"`
-	// DisplayName: A user-specified display name of the pool in Google Cloud
-	// Console. Cannot exceed 32 characters.
+	// DisplayName: Optional. A user-specified display name of the pool in Google
+	// Cloud Console. Cannot exceed 32 characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// ExpireTime: Output only. Time after which the workforce pool will be
 	// permanently purged and cannot be recovered.
@@ -3252,13 +3252,13 @@ type WorkforcePool struct {
 	// Parent: Immutable. The resource name of the parent. Format:
 	// `organizations/{org-id}`.
 	Parent string `json:"parent,omitempty"`
-	// SessionDuration: Duration that the Google Cloud access tokens, console
-	// sign-in sessions, and `gcloud` sign-in sessions from this pool are valid.
-	// Must be greater than 15 minutes (900s) and less than 12 hours (43200s). If
-	// `session_duration` is not configured, minted credentials have a default
-	// duration of one hour (3600s). For SAML providers, the lifetime of the token
-	// is the minimum of the `session_duration` and the `SessionNotOnOrAfter` claim
-	// in the SAML assertion.
+	// SessionDuration: Optional. Duration that the Google Cloud access tokens,
+	// console sign-in sessions, and `gcloud` sign-in sessions from this pool are
+	// valid. Must be greater than 15 minutes (900s) and less than 12 hours
+	// (43200s). If `session_duration` is not configured, minted credentials have a
+	// default duration of one hour (3600s). For SAML providers, the lifetime of
+	// the token is the minimum of the `session_duration` and the
+	// `SessionNotOnOrAfter` claim in the SAML assertion.
 	SessionDuration string `json:"sessionDuration,omitempty"`
 	// State: Output only. The state of the pool.
 	//
@@ -3295,7 +3295,7 @@ func (s WorkforcePool) MarshalJSON() ([]byte, error) {
 
 // WorkforcePoolProvider: A configuration for an external identity provider.
 type WorkforcePoolProvider struct {
-	// AttributeCondition: A Common Expression Language
+	// AttributeCondition: Optional. A Common Expression Language
 	// (https://opensource.google/projects/cel) expression, in plain text, to
 	// restrict what otherwise valid authentication credentials issued by the
 	// provider should not be accepted. The expression must output a boolean
@@ -3356,14 +3356,15 @@ type WorkforcePoolProvider struct {
 	// `sub` claim of the incoming credential to the `subject` attribute on a
 	// Google token: ``` {"google.subject": "assertion.sub"} ```
 	AttributeMapping map[string]string `json:"attributeMapping,omitempty"`
-	// Description: A user-specified description of the provider. Cannot exceed 256
-	// characters.
+	// Description: Optional. A user-specified description of the provider. Cannot
+	// exceed 256 characters.
 	Description string `json:"description,omitempty"`
-	// Disabled: Disables the workforce pool provider. You cannot use a disabled
-	// provider to exchange tokens. However, existing tokens still grant access.
+	// Disabled: Optional. Disables the workforce pool provider. You cannot use a
+	// disabled provider to exchange tokens. However, existing tokens still grant
+	// access.
 	Disabled bool `json:"disabled,omitempty"`
-	// DisplayName: A user-specified display name for the provider. Cannot exceed
-	// 32 characters.
+	// DisplayName: Optional. A user-specified display name for the provider.
+	// Cannot exceed 32 characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// ExpireTime: Output only. Time after which the workload pool provider will be
 	// permanently purged and cannot be recovered.
@@ -3883,7 +3884,7 @@ type LocationsWorkforcePoolsCreateCall struct {
 // Create: Creates a new WorkforcePool. You cannot reuse the name of a deleted
 // pool until 30 days after deletion.
 //
-//   - location: The location of the pool to create. Format:
+//   - location: Optional. The location of the pool to create. Format:
 //     `locations/{location}`.
 func (r *LocationsWorkforcePoolsService) Create(location string, workforcepool *WorkforcePool) *LocationsWorkforcePoolsCreateCall {
 	c := &LocationsWorkforcePoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}

@@ -2140,6 +2140,9 @@ func (s Dataset) MarshalJSON() ([]byte, error) {
 
 // DatasetAccess: An object that defines dataset access for an entity.
 type DatasetAccess struct {
+	// Condition: Optional. condition for the binding. If CEL expression in this
+	// field is true, this access binding will be considered
+	Condition *Expr `json:"condition,omitempty"`
 	// Dataset: [Pick one] A grant authorizing all resources of a particular type
 	// in a particular dataset access to this dataset. Only views are supported for
 	// now. The role field is not required when this field is set. If that dataset
@@ -2187,13 +2190,13 @@ type DatasetAccess struct {
 	// view is updated by any user, access to the view needs to be granted again
 	// via an update operation.
 	View *TableReference `json:"view,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Dataset") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Dataset") to include in API
+	// NullFields is a list of field names (e.g. "Condition") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -6051,6 +6054,7 @@ type MlStatistics struct {
 	//   "ONNX" - An imported ONNX model.
 	//   "TRANSFORM_ONLY" - Model to capture the columns and logic in the TRANSFORM
 	// clause along with statistics useful for ML analytic functions.
+	//   "CONTRIBUTION_ANALYSIS" - The contribution analysis model.
 	ModelType string `json:"modelType,omitempty"`
 	// TrainingType: Output only. Training type of the job.
 	//
@@ -6167,6 +6171,7 @@ type Model struct {
 	//   "ONNX" - An imported ONNX model.
 	//   "TRANSFORM_ONLY" - Model to capture the columns and logic in the TRANSFORM
 	// clause along with statistics useful for ML analytic functions.
+	//   "CONTRIBUTION_ANALYSIS" - The contribution analysis model.
 	ModelType string `json:"modelType,omitempty"`
 	// OptimalTrialIds: Output only. For single-objective hyperparameter tuning
 	// (https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-overview)
@@ -9576,6 +9581,11 @@ type TrainingOptions struct {
 	// ColsampleBytree: Subsample ratio of columns when constructing each tree for
 	// boosted tree models.
 	ColsampleBytree float64 `json:"colsampleBytree,omitempty"`
+	// ContributionMetric: The contribution metric. Applies to contribution
+	// analysis models. Allowed formats supported are for summable and summable
+	// ratio contribution metrics. These include expressions such as "SUM(x)" or
+	// "SUM(x)/SUM(y)", where x and y are column names from the base table.
+	ContributionMetric string `json:"contributionMetric,omitempty"`
 	// DartNormalizeType: Type of normalization algorithm for boosted tree models
 	// using dart booster.
 	//
@@ -9625,6 +9635,9 @@ type TrainingOptions struct {
 	// DecomposeTimeSeries: If true, perform decompose time series and save the
 	// results.
 	DecomposeTimeSeries bool `json:"decomposeTimeSeries,omitempty"`
+	// DimensionIdColumns: Optional. Names of the columns to slice on. Applies to
+	// contribution analysis models.
+	DimensionIdColumns []string `json:"dimensionIdColumns,omitempty"`
 	// DistanceType: Distance type for clustering models.
 	//
 	// Possible values:
@@ -9855,6 +9868,9 @@ type TrainingOptions struct {
 	// IntegratedGradientsNumSteps: Number of integral steps for the integrated
 	// gradients explain method.
 	IntegratedGradientsNumSteps int64 `json:"integratedGradientsNumSteps,omitempty,string"`
+	// IsTestColumn: Name of the column used to determine the rows corresponding to
+	// control and test. Applies to contribution analysis models.
+	IsTestColumn string `json:"isTestColumn,omitempty"`
 	// ItemColumn: Item column specified for matrix factorization models.
 	ItemColumn string `json:"itemColumn,omitempty"`
 	// KmeansInitializationColumn: The column used to provide the initial centroids
@@ -9910,6 +9926,9 @@ type TrainingOptions struct {
 	MaxTimeSeriesLength int64 `json:"maxTimeSeriesLength,omitempty,string"`
 	// MaxTreeDepth: Maximum depth of a tree for boosted tree models.
 	MaxTreeDepth int64 `json:"maxTreeDepth,omitempty,string"`
+	// MinAprioriSupport: The apriori support minimum. Applies to contribution
+	// analysis models.
+	MinAprioriSupport float64 `json:"minAprioriSupport,omitempty"`
 	// MinRelativeProgress: When early_stop is true, stops training when accuracy
 	// improvement is less than 'min_relative_progress'. Used only for iterative
 	// training algorithms.
@@ -10073,6 +10092,7 @@ func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 		L1Regularization          gensupport.JSONFloat64 `json:"l1Regularization"`
 		L2Regularization          gensupport.JSONFloat64 `json:"l2Regularization"`
 		LearnRate                 gensupport.JSONFloat64 `json:"learnRate"`
+		MinAprioriSupport         gensupport.JSONFloat64 `json:"minAprioriSupport"`
 		MinRelativeProgress       gensupport.JSONFloat64 `json:"minRelativeProgress"`
 		MinSplitLoss              gensupport.JSONFloat64 `json:"minSplitLoss"`
 		PcaExplainedVarianceRatio gensupport.JSONFloat64 `json:"pcaExplainedVarianceRatio"`
@@ -10096,6 +10116,7 @@ func (s *TrainingOptions) UnmarshalJSON(data []byte) error {
 	s.L1Regularization = float64(s1.L1Regularization)
 	s.L2Regularization = float64(s1.L2Regularization)
 	s.LearnRate = float64(s1.LearnRate)
+	s.MinAprioriSupport = float64(s1.MinAprioriSupport)
 	s.MinRelativeProgress = float64(s1.MinRelativeProgress)
 	s.MinSplitLoss = float64(s1.MinSplitLoss)
 	s.PcaExplainedVarianceRatio = float64(s1.PcaExplainedVarianceRatio)
@@ -10450,6 +10471,25 @@ func (r *DatasetsService) Get(projectId string, datasetId string) *DatasetsGetCa
 	return c
 }
 
+// AccessPolicyVersion sets the optional parameter "accessPolicyVersion": The
+// version of the access policy schema to fetch. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// conditional access policy binding in datasets must specify version 3.
+// Dataset with no conditional role bindings in access policy may specify any
+// valid value or leave the field unset. This field will be maped to [IAM
+// Policy version] (https://cloud.google.com/iam/docs/policies#versions) and
+// will be used to fetch policy from IAM. If unset or if 0 or 1 value is used
+// for dataset with conditional bindings, access entry with condition will have
+// role string appended by 'withcond' string followed by a hash value. For
+// example : { "access": [ { "role":
+// "roles/bigquery.dataViewer_with_conditionalbinding_7a34awqsda",
+// "userByEmail": "user@example.com", } ] } Please refer
+// https://cloud.google.com/iam/docs/troubleshooting-withcond for more details.
+func (c *DatasetsGetCall) AccessPolicyVersion(accessPolicyVersion int64) *DatasetsGetCall {
+	c.urlParams_.Set("accessPolicyVersion", fmt.Sprint(accessPolicyVersion))
+	return c
+}
+
 // DatasetView sets the optional parameter "datasetView": Specifies the view
 // that determines which dataset information is returned. By default, metadata
 // and ACL information are returned.
@@ -10577,6 +10617,23 @@ func (r *DatasetsService) Insert(projectId string, dataset *Dataset) *DatasetsIn
 	c := &DatasetsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.dataset = dataset
+	return c
+}
+
+// AccessPolicyVersion sets the optional parameter "accessPolicyVersion": The
+// version of the provided access policy schema. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. This version refers
+// to the schema version of the access policy and not the version of access
+// policy. This field's value can be equal or more than the access policy
+// schema provided in the request. For example, * Requests with conditional
+// access policy binding in datasets must specify version 3. * But dataset with
+// no conditional role bindings in access policy may specify any valid value or
+// leave the field unset. If unset or if 0 or 1 value is used for dataset with
+// conditional bindings, request will be rejected. This field will be maped to
+// IAM Policy version (https://cloud.google.com/iam/docs/policies#versions) and
+// will be used to set policy in IAM.
+func (c *DatasetsInsertCall) AccessPolicyVersion(accessPolicyVersion int64) *DatasetsInsertCall {
+	c.urlParams_.Set("accessPolicyVersion", fmt.Sprint(accessPolicyVersion))
 	return c
 }
 
@@ -10850,6 +10907,26 @@ func (r *DatasetsService) Patch(projectId string, datasetId string, dataset *Dat
 	return c
 }
 
+// AccessPolicyVersion sets the optional parameter "accessPolicyVersion": The
+// version of the provided access policy schema. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. This version refers
+// to the schema version of the access policy and not the version of access
+// policy. This field's value can be equal or more than the access policy
+// schema provided in the request. For example, * Operations updating
+// conditional access policy binding in datasets must specify version 3. Some
+// of the operations are : - Adding a new access policy entry with condition. -
+// Removing an access policy entry with condition. - Updating an access policy
+// entry with condition. * But dataset with no conditional role bindings in
+// access policy may specify any valid value or leave the field unset. If unset
+// or if 0 or 1 value is used for dataset with conditional bindings, request
+// will be rejected. This field will be maped to IAM Policy version
+// (https://cloud.google.com/iam/docs/policies#versions) and will be used to
+// set policy in IAM.
+func (c *DatasetsPatchCall) AccessPolicyVersion(accessPolicyVersion int64) *DatasetsPatchCall {
+	c.urlParams_.Set("accessPolicyVersion", fmt.Sprint(accessPolicyVersion))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -11061,6 +11138,26 @@ func (r *DatasetsService) Update(projectId string, datasetId string, dataset *Da
 	c.projectId = projectId
 	c.datasetId = datasetId
 	c.dataset = dataset
+	return c
+}
+
+// AccessPolicyVersion sets the optional parameter "accessPolicyVersion": The
+// version of the provided access policy schema. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. This version refers
+// to the schema version of the access policy and not the version of access
+// policy. This field's value can be equal or more than the access policy
+// schema provided in the request. For example, * Operations updating
+// conditional access policy binding in datasets must specify version 3. Some
+// of the operations are : - Adding a new access policy entry with condition. -
+// Removing an access policy entry with condition. - Updating an access policy
+// entry with condition. * But dataset with no conditional role bindings in
+// access policy may specify any valid value or leave the field unset. If unset
+// or if 0 or 1 value is used for dataset with conditional bindings, request
+// will be rejected. This field will be maped to IAM Policy version
+// (https://cloud.google.com/iam/docs/policies#versions) and will be used to
+// set policy in IAM.
+func (c *DatasetsUpdateCall) AccessPolicyVersion(accessPolicyVersion int64) *DatasetsUpdateCall {
+	c.urlParams_.Set("accessPolicyVersion", fmt.Sprint(accessPolicyVersion))
 	return c
 }
 

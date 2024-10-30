@@ -204,6 +204,7 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs.Reports = NewOrganizationsReportsService(s)
 	rs.SecurityAssessmentResults = NewOrganizationsSecurityAssessmentResultsService(s)
 	rs.SecurityProfiles = NewOrganizationsSecurityProfilesService(s)
+	rs.SecurityProfilesV2 = NewOrganizationsSecurityProfilesV2Service(s)
 	rs.Sharedflows = NewOrganizationsSharedflowsService(s)
 	rs.Sites = NewOrganizationsSitesService(s)
 	return rs
@@ -253,6 +254,8 @@ type OrganizationsService struct {
 	SecurityAssessmentResults *OrganizationsSecurityAssessmentResultsService
 
 	SecurityProfiles *OrganizationsSecurityProfilesService
+
+	SecurityProfilesV2 *OrganizationsSecurityProfilesV2Service
 
 	Sharedflows *OrganizationsSharedflowsService
 
@@ -1141,6 +1144,15 @@ func NewOrganizationsSecurityProfilesEnvironmentsService(s *Service) *Organizati
 }
 
 type OrganizationsSecurityProfilesEnvironmentsService struct {
+	s *Service
+}
+
+func NewOrganizationsSecurityProfilesV2Service(s *Service) *OrganizationsSecurityProfilesV2Service {
+	rs := &OrganizationsSecurityProfilesV2Service{s: s}
+	return rs
+}
+
+type OrganizationsSecurityProfilesV2Service struct {
 	s *Service
 }
 
@@ -3242,6 +3254,51 @@ type GoogleCloudApigeeV1ConnectorsPlatformConfig struct {
 
 func (s GoogleCloudApigeeV1ConnectorsPlatformConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1ConnectorsPlatformConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1ControlPlaneAccess: ControlPlaneAccess is the request
+// body and response body of UpdateControlPlaneAccess. and the response body of
+// GetControlPlaneAccess. The input identities contains an array of service
+// accounts to grant access to the respective control plane resource, with each
+// service account specified using the following format:
+// `serviceAccount:`***service-account-name***. The ***service-account-name***
+// is formatted like an email address. For example:
+// `my-control-plane-service_account@my_project_id.iam.gserviceaccount.com` You
+// might specify multiple service accounts, for example, if you have multiple
+// environments and wish to assign a unique service account to each one.
+type GoogleCloudApigeeV1ControlPlaneAccess struct {
+	// AnalyticsPublisherIdentities: Optional. Array of service accounts authorized
+	// to publish analytics data to the control plane (for the Message Processor
+	// component).
+	AnalyticsPublisherIdentities []string `json:"analyticsPublisherIdentities,omitempty"`
+	// Name: Identifier. The resource name of the ControlPlaneAccess. Format:
+	// "organizations/{org}/controlPlaneAccess"
+	Name string `json:"name,omitempty"`
+	// SynchronizerIdentities: Optional. Array of service accounts to grant access
+	// to control plane resources (for the Synchronizer component). The service
+	// accounts must have **Apigee Synchronizer Manager** role. See also Create
+	// service accounts
+	// (https://cloud.google.com/apigee/docs/hybrid/latest/sa-about#create-the-service-accounts).
+	SynchronizerIdentities []string `json:"synchronizerIdentities,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AnalyticsPublisherIdentities") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnalyticsPublisherIdentities") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1ControlPlaneAccess) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ControlPlaneAccess
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6675,6 +6732,35 @@ func (s GoogleCloudApigeeV1ListSecurityProfilesResponse) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1ListSecurityProfilesV2Response: Response for
+// ListSecurityProfilesV2.
+type GoogleCloudApigeeV1ListSecurityProfilesV2Response struct {
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SecurityProfilesV2: List of security profiles in the organization.
+	SecurityProfilesV2 []*GoogleCloudApigeeV1SecurityProfileV2 `json:"securityProfilesV2,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1ListSecurityProfilesV2Response) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1ListSecurityProfilesV2Response
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1ListSecurityReportsResponse: The response for
 // SecurityReports.
 type GoogleCloudApigeeV1ListSecurityReportsResponse struct {
@@ -9767,6 +9853,73 @@ func (s GoogleCloudApigeeV1SecurityProfileScoringConfig) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1SecurityProfileV2: Security profile for risk assessment
+// version 2.
+type GoogleCloudApigeeV1SecurityProfileV2 struct {
+	// CreateTime: Output only. The time of the security profile creation.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. The description of the security profile.
+	Description string `json:"description,omitempty"`
+	// GoogleDefined: Output only. Whether the security profile is google defined.
+	GoogleDefined bool `json:"googleDefined,omitempty"`
+	// Name: Identifier. Name of the security profile v2 resource. Format:
+	// organizations/{org}/securityProfilesV2/{profile}
+	Name string `json:"name,omitempty"`
+	// ProfileAssessmentConfigs: Required. The configuration for each assessment in
+	// this profile. Key is the name/id of the assessment.
+	ProfileAssessmentConfigs map[string]GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfig `json:"profileAssessmentConfigs,omitempty"`
+	// UpdateTime: Output only. The time of the security profile update.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1SecurityProfileV2) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityProfileV2
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfig: The
+// configuration definition for a specific assessment.
+type GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfig struct {
+	// Weight: The weight of the assessment.
+	//
+	// Possible values:
+	//   "WEIGHT_UNSPECIFIED" - The weight is unspecified.
+	//   "MINOR" - The weight is minor.
+	//   "MODERATE" - The weight is moderate.
+	//   "MAJOR" - The weight is major.
+	Weight string `json:"weight,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Weight") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Weight") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityProfileV2ProfileAssessmentConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1SecurityReport: SecurityReport saves all the information
 // about the created security report.
 type GoogleCloudApigeeV1SecurityReport struct {
@@ -12062,6 +12215,117 @@ func (c *OrganizationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApi
 	return ret, nil
 }
 
+type OrganizationsGetControlPlaneAccessCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetControlPlaneAccess: Lists the service accounts allowed to access Apigee
+// control plane directly for limited functionality. **Note**: Available to
+// Apigee hybrid only.
+//
+//   - name: Resource name of the Control Plane Access. Use the following
+//     structure in your request: `organizations/{org}/controlPlaneAccess`.
+func (r *OrganizationsService) GetControlPlaneAccess(name string) *OrganizationsGetControlPlaneAccessCall {
+	c := &OrganizationsGetControlPlaneAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsGetControlPlaneAccessCall) Fields(s ...googleapi.Field) *OrganizationsGetControlPlaneAccessCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsGetControlPlaneAccessCall) IfNoneMatch(entityTag string) *OrganizationsGetControlPlaneAccessCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsGetControlPlaneAccessCall) Context(ctx context.Context) *OrganizationsGetControlPlaneAccessCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsGetControlPlaneAccessCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsGetControlPlaneAccessCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.getControlPlaneAccess" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1ControlPlaneAccess.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsGetControlPlaneAccessCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ControlPlaneAccess, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ControlPlaneAccess{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type OrganizationsGetDeployedIngressConfigCall struct {
 	s            *Service
 	name         string
@@ -13055,6 +13319,121 @@ func (c *OrganizationsUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudApigeeV1Organization{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsUpdateControlPlaneAccessCall struct {
+	s                                     *Service
+	name                                  string
+	googlecloudapigeev1controlplaneaccess *GoogleCloudApigeeV1ControlPlaneAccess
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// UpdateControlPlaneAccess: Updates the permissions required to allow Apigee
+// runtime-plane components access to the control plane. Currently, the
+// permissions required are to: 1. Allow runtime components to publish
+// analytics data to the control plane. **Note**: Available to Apigee hybrid
+// only.
+//
+//   - name: Identifier. The resource name of the ControlPlaneAccess. Format:
+//     "organizations/{org}/controlPlaneAccess".
+func (r *OrganizationsService) UpdateControlPlaneAccess(name string, googlecloudapigeev1controlplaneaccess *GoogleCloudApigeeV1ControlPlaneAccess) *OrganizationsUpdateControlPlaneAccessCall {
+	c := &OrganizationsUpdateControlPlaneAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1controlplaneaccess = googlecloudapigeev1controlplaneaccess
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": List of fields to be
+// updated. Fields that can be updated: synchronizer_identities,
+// publisher_identities.
+func (c *OrganizationsUpdateControlPlaneAccessCall) UpdateMask(updateMask string) *OrganizationsUpdateControlPlaneAccessCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsUpdateControlPlaneAccessCall) Fields(s ...googleapi.Field) *OrganizationsUpdateControlPlaneAccessCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsUpdateControlPlaneAccessCall) Context(ctx context.Context) *OrganizationsUpdateControlPlaneAccessCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsUpdateControlPlaneAccessCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsUpdateControlPlaneAccessCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1controlplaneaccess)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.updateControlPlaneAccess" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsUpdateControlPlaneAccessCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -45831,6 +46210,577 @@ func (c *OrganizationsSecurityProfilesEnvironmentsDeleteCall) Do(opts ...googlea
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsSecurityProfilesV2CreateCall struct {
+	s                                    *Service
+	parent                               string
+	googlecloudapigeev1securityprofilev2 *GoogleCloudApigeeV1SecurityProfileV2
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Create: Create a security profile v2.
+//
+// - parent: The parent resource name. Format: `organizations/{org}`.
+func (r *OrganizationsSecurityProfilesV2Service) Create(parent string, googlecloudapigeev1securityprofilev2 *GoogleCloudApigeeV1SecurityProfileV2) *OrganizationsSecurityProfilesV2CreateCall {
+	c := &OrganizationsSecurityProfilesV2CreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudapigeev1securityprofilev2 = googlecloudapigeev1securityprofilev2
+	return c
+}
+
+// SecurityProfileV2Id sets the optional parameter "securityProfileV2Id":
+// Required. The security profile id.
+func (c *OrganizationsSecurityProfilesV2CreateCall) SecurityProfileV2Id(securityProfileV2Id string) *OrganizationsSecurityProfilesV2CreateCall {
+	c.urlParams_.Set("securityProfileV2Id", securityProfileV2Id)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSecurityProfilesV2CreateCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesV2CreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSecurityProfilesV2CreateCall) Context(ctx context.Context) *OrganizationsSecurityProfilesV2CreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSecurityProfilesV2CreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesV2CreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1securityprofilev2)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityProfilesV2")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfilesV2.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1SecurityProfileV2.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSecurityProfilesV2CreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityProfileV2, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityProfileV2{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsSecurityProfilesV2DeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a security profile v2.
+//
+//   - name: The name of the security profile v2 to delete. Format:
+//     `organizations/{org}/securityProfilesV2/{profile}`.
+func (r *OrganizationsSecurityProfilesV2Service) Delete(name string) *OrganizationsSecurityProfilesV2DeleteCall {
+	c := &OrganizationsSecurityProfilesV2DeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSecurityProfilesV2DeleteCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesV2DeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSecurityProfilesV2DeleteCall) Context(ctx context.Context) *OrganizationsSecurityProfilesV2DeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSecurityProfilesV2DeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesV2DeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfilesV2.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityProfilesV2DeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsSecurityProfilesV2GetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a security profile v2.
+//
+//   - name: The name of the security profile v2 to get. Format:
+//     `organizations/{org}/securityProfilesV2/{profile}`.
+func (r *OrganizationsSecurityProfilesV2Service) Get(name string) *OrganizationsSecurityProfilesV2GetCall {
+	c := &OrganizationsSecurityProfilesV2GetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSecurityProfilesV2GetCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesV2GetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsSecurityProfilesV2GetCall) IfNoneMatch(entityTag string) *OrganizationsSecurityProfilesV2GetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSecurityProfilesV2GetCall) Context(ctx context.Context) *OrganizationsSecurityProfilesV2GetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSecurityProfilesV2GetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesV2GetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfilesV2.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1SecurityProfileV2.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSecurityProfilesV2GetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityProfileV2, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityProfileV2{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type OrganizationsSecurityProfilesV2ListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List security profiles v2.
+//
+//   - parent: For a specific organization, list of all the security profiles.
+//     Format: `organizations/{org}`.
+func (r *OrganizationsSecurityProfilesV2Service) List(parent string) *OrganizationsSecurityProfilesV2ListCall {
+	c := &OrganizationsSecurityProfilesV2ListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// profiles to return
+func (c *OrganizationsSecurityProfilesV2ListCall) PageSize(pageSize int64) *OrganizationsSecurityProfilesV2ListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListSecurityProfilesV2` call. Provide this to retrieve the
+// subsequent page.
+func (c *OrganizationsSecurityProfilesV2ListCall) PageToken(pageToken string) *OrganizationsSecurityProfilesV2ListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSecurityProfilesV2ListCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesV2ListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsSecurityProfilesV2ListCall) IfNoneMatch(entityTag string) *OrganizationsSecurityProfilesV2ListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSecurityProfilesV2ListCall) Context(ctx context.Context) *OrganizationsSecurityProfilesV2ListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSecurityProfilesV2ListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesV2ListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/securityProfilesV2")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfilesV2.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1ListSecurityProfilesV2Response.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSecurityProfilesV2ListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1ListSecurityProfilesV2Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1ListSecurityProfilesV2Response{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSecurityProfilesV2ListCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1ListSecurityProfilesV2Response) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsSecurityProfilesV2PatchCall struct {
+	s                                    *Service
+	name                                 string
+	googlecloudapigeev1securityprofilev2 *GoogleCloudApigeeV1SecurityProfileV2
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Patch: Update a security profile V2.
+//
+//   - name: Identifier. Name of the security profile v2 resource. Format:
+//     organizations/{org}/securityProfilesV2/{profile}.
+func (r *OrganizationsSecurityProfilesV2Service) Patch(name string, googlecloudapigeev1securityprofilev2 *GoogleCloudApigeeV1SecurityProfileV2) *OrganizationsSecurityProfilesV2PatchCall {
+	c := &OrganizationsSecurityProfilesV2PatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1securityprofilev2 = googlecloudapigeev1securityprofilev2
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. Valid fields to update are `description` and
+// `profileAssessmentConfigs`.
+func (c *OrganizationsSecurityProfilesV2PatchCall) UpdateMask(updateMask string) *OrganizationsSecurityProfilesV2PatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsSecurityProfilesV2PatchCall) Fields(s ...googleapi.Field) *OrganizationsSecurityProfilesV2PatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsSecurityProfilesV2PatchCall) Context(ctx context.Context) *OrganizationsSecurityProfilesV2PatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsSecurityProfilesV2PatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityProfilesV2PatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1securityprofilev2)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityProfilesV2.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1SecurityProfileV2.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsSecurityProfilesV2PatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1SecurityProfileV2, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1SecurityProfileV2{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

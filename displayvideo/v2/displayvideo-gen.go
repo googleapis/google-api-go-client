@@ -886,13 +886,13 @@ func (s AdUrl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Adloox: Details of Adloox settings.
+// Adloox: Details of Adloox brand safety settings.
 type Adloox struct {
-	// ExcludedAdlooxCategories: Adloox's brand safety settings.
+	// ExcludedAdlooxCategories: Adloox categories to exclude.
 	//
 	// Possible values:
-	//   "ADLOOX_UNSPECIFIED" - This enum is only a placeholder and it doesn't
-	// specify any Adloox option.
+	//   "ADLOOX_UNSPECIFIED" - Default value when a Adloox category is not
+	// specified or is unknown in this version.
 	//   "ADULT_CONTENT_HARD" - Adult content (hard).
 	//   "ADULT_CONTENT_SOFT" - Adult content (soft).
 	//   "ILLEGAL_CONTENT" - Illegal content.
@@ -928,8 +928,7 @@ type Advertiser struct {
 	// AdvertiserId: Output only. The unique ID of the advertiser. Assigned by the
 	// system.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
-	// BillingConfig: Optional. Required. Billing related settings of the
-	// advertiser.
+	// BillingConfig: Required. Billing related settings of the advertiser.
 	BillingConfig *AdvertiserBillingConfig `json:"billingConfig,omitempty"`
 	// CreativeConfig: Required. Creative related settings of the advertiser.
 	CreativeConfig *AdvertiserCreativeConfig `json:"creativeConfig,omitempty"`
@@ -1031,7 +1030,7 @@ func (s AdvertiserAdServerConfig) MarshalJSON() ([]byte, error) {
 
 // AdvertiserBillingConfig: Billing related settings of an advertiser.
 type AdvertiserBillingConfig struct {
-	// BillingProfileId: Optional. The ID of a billing profile assigned to the
+	// BillingProfileId: Required. The ID of a billing profile assigned to the
 	// advertiser.
 	BillingProfileId int64 `json:"billingProfileId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "BillingProfileId") to
@@ -4797,6 +4796,8 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_8" - SDF version 8. **This SDF version is in beta. It is only
+	// available to a subset of users.**
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13206,6 +13207,8 @@ type SdfConfig struct {
 	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_8" - SDF version 8. **This SDF version is in beta. It is only
+	// available to a subset of users.**
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13281,6 +13284,8 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_8" - SDF version 8. **This SDF version is in beta. It is only
+	// available to a subset of users.**
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13429,15 +13434,9 @@ type SensitiveCategoryAssignedTargetingOptionDetails struct {
 	//   "SENSITIVE_CATEGORY_SHOCKING" - Content which may be considered shocking
 	// or disturbing, such as violent news stories, stunts, or toilet humor.
 	//   "SENSITIVE_CATEGORY_EMBEDDED_VIDEO" - YouTube videos embedded on websites
-	// outside of YouTube.com. Only applicable to YouTube and Partners line items.
-	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
-	// about this announced
-	// change](/display-video/api/deprecations#features.yt_li_categories).
+	// outside of YouTube.com.
 	//   "SENSITIVE_CATEGORY_LIVE_STREAMING_VIDEO" - Video of live events streamed
-	// over the internet. Only applicable to YouTube and Partners line items.
-	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
-	// about this announced
-	// change](/display-video/api/deprecations#features.yt_li_categories).
+	// over the internet.
 	ExcludedSensitiveCategory string `json:"excludedSensitiveCategory,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludedSensitiveCategory")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -13515,15 +13514,9 @@ type SensitiveCategoryTargetingOptionDetails struct {
 	//   "SENSITIVE_CATEGORY_SHOCKING" - Content which may be considered shocking
 	// or disturbing, such as violent news stories, stunts, or toilet humor.
 	//   "SENSITIVE_CATEGORY_EMBEDDED_VIDEO" - YouTube videos embedded on websites
-	// outside of YouTube.com. Only applicable to YouTube and Partners line items.
-	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
-	// about this announced
-	// change](/display-video/api/deprecations#features.yt_li_categories).
+	// outside of YouTube.com.
 	//   "SENSITIVE_CATEGORY_LIVE_STREAMING_VIDEO" - Video of live events streamed
-	// over the internet. Only applicable to YouTube and Partners line items.
-	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
-	// about this announced
-	// change](/display-video/api/deprecations#features.yt_li_categories).
+	// over the internet.
 	SensitiveCategory string `json:"sensitiveCategory,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SensitiveCategory") to
 	// unconditionally include in API requests. By default, fields with empty or

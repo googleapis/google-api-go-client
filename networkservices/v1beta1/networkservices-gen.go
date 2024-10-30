@@ -181,6 +181,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.ServiceLbPolicies = NewProjectsLocationsServiceLbPoliciesService(s)
 	rs.TcpRoutes = NewProjectsLocationsTcpRoutesService(s)
 	rs.TlsRoutes = NewProjectsLocationsTlsRoutesService(s)
+	rs.WasmPlugins = NewProjectsLocationsWasmPluginsService(s)
 	return rs
 }
 
@@ -212,6 +213,8 @@ type ProjectsLocationsService struct {
 	TcpRoutes *ProjectsLocationsTcpRoutesService
 
 	TlsRoutes *ProjectsLocationsTlsRoutesService
+
+	WasmPlugins *ProjectsLocationsWasmPluginsService
 }
 
 func NewProjectsLocationsAuthzExtensionsService(s *Service) *ProjectsLocationsAuthzExtensionsService {
@@ -328,6 +331,27 @@ func NewProjectsLocationsTlsRoutesService(s *Service) *ProjectsLocationsTlsRoute
 }
 
 type ProjectsLocationsTlsRoutesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsWasmPluginsService(s *Service) *ProjectsLocationsWasmPluginsService {
+	rs := &ProjectsLocationsWasmPluginsService{s: s}
+	rs.Versions = NewProjectsLocationsWasmPluginsVersionsService(s)
+	return rs
+}
+
+type ProjectsLocationsWasmPluginsService struct {
+	s *Service
+
+	Versions *ProjectsLocationsWasmPluginsVersionsService
+}
+
+func NewProjectsLocationsWasmPluginsVersionsService(s *Service) *ProjectsLocationsWasmPluginsVersionsService {
+	rs := &ProjectsLocationsWasmPluginsVersionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsWasmPluginsVersionsService struct {
 	s *Service
 }
 
@@ -576,7 +600,8 @@ func (s ExtensionChain) MarshalJSON() ([]byte, error) {
 // matching request.
 type ExtensionChainExtension struct {
 	// Authority: Optional. The `:authority` header in the gRPC request sent from
-	// Envoy to the extension service. Required for Callout extensions.
+	// Envoy to the extension service. Required for Callout extensions. This field
+	// is not supported for plugin extensions and must not be set.
 	Authority string `json:"authority,omitempty"`
 	// FailOpen: Optional. Determines how the proxy behaves if the call to the
 	// extension fails or times out. When set to `TRUE`, request or response
@@ -593,6 +618,15 @@ type ExtensionChainExtension struct {
 	// extension (from the client or backend). If omitted, all headers are sent.
 	// Each element is a string indicating the header name.
 	ForwardHeaders []string `json:"forwardHeaders,omitempty"`
+	// Metadata: Optional. The metadata provided here is included as part of the
+	// `metadata_context` (of type `google.protobuf.Struct`) in the
+	// `ProcessingRequest` message sent to the extension server. The metadata is
+	// available under the namespace `com.google....`. For example:
+	// `com.google.lb_traffic_extension.lbtrafficextension1.chain1.ext1`. The
+	// following variables are supported in the metadata: `{forwarding_rule_id}` -
+	// substituted with the forwarding rule's fully qualified resource name. This
+	// field is not supported for plugin extensions and must not be set.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Name: Required. The name for this extension. The name is logged as part of
 	// the HTTP request logs. The name must conform with RFC-1034, is restricted to
 	// lower-cased letters, numbers and hyphens, and can have a maximum length of
@@ -608,7 +642,13 @@ type ExtensionChainExtension struct {
 	// `https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/ba
 	// ckendServices/{backendService}` or
 	// `https://www.googleapis.com/compute/v1/projects/{project}/global/backendServi
-	// ces/{backendService}`.
+	// ces/{backendService}`. To configure a plugin extension, this must be a
+	// reference to a wasm plugin
+	// (https://cloud.google.com/service-extensions/docs/reference/rest/v1beta1/projects.locations.wasmPlugins)
+	// in the format:
+	// `projects/{project}/locations/{location}/wasmPlugins/{plugin}` or
+	// `//networkservices.googleapis.com/projects/{project}/locations/{location}/was
+	// mPlugins/{wasmPlugin}`.
 	Service string `json:"service,omitempty"`
 	// SupportedEvents: Optional. A set of events during request or response
 	// processing for which this extension is called. This field is required for
@@ -632,7 +672,8 @@ type ExtensionChainExtension struct {
 	SupportedEvents []string `json:"supportedEvents,omitempty"`
 	// Timeout: Optional. Specifies the timeout for each individual message on the
 	// stream. The timeout must be between 10-1000 milliseconds. Required for
-	// Callout extensions.
+	// callout extensions. This field is not supported for plugin extensions and
+	// must not be set.
 	Timeout string `json:"timeout,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Authority") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2030,7 +2071,8 @@ type LbRouteExtension struct {
 	// available under the namespace `com.google.lb_route_extension.`. The
 	// following variables are supported in the metadata Struct:
 	// `{forwarding_rule_id}` - substituted with the forwarding rule's fully
-	// qualified resource name.
+	// qualified resource name. This field is not supported for plugin extensions
+	// and must not be set.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Name: Required. Identifier. Name of the `LbRouteExtension` resource in the
 	// following format:
@@ -2103,7 +2145,8 @@ type LbTrafficExtension struct {
 	// `ProcessingRequest.metadata_context.filter_metadata` map field. The metadata
 	// is available under the key `com.google.lb_traffic_extension.`. The following
 	// variables are supported in the metadata: `{forwarding_rule_id}` -
-	// substituted with the forwarding rule's fully qualified resource name.
+	// substituted with the forwarding rule's fully qualified resource name. This
+	// field is not supported for plugin extensions and must not be set.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Name: Required. Identifier. Name of the `LbTrafficExtension` resource in the
 	// following format:
@@ -2557,6 +2600,67 @@ func (s ListTlsRoutesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListWasmPluginVersionsResponse: Response returned by the
+// `ListWasmPluginVersions` method.
+type ListWasmPluginVersionsResponse struct {
+	// NextPageToken: If there might be more results than those appearing in this
+	// response, then `next_page_token` is included. To get the next set of
+	// results, call this method again using the value of `next_page_token` as
+	// `page_token`.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// WasmPluginVersions: List of `WasmPluginVersion` resources.
+	WasmPluginVersions []*WasmPluginVersion `json:"wasmPluginVersions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListWasmPluginVersionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListWasmPluginVersionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListWasmPluginsResponse: Response returned by the `ListWasmPlugins` method.
+type ListWasmPluginsResponse struct {
+	// NextPageToken: If there might be more results than those appearing in this
+	// response, then `next_page_token` is included. To get the next set of
+	// results, call this method again using the value of `next_page_token` as
+	// `page_token`.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// WasmPlugins: List of `WasmPlugin` resources.
+	WasmPlugins []*WasmPlugin `json:"wasmPlugins,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListWasmPluginsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListWasmPluginsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby city
@@ -2951,7 +3055,7 @@ type ServiceLbPolicy struct {
 	//   "WATERFALL_BY_ZONE" - Attempt to keep traffic in a single zone closest to
 	// the client, before spilling over to other zones.
 	LoadBalancingAlgorithm string `json:"loadBalancingAlgorithm,omitempty"`
-	// Name: Required. Name of the ServiceLbPolicy resource. It matches pattern
+	// Name: Identifier. Name of the ServiceLbPolicy resource. It matches pattern
 	// `projects/{project}/locations/{location}/serviceLbPolicies/{service_lb_policy
 	// _name}`.
 	Name string `json:"name,omitempty"`
@@ -3439,6 +3543,279 @@ type TrafficPortSelector struct {
 
 func (s TrafficPortSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod TrafficPortSelector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WasmPlugin: `WasmPlugin` is a resource representing a service executing a
+// customer-provided Wasm module.
+type WasmPlugin struct {
+	// CreateTime: Output only. The timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. A human-readable description of the resource.
+	Description string `json:"description,omitempty"`
+	// Labels: Optional. Set of labels associated with the `WasmPlugin` resource.
+	// The format must comply with the following requirements
+	// (/compute/docs/labeling-resources#requirements).
+	Labels map[string]string `json:"labels,omitempty"`
+	// LogConfig: Optional. Specifies the logging options for the activity
+	// performed by this `WasmPlugin`. If logging is enabled, plugin logs are
+	// exported to Cloud Logging. Note that the settings relate to the logs
+	// generated by using logging statements in your Wasm code.
+	LogConfig *WasmPluginLogConfig `json:"logConfig,omitempty"`
+	// MainVersionId: Optional. The ID of the `WasmPluginVersion` resource that is
+	// the currently serving one. The version referred to must be a child of this
+	// `WasmPlugin` resource.
+	MainVersionId string `json:"mainVersionId,omitempty"`
+	// Name: Identifier. Name of the `WasmPlugin` resource in the following format:
+	// `projects/{project}/locations/{location}/wasmPlugins/{wasm_plugin}`.
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. The timestamp when the resource was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// UsedBy: Output only. List of all Service Extensions
+	// (https://cloud.google.com/service-extensions/docs/overview) that use this
+	// `WasmPlugin`.
+	UsedBy []*WasmPluginUsedBy `json:"usedBy,omitempty"`
+	// Versions: Optional. All versions of this `WasmPlugin` in the key-value
+	// format. The key is the resource ID, the value is the `VersionDetails`.
+	// Allows to create or update `WasmPlugin` and its WasmPluginVersions in a
+	// single request. When the `main_version_id` field is not empty it must point
+	// to one of the VersionDetails in the map. If provided in the update request,
+	// the new versions replace the previous set. Any version omitted from the
+	// `versions` will be removed. Since the `WasmPluginVersion` resource is
+	// immutable, if the WasmPluginVersion with the same name already exists and
+	// differs the Update request will fail. Note: In the GET request, this field
+	// is populated only if the GetWasmPluginRequest.view is set to
+	// WASM_PLUGIN_VIEW_FULL.
+	Versions map[string]WasmPluginVersionDetails `json:"versions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WasmPlugin) MarshalJSON() ([]byte, error) {
+	type NoMethod WasmPlugin
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WasmPluginLogConfig: Specifies the logging options for the activity
+// performed by this `WasmPlugin`. If logging is enabled, plugin logs are
+// exported to Cloud Logging.
+type WasmPluginLogConfig struct {
+	// Enable: Optional. Specifies whether to enable logging for activity by this
+	// `WasmPlugin`. Defaults to `false`.
+	Enable bool `json:"enable,omitempty"`
+	// MinLogLevel: Non-empty default. Specificies the lowest level of the plugin
+	// logs that are exported to Cloud Logging. This setting relates to the logs
+	// generated by using logging statements in your Wasm code. This field is can
+	// be set only if logging is enabled for the `WasmPlugin` resource. If the
+	// field is not provided when logging is enabled, it is set to `INFO` by
+	// default.
+	//
+	// Possible values:
+	//   "LOG_LEVEL_UNSPECIFIED" - Unspecified value.
+	//   "TRACE" - Report logs with TRACE level and above.
+	//   "DEBUG" - Report logs with DEBUG level and above.
+	//   "INFO" - Report logs with INFO level and above.
+	//   "WARN" - Report logs with WARN level and above.
+	//   "ERROR" - Report logs with ERROR level and above.
+	//   "CRITICAL" - Report logs with CRITICAL level only.
+	MinLogLevel string `json:"minLogLevel,omitempty"`
+	// SampleRate: Non-empty default. Configures the sampling rate of activity
+	// logs, where `1.0` means all logged activity is reported and `0.0` means no
+	// activity is reported. A floating point value between `0.0` and `1.0`
+	// indicates that a percentage of log messages is stored. The default value
+	// when logging is enabled is `1.0`. The value of the field must be between `0`
+	// and `1` (inclusive). This field can only be specified if logging is enabled
+	// for this `WasmPlugin`.
+	SampleRate float64 `json:"sampleRate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enable") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WasmPluginLogConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WasmPluginLogConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *WasmPluginLogConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod WasmPluginLogConfig
+	var s1 struct {
+		SampleRate gensupport.JSONFloat64 `json:"sampleRate"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SampleRate = float64(s1.SampleRate)
+	return nil
+}
+
+// WasmPluginUsedBy: Defines a resource that uses the `WasmPlugin`.
+type WasmPluginUsedBy struct {
+	// Name: Output only. Full name of the resource
+	// https://google.aip.dev/122#full-resource-names, e.g.
+	// `//networkservices.googleapis.com/projects/{project}/locations/{location}/lbR
+	// outeExtensions/{extension}`
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WasmPluginUsedBy) MarshalJSON() ([]byte, error) {
+	type NoMethod WasmPluginUsedBy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WasmPluginVersion: A single immutable version of a `WasmPlugin`. Defines the
+// Wasm module used and optionally its runtime config.
+type WasmPluginVersion struct {
+	// CreateTime: Output only. The timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. A human-readable description of the resource.
+	Description string `json:"description,omitempty"`
+	// ImageDigest: Output only. The resolved digest for the image specified in
+	// `image`. The digest is resolved during the creation of `WasmPluginVersion`
+	// resource. This field holds the digest value regardless of whether a tag or
+	// digest was originally specified in the `image` field.
+	ImageDigest string `json:"imageDigest,omitempty"`
+	// ImageUri: Optional. URI of the container image containing the Wasm plugin,
+	// stored in the Artifact Registry. When a new `WasmPluginVersion` resource is
+	// created, the digest of the container image is saved in the `image_digest`
+	// field. When downloading an image, the digest value is used instead of an
+	// image tag.
+	ImageUri string `json:"imageUri,omitempty"`
+	// Labels: Optional. Set of labels associated with the `WasmPluginVersion`
+	// resource.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. Name of the `WasmPluginVersion` resource in the following
+	// format: `projects/{project}/locations/{location}/wasmPlugins/{wasm_plugin}/
+	// versions/{wasm_plugin_version}`.
+	Name string `json:"name,omitempty"`
+	// PluginConfigData: Configuration for the Wasm plugin. The configuration is
+	// provided to the Wasm plugin at runtime through the `ON_CONFIGURE` callback.
+	// When a new `WasmPluginVersion` resource is created, the digest of the
+	// contents is saved in the `plugin_config_digest` field.
+	PluginConfigData string `json:"pluginConfigData,omitempty"`
+	// PluginConfigDigest: Output only. This field holds the digest (usually
+	// checksum) value for the plugin configuration. The value is calculated based
+	// on the contents of the `plugin_config_data` or the container image defined
+	// by the `plugin_config_uri` field.
+	PluginConfigDigest string `json:"pluginConfigDigest,omitempty"`
+	// PluginConfigUri: URI of the Wasm plugin configuration stored in the Artifact
+	// Registry. The configuration is provided to the plugin at runtime through the
+	// `ON_CONFIGURE` callback. The container image must contain only a single file
+	// with the name `plugin.config`. When a new `WasmPluginVersion` resource is
+	// created, the digest of the container image is saved in the
+	// `plugin_config_digest` field.
+	PluginConfigUri string `json:"pluginConfigUri,omitempty"`
+	// UpdateTime: Output only. The timestamp when the resource was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WasmPluginVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod WasmPluginVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WasmPluginVersionDetails: Details of a `WasmPluginVersion` resource to be
+// inlined in the `WasmPlugin` resource.
+type WasmPluginVersionDetails struct {
+	// CreateTime: Output only. The timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. A human-readable description of the resource.
+	Description string `json:"description,omitempty"`
+	// ImageDigest: Output only. The resolved digest for the image specified in
+	// `image`. The digest is resolved during the creation of a `WasmPluginVersion`
+	// resource. This field holds the digest value regardless of whether a tag or
+	// digest was originally specified in the `image` field.
+	ImageDigest string `json:"imageDigest,omitempty"`
+	// ImageUri: Optional. URI of the container image containing the Wasm module,
+	// stored in the Artifact Registry. The container image must contain only a
+	// single file with the name `plugin.wasm`. When a new `WasmPluginVersion`
+	// resource is created, the URI gets resolved to an image digest and saved in
+	// the `image_digest` field.
+	ImageUri string `json:"imageUri,omitempty"`
+	// Labels: Optional. Set of labels associated with the `WasmPluginVersion`
+	// resource.
+	Labels map[string]string `json:"labels,omitempty"`
+	// PluginConfigData: Configuration for the Wasm plugin. The configuration is
+	// provided to the Wasm plugin at runtime through the `ON_CONFIGURE` callback.
+	// When a new `WasmPluginVersion` version is created, the digest of the
+	// contents is saved in the `plugin_config_digest` field.
+	PluginConfigData string `json:"pluginConfigData,omitempty"`
+	// PluginConfigDigest: Output only. This field holds the digest (usually
+	// checksum) value for the plugin configuration. The value is calculated based
+	// on the contents of the `plugin_config_data` or the container image defined
+	// by the `plugin_config_uri` field.
+	PluginConfigDigest string `json:"pluginConfigDigest,omitempty"`
+	// PluginConfigUri: URI of the WasmPlugin configuration stored in the Artifact
+	// Registry. The configuration is provided to the Wasm plugin at runtime
+	// through the `ON_CONFIGURE` callback. The container image must contain only a
+	// single file with the name `plugin.config`. When a new `WasmPluginVersion`
+	// resource is created, the digest of the container image is saved in the
+	// `plugin_config_digest` field.
+	PluginConfigUri string `json:"pluginConfigUri,omitempty"`
+	// UpdateTime: Output only. The timestamp when the resource was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WasmPluginVersionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod WasmPluginVersionDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9880,7 +10257,7 @@ type ProjectsLocationsServiceLbPoliciesPatchCall struct {
 
 // Patch: Updates the parameters of a single ServiceLbPolicy.
 //
-//   - name: Name of the ServiceLbPolicy resource. It matches pattern
+//   - name: Identifier. Name of the ServiceLbPolicy resource. It matches pattern
 //     `projects/{project}/locations/{location}/serviceLbPolicies/{service_lb_poli
 //     cy_name}`.
 func (r *ProjectsLocationsServiceLbPoliciesService) Patch(name string, servicelbpolicy *ServiceLbPolicy) *ProjectsLocationsServiceLbPoliciesPatchCall {
@@ -11123,4 +11500,1070 @@ func (c *ProjectsLocationsTlsRoutesPatchCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
+}
+
+type ProjectsLocationsWasmPluginsCreateCall struct {
+	s          *Service
+	parent     string
+	wasmplugin *WasmPlugin
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new `WasmPlugin` resource in a given project and location.
+//
+//   - parent: The parent resource of the `WasmPlugin` resource. Must be in the
+//     format `projects/{project}/locations/global`.
+func (r *ProjectsLocationsWasmPluginsService) Create(parent string, wasmplugin *WasmPlugin) *ProjectsLocationsWasmPluginsCreateCall {
+	c := &ProjectsLocationsWasmPluginsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.wasmplugin = wasmplugin
+	return c
+}
+
+// WasmPluginId sets the optional parameter "wasmPluginId": Required.
+// User-provided ID of the `WasmPlugin` resource to be created.
+func (c *ProjectsLocationsWasmPluginsCreateCall) WasmPluginId(wasmPluginId string) *ProjectsLocationsWasmPluginsCreateCall {
+	c.urlParams_.Set("wasmPluginId", wasmPluginId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsWasmPluginsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsWasmPluginsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsWasmPluginsCreateCall) Context(ctx context.Context) *ProjectsLocationsWasmPluginsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsWasmPluginsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWasmPluginsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.wasmplugin)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/wasmPlugins")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.wasmPlugins.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsWasmPluginsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsWasmPluginsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified `WasmPlugin` resource.
+//
+//   - name: A name of the `WasmPlugin` resource to delete. Must be in the format
+//     `projects/{project}/locations/global/wasmPlugins/{wasm_plugin}`.
+func (r *ProjectsLocationsWasmPluginsService) Delete(name string) *ProjectsLocationsWasmPluginsDeleteCall {
+	c := &ProjectsLocationsWasmPluginsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsWasmPluginsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsWasmPluginsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsWasmPluginsDeleteCall) Context(ctx context.Context) *ProjectsLocationsWasmPluginsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsWasmPluginsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWasmPluginsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.wasmPlugins.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsWasmPluginsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsWasmPluginsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of the specified `WasmPlugin` resource.
+//
+//   - name: A name of the `WasmPlugin` resource to get. Must be in the format
+//     `projects/{project}/locations/global/wasmPlugins/{wasm_plugin}`.
+func (r *ProjectsLocationsWasmPluginsService) Get(name string) *ProjectsLocationsWasmPluginsGetCall {
+	c := &ProjectsLocationsWasmPluginsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": Determine how much data should be
+// returned by the API. See AIP-157 (https://google.aip.dev/157).
+//
+// Possible values:
+//
+//	"WASM_PLUGIN_VIEW_UNSPECIFIED" - The default / unset value. The API will
+//
+// default to the BASIC view.
+//
+//	"WASM_PLUGIN_VIEW_BASIC" - Include just WasmPlugin record.
+//	"WASM_PLUGIN_VIEW_FULL" - Include WasmPlugin record and all its
+//
+// WasmPluginVersions.
+func (c *ProjectsLocationsWasmPluginsGetCall) View(view string) *ProjectsLocationsWasmPluginsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsWasmPluginsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsWasmPluginsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsWasmPluginsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsWasmPluginsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsWasmPluginsGetCall) Context(ctx context.Context) *ProjectsLocationsWasmPluginsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsWasmPluginsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWasmPluginsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.wasmPlugins.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *WasmPlugin.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsWasmPluginsGetCall) Do(opts ...googleapi.CallOption) (*WasmPlugin, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WasmPlugin{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsWasmPluginsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists `WasmPlugin` resources in a given project and location.
+//
+//   - parent: The project and location from which the `WasmPlugin` resources are
+//     listed, specified in the following format:
+//     `projects/{project}/locations/global`.
+func (r *ProjectsLocationsWasmPluginsService) List(parent string) *ProjectsLocationsWasmPluginsListCall {
+	c := &ProjectsLocationsWasmPluginsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// `WasmPlugin` resources to return per call. If not specified, at most 50
+// `WasmPlugin`s are returned. The maximum value is 1000; values above 1000 are
+// coerced to 1000.
+func (c *ProjectsLocationsWasmPluginsListCall) PageSize(pageSize int64) *ProjectsLocationsWasmPluginsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListWasmPluginsResponse` call. Indicates that this is a continuation
+// of a prior `ListWasmPlugins` call, and that the next page of data is to be
+// returned.
+func (c *ProjectsLocationsWasmPluginsListCall) PageToken(pageToken string) *ProjectsLocationsWasmPluginsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsWasmPluginsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsWasmPluginsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsWasmPluginsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsWasmPluginsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsWasmPluginsListCall) Context(ctx context.Context) *ProjectsLocationsWasmPluginsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsWasmPluginsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWasmPluginsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/wasmPlugins")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.wasmPlugins.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListWasmPluginsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsWasmPluginsListCall) Do(opts ...googleapi.CallOption) (*ListWasmPluginsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListWasmPluginsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsWasmPluginsListCall) Pages(ctx context.Context, f func(*ListWasmPluginsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsWasmPluginsPatchCall struct {
+	s          *Service
+	name       string
+	wasmplugin *WasmPlugin
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the parameters of the specified `WasmPlugin` resource.
+//
+//   - name: Identifier. Name of the `WasmPlugin` resource in the following
+//     format:
+//     `projects/{project}/locations/{location}/wasmPlugins/{wasm_plugin}`.
+func (r *ProjectsLocationsWasmPluginsService) Patch(name string, wasmplugin *WasmPlugin) *ProjectsLocationsWasmPluginsPatchCall {
+	c := &ProjectsLocationsWasmPluginsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.wasmplugin = wasmplugin
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Used to specify the
+// fields to be overwritten in the `WasmPlugin` resource by the update. The
+// fields specified in the `update_mask` field are relative to the resource,
+// not the full request. An omitted `update_mask` field is treated as an
+// implied `update_mask` field equivalent to all fields that are populated
+// (that have a non-empty value). The `update_mask` field supports a special
+// value `*`, which means that each field in the given `WasmPlugin` resource
+// (including the empty ones) replaces the current value.
+func (c *ProjectsLocationsWasmPluginsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsWasmPluginsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsWasmPluginsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsWasmPluginsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsWasmPluginsPatchCall) Context(ctx context.Context) *ProjectsLocationsWasmPluginsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsWasmPluginsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWasmPluginsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.wasmplugin)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.wasmPlugins.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsWasmPluginsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsWasmPluginsVersionsCreateCall struct {
+	s                 *Service
+	parent            string
+	wasmpluginversion *WasmPluginVersion
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Create: Creates a new `WasmPluginVersion` resource in a given project and
+// location.
+//
+//   - parent: The parent resource of the `WasmPluginVersion` resource. Must be
+//     in the format
+//     `projects/{project}/locations/global/wasmPlugins/{wasm_plugin}`.
+func (r *ProjectsLocationsWasmPluginsVersionsService) Create(parent string, wasmpluginversion *WasmPluginVersion) *ProjectsLocationsWasmPluginsVersionsCreateCall {
+	c := &ProjectsLocationsWasmPluginsVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.wasmpluginversion = wasmpluginversion
+	return c
+}
+
+// WasmPluginVersionId sets the optional parameter "wasmPluginVersionId":
+// Required. User-provided ID of the `WasmPluginVersion` resource to be
+// created.
+func (c *ProjectsLocationsWasmPluginsVersionsCreateCall) WasmPluginVersionId(wasmPluginVersionId string) *ProjectsLocationsWasmPluginsVersionsCreateCall {
+	c.urlParams_.Set("wasmPluginVersionId", wasmPluginVersionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsWasmPluginsVersionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsWasmPluginsVersionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsWasmPluginsVersionsCreateCall) Context(ctx context.Context) *ProjectsLocationsWasmPluginsVersionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsWasmPluginsVersionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWasmPluginsVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.wasmpluginversion)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/versions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.wasmPlugins.versions.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsWasmPluginsVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsWasmPluginsVersionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified `WasmPluginVersion` resource.
+//
+//   - name: A name of the `WasmPluginVersion` resource to delete. Must be in the
+//     format
+//     `projects/{project}/locations/global/wasmPlugins/{wasm_plugin}/versions/{wa
+//     sm_plugin_version}`.
+func (r *ProjectsLocationsWasmPluginsVersionsService) Delete(name string) *ProjectsLocationsWasmPluginsVersionsDeleteCall {
+	c := &ProjectsLocationsWasmPluginsVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsWasmPluginsVersionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsWasmPluginsVersionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsWasmPluginsVersionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsWasmPluginsVersionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsWasmPluginsVersionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWasmPluginsVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.wasmPlugins.versions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsWasmPluginsVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsWasmPluginsVersionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of the specified `WasmPluginVersion` resource.
+//
+//   - name: A name of the `WasmPluginVersion` resource to get. Must be in the
+//     format
+//     `projects/{project}/locations/global/wasmPlugins/{wasm_plugin}/versions/{wa
+//     sm_plugin_version}`.
+func (r *ProjectsLocationsWasmPluginsVersionsService) Get(name string) *ProjectsLocationsWasmPluginsVersionsGetCall {
+	c := &ProjectsLocationsWasmPluginsVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsWasmPluginsVersionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsWasmPluginsVersionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsWasmPluginsVersionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsWasmPluginsVersionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsWasmPluginsVersionsGetCall) Context(ctx context.Context) *ProjectsLocationsWasmPluginsVersionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsWasmPluginsVersionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWasmPluginsVersionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.wasmPlugins.versions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *WasmPluginVersion.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsWasmPluginsVersionsGetCall) Do(opts ...googleapi.CallOption) (*WasmPluginVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WasmPluginVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsWasmPluginsVersionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists `WasmPluginVersion` resources in a given project and location.
+//
+//   - parent: The `WasmPlugin` resource whose `WasmPluginVersion`s are listed,
+//     specified in the following format:
+//     `projects/{project}/locations/global/wasmPlugins/{wasm_plugin}`.
+func (r *ProjectsLocationsWasmPluginsVersionsService) List(parent string) *ProjectsLocationsWasmPluginsVersionsListCall {
+	c := &ProjectsLocationsWasmPluginsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// `WasmPluginVersion` resources to return per call. If not specified, at most
+// 50 `WasmPluginVersion`s are returned. The maximum value is 1000; values
+// above 1000 are coerced to 1000.
+func (c *ProjectsLocationsWasmPluginsVersionsListCall) PageSize(pageSize int64) *ProjectsLocationsWasmPluginsVersionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListWasmPluginVersionsResponse` call. Indicates that this is a
+// continuation of a prior `ListWasmPluginVersions` call, and that the next
+// page of data is to be returned.
+func (c *ProjectsLocationsWasmPluginsVersionsListCall) PageToken(pageToken string) *ProjectsLocationsWasmPluginsVersionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsWasmPluginsVersionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsWasmPluginsVersionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsWasmPluginsVersionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsWasmPluginsVersionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsWasmPluginsVersionsListCall) Context(ctx context.Context) *ProjectsLocationsWasmPluginsVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsWasmPluginsVersionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWasmPluginsVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/versions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.wasmPlugins.versions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListWasmPluginVersionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsWasmPluginsVersionsListCall) Do(opts ...googleapi.CallOption) (*ListWasmPluginVersionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListWasmPluginVersionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsWasmPluginsVersionsListCall) Pages(ctx context.Context, f func(*ListWasmPluginVersionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

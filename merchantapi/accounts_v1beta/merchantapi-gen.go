@@ -318,36 +318,6 @@ type TermsOfServiceService struct {
 	s *APIService
 }
 
-// AcceptTermsOfService: Reference to a Terms of Service resource.
-type AcceptTermsOfService struct {
-	// Name: Required. The resource name of the terms of service version in the
-	// format `termsOfService/{version}`. To retrieve the latest version, use the
-	// termsOfService.retrieveLatest
-	// (/merchant/api/reference/rest/accounts_v1beta/termsOfService/retrieveLatest)
-	// method.
-	Name string `json:"name,omitempty"`
-	// RegionCode: Required. Region code as defined by CLDR
-	// (https://cldr.unicode.org/). This is either a country when the ToS applies
-	// specifically to that country or `001` when it applies globally.
-	RegionCode string `json:"regionCode,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s AcceptTermsOfService) MarshalJSON() ([]byte, error) {
-	type NoMethod AcceptTermsOfService
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // Accepted: Describes the accepted terms of service.
 type Accepted struct {
 	// AcceptedBy: The account where the acceptance was recorded. This can be the
@@ -478,7 +448,7 @@ type AddAccountService struct {
 	// (https://support.google.com/merchants/answer/188487) for the account.
 	// Payload for service type Account Aggregation.
 	AccountAggregation *AccountAggregation `json:"accountAggregation,omitempty"`
-	// Provider: Optional. The provider of the service. Format:
+	// Provider: Required. The provider of the service. Format:
 	// `accounts/{account}`
 	Provider string `json:"provider,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccountAggregation") to
@@ -715,7 +685,8 @@ func (s BusinessInfo) MarshalJSON() ([]byte, error) {
 }
 
 // CarrierRate: A list of carrier rates that can be referred to by `main_table`
-// or `single_value`.
+// or `single_value`. Supported carrier services are defined in
+// https://support.google.com/merchants/answer/12577710?hl=en&ref_topic=12570808&sjid=10662598224319463032-NC#zippy=%2Cdelivery-cost-rate-type%2Ccarrier-rate-au-de-uk-and-us-only.
 type CarrierRate struct {
 	// Carrier: Required. Carrier service, such as "UPS" or "Fedex".
 	Carrier string `json:"carrier,omitempty"`
@@ -754,14 +725,31 @@ func (s CarrierRate) MarshalJSON() ([]byte, error) {
 
 // ClaimHomepageRequest: Request message for the `ClaimHomepage` method.
 type ClaimHomepageRequest struct {
+	// Overwrite: Optional. When set to `true`, this option removes any existing
+	// claim on the requested website and replaces it with a claim from the account
+	// that makes the request.
+	Overwrite bool `json:"overwrite,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Overwrite") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Overwrite") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClaimHomepageRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ClaimHomepageRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateAndConfigureAccountRequest: Request message for the
 // `CreateAndConfigureAccount` method.
 type CreateAndConfigureAccountRequest struct {
-	// AcceptTermsOfService: Optional. The Terms of Service (ToS) to be accepted
-	// immediately upon account creation.
-	AcceptTermsOfService *AcceptTermsOfService `json:"acceptTermsOfService,omitempty"`
 	// Account: Required. The account to be created.
 	Account *Account `json:"account,omitempty"`
 	// Service: Required. An account service between the account to be created and
@@ -773,15 +761,15 @@ type CreateAndConfigureAccountRequest struct {
 	Service []*AddAccountService `json:"service,omitempty"`
 	// Users: Optional. Users to be added to the account.
 	Users []*CreateUserRequest `json:"users,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AcceptTermsOfService") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AcceptTermsOfService") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Account") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2086,6 +2074,8 @@ type ProductStatusChangeMessage struct {
 	Attribute string `json:"attribute,omitempty"`
 	// Changes: A message to describe the change that happened to the product
 	Changes []*ProductChange `json:"changes,omitempty"`
+	// ExpirationTime: The product expiration time.
+	ExpirationTime string `json:"expirationTime,omitempty"`
 	// ManagingAccount: The account that manages the merchant's account. can be the
 	// same as merchant id if it is standalone account. Format :
 	// `accounts/{service_provider_id}`
@@ -2989,7 +2979,8 @@ func (s Warehouse) MarshalJSON() ([]byte, error) {
 // the selected carrier. When set, no other transit time related field in
 // `delivery_time` should be set.
 type WarehouseBasedDeliveryTime struct {
-	// Carrier: Required. Carrier, such as "UPS" or "Fedex".
+	// Carrier: Required. Carrier, such as "UPS" or "Fedex". supported carriers
+	// (https://support.google.com/merchants/answer/7050921#zippy=%2Ccarrier-rates-au-de-uk-and-us-only)
 	Carrier string `json:"carrier,omitempty"`
 	// CarrierService: Required. Carrier service, such as "ground" or "2 days".
 	// The name of the service must be in the eddSupportedServices list.
@@ -3182,12 +3173,23 @@ type AccountsDeleteCall struct {
 
 // Delete: Deletes the specified account regardless of its type: standalone,
 // MCA or sub-account. Deleting an MCA leads to the deletion of all of its
-// sub-accounts. Executing this method requires admin access.
+// sub-accounts. Executing this method requires admin access. The deletion
+// succeeds only if the account does not provide services to any other account
+// and has no processed offers. You can use the `force` parameter to override
+// this.
 //
 // - name: The name of the account to delete. Format: `accounts/{account}`.
 func (r *AccountsService) Delete(name string) *AccountsDeleteCall {
 	c := &AccountsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": If set to `true`, the account is
+// deleted even if it provides services to other accounts or has processed
+// offers.
+func (c *AccountsDeleteCall) Force(force bool) *AccountsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
 }
 
@@ -3390,7 +3392,8 @@ type AccountsListCall struct {
 // constraints of the request such as page size or filters. This is not just
 // listing the sub-accounts of an MCA, but all accounts the calling user has
 // access to including other MCAs, linked accounts, standalone accounts and so
-// on.
+// on. If no filter is provided, then it returns accounts the user is directly
+// added to.
 func (r *AccountsService) List() *AccountsListCall {
 	c := &AccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -3703,8 +3706,10 @@ func (r *AccountsService) Patch(name string, account *Account) *AccountsPatchCal
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated. The following fields are supported (in both `snake_case` and
+// `lowerCamelCase`): - `account_name` - `adult_content` - `language_code` -
+// `time_zone`
 func (c *AccountsPatchCall) UpdateMask(updateMask string) *AccountsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4141,8 +4146,10 @@ func (r *AccountsBusinessIdentityService) UpdateBusinessIdentity(name string, bu
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated. The following fields are supported (in both `snake_case` and
+// `lowerCamelCase`): - `black_owned` - `latino_owned` - `promotions_consent` -
+// `small_business` - `veteran_owned` - `women_owned`
 func (c *AccountsBusinessIdentityUpdateBusinessIdentityCall) UpdateMask(updateMask string) *AccountsBusinessIdentityUpdateBusinessIdentityCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4360,8 +4367,10 @@ func (r *AccountsBusinessInfoService) UpdateBusinessInfo(name string, businessin
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated. The following fields are supported (in both `snake_case` and
+// `lowerCamelCase`): - `address` - `customer_service` -
+// `korean_business_registration_number`
 func (c *AccountsBusinessInfoUpdateBusinessInfoCall) UpdateMask(updateMask string) *AccountsBusinessInfoUpdateBusinessInfoCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4459,8 +4468,10 @@ type AccountsEmailPreferencesGetEmailPreferencesCall struct {
 }
 
 // GetEmailPreferences: Returns the email preferences for a Merchant Center
-// account user. Use the name=accounts/*/users/me/emailPreferences alias to get
-// preferences for the authenticated user.
+// account user. This service only permits retrieving and updating email
+// preferences for the authenticated user. Use the
+// name=accounts/*/users/me/emailPreferences alias to get preferences for the
+// authenticated user.
 //
 //   - name: The name of the `EmailPreferences` resource. Format:
 //     `accounts/{account}/users/{email}/emailPreferences`.
@@ -4587,7 +4598,8 @@ func (r *AccountsEmailPreferencesService) UpdateEmailPreferences(name string, em
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// fields being updated. The following fields are supported (in both
+// `snake_case` and `lowerCamelCase`): - `news_and_tips`
 func (c *AccountsEmailPreferencesUpdateEmailPreferencesCall) UpdateMask(updateMask string) *AccountsEmailPreferencesUpdateEmailPreferencesCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5019,8 +5031,9 @@ func (r *AccountsHomepageService) UpdateHomepage(name string, homepage *Homepage
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated. The following fields are supported (in both `snake_case` and
+// `lowerCamelCase`): - `uri`
 func (c *AccountsHomepageUpdateHomepageCall) UpdateMask(updateMask string) *AccountsHomepageUpdateHomepageCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7120,7 +7133,9 @@ type AccountsUsersDeleteCall struct {
 }
 
 // Delete: Deletes a Merchant Center account user. Executing this method
-// requires admin access.
+// requires admin access. The user to be deleted can't be the last admin user
+// of that account. Also a user is protected from deletion if it is managed by
+// Business Manager"
 //
 //   - name: The name of the user to delete. Format:
 //     `accounts/{account}/users/{email}` It is also possible to delete the user
@@ -7490,8 +7505,9 @@ func (r *AccountsUsersService) Patch(name string, user *User) *AccountsUsersPatc
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. List of
-// fields being updated.
+// UpdateMask sets the optional parameter "updateMask": List of fields being
+// updated. The following fields are supported (in both `snake_case` and
+// `lowerCamelCase`): - `access_rights`
 func (c *AccountsUsersPatchCall) UpdateMask(updateMask string) *AccountsUsersPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

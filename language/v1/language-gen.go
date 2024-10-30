@@ -884,7 +884,11 @@ type CpuMetric struct {
 	//   "A2_ULTRAGPU_2G"
 	//   "A2_ULTRAGPU_4G"
 	//   "A2_ULTRAGPU_8G"
+	//   "A3_HIGHGPU_1G"
+	//   "A3_HIGHGPU_2G"
+	//   "A3_HIGHGPU_4G"
 	//   "A3_HIGHGPU_8G"
+	//   "A3_MEGAGPU_8G"
 	//   "E2_STANDARD_2"
 	//   "E2_STANDARD_4"
 	//   "E2_STANDARD_8"
@@ -1398,7 +1402,11 @@ type GpuMetric struct {
 	//   "A2_ULTRAGPU_2G"
 	//   "A2_ULTRAGPU_4G"
 	//   "A2_ULTRAGPU_8G"
+	//   "A3_HIGHGPU_1G"
+	//   "A3_HIGHGPU_2G"
+	//   "A3_HIGHGPU_4G"
 	//   "A3_HIGHGPU_8G"
+	//   "A3_MEGAGPU_8G"
 	//   "E2_STANDARD_2"
 	//   "E2_STANDARD_4"
 	//   "E2_STANDARD_8"
@@ -1828,7 +1836,11 @@ type RamMetric struct {
 	//   "A2_ULTRAGPU_2G"
 	//   "A2_ULTRAGPU_4G"
 	//   "A2_ULTRAGPU_8G"
+	//   "A3_HIGHGPU_1G"
+	//   "A3_HIGHGPU_2G"
+	//   "A3_HIGHGPU_4G"
 	//   "A3_HIGHGPU_8G"
+	//   "A3_MEGAGPU_8G"
 	//   "E2_STANDARD_2"
 	//   "E2_STANDARD_4"
 	//   "E2_STANDARD_8"
@@ -3471,6 +3483,7 @@ type XPSImageModelServingSpecModelThroughputEstimation struct {
 	//   "NVIDIA_A100_80GB" - Nvidia A100 80GB GPU.
 	//   "NVIDIA_L4" - Nvidia L4 GPU.
 	//   "NVIDIA_H100_80GB" - Nvidia H100 80Gb GPU.
+	//   "NVIDIA_H100_MEGA_80GB" - Nvidia H100 80Gb GPU.
 	//   "TPU_V2" - TPU v2 (JellyFish).
 	//   "TPU_V3" - TPU v3 (DragonFish).
 	//   "TPU_V4_POD" - TPU_v4 (PufferFish).

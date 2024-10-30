@@ -1068,13 +1068,92 @@ func (s AdUrl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Adloox: Details of Adloox settings.
+// Adloox: Details of Adloox brand safety settings.
 type Adloox struct {
-	// ExcludedAdlooxCategories: Adloox's brand safety settings.
+	// AdultExplicitSexualContent: Optional. Adult and Explicit Sexual Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
 	//
 	// Possible values:
-	//   "ADLOOX_UNSPECIFIED" - This enum is only a placeholder and it doesn't
-	// specify any Adloox option.
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk exclusion option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
+	AdultExplicitSexualContent string `json:"adultExplicitSexualContent,omitempty"`
+	// ArmsAmmunitionContent: Optional. Arms and Ammunition Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk exclusion option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
+	ArmsAmmunitionContent string `json:"armsAmmunitionContent,omitempty"`
+	// CrimeHarmfulActsIndividualsSocietyHumanRightsViolationsContent: Optional.
+	// Crime and Harmful Acts Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk exclusion option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
+	CrimeHarmfulActsIndividualsSocietyHumanRightsViolationsContent string `json:"crimeHarmfulActsIndividualsSocietyHumanRightsViolationsContent,omitempty"`
+	// DeathInjuryMilitaryConflictContent: Optional. Death, Injury, or Military
+	// Conflict Content GARM (https://wfanet.org/leadership/garm/about-garm) risk
+	// ranges to exclude.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk exclusion option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
+	DeathInjuryMilitaryConflictContent string `json:"deathInjuryMilitaryConflictContent,omitempty"`
+	// DebatedSensitiveSocialIssueContent: Optional. Debated Sensitive Social Issue
+	// Content GARM (https://wfanet.org/leadership/garm/about-garm) risk ranges to
+	// exclude.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk exclusion option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
+	DebatedSensitiveSocialIssueContent string `json:"debatedSensitiveSocialIssueContent,omitempty"`
+	// DisplayIabViewability: Optional. IAB viewability threshold for display ads.
+	//
+	// Possible values:
+	//   "DISPLAY_IAB_VIEWABILITY_UNSPECIFIED" - Default value when not specified
+	// or is unknown in this version.
+	//   "DISPLAY_IAB_VIEWABILITY_10" - 10%+ in view (IAB display viewability
+	// standard).
+	//   "DISPLAY_IAB_VIEWABILITY_20" - 20%+ in view (IAB display viewability
+	// standard).
+	//   "DISPLAY_IAB_VIEWABILITY_35" - 35%+ in view (IAB display viewability
+	// standard).
+	//   "DISPLAY_IAB_VIEWABILITY_50" - 50%+ in view (IAB display viewability
+	// standard).
+	//   "DISPLAY_IAB_VIEWABILITY_75" - 75%+ in view (IAB display viewability
+	// standard).
+	DisplayIabViewability string `json:"displayIabViewability,omitempty"`
+	// ExcludedAdlooxCategories: Adloox categories to exclude.
+	//
+	// Possible values:
+	//   "ADLOOX_UNSPECIFIED" - Default value when a Adloox category is not
+	// specified or is unknown in this version.
 	//   "ADULT_CONTENT_HARD" - Adult content (hard).
 	//   "ADULT_CONTENT_SOFT" - Adult content (soft).
 	//   "ILLEGAL_CONTENT" - Illegal content.
@@ -1084,13 +1163,123 @@ type Adloox struct {
 	//   "LOW_VIEWABILITY_DOMAINS" - Low viewability domains.
 	//   "FRAUD" - Fraud.
 	ExcludedAdlooxCategories []string `json:"excludedAdlooxCategories,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExcludedAdlooxCategories")
+	// ExcludedFraudIvtMfaCategories: Optional. Adloox's fraud IVT MFA categories
+	// to exclude.
+	//
+	// Possible values:
+	//   "FRAUD_IVT_MFA_CATEGORY_UNSPECIFIED" - Default value when a Adloox Fraud,
+	// IVT, MFA category is not specified or is unknown in this version.
+	//   "FRAUD_IVT_MFA" - FRAUD, IVT, MFA.
+	ExcludedFraudIvtMfaCategories []string `json:"excludedFraudIvtMfaCategories,omitempty"`
+	// HateSpeechActsAggressionContent: Optional. Hate Speech and Acts of
+	// Aggression Content GARM (https://wfanet.org/leadership/garm/about-garm) risk
+	// ranges to exclude.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk exclusion option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
+	HateSpeechActsAggressionContent string `json:"hateSpeechActsAggressionContent,omitempty"`
+	// IllegalDrugsTobaccoEcigarettesVapingAlcoholContent: Optional. Illegal
+	// Drugs/Alcohol Content GARM (https://wfanet.org/leadership/garm/about-garm)
+	// risk ranges to exclude.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk exclusion option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
+	IllegalDrugsTobaccoEcigarettesVapingAlcoholContent string `json:"illegalDrugsTobaccoEcigarettesVapingAlcoholContent,omitempty"`
+	// MisinformationContent: Optional. Misinformation Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk exclusion option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
+	MisinformationContent string `json:"misinformationContent,omitempty"`
+	// ObscenityProfanityContent: Optional. Obscenity and Profanity Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk exclusion option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
+	ObscenityProfanityContent string `json:"obscenityProfanityContent,omitempty"`
+	// OnlinePiracyContent: Optional. Online Piracy Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk exclusion option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
+	OnlinePiracyContent string `json:"onlinePiracyContent,omitempty"`
+	// SpamHarmfulContent: Optional. Spam or Harmful Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk exclusion option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
+	SpamHarmfulContent string `json:"spamHarmfulContent,omitempty"`
+	// TerrorismContent: Optional. Terrorism Content GARM
+	// (https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.
+	//
+	// Possible values:
+	//   "GARM_RISK_EXCLUSION_UNSPECIFIED" - This enum is only a placeholder and it
+	// doesn't specify any GARM risk exclusion option.
+	//   "GARM_RISK_EXCLUSION_FLOOR" - Exclude floor risk.
+	//   "GARM_RISK_EXCLUSION_HIGH" - Exclude high and floor risk.
+	//   "GARM_RISK_EXCLUSION_MEDIUM" - Exclude medium, high, and floor risk.
+	//   "GARM_RISK_EXCLUSION_LOW" - Exclude all levels of risk (low, medium, high
+	// and floor).
+	TerrorismContent string `json:"terrorismContent,omitempty"`
+	// VideoIabViewability: Optional. IAB viewability threshold for video ads.
+	//
+	// Possible values:
+	//   "VIDEO_IAB_VIEWABILITY_UNSPECIFIED" - Default value when not specified or
+	// is unknown in this version.
+	//   "VIDEO_IAB_VIEWABILITY_10" - 10%+ in view (IAB video viewability
+	// standard).
+	//   "VIDEO_IAB_VIEWABILITY_20" - 20%+ in view (IAB video viewability
+	// standard).
+	//   "VIDEO_IAB_VIEWABILITY_35" - 35%+ in view (IAB video viewability
+	// standard).
+	//   "VIDEO_IAB_VIEWABILITY_50" - 50%+ in view (IAB video viewability
+	// standard).
+	//   "VIDEO_IAB_VIEWABILITY_75" - 75%+ in view (IAB video viewability
+	// standard).
+	VideoIabViewability string `json:"videoIabViewability,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdultExplicitSexualContent")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExcludedAdlooxCategories") to
+	// NullFields is a list of field names (e.g. "AdultExplicitSexualContent") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1110,8 +1299,7 @@ type Advertiser struct {
 	// AdvertiserId: Output only. The unique ID of the advertiser. Assigned by the
 	// system.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
-	// BillingConfig: Optional. Required. Billing related settings of the
-	// advertiser.
+	// BillingConfig: Required. Billing related settings of the advertiser.
 	BillingConfig *AdvertiserBillingConfig `json:"billingConfig,omitempty"`
 	// CreativeConfig: Required. Creative related settings of the advertiser.
 	CreativeConfig *AdvertiserCreativeConfig `json:"creativeConfig,omitempty"`
@@ -1213,7 +1401,7 @@ func (s AdvertiserAdServerConfig) MarshalJSON() ([]byte, error) {
 
 // AdvertiserBillingConfig: Billing related settings of an advertiser.
 type AdvertiserBillingConfig struct {
-	// BillingProfileId: Optional. The ID of a billing profile assigned to the
+	// BillingProfileId: Required. The ID of a billing profile assigned to the
 	// advertiser.
 	BillingProfileId int64 `json:"billingProfileId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "BillingProfileId") to
@@ -5413,6 +5601,8 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_8" - SDF version 8. **This SDF version is in beta. It is only
+	// available to a subset of users.**
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14043,6 +14233,8 @@ type SdfConfig struct {
 	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_8" - SDF version 8. **This SDF version is in beta. It is only
+	// available to a subset of users.**
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14118,6 +14310,8 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
+	//   "SDF_VERSION_8" - SDF version 8. **This SDF version is in beta. It is only
+	// available to a subset of users.**
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14266,15 +14460,9 @@ type SensitiveCategoryAssignedTargetingOptionDetails struct {
 	//   "SENSITIVE_CATEGORY_SHOCKING" - Content which may be considered shocking
 	// or disturbing, such as violent news stories, stunts, or toilet humor.
 	//   "SENSITIVE_CATEGORY_EMBEDDED_VIDEO" - YouTube videos embedded on websites
-	// outside of YouTube.com. Only applicable to YouTube and Partners line items.
-	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
-	// about this announced
-	// change](/display-video/api/deprecations#features.yt_li_categories).
+	// outside of YouTube.com.
 	//   "SENSITIVE_CATEGORY_LIVE_STREAMING_VIDEO" - Video of live events streamed
-	// over the internet. Only applicable to YouTube and Partners line items.
-	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
-	// about this announced
-	// change](/display-video/api/deprecations#features.yt_li_categories).
+	// over the internet.
 	ExcludedSensitiveCategory string `json:"excludedSensitiveCategory,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludedSensitiveCategory")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -14352,15 +14540,9 @@ type SensitiveCategoryTargetingOptionDetails struct {
 	//   "SENSITIVE_CATEGORY_SHOCKING" - Content which may be considered shocking
 	// or disturbing, such as violent news stories, stunts, or toilet humor.
 	//   "SENSITIVE_CATEGORY_EMBEDDED_VIDEO" - YouTube videos embedded on websites
-	// outside of YouTube.com. Only applicable to YouTube and Partners line items.
-	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
-	// about this announced
-	// change](/display-video/api/deprecations#features.yt_li_categories).
+	// outside of YouTube.com.
 	//   "SENSITIVE_CATEGORY_LIVE_STREAMING_VIDEO" - Video of live events streamed
-	// over the internet. Only applicable to YouTube and Partners line items.
-	// *Warning*: On **September 30, 2024**, this value will be sunset. [Read more
-	// about this announced
-	// change](/display-video/api/deprecations#features.yt_li_categories).
+	// over the internet.
 	SensitiveCategory string `json:"sensitiveCategory,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SensitiveCategory") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14590,10 +14772,15 @@ type TargetingExpansionConfig struct {
 	// item and ad group resources.
 	AudienceExpansionSeedListExcluded bool `json:"audienceExpansionSeedListExcluded,omitempty"`
 	// EnableOptimizedTargeting: Required. Whether to enable Optimized Targeting
-	// for the line item. *Warning*: Starting on **September 30, 2024**, optimized
-	// targeting will no longer be compatible with a subset of bid strategies. Read
-	// more about this announced change
-	// (/display-video/api/deprecations#features.ot_bid_strategies).
+	// for the line item. Optimized targeting is not compatible with all bid
+	// strategies. Attempting to set this field to `true` for a line item using one
+	// of the following combinations of BiddingStrategy fields and
+	// BiddingStrategyPerformanceGoalType will result in an error:
+	// maximize_auto_spend_bid: * `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_CIVA` *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_IVO_TEN` *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_AV_VIEWED`
+	// performance_goal_auto_bid: *
+	// `BIDDING_STRATEGY_PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM`
 	EnableOptimizedTargeting bool `json:"enableOptimizedTargeting,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudienceExpansionLevel") to
 	// unconditionally include in API requests. By default, fields with empty or

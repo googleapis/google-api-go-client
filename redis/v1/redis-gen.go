@@ -244,41 +244,6 @@ func (s AOFConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AssetLocation: Provides the mapping of a cloud asset to a direct physical
-// location or to a proxy that defines the location on its behalf.
-type AssetLocation struct {
-	// CcfeRmsPath: Spanner path of the CCFE RMS database. It is only applicable
-	// for CCFE tenants that use CCFE RMS for storing resource metadata.
-	CcfeRmsPath string `json:"ccfeRmsPath,omitempty"`
-	// Expected: Defines the customer expectation around ZI/ZS for this asset and
-	// ZI/ZS state of the region at the time of asset creation.
-	Expected *IsolationExpectations `json:"expected,omitempty"`
-	// ExtraParameters: Defines extra parameters required for specific asset types.
-	ExtraParameters []*ExtraParameter `json:"extraParameters,omitempty"`
-	// LocationData: Contains all kinds of physical location definitions for this
-	// asset.
-	LocationData []*LocationData `json:"locationData,omitempty"`
-	// ParentAsset: Defines parents assets if any in order to allow later
-	// generation of child_asset_location data via child assets.
-	ParentAsset []*CloudAsset `json:"parentAsset,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CcfeRmsPath") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CcfeRmsPath") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s AssetLocation) MarshalJSON() ([]byte, error) {
-	type NoMethod AssetLocation
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // AvailabilityConfiguration: Configuration for availability of database
 // instance
 type AvailabilityConfiguration struct {
@@ -386,28 +351,6 @@ func (s BackupRun) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BlobstoreLocation: Policy ID that identified data placement in Blobstore as
-// per go/blobstore-user-guide#data-metadata-placement-and-failure-domains
-type BlobstoreLocation struct {
-	PolicyId []string `json:"policyId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PolicyId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PolicyId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s BlobstoreLocation) MarshalJSON() ([]byte, error) {
-	type NoMethod BlobstoreLocation
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 type CertChain struct {
 	// Certificates: The certificates that form the CA chain, from leaf to root
 	// order.
@@ -459,47 +402,6 @@ func (s CertificateAuthority) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-type CloudAsset struct {
-	AssetName string `json:"assetName,omitempty"`
-	AssetType string `json:"assetType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AssetName") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AssetName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s CloudAsset) MarshalJSON() ([]byte, error) {
-	type NoMethod CloudAsset
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-type CloudAssetComposition struct {
-	ChildAsset []*CloudAsset `json:"childAsset,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChildAsset") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChildAsset") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s CloudAssetComposition) MarshalJSON() ([]byte, error) {
-	type NoMethod CloudAssetComposition
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // Cluster: A cluster instance.
 type Cluster struct {
 	// AuthorizationMode: Optional. The authorization mode of the Redis cluster. If
@@ -510,6 +412,8 @@ type Cluster struct {
 	//   "AUTH_MODE_IAM_AUTH" - IAM basic authorization mode
 	//   "AUTH_MODE_DISABLED" - Authorization disabled mode
 	AuthorizationMode string `json:"authorizationMode,omitempty"`
+	// ClusterEndpoints: Optional. A list of cluster enpoints.
+	ClusterEndpoints []*ClusterEndpoint `json:"clusterEndpoints,omitempty"`
 	// CreateTime: Output only. The timestamp associated with the cluster creation
 	// request.
 	CreateTime string `json:"createTime,omitempty"`
@@ -547,13 +451,16 @@ type Cluster struct {
 	// PreciseSizeGb: Output only. Precise value of redis memory size in GB for the
 	// entire cluster.
 	PreciseSizeGb float64 `json:"preciseSizeGb,omitempty"`
-	// PscConfigs: Required. Each PscConfig configures the consumer network where
+	// PscConfigs: Optional. Each PscConfig configures the consumer network where
 	// IPs will be designated to the cluster for client access through Private
 	// Service Connect Automation. Currently, only one PscConfig is supported.
 	PscConfigs []*PscConfig `json:"pscConfigs,omitempty"`
 	// PscConnections: Output only. The list of PSC connections that are
 	// auto-created through service connectivity automation.
 	PscConnections []*PscConnection `json:"pscConnections,omitempty"`
+	// PscServiceAttachments: Output only. Service attachment details to configure
+	// Psc connections
+	PscServiceAttachments []*PscServiceAttachment `json:"pscServiceAttachments,omitempty"`
 	// RedisConfigs: Optional. Key/Value pairs of customer overrides for mutable
 	// Redis Configs
 	RedisConfigs map[string]string `json:"redisConfigs,omitempty"`
@@ -624,6 +531,32 @@ func (s *Cluster) UnmarshalJSON(data []byte) error {
 	}
 	s.PreciseSizeGb = float64(s1.PreciseSizeGb)
 	return nil
+}
+
+// ClusterEndpoint: ClusterEndpoint consists of PSC connections that are
+// created as a group in each VPC network for accessing the cluster. In each
+// group, there shall be one connection for each service attachment in the
+// cluster.
+type ClusterEndpoint struct {
+	// Connections: A group of PSC connections. They are created in the same VPC
+	// network, one for each service attachment in the cluster.
+	Connections []*ConnectionDetail `json:"connections,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Connections") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Connections") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClusterEndpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterEndpoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClusterMaintenancePolicy: Maintenance policy per cluster.
@@ -773,6 +706,29 @@ type Compliance struct {
 
 func (s Compliance) MarshalJSON() ([]byte, error) {
 	type NoMethod Compliance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectionDetail: Detailed information of each PSC connection.
+type ConnectionDetail struct {
+	// PscConnection: Detailed information of a PSC connection that is created by
+	// the customer who owns the cluster.
+	PscConnection *PscConnection `json:"pscConnection,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PscConnection") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PscConnection") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectionDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectionDetail
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1613,26 +1569,6 @@ func (s DatabaseResourceRecommendationSignalData) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-type DirectLocationAssignment struct {
-	Location []*LocationAssignment `json:"location,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Location") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Location") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s DirectLocationAssignment) MarshalJSON() ([]byte, error) {
-	type NoMethod DirectLocationAssignment
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // DiscoveryEndpoint: Endpoints on each network, for Redis clients to connect
 // to the cluster.
 type DiscoveryEndpoint struct {
@@ -1728,30 +1664,6 @@ type ExportInstanceRequest struct {
 
 func (s ExportInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportInstanceRequest
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ExtraParameter: Defines parameters that should only be used for specific
-// asset types.
-type ExtraParameter struct {
-	// RegionalMigDistributionPolicy: Details about zones used by regional
-	// compute.googleapis.com/InstanceGroupManager to create instances.
-	RegionalMigDistributionPolicy *RegionalMigDistributionPolicy `json:"regionalMigDistributionPolicy,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "RegionalMigDistributionPolicy") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
-	// for more details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RegionalMigDistributionPolicy")
-	// to include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ExtraParameter) MarshalJSON() ([]byte, error) {
-	type NoMethod ExtraParameter
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2214,81 +2126,6 @@ func (s InternalResourceMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-type IsolationExpectations struct {
-	// RequirementOverride: Explicit overrides for ZI and ZS requirements to be
-	// used for resources that should be excluded from ZI/ZS verification logic.
-	RequirementOverride *RequirementOverride `json:"requirementOverride,omitempty"`
-	// Possible values:
-	//   "ZI_UNSPECIFIED"
-	//   "ZI_UNKNOWN" - To be used if tracking is not available
-	//   "ZI_NOT_REQUIRED"
-	//   "ZI_PREFERRED"
-	//   "ZI_REQUIRED"
-	ZiOrgPolicy string `json:"ziOrgPolicy,omitempty"`
-	// Possible values:
-	//   "ZI_REGION_POLICY_UNSPECIFIED"
-	//   "ZI_REGION_POLICY_UNKNOWN" - To be used if tracking is not available
-	//   "ZI_REGION_POLICY_NOT_SET"
-	//   "ZI_REGION_POLICY_FAIL_OPEN"
-	//   "ZI_REGION_POLICY_FAIL_CLOSED"
-	ZiRegionPolicy string `json:"ziRegionPolicy,omitempty"`
-	// Possible values:
-	//   "ZI_REGION_UNSPECIFIED"
-	//   "ZI_REGION_UNKNOWN" - To be used if tracking is not available
-	//   "ZI_REGION_NOT_ENABLED"
-	//   "ZI_REGION_ENABLED"
-	ZiRegionState string `json:"ziRegionState,omitempty"`
-	// ZoneIsolation: Deprecated: use zi_org_policy, zi_region_policy and
-	// zi_region_state instead for setting ZI expectations as per
-	// go/zicy-publish-physical-location.
-	//
-	// Possible values:
-	//   "ZI_UNSPECIFIED"
-	//   "ZI_UNKNOWN" - To be used if tracking is not available
-	//   "ZI_NOT_REQUIRED"
-	//   "ZI_PREFERRED"
-	//   "ZI_REQUIRED"
-	ZoneIsolation string `json:"zoneIsolation,omitempty"`
-	// ZoneSeparation: Deprecated: use zs_org_policy, and zs_region_stateinstead
-	// for setting Zs expectations as per go/zicy-publish-physical-location.
-	//
-	// Possible values:
-	//   "ZS_UNSPECIFIED"
-	//   "ZS_UNKNOWN" - To be used if tracking is not available
-	//   "ZS_NOT_REQUIRED"
-	//   "ZS_REQUIRED"
-	ZoneSeparation string `json:"zoneSeparation,omitempty"`
-	// Possible values:
-	//   "ZS_UNSPECIFIED"
-	//   "ZS_UNKNOWN" - To be used if tracking is not available
-	//   "ZS_NOT_REQUIRED"
-	//   "ZS_REQUIRED"
-	ZsOrgPolicy string `json:"zsOrgPolicy,omitempty"`
-	// Possible values:
-	//   "ZS_REGION_UNSPECIFIED"
-	//   "ZS_REGION_UNKNOWN" - To be used if tracking of the asset ZS-bit is not
-	// available
-	//   "ZS_REGION_NOT_ENABLED"
-	//   "ZS_REGION_ENABLED"
-	ZsRegionState string `json:"zsRegionState,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RequirementOverride") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RequirementOverride") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s IsolationExpectations) MarshalJSON() ([]byte, error) {
-	type NoMethod IsolationExpectations
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // ListClustersResponse: Response for ListClusters.
 type ListClustersResponse struct {
 	// Clusters: A list of Redis clusters in the project in the specified location,
@@ -2457,62 +2294,6 @@ type Location struct {
 
 func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-type LocationAssignment struct {
-	Location string `json:"location,omitempty"`
-	// Possible values:
-	//   "UNSPECIFIED"
-	//   "CLUSTER" - 1-10: Physical failure domains.
-	//   "POP"
-	//   "CLOUD_ZONE" - 11-20: Logical failure domains.
-	//   "CLOUD_REGION"
-	//   "MULTI_REGION_GEO"
-	//   "MULTI_REGION_JURISDICTION"
-	//   "GLOBAL"
-	//   "OTHER"
-	LocationType string `json:"locationType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Location") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Location") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s LocationAssignment) MarshalJSON() ([]byte, error) {
-	type NoMethod LocationAssignment
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-type LocationData struct {
-	BlobstoreLocation  *BlobstoreLocation        `json:"blobstoreLocation,omitempty"`
-	ChildAssetLocation *CloudAssetComposition    `json:"childAssetLocation,omitempty"`
-	DirectLocation     *DirectLocationAssignment `json:"directLocation,omitempty"`
-	GcpProjectProxy    *TenantProjectProxy       `json:"gcpProjectProxy,omitempty"`
-	PlacerLocation     *PlacerLocation           `json:"placerLocation,omitempty"`
-	SpannerLocation    *SpannerLocation          `json:"spannerLocation,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BlobstoreLocation") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BlobstoreLocation") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s LocationData) MarshalJSON() ([]byte, error) {
-	type NoMethod LocationData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2928,30 +2709,6 @@ func (s PersistenceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PlacerLocation: Message describing that the location of the customer
-// resource is tied to placer allocations
-type PlacerLocation struct {
-	// PlacerConfig: Directory with a config related to it in placer (e.g.
-	// "/placer/prod/home/my-root/my-dir")
-	PlacerConfig string `json:"placerConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "PlacerConfig") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PlacerConfig") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s PlacerLocation) MarshalJSON() ([]byte, error) {
-	type NoMethod PlacerLocation
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // Product: Product specification for Condor resources.
 type Product struct {
 	// Engine: The specific engine that the underlying database is running.
@@ -3050,6 +2807,17 @@ type PscConnection struct {
 	// Address: Required. The IP allocated on the consumer network for the PSC
 	// forwarding rule.
 	Address string `json:"address,omitempty"`
+	// ConnectionType: Output only. Type of the PSC connection.
+	//
+	// Possible values:
+	//   "CONNECTION_TYPE_UNSPECIFIED" - Cluster endpoint Type is not set
+	//   "CONNECTION_TYPE_DISCOVERY" - Cluster endpoint that will be used as for
+	// cluster topology discovery.
+	//   "CONNECTION_TYPE_PRIMARY" - Cluster endpoint that will be used as primary
+	// endpoint to access primary.
+	//   "CONNECTION_TYPE_READER" - Cluster endpoint that will be used as reader
+	// endpoint to access replicas.
+	ConnectionType string `json:"connectionType,omitempty"`
 	// ForwardingRule: Required. The URI of the consumer side forwarding rule.
 	// Example:
 	// projects/{projectNumOrId}/regions/us-east1/forwardingRules/{resourceId}.
@@ -3063,6 +2831,17 @@ type PscConnection struct {
 	// PscConnectionId: Required. The PSC connection id of the forwarding rule
 	// connected to the service attachment.
 	PscConnectionId string `json:"pscConnectionId,omitempty"`
+	// PscConnectionStatus: Output only. The status of the PSC connection. Please
+	// note that this value is updated periodically. To get the latest status of a
+	// PSC connection, follow
+	// https://cloud.google.com/vpc/docs/configure-private-service-connect-services#endpoint-details.
+	//
+	// Possible values:
+	//   "PSC_CONNECTION_STATUS_UNSPECIFIED" - PSC connection status is not
+	// specified.
+	//   "PSC_CONNECTION_STATUS_ACTIVE" - The connection is active
+	//   "PSC_CONNECTION_STATUS_NOT_FOUND" - Connection not found
+	PscConnectionStatus string `json:"pscConnectionStatus,omitempty"`
 	// ServiceAttachment: Required. The service attachment which is the target of
 	// the PSC connection, in the form of
 	// projects/{project-id}/regions/{region}/serviceAttachments/{service-attachment
@@ -3083,6 +2862,42 @@ type PscConnection struct {
 
 func (s PscConnection) MarshalJSON() ([]byte, error) {
 	type NoMethod PscConnection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PscServiceAttachment: Configuration of a service attachment of the cluster,
+// for creating PSC connections.
+type PscServiceAttachment struct {
+	// ConnectionType: Output only. Type of a PSC connection targeting this service
+	// attachment.
+	//
+	// Possible values:
+	//   "CONNECTION_TYPE_UNSPECIFIED" - Cluster endpoint Type is not set
+	//   "CONNECTION_TYPE_DISCOVERY" - Cluster endpoint that will be used as for
+	// cluster topology discovery.
+	//   "CONNECTION_TYPE_PRIMARY" - Cluster endpoint that will be used as primary
+	// endpoint to access primary.
+	//   "CONNECTION_TYPE_READER" - Cluster endpoint that will be used as reader
+	// endpoint to access replicas.
+	ConnectionType string `json:"connectionType,omitempty"`
+	// ServiceAttachment: Output only. Service attachment URI which your
+	// self-created PscConnection should use as target
+	ServiceAttachment string `json:"serviceAttachment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConnectionType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectionType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscServiceAttachment) MarshalJSON() ([]byte, error) {
+	type NoMethod PscServiceAttachment
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3154,33 +2969,6 @@ func (s ReconciliationOperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RegionalMigDistributionPolicy: To be used for specifying the intended
-// distribution of regional compute.googleapis.com/InstanceGroupManager
-// instances
-type RegionalMigDistributionPolicy struct {
-	// TargetShape: The shape in which the group converges around distribution of
-	// resources. Instance of proto2 enum
-	TargetShape int64 `json:"targetShape,omitempty"`
-	// Zones: Cloud zones used by regional MIG to create instances.
-	Zones []*ZoneConfiguration `json:"zones,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "TargetShape") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "TargetShape") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s RegionalMigDistributionPolicy) MarshalJSON() ([]byte, error) {
-	type NoMethod RegionalMigDistributionPolicy
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // RemoteCluster: Details of the remote cluster associated with this cluster in
 // a cross cluster replication setup.
 type RemoteCluster struct {
@@ -3204,38 +2992,6 @@ type RemoteCluster struct {
 
 func (s RemoteCluster) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteCluster
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-type RequirementOverride struct {
-	// Possible values:
-	//   "ZI_UNSPECIFIED"
-	//   "ZI_UNKNOWN" - To be used if tracking is not available
-	//   "ZI_NOT_REQUIRED"
-	//   "ZI_PREFERRED"
-	//   "ZI_REQUIRED"
-	ZiOverride string `json:"ziOverride,omitempty"`
-	// Possible values:
-	//   "ZS_UNSPECIFIED"
-	//   "ZS_UNKNOWN" - To be used if tracking is not available
-	//   "ZS_NOT_REQUIRED"
-	//   "ZS_REQUIRED"
-	ZsOverride string `json:"zsOverride,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ZiOverride") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ZiOverride") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s RequirementOverride) MarshalJSON() ([]byte, error) {
-	type NoMethod RequirementOverride
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3327,6 +3083,9 @@ type RetentionSettings struct {
 	//   "RETENTION_UNIT_OTHER" - For rest of the other category
 	RetentionUnit      string `json:"retentionUnit,omitempty"`
 	TimeBasedRetention string `json:"timeBasedRetention,omitempty"`
+	// TimestampBasedRetentionTime: Timestamp based retention period i.e.
+	// 2024-05-01T00:00:00Z
+	TimestampBasedRetentionTime string `json:"timestampBasedRetentionTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DurationBasedRetention") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3342,30 +3101,6 @@ type RetentionSettings struct {
 
 func (s RetentionSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod RetentionSettings
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-type SpannerLocation struct {
-	// BackupName: Set of backups used by the resource with name in the same format
-	// as what is available at http://table/spanner_automon.backup_metadata
-	BackupName []string `json:"backupName,omitempty"`
-	// DbName: Set of databases used by the resource in format /span//
-	DbName []string `json:"dbName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BackupName") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackupName") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s SpannerLocation) MarshalJSON() ([]byte, error) {
-	type NoMethod SpannerLocation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3450,40 +3185,23 @@ func (s Tags) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-type TenantProjectProxy struct {
-	ProjectNumbers []string `json:"projectNumbers,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ProjectNumbers") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ProjectNumbers") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s TenantProjectProxy) MarshalJSON() ([]byte, error) {
-	type NoMethod TenantProjectProxy
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // TimeOfDay: Represents a time of day. The date and time zone are either not
 // significant or are specified elsewhere. An API may choose to allow leap
 // seconds. Related types are google.type.Date and `google.protobuf.Timestamp`.
 type TimeOfDay struct {
-	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API may
-	// choose to allow the value "24:00:00" for scenarios like business closing
-	// time.
+	// Hours: Hours of a day in 24 hour format. Must be greater than or equal to 0
+	// and typically must be less than or equal to 23. An API may choose to allow
+	// the value "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
-	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Minutes of an hour. Must be greater than or equal to 0 and less
+	// than or equal to 59.
 	Minutes int64 `json:"minutes,omitempty"`
-	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+	// Nanos: Fractions of seconds, in nanoseconds. Must be greater than or equal
+	// to 0 and less than or equal to 999,999,999.
 	Nanos int64 `json:"nanos,omitempty"`
-	// Seconds: Seconds of minutes of the time. Must normally be from 0 to 59. An
-	// API may allow the value 60 if it allows leap-seconds.
+	// Seconds: Seconds of a minute. Must be greater than or equal to 0 and
+	// typically must be less than or equal to 59. An API may allow the value 60 if
+	// it allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3685,26 +3403,6 @@ type WeeklyMaintenanceWindow struct {
 
 func (s WeeklyMaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod WeeklyMaintenanceWindow
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-type ZoneConfiguration struct {
-	Zone string `json:"zone,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Zone") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Zone") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ZoneConfiguration) MarshalJSON() ([]byte, error) {
-	type NoMethod ZoneConfiguration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

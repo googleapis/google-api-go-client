@@ -2183,6 +2183,20 @@ type GoogleCloudDatacatalogV1Tag struct {
 	// schema. To attach a tag to a nested column, separate column names with a dot
 	// (`.`). Example: `column.nested_column`.
 	Column string `json:"column,omitempty"`
+	// DataplexTransferStatus: Output only. Denotes the transfer status of the Tag
+	// Template.
+	//
+	// Possible values:
+	//   "DATAPLEX_TRANSFER_STATUS_UNSPECIFIED" - Default value. TagTemplate and
+	// its tags are only visible and editable in DataCatalog.
+	//   "MIGRATED" - TagTemplate and its tags are auto-copied to Dataplex service.
+	// Visible in both services. Editable in DataCatalog, read-only in Dataplex.
+	// Deprecated: Individual TagTemplate migration is deprecated in favor of
+	// organization or project wide TagTemplate migration opt-in.
+	//   "TRANSFERRED" - TagTemplate and its tags are auto-copied to Dataplex
+	// service. Visible in both services. Editable in Dataplex, read-only in
+	// DataCatalog.
+	DataplexTransferStatus string `json:"dataplexTransferStatus,omitempty"`
 	// Fields: Required. Maps the ID of a tag field to its value and additional
 	// information about that field. Tag template defines valid field IDs. A tag
 	// must have at least 1 field and at most 500 fields.

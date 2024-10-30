@@ -395,6 +395,10 @@ type Backup struct {
 	//   "FAILED" - The backup failed.
 	//   "DELETING" - The backup is being deleted.
 	State string `json:"state,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: ``` "123/environment": "production",
+	// "123/costCenter": "marketing" ```
+	Tags map[string]string `json:"tags,omitempty"`
 	// Type: The backup type, which suggests the trigger for the backup.
 	//
 	// Possible values:
@@ -469,7 +473,7 @@ type ClientConnectionConfig struct {
 	// RequireConnectors: Optional. Configuration to enforce connectors only (ex:
 	// AuthProxy) connections to the database.
 	RequireConnectors bool `json:"requireConnectors,omitempty"`
-	// SslConfig: Optional. SSL config option for this instance.
+	// SslConfig: Optional. SSL configuration option for this instance.
 	SslConfig *SslConfig `json:"sslConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RequireConnectors") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -657,11 +661,15 @@ type Cluster struct {
 	// SubscriptionType: Optional. Subscription type of the cluster.
 	//
 	// Possible values:
-	//   "SUBSCRIPTION_TYPE_UNSPECIFIED" - This is an unknown Subscription type (By
-	// default, Subscription Type is STANDARD)
+	//   "SUBSCRIPTION_TYPE_UNSPECIFIED" - This is an unknown subscription type. By
+	// default, the subscription type is STANDARD.
 	//   "STANDARD" - Standard subscription.
 	//   "TRIAL" - Trial subscription.
 	SubscriptionType string `json:"subscriptionType,omitempty"`
+	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
+	// this resource. For example: ``` "123/environment": "production",
+	// "123/costCenter": "marketing" ```
+	Tags map[string]string `json:"tags,omitempty"`
 	// TrialMetadata: Output only. Metadata for free trial clusters
 	TrialMetadata *TrialMetadata `json:"trialMetadata,omitempty"`
 	// Uid: Output only. The system-generated UID of the resource. The UID is
@@ -964,20 +972,20 @@ func (s EncryptionInfo) MarshalJSON() ([]byte, error) {
 // FailoverInstanceRequest: Message for triggering failover on an Instance
 type FailoverInstanceRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
-	// unique request ID so that if you must retry your request, the server will
-	// know to ignore the request if it has already been completed. The server will
-	// guarantee that for at least 60 minutes after the first request. For example,
-	// consider a situation where you make an initial request and the request times
-	// out. If you make the request again with the same request ID, the server can
-	// check if original operation with the same request ID was received, and if
-	// so, will ignore the second request. This prevents clients from accidentally
-	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// unique request ID so that if you must retry your request, the server ignores
+	// the request if it has already been completed. The server guarantees that for
+	// at least 60 minutes since the first request. For example, consider a
+	// situation where you make an initial request and the request times out. If
+	// you make the request again with the same request ID, the server can check if
+	// the original operation with the same request ID was received, and if so,
+	// ignores the second request. This prevents clients from accidentally creating
+	// duplicate commitments. The request ID must be a valid UUID with the
 	// exception that zero UUID is not supported
 	// (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
-	// ValidateOnly: Optional. If set, performs request validation (e.g. permission
-	// checks and any other type of validation), but do not actually execute the
-	// failover.
+	// ValidateOnly: Optional. If set, performs request validation, for example,
+	// permission checks and any other type of validation, but does not actually
+	// execute the create request.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RequestId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1070,16 +1078,19 @@ func (s GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
 // allow leap seconds. Related types are google.type.Date and
 // `google.protobuf.Timestamp`.
 type GoogleTypeTimeOfDay struct {
-	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API may
-	// choose to allow the value "24:00:00" for scenarios like business closing
-	// time.
+	// Hours: Hours of a day in 24 hour format. Must be greater than or equal to 0
+	// and typically must be less than or equal to 23. An API may choose to allow
+	// the value "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
-	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Minutes of an hour. Must be greater than or equal to 0 and less
+	// than or equal to 59.
 	Minutes int64 `json:"minutes,omitempty"`
-	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+	// Nanos: Fractions of seconds, in nanoseconds. Must be greater than or equal
+	// to 0 and less than or equal to 999,999,999.
 	Nanos int64 `json:"nanos,omitempty"`
-	// Seconds: Seconds of minutes of the time. Must normally be from 0 to 59. An
-	// API may allow the value 60 if it allows leap-seconds.
+	// Seconds: Seconds of a minute. Must be greater than or equal to 0 and
+	// typically must be less than or equal to 59. An API may allow the value 60 if
+	// it allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1108,20 +1119,20 @@ type InjectFaultRequest struct {
 	//   "STOP_VM" - Stop the VM
 	FaultType string `json:"faultType,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
-	// unique request ID so that if you must retry your request, the server will
-	// know to ignore the request if it has already been completed. The server will
-	// guarantee that for at least 60 minutes after the first request. For example,
-	// consider a situation where you make an initial request and the request times
-	// out. If you make the request again with the same request ID, the server can
-	// check if original operation with the same request ID was received, and if
-	// so, will ignore the second request. This prevents clients from accidentally
-	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// unique request ID so that if you must retry your request, the server ignores
+	// the request if it has already been completed. The server guarantees that for
+	// at least 60 minutes since the first request. For example, consider a
+	// situation where you make an initial request and the request times out. If
+	// you make the request again with the same request ID, the server can check if
+	// the original operation with the same request ID was received, and if so,
+	// ignores the second request. This prevents clients from accidentally creating
+	// duplicate commitments. The request ID must be a valid UUID with the
 	// exception that zero UUID is not supported
 	// (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
-	// ValidateOnly: Optional. If set, performs request validation (e.g. permission
-	// checks and any other type of validation), but do not actually execute the
-	// fault injection.
+	// ValidateOnly: Optional. If set, performs request validation, for example,
+	// permission checks and any other type of validation, but does not actually
+	// execute the create request.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FaultType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1216,7 +1227,7 @@ type Instance struct {
 	// The prefix of the instance resource name is the name of the parent resource:
 	// * projects/{project}/locations/{region}/clusters/{cluster_id}
 	Name string `json:"name,omitempty"`
-	// NetworkConfig: Optional. Instance level network configuration.
+	// NetworkConfig: Optional. Instance-level network configuration.
 	NetworkConfig *InstanceNetworkConfig `json:"networkConfig,omitempty"`
 	// Nodes: Output only. List of available read-only VMs in this instance,
 	// including the standby for a PRIMARY instance.
@@ -1294,7 +1305,7 @@ func (s Instance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InstanceNetworkConfig: Metadata related to instance level network
+// InstanceNetworkConfig: Metadata related to instance-level network
 // configuration.
 type InstanceNetworkConfig struct {
 	// AuthorizedExternalNetworks: Optional. A list of external network authorized
@@ -1897,20 +1908,20 @@ type PromoteClusterRequest struct {
 	// an ABORTED error will be returned.
 	Etag string `json:"etag,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
-	// unique request ID so that if you must retry your request, the server will
-	// know to ignore the request if it has already been completed. The server will
-	// guarantee that for at least 60 minutes after the first request. For example,
-	// consider a situation where you make an initial request and the request times
-	// out. If you make the request again with the same request ID, the server can
-	// check if original operation with the same request ID was received, and if
-	// so, will ignore the second request. This prevents clients from accidentally
-	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// unique request ID so that if you must retry your request, the server ignores
+	// the request if it has already been completed. The server guarantees that for
+	// at least 60 minutes since the first request. For example, consider a
+	// situation where you make an initial request and the request times out. If
+	// you make the request again with the same request ID, the server can check if
+	// original operation with the same request ID was received, and if so, will
+	// ignore the second request. This prevents clients from accidentally creating
+	// duplicate commitments. The request ID must be a valid UUID with the
 	// exception that zero UUID is not supported
 	// (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
-	// ValidateOnly: Optional. If set, performs request validation (e.g. permission
-	// checks and any other type of validation), but do not actually execute the
-	// delete.
+	// ValidateOnly: Optional. If set, performs request validation, for example,
+	// permission checks and any other type of validation, but does not actually
+	// execute the create request.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2098,23 +2109,23 @@ func (s ReadPoolConfig) MarshalJSON() ([]byte, error) {
 
 type RestartInstanceRequest struct {
 	// NodeIds: Optional. Full name of the nodes as obtained from
-	// INSTANCE_VIEW_FULL to restart upon. Only applicable for read instances.
+	// INSTANCE_VIEW_FULL to restart upon. Applicable only to read instances.
 	NodeIds []string `json:"nodeIds,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
-	// unique request ID so that if you must retry your request, the server will
-	// know to ignore the request if it has already been completed. The server will
-	// guarantee that for at least 60 minutes after the first request. For example,
-	// consider a situation where you make an initial request and the request times
-	// out. If you make the request again with the same request ID, the server can
-	// check if original operation with the same request ID was received, and if
-	// so, will ignore the second request. This prevents clients from accidentally
-	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// unique request ID so that if you must retry your request, the server ignores
+	// the request if it has already been completed. The server guarantees that for
+	// at least 60 minutes since the first request. For example, consider a
+	// situation where you make an initial request and the request times out. If
+	// you make the request again with the same request ID, the server can check if
+	// the original operation with the same request ID was received, and if so,
+	// ignores the second request. This prevents clients from accidentally creating
+	// duplicate commitments. The request ID must be a valid UUID with the
 	// exception that zero UUID is not supported
 	// (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
-	// ValidateOnly: Optional. If set, performs request validation (e.g. permission
-	// checks and any other type of validation), but do not actually execute the
-	// restart.
+	// ValidateOnly: Optional. If set, performs request validation, for example,
+	// permission checks and any other type of validation, but does not actually
+	// execute the create request.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NodeIds") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2147,20 +2158,20 @@ type RestoreClusterRequest struct {
 	// be enabled in the source cluster for this operation to succeed.
 	ContinuousBackupSource *ContinuousBackupSource `json:"continuousBackupSource,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
-	// unique request ID so that if you must retry your request, the server will
-	// know to ignore the request if it has already been completed. The server will
-	// guarantee that for at least 60 minutes since the first request. For example,
-	// consider a situation where you make an initial request and the request times
-	// out. If you make the request again with the same request ID, the server can
-	// check if original operation with the same request ID was received, and if
-	// so, will ignore the second request. This prevents clients from accidentally
-	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// unique request ID so that if you must retry your request, the server ignores
+	// the request if it has already been completed. The server guarantees that for
+	// at least 60 minutes since the first request. For example, consider a
+	// situation where you make an initial request and the request times out. If
+	// you make the request again with the same request ID, the server can check if
+	// the original operation with the same request ID was received, and if so,
+	// ignores the second request. This prevents clients from accidentally creating
+	// duplicate commitments. The request ID must be a valid UUID with the
 	// exception that zero UUID is not supported
 	// (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
-	// ValidateOnly: Optional. If set, performs request validation (e.g. permission
-	// checks and any other type of validation), but do not actually execute the
-	// import request.
+	// ValidateOnly: Optional. If set, performs request validation, for example,
+	// permission checks and any other type of validation, but does not actually
+	// execute the create request.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupSource") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2219,7 +2230,7 @@ type SslConfig struct {
 	// behavior.
 	//
 	// Possible values:
-	//   "SSL_MODE_UNSPECIFIED" - SSL mode not specified. Defaults to
+	//   "SSL_MODE_UNSPECIFIED" - SSL mode is not specified. Defaults to
 	// ENCRYPTED_ONLY.
 	//   "SSL_MODE_ALLOW" - SSL connections are optional. CA verification not
 	// enforced.
@@ -2227,8 +2238,8 @@ type SslConfig struct {
 	// enforced. Clients may use locally self-signed certificates (default psql
 	// client behavior).
 	//   "SSL_MODE_VERIFY_CA" - SSL connections are required. CA verification
-	// enforced. Clients must have certificates signed by a Cluster CA, e.g. via
-	// GenerateClientCertificate.
+	// enforced. Clients must have certificates signed by a Cluster CA, for
+	// example, using GenerateClientCertificate.
 	//   "ALLOW_UNENCRYPTED_AND_ENCRYPTED" - SSL connections are optional. CA
 	// verification not enforced.
 	//   "ENCRYPTED_ONLY" - SSL connections are required. CA verification not
@@ -2883,7 +2894,7 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceId) MarshalJSON() (
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata: Common model
-// for database resource instance metadata. Next ID: 21
+// for database resource instance metadata. Next ID: 23
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// AvailabilityConfiguration: Availability configuration for this instance
 	AvailabilityConfiguration *StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
@@ -2907,6 +2918,16 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	CurrentState string `json:"currentState,omitempty"`
 	// CustomMetadata: Any custom metadata associated with the resource
 	CustomMetadata *StorageDatabasecenterPartnerapiV1mainCustomMetadataData `json:"customMetadata,omitempty"`
+	// Edition: Optional. Edition represents whether the instance is ENTERPRISE or
+	// ENTERPRISE_PLUS. This information is core to Cloud SQL only and is used to
+	// identify the edition of the instance.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - Default, to make it consistent with instance
+	// edition enum.
+	//   "EDITION_ENTERPRISE" - Represents the enterprise edition.
+	//   "EDITION_ENTERPRISE_PLUS" - Represents the enterprise plus edition.
+	Edition string `json:"edition,omitempty"`
 	// Entitlements: Entitlements associated with the resource
 	Entitlements []*StorageDatabasecenterPartnerapiV1mainEntitlement `json:"entitlements,omitempty"`
 	// ExpectedState: The state that the instance is expected to be in. For
@@ -2948,6 +2969,10 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// Database resource. Else it would be NULL. REQUIRED if the immediate parent
 	// exists when first time resource is getting ingested, otherwise optional.
 	PrimaryResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"primaryResourceId,omitempty"`
+	// PrimaryResourceLocation: Primary resource location. REQUIRED if the
+	// immediate parent exists when first time resource is getting ingested,
+	// otherwise optional.
+	PrimaryResourceLocation string `json:"primaryResourceLocation,omitempty"`
 	// Product: The product this resource represents.
 	Product *StorageDatabasecenterProtoCommonProduct `json:"product,omitempty"`
 	// ResourceContainer: Closest parent Cloud Resource Manager container of this
@@ -3426,7 +3451,10 @@ func (s StorageDatabasecenterPartnerapiV1mainOperationError) MarshalJSON() ([]by
 }
 
 type StorageDatabasecenterPartnerapiV1mainRetentionSettings struct {
-	QuantityBasedRetention int64 `json:"quantityBasedRetention,omitempty"`
+	// DurationBasedRetention: Duration based retention period i.e. 172800 seconds
+	// (2 days)
+	DurationBasedRetention string `json:"durationBasedRetention,omitempty"`
+	QuantityBasedRetention int64  `json:"quantityBasedRetention,omitempty"`
 	// RetentionUnit: The unit that 'retained_backups' represents.
 	//
 	// Possible values:
@@ -3434,17 +3462,23 @@ type StorageDatabasecenterPartnerapiV1mainRetentionSettings struct {
 	// be treated as COUNT.
 	//   "COUNT" - Retention will be by count, eg. "retain the most recent 7
 	// backups".
-	//   "TIME" - Retention will be by Time, eg. "retain the last 7 days backups".
+	//   "TIME" - Retention will be by Time, eg. "retain backups till a specific
+	// time" i.e. till 2024-05-01T00:00:00Z.
+	//   "DURATION" - Retention will be by duration, eg. "retain the backups for
+	// 172800 seconds (2 days)".
 	//   "RETENTION_UNIT_OTHER" - For rest of the other category
 	RetentionUnit      string `json:"retentionUnit,omitempty"`
 	TimeBasedRetention string `json:"timeBasedRetention,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "QuantityBasedRetention") to
+	// TimestampBasedRetentionTime: Timestamp based retention period i.e.
+	// 2024-05-01T00:00:00Z
+	TimestampBasedRetentionTime string `json:"timestampBasedRetentionTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DurationBasedRetention") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "QuantityBasedRetention") to
+	// NullFields is a list of field names (e.g. "DurationBasedRetention") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3705,20 +3739,20 @@ func (s SupportedDatabaseFlag) MarshalJSON() ([]byte, error) {
 // SwitchoverClusterRequest: Message for switching over to a cluster
 type SwitchoverClusterRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
-	// unique request ID so that if you must retry your request, the server will
-	// know to ignore the request if it has already been completed. The server will
-	// guarantee that for at least 60 minutes after the first request. For example,
-	// consider a situation where you make an initial request and the request times
-	// out. If you make the request again with the same request ID, the server can
-	// check if original operation with the same request ID was received, and if
-	// so, will ignore the second request. This prevents clients from accidentally
-	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// unique request ID so that if you must retry your request, the server ignores
+	// the request if it has already been completed. The server guarantees that for
+	// at least 60 minutes since the first request. For example, consider a
+	// situation where you make an initial request and the request times out. If
+	// you make the request again with the same request ID, the server can check if
+	// the original operation with the same request ID was received, and if so,
+	// ignores the second request. This prevents clients from accidentally creating
+	// duplicate commitments. The request ID must be a valid UUID with the
 	// exception that zero UUID is not supported
 	// (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
-	// ValidateOnly: Optional. If set, performs request validation (e.g. permission
-	// checks and any other type of validation), but do not actually execute the
-	// delete.
+	// ValidateOnly: Optional. If set, performs request validation, for example,
+	// permission checks and any other type of validation, but does not actually
+	// execute the create request.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RequestId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3797,20 +3831,20 @@ type UpgradeClusterRequest struct {
 	// an ABORTED error will be returned.
 	Etag string `json:"etag,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
-	// unique request ID so that if you must retry your request, the server will
-	// know to ignore the request if it has already been completed. The server will
-	// guarantee that for at least 60 minutes after the first request. For example,
-	// consider a situation where you make an initial request and the request times
-	// out. If you make the request again with the same request ID, the server can
-	// check if original operation with the same request ID was received, and if
-	// so, will ignore the second request. This prevents clients from accidentally
-	// creating duplicate commitments. The request ID must be a valid UUID with the
+	// unique request ID so that if you must retry your request, the server ignores
+	// the request if it has already been completed. The server guarantees that for
+	// at least 60 minutes since the first request. For example, consider a
+	// situation where you make an initial request and the request times out. If
+	// you make the request again with the same request ID, the server can check if
+	// the original operation with the same request ID was received, and if so,
+	// ignores the second request. This prevents clients from accidentally creating
+	// duplicate commitments. The request ID must be a valid UUID with the
 	// exception that zero UUID is not supported
 	// (00000000-0000-0000-0000-000000000000).
 	RequestId string `json:"requestId,omitempty"`
-	// ValidateOnly: Optional. If set, performs request validation (e.g. permission
-	// checks and any other type of validation), but does not actually execute the
-	// upgrade.
+	// ValidateOnly: Optional. If set, performs request validation, for example,
+	// permission checks and any other type of validation, but does not actually
+	// execute the create request.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// Version: Required. The version the cluster is going to be upgraded to.
 	//
@@ -4277,13 +4311,13 @@ func (c *ProjectsLocationsBackupsCreateCall) BackupId(backupId string) *Projects
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsBackupsCreateCall) RequestId(requestId string) *ProjectsLocationsBackupsCreateCall {
@@ -4408,13 +4442,13 @@ func (c *ProjectsLocationsBackupsDeleteCall) Etag(etag string) *ProjectsLocation
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsBackupsDeleteCall) RequestId(requestId string) *ProjectsLocationsBackupsDeleteCall {
@@ -4807,13 +4841,13 @@ func (c *ProjectsLocationsBackupsPatchCall) AllowMissing(allowMissing bool) *Pro
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsBackupsPatchCall) RequestId(requestId string) *ProjectsLocationsBackupsPatchCall {
@@ -4949,13 +4983,13 @@ func (c *ProjectsLocationsClustersCreateCall) ClusterId(clusterId string) *Proje
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsClustersCreateCall) RequestId(requestId string) *ProjectsLocationsClustersCreateCall {
@@ -4964,8 +4998,8 @@ func (c *ProjectsLocationsClustersCreateCall) RequestId(requestId string) *Proje
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, performs
-// request validation (e.g. permission checks and any other type of
-// validation), but do not actually execute the create request.
+// request validation, for example, permission checks and any other type of
+// validation, but does not actually execute the create request.
 func (c *ProjectsLocationsClustersCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsClustersCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -5083,13 +5117,13 @@ func (c *ProjectsLocationsClustersCreatesecondaryCall) ClusterId(clusterId strin
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsClustersCreatesecondaryCall) RequestId(requestId string) *ProjectsLocationsClustersCreatesecondaryCall {
@@ -5098,8 +5132,8 @@ func (c *ProjectsLocationsClustersCreatesecondaryCall) RequestId(requestId strin
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, performs
-// request validation (e.g. permission checks and any other type of
-// validation), but do not actually execute the create request.
+// request validation, for example, permission checks and any other type of
+// validation, but does not actually execute the create request.
 func (c *ProjectsLocationsClustersCreatesecondaryCall) ValidateOnly(validateOnly bool) *ProjectsLocationsClustersCreatesecondaryCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -5222,13 +5256,13 @@ func (c *ProjectsLocationsClustersDeleteCall) Force(force bool) *ProjectsLocatio
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsClustersDeleteCall) RequestId(requestId string) *ProjectsLocationsClustersDeleteCall {
@@ -5237,8 +5271,8 @@ func (c *ProjectsLocationsClustersDeleteCall) RequestId(requestId string) *Proje
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, performs
-// request validation (e.g. permission checks and any other type of
-// validation), but do not actually execute the delete.
+// request validation, for example, permission checks and any other type of
+// validation, but does not actually execute the create request.
 func (c *ProjectsLocationsClustersDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsClustersDeleteCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -5648,13 +5682,13 @@ func (c *ProjectsLocationsClustersPatchCall) AllowMissing(allowMissing bool) *Pr
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsClustersPatchCall) RequestId(requestId string) *ProjectsLocationsClustersPatchCall {
@@ -5673,8 +5707,8 @@ func (c *ProjectsLocationsClustersPatchCall) UpdateMask(updateMask string) *Proj
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, performs
-// request validation (e.g. permission checks and any other type of
-// validation), but do not actually execute the update request.
+// request validation, for example, permission checks and any other type of
+// validation, but does not actually execute the create request.
 func (c *ProjectsLocationsClustersPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsClustersPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -5979,8 +6013,8 @@ type ProjectsLocationsClustersSwitchoverCall struct {
 	header_                  http.Header
 }
 
-// Switchover: Switches the role of PRIMARY and SECONDARY cluster without any
-// data loss. This promotes the SECONDARY cluster to PRIMARY and sets up
+// Switchover: Switches the roles of PRIMARY and SECONDARY clusters without any
+// data loss. This promotes the SECONDARY cluster to PRIMARY and sets up the
 // original PRIMARY cluster to replicate from this newly promoted cluster.
 //
 //   - name: The name of the resource. For the required format, see the comment
@@ -6204,13 +6238,13 @@ func (c *ProjectsLocationsClustersInstancesCreateCall) InstanceId(instanceId str
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsClustersInstancesCreateCall) RequestId(requestId string) *ProjectsLocationsClustersInstancesCreateCall {
@@ -6219,8 +6253,8 @@ func (c *ProjectsLocationsClustersInstancesCreateCall) RequestId(requestId strin
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, performs
-// request validation (e.g. permission checks and any other type of
-// validation), but do not actually execute the create request.
+// request validation, for example, permission checks and any other type of
+// validation, but does not actually execute the create request.
 func (c *ProjectsLocationsClustersInstancesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsClustersInstancesCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -6338,13 +6372,13 @@ func (c *ProjectsLocationsClustersInstancesCreatesecondaryCall) InstanceId(insta
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsClustersInstancesCreatesecondaryCall) RequestId(requestId string) *ProjectsLocationsClustersInstancesCreatesecondaryCall {
@@ -6353,8 +6387,8 @@ func (c *ProjectsLocationsClustersInstancesCreatesecondaryCall) RequestId(reques
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, performs
-// request validation (e.g. permission checks and any other type of
-// validation), but do not actually execute the create request.
+// request validation, for example, permission checks and any other type of
+// validation, but does not actually execute the create request.
 func (c *ProjectsLocationsClustersInstancesCreatesecondaryCall) ValidateOnly(validateOnly bool) *ProjectsLocationsClustersInstancesCreatesecondaryCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -6470,13 +6504,13 @@ func (c *ProjectsLocationsClustersInstancesDeleteCall) Etag(etag string) *Projec
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsClustersInstancesDeleteCall) RequestId(requestId string) *ProjectsLocationsClustersInstancesDeleteCall {
@@ -6485,8 +6519,8 @@ func (c *ProjectsLocationsClustersInstancesDeleteCall) RequestId(requestId strin
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, performs
-// request validation (e.g. permission checks and any other type of
-// validation), but do not actually execute the delete.
+// request validation, for example, permission checks and any other type of
+// validation, but does not actually execute the create request.
 func (c *ProjectsLocationsClustersInstancesDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsClustersInstancesDeleteCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -6825,13 +6859,13 @@ func (r *ProjectsLocationsClustersInstancesService) GetConnectionInfo(parent str
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsClustersInstancesGetConnectionInfoCall) RequestId(requestId string) *ProjectsLocationsClustersInstancesGetConnectionInfoCall {
@@ -7228,13 +7262,13 @@ func (c *ProjectsLocationsClustersInstancesPatchCall) AllowMissing(allowMissing 
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsClustersInstancesPatchCall) RequestId(requestId string) *ProjectsLocationsClustersInstancesPatchCall {
@@ -7253,8 +7287,8 @@ func (c *ProjectsLocationsClustersInstancesPatchCall) UpdateMask(updateMask stri
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": If set, performs
-// request validation (e.g. permission checks and any other type of
-// validation), but do not actually execute the update request.
+// request validation, for example, permission checks and any other type of
+// validation, but does not actually execute the create request.
 func (c *ProjectsLocationsClustersInstancesPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsClustersInstancesPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -7465,13 +7499,13 @@ func (r *ProjectsLocationsClustersUsersService) Create(parent string, user *User
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsClustersUsersCreateCall) RequestId(requestId string) *ProjectsLocationsClustersUsersCreateCall {
@@ -7595,13 +7629,13 @@ func (r *ProjectsLocationsClustersUsersService) Delete(name string) *ProjectsLoc
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsClustersUsersDeleteCall) RequestId(requestId string) *ProjectsLocationsClustersUsersDeleteCall {
@@ -7988,13 +8022,13 @@ func (c *ProjectsLocationsClustersUsersPatchCall) AllowMissing(allowMissing bool
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server ignores the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsClustersUsersPatchCall) RequestId(requestId string) *ProjectsLocationsClustersUsersPatchCall {

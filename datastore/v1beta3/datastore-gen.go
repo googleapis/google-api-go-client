@@ -758,6 +758,84 @@ func (s Filter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FindNearest: Nearest Neighbors search config. The ordering provided by
+// FindNearest supersedes the order_by stage. If multiple documents have the
+// same vector distance, the returned document order is not guaranteed to be
+// stable between queries.
+type FindNearest struct {
+	// DistanceMeasure: Required. The Distance Measure to use, required.
+	//
+	// Possible values:
+	//   "DISTANCE_MEASURE_UNSPECIFIED" - Should not be set.
+	//   "EUCLIDEAN" - Measures the EUCLIDEAN distance between the vectors. See
+	// [Euclidean](https://en.wikipedia.org/wiki/Euclidean_distance) to learn more.
+	// The resulting distance decreases the more similar two vectors are.
+	//   "COSINE" - COSINE distance compares vectors based on the angle between
+	// them, which allows you to measure similarity that isn't based on the vectors
+	// magnitude. We recommend using DOT_PRODUCT with unit normalized vectors
+	// instead of COSINE distance, which is mathematically equivalent with better
+	// performance. See [Cosine
+	// Similarity](https://en.wikipedia.org/wiki/Cosine_similarity) to learn more
+	// about COSINE similarity and COSINE distance. The resulting COSINE distance
+	// decreases the more similar two vectors are.
+	//   "DOT_PRODUCT" - Similar to cosine but is affected by the magnitude of the
+	// vectors. See [Dot Product](https://en.wikipedia.org/wiki/Dot_product) to
+	// learn more. The resulting distance increases the more similar two vectors
+	// are.
+	DistanceMeasure string `json:"distanceMeasure,omitempty"`
+	// DistanceResultProperty: Optional. Optional name of the field to output the
+	// result of the vector distance calculation. Must conform to entity property
+	// limitations.
+	DistanceResultProperty string `json:"distanceResultProperty,omitempty"`
+	// DistanceThreshold: Optional. Option to specify a threshold for which no less
+	// similar documents will be returned. The behavior of the specified
+	// `distance_measure` will affect the meaning of the distance threshold. Since
+	// DOT_PRODUCT distances increase when the vectors are more similar, the
+	// comparison is inverted. * For EUCLIDEAN, COSINE: WHERE distance <=
+	// distance_threshold * For DOT_PRODUCT: WHERE distance >= distance_threshold
+	DistanceThreshold float64 `json:"distanceThreshold,omitempty"`
+	// Limit: Required. The number of nearest neighbors to return. Must be a
+	// positive integer of no more than 100.
+	Limit int64 `json:"limit,omitempty"`
+	// QueryVector: Required. The query vector that we are searching on. Must be a
+	// vector of no more than 2048 dimensions.
+	QueryVector *Value `json:"queryVector,omitempty"`
+	// VectorProperty: Required. An indexed vector property to search upon. Only
+	// documents which contain vectors whose dimensionality match the query_vector
+	// can be returned.
+	VectorProperty *PropertyReference `json:"vectorProperty,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DistanceMeasure") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DistanceMeasure") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FindNearest) MarshalJSON() ([]byte, error) {
+	type NoMethod FindNearest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *FindNearest) UnmarshalJSON(data []byte) error {
+	type NoMethod FindNearest
+	var s1 struct {
+		DistanceThreshold gensupport.JSONFloat64 `json:"distanceThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DistanceThreshold = float64(s1.DistanceThreshold)
+	return nil
+}
+
 // GoogleDatastoreAdminV1CommonMetadata: Metadata common to all Datastore Admin
 // operations.
 type GoogleDatastoreAdminV1CommonMetadata struct {
@@ -1628,6 +1706,15 @@ type Mutation struct {
 	// to. If this does not match the current version on the server, the mutation
 	// conflicts.
 	BaseVersion int64 `json:"baseVersion,omitempty,string"`
+	// ConflictResolutionStrategy: The strategy to use when a conflict is detected.
+	// Defaults to `SERVER_VALUE`. If this is set, then
+	// `conflict_detection_strategy` must also be set.
+	//
+	// Possible values:
+	//   "STRATEGY_UNSPECIFIED" - Unspecified. Defaults to `SERVER_VALUE`.
+	//   "SERVER_VALUE" - The server entity is kept.
+	//   "FAIL" - The whole commit request fails.
+	ConflictResolutionStrategy string `json:"conflictResolutionStrategy,omitempty"`
 	// Delete: The key of the entity to delete. The entity may or may not already
 	// exist. Must have a complete key path and must not be reserved/read-only.
 	Delete *Key `json:"delete,omitempty"`
@@ -1640,6 +1727,11 @@ type Mutation struct {
 	// referenced in the mask are updated, others are left untouched. Properties
 	// referenced in the mask but not in the entity are deleted.
 	PropertyMask *PropertyMask `json:"propertyMask,omitempty"`
+	// PropertyTransforms: Optional. The transforms to perform on the entity. This
+	// field can be set only when the operation is `insert`, `update`, or `upsert`.
+	// If present, the transforms are be applied to the entity regardless of the
+	// property mask, in order, after the operation.
+	PropertyTransforms []*PropertyTransform `json:"propertyTransforms,omitempty"`
 	// Update: The entity to update. The entity must already exist. Must have a
 	// complete key path.
 	Update *Entity `json:"update,omitempty"`
@@ -1679,6 +1771,9 @@ type MutationResult struct {
 	// Key: The automatically allocated key. Set only when the mutation allocated a
 	// key.
 	Key *Key `json:"key,omitempty"`
+	// TransformResults: The results of applying each PropertyTransform, in the
+	// same order of the request.
+	TransformResults []*Value `json:"transformResults,omitempty"`
 	// UpdateTime: The update time of the entity on the server after processing the
 	// mutation. If the mutation doesn't change anything on the server, then the
 	// timestamp will be the update timestamp of the current entity. This field
@@ -1958,7 +2053,92 @@ func (s PropertyReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Query: A query for entities.
+// PropertyTransform: A transformation of an entity property.
+type PropertyTransform struct {
+	// AppendMissingElements: Appends the given elements in order if they are not
+	// already present in the current property value. If the property is not an
+	// array, or if the property does not yet exist, it is first set to the empty
+	// array. Equivalent numbers of different types (e.g. 3L and 3.0) are
+	// considered equal when checking if a value is missing. NaN is equal to NaN,
+	// and the null value is equal to the null value. If the input contains
+	// multiple equivalent values, only the first will be considered. The
+	// corresponding transform result will be the null value.
+	AppendMissingElements *ArrayValue `json:"appendMissingElements,omitempty"`
+	// Increment: Adds the given value to the property's current value. This must
+	// be an integer or a double value. If the property is not an integer or
+	// double, or if the property does not yet exist, the transformation will set
+	// the property to the given value. If either of the given value or the current
+	// property value are doubles, both values will be interpreted as doubles.
+	// Double arithmetic and representation of double values follows IEEE 754
+	// semantics. If there is positive/negative integer overflow, the property is
+	// resolved to the largest magnitude positive/negative integer.
+	Increment *Value `json:"increment,omitempty"`
+	// Maximum: Sets the property to the maximum of its current value and the given
+	// value. This must be an integer or a double value. If the property is not an
+	// integer or double, or if the property does not yet exist, the transformation
+	// will set the property to the given value. If a maximum operation is applied
+	// where the property and the input value are of mixed types (that is - one is
+	// an integer and one is a double) the property takes on the type of the larger
+	// operand. If the operands are equivalent (e.g. 3 and 3.0), the property does
+	// not change. 0, 0.0, and -0.0 are all zero. The maximum of a zero stored
+	// value and zero input value is always the stored value. The maximum of any
+	// numeric value x and NaN is NaN.
+	Maximum *Value `json:"maximum,omitempty"`
+	// Minimum: Sets the property to the minimum of its current value and the given
+	// value. This must be an integer or a double value. If the property is not an
+	// integer or double, or if the property does not yet exist, the transformation
+	// will set the property to the input value. If a minimum operation is applied
+	// where the property and the input value are of mixed types (that is - one is
+	// an integer and one is a double) the property takes on the type of the
+	// smaller operand. If the operands are equivalent (e.g. 3 and 3.0), the
+	// property does not change. 0, 0.0, and -0.0 are all zero. The minimum of a
+	// zero stored value and zero input value is always the stored value. The
+	// minimum of any numeric value x and NaN is NaN.
+	Minimum *Value `json:"minimum,omitempty"`
+	// Property: Optional. The name of the property. Property paths (a list of
+	// property names separated by dots (`.`)) may be used to refer to properties
+	// inside entity values. For example `foo.bar` means the property `bar` inside
+	// the entity property `foo`. If a property name contains a dot `.` or a
+	// backlslash `\`, then that name must be escaped.
+	Property string `json:"property,omitempty"`
+	// RemoveAllFromArray: Removes all of the given elements from the array in the
+	// property. If the property is not an array, or if the property does not yet
+	// exist, it is set to the empty array. Equivalent numbers of different types
+	// (e.g. 3L and 3.0) are considered equal when deciding whether an element
+	// should be removed. NaN is equal to NaN, and the null value is equal to the
+	// null value. This will remove all equivalent values if there are duplicates.
+	// The corresponding transform result will be the null value.
+	RemoveAllFromArray *ArrayValue `json:"removeAllFromArray,omitempty"`
+	// SetToServerValue: Sets the property to the given server value.
+	//
+	// Possible values:
+	//   "SERVER_VALUE_UNSPECIFIED" - Unspecified. This value must not be used.
+	//   "REQUEST_TIME" - The time at which the server processed the request, with
+	// millisecond precision. If used on multiple properties (same or different
+	// entities) in a transaction, all the properties will get the same server
+	// timestamp.
+	SetToServerValue string `json:"setToServerValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AppendMissingElements") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppendMissingElements") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PropertyTransform) MarshalJSON() ([]byte, error) {
+	type NoMethod PropertyTransform
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Query: A query for entities. The query stages are executed in the following
+// order: 1. kind 2. filter 3. projection 4. order + start_cursor + end_cursor
+// 5. offset 6. limit 7. find_nearest
 type Query struct {
 	// DistinctOn: The properties to make distinct. The query results will contain
 	// the first result for each distinct combination of values for the given
@@ -1972,6 +2152,10 @@ type Query struct {
 	EndCursor string `json:"endCursor,omitempty"`
 	// Filter: The filter to apply.
 	Filter *Filter `json:"filter,omitempty"`
+	// FindNearest: Optional. A potential Nearest Neighbors Search. Applies after
+	// all other filters and ordering. Finds the closest vector embeddings to the
+	// given query vector.
+	FindNearest *FindNearest `json:"findNearest,omitempty"`
 	// Kind: The kinds to query (if empty, returns entities of all kinds).
 	// Currently at most 1 kind may be specified.
 	Kind []*KindExpression `json:"kind,omitempty"`

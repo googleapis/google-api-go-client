@@ -56,8 +56,28 @@
     },
     {
       "description": "Regional Endpoint",
+      "endpointUrl": "https://bigquery.us-central1.rep.googleapis.com/",
+      "location": "us-central1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://bigquery.us-central2.rep.googleapis.com/",
+      "location": "us-central2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://bigquery.us-east1.rep.googleapis.com/",
+      "location": "us-east1"
+    },
+    {
+      "description": "Regional Endpoint",
       "endpointUrl": "https://bigquery.us-east4.rep.googleapis.com/",
       "location": "us-east4"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://bigquery.us-east5.rep.googleapis.com/",
+      "location": "us-east5"
     },
     {
       "description": "Regional Endpoint",
@@ -66,8 +86,33 @@
     },
     {
       "description": "Regional Endpoint",
+      "endpointUrl": "https://bigquery.us-south1.rep.googleapis.com/",
+      "location": "us-south1"
+    },
+    {
+      "description": "Regional Endpoint",
       "endpointUrl": "https://bigquery.us-west1.rep.googleapis.com/",
       "location": "us-west1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://bigquery.us-west2.rep.googleapis.com/",
+      "location": "us-west2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://bigquery.us-west3.rep.googleapis.com/",
+      "location": "us-west3"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://bigquery.us-west4.rep.googleapis.com/",
+      "location": "us-west4"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://bigquery.us-west8.rep.googleapis.com/",
+      "location": "us-west8"
     }
   ],
   "fullyEncodeReservedExpansion": true,
@@ -208,6 +253,12 @@
             "datasetId"
           ],
           "parameters": {
+            "accessPolicyVersion": {
+              "description": "Optional. The version of the access policy schema to fetch. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for conditional access policy binding in datasets must specify version 3. Dataset with no conditional role bindings in access policy may specify any valid value or leave the field unset. This field will be maped to [IAM Policy version] (https://cloud.google.com/iam/docs/policies#versions) and will be used to fetch policy from IAM. If unset or if 0 or 1 value is used for dataset with conditional bindings, access entry with condition will have role string appended by 'withcond' string followed by a hash value. For example : { \"access\": [ { \"role\": \"roles/bigquery.dataViewer_with_conditionalbinding_7a34awqsda\", \"userByEmail\": \"user@example.com\", } ] } Please refer https://cloud.google.com/iam/docs/troubleshooting-withcond for more details.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "datasetId": {
               "description": "Required. Dataset ID of the requested dataset",
               "location": "path",
@@ -259,6 +310,12 @@
             "projectId"
           ],
           "parameters": {
+            "accessPolicyVersion": {
+              "description": "Optional. The version of the provided access policy schema. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. This version refers to the schema version of the access policy and not the version of access policy. This field's value can be equal or more than the access policy schema provided in the request. For example, * Requests with conditional access policy binding in datasets must specify version 3. * But dataset with no conditional role bindings in access policy may specify any valid value or leave the field unset. If unset or if 0 or 1 value is used for dataset with conditional bindings, request will be rejected. This field will be maped to IAM Policy version (https://cloud.google.com/iam/docs/policies#versions) and will be used to set policy in IAM.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "projectId": {
               "description": "Required. Project ID of the new dataset",
               "location": "path",
@@ -337,6 +394,12 @@
             "datasetId"
           ],
           "parameters": {
+            "accessPolicyVersion": {
+              "description": "Optional. The version of the provided access policy schema. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. This version refers to the schema version of the access policy and not the version of access policy. This field's value can be equal or more than the access policy schema provided in the request. For example, * Operations updating conditional access policy binding in datasets must specify version 3. Some of the operations are : - Adding a new access policy entry with condition. - Removing an access policy entry with condition. - Updating an access policy entry with condition. * But dataset with no conditional role bindings in access policy may specify any valid value or leave the field unset. If unset or if 0 or 1 value is used for dataset with conditional bindings, request will be rejected. This field will be maped to IAM Policy version (https://cloud.google.com/iam/docs/policies#versions) and will be used to set policy in IAM.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "datasetId": {
               "description": "Required. Dataset ID of the dataset being updated",
               "location": "path",
@@ -411,6 +474,12 @@
             "datasetId"
           ],
           "parameters": {
+            "accessPolicyVersion": {
+              "description": "Optional. The version of the provided access policy schema. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. This version refers to the schema version of the access policy and not the version of access policy. This field's value can be equal or more than the access policy schema provided in the request. For example, * Operations updating conditional access policy binding in datasets must specify version 3. Some of the operations are : - Adding a new access policy entry with condition. - Removing an access policy entry with condition. - Updating an access policy entry with condition. * But dataset with no conditional role bindings in access policy may specify any valid value or leave the field unset. If unset or if 0 or 1 value is used for dataset with conditional bindings, request will be rejected. This field will be maped to IAM Policy version (https://cloud.google.com/iam/docs/policies#versions) and will be used to set policy in IAM.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
             "datasetId": {
               "description": "Required. Dataset ID of the dataset being updated",
               "location": "path",
@@ -1940,7 +2009,7 @@
       }
     }
   },
-  "revision": "20240905",
+  "revision": "20241013",
   "rootUrl": "https://bigquery.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -3120,6 +3189,10 @@
           "items": {
             "description": "An object that defines dataset access for an entity.",
             "properties": {
+              "condition": {
+                "$ref": "Expr",
+                "description": "Optional. condition for the binding. If CEL expression in this field is true, this access binding will be considered"
+              },
               "dataset": {
                 "$ref": "DatasetAccessEntry",
                 "description": "[Pick one] A grant authorizing all resources of a particular type in a particular dataset access to this dataset. Only views are supported for now. The role field is not required when this field is set. If that dataset is deleted and re-created, its access needs to be granted again via an update operation."
@@ -6424,7 +6497,8 @@
             "RANDOM_FOREST_CLASSIFIER",
             "TENSORFLOW_LITE",
             "ONNX",
-            "TRANSFORM_ONLY"
+            "TRANSFORM_ONLY",
+            "CONTRIBUTION_ANALYSIS"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -6451,7 +6525,8 @@
             "Random forest classifier model.",
             "An imported TensorFlow Lite model.",
             "An imported ONNX model.",
-            "Model to capture the columns and logic in the TRANSFORM clause along with statistics useful for ML analytic functions."
+            "Model to capture the columns and logic in the TRANSFORM clause along with statistics useful for ML analytic functions.",
+            "The contribution analysis model."
           ],
           "readOnly": true,
           "type": "string"
@@ -6595,7 +6670,8 @@
             "RANDOM_FOREST_CLASSIFIER",
             "TENSORFLOW_LITE",
             "ONNX",
-            "TRANSFORM_ONLY"
+            "TRANSFORM_ONLY",
+            "CONTRIBUTION_ANALYSIS"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -6622,7 +6698,8 @@
             "Random forest classifier model.",
             "An imported TensorFlow Lite model.",
             "An imported ONNX model.",
-            "Model to capture the columns and logic in the TRANSFORM clause along with statistics useful for ML analytic functions."
+            "Model to capture the columns and logic in the TRANSFORM clause along with statistics useful for ML analytic functions.",
+            "The contribution analysis model."
           ],
           "readOnly": true,
           "type": "string"
@@ -9329,6 +9406,10 @@
           "format": "double",
           "type": "number"
         },
+        "contributionMetric": {
+          "description": "The contribution metric. Applies to contribution analysis models. Allowed formats supported are for summable and summable ratio contribution metrics. These include expressions such as \"SUM(x)\" or \"SUM(x)/SUM(y)\", where x and y are column names from the base table.",
+          "type": "string"
+        },
         "dartNormalizeType": {
           "description": "Type of normalization algorithm for boosted tree models using dart booster.",
           "enum": [
@@ -9401,6 +9482,13 @@
         "decomposeTimeSeries": {
           "description": "If true, perform decompose time series and save the results.",
           "type": "boolean"
+        },
+        "dimensionIdColumns": {
+          "description": "Optional. Names of the columns to slice on. Applies to contribution analysis models.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "distanceType": {
           "description": "Distance type for clustering models.",
@@ -9825,6 +9913,10 @@
           "format": "int64",
           "type": "string"
         },
+        "isTestColumn": {
+          "description": "Name of the column used to determine the rows corresponding to control and test. Applies to contribution analysis models.",
+          "type": "string"
+        },
         "itemColumn": {
           "description": "Item column specified for matrix factorization models.",
           "type": "string"
@@ -9924,6 +10016,11 @@
           "description": "Maximum depth of a tree for boosted tree models.",
           "format": "int64",
           "type": "string"
+        },
+        "minAprioriSupport": {
+          "description": "The apriori support minimum. Applies to contribution analysis models.",
+          "format": "double",
+          "type": "number"
         },
         "minRelativeProgress": {
           "description": "When early_stop is true, stops training when accuracy improvement is less than 'min_relative_progress'. Used only for iterative training algorithms.",

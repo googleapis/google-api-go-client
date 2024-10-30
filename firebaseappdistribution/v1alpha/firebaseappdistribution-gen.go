@@ -499,6 +499,9 @@ type GoogleFirebaseAppdistroV1alphaAiStepResult struct {
 	//   "IN_PROGRESS" - The step is in progress
 	//   "PASSED" - The step has completed successfully
 	//   "FAILED" - The step has failed
+	//   "TIMED_OUT" - The test timed out during this step
+	//   "GOAL_ACTION_LIMIT_REACHED" - The number of actions needed to reach the
+	// goal exceeded its limit
 	State string `json:"state,omitempty"`
 	// Step: Required. The step performed by the AI
 	Step *GoogleFirebaseAppdistroV1alphaAiStep `json:"step,omitempty"`
@@ -622,6 +625,13 @@ type GoogleFirebaseAppdistroV1alphaAssertionDetails struct {
 func (s GoogleFirebaseAppdistroV1alphaAssertionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaAssertionDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppdistroV1alphaCancelReleaseTestResponse: The (empty)
+// response message for `CancelReleaseTest`.
+type GoogleFirebaseAppdistroV1alphaCancelReleaseTestResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 type GoogleFirebaseAppdistroV1alphaCreateReleaseNotesRequest struct {
@@ -767,6 +777,8 @@ func (s GoogleFirebaseAppdistroV1alphaDeviceExecution) MarshalJSON() ([]byte, er
 // GoogleFirebaseAppdistroV1alphaDeviceInteraction: An interaction with the
 // device, such as a tap, text entry, wait, etc.
 type GoogleFirebaseAppdistroV1alphaDeviceInteraction struct {
+	// KeyCode: Output only. Key code for a key event action.
+	KeyCode string `json:"keyCode,omitempty"`
 	// Screenshot: Output only. The screenshot used in the context of this action.
 	// The screen may have changed before the action was actually taken.
 	Screenshot *GoogleFirebaseAppdistroV1alphaScreenshot `json:"screenshot,omitempty"`
@@ -778,13 +790,13 @@ type GoogleFirebaseAppdistroV1alphaDeviceInteraction struct {
 	TextInput string `json:"textInput,omitempty"`
 	// Wait: Output only. A wait action.
 	Wait *GoogleFirebaseAppdistroV1alphaDeviceInteractionWait `json:"wait,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Screenshot") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "KeyCode") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Screenshot") to include in API
+	// NullFields is a list of field names (e.g. "KeyCode") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1236,6 +1248,9 @@ type GoogleFirebaseAppdistroV1alphaReleaseTest struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// DeviceExecutions: Required. The results of the test on each device.
 	DeviceExecutions []*GoogleFirebaseAppdistroV1alphaDeviceExecution `json:"deviceExecutions,omitempty"`
+	// DisplayName: Optional. Display name of the release test. Required if the
+	// release test is created with multiple goals
+	DisplayName string `json:"displayName,omitempty"`
 	// LoginCredential: Optional. Input only. Login credentials for the test. Input
 	// only.
 	LoginCredential *GoogleFirebaseAppdistroV1alphaLoginCredential `json:"loginCredential,omitempty"`
@@ -1243,6 +1258,15 @@ type GoogleFirebaseAppdistroV1alphaReleaseTest struct {
 	// `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_id
 	// }`
 	Name string `json:"name,omitempty"`
+	// TestState: Output only. The state of the release test.
+	//
+	// Possible values:
+	//   "TEST_STATE_UNSPECIFIED" - Test state unspecified.
+	//   "IN_PROGRESS" - The test is in progress.
+	//   "PASSED" - The test has passed.
+	//   "FAILED" - The test has failed.
+	//   "INCONCLUSIVE" - The test was inconclusive.
+	TestState string `json:"testState,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2578,6 +2602,116 @@ func (c *ProjectsAppsUpdateTestConfigCall) Do(opts ...googleapi.CallOption) (*Go
 	return ret, nil
 }
 
+type ProjectsAppsReleasesTestsCancelCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Cancel: Abort automated test run on release.
+//
+//   - name: The name of the release test resource. Format:
+//     `projects/{project_number}/apps/{app_id}/releases/{release_id}/tests/{test_
+//     id}`.
+func (r *ProjectsAppsReleasesTestsService) Cancel(name string) *ProjectsAppsReleasesTestsCancelCall {
+	c := &ProjectsAppsReleasesTestsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAppsReleasesTestsCancelCall) Fields(s ...googleapi.Field) *ProjectsAppsReleasesTestsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsAppsReleasesTestsCancelCall) IfNoneMatch(entityTag string) *ProjectsAppsReleasesTestsCancelCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAppsReleasesTestsCancelCall) Context(ctx context.Context) *ProjectsAppsReleasesTestsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAppsReleasesTestsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAppsReleasesTestsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappdistribution.projects.apps.releases.tests.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaCancelReleaseTestResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsAppsReleasesTestsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaCancelReleaseTestResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppdistroV1alphaCancelReleaseTestResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsAppsReleasesTestsCreateCall struct {
 	s                                         *Service
 	parent                                    string
@@ -2599,9 +2733,9 @@ func (r *ProjectsAppsReleasesTestsService) Create(parent string, googlefirebasea
 }
 
 // ReleaseTestId sets the optional parameter "releaseTestId": The ID to use for
-// the test, which will become the final component of the tests's resource
-// name. This value should be 4-63 characters, and valid characters are /a-z-/.
-// If it is not provided one will be automatically generated.
+// the test, which will become the final component of the test's resource name.
+// This value should be 4-63 characters, and valid characters are /a-z-/. If it
+// is not provided one will be automatically generated.
 func (c *ProjectsAppsReleasesTestsCreateCall) ReleaseTestId(releaseTestId string) *ProjectsAppsReleasesTestsCreateCall {
 	c.urlParams_.Set("releaseTestId", releaseTestId)
 	return c
@@ -2831,6 +2965,26 @@ func (c *ProjectsAppsReleasesTestsListCall) PageSize(pageSize int64) *ProjectsAp
 // subsequent page.
 func (c *ProjectsAppsReleasesTestsListCall) PageToken(pageToken string) *ProjectsAppsReleasesTestsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": The requested view on the returned
+// ReleaseTests. Defaults to the basic view.
+//
+// Possible values:
+//
+//	"RELEASE_TEST_VIEW_UNSPECIFIED" - The default / unset value. The default
+//
+// view depends on the RPC.
+//
+//	"RELEASE_TEST_VIEW_BASIC" - Include basic metadata about the release test
+//
+// and its status, but not the full result details. This is the default value
+// for ListReleaseTests.
+//
+//	"RELEASE_TEST_VIEW_FULL" - Include everything.
+func (c *ProjectsAppsReleasesTestsListCall) View(view string) *ProjectsAppsReleasesTestsListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 

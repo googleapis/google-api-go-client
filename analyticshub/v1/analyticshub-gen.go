@@ -1157,8 +1157,8 @@ type GooglePubsubV1Subscription struct {
 	// messages in the subscription's backlog, from the moment a message is
 	// published. If `retain_acked_messages` is true, then this also configures the
 	// retention of acknowledged messages, and thus configures how far back in time
-	// a `Seek` can be done. Defaults to 7 days. Cannot be more than 7 days or less
-	// than 10 minutes.
+	// a `Seek` can be done. Defaults to 7 days. Cannot be more than 31 days or
+	// less than 10 minutes.
 	MessageRetentionDuration string `json:"messageRetentionDuration,omitempty"`
 	// Name: Required. Name of the subscription. Format is
 	// `projects/{project}/subscriptions/{sub}`.

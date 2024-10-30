@@ -2208,10 +2208,12 @@ type Policy struct {
 	// applied. Recommended alternative: autoUpdateMode which is set per app,
 	// provides greater flexibility around update frequency. When autoUpdateMode is
 	// set to AUTO_UPDATE_POSTPONED or AUTO_UPDATE_HIGH_PRIORITY, autoUpdatePolicy
-	// has no effect. "choiceToTheUser" allows the device's user to configure the
-	// app update policy. "always" enables auto updates. "never" disables auto
-	// updates. "wifiOnly" enables auto updates only when the device is connected
-	// to wifi.
+	// has no effect. - choiceToTheUser allows the device's user to configure the
+	// app update policy. - always enables auto updates. - never disables auto
+	// updates. - wifiOnly enables auto updates only when the device is connected
+	// to wifi. *Important:* Changes to app update policies don't affect updates
+	// that are in progress. Any policy changes will apply to subsequent app
+	// updates.
 	//
 	// Possible values:
 	//   "autoUpdatePolicyUnspecified" - The auto update policy is not set.
@@ -2231,6 +2233,9 @@ type Policy struct {
 	// MaintenanceWindow: The maintenance window defining when apps running in the
 	// foreground should be updated.
 	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
+	// PolicyId: An identifier for the policy that will be passed with the app
+	// install feedback sent from the Play Store.
+	PolicyId string `json:"policyId,omitempty"`
 	// ProductAvailabilityPolicy: The availability granted to the device for the
 	// specified products. "all" gives the device access to all products,
 	// regardless of approval status. "all" does not enable automatic visibility of

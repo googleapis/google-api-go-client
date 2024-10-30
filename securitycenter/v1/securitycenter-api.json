@@ -20,6 +20,16 @@
       "description": "Regional Endpoint",
       "endpointUrl": "https://securitycenter.me-central2.rep.googleapis.com/",
       "location": "me-central2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://securitycenter.us.rep.googleapis.com/",
+      "location": "us"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://securitycenter.eu.rep.googleapis.com/",
+      "location": "eu"
     }
   ],
   "fullyEncodeReservedExpansion": true,
@@ -732,39 +742,6 @@
           "resources": {
             "muteConfigs": {
               "methods": {
-                "create": {
-                  "description": "Creates a mute config.",
-                  "flatPath": "v1/folders/{foldersId}/locations/{locationsId}/muteConfigs",
-                  "httpMethod": "POST",
-                  "id": "securitycenter.folders.locations.muteConfigs.create",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "muteConfigId": {
-                      "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "parent": {
-                      "description": "Required. Resource name of the new mute configs's parent. Its format is `organizations/[organization_id]`, `folders/[folder_id]`, or `projects/[project_id]`.",
-                      "location": "path",
-                      "pattern": "^folders/[^/]+/locations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1/{+parent}/muteConfigs",
-                  "request": {
-                    "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
-                  },
-                  "response": {
-                    "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
                 "delete": {
                   "description": "Deletes an existing mute config.",
                   "flatPath": "v1/folders/{foldersId}/locations/{locationsId}/muteConfigs/{muteConfigsId}",
@@ -810,42 +787,6 @@
                   "path": "v1/{+name}",
                   "response": {
                     "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "list": {
-                  "description": "Lists mute configs.",
-                  "flatPath": "v1/folders/{foldersId}/locations/{locationsId}/muteConfigs",
-                  "httpMethod": "GET",
-                  "id": "securitycenter.folders.locations.muteConfigs.list",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "pageSize": {
-                      "description": "The maximum number of configs to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
-                      "format": "int32",
-                      "location": "query",
-                      "type": "integer"
-                    },
-                    "pageToken": {
-                      "description": "A page token, received from a previous `ListMuteConfigs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMuteConfigs` must match the call that provided the page token.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "parent": {
-                      "description": "Required. The parent, which owns the collection of mute configs. Its format is `organizations/[organization_id]`, `folders/[folder_id]`, `projects/[project_id]`.",
-                      "location": "path",
-                      "pattern": "^folders/[^/]+/locations/[^/]+/muteConfigs$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1/{+parent}",
-                  "response": {
-                    "$ref": "ListMuteConfigsResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -1568,6 +1509,7 @@
                   ],
                   "parameters": {
                     "compareDuration": {
+                      "deprecated": true,
                       "description": "When compare_duration is set, the ListFindingsResult's \"state_change\" attribute is updated to indicate whether the finding had its state changed, the finding's state remained unchanged, or if the finding was added in any state during the compare_duration period of time that precedes the read_time. This is the time between (read_time - compare_duration) and read_time. The state_change value is derived based on the presence and state of the finding at the two points in time. Intermediate state changes between the two times don't affect the result. For example, the results aren't affected if the finding is made inactive and then active again. Possible \"state_change\" values when compare_duration is specified: * \"CHANGED\": indicates that the finding was present and matched the given filter at the start of compare_duration, but changed its state at read_time. * \"UNCHANGED\": indicates that the finding was present and matched the given filter at the start of compare_duration and did not change state at read_time. * \"ADDED\": indicates that the finding did not match the given filter or was not present at the start of compare_duration, but was present at read_time. * \"REMOVED\": indicates that the finding was present and matched the filter at the start of compare_duration, but did not match the filter at read_time. If compare_duration is not specified, then the only possible state_change is \"UNUSED\", which will be the state_change set for all findings present at read_time.",
                       "format": "google-duration",
                       "location": "query",
@@ -1608,6 +1550,7 @@
                       "type": "string"
                     },
                     "readTime": {
+                      "deprecated": true,
                       "description": "Time used as a reference point when filtering findings. The filter is limited to findings existing at the supplied time and their values are those at that specific time. Absence of this field will default to the API's version of NOW.",
                       "format": "google-datetime",
                       "location": "query",
@@ -2508,39 +2451,6 @@
           "resources": {
             "muteConfigs": {
               "methods": {
-                "create": {
-                  "description": "Creates a mute config.",
-                  "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/muteConfigs",
-                  "httpMethod": "POST",
-                  "id": "securitycenter.organizations.locations.muteConfigs.create",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "muteConfigId": {
-                      "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "parent": {
-                      "description": "Required. Resource name of the new mute configs's parent. Its format is `organizations/[organization_id]`, `folders/[folder_id]`, or `projects/[project_id]`.",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1/{+parent}/muteConfigs",
-                  "request": {
-                    "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
-                  },
-                  "response": {
-                    "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
                 "delete": {
                   "description": "Deletes an existing mute config.",
                   "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/muteConfigs/{muteConfigsId}",
@@ -2586,42 +2496,6 @@
                   "path": "v1/{+name}",
                   "response": {
                     "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "list": {
-                  "description": "Lists mute configs.",
-                  "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/muteConfigs",
-                  "httpMethod": "GET",
-                  "id": "securitycenter.organizations.locations.muteConfigs.list",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "pageSize": {
-                      "description": "The maximum number of configs to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
-                      "format": "int32",
-                      "location": "query",
-                      "type": "integer"
-                    },
-                    "pageToken": {
-                      "description": "A page token, received from a previous `ListMuteConfigs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMuteConfigs` must match the call that provided the page token.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "parent": {
-                      "description": "Required. The parent, which owns the collection of mute configs. Its format is `organizations/[organization_id]`, `folders/[folder_id]`, `projects/[project_id]`.",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+/muteConfigs$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1/{+parent}",
-                  "response": {
-                    "$ref": "ListMuteConfigsResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -4117,6 +3991,7 @@
                   ],
                   "parameters": {
                     "compareDuration": {
+                      "deprecated": true,
                       "description": "When compare_duration is set, the ListFindingsResult's \"state_change\" attribute is updated to indicate whether the finding had its state changed, the finding's state remained unchanged, or if the finding was added in any state during the compare_duration period of time that precedes the read_time. This is the time between (read_time - compare_duration) and read_time. The state_change value is derived based on the presence and state of the finding at the two points in time. Intermediate state changes between the two times don't affect the result. For example, the results aren't affected if the finding is made inactive and then active again. Possible \"state_change\" values when compare_duration is specified: * \"CHANGED\": indicates that the finding was present and matched the given filter at the start of compare_duration, but changed its state at read_time. * \"UNCHANGED\": indicates that the finding was present and matched the given filter at the start of compare_duration and did not change state at read_time. * \"ADDED\": indicates that the finding did not match the given filter or was not present at the start of compare_duration, but was present at read_time. * \"REMOVED\": indicates that the finding was present and matched the filter at the start of compare_duration, but did not match the filter at read_time. If compare_duration is not specified, then the only possible state_change is \"UNUSED\", which will be the state_change set for all findings present at read_time.",
                       "format": "google-duration",
                       "location": "query",
@@ -4157,6 +4032,7 @@
                       "type": "string"
                     },
                     "readTime": {
+                      "deprecated": true,
                       "description": "Time used as a reference point when filtering findings. The filter is limited to findings existing at the supplied time and their values are those at that specific time. Absence of this field will default to the API's version of NOW.",
                       "format": "google-datetime",
                       "location": "query",
@@ -5017,39 +4893,6 @@
           "resources": {
             "muteConfigs": {
               "methods": {
-                "create": {
-                  "description": "Creates a mute config.",
-                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/muteConfigs",
-                  "httpMethod": "POST",
-                  "id": "securitycenter.projects.locations.muteConfigs.create",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "muteConfigId": {
-                      "description": "Required. Unique identifier provided by the client within the parent scope. It must consist of only lowercase letters, numbers, and hyphens, must start with a letter, must end with either a letter or a number, and must be 63 characters or less.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "parent": {
-                      "description": "Required. Resource name of the new mute configs's parent. Its format is `organizations/[organization_id]`, `folders/[folder_id]`, or `projects/[project_id]`.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1/{+parent}/muteConfigs",
-                  "request": {
-                    "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
-                  },
-                  "response": {
-                    "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
                 "delete": {
                   "description": "Deletes an existing mute config.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/muteConfigs/{muteConfigsId}",
@@ -5095,42 +4938,6 @@
                   "path": "v1/{+name}",
                   "response": {
                     "$ref": "GoogleCloudSecuritycenterV1MuteConfig"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "list": {
-                  "description": "Lists mute configs.",
-                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/muteConfigs",
-                  "httpMethod": "GET",
-                  "id": "securitycenter.projects.locations.muteConfigs.list",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "pageSize": {
-                      "description": "The maximum number of configs to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
-                      "format": "int32",
-                      "location": "query",
-                      "type": "integer"
-                    },
-                    "pageToken": {
-                      "description": "A page token, received from a previous `ListMuteConfigs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMuteConfigs` must match the call that provided the page token.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "parent": {
-                      "description": "Required. The parent, which owns the collection of mute configs. Its format is `organizations/[organization_id]`, `folders/[folder_id]`, `projects/[project_id]`.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/muteConfigs$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1/{+parent}",
-                  "response": {
-                    "$ref": "ListMuteConfigsResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -5853,6 +5660,7 @@
                   ],
                   "parameters": {
                     "compareDuration": {
+                      "deprecated": true,
                       "description": "When compare_duration is set, the ListFindingsResult's \"state_change\" attribute is updated to indicate whether the finding had its state changed, the finding's state remained unchanged, or if the finding was added in any state during the compare_duration period of time that precedes the read_time. This is the time between (read_time - compare_duration) and read_time. The state_change value is derived based on the presence and state of the finding at the two points in time. Intermediate state changes between the two times don't affect the result. For example, the results aren't affected if the finding is made inactive and then active again. Possible \"state_change\" values when compare_duration is specified: * \"CHANGED\": indicates that the finding was present and matched the given filter at the start of compare_duration, but changed its state at read_time. * \"UNCHANGED\": indicates that the finding was present and matched the given filter at the start of compare_duration and did not change state at read_time. * \"ADDED\": indicates that the finding did not match the given filter or was not present at the start of compare_duration, but was present at read_time. * \"REMOVED\": indicates that the finding was present and matched the filter at the start of compare_duration, but did not match the filter at read_time. If compare_duration is not specified, then the only possible state_change is \"UNUSED\", which will be the state_change set for all findings present at read_time.",
                       "format": "google-duration",
                       "location": "query",
@@ -5893,6 +5701,7 @@
                       "type": "string"
                     },
                     "readTime": {
+                      "deprecated": true,
                       "description": "Time used as a reference point when filtering findings. The filter is limited to findings existing at the supplied time and their values are those at that specific time. Absence of this field will default to the API's version of NOW.",
                       "format": "google-datetime",
                       "location": "query",
@@ -6084,7 +5893,7 @@
       }
     }
   },
-  "revision": "20240916",
+  "revision": "20241026",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Access": {
@@ -6630,6 +6439,10 @@
       "description": "Represents an Azure resource group.",
       "id": "AzureResourceGroup",
       "properties": {
+        "id": {
+          "description": "The ID of the Azure resource group.",
+          "type": "string"
+        },
         "name": {
           "description": "The name of the Azure resource group. This is not a UUID.",
           "type": "string"
@@ -9324,6 +9137,10 @@
       "description": "Represents an Azure resource group.",
       "id": "GoogleCloudSecuritycenterV2AzureResourceGroup",
       "properties": {
+        "id": {
+          "description": "The ID of the Azure resource group.",
+          "type": "string"
+        },
         "name": {
           "description": "The name of the Azure resource group. This is not a UUID.",
           "type": "string"
@@ -10944,6 +10761,7 @@
               "ACCOUNT_ACCESS_REMOVAL",
               "STEAL_WEB_SESSION_COOKIE",
               "CREATE_OR_MODIFY_SYSTEM_PROCESS",
+              "EVENT_TRIGGERED_EXECUTION",
               "ABUSE_ELEVATION_CONTROL_MECHANISM",
               "UNSECURED_CREDENTIALS",
               "MODIFY_AUTHENTICATION_PROCESS",
@@ -10960,6 +10778,7 @@
               "ACTIVE_SCANNING",
               "SCANNING_IP_BLOCKS",
               "CONTAINER_ADMINISTRATION_COMMAND",
+              "DEPLOY_CONTAINER",
               "ESCAPE_TO_HOST",
               "CONTAINER_AND_RESOURCE_DISCOVERY",
               "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES"
@@ -11011,6 +10830,7 @@
               "T1531",
               "T1539",
               "T1543",
+              "T1546",
               "T1548",
               "T1552",
               "T1556",
@@ -11027,6 +10847,7 @@
               "T1595",
               "T1595.001",
               "T1609",
+              "T1610",
               "T1611",
               "T1613",
               "T1649"
@@ -11123,6 +10944,7 @@
               "ACCOUNT_ACCESS_REMOVAL",
               "STEAL_WEB_SESSION_COOKIE",
               "CREATE_OR_MODIFY_SYSTEM_PROCESS",
+              "EVENT_TRIGGERED_EXECUTION",
               "ABUSE_ELEVATION_CONTROL_MECHANISM",
               "UNSECURED_CREDENTIALS",
               "MODIFY_AUTHENTICATION_PROCESS",
@@ -11139,6 +10961,7 @@
               "ACTIVE_SCANNING",
               "SCANNING_IP_BLOCKS",
               "CONTAINER_ADMINISTRATION_COMMAND",
+              "DEPLOY_CONTAINER",
               "ESCAPE_TO_HOST",
               "CONTAINER_AND_RESOURCE_DISCOVERY",
               "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES"
@@ -11190,6 +11013,7 @@
               "T1531",
               "T1539",
               "T1543",
+              "T1546",
               "T1548",
               "T1552",
               "T1556",
@@ -11206,6 +11030,7 @@
               "T1595",
               "T1595.001",
               "T1609",
+              "T1610",
               "T1611",
               "T1613",
               "T1649"
@@ -12215,6 +12040,7 @@
       "id": "GroupFindingsRequest",
       "properties": {
         "compareDuration": {
+          "deprecated": true,
           "description": "When compare_duration is set, the GroupResult's \"state_change\" attribute is updated to indicate whether the finding had its state changed, the finding's state remained unchanged, or if the finding was added during the compare_duration period of time that precedes the read_time. This is the time between (read_time - compare_duration) and read_time. The state_change value is derived based on the presence and state of the finding at the two points in time. Intermediate state changes between the two times don't affect the result. For example, the results aren't affected if the finding is made inactive and then active again. Possible \"state_change\" values when compare_duration is specified: * \"CHANGED\": indicates that the finding was present and matched the given filter at the start of compare_duration, but changed its state at read_time. * \"UNCHANGED\": indicates that the finding was present and matched the given filter at the start of compare_duration and did not change state at read_time. * \"ADDED\": indicates that the finding did not match the given filter or was not present at the start of compare_duration, but was present at read_time. * \"REMOVED\": indicates that the finding was present and matched the filter at the start of compare_duration, but did not match the filter at read_time. If compare_duration is not specified, then the only possible state_change is \"UNUSED\", which will be the state_change set for all findings present at read_time. If this field is set then `state_change` must be a specified field in `group_by`.",
           "format": "google-duration",
           "type": "string"
@@ -12237,6 +12063,7 @@
           "type": "string"
         },
         "readTime": {
+          "deprecated": true,
           "description": "Time used as a reference point when filtering findings. The filter is limited to findings existing at the supplied time and their values are those at that specific time. Absence of this field will default to the API's version of NOW.",
           "format": "google-datetime",
           "type": "string"
@@ -13012,6 +12839,7 @@
               "ACCOUNT_ACCESS_REMOVAL",
               "STEAL_WEB_SESSION_COOKIE",
               "CREATE_OR_MODIFY_SYSTEM_PROCESS",
+              "EVENT_TRIGGERED_EXECUTION",
               "ABUSE_ELEVATION_CONTROL_MECHANISM",
               "UNSECURED_CREDENTIALS",
               "MODIFY_AUTHENTICATION_PROCESS",
@@ -13028,6 +12856,7 @@
               "ACTIVE_SCANNING",
               "SCANNING_IP_BLOCKS",
               "CONTAINER_ADMINISTRATION_COMMAND",
+              "DEPLOY_CONTAINER",
               "ESCAPE_TO_HOST",
               "CONTAINER_AND_RESOURCE_DISCOVERY",
               "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES"
@@ -13079,6 +12908,7 @@
               "T1531",
               "T1539",
               "T1543",
+              "T1546",
               "T1548",
               "T1552",
               "T1556",
@@ -13095,6 +12925,7 @@
               "T1595",
               "T1595.001",
               "T1609",
+              "T1610",
               "T1611",
               "T1613",
               "T1649"
@@ -13191,6 +13022,7 @@
               "ACCOUNT_ACCESS_REMOVAL",
               "STEAL_WEB_SESSION_COOKIE",
               "CREATE_OR_MODIFY_SYSTEM_PROCESS",
+              "EVENT_TRIGGERED_EXECUTION",
               "ABUSE_ELEVATION_CONTROL_MECHANISM",
               "UNSECURED_CREDENTIALS",
               "MODIFY_AUTHENTICATION_PROCESS",
@@ -13207,6 +13039,7 @@
               "ACTIVE_SCANNING",
               "SCANNING_IP_BLOCKS",
               "CONTAINER_ADMINISTRATION_COMMAND",
+              "DEPLOY_CONTAINER",
               "ESCAPE_TO_HOST",
               "CONTAINER_AND_RESOURCE_DISCOVERY",
               "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES"
@@ -13258,6 +13091,7 @@
               "T1531",
               "T1539",
               "T1543",
+              "T1546",
               "T1548",
               "T1552",
               "T1556",
@@ -13274,6 +13108,7 @@
               "T1595",
               "T1595.001",
               "T1609",
+              "T1610",
               "T1611",
               "T1613",
               "T1649"
@@ -14109,7 +13944,8 @@
       "id": "SetFindingStateRequest",
       "properties": {
         "startTime": {
-          "description": "Required. The time at which the updated state takes effect.",
+          "deprecated": true,
+          "description": "Optional. The time at which the updated state takes effect. If unset, defaults to the request time.",
           "format": "google-datetime",
           "type": "string"
         },

@@ -623,6 +623,15 @@ type GoogleChecksReportV1alphaCheck struct {
 	// Information data type declaration matches usage.
 	//   "DATA_MONITORING_PII_LOGCAT_LEAK" - Checks if there were any PII leaked to
 	// device logs.
+	//   "DATA_MONITORING_MINIMIZE_PERMISSION_MEDIA" - Checks if there are media
+	// (photo and video) permissions that are considered sensitive and should be
+	// minimized for Android.
+	//   "DATA_MONITORING_MINIMIZE_PERMISSION_CAMERA" - Checks if there are camera
+	// use permissions that are considered sensitive and should be minimized for
+	// Android.
+	//   "DATA_MONITORING_MINIMIZE_PERMISSION_DOCUMENTS" - Checks if there are
+	// documents and file permissions that are considered sensitive and should be
+	// minimized for Android.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Citations") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -788,6 +797,8 @@ type GoogleChecksReportV1alphaCheckDataTypeEvidence struct {
 	// sender, recipients, and the content of the email.
 	//   "DATA_TYPE_TEXT_MESSAGES" - A user's text messages including the sender,
 	// recipients, and the content of the message.
+	//   "DATA_TYPE_OTHER_IN_APP_MESSAGES" - Any other types of messages. For
+	// example, instant messages or chat content.
 	//   "DATA_TYPE_PHOTOS" - A user's photos.
 	//   "DATA_TYPE_VIDEOS" - A user's videos.
 	//   "DATA_TYPE_VOICE_OR_SOUND_RECORDINGS" - A user's voice such as a voicemail
@@ -1254,6 +1265,8 @@ type GoogleChecksReportV1alphaDataMonitoringDataTypeResult struct {
 	// sender, recipients, and the content of the email.
 	//   "DATA_TYPE_TEXT_MESSAGES" - A user's text messages including the sender,
 	// recipients, and the content of the message.
+	//   "DATA_TYPE_OTHER_IN_APP_MESSAGES" - Any other types of messages. For
+	// example, instant messages or chat content.
 	//   "DATA_TYPE_PHOTOS" - A user's photos.
 	//   "DATA_TYPE_VIDEOS" - A user's videos.
 	//   "DATA_TYPE_VOICE_OR_SOUND_RECORDINGS" - A user's voice such as a voicemail

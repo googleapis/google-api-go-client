@@ -1234,6 +1234,7 @@ type EventAnnotation struct {
 	//   "UPTIME_CHECK_FAILURE" - Failure of a Cloud Monitoring uptime check.
 	//   "CLOUD_ALERTING_ALERT" - Alerts from Cloud Alerting
 	//   "SERVICE_HEALTH_INCIDENT" - Incidents from Service Health
+	//   "SAP_BACKINT" - Agent for SAP Backint related events.
 	EventType string `json:"eventType,omitempty"`
 	// Filter: string filtering the events - event dependant. Example values:
 	// "resource.labels.pod_name = 'pod-1'"
@@ -1743,7 +1744,7 @@ func (s MonitoredResource) MarshalJSON() ([]byte, error) {
 // multiple grid blocks and can be placed at arbitrary locations in the grid.
 type MosaicLayout struct {
 	// Columns: The number of columns in the mosaic grid. The number of columns
-	// must be between 1 and 12, inclusive.
+	// must be between 1 and 48, inclusive.
 	Columns int64 `json:"columns,omitempty"`
 	// Tiles: The tiles to display.
 	Tiles []*Tile `json:"tiles,omitempty"`
@@ -2073,7 +2074,7 @@ type QueryExemplarsRequest struct {
 	// End: The end time to evaluate the query for. Either floating point UNIX
 	// seconds or RFC3339 formatted timestamp.
 	End string `json:"end,omitempty"`
-	// Query: A PromQL query string. Query lanauge documentation:
+	// Query: A PromQL query string. Query language documentation:
 	// https://prometheus.io/docs/prometheus/latest/querying/basics/.
 	Query string `json:"query,omitempty"`
 	// Start: The start time to evaluate the query for. Either floating point UNIX
@@ -2100,7 +2101,7 @@ func (s QueryExemplarsRequest) MarshalJSON() ([]byte, error) {
 // QueryInstantRequest: QueryInstantRequest holds all parameters of the
 // Prometheus upstream instant query API plus GCM specific parameters.
 type QueryInstantRequest struct {
-	// Query: A PromQL query string. Query lanauge documentation:
+	// Query: A PromQL query string. Query language documentation:
 	// https://prometheus.io/docs/prometheus/latest/querying/basics/.
 	Query string `json:"query,omitempty"`
 	// Time: The single point in time to evaluate the query for. Either floating
@@ -2167,7 +2168,7 @@ type QueryRangeRequest struct {
 	// End: The end time to evaluate the query for. Either floating point UNIX
 	// seconds or RFC3339 formatted timestamp.
 	End string `json:"end,omitempty"`
-	// Query: A PromQL query string. Query lanauge documentation:
+	// Query: A PromQL query string. Query language documentation:
 	// https://prometheus.io/docs/prometheus/latest/querying/basics/.
 	Query string `json:"query,omitempty"`
 	// Start: The start time to evaluate the query for. Either floating point UNIX

@@ -1965,6 +1965,8 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	//   "REGIONAL_USER_OWNED_BUCKET" - Bucket is located in user-owned project in
 	// the same region as the build. The builder service account must have access
 	// to create and write to Cloud Storage buckets in the build project.
+	//   "LEGACY_BUCKET" - Bucket is located in a Google-owned project and is not
+	// regionalized.
 	DefaultLogsBucketBehavior string `json:"defaultLogsBucketBehavior,omitempty"`
 	// DiskSizeGb: Requested disk size for the VM that runs the build. Note that
 	// this is *NOT* "disk free"; some of the space will be used by the operating
@@ -3938,8 +3940,9 @@ type ObjectMeta struct {
 	// `run.googleapis.com/encryption-key`: Revision, Execution. *
 	// `run.googleapis.com/execution-environment`: Revision, Execution. *
 	// `run.googleapis.com/gc-traffic-tags`: Service. *
+	// `run.googleapis.com/health-check-disabled`: Revision. *
 	// `run.googleapis.com/ingress`: Service. * `run.googleapis.com/launch-stage`:
-	// Service, Job. * `run.googleapis.com/minScale`: Service (ALPHA) *
+	// Service, Job. * `run.googleapis.com/minScale`: Service *
 	// `run.googleapis.com/network-interfaces`: Revision, Execution. *
 	// `run.googleapis.com/post-key-revocation-action-type`: Revision. *
 	// `run.googleapis.com/secrets`: Revision, Execution. *
@@ -4428,6 +4431,8 @@ type RevisionTemplate struct {
 	// `autoscaling.knative.dev/maxScale` sets the maximum number of instances. *
 	// `run.googleapis.com/cloudsql-instances` sets Cloud SQL connections. Multiple
 	// values should be comma separated. *
+	// `run.googleapis.com/health-check-disabled`: if true, deploy-time startup
+	// probes will not run for this revision. *
 	// `run.googleapis.com/vpc-access-connector` sets a Serverless VPC Access
 	// connector. * `run.googleapis.com/vpc-access-egress` sets VPC egress.
 	// Supported values are `all-traffic`, `all` (deprecated), and

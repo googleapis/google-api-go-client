@@ -418,12 +418,77 @@ type ScansService struct {
 	s *Service
 }
 
+// AsymmetricAutoscalingOption: AsymmetricAutoscalingOption specifies the
+// scaling of replicas identified by the given selection.
+type AsymmetricAutoscalingOption struct {
+	// Overrides: Optional. Overrides applied to the top-level autoscaling
+	// configuration for the selected replicas.
+	Overrides *AutoscalingConfigOverrides `json:"overrides,omitempty"`
+	// ReplicaSelection: Required. Selects the replicas to which this
+	// AsymmetricAutoscalingOption applies. Only read-only replicas are supported.
+	ReplicaSelection *InstanceReplicaSelection `json:"replicaSelection,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Overrides") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Overrides") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AsymmetricAutoscalingOption) MarshalJSON() ([]byte, error) {
+	type NoMethod AsymmetricAutoscalingOption
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AutoscalingConfig: Autoscaling configuration for an instance.
 type AutoscalingConfig struct {
+	// AsymmetricAutoscalingOptions: Optional. Optional asymmetric autoscaling
+	// options. Replicas matching the replica selection criteria will be autoscaled
+	// independently from other replicas. The autoscaler will scale the replicas
+	// based on the utilization of replicas identified by the replica selection.
+	// Replica selections should not overlap with each other. Other replicas (those
+	// do not match any replica selection) will be autoscaled together and will
+	// have the same compute capacity allocated to them.
+	AsymmetricAutoscalingOptions []*AsymmetricAutoscalingOption `json:"asymmetricAutoscalingOptions,omitempty"`
 	// AutoscalingLimits: Required. Autoscaling limits for an instance.
 	AutoscalingLimits *AutoscalingLimits `json:"autoscalingLimits,omitempty"`
 	// AutoscalingTargets: Required. The autoscaling targets for an instance.
 	AutoscalingTargets *AutoscalingTargets `json:"autoscalingTargets,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AsymmetricAutoscalingOptions") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AsymmetricAutoscalingOptions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutoscalingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AutoscalingConfigOverrides: Overrides the top-level autoscaling
+// configuration for the replicas identified by `replica_selection`. All fields
+// in this message are optional. Any unspecified fields will use the
+// corresponding values from the top-level autoscaling configuration.
+type AutoscalingConfigOverrides struct {
+	// AutoscalingLimits: Optional. If specified, overrides the min/max limit in
+	// the top-level autoscaling configuration for the selected replicas.
+	AutoscalingLimits *AutoscalingLimits `json:"autoscalingLimits,omitempty"`
+	// AutoscalingTargetHighPriorityCpuUtilizationPercent: Optional. If specified,
+	// overrides the autoscaling target high_priority_cpu_utilization_percent in
+	// the top-level autoscaling configuration for the selected replicas.
+	AutoscalingTargetHighPriorityCpuUtilizationPercent int64 `json:"autoscalingTargetHighPriorityCpuUtilizationPercent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoscalingLimits") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -437,8 +502,8 @@ type AutoscalingConfig struct {
 	NullFields []string `json:"-"`
 }
 
-func (s AutoscalingConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod AutoscalingConfig
+func (s AutoscalingConfigOverrides) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingConfigOverrides
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -544,7 +609,7 @@ type Backup struct {
 	// EncryptionInformation: Output only. The encryption information for the
 	// backup, whether it is protected by one or more KMS keys. The information
 	// includes all Cloud KMS key versions used to encrypt the backup. The
-	// `encryption_status' field inside of each `EncryptionInfo` is not populated.
+	// `encryption_status` field inside of each `EncryptionInfo` is not populated.
 	// At least one of the key versions must be available for the backup to be
 	// restored. If a key version is revoked in the middle of a restore, the
 	// restore behavior is undefined.
@@ -876,6 +941,11 @@ func (s BatchWriteResponse) MarshalJSON() ([]byte, error) {
 
 // BeginTransactionRequest: The request for BeginTransaction.
 type BeginTransactionRequest struct {
+	// MutationKey: Optional. Required for read-write transactions on a multiplexed
+	// session that commit mutations but do not perform any reads or queries.
+	// Clients should randomly select one of the mutations from the mutation set
+	// and send it as a part of this request.
+	MutationKey *Mutation `json:"mutationKey,omitempty"`
 	// Options: Required. Options for the new transaction.
 	Options *TransactionOptions `json:"options,omitempty"`
 	// RequestOptions: Common options for this request. Priority is ignored for
@@ -883,13 +953,13 @@ type BeginTransactionRequest struct {
 	// do anything. To set the priority for a transaction, set it on the reads and
 	// writes that are part of this transaction instead.
 	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Options") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "MutationKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Options") to include in API
+	// NullFields is a list of field names (e.g. "MutationKey") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1106,6 +1176,11 @@ type CommitRequest struct {
 	// Mutations: The mutations to be executed when this transaction commits. All
 	// mutations are applied atomically, in the order they appear in this list.
 	Mutations []*Mutation `json:"mutations,omitempty"`
+	// PrecommitToken: Optional. If the read-write transaction was executed on a
+	// multiplexed session, the precommit token with the highest sequence number
+	// received in this transaction attempt, should be included here. Failing to do
+	// so will result in a FailedPrecondition error.
+	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 	// RequestOptions: Common options for this request.
 	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// ReturnCommitStats: If `true`, then statistics related to the transaction
@@ -1147,6 +1222,9 @@ type CommitResponse struct {
 	// CommitTimestamp: The Cloud Spanner timestamp at which the transaction
 	// committed.
 	CommitTimestamp string `json:"commitTimestamp,omitempty"`
+	// PrecommitToken: If specified, transaction has not committed yet. Clients
+	// must retry the commit with the new precommit token.
+	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1269,16 +1347,17 @@ type CopyBackupEncryptionConfig struct {
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// KmsKeyNames: Optional. Specifies the KMS configuration for the one or more
 	// keys used to protect the backup. Values are of the form
-	// `projects//locations//keyRings//cryptoKeys/`. Kms keys specified can be in
-	// any order. The keys referenced by kms_key_names must fully cover all regions
-	// of the backup's instance configuration. Some examples: * For single region
-	// instance configs, specify a single regional location KMS key. * For
-	// multi-regional instance configs of type GOOGLE_MANAGED, either specify a
-	// multi-regional location KMS key or multiple regional location KMS keys that
-	// cover all regions in the instance config. * For an instance config of type
-	// USER_MANAGED, please specify only regional location KMS keys to cover each
-	// region in the instance config. Multi-regional location KMS keys are not
-	// supported for USER_MANAGED instance configs.
+	// `projects//locations//keyRings//cryptoKeys/`. KMS keys specified can be in
+	// any order. The keys referenced by `kms_key_names` must fully cover all
+	// regions of the backup's instance configuration. Some examples: * For
+	// regional (single-region) instance configurations, specify a regional
+	// location KMS key. * For multi-region instance configurations of type
+	// `GOOGLE_MANAGED`, either specify a multi-region location KMS key or multiple
+	// regional location KMS keys that cover all regions in the instance
+	// configuration. * For an instance configuration of type `USER_MANAGED`,
+	// specify only regional location KMS keys to cover each region in the instance
+	// configuration. Multi-region location KMS keys aren't supported for
+	// `USER_MANAGED` type instance configurations.
 	KmsKeyNames []string `json:"kmsKeyNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EncryptionType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1400,15 +1479,16 @@ type CreateBackupEncryptionConfig struct {
 	// KmsKeyNames: Optional. Specifies the KMS configuration for the one or more
 	// keys used to protect the backup. Values are of the form
 	// `projects//locations//keyRings//cryptoKeys/`. The keys referenced by
-	// kms_key_names must fully cover all regions of the backup's instance
-	// configuration. Some examples: * For single region instance configs, specify
-	// a single regional location KMS key. * For multi-regional instance configs of
-	// type GOOGLE_MANAGED, either specify a multi-regional location KMS key or
-	// multiple regional location KMS keys that cover all regions in the instance
-	// config. * For an instance config of type USER_MANAGED, please specify only
-	// regional location KMS keys to cover each region in the instance config.
-	// Multi-regional location KMS keys are not supported for USER_MANAGED instance
-	// configs.
+	// `kms_key_names` must fully cover all regions of the backup's instance
+	// configuration. Some examples: * For regional (single-region) instance
+	// configurations, specify a regional location KMS key. * For multi-region
+	// instance configurations of type `GOOGLE_MANAGED`, either specify a
+	// multi-region location KMS key or multiple regional location KMS keys that
+	// cover all regions in the instance configuration. * For an instance
+	// configuration of type `USER_MANAGED`, specify only regional location KMS
+	// keys to cover each region in the instance configuration. Multi-region
+	// location KMS keys aren't supported for `USER_MANAGED` type instance
+	// configurations.
 	KmsKeyNames []string `json:"kmsKeyNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EncryptionType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1835,7 +1915,7 @@ type Database struct {
 	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
 	// EncryptionInfo: Output only. For databases that are using customer managed
 	// encryption, this field contains the encryption information for the database,
-	// such as all Cloud KMS key versions that are in use. The `encryption_status'
+	// such as all Cloud KMS key versions that are in use. The `encryption_status`
 	// field inside of each `EncryptionInfo` is not populated. For databases that
 	// are using Google default or other types of encryption, this field is empty.
 	// This field is propagated lazily from the backend. There might be a delay
@@ -2102,18 +2182,19 @@ type EncryptionConfig struct {
 	// database. Values are of the form
 	// `projects//locations//keyRings//cryptoKeys/`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
-	// KmsKeyNames: Specifies the KMS configuration for the one or more keys used
-	// to encrypt the database. Values are of the form
+	// KmsKeyNames: Specifies the KMS configuration for one or more keys used to
+	// encrypt the database. Values are of the form
 	// `projects//locations//keyRings//cryptoKeys/`. The keys referenced by
-	// kms_key_names must fully cover all regions of the database instance
-	// configuration. Some examples: * For single region database instance configs,
-	// specify a single regional location KMS key. * For multi-regional database
-	// instance configs of type GOOGLE_MANAGED, either specify a multi-regional
-	// location KMS key or multiple regional location KMS keys that cover all
-	// regions in the instance config. * For a database instance config of type
-	// USER_MANAGED, please specify only regional location KMS keys to cover each
-	// region in the instance config. Multi-regional location KMS keys are not
-	// supported for USER_MANAGED instance configs.
+	// `kms_key_names` must fully cover all regions of the database's instance
+	// configuration. Some examples: * For regional (single-region) instance
+	// configurations, specify a regional location KMS key. * For multi-region
+	// instance configurations of type `GOOGLE_MANAGED`, either specify a
+	// multi-region location KMS key or multiple regional location KMS keys that
+	// cover all regions in the instance configuration. * For an instance
+	// configuration of type `USER_MANAGED`, specify only regional location KMS
+	// keys to cover each region in the instance configuration. Multi-region
+	// location KMS keys aren't supported for `USER_MANAGED` type instance
+	// configurations.
 	KmsKeyNames []string `json:"kmsKeyNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2255,6 +2336,11 @@ func (s ExecuteBatchDmlRequest) MarshalJSON() ([]byte, error) {
 // the third statement failed, and the fourth and fifth statements were not
 // executed.
 type ExecuteBatchDmlResponse struct {
+	// PrecommitToken: Optional. A precommit token will be included if the
+	// read-write transaction is on a multiplexed session. The precommit token with
+	// the highest sequence number from this transaction attempt should be passed
+	// to the Commit request for this transaction.
+	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 	// ResultSets: One ResultSet for each statement in the request that ran
 	// successfully, in the same order as the statements in the request. Each
 	// ResultSet does not contain any rows. The ResultSetStats in each ResultSet
@@ -2267,15 +2353,15 @@ type ExecuteBatchDmlResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ResultSets") to
+	// ForceSendFields is a list of field names (e.g. "PrecommitToken") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ResultSets") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "PrecommitToken") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2328,6 +2414,10 @@ type ExecuteSqlRequest struct {
 	// statistics, operator level execution statistics along with the results. This
 	// has a performance overhead compared to the other modes. It is not
 	// recommended to use this mode for production traffic.
+	//   "WITH_STATS" - This mode returns the overall (but not operator-level)
+	// execution statistics along with the results.
+	//   "WITH_PLAN_AND_STATS" - This mode returns the query plan, overall (but not
+	// operator-level) execution statistics along with the results.
 	QueryMode string `json:"queryMode,omitempty"`
 	// QueryOptions: Query optimizer configuration to use for the given query.
 	QueryOptions *QueryOptions `json:"queryOptions,omitempty"`
@@ -2728,6 +2818,24 @@ type Instance struct {
 	Config string `json:"config,omitempty"`
 	// CreateTime: Output only. The time at which the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DefaultBackupScheduleType: Optional. Controls the default backup behavior
+	// for new databases within the instance. Note that `AUTOMATIC` is not
+	// permitted for free instances, as backups and backup schedules are not
+	// allowed for free instances. In the `GetInstance` or `ListInstances`
+	// response, if the value of default_backup_schedule_type is unset or NONE, no
+	// default backup schedule will be created for new databases within the
+	// instance.
+	//
+	// Possible values:
+	//   "DEFAULT_BACKUP_SCHEDULE_TYPE_UNSPECIFIED" - Not specified.
+	//   "NONE" - No default backup schedule will be created automatically on
+	// creation of a database within the instance.
+	//   "AUTOMATIC" - A default backup schedule will be created automatically on
+	// creation of a database within the instance. The default backup schedule
+	// creates a full backup every 24 hours and retains the backup for a period of
+	// 7 days. Once created, the default backup schedule can be edited/deleted
+	// similar to any other backup schedule.
+	DefaultBackupScheduleType string `json:"defaultBackupScheduleType,omitempty"`
 	// DisplayName: Required. The descriptive name for this instance as it appears
 	// in UIs. Must be unique per project and between 4 and 30 characters in
 	// length.
@@ -2797,6 +2905,11 @@ type Instance struct {
 	// `READY` state. For more information, see Compute capacity, nodes and
 	// processing units (https://cloud.google.com/spanner/docs/compute-capacity).
 	ProcessingUnits int64 `json:"processingUnits,omitempty"`
+	// ReplicaComputeCapacity: Output only. Lists the compute capacity per
+	// ReplicaSelection. A replica selection identifies a set of replicas with
+	// common properties. Replicas identified by a ReplicaSelection are scaled with
+	// the same compute capacity.
+	ReplicaComputeCapacity []*ReplicaComputeCapacity `json:"replicaComputeCapacity,omitempty"`
 	// State: Output only. The current instance state. For CreateInstance, the
 	// state must be either omitted or set to `CREATING`. For UpdateInstance, the
 	// state must be either omitted or set to `READY`.
@@ -3075,6 +3188,30 @@ type InstancePartition struct {
 
 func (s InstancePartition) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancePartition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InstanceReplicaSelection: ReplicaSelection identifies replicas with common
+// properties.
+type InstanceReplicaSelection struct {
+	// Location: Required. Name of the location of the replicas (e.g.,
+	// "us-central1").
+	Location string `json:"location,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Location") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceReplicaSelection) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceReplicaSelection
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4086,6 +4223,11 @@ type PartialResultSet struct {
 	// Metadata: Metadata about the result set, such as row type information. Only
 	// present in the first response.
 	Metadata *ResultSetMetadata `json:"metadata,omitempty"`
+	// PrecommitToken: Optional. A precommit token will be included if the
+	// read-write transaction is on a multiplexed session. The precommit token with
+	// the highest sequence number from this transaction attempt should be passed
+	// to the Commit request for this transaction.
+	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 	// ResumeToken: Streaming calls might be interrupted for a variety of reasons,
 	// such as TCP connection loss. If this occurs, the stream of results can be
 	// resumed by re-sending the original request and including `resume_token`.
@@ -4862,6 +5004,10 @@ func (s ReadRequest) MarshalJSON() ([]byte, error) {
 // ReadWrite: Message type to initiate a read-write transaction. Currently this
 // transaction type has no options.
 type ReadWrite struct {
+	// MultiplexedSessionPreviousTransactionId: Optional. Clients should pass the
+	// transaction ID of the previous transaction attempt that was aborted if this
+	// transaction is being executed on a multiplexed session.
+	MultiplexedSessionPreviousTransactionId string `json:"multiplexedSessionPreviousTransactionId,omitempty"`
 	// ReadLockMode: Read lock mode for the transaction.
 	//
 	// Possible values:
@@ -4874,21 +5020,55 @@ type ReadWrite struct {
 	// commit to validate that read/queried data has not changed since the
 	// transaction started.
 	ReadLockMode string `json:"readLockMode,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ReadLockMode") to
+	// ForceSendFields is a list of field names (e.g.
+	// "MultiplexedSessionPreviousTransactionId") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "MultiplexedSessionPreviousTransactionId") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted from
+	// API requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields
+	// for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReadWrite) MarshalJSON() ([]byte, error) {
+	type NoMethod ReadWrite
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReplicaComputeCapacity: ReplicaComputeCapacity describes the amount of
+// server resources that are allocated to each replica identified by the
+// replica selection.
+type ReplicaComputeCapacity struct {
+	// NodeCount: The number of nodes allocated to each replica. This may be zero
+	// in API responses for instances that are not yet in state `READY`.
+	NodeCount int64 `json:"nodeCount,omitempty"`
+	// ProcessingUnits: The number of processing units allocated to each replica.
+	// This may be zero in API responses for instances that are not yet in state
+	// `READY`.
+	ProcessingUnits int64 `json:"processingUnits,omitempty"`
+	// ReplicaSelection: Required. Identifies replicas by specified properties. All
+	// replicas in the selection have the same amount of compute capacity.
+	ReplicaSelection *InstanceReplicaSelection `json:"replicaSelection,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NodeCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ReadLockMode") to include in API
+	// NullFields is a list of field names (e.g. "NodeCount") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s ReadWrite) MarshalJSON() ([]byte, error) {
-	type NoMethod ReadWrite
+func (s ReplicaComputeCapacity) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplicaComputeCapacity
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5039,19 +5219,19 @@ type RestoreDatabaseEncryptionConfig struct {
 	// `CUSTOMER_MANAGED_ENCRYPTION`. Values are of the form
 	// `projects//locations//keyRings//cryptoKeys/`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
-	// KmsKeyNames: Optional. Specifies the KMS configuration for the one or more
-	// keys used to encrypt the database. Values have the form
+	// KmsKeyNames: Optional. Specifies the KMS configuration for one or more keys
+	// used to encrypt the database. Values have the form
 	// `projects//locations//keyRings//cryptoKeys/`. The keys referenced by
-	// kms_key_names must fully cover all regions of the database instance
-	// configuration. Some examples: * For single region database instance
-	// configurations, specify a single regional location KMS key. * For
-	// multi-regional database instance configurations of type `GOOGLE_MANAGED`,
-	// either specify a multi-regional location KMS key or multiple regional
-	// location KMS keys that cover all regions in the instance configuration. *
-	// For a database instance configuration of type `USER_MANAGED`, please specify
-	// only regional location KMS keys to cover each region in the instance
-	// configuration. Multi-regional location KMS keys are not supported for
-	// USER_MANAGED instance configurations.
+	// `kms_key_names` must fully cover all regions of the database's instance
+	// configuration. Some examples: * For regional (single-region) instance
+	// configurations, specify a regional location KMS key. * For multi-region
+	// instance configurations of type `GOOGLE_MANAGED`, either specify a
+	// multi-region location KMS key or multiple regional location KMS keys that
+	// cover all regions in the instance configuration. * For an instance
+	// configuration of type `USER_MANAGED`, specify only regional location KMS
+	// keys to cover each region in the instance configuration. Multi-region
+	// location KMS keys aren't supported for `USER_MANAGED` type instance
+	// configurations.
 	KmsKeyNames []string `json:"kmsKeyNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EncryptionType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5191,6 +5371,11 @@ func (s RestoreInfo) MarshalJSON() ([]byte, error) {
 type ResultSet struct {
 	// Metadata: Metadata about the result set, such as row type information.
 	Metadata *ResultSetMetadata `json:"metadata,omitempty"`
+	// PrecommitToken: Optional. A precommit token will be included if the
+	// read-write transaction is on a multiplexed session. The precommit token with
+	// the highest sequence number from this transaction attempt should be passed
+	// to the Commit request for this transaction.
+	PrecommitToken *MultiplexedSessionPrecommitToken `json:"precommitToken,omitempty"`
 	// Rows: Each element in `rows` is a row whose format is defined by
 	// metadata.row_type. The ith element in each row matches the ith field in
 	// metadata.row_type. Elements are encoded based on type as described here.
@@ -6016,6 +6201,10 @@ type Type struct {
 	//   "PROTO" - Encoded as a base64-encoded `string`, as described in RFC 4648,
 	// section 4.
 	//   "ENUM" - Encoded as `string`, in decimal format.
+	//   "INTERVAL" - Encoded as `string`, in `ISO8601` duration format -
+	// `P[n]Y[n]M[n]DT[n]H[n]M[n[.fraction]]S` where `n` is an integer. For
+	// example, `P1Y2M3DT4H5M6.5S` represents time duration of 1 year, 2 months, 3
+	// days, 4 hours, 5 minutes, and 6.5 seconds.
 	Code string `json:"code,omitempty"`
 	// ProtoTypeFqn: If code == PROTO or code == ENUM, then `proto_type_fqn` is the
 	// fully qualified name of the proto type representing the proto/enum
@@ -6123,7 +6312,7 @@ type UpdateDatabaseDdlRequest struct {
 	// operation ID simplifies determining whether the statements were executed in
 	// the event that the UpdateDatabaseDdl call is replayed, or the return value
 	// is otherwise lost: the database and `operation_id` fields can be combined to
-	// form the name of the resulting longrunning.Operation: `/operations/`.
+	// form the `name` of the resulting longrunning.Operation: `/operations/`.
 	// `operation_id` should be unique within the database, and must be a valid
 	// identifier: `a-z*`. Note that automatically-generated operation IDs always
 	// begin with an underscore. If the named operation already exists,
@@ -9679,15 +9868,16 @@ func (c *ProjectsInstancesBackupsCreateCall) EncryptionConfigKmsKeyName(encrypti
 // "encryptionConfig.kmsKeyNames": Specifies the KMS configuration for the one
 // or more keys used to protect the backup. Values are of the form
 // `projects//locations//keyRings//cryptoKeys/`. The keys referenced by
-// kms_key_names must fully cover all regions of the backup's instance
-// configuration. Some examples: * For single region instance configs, specify
-// a single regional location KMS key. * For multi-regional instance configs of
-// type GOOGLE_MANAGED, either specify a multi-regional location KMS key or
-// multiple regional location KMS keys that cover all regions in the instance
-// config. * For an instance config of type USER_MANAGED, please specify only
-// regional location KMS keys to cover each region in the instance config.
-// Multi-regional location KMS keys are not supported for USER_MANAGED instance
-// configs.
+// `kms_key_names` must fully cover all regions of the backup's instance
+// configuration. Some examples: * For regional (single-region) instance
+// configurations, specify a regional location KMS key. * For multi-region
+// instance configurations of type `GOOGLE_MANAGED`, either specify a
+// multi-region location KMS key or multiple regional location KMS keys that
+// cover all regions in the instance configuration. * For an instance
+// configuration of type `USER_MANAGED`, specify only regional location KMS
+// keys to cover each region in the instance configuration. Multi-region
+// location KMS keys aren't supported for `USER_MANAGED` type instance
+// configurations.
 func (c *ProjectsInstancesBackupsCreateCall) EncryptionConfigKmsKeyNames(encryptionConfigKmsKeyNames ...string) *ProjectsInstancesBackupsCreateCall {
 	c.urlParams_.SetMulti("encryptionConfig.kmsKeyNames", append([]string{}, encryptionConfigKmsKeyNames...))
 	return c
@@ -9993,7 +10183,8 @@ type ProjectsInstancesBackupsGetIamPolicyCall struct {
 // not have a policy set. Authorization requires
 // `spanner.databases.getIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.getIamPolicy` permission on
-// resource.
+// resource. For backup schedules, authorization requires
+// `spanner.backupSchedules.getIamPolicy` permission on resource.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
 //     being retrieved. The format is `projects//instances/` for instance
@@ -10395,7 +10586,8 @@ type ProjectsInstancesBackupsSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Authorization requires
 // `spanner.databases.setIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.setIamPolicy` permission on
-// resource.
+// resource. For backup schedules, authorization requires
+// `spanner.backupSchedules.setIamPolicy` permission on resource.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
 //     being set. The format is `projects//instances/` for instance resources and
@@ -10504,7 +10696,10 @@ type ProjectsInstancesBackupsTestIamPermissionsCall struct {
 // `spanner.databases.list` permission on the containing Cloud Spanner
 // instance. Otherwise returns an empty set of permissions. Calling this method
 // on a backup that does not exist will result in a NOT_FOUND error if the user
-// has `spanner.backups.list` permission on the containing instance.
+// has `spanner.backups.list` permission on the containing instance. Calling
+// this method on a backup schedule that does not exist will result in a
+// NOT_FOUND error if the user has `spanner.backupSchedules.list` permission on
+// the containing database.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which permissions are
 //     being tested. The format is `projects//instances/` for instance resources
@@ -11087,7 +11282,7 @@ func (r *ProjectsInstancesDatabaseOperationsService) List(parent string) *Projec
 // comparison operator, and a value for filtering. The value must be a string,
 // a number, or a boolean. The comparison operator must be one of: `<`, `>`,
 // `<=`, `>=`, `!=`, `=`, or `:`. Colon `:` is the contains operator. Filter
-// rules are not case sensitive. The following fields in the Operation are
+// rules are not case sensitive. The following fields in the operation are
 // eligible for filtering: * `name` - The name of the long-running operation *
 // `done` - False if the operation is in progress, else true. *
 // `metadata.@type` - the type of metadata. For example, the type string for
@@ -11789,7 +11984,8 @@ type ProjectsInstancesDatabasesGetIamPolicyCall struct {
 // not have a policy set. Authorization requires
 // `spanner.databases.getIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.getIamPolicy` permission on
-// resource.
+// resource. For backup schedules, authorization requires
+// `spanner.backupSchedules.getIamPolicy` permission on resource.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
 //     being retrieved. The format is `projects//instances/` for instance
@@ -12431,7 +12627,8 @@ type ProjectsInstancesDatabasesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Authorization requires
 // `spanner.databases.setIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.setIamPolicy` permission on
-// resource.
+// resource. For backup schedules, authorization requires
+// `spanner.backupSchedules.setIamPolicy` permission on resource.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
 //     being set. The format is `projects//instances/` for instance resources and
@@ -12540,7 +12737,10 @@ type ProjectsInstancesDatabasesTestIamPermissionsCall struct {
 // `spanner.databases.list` permission on the containing Cloud Spanner
 // instance. Otherwise returns an empty set of permissions. Calling this method
 // on a backup that does not exist will result in a NOT_FOUND error if the user
-// has `spanner.backups.list` permission on the containing instance.
+// has `spanner.backups.list` permission on the containing instance. Calling
+// this method on a backup schedule that does not exist will result in a
+// NOT_FOUND error if the user has `spanner.backupSchedules.list` permission on
+// the containing database.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which permissions are
 //     being tested. The format is `projects//instances/` for instance resources
@@ -13068,7 +13268,8 @@ type ProjectsInstancesDatabasesBackupSchedulesGetIamPolicyCall struct {
 // not have a policy set. Authorization requires
 // `spanner.databases.getIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.getIamPolicy` permission on
-// resource.
+// resource. For backup schedules, authorization requires
+// `spanner.backupSchedules.getIamPolicy` permission on resource.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
 //     being retrieved. The format is `projects//instances/` for instance
@@ -13437,7 +13638,8 @@ type ProjectsInstancesDatabasesBackupSchedulesSetIamPolicyCall struct {
 // resource. Replaces any existing policy. Authorization requires
 // `spanner.databases.setIamPolicy` permission on resource. For backups,
 // authorization requires `spanner.backups.setIamPolicy` permission on
-// resource.
+// resource. For backup schedules, authorization requires
+// `spanner.backupSchedules.setIamPolicy` permission on resource.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which the policy is
 //     being set. The format is `projects//instances/` for instance resources and
@@ -13546,7 +13748,10 @@ type ProjectsInstancesDatabasesBackupSchedulesTestIamPermissionsCall struct {
 // `spanner.databases.list` permission on the containing Cloud Spanner
 // instance. Otherwise returns an empty set of permissions. Calling this method
 // on a backup that does not exist will result in a NOT_FOUND error if the user
-// has `spanner.backups.list` permission on the containing instance.
+// has `spanner.backups.list` permission on the containing instance. Calling
+// this method on a backup schedule that does not exist will result in a
+// NOT_FOUND error if the user has `spanner.backupSchedules.list` permission on
+// the containing database.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which permissions are
 //     being tested. The format is `projects//instances/` for instance resources
@@ -13802,7 +14007,10 @@ type ProjectsInstancesDatabasesDatabaseRolesTestIamPermissionsCall struct {
 // `spanner.databases.list` permission on the containing Cloud Spanner
 // instance. Otherwise returns an empty set of permissions. Calling this method
 // on a backup that does not exist will result in a NOT_FOUND error if the user
-// has `spanner.backups.list` permission on the containing instance.
+// has `spanner.backups.list` permission on the containing instance. Calling
+// this method on a backup schedule that does not exist will result in a
+// NOT_FOUND error if the user has `spanner.backupSchedules.list` permission on
+// the containing database.
 //
 //   - resource: REQUIRED: The Cloud Spanner resource for which permissions are
 //     being tested. The format is `projects//instances/` for instance resources

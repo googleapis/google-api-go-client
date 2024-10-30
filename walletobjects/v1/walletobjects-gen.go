@@ -1912,6 +1912,19 @@ type EventTicketClass struct {
 	//   "oneUserAllDevices" - Legacy alias for `ONE_USER_ALL_DEVICES`. Deprecated.
 	//   "oneUserOneDevice" - Legacy alias for `ONE_USER_ONE_DEVICE`. Deprecated.
 	MultipleDevicesAndHoldersAllowedStatus string `json:"multipleDevicesAndHoldersAllowedStatus,omitempty"`
+	// NotifyPreference: Whether or not field updates to this class should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If not specified, no notification will be
+	// triggered. This setting is ephemeral and needs to be set with each PATCH or
+	// UPDATE request, otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// RedemptionIssuers: Identifies which redemption issuers can redeem the pass
 	// over Smart Tap. Redemption issuers are identified by their issuer ID.
 	// Redemption issuers must have at least one Smart Tap key configured. The
@@ -1988,6 +2001,10 @@ type EventTicketClass struct {
 	// the class, both will be displayed. The maximum number of these fields
 	// displayed is 10 from the object and 10 from the class.
 	TextModulesData []*TextModuleData `json:"textModulesData,omitempty"`
+	// ValueAddedModuleData: Optional value added module data. Maximum of ten on
+	// the class. For a pass only ten will be displayed, prioritizing those from
+	// the object.
+	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Venue: Event venue details.
 	Venue *EventVenue `json:"venue,omitempty"`
 	// Version: Deprecated
@@ -2165,6 +2182,20 @@ type EventTicketObject struct {
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
 	Messages []*Message `json:"messages,omitempty"`
+	// NotifyPreference: Whether or not field updates to this object should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If set to DO_NOT_NOTIFY or
+	// NOTIFICATION_SETTINGS_UNSPECIFIED, no notification will be triggered. This
+	// setting is ephemeral and needs to be set with each PATCH or UPDATE request,
+	// otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// PassConstraints: Pass constraints for the object. Includes limiting NFC and
 	// screenshot behaviors.
 	PassConstraints *PassConstraints `json:"passConstraints,omitempty"`
@@ -2220,6 +2251,9 @@ type EventTicketObject struct {
 	// can be used. An object's state will be changed to `expired` when this time
 	// period has passed.
 	ValidTimeInterval *TimeInterval `json:"validTimeInterval,omitempty"`
+	// ValueAddedModuleData: Optional value added module data. Maximum of ten on
+	// the object.
+	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
 
@@ -2674,6 +2708,19 @@ type FlightClass struct {
 	//   "oneUserAllDevices" - Legacy alias for `ONE_USER_ALL_DEVICES`. Deprecated.
 	//   "oneUserOneDevice" - Legacy alias for `ONE_USER_ONE_DEVICE`. Deprecated.
 	MultipleDevicesAndHoldersAllowedStatus string `json:"multipleDevicesAndHoldersAllowedStatus,omitempty"`
+	// NotifyPreference: Whether or not field updates to this class should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If not specified, no notification will be
+	// triggered. This setting is ephemeral and needs to be set with each PATCH or
+	// UPDATE request, otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// Origin: Required. Origin airport.
 	Origin *AirportInfo `json:"origin,omitempty"`
 	// RedemptionIssuers: Identifies which redemption issuers can redeem the pass
@@ -2713,6 +2760,10 @@ type FlightClass struct {
 	// the class, both will be displayed. The maximum number of these fields
 	// displayed is 10 from the object and 10 from the class.
 	TextModulesData []*TextModuleData `json:"textModulesData,omitempty"`
+	// ValueAddedModuleData: Optional value added module data. Maximum of ten on
+	// the class. For a pass only ten will be displayed, prioritizing those from
+	// the object.
+	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
 	// ViewUnlockRequirement: View Unlock Requirement options for the boarding
@@ -2920,6 +2971,20 @@ type FlightObject struct {
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
 	Messages []*Message `json:"messages,omitempty"`
+	// NotifyPreference: Whether or not field updates to this object should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If set to DO_NOT_NOTIFY or
+	// NOTIFICATION_SETTINGS_UNSPECIFIED, no notification will be triggered. This
+	// setting is ephemeral and needs to be set with each PATCH or UPDATE request,
+	// otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// PassConstraints: Pass constraints for the object. Includes limiting NFC and
 	// screenshot behaviors.
 	PassConstraints *PassConstraints `json:"passConstraints,omitempty"`
@@ -2968,6 +3033,9 @@ type FlightObject struct {
 	// can be used. An object's state will be changed to `expired` when this time
 	// period has passed.
 	ValidTimeInterval *TimeInterval `json:"validTimeInterval,omitempty"`
+	// ValueAddedModuleData: Optional value added module data. Maximum of ten on
+	// the object.
+	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
 
@@ -3138,6 +3206,10 @@ type GenericClass struct {
 	// the object, both will be displayed. The maximum number of these fields
 	// displayed is 10 from class and 10 from object.
 	TextModulesData []*TextModuleData `json:"textModulesData,omitempty"`
+	// ValueAddedModuleData: Optional value added module data. Maximum of ten on
+	// the class. For a pass only ten will be displayed, prioritizing those from
+	// the object.
+	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// ViewUnlockRequirement: View Unlock Requirement options for the generic pass.
 	//
 	// Possible values:
@@ -3258,6 +3330,10 @@ type GenericObject struct {
 	//   "GENERIC_HOME_INSURANCE" - Home-insurance cards
 	//   "GENERIC_ENTRY_TICKET" - Entry tickets
 	//   "GENERIC_RECEIPT" - Receipts
+	//   "GENERIC_LOYALTY_CARD" - Loyalty cards. Please note that it is advisable
+	// to use a dedicated Loyalty card pass type instead of this generic type. A
+	// dedicated loyalty card pass type offers more features and functionality than
+	// a generic pass type.
 	//   "GENERIC_OTHER" - Other type
 	GenericType string `json:"genericType,omitempty"`
 	// GroupingInfo: Information that controls how passes are grouped together.
@@ -3358,6 +3434,9 @@ type GenericObject struct {
 	// usable. When the time period is passed, the object will be considered
 	// expired, which will affect the rendering on user's devices.
 	ValidTimeInterval *TimeInterval `json:"validTimeInterval,omitempty"`
+	// ValueAddedModuleData: Optional value added module data. Maximum of ten on
+	// the object.
+	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// WideLogo: The wide logo of the pass. When provided, this will be used in
 	// place of the logo in the top left of the card view.
 	WideLogo *Image `json:"wideLogo,omitempty"`
@@ -3551,6 +3630,19 @@ type GiftCardClass struct {
 	//   "oneUserAllDevices" - Legacy alias for `ONE_USER_ALL_DEVICES`. Deprecated.
 	//   "oneUserOneDevice" - Legacy alias for `ONE_USER_ONE_DEVICE`. Deprecated.
 	MultipleDevicesAndHoldersAllowedStatus string `json:"multipleDevicesAndHoldersAllowedStatus,omitempty"`
+	// NotifyPreference: Whether or not field updates to this class should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If not specified, no notification will be
+	// triggered. This setting is ephemeral and needs to be set with each PATCH or
+	// UPDATE request, otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// PinLabel: The label to display for the PIN, such as "4-digit PIN".
 	PinLabel string `json:"pinLabel,omitempty"`
 	// ProgramLogo: The logo of the gift card program or company. This logo is
@@ -3593,6 +3685,10 @@ type GiftCardClass struct {
 	// the class, both will be displayed. The maximum number of these fields
 	// displayed is 10 from the object and 10 from the class.
 	TextModulesData []*TextModuleData `json:"textModulesData,omitempty"`
+	// ValueAddedModuleData: Optional value added module data. Maximum of ten on
+	// the class. For a pass only ten will be displayed, prioritizing those from
+	// the object.
+	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
 	// ViewUnlockRequirement: View Unlock Requirement options for the gift card.
@@ -3766,6 +3862,20 @@ type GiftCardObject struct {
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
 	Messages []*Message `json:"messages,omitempty"`
+	// NotifyPreference: Whether or not field updates to this object should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If set to DO_NOT_NOTIFY or
+	// NOTIFICATION_SETTINGS_UNSPECIFIED, no notification will be triggered. This
+	// setting is ephemeral and needs to be set with each PATCH or UPDATE request,
+	// otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// PassConstraints: Pass constraints for the object. Includes limiting NFC and
 	// screenshot behaviors.
 	PassConstraints *PassConstraints `json:"passConstraints,omitempty"`
@@ -3808,6 +3918,9 @@ type GiftCardObject struct {
 	// can be used. An object's state will be changed to `expired` when this time
 	// period has passed.
 	ValidTimeInterval *TimeInterval `json:"validTimeInterval,omitempty"`
+	// ValueAddedModuleData: Optional value added module data. Maximum of ten on
+	// the object.
+	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
 
@@ -4494,6 +4607,19 @@ type LoyaltyClass struct {
 	//   "oneUserAllDevices" - Legacy alias for `ONE_USER_ALL_DEVICES`. Deprecated.
 	//   "oneUserOneDevice" - Legacy alias for `ONE_USER_ONE_DEVICE`. Deprecated.
 	MultipleDevicesAndHoldersAllowedStatus string `json:"multipleDevicesAndHoldersAllowedStatus,omitempty"`
+	// NotifyPreference: Whether or not field updates to this class should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If not specified, no notification will be
+	// triggered. This setting is ephemeral and needs to be set with each PATCH or
+	// UPDATE request, otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// ProgramLogo: Required. The logo of the loyalty program or company. This logo
 	// is displayed in both the details and list views of the app.
 	ProgramLogo *Image `json:"programLogo,omitempty"`
@@ -4553,6 +4679,10 @@ type LoyaltyClass struct {
 	// the class, both will be displayed. The maximum number of these fields
 	// displayed is 10 from the object and 10 from the class.
 	TextModulesData []*TextModuleData `json:"textModulesData,omitempty"`
+	// ValueAddedModuleData: Optional value added module data. Maximum of ten on
+	// the class. For a pass only ten will be displayed, prioritizing those from
+	// the object.
+	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
 	// ViewUnlockRequirement: View Unlock Requirement options for the loyalty card.
@@ -4729,6 +4859,20 @@ type LoyaltyObject struct {
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
 	Messages []*Message `json:"messages,omitempty"`
+	// NotifyPreference: Whether or not field updates to this object should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If set to DO_NOT_NOTIFY or
+	// NOTIFICATION_SETTINGS_UNSPECIFIED, no notification will be triggered. This
+	// setting is ephemeral and needs to be set with each PATCH or UPDATE request,
+	// otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// PassConstraints: Pass constraints for the object. Includes limiting NFC and
 	// screenshot behaviors.
 	PassConstraints *PassConstraints `json:"passConstraints,omitempty"`
@@ -4774,6 +4918,9 @@ type LoyaltyObject struct {
 	// can be used. An object's state will be changed to `expired` when this time
 	// period has passed.
 	ValidTimeInterval *TimeInterval `json:"validTimeInterval,omitempty"`
+	// ValueAddedModuleData: Optional value added module data. Maximum of ten on
+	// the object.
+	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
 
@@ -5245,6 +5392,32 @@ func (s ModifyLinkedOfferObjectsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ModuleViewConstraints: Constraints that all must be met for the module to be
+// shown.
+type ModuleViewConstraints struct {
+	// DisplayInterval: The period of time that the module will be displayed to
+	// users. Can define both a `startTime` and `endTime`. The module is displayed
+	// immediately after insertion unless a `startTime` is set. The module is
+	// displayed indefinitely if `endTime` is not set.
+	DisplayInterval *TimeInterval `json:"displayInterval,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayInterval") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayInterval") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ModuleViewConstraints) MarshalJSON() ([]byte, error) {
+	type NoMethod ModuleViewConstraints
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type Money struct {
 	// CurrencyCode: The currency code, such as "USD" or "EUR."
 	CurrencyCode string `json:"currencyCode,omitempty"`
@@ -5446,6 +5619,19 @@ type OfferClass struct {
 	//   "oneUserAllDevices" - Legacy alias for `ONE_USER_ALL_DEVICES`. Deprecated.
 	//   "oneUserOneDevice" - Legacy alias for `ONE_USER_ONE_DEVICE`. Deprecated.
 	MultipleDevicesAndHoldersAllowedStatus string `json:"multipleDevicesAndHoldersAllowedStatus,omitempty"`
+	// NotifyPreference: Whether or not field updates to this class should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If not specified, no notification will be
+	// triggered. This setting is ephemeral and needs to be set with each PATCH or
+	// UPDATE request, otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// Provider: Required. The offer provider (either the aggregator name or
 	// merchant name). Recommended maximum length is 12 characters to ensure full
 	// string is displayed on smaller screens.
@@ -5514,6 +5700,10 @@ type OfferClass struct {
 	// TitleImage: The title image of the offer. This image is displayed in both
 	// the details and list views of the app.
 	TitleImage *Image `json:"titleImage,omitempty"`
+	// ValueAddedModuleData: Optional value added module data. Maximum of ten on
+	// the class. For a pass only ten will be displayed, prioritizing those from
+	// the object.
+	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
 	// ViewUnlockRequirement: View Unlock Requirement options for the offer.
@@ -5675,6 +5865,20 @@ type OfferObject struct {
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
 	Messages []*Message `json:"messages,omitempty"`
+	// NotifyPreference: Whether or not field updates to this object should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If set to DO_NOT_NOTIFY or
+	// NOTIFICATION_SETTINGS_UNSPECIFIED, no notification will be triggered. This
+	// setting is ephemeral and needs to be set with each PATCH or UPDATE request,
+	// otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// PassConstraints: Pass constraints for the object. Includes limiting NFC and
 	// screenshot behaviors.
 	PassConstraints *PassConstraints `json:"passConstraints,omitempty"`
@@ -5715,6 +5919,9 @@ type OfferObject struct {
 	// can be used. An object's state will be changed to `expired` when this time
 	// period has passed.
 	ValidTimeInterval *TimeInterval `json:"validTimeInterval,omitempty"`
+	// ValueAddedModuleData: Optional value added module data. Maximum of ten on
+	// the object.
+	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
 
@@ -6854,6 +7061,20 @@ type TransitClass struct {
 	//   "oneUserAllDevices" - Legacy alias for `ONE_USER_ALL_DEVICES`. Deprecated.
 	//   "oneUserOneDevice" - Legacy alias for `ONE_USER_ONE_DEVICE`. Deprecated.
 	MultipleDevicesAndHoldersAllowedStatus string `json:"multipleDevicesAndHoldersAllowedStatus,omitempty"`
+	// NotifyPreference: Whether or not field updates to this class should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If set to DO_NOT_NOTIFY or
+	// NOTIFICATION_SETTINGS_UNSPECIFIED, no notification will be triggered. This
+	// setting is ephemeral and needs to be set with each PATCH or UPDATE request,
+	// otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// RedemptionIssuers: Identifies which redemption issuers can redeem the pass
 	// over Smart Tap. Redemption issuers are identified by their issuer ID.
 	// Redemption issuers must have at least one Smart Tap key configured. The
@@ -6909,6 +7130,10 @@ type TransitClass struct {
 	//   "OTHER"
 	//   "other" - Legacy alias for `OTHER`. Deprecated.
 	TransitType string `json:"transitType,omitempty"`
+	// ValueAddedModuleData: Optional value added module data. Maximum of ten on
+	// the class. For a pass only ten will be displayed, prioritizing those from
+	// the object.
+	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
 	// ViewUnlockRequirement: View Unlock Requirement options for the transit
@@ -7100,6 +7325,20 @@ type TransitObject struct {
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
 	Messages []*Message `json:"messages,omitempty"`
+	// NotifyPreference: Whether or not field updates to this object should trigger
+	// notifications. When set to NOTIFY, we will attempt to trigger a field update
+	// notification to users. These notifications will only be sent to users if the
+	// field is part of an allowlist. If set to DO_NOT_NOTIFY or
+	// NOTIFICATION_SETTINGS_UNSPECIFIED, no notification will be triggered. This
+	// setting is ephemeral and needs to be set with each PATCH or UPDATE request,
+	// otherwise a notification will not be triggered.
+	//
+	// Possible values:
+	//   "NOTIFICATION_SETTINGS_FOR_UPDATES_UNSPECIFIED" - Default behavior is no
+	// notifications sent.
+	//   "NOTIFY_ON_UPDATE" - This value will result in a notification being sent,
+	// if the updated fields are part of an allowlist.
+	NotifyPreference string `json:"notifyPreference,omitempty"`
 	// PassConstraints: Pass constraints for the object. Includes limiting NFC and
 	// screenshot behaviors.
 	PassConstraints *PassConstraints `json:"passConstraints,omitempty"`
@@ -7197,6 +7436,9 @@ type TransitObject struct {
 	// can be used. An object's state will be changed to `expired` when this time
 	// period has passed.
 	ValidTimeInterval *TimeInterval `json:"validTimeInterval,omitempty"`
+	// ValueAddedModuleData: Optional value added module data. Maximum of ten on
+	// the object.
+	ValueAddedModuleData []*ValueAddedModuleData `json:"valueAddedModuleData,omitempty"`
 	// Version: Deprecated
 	Version int64 `json:"version,omitempty,string"`
 
@@ -7390,6 +7632,48 @@ type Uri struct {
 
 func (s Uri) MarshalJSON() ([]byte, error) {
 	type NoMethod Uri
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ValueAddedModuleData: Data for Value Added module. Required fields are
+// header and uri.
+type ValueAddedModuleData struct {
+	// Body: Body to be displayed on the module. Character limit is 50 and longer
+	// strings will be truncated.
+	Body *LocalizedString `json:"body,omitempty"`
+	// Header: Header to be displayed on the module. Character limit is 60 and
+	// longer strings will be truncated.
+	Header *LocalizedString `json:"header,omitempty"`
+	// Image: Image to be displayed on the module. Recommended image ratio is 1:1.
+	// Images will be resized to fit this ratio.
+	Image *Image `json:"image,omitempty"`
+	// SortIndex: The index for sorting the modules. Modules with a lower sort
+	// index are shown before modules with a higher sort index. If unspecified, the
+	// sort index is assumed to be INT_MAX. For two modules with the same index,
+	// the sorting behavior is undefined.
+	SortIndex int64 `json:"sortIndex,omitempty"`
+	// Uri: URI that the module leads to on click. This can be a web link or a deep
+	// link as mentioned in
+	// https://developer.android.com/training/app-links/deep-linking.
+	Uri string `json:"uri,omitempty"`
+	// ViewConstraints: Constraints that all must be met for the module to be
+	// shown.
+	ViewConstraints *ModuleViewConstraints `json:"viewConstraints,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ValueAddedModuleData) MarshalJSON() ([]byte, error) {
+	type NoMethod ValueAddedModuleData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

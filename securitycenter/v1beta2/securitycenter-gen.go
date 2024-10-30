@@ -877,15 +877,17 @@ func (s AzureMetadata) MarshalJSON() ([]byte, error) {
 
 // AzureResourceGroup: Represents an Azure resource group.
 type AzureResourceGroup struct {
+	// Id: The ID of the Azure resource group.
+	Id string `json:"id,omitempty"`
 	// Name: The name of the Azure resource group. This is not a UUID.
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
 	// with the JSON null value. By default, fields with empty values are omitted
 	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3927,15 +3929,17 @@ func (s GoogleCloudSecuritycenterV2AzureMetadata) MarshalJSON() ([]byte, error) 
 // GoogleCloudSecuritycenterV2AzureResourceGroup: Represents an Azure resource
 // group.
 type GoogleCloudSecuritycenterV2AzureResourceGroup struct {
+	// Id: The ID of the Azure resource group.
+	Id string `json:"id,omitempty"`
 	// Name: The name of the Azure resource group. This is not a UUID.
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
 	// with the JSON null value. By default, fields with empty values are omitted
 	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5778,6 +5782,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "EVENT_TRIGGERED_EXECUTION" - T1546
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
 	//   "UNSECURED_CREDENTIALS" - T1552
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
@@ -5794,6 +5799,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
+	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
 	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
@@ -5872,6 +5878,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "EVENT_TRIGGERED_EXECUTION" - T1546
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
 	//   "UNSECURED_CREDENTIALS" - T1552
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
@@ -5888,6 +5895,7 @@ type GoogleCloudSecuritycenterV2MitreAttack struct {
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
+	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
 	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
@@ -7446,6 +7454,7 @@ type MitreAttack struct {
 	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "EVENT_TRIGGERED_EXECUTION" - T1546
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
 	//   "UNSECURED_CREDENTIALS" - T1552
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
@@ -7462,6 +7471,7 @@ type MitreAttack struct {
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
+	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
 	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649
@@ -7540,6 +7550,7 @@ type MitreAttack struct {
 	//   "ACCOUNT_ACCESS_REMOVAL" - T1531
 	//   "STEAL_WEB_SESSION_COOKIE" - T1539
 	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "EVENT_TRIGGERED_EXECUTION" - T1546
 	//   "ABUSE_ELEVATION_CONTROL_MECHANISM" - T1548
 	//   "UNSECURED_CREDENTIALS" - T1552
 	//   "MODIFY_AUTHENTICATION_PROCESS" - T1556
@@ -7556,6 +7567,7 @@ type MitreAttack struct {
 	//   "ACTIVE_SCANNING" - T1595
 	//   "SCANNING_IP_BLOCKS" - T1595.001
 	//   "CONTAINER_ADMINISTRATION_COMMAND" - T1609
+	//   "DEPLOY_CONTAINER" - T1610
 	//   "ESCAPE_TO_HOST" - T1611
 	//   "CONTAINER_AND_RESOURCE_DISCOVERY" - T1613
 	//   "STEAL_OR_FORGE_AUTHENTICATION_CERTIFICATES" - T1649

@@ -1040,7 +1040,10 @@ type Product struct {
 	// FeedLabel: Output only. The feed label for the product.
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// Name: The name of the product. Format:
-	// "{product.name=accounts/{account}/products/{product}}"
+	// "{product.name=accounts/{account}/products/{product}}" where the last
+	// section `product` consists of 4 parts:
+	// channel~content_language~feed_label~offer_id example for product name is
+	// "accounts/123/products/online~en~US~sku123"
 	Name string `json:"name,omitempty"`
 	// OfferId: Output only. Your unique identifier for the product. This is the
 	// same for the product input and processed product. Leading and trailing
@@ -1254,6 +1257,9 @@ type ProductInput struct {
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// Name: Identifier. The name of the product input. Format:
 	// "{productinput.name=accounts/{account}/productInputs/{productinput}}"
+	// where the last section `productinput` consists of 4 parts:
+	// channel~content_language~feed_label~offer_id example for product input name
+	// is "accounts/123/productInputs/online~en~US~sku123"
 	Name string `json:"name,omitempty"`
 	// OfferId: Required. Immutable. Your unique identifier for the product. This
 	// is the same for the product input and processed product. Leading and
@@ -1343,6 +1349,8 @@ type ProductStatusChangeMessage struct {
 	Attribute string `json:"attribute,omitempty"`
 	// Changes: A message to describe the change that happened to the product
 	Changes []*ProductChange `json:"changes,omitempty"`
+	// ExpirationTime: The product expiration time.
+	ExpirationTime string `json:"expirationTime,omitempty"`
 	// ManagingAccount: The account that manages the merchant's account. can be the
 	// same as merchant id if it is standalone account. Format :
 	// `accounts/{service_provider_id}`
@@ -1779,7 +1787,10 @@ type AccountsProductInputsDeleteCall struct {
 // minutes before the processed product can be retrieved.
 //
 //   - name: The name of the product input resource to delete. Format:
-//     accounts/{account}/productInputs/{product}.
+//     accounts/{account}/productInputs/{product} where the last section
+//     `product` consists of 4 parts:
+//     channel~content_language~feed_label~offer_id example for product name is
+//     "accounts/123/productInputs/online~en~US~sku123".
 func (r *AccountsProductInputsService) Delete(name string) *AccountsProductInputsDeleteCall {
 	c := &AccountsProductInputsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2001,7 +2012,9 @@ type AccountsProductsGetCall struct {
 // minutes before the updated final product can be retrieved.
 //
 //   - name: The name of the product to retrieve. Format:
-//     `accounts/{account}/products/{product}`.
+//     `accounts/{account}/products/{product}` where the last section `product`
+//     consists of 4 parts: channel~content_language~feed_label~offer_id example
+//     for product name is "accounts/123/products/online~en~US~sku123".
 func (r *AccountsProductsService) Get(name string) *AccountsProductsGetCall {
 	c := &AccountsProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2122,7 +2135,7 @@ func (r *AccountsProductsService) List(parent string) *AccountsProductsListCall 
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // products to return. The service may return fewer than this value. The
-// maximum value is 1000; values above 1000 will be coerced to 1000. If
+// maximum value is 250; values above 250 will be coerced to 250. If
 // unspecified, the maximum number of products will be returned.
 func (c *AccountsProductsListCall) PageSize(pageSize int64) *AccountsProductsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))

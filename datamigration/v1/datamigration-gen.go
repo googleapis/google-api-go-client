@@ -601,6 +601,30 @@ func (s BackgroundJobLogEntry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BinaryLogParser: Configuration to use Binary Log Parser CDC technique.
+type BinaryLogParser struct {
+	// LogFileDirectories: Use Oracle directories.
+	LogFileDirectories *LogFileDirectories `json:"logFileDirectories,omitempty"`
+	// OracleAsmLogFileAccess: Use Oracle ASM.
+	OracleAsmLogFileAccess *OracleAsmLogFileAccess `json:"oracleAsmLogFileAccess,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LogFileDirectories") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LogFileDirectories") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BinaryLogParser) MarshalJSON() ([]byte, error) {
+	type NoMethod BinaryLogParser
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -1054,6 +1078,13 @@ type ConnectionProfile struct {
 	//   "AURORA" - Amazon Aurora is the source instance provider.
 	//   "ALLOYDB" - AlloyDB for PostgreSQL is the source instance provider.
 	Provider string `json:"provider,omitempty"`
+	// Role: Optional. The connection profile role.
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - The role is unspecified.
+	//   "SOURCE" - The role is source.
+	//   "DESTINATION" - The role is destination.
+	Role string `json:"role,omitempty"`
 	// Sqlserver: Connection profile for a SQL Server data source.
 	Sqlserver *SqlServerConnectionProfile `json:"sqlserver,omitempty"`
 	// State: The current connection profile state (e.g. DRAFT, READY, or FAILED).
@@ -2613,6 +2644,35 @@ func (s Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LogFileDirectories: Configuration to specify the Oracle directories to
+// access the log files.
+type LogFileDirectories struct {
+	// ArchivedLogDirectory: Required. Oracle directory for archived logs.
+	ArchivedLogDirectory string `json:"archivedLogDirectory,omitempty"`
+	// OnlineLogDirectory: Required. Oracle directory for online logs.
+	OnlineLogDirectory string `json:"onlineLogDirectory,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArchivedLogDirectory") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArchivedLogDirectory") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LogFileDirectories) MarshalJSON() ([]byte, error) {
+	type NoMethod LogFileDirectories
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LogMiner: Configuration to use LogMiner CDC method.
+type LogMiner struct {
+}
+
 // MachineConfig: MachineConfig describes the configuration of a machine.
 type MachineConfig struct {
 	// CpuCount: The number of CPU's in the VM instance.
@@ -2869,6 +2929,9 @@ type MigrationJob struct {
 	// Name: The name (URI) of this migration job resource, in the form of:
 	// projects/{project}/locations/{location}/migrationJobs/{migrationJob}.
 	Name string `json:"name,omitempty"`
+	// OracleToPostgresConfig: Configuration for heterogeneous **Oracle to Cloud
+	// SQL for PostgreSQL** and **Oracle to AlloyDB for PostgreSQL** migrations.
+	OracleToPostgresConfig *OracleToPostgresConfig `json:"oracleToPostgresConfig,omitempty"`
 	// PerformanceConfig: Optional. Data dump parallelism settings used by the
 	// migration.
 	PerformanceConfig *PerformanceConfig `json:"performanceConfig,omitempty"`
@@ -3263,6 +3326,11 @@ func (s OracleAsmConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OracleAsmLogFileAccess: Configuration to use Oracle ASM to access the log
+// files.
+type OracleAsmLogFileAccess struct {
+}
+
 // OracleConnectionProfile: Specifies connection parameters required
 // specifically for Oracle databases.
 type OracleConnectionProfile struct {
@@ -3311,6 +3379,66 @@ type OracleConnectionProfile struct {
 
 func (s OracleConnectionProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod OracleConnectionProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OracleSourceConfig: Configuration for Oracle as a source in a migration.
+type OracleSourceConfig struct {
+	// BinaryLogParser: Use Binary Log Parser.
+	BinaryLogParser *BinaryLogParser `json:"binaryLogParser,omitempty"`
+	// CdcStartPosition: Optional. The schema change number (SCN) to start CDC data
+	// migration from.
+	CdcStartPosition int64 `json:"cdcStartPosition,omitempty,string"`
+	// LogMiner: Use LogMiner.
+	LogMiner *LogMiner `json:"logMiner,omitempty"`
+	// MaxConcurrentCdcConnections: Optional. Maximum number of connections
+	// Database Migration Service will open to the source for CDC phase.
+	MaxConcurrentCdcConnections int64 `json:"maxConcurrentCdcConnections,omitempty"`
+	// MaxConcurrentFullDumpConnections: Optional. Maximum number of connections
+	// Database Migration Service will open to the source for full dump phase.
+	MaxConcurrentFullDumpConnections int64 `json:"maxConcurrentFullDumpConnections,omitempty"`
+	// SkipFullDump: Optional. Whether to skip full dump or not.
+	SkipFullDump bool `json:"skipFullDump,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BinaryLogParser") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BinaryLogParser") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OracleSourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod OracleSourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OracleToPostgresConfig: Configuration for heterogeneous **Oracle to Cloud
+// SQL for PostgreSQL** and **Oracle to AlloyDB for PostgreSQL** migrations.
+type OracleToPostgresConfig struct {
+	// OracleSourceConfig: Optional. Configuration for Oracle source.
+	OracleSourceConfig *OracleSourceConfig `json:"oracleSourceConfig,omitempty"`
+	// PostgresDestinationConfig: Optional. Configuration for Postgres destination.
+	PostgresDestinationConfig *PostgresDestinationConfig `json:"postgresDestinationConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OracleSourceConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OracleSourceConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OracleToPostgresConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod OracleToPostgresConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3549,6 +3677,32 @@ type PostgreSqlConnectionProfile struct {
 
 func (s PostgreSqlConnectionProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod PostgreSqlConnectionProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PostgresDestinationConfig: Configuration for Postgres as a destination in a
+// migration.
+type PostgresDestinationConfig struct {
+	// MaxConcurrentConnections: Optional. Maximum number of connections Database
+	// Migration Service will open to the destination for data migration.
+	MaxConcurrentConnections int64 `json:"maxConcurrentConnections,omitempty"`
+	// TransactionTimeout: Optional. Timeout for data migration transactions.
+	TransactionTimeout string `json:"transactionTimeout,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxConcurrentConnections")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxConcurrentConnections") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PostgresDestinationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgresDestinationConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4532,7 +4686,7 @@ type SslConfig struct {
 	// key associated with the Client Certificate. If this field is used then the
 	// 'client_certificate' field is mandatory.
 	ClientKey string `json:"clientKey,omitempty"`
-	// Type: Output only. The ssl config type according to 'client_key',
+	// Type: Optional. The ssl config type according to 'client_key',
 	// 'client_certificate' and 'ca_certificate'.
 	//
 	// Possible values:
@@ -4540,6 +4694,9 @@ type SslConfig struct {
 	//   "SERVER_ONLY" - Only 'ca_certificate' specified.
 	//   "SERVER_CLIENT" - Both server ('ca_certificate'), and client
 	// ('client_key', 'client_certificate') specified.
+	//   "REQUIRED" - Mandates SSL encryption for all connections. This doesn’t
+	// require certificate verification.
+	//   "NONE" - Connection is not encrypted.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
 	// unconditionally include in API requests. By default, fields with empty or

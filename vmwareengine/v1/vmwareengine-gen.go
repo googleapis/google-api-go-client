@@ -663,8 +663,8 @@ type Cluster struct {
 	// otherwise. There can only be one management cluster in a private cloud and
 	// it has to be the first one.
 	Management bool `json:"management,omitempty"`
-	// Name: Output only. The resource name of this cluster. Resource names are
-	// schemeless URIs that follow the conventions in
+	// Name: Output only. Identifier. The resource name of this cluster. Resource
+	// names are schemeless URIs that follow the conventions in
 	// https://cloud.google.com/apis/design/resource_names. For example:
 	// `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/clusters/
 	// my-cluster`
@@ -784,8 +784,8 @@ type DnsForwarding struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// ForwardingRules: Required. List of domain mappings to configure
 	ForwardingRules []*ForwardingRule `json:"forwardingRules,omitempty"`
-	// Name: Output only. The resource name of this DNS profile. Resource names are
-	// schemeless URIs that follow the conventions in
+	// Name: Output only. Identifier. The resource name of this DNS profile.
+	// Resource names are schemeless URIs that follow the conventions in
 	// https://cloud.google.com/apis/design/resource_names. For example:
 	// `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/dnsForwar
 	// ding`
@@ -975,8 +975,8 @@ type ExternalAddress struct {
 	ExternalIp string `json:"externalIp,omitempty"`
 	// InternalIp: The internal IP address of a workload VM.
 	InternalIp string `json:"internalIp,omitempty"`
-	// Name: Output only. The resource name of this external IP address. Resource
-	// names are schemeless URIs that follow the conventions in
+	// Name: Output only. Identifier. The resource name of this external IP
+	// address. Resource names are schemeless URIs that follow the conventions in
 	// https://cloud.google.com/apis/design/resource_names. For example:
 	// `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/externalA
 	// ddresses/my-address`
@@ -2077,9 +2077,9 @@ type NetworkPeering struct {
 	// (https://en.wikipedia.org/wiki/IPv4#Special_addresses) are always imported
 	// to peers and are not controlled by this field.
 	ImportCustomRoutesWithPublicIp bool `json:"importCustomRoutesWithPublicIp,omitempty"`
-	// Name: Output only. The resource name of the network peering. NetworkPeering
-	// is a global resource and location can only be global. Resource names are
-	// scheme-less URIs that follow the conventions in
+	// Name: Output only. Identifier. The resource name of the network peering.
+	// NetworkPeering is a global resource and location can only be global.
+	// Resource names are scheme-less URIs that follow the conventions in
 	// https://cloud.google.com/apis/design/resource_names. For example:
 	// `projects/my-project/locations/global/networkPeerings/my-peering`
 	Name string `json:"name,omitempty"`
@@ -2189,8 +2189,8 @@ type NetworkPolicy struct {
 	// InternetAccess: Network service that allows VMware workloads to access the
 	// internet.
 	InternetAccess *NetworkService `json:"internetAccess,omitempty"`
-	// Name: Output only. The resource name of this network policy. Resource names
-	// are schemeless URIs that follow the conventions in
+	// Name: Output only. Identifier. The resource name of this network policy.
+	// Resource names are schemeless URIs that follow the conventions in
 	// https://cloud.google.com/apis/design/resource_names. For example:
 	// `projects/my-project/locations/us-central1/networkPolicies/my-network-policy`
 	Name string `json:"name,omitempty"`
@@ -2725,8 +2725,8 @@ type PrivateCloud struct {
 	// changed after private cloud creation: `ManagementCluster.clusterId`,
 	// `ManagementCluster.nodeTypeId`.
 	ManagementCluster *ManagementCluster `json:"managementCluster,omitempty"`
-	// Name: Output only. The resource name of this private cloud. Resource names
-	// are schemeless URIs that follow the conventions in
+	// Name: Output only. Identifier. The resource name of this private cloud.
+	// Resource names are schemeless URIs that follow the conventions in
 	// https://cloud.google.com/apis/design/resource_names. For example:
 	// `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
 	Name string `json:"name,omitempty"`
@@ -3146,8 +3146,8 @@ type Subnet struct {
 	// IpCidrRange: The IP address range of the subnet in CIDR format
 	// '10.0.0.0/24'.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
-	// Name: Output only. The resource name of this subnet. Resource names are
-	// schemeless URIs that follow the conventions in
+	// Name: Output only. Identifier. The resource name of this subnet. Resource
+	// names are schemeless URIs that follow the conventions in
 	// https://cloud.google.com/apis/design/resource_names. For example:
 	// `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/subnets/m
 	// y-subnet`
@@ -3340,8 +3340,8 @@ type VmwareEngineNetwork struct {
 	// The server computes checksums based on the value of other fields in the
 	// request.
 	Etag string `json:"etag,omitempty"`
-	// Name: Output only. The resource name of the VMware Engine network. Resource
-	// names are schemeless URIs that follow the conventions in
+	// Name: Output only. Identifier. The resource name of the VMware Engine
+	// network. Resource names are schemeless URIs that follow the conventions in
 	// https://cloud.google.com/apis/design/resource_names. For example:
 	// `projects/my-project/locations/global/vmwareEngineNetworks/my-network`
 	Name string `json:"name,omitempty"`
@@ -4583,7 +4583,7 @@ type ProjectsLocationsNetworkPeeringsPatchCall struct {
 // can be updated. Only fields specified in `updateMask` are applied.
 // NetworkPeering is a global resource and location can only be global.
 //
-//   - name: Output only. The resource name of the network peering.
+//   - name: Output only. Identifier. The resource name of the network peering.
 //     NetworkPeering is a global resource and location can only be global.
 //     Resource names are scheme-less URIs that follow the conventions in
 //     https://cloud.google.com/apis/design/resource_names. For example:
@@ -5584,8 +5584,8 @@ type ProjectsLocationsNetworkPoliciesPatchCall struct {
 // can't update the resource. Use the operation status to determine when the
 // processing fully completes.
 //
-//   - name: Output only. The resource name of this network policy. Resource
-//     names are schemeless URIs that follow the conventions in
+//   - name: Output only. Identifier. The resource name of this network policy.
+//     Resource names are schemeless URIs that follow the conventions in
 //     https://cloud.google.com/apis/design/resource_names. For example:
 //     `projects/my-project/locations/us-central1/networkPolicies/my-network-polic
 //     y`.
@@ -7840,8 +7840,8 @@ type ProjectsLocationsPrivateCloudsPatchCall struct {
 // can't update the resource. Use the operation status to determine when the
 // processing fully completes.
 //
-//   - name: Output only. The resource name of this private cloud. Resource names
-//     are schemeless URIs that follow the conventions in
+//   - name: Output only. Identifier. The resource name of this private cloud.
+//     Resource names are schemeless URIs that follow the conventions in
 //     https://cloud.google.com/apis/design/resource_names. For example:
 //     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`.
 func (r *ProjectsLocationsPrivateCloudsService) Patch(name string, privatecloud *PrivateCloud) *ProjectsLocationsPrivateCloudsPatchCall {
@@ -8728,8 +8728,8 @@ type ProjectsLocationsPrivateCloudsUpdateDnsForwardingCall struct {
 // UpdateDnsForwarding: Updates the parameters of the `DnsForwarding` config,
 // like associated domains. Only fields specified in `update_mask` are applied.
 //
-//   - name: Output only. The resource name of this DNS profile. Resource names
-//     are schemeless URIs that follow the conventions in
+//   - name: Output only. Identifier. The resource name of this DNS profile.
+//     Resource names are schemeless URIs that follow the conventions in
 //     https://cloud.google.com/apis/design/resource_names. For example:
 //     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/dnsForw
 //     arding`.
@@ -9520,8 +9520,8 @@ type ProjectsLocationsPrivateCloudsClustersPatchCall struct {
 // time, you can't update the resource. Use the operation status to determine
 // when the processing fully completes.
 //
-//   - name: Output only. The resource name of this cluster. Resource names are
-//     schemeless URIs that follow the conventions in
+//   - name: Output only. Identifier. The resource name of this cluster. Resource
+//     names are schemeless URIs that follow the conventions in
 //     https://cloud.google.com/apis/design/resource_names. For example:
 //     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/cluster
 //     s/my-cluster`.
@@ -10674,8 +10674,8 @@ type ProjectsLocationsPrivateCloudsExternalAddressesPatchCall struct {
 // completes. For that period of time, you can't update the resource. Use the
 // operation status to determine when the processing fully completes.
 //
-//   - name: Output only. The resource name of this external IP address. Resource
-//     names are schemeless URIs that follow the conventions in
+//   - name: Output only. Identifier. The resource name of this external IP
+//     address. Resource names are schemeless URIs that follow the conventions in
 //     https://cloud.google.com/apis/design/resource_names. For example:
 //     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/externa
 //     lAddresses/my-address`.
@@ -13278,8 +13278,8 @@ type ProjectsLocationsPrivateCloudsSubnetsPatchCall struct {
 // returns a successful `google.longrunning.Operation` (LRO). The returned LRO
 // will only have `done` and `response` fields.
 //
-//   - name: Output only. The resource name of this subnet. Resource names are
-//     schemeless URIs that follow the conventions in
+//   - name: Output only. Identifier. The resource name of this subnet. Resource
+//     names are schemeless URIs that follow the conventions in
 //     https://cloud.google.com/apis/design/resource_names. For example:
 //     `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/subnets
 //     /my-subnet`.
@@ -14788,8 +14788,8 @@ type ProjectsLocationsVmwareEngineNetworksPatchCall struct {
 // can be updated: `description`. Only fields specified in `updateMask` are
 // applied.
 //
-//   - name: Output only. The resource name of the VMware Engine network.
-//     Resource names are schemeless URIs that follow the conventions in
+//   - name: Output only. Identifier. The resource name of the VMware Engine
+//     network. Resource names are schemeless URIs that follow the conventions in
 //     https://cloud.google.com/apis/design/resource_names. For example:
 //     `projects/my-project/locations/global/vmwareEngineNetworks/my-network`.
 func (r *ProjectsLocationsVmwareEngineNetworksService) Patch(name string, vmwareenginenetwork *VmwareEngineNetwork) *ProjectsLocationsVmwareEngineNetworksPatchCall {

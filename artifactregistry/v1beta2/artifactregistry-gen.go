@@ -1353,8 +1353,8 @@ type Tag struct {
 	// URL encoded.
 	Name string `json:"name,omitempty"`
 	// Version: The name of the version the tag refers to, for example:
-	// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/
-	// sha256:5243811" If the package or version ID parts contain slashes, the
+	// `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/
+	// sha256:5243811` If the package or version ID parts contain slashes, the
 	// slashes are escaped.
 	Version string `json:"version,omitempty"`
 
@@ -1559,8 +1559,8 @@ type Version struct {
 	// MavenArtifact
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
 	// Name: The name of the version, for example:
-	// "projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/
-	// art1". If the package or version ID parts contain slashes, the slashes are
+	// `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/
+	// art1`. If the package or version ID parts contain slashes, the slashes are
 	// escaped.
 	Name string `json:"name,omitempty"`
 	// RelatedTags: Output only. A list of related tags. Will contain up to 100

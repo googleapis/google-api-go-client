@@ -126,7 +126,7 @@
           ]
         },
         "delete": {
-          "description": "Deletes the specified account regardless of its type: standalone, MCA or sub-account. Deleting an MCA leads to the deletion of all of its sub-accounts. Executing this method requires admin access.",
+          "description": "Deletes the specified account regardless of its type: standalone, MCA or sub-account. Deleting an MCA leads to the deletion of all of its sub-accounts. Executing this method requires admin access. The deletion succeeds only if the account does not provide services to any other account and has no processed offers. You can use the `force` parameter to override this.",
           "flatPath": "accounts/v1beta/accounts/{accountsId}",
           "httpMethod": "DELETE",
           "id": "merchantapi.accounts.delete",
@@ -134,6 +134,11 @@
             "name"
           ],
           "parameters": {
+            "force": {
+              "description": "Optional. If set to `true`, the account is deleted even if it provides services to other accounts or has processed offers.",
+              "location": "query",
+              "type": "boolean"
+            },
             "name": {
               "description": "Required. The name of the account to delete. Format: `accounts/{account}`",
               "location": "path",
@@ -176,7 +181,7 @@
           ]
         },
         "list": {
-          "description": "Lists accounts accessible to the calling user and matching the constraints of the request such as page size or filters. This is not just listing the sub-accounts of an MCA, but all accounts the calling user has access to including other MCAs, linked accounts, standalone accounts and so on.",
+          "description": "Lists accounts accessible to the calling user and matching the constraints of the request such as page size or filters. This is not just listing the sub-accounts of an MCA, but all accounts the calling user has access to including other MCAs, linked accounts, standalone accounts and so on. If no filter is provided, then it returns accounts the user is directly added to.",
           "flatPath": "accounts/v1beta/accounts",
           "httpMethod": "GET",
           "id": "merchantapi.accounts.list",
@@ -260,7 +265,7 @@
               "type": "string"
             },
             "updateMask": {
-              "description": "Required. List of fields being updated.",
+              "description": "Optional. List of fields being updated. The following fields are supported (in both `snake_case` and `lowerCamelCase`): - `account_name` - `adult_content` - `language_code` - `time_zone`",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -386,7 +391,7 @@
                   "type": "string"
                 },
                 "updateMask": {
-                  "description": "Required. List of fields being updated.",
+                  "description": "Optional. List of fields being updated. The following fields are supported (in both `snake_case` and `lowerCamelCase`): - `black_owned` - `latino_owned` - `promotions_consent` - `small_business` - `veteran_owned` - `women_owned`",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -449,7 +454,7 @@
                   "type": "string"
                 },
                 "updateMask": {
-                  "description": "Required. List of fields being updated.",
+                  "description": "Optional. List of fields being updated. The following fields are supported (in both `snake_case` and `lowerCamelCase`): - `address` - `customer_service` - `korean_business_registration_number`",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -471,7 +476,7 @@
         "emailPreferences": {
           "methods": {
             "getEmailPreferences": {
-              "description": "Returns the email preferences for a Merchant Center account user. Use the name=accounts/*/users/me/emailPreferences alias to get preferences for the authenticated user.",
+              "description": "Returns the email preferences for a Merchant Center account user. This service only permits retrieving and updating email preferences for the authenticated user. Use the name=accounts/*/users/me/emailPreferences alias to get preferences for the authenticated user.",
               "flatPath": "accounts/v1beta/accounts/{accountsId}/users/{usersId}/emailPreferences",
               "httpMethod": "GET",
               "id": "merchantapi.accounts.emailPreferences.getEmailPreferences",
@@ -512,7 +517,7 @@
                   "type": "string"
                 },
                 "updateMask": {
-                  "description": "Required. List of fields being updated.",
+                  "description": "Required. List of fields being updated. The following fields are supported (in both `snake_case` and `lowerCamelCase`): - `news_and_tips`",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -631,7 +636,7 @@
                   "type": "string"
                 },
                 "updateMask": {
-                  "description": "Required. List of fields being updated.",
+                  "description": "Optional. List of fields being updated. The following fields are supported (in both `snake_case` and `lowerCamelCase`): - `uri`",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -1190,7 +1195,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes a Merchant Center account user. Executing this method requires admin access.",
+              "description": "Deletes a Merchant Center account user. Executing this method requires admin access. The user to be deleted can't be the last admin user of that account. Also a user is protected from deletion if it is managed by Business Manager\"",
               "flatPath": "accounts/v1beta/accounts/{accountsId}/users/{usersId}",
               "httpMethod": "DELETE",
               "id": "merchantapi.accounts.users.delete",
@@ -1292,7 +1297,7 @@
                   "type": "string"
                 },
                 "updateMask": {
-                  "description": "Required. List of fields being updated.",
+                  "description": "Optional. List of fields being updated. The following fields are supported (in both `snake_case` and `lowerCamelCase`): - `access_rights`",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -1412,24 +1417,9 @@
       }
     }
   },
-  "revision": "20240924",
+  "revision": "20241028",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
-    "AcceptTermsOfService": {
-      "description": "Reference to a Terms of Service resource.",
-      "id": "AcceptTermsOfService",
-      "properties": {
-        "name": {
-          "description": "Required. The resource name of the terms of service version in the format `termsOfService/{version}`. To retrieve the latest version, use the [termsOfService.retrieveLatest](/merchant/api/reference/rest/accounts_v1beta/termsOfService/retrieveLatest) method.",
-          "type": "string"
-        },
-        "regionCode": {
-          "description": "Required. Region code as defined by [CLDR](https://cldr.unicode.org/). This is either a country when the ToS applies specifically to that country or `001` when it applies globally.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "Accepted": {
       "description": "Describes the accepted terms of service.",
       "id": "Accepted",
@@ -1548,7 +1538,7 @@
           "description": "The provider is an [aggregator](https://support.google.com/merchants/answer/188487) for the account. Payload for service type Account Aggregation."
         },
         "provider": {
-          "description": "Optional. The provider of the service. Format: `accounts/{account}`",
+          "description": "Required. The provider of the service. Format: `accounts/{account}`",
           "type": "string"
         }
       },
@@ -1724,7 +1714,7 @@
       "type": "object"
     },
     "CarrierRate": {
-      "description": "A list of carrier rates that can be referred to by `main_table` or `single_value`.",
+      "description": "A list of carrier rates that can be referred to by `main_table` or `single_value`. Supported carrier services are defined in https://support.google.com/merchants/answer/12577710?hl=en\u0026ref_topic=12570808\u0026sjid=10662598224319463032-NC#zippy=%2Cdelivery-cost-rate-type%2Ccarrier-rate-au-de-uk-and-us-only.",
       "id": "CarrierRate",
       "properties": {
         "carrier": {
@@ -1757,17 +1747,18 @@
     "ClaimHomepageRequest": {
       "description": "Request message for the `ClaimHomepage` method.",
       "id": "ClaimHomepageRequest",
-      "properties": {},
+      "properties": {
+        "overwrite": {
+          "description": "Optional. When set to `true`, this option removes any existing claim on the requested website and replaces it with a claim from the account that makes the request.",
+          "type": "boolean"
+        }
+      },
       "type": "object"
     },
     "CreateAndConfigureAccountRequest": {
       "description": "Request message for the `CreateAndConfigureAccount` method.",
       "id": "CreateAndConfigureAccountRequest",
       "properties": {
-        "acceptTermsOfService": {
-          "$ref": "AcceptTermsOfService",
-          "description": "Optional. The Terms of Service (ToS) to be accepted immediately upon account creation."
-        },
         "account": {
           "$ref": "Account",
           "description": "Required. The account to be created."
@@ -2764,6 +2755,11 @@
           },
           "type": "array"
         },
+        "expirationTime": {
+          "description": "The product expiration time.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "managingAccount": {
           "description": "The account that manages the merchant's account. can be the same as merchant id if it is standalone account. Format : `accounts/{service_provider_id}`",
           "type": "string"
@@ -3459,7 +3455,7 @@
       "id": "WarehouseBasedDeliveryTime",
       "properties": {
         "carrier": {
-          "description": "Required. Carrier, such as `\"UPS\"` or `\"Fedex\"`.",
+          "description": "Required. Carrier, such as `\"UPS\"` or `\"Fedex\"`. [supported carriers](https://support.google.com/merchants/answer/7050921#zippy=%2Ccarrier-rates-au-de-uk-and-us-only)",
           "type": "string"
         },
         "carrierService": {

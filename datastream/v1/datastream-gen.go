@@ -1184,11 +1184,12 @@ func (s MysqlObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MysqlProfile: MySQL database profile.
+// MysqlProfile: MySQL database profile. Next ID: 7.
 type MysqlProfile struct {
 	// Hostname: Required. Hostname for the MySQL connection.
 	Hostname string `json:"hostname,omitempty"`
-	// Password: Required. Input only. Password for the MySQL connection.
+	// Password: Optional. Input only. Password for the MySQL connection. Mutually
+	// exclusive with the `secret_manager_stored_password` field.
 	Password string `json:"password,omitempty"`
 	// Port: Port for the MySQL connection, default value is 3306.
 	Port int64 `json:"port,omitempty"`
@@ -1488,7 +1489,7 @@ func (s OracleObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// OracleProfile: Oracle database profile.
+// OracleProfile: Oracle database profile. Next ID: 10.
 type OracleProfile struct {
 	// ConnectionAttributes: Connection string attributes
 	ConnectionAttributes map[string]string `json:"connectionAttributes,omitempty"`
@@ -1498,7 +1499,8 @@ type OracleProfile struct {
 	Hostname string `json:"hostname,omitempty"`
 	// OracleSslConfig: Optional. SSL configuration for the Oracle connection.
 	OracleSslConfig *OracleSslConfig `json:"oracleSslConfig,omitempty"`
-	// Password: Required. Password for the Oracle connection.
+	// Password: Optional. Password for the Oracle connection. Mutually exclusive
+	// with the `secret_manager_stored_password` field.
 	Password string `json:"password,omitempty"`
 	// Port: Port for the Oracle connection, default value is 1521.
 	Port int64 `json:"port,omitempty"`
@@ -1737,13 +1739,14 @@ func (s PostgresqlObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PostgresqlProfile: PostgreSQL database profile.
+// PostgresqlProfile: PostgreSQL database profile. Next ID: 7.
 type PostgresqlProfile struct {
 	// Database: Required. Database for the PostgreSQL connection.
 	Database string `json:"database,omitempty"`
 	// Hostname: Required. Hostname for the PostgreSQL connection.
 	Hostname string `json:"hostname,omitempty"`
-	// Password: Required. Password for the PostgreSQL connection.
+	// Password: Optional. Password for the PostgreSQL connection. Mutually
+	// exclusive with the `secret_manager_stored_password` field.
 	Password string `json:"password,omitempty"`
 	// Port: Port for the PostgreSQL connection, default value is 5432.
 	Port int64 `json:"port,omitempty"`
@@ -2207,13 +2210,14 @@ func (s SqlServerObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SqlServerProfile: SQLServer database profile
+// SqlServerProfile: SQLServer database profile. Next ID: 8.
 type SqlServerProfile struct {
 	// Database: Required. Database for the SQLServer connection.
 	Database string `json:"database,omitempty"`
 	// Hostname: Required. Hostname for the SQLServer connection.
 	Hostname string `json:"hostname,omitempty"`
-	// Password: Required. Password for the SQLServer connection.
+	// Password: Optional. Password for the SQLServer connection. Mutually
+	// exclusive with the `secret_manager_stored_password` field.
 	Password string `json:"password,omitempty"`
 	// Port: Port for the SQLServer connection, default value is 1433.
 	Port int64 `json:"port,omitempty"`

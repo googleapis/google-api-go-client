@@ -615,6 +615,14 @@ type ConsumerPscConfig struct {
 	// DisableGlobalAccess: This is used in PSC consumer ForwardingRule to control
 	// whether the PSC endpoint can be accessed from another region.
 	DisableGlobalAccess bool `json:"disableGlobalAccess,omitempty"`
+	// IpVersion: The requested IP version for the PSC connection.
+	//
+	// Possible values:
+	//   "IP_VERSION_UNSPECIFIED" - Default value. We will use IPv4 or IPv6
+	// depending on the IP version of first available subnetwork.
+	//   "IPV4" - Will use IPv4 only.
+	//   "IPV6" - Will use IPv6 only.
+	IpVersion string `json:"ipVersion,omitempty"`
 	// Network: The resource path of the consumer network where PSC connections are
 	// allowed to be created in. Note, this network does not need be in the
 	// ConsumerPscConfig.project in the case of SharedVPC. Example:
@@ -694,6 +702,14 @@ type ConsumerPscConnection struct {
 	// rule that is created to connect to the producer service attachment in this
 	// service connection map.
 	Ip string `json:"ip,omitempty"`
+	// IpVersion: The requested IP version for the PSC connection.
+	//
+	// Possible values:
+	//   "IP_VERSION_UNSPECIFIED" - Default value. We will use IPv4 or IPv6
+	// depending on the IP version of first available subnetwork.
+	//   "IPV4" - Will use IPv4 only.
+	//   "IPV6" - Will use IPv6 only.
+	IpVersion string `json:"ipVersion,omitempty"`
 	// Network: The consumer network whose PSC forwarding rule is connected to the
 	// service attachments in this service connection map. Note that the network
 	// could be on a different project (shared VPC).
@@ -727,6 +743,10 @@ type ConsumerPscConnection struct {
 	// connection fail to be created.
 	//   "CREATING" - The connection is being created.
 	//   "DELETING" - The connection is being deleted.
+	//   "CREATE_REPAIRING" - The connection is being repaired to complete
+	// creation.
+	//   "DELETE_REPAIRING" - The connection is being repaired to complete
+	// deletion.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1210,7 +1230,8 @@ type InternalRange struct {
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 	// Labels: User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Migration: Optional. Should be present if usage is set to FOR_MIGRATION.
+	// Migration: Optional. Must be present if usage is set to FOR_MIGRATION. This
+	// field is for internal use.
 	Migration *Migration `json:"migration,omitempty"`
 	// Name: Immutable. The name of an internal range. Format:
 	// projects/{project}/locations/{location}/internalRanges/{internal_range} See:
@@ -1285,9 +1306,9 @@ type InternalRange struct {
 	// various use cases, like for example, usage on-prem, with dynamic route
 	// announcements via interconnect.
 	//   "FOR_MIGRATION" - Ranges created FOR_MIGRATION can be used to lock a CIDR
-	// range between a source and target subnet. If usage is set to FOR_MIGRATION
+	// range between a source and target subnet. If usage is set to FOR_MIGRATION,
 	// the peering value has to be set to FOR_SELF or default to FOR_SELF when
-	// unset.
+	// unset. This value is for internal use.
 	Usage string `json:"usage,omitempty"`
 	// Users: Output only. The list of resources that refer to this internal range.
 	// Resources that use the internal range for their range allocation are
@@ -2453,6 +2474,14 @@ type PscConnection struct {
 	ErrorType string `json:"errorType,omitempty"`
 	// GceOperation: The last Compute Engine operation to setup PSC connection.
 	GceOperation string `json:"gceOperation,omitempty"`
+	// IpVersion: The requested IP version for the PSC connection.
+	//
+	// Possible values:
+	//   "IP_VERSION_UNSPECIFIED" - Default value. We will use IPv4 or IPv6
+	// depending on the IP version of first available subnetwork.
+	//   "IPV4" - Will use IPv4 only.
+	//   "IPV6" - Will use IPv6 only.
+	IpVersion string `json:"ipVersion,omitempty"`
 	// ProducerInstanceId: Immutable. Deprecated. Use producer_instance_metadata
 	// instead. An immutable identifier for the producer instance.
 	ProducerInstanceId string `json:"producerInstanceId,omitempty"`
@@ -2479,6 +2508,10 @@ type PscConnection struct {
 	// connection fail to be created.
 	//   "CREATING" - The connection is being created.
 	//   "DELETING" - The connection is being deleted.
+	//   "CREATE_REPAIRING" - The connection is being repaired to complete
+	// creation.
+	//   "DELETE_REPAIRING" - The connection is being repaired to complete
+	// deletion.
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConsumerAddress") to
 	// unconditionally include in API requests. By default, fields with empty or

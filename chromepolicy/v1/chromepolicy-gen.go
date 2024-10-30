@@ -100,11 +100,11 @@ const mtlsBasePath = "https://chromepolicy.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, create or delete policies applied to Chrome OS and Chrome
-	// Browsers managed within your organization
+	// See, edit, create or delete policies applied to ChromeOS and Chrome Browsers
+	// managed within your organization
 	ChromeManagementPolicyScope = "https://www.googleapis.com/auth/chrome.management.policy"
 
-	// See policies applied to Chrome OS and Chrome Browsers managed within your
+	// See policies applied to ChromeOS and Chrome Browsers managed within your
 	// organization
 	ChromeManagementPolicyReadonlyScope = "https://www.googleapis.com/auth/chrome.management.policy.readonly"
 )

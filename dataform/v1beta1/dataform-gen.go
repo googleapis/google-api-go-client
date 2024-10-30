@@ -772,8 +772,6 @@ type CompilationResultAction struct {
 	// CanonicalTarget: The action's identifier if the project had been compiled
 	// without any overrides configured. Unique within the compilation result.
 	CanonicalTarget *Target `json:"canonicalTarget,omitempty"`
-	// DataPreparation: The data preparation executed by this action.
-	DataPreparation *DataPreparation `json:"dataPreparation,omitempty"`
 	// Declaration: The declaration declared by this action.
 	Declaration *Declaration `json:"declaration,omitempty"`
 	// FilePath: The full path including filename in which this action is located,
@@ -888,34 +886,6 @@ type DataEncryptionState struct {
 
 func (s DataEncryptionState) MarshalJSON() ([]byte, error) {
 	type NoMethod DataEncryptionState
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// DataPreparation: Defines a compiled Data Preparation entity
-type DataPreparation struct {
-	// Contents: The data preparation definition, stored as a binary encoded proto.
-	Contents string `json:"contents,omitempty"`
-	// DependencyTargets: A list of actions that this action depends on.
-	DependencyTargets []*Target `json:"dependencyTargets,omitempty"`
-	// Disabled: Whether this action is disabled (i.e. should not be run).
-	Disabled bool `json:"disabled,omitempty"`
-	// Tags: Arbitrary, user-defined tags on this action.
-	Tags []string `json:"tags,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Contents") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Contents") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s DataPreparation) MarshalJSON() ([]byte, error) {
-	type NoMethod DataPreparation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2301,9 +2271,9 @@ type ReleaseConfig struct {
 	// Name: Identifier. The release config's name.
 	Name string `json:"name,omitempty"`
 	// RecentScheduledReleaseRecords: Output only. Records of the 10 most recent
-	// scheduled release attempts, ordered in in descending order of
-	// `release_time`. Updated whenever automatic creation of a compilation result
-	// is triggered by cron_schedule.
+	// scheduled release attempts, ordered in descending order of `release_time`.
+	// Updated whenever automatic creation of a compilation result is triggered by
+	// cron_schedule.
 	RecentScheduledReleaseRecords []*ScheduledReleaseRecord `json:"recentScheduledReleaseRecords,omitempty"`
 	// ReleaseCompilationResult: Optional. The name of the currently released
 	// compilation result for this release config. This value is updated when a
@@ -2401,8 +2371,8 @@ type Repository struct {
 	// will be used to encrypt user data in the repository and all child resources.
 	// It is not possible to add or update the encryption key after the repository
 	// is created. Example:
-	// `projects/[kms_project_id]/locations/[region]/keyRings/[key_region]/cryptoKey
-	// s/[key]`
+	// `projects/{kms_project}/locations/{location}/keyRings/{key_location}/cryptoKe
+	// ys/{key}`
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// Labels: Optional. Repository user labels.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -2801,7 +2771,7 @@ type WorkflowConfig struct {
 	// Name: Identifier. The workflow config's name.
 	Name string `json:"name,omitempty"`
 	// RecentScheduledExecutionRecords: Output only. Records of the 10 most recent
-	// scheduled execution attempts, ordered in in descending order of
+	// scheduled execution attempts, ordered in descending order of
 	// `execution_time`. Updated whenever automatic creation of a workflow
 	// invocation is triggered by cron_schedule.
 	RecentScheduledExecutionRecords []*ScheduledExecutionRecord `json:"recentScheduledExecutionRecords,omitempty"`
@@ -2947,6 +2917,8 @@ func (s WorkflowInvocationAction) MarshalJSON() ([]byte, error) {
 
 // Workspace: Represents a Dataform Git workspace.
 type Workspace struct {
+	// CreateTime: Output only. The timestamp of when the workspace was created.
+	CreateTime string `json:"createTime,omitempty"`
 	// DataEncryptionState: Output only. A data encryption state of a Git
 	// repository if this Workspace is protected by a KMS key.
 	DataEncryptionState *DataEncryptionState `json:"dataEncryptionState,omitempty"`
@@ -2955,15 +2927,15 @@ type Workspace struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "DataEncryptionState") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DataEncryptionState") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4332,7 +4304,8 @@ func (c *ProjectsLocationsRepositoriesFetchHistoryCall) PageSize(pageSize int64)
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous `FetchRepositoryHistory` call. Provide this to retrieve the
 // subsequent page. When paginating, all other parameters provided to
-// `FetchRepositoryHistory` must match the call that provided the page token.
+// `FetchRepositoryHistory`, with the exception of `page_size`, must match the
+// call that provided the page token.
 func (c *ProjectsLocationsRepositoriesFetchHistoryCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesFetchHistoryCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4834,8 +4807,9 @@ func (c *ProjectsLocationsRepositoriesListCall) PageSize(pageSize int64) *Projec
 
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous `ListRepositories` call. Provide this to retrieve the subsequent
-// page. When paginating, all other parameters provided to `ListRepositories`
-// must match the call that provided the page token.
+// page. When paginating, all other parameters provided to `ListRepositories`,
+// with the exception of `page_size`, must match the call that provided the
+// page token.
 func (c *ProjectsLocationsRepositoriesListCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5098,8 +5072,8 @@ func (c *ProjectsLocationsRepositoriesQueryDirectoryContentsCall) PageSize(pageS
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous `QueryRepositoryDirectoryContents` call. Provide this to retrieve
 // the subsequent page. When paginating, all other parameters provided to
-// `QueryRepositoryDirectoryContents` must match the call that provided the
-// page token.
+// `QueryRepositoryDirectoryContents`, with the exception of `page_size`, must
+// match the call that provided the page token.
 func (c *ProjectsLocationsRepositoriesQueryDirectoryContentsCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesQueryDirectoryContentsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6280,7 +6254,8 @@ func (c *ProjectsLocationsRepositoriesCompilationResultsListCall) PageSize(pageS
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous `ListCompilationResults` call. Provide this to retrieve the
 // subsequent page. When paginating, all other parameters provided to
-// `ListCompilationResults` must match the call that provided the page token.
+// `ListCompilationResults`, with the exception of `page_size`, must match the
+// call that provided the page token.
 func (c *ProjectsLocationsRepositoriesCompilationResultsListCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesCompilationResultsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6434,8 +6409,8 @@ func (c *ProjectsLocationsRepositoriesCompilationResultsQueryCall) PageSize(page
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous `QueryCompilationResultActions` call. Provide this to retrieve
 // the subsequent page. When paginating, all other parameters provided to
-// `QueryCompilationResultActions` must match the call that provided the page
-// token.
+// `QueryCompilationResultActions`, with the exception of `page_size`, must
+// match the call that provided the page token.
 func (c *ProjectsLocationsRepositoriesCompilationResultsQueryCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesCompilationResultsQueryCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6894,7 +6869,8 @@ func (c *ProjectsLocationsRepositoriesReleaseConfigsListCall) PageSize(pageSize 
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous `ListReleaseConfigs` call. Provide this to retrieve the
 // subsequent page. When paginating, all other parameters provided to
-// `ListReleaseConfigs` must match the call that provided the page token.
+// `ListReleaseConfigs`, with the exception of `page_size`, must match the call
+// that provided the page token.
 func (c *ProjectsLocationsRepositoriesReleaseConfigsListCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesReleaseConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7461,7 +7437,8 @@ func (c *ProjectsLocationsRepositoriesWorkflowConfigsListCall) PageSize(pageSize
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous `ListWorkflowConfigs` call. Provide this to retrieve the
 // subsequent page. When paginating, all other parameters provided to
-// `ListWorkflowConfigs` must match the call that provided the page token.
+// `ListWorkflowConfigs`, with the exception of `page_size`, must match the
+// call that provided the page token.
 func (c *ProjectsLocationsRepositoriesWorkflowConfigsListCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesWorkflowConfigsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8138,7 +8115,8 @@ func (c *ProjectsLocationsRepositoriesWorkflowInvocationsListCall) PageSize(page
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous `ListWorkflowInvocations` call. Provide this to retrieve the
 // subsequent page. When paginating, all other parameters provided to
-// `ListWorkflowInvocations` must match the call that provided the page token.
+// `ListWorkflowInvocations`, with the exception of `page_size`, must match the
+// call that provided the page token.
 func (c *ProjectsLocationsRepositoriesWorkflowInvocationsListCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesWorkflowInvocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8284,8 +8262,8 @@ func (c *ProjectsLocationsRepositoriesWorkflowInvocationsQueryCall) PageSize(pag
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous `QueryWorkflowInvocationActions` call. Provide this to retrieve
 // the subsequent page. When paginating, all other parameters provided to
-// `QueryWorkflowInvocationActions` must match the call that provided the page
-// token.
+// `QueryWorkflowInvocationActions`, with the exception of `page_size`, must
+// match the call that provided the page token.
 func (c *ProjectsLocationsRepositoriesWorkflowInvocationsQueryCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesWorkflowInvocationsQueryCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -9426,8 +9404,9 @@ func (c *ProjectsLocationsRepositoriesWorkspacesListCall) PageSize(pageSize int6
 
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous `ListWorkspaces` call. Provide this to retrieve the subsequent
-// page. When paginating, all other parameters provided to `ListWorkspaces`
-// must match the call that provided the page token.
+// page. When paginating, all other parameters provided to `ListWorkspaces`,
+// with the exception of `page_size`, must match the call that provided the
+// page token.
 func (c *ProjectsLocationsRepositoriesWorkspacesListCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesWorkspacesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -10082,7 +10061,8 @@ func (c *ProjectsLocationsRepositoriesWorkspacesQueryDirectoryContentsCall) Page
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous `QueryDirectoryContents` call. Provide this to retrieve the
 // subsequent page. When paginating, all other parameters provided to
-// `QueryDirectoryContents` must match the call that provided the page token.
+// `QueryDirectoryContents`, with the exception of `page_size`, must match the
+// call that provided the page token.
 func (c *ProjectsLocationsRepositoriesWorkspacesQueryDirectoryContentsCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesWorkspacesQueryDirectoryContentsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -10671,7 +10651,8 @@ func (c *ProjectsLocationsRepositoriesWorkspacesSearchFilesCall) PageSize(pageSi
 // PageToken sets the optional parameter "pageToken": Page token received from
 // a previous `SearchFilesRequest` call. Provide this to retrieve the
 // subsequent page. When paginating, all other parameters provided to
-// `SearchFilesRequest` must match the call that provided the page token.
+// `SearchFilesRequest`, with the exception of `page_size`, must match the call
+// that provided the page token.
 func (c *ProjectsLocationsRepositoriesWorkspacesSearchFilesCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesWorkspacesSearchFilesCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

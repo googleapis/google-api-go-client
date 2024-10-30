@@ -1308,19 +1308,21 @@ func (s PosixFilesystem) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ReplicationSpec: Specifies the configuration for running a replication job.
+// ReplicationSpec: Specifies the configuration for a cross-bucket replication
+// job. Cross-bucket replication copies new or updated objects from a source
+// Cloud Storage bucket to a destination Cloud Storage bucket. Existing objects
+// in the source bucket are not copied by a new cross-bucket replication job.
 type ReplicationSpec struct {
-	// GcsDataSink: Specifies cloud Storage data sink.
+	// GcsDataSink: The Cloud Storage bucket to which to replicate objects.
 	GcsDataSink *GcsData `json:"gcsDataSink,omitempty"`
-	// GcsDataSource: Specifies cloud Storage data source.
+	// GcsDataSource: The Cloud Storage bucket from which to replicate objects.
 	GcsDataSource *GcsData `json:"gcsDataSource,omitempty"`
-	// ObjectConditions: Specifies the object conditions to only include objects
-	// that satisfy these conditions in the set of data source objects. Object
-	// conditions based on objects' "last modification time" do not exclude objects
-	// in a data sink.
+	// ObjectConditions: Object conditions that determine which objects are
+	// transferred. For replication jobs, only `include_prefixes` and
+	// `exclude_prefixes` are supported.
 	ObjectConditions *ObjectConditions `json:"objectConditions,omitempty"`
-	// TransferOptions: Specifies the actions to be performed on the object during
-	// replication. Delete options are not supported for replication and when
+	// TransferOptions: Specifies the metadata options to be applied during
+	// replication. Delete options are not supported. If a delete option is
 	// specified, the request fails with an INVALID_ARGUMENT error.
 	TransferOptions *TransferOptions `json:"transferOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GcsDataSink") to
@@ -1527,16 +1529,19 @@ func (s Status) MarshalJSON() ([]byte, error) {
 // significant or are specified elsewhere. An API may choose to allow leap
 // seconds. Related types are google.type.Date and `google.protobuf.Timestamp`.
 type TimeOfDay struct {
-	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API may
-	// choose to allow the value "24:00:00" for scenarios like business closing
-	// time.
+	// Hours: Hours of a day in 24 hour format. Must be greater than or equal to 0
+	// and typically must be less than or equal to 23. An API may choose to allow
+	// the value "24:00:00" for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
-	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	// Minutes: Minutes of an hour. Must be greater than or equal to 0 and less
+	// than or equal to 59.
 	Minutes int64 `json:"minutes,omitempty"`
-	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+	// Nanos: Fractions of seconds, in nanoseconds. Must be greater than or equal
+	// to 0 and less than or equal to 999,999,999.
 	Nanos int64 `json:"nanos,omitempty"`
-	// Seconds: Seconds of minutes of the time. Must normally be from 0 to 59. An
-	// API may allow the value 60 if it allows leap-seconds.
+	// Seconds: Seconds of a minute. Must be greater than or equal to 0 and
+	// typically must be less than or equal to 59. An API may allow the value 60 if
+	// it allows leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2971,12 +2976,19 @@ type TransferJobsListCall struct {
 // List: Lists transfer jobs.
 //
 //   - filter: A list of query parameters specified as JSON text in the form of:
-//     `{"projectId":"my_project_id", "jobNames":["jobid1","jobid2",...],
-//     "jobStatuses":["status1","status2",...]}` Since `jobNames` and
-//     `jobStatuses` support multiple values, their values must be specified with
-//     array notation. `projectId` is required. `jobNames` and `jobStatuses` are
-//     optional. The valid values for `jobStatuses` are case-insensitive:
-//     ENABLED, DISABLED, and DELETED.
+//     ``` { "projectId":"my_project_id", "jobNames":["jobid1","jobid2",...],
+//     "jobStatuses":["status1","status2",...],
+//     "dataBackend":"QUERY_REPLICATION_CONFIGS",
+//     "sourceBucket":"source-bucket-name", "sinkBucket":"sink-bucket-name", }
+//     ``` The JSON formatting in the example is for display only; provide the
+//     query parameters without spaces or line breaks. * `projectId` is required.
+//   - Since `jobNames` and `jobStatuses` support multiple values, their values
+//     must be specified with array notation. `jobNames` and `jobStatuses` are
+//     optional. Valid values are case-insensitive: * ENABLED * DISABLED *
+//     DELETED * Specify "dataBackend":"QUERY_REPLICATION_CONFIGS" to return a
+//     list of cross-bucket replication jobs. * Limit the results to jobs from a
+//     particular bucket with `sourceBucket` and/or to a particular bucket with
+//     `sinkBucket`.
 func (r *TransferJobsService) List(filter string) *TransferJobsListCall {
 	c := &TransferJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("filter", filter)

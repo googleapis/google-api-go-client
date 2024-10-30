@@ -375,6 +375,15 @@ func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 // (https://console.cloud.google.com/). You can assign a billing account to one
 // or more projects.
 type BillingAccount struct {
+	// CurrencyCode: Optional. The currency in which the billing account is billed
+	// and charged, represented as an ISO 4217 code such as `USD`. Billing account
+	// currency is determined at the time of billing account creation and cannot be
+	// updated subsequently, so this field should not be set on update requests. In
+	// addition, a subaccount always matches the currency of its parent billing
+	// account, so this field should not be set on subaccount creation requests.
+	// Clients can read this field to determine the currency of an existing billing
+	// account.
+	CurrencyCode string `json:"currencyCode,omitempty"`
 	// DisplayName: The display name given to the billing account, such as `My
 	// Billing Account`. This name is displayed in the Google Cloud Console.
 	DisplayName string `json:"displayName,omitempty"`
@@ -402,13 +411,13 @@ type BillingAccount struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

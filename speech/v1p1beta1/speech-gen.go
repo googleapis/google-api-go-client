@@ -996,6 +996,8 @@ type RecognitionConfig struct {
 	//   "WEBM_OPUS" - Opus encoded audio frames in WebM container
 	// ([WebM](https://www.webmproject.org/docs/container/)). `sample_rate_hertz`
 	// must be one of 8000, 12000, 16000, 24000, or 48000.
+	//   "ALAW" - 8-bit samples that compand 13-bit audio samples using G.711
+	// PCMU/a-law.
 	Encoding string `json:"encoding,omitempty"`
 	// LanguageCode: Required. The language of the supplied audio as a BCP-47
 	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. Example:

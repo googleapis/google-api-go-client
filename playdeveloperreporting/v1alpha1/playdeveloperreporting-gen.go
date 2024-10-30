@@ -775,6 +775,9 @@ func (s GooglePlayDeveloperReportingV1alpha1ErrorCountMetricSet) MarshalJSON() (
 // resource, the calling user needs the _View app information (read-only)_
 // permission for the app.
 type GooglePlayDeveloperReportingV1alpha1ErrorIssue struct {
+	// Annotations: List of annotations for an issue. Annotations provide
+	// additional information that may help in diagnosing and fixing the issue.
+	Annotations []*GooglePlayDeveloperReportingV1alpha1IssueAnnotation `json:"annotations,omitempty"`
 	// Cause: Cause of the issue. Depending on the type this can be either: *
 	// APPLICATION_NOT_RESPONDING: the type of ANR that occurred, e.g., 'Input
 	// dispatching timed out'. * CRASH: for Java unhandled exception errors, the
@@ -838,13 +841,13 @@ type GooglePlayDeveloperReportingV1alpha1ErrorIssue struct {
 	//   "NON_FATAL" - Non-fatal caused by events that do not immediately cause
 	// crashes, but is likely to lead to one.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Cause") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Cause") to include in API
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1066,6 +1069,34 @@ type GooglePlayDeveloperReportingV1alpha1FreshnessInfoFreshness struct {
 
 func (s GooglePlayDeveloperReportingV1alpha1FreshnessInfoFreshness) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1alpha1FreshnessInfoFreshness
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePlayDeveloperReportingV1alpha1IssueAnnotation: Representation of an
+// annotation message for an issue.
+type GooglePlayDeveloperReportingV1alpha1IssueAnnotation struct {
+	// Body: Contains the contents of the annotation message.
+	Body string `json:"body,omitempty"`
+	// Category: Category that the annotation belongs to. An annotation will belong
+	// to a single category. Example categories: "Potential fix", "Insight".
+	Category string `json:"category,omitempty"`
+	// Title: Title for the annotation.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePlayDeveloperReportingV1alpha1IssueAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1alpha1IssueAnnotation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4247,29 +4278,28 @@ func (r *VitalsErrorsReportsService) Search(parent string) *VitalsErrorsReportsS
 // occurred in the requested device brands. Example: `deviceBrand = "Google". *
 // `deviceType`: Matches error reports that occurred in the requested device
 // types. Example: `deviceType = "PHONE". * `errorIssueType`: Matches error
-// reports of the requested types only. Valid candidates: `JAVA_CRASH`,
-// `NATIVE_CRASH`, `ANR`. Example: `errorIssueType = JAVA_CRASH OR
-// errorIssueType = NATIVE_CRASH`. * `errorIssueId`: Matches error reports
-// belonging to the requested error issue ids only. Example: `errorIssueId =
-// 1234 OR errorIssueId = 4567`. * `errorReportId`: Matches error reports with
-// the requested error report id. Example: `errorReportId = 1234 OR
-// errorReportId = 4567`. * `appProcessState`: Matches error reports on the
-// process state of an app, indicating whether an app runs in the foreground
-// (user-visible) or background. Valid candidates: `FOREGROUND`, `BACKGROUND`.
-// Example: `appProcessState = FOREGROUND`. * `isUserPerceived`: Matches error
-// reports that are user-perceived. It is not accompanied by any operators.
-// Example: `isUserPerceived`. ** Supported operators:** * Comparison
-// operators: The only supported comparison operator is equality. The filtered
-// field must appear on the left hand side of the comparison. * Logical
-// Operators: Logical operators `AND` and `OR` can be used to build complex
-// filters following a conjunctive normal form (CNF), i.e., conjunctions of
-// disjunctions. The `OR` operator takes precedence over `AND` so the use of
-// parenthesis is not necessary when building CNF. The `OR` operator is only
-// supported to build disjunctions that apply to the same field, e.g.,
-// `versionCode = 123 OR versionCode = ANR`. The filter expression `versionCode
-// = 123 OR errorIssueType = ANR` is not valid. ** Examples ** Some valid
-// filtering expressions: * `versionCode = 123 AND errorIssueType = ANR` *
-// `versionCode = 123 AND errorIssueType = OR errorIssueType = CRASH` *
+// reports of the requested types only. Valid candidates: `CRASH`, `ANR`.
+// Example: `errorIssueType = CRASH OR errorIssueType = ANR`. * `errorIssueId`:
+// Matches error reports belonging to the requested error issue ids only.
+// Example: `errorIssueId = 1234 OR errorIssueId = 4567`. * `errorReportId`:
+// Matches error reports with the requested error report id. Example:
+// `errorReportId = 1234 OR errorReportId = 4567`. * `appProcessState`: Matches
+// error reports on the process state of an app, indicating whether an app runs
+// in the foreground (user-visible) or background. Valid candidates:
+// `FOREGROUND`, `BACKGROUND`. Example: `appProcessState = FOREGROUND`. *
+// `isUserPerceived`: Matches error reports that are user-perceived. It is not
+// accompanied by any operators. Example: `isUserPerceived`. ** Supported
+// operators:** * Comparison operators: The only supported comparison operator
+// is equality. The filtered field must appear on the left hand side of the
+// comparison. * Logical Operators: Logical operators `AND` and `OR` can be
+// used to build complex filters following a conjunctive normal form (CNF),
+// i.e., conjunctions of disjunctions. The `OR` operator takes precedence over
+// `AND` so the use of parenthesis is not necessary when building CNF. The `OR`
+// operator is only supported to build disjunctions that apply to the same
+// field, e.g., `versionCode = 123 OR versionCode = ANR`. The filter expression
+// `versionCode = 123 OR errorIssueType = ANR` is not valid. ** Examples **
+// Some valid filtering expressions: * `versionCode = 123 AND errorIssueType =
+// ANR` * `versionCode = 123 AND errorIssueType = OR errorIssueType = CRASH` *
 // `versionCode = 123 AND (errorIssueType = OR errorIssueType = CRASH)`
 func (c *VitalsErrorsReportsSearchCall) Filter(filter string) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("filter", filter)

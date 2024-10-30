@@ -2421,6 +2421,9 @@ type DeviceSelector struct {
 	// RequiredSystemFeatures: A device needs to have all these system features to
 	// be included by the selector.
 	RequiredSystemFeatures []*SystemFeature `json:"requiredSystemFeatures,omitempty"`
+	// SystemOnChips: Optional. The SoCs included by this selector. Only works for
+	// Android S+ devices.
+	SystemOnChips []*SystemOnChip `json:"systemOnChips,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeviceRam") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2653,30 +2656,6 @@ func (s ExternalAccountIdentifiers) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExternalOfferInitialAcquisitionDetails: Details about the first time a
-// user/device completed a transaction using external offers.
-type ExternalOfferInitialAcquisitionDetails struct {
-	// ExternalTransactionId: Required. The external transaction id of the first
-	// completed purchase made by the user.
-	ExternalTransactionId string `json:"externalTransactionId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExternalTransactionId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExternalTransactionId") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ExternalOfferInitialAcquisitionDetails) MarshalJSON() ([]byte, error) {
-	type NoMethod ExternalOfferInitialAcquisitionDetails
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // ExternalSubscription: Details of an external subscription.
 type ExternalSubscription struct {
 	// SubscriptionType: Required. The type of the external subscription.
@@ -2718,11 +2697,6 @@ type ExternalTransaction struct {
 	// current tax amount including any refunds that may have been applied to this
 	// transaction.
 	CurrentTaxAmount *Price `json:"currentTaxAmount,omitempty"`
-	// ExternalOfferInitialAcquisitionDetails: Optional. Details about the first
-	// time a user/device completed a transaction using external offers. Not
-	// required for transactions made using user choice billing or alternative
-	// billing only.
-	ExternalOfferInitialAcquisitionDetails *ExternalOfferInitialAcquisitionDetails `json:"externalOfferInitialAcquisitionDetails,omitempty"`
 	// ExternalTransactionId: Output only. The id of this transaction. All
 	// transaction ids under the same package name must be unique. Set when
 	// creating the external transaction.
@@ -6517,6 +6491,36 @@ func (s SystemFeature) MarshalJSON() ([]byte, error) {
 // SystemInitiatedCancellation: Information specific to cancellations initiated
 // by Google system.
 type SystemInitiatedCancellation struct {
+}
+
+// SystemOnChip: Representation of a System-on-Chip (SoC) of an Android device.
+// Can be used to target S+ devices.
+type SystemOnChip struct {
+	// Manufacturer: Required. The designer of the SoC, eg. "Google" Value of build
+	// property "ro.soc.manufacturer"
+	// https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER
+	// Required.
+	Manufacturer string `json:"manufacturer,omitempty"`
+	// Model: Required. The model of the SoC, eg. "Tensor" Value of build property
+	// "ro.soc.model"
+	// https://developer.android.com/reference/android/os/Build#SOC_MODEL Required.
+	Model string `json:"model,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Manufacturer") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Manufacturer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SystemOnChip) MarshalJSON() ([]byte, error) {
+	type NoMethod SystemOnChip
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Targeting: Targeting details for a recovery action such as regions, android

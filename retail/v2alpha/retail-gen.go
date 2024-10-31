@@ -5107,6 +5107,56 @@ func (s GoogleCloudRetailV2alphaOutputResult) MarshalJSON() ([]byte, error) {
 type GoogleCloudRetailV2alphaPauseModelRequest struct {
 }
 
+// GoogleCloudRetailV2alphaPinControlMetadata: Metadata for pinning to be
+// returned in the response. This is used for distinguishing between applied vs
+// dropped pins.
+type GoogleCloudRetailV2alphaPinControlMetadata struct {
+	// AllMatchedPins: Map of all matched pins, keyed by pin position.
+	AllMatchedPins map[string]GoogleCloudRetailV2alphaPinControlMetadataProductPins `json:"allMatchedPins,omitempty"`
+	// DroppedPins: Map of pins that were dropped due to overlap with other
+	// matching pins, keyed by pin position.
+	DroppedPins map[string]GoogleCloudRetailV2alphaPinControlMetadataProductPins `json:"droppedPins,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllMatchedPins") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllMatchedPins") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaPinControlMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaPinControlMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRetailV2alphaPinControlMetadataProductPins: List of product ids
+// which have associated pins.
+type GoogleCloudRetailV2alphaPinControlMetadataProductPins struct {
+	// ProductId: List of product ids which have associated pins.
+	ProductId []string `json:"productId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRetailV2alphaPinControlMetadataProductPins) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRetailV2alphaPinControlMetadataProductPins
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRetailV2alphaPredictRequest: Request message for Predict method.
 type GoogleCloudRetailV2alphaPredictRequest struct {
 	// Filter: Filter for restricting prediction results with a length limit of
@@ -7579,6 +7629,11 @@ type GoogleCloudRetailV2alphaSearchResponse struct {
 	// retrieve the next page. If this field is omitted, there are no subsequent
 	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// PinControlMetadata: Metadata for pin controls which were applicable to the
+	// request. This contains two map fields, one for all matched pins and one for
+	// pins which were matched but not applied. The two maps are keyed by pin
+	// position, and the values are the product ids which were matched to that pin.
+	PinControlMetadata *GoogleCloudRetailV2alphaPinControlMetadata `json:"pinControlMetadata,omitempty"`
 	// QueryExpansionInfo: Query expansion information for the returned results.
 	QueryExpansionInfo *GoogleCloudRetailV2alphaSearchResponseQueryExpansionInfo `json:"queryExpansionInfo,omitempty"`
 	// RedirectUri: The URI of a customer-defined redirect page. If redirect action

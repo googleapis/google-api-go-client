@@ -1603,7 +1603,7 @@ func (s GoogleCloudIdentitytoolkitAdminV2QuotaConfig) MarshalJSON() ([]byte, err
 type GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig struct {
 	// EmailPasswordEnforcementState: The reCAPTCHA config for email/password
 	// provider, containing the enforcement status. The email/password provider
-	// contains all related user flows protected by reCAPTCHA.
+	// contains all email related user flows protected by reCAPTCHA.
 	//
 	// Possible values:
 	//   "RECAPTCHA_PROVIDER_ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement state has
@@ -1616,8 +1616,8 @@ type GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig struct {
 	// scores. The rules are shared across providers for a given tenant project.
 	ManagedRules []*GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule `json:"managedRules,omitempty"`
 	// PhoneEnforcementState: The reCAPTCHA config for phone provider, containing
-	// the enforcement status. The phone provider contains all related user flows
-	// protected by reCAPTCHA.
+	// the enforcement status. The phone provider contains all SMS related user
+	// flows protected by reCAPTCHA.
 	//
 	// Possible values:
 	//   "RECAPTCHA_PROVIDER_ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement state has
@@ -1628,13 +1628,22 @@ type GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig struct {
 	PhoneEnforcementState string `json:"phoneEnforcementState,omitempty"`
 	// RecaptchaKeys: The reCAPTCHA keys.
 	RecaptchaKeys []*GoogleCloudIdentitytoolkitAdminV2RecaptchaKey `json:"recaptchaKeys,omitempty"`
-	// TollFraudManagedRules: The managed rules for toll fraud provider, containing
-	// the enforcement status. The toll fraud provider contains all SMS related
-	// user flows.
+	// TollFraudManagedRules: The managed rules for the authentication action based
+	// on reCAPTCHA toll fraud risk scores. Toll fraud managed rules will only take
+	// effect when the phone_enforcement_state is AUDIT or ENFORCE and
+	// use_sms_toll_fraud_protection is true.
 	TollFraudManagedRules []*GoogleCloudIdentitytoolkitAdminV2RecaptchaTollFraudManagedRule `json:"tollFraudManagedRules,omitempty"`
 	// UseAccountDefender: Whether to use the account defender for reCAPTCHA
 	// assessment. Defaults to `false`.
 	UseAccountDefender bool `json:"useAccountDefender,omitempty"`
+	// UseSmsBotScore: Whether to use the rCE bot score for reCAPTCHA phone
+	// provider. Can only be true when the phone_enforcement_state is AUDIT or
+	// ENFORCE.
+	UseSmsBotScore bool `json:"useSmsBotScore,omitempty"`
+	// UseSmsTollFraudProtection: Whether to use the rCE sms toll fraud protection
+	// risk score for reCAPTCHA phone provider. Can only be true when the
+	// phone_enforcement_state is AUDIT or ENFORCE.
+	UseSmsTollFraudProtection bool `json:"useSmsTollFraudProtection,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "EmailPasswordEnforcementState") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -1738,8 +1747,9 @@ func (s *GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule) UnmarshalJSON(da
 
 // GoogleCloudIdentitytoolkitAdminV2RecaptchaTollFraudManagedRule: The config
 // for a reCAPTCHA toll fraud assessment managed rule. Models a single interval
-// [start_score, end_score]. The start_score is maximum_allowed_score. End
-// score is 1.0.
+// [start_score, end_score]. The end_score is implicit. It is either the
+// closest smaller end_score (if one is available) or 0. Intervals in aggregate
+// span [0, 1] without overlapping.
 type GoogleCloudIdentitytoolkitAdminV2RecaptchaTollFraudManagedRule struct {
 	// Action: The action taken if the reCAPTCHA score of a request is within the
 	// interval [start_score, end_score].
@@ -1748,9 +1758,10 @@ type GoogleCloudIdentitytoolkitAdminV2RecaptchaTollFraudManagedRule struct {
 	//   "RECAPTCHA_ACTION_UNSPECIFIED" - The reCAPTCHA action is not specified.
 	//   "BLOCK" - The reCAPTCHA-protected request will be blocked.
 	Action string `json:"action,omitempty"`
-	// StartScore: The start score (inclusive) for an action. A score of 0.0
-	// indicates the safest request (likely legitimate), whereas 1.0 indicates the
-	// riskiest request (likely toll fraud). See
+	// StartScore: The start score (inclusive) for an action. Must be a value
+	// between 0.0 and 1.0, at 11 discrete values; e.g. 0, 0.1, 0.2, 0.3, ... 0.9,
+	// 1.0. A score of 0.0 indicates the safest request (likely legitimate),
+	// whereas 1.0 indicates the riskiest request (likely toll fraud). See
 	// https://cloud.google.com/recaptcha-enterprise/docs/sms-fraud-detection#create-assessment-sms.
 	StartScore float64 `json:"startScore,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
@@ -2565,6 +2576,12 @@ type GoogleCloudIdentitytoolkitV2RecaptchaConfig struct {
 	// reCAPTCHA enforcement state is AUDIT or ENFORCE on at least one of the
 	// reCAPTCHA providers.
 	RecaptchaKey string `json:"recaptchaKey,omitempty"`
+	// UseSmsBotScore: Whether to use the rCE bot score for reCAPTCHA phone
+	// provider.
+	UseSmsBotScore bool `json:"useSmsBotScore,omitempty"`
+	// UseSmsTollFraudProtection: Whether to use the rCE sms toll fraud protection
+	// risk score for reCAPTCHA phone provider.
+	UseSmsTollFraudProtection bool `json:"useSmsTollFraudProtection,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2772,7 +2789,7 @@ type GoogleCloudIdentitytoolkitV2StartMfaPhoneRequestInfo struct {
 	// RecaptchaToken: Web only. Recaptcha solution.
 	RecaptchaToken string `json:"recaptchaToken,omitempty"`
 	// RecaptchaVersion: The reCAPTCHA version of the reCAPTCHA token in the
-	// captcha_response.
+	// captcha_response. Required when reCAPTCHA Enterprise is enabled.
 	//
 	// Possible values:
 	//   "RECAPTCHA_VERSION_UNSPECIFIED" - The reCAPTCHA version is not specified.

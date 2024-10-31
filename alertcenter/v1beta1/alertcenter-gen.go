@@ -653,7 +653,7 @@ func (s AppMakerSqlSetupNotification) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AppSettingsChanged: Alerts from AppSettingsChanged bucket Rules configured
+// AppSettingsChanged: * Alerts from AppSettingsChanged bucket Rules configured
 // by Admin which contain the below rules. Calendar settings changed Drive
 // settings changed Email settings changed Mobile settings changed
 type AppSettingsChanged struct {
@@ -1589,7 +1589,7 @@ func (s PredefinedDetectorInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PrimaryAdminChangedEvent: Event occurred when primary admin changed in
+// PrimaryAdminChangedEvent: * Event occurred when primary admin changed in
 // customer's account. The event are being received from insight forwarder
 type PrimaryAdminChangedEvent struct {
 	// Domain: domain in which actioned occurred
@@ -1860,7 +1860,7 @@ func (s RuleViolationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SSOProfileCreatedEvent: Event occurred when SSO Profile created in
+// SSOProfileCreatedEvent: * Event occurred when SSO Profile created in
 // customer's account. The event are being received from insight forwarder
 type SSOProfileCreatedEvent struct {
 	// InboundSsoProfileName: sso profile name which got created
@@ -1883,7 +1883,7 @@ func (s SSOProfileCreatedEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SSOProfileDeletedEvent: Event occurred when SSO Profile deleted in
+// SSOProfileDeletedEvent: * Event occurred when SSO Profile deleted in
 // customer's account. The event are being received from insight forwarder
 type SSOProfileDeletedEvent struct {
 	// InboundSsoProfileName: sso profile name which got deleted
@@ -1906,7 +1906,7 @@ func (s SSOProfileDeletedEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SSOProfileUpdatedEvent: Event occurred when SSO Profile updated in
+// SSOProfileUpdatedEvent: * Event occurred when SSO Profile updated in
 // customer's account. The event are being received from insight forwarder
 type SSOProfileUpdatedEvent struct {
 	// InboundSsoProfileChanges: changes made to sso profile
@@ -2053,7 +2053,7 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SuperAdminPasswordResetEvent: Event occurred when password was reset for
+// SuperAdminPasswordResetEvent: * Event occurred when password was reset for
 // super admin in customer's account. The event are being received from insight
 // forwarder
 type SuperAdminPasswordResetEvent struct {
@@ -2287,10 +2287,10 @@ func (s User) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserChanges: Alerts from UserChanges bucket Rules for predefined rules which
-// contain the below rules. Suspended user made active New user Added User
-// suspended (by admin) User granted admin privileges User admin privileges
-// revoked User deleted Users password changed
+// UserChanges: * Alerts from UserChanges bucket Rules for predefined rules
+// which contain the below rules. Suspended user made active New user Added
+// User suspended (by admin) User granted admin privileges User admin
+// privileges revoked User deleted Users password changed
 type UserChanges struct {
 	// Name: Rule name
 	Name string `json:"name,omitempty"`

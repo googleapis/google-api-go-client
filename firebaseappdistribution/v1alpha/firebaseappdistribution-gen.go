@@ -1248,6 +1248,9 @@ type GoogleFirebaseAppdistroV1alphaReleaseTest struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// DeviceExecutions: Required. The results of the test on each device.
 	DeviceExecutions []*GoogleFirebaseAppdistroV1alphaDeviceExecution `json:"deviceExecutions,omitempty"`
+	// DisplayName: Optional. Display name of the release test. Required if the
+	// release test is created with multiple goals
+	DisplayName string `json:"displayName,omitempty"`
 	// LoginCredential: Optional. Input only. Login credentials for the test. Input
 	// only.
 	LoginCredential *GoogleFirebaseAppdistroV1alphaLoginCredential `json:"loginCredential,omitempty"`

@@ -886,13 +886,13 @@ func (s AdUrl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Adloox: Details of Adloox settings.
+// Adloox: Details of Adloox brand safety settings.
 type Adloox struct {
-	// ExcludedAdlooxCategories: Adloox's brand safety settings.
+	// ExcludedAdlooxCategories: Adloox categories to exclude.
 	//
 	// Possible values:
-	//   "ADLOOX_UNSPECIFIED" - This enum is only a placeholder and it doesn't
-	// specify any Adloox option.
+	//   "ADLOOX_UNSPECIFIED" - Default value when a Adloox category is not
+	// specified or is unknown in this version.
 	//   "ADULT_CONTENT_HARD" - Adult content (hard).
 	//   "ADULT_CONTENT_SOFT" - Adult content (soft).
 	//   "ILLEGAL_CONTENT" - Illegal content.
@@ -928,8 +928,7 @@ type Advertiser struct {
 	// AdvertiserId: Output only. The unique ID of the advertiser. Assigned by the
 	// system.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
-	// BillingConfig: Optional. Required. Billing related settings of the
-	// advertiser.
+	// BillingConfig: Required. Billing related settings of the advertiser.
 	BillingConfig *AdvertiserBillingConfig `json:"billingConfig,omitempty"`
 	// CreativeConfig: Required. Creative related settings of the advertiser.
 	CreativeConfig *AdvertiserCreativeConfig `json:"creativeConfig,omitempty"`
@@ -1031,7 +1030,7 @@ func (s AdvertiserAdServerConfig) MarshalJSON() ([]byte, error) {
 
 // AdvertiserBillingConfig: Billing related settings of an advertiser.
 type AdvertiserBillingConfig struct {
-	// BillingProfileId: Optional. The ID of a billing profile assigned to the
+	// BillingProfileId: Required. The ID of a billing profile assigned to the
 	// advertiser.
 	BillingProfileId int64 `json:"billingProfileId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "BillingProfileId") to

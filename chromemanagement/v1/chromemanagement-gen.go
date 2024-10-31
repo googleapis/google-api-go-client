@@ -2682,7 +2682,8 @@ func (s GoogleChromeManagementV1PrinterReport) MarshalJSON() ([]byte, error) {
 // extension.
 type GoogleChromeManagementV1RiskAssessment struct {
 	// Assessment: Risk assessment for the extension. Currently, this is a
-	// numerical value, and higher values denote higher risk.
+	// numerical value, and its interpretation is specific to each risk assessment
+	// provider.
 	Assessment string `json:"assessment,omitempty"`
 	// DetailsUrl: A URL that a user can navigate to for more information about the
 	// risk assessment.

@@ -124,6 +124,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Accounts = NewAccountsService(s)
+	s.Aisafety = NewAisafetyService(s)
 	s.Media = NewMediaService(s)
 	return s, nil
 }
@@ -134,6 +135,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Accounts *AccountsService
+
+	Aisafety *AisafetyService
 
 	Media *MediaService
 }
@@ -214,6 +217,15 @@ type AccountsReposOperationsService struct {
 	s *Service
 }
 
+func NewAisafetyService(s *Service) *AisafetyService {
+	rs := &AisafetyService{s: s}
+	return rs
+}
+
+type AisafetyService struct {
+	s *Service
+}
+
 func NewMediaService(s *Service) *MediaService {
 	rs := &MediaService{s: s}
 	return rs
@@ -289,6 +301,266 @@ type GoogleChecksAccountV1alphaListAppsResponse struct {
 
 func (s GoogleChecksAccountV1alphaListAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksAccountV1alphaListAppsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksAisafetyV1alphaClassifyContentRequest: Request proto for
+// ClassifyContent RPC.
+type GoogleChecksAisafetyV1alphaClassifyContentRequest struct {
+	// ClassifierVersion: Optional. Version of the classifier to use. If not
+	// specified, the latest version will be used.
+	//
+	// Possible values:
+	//   "CLASSIFIER_VERSION_UNSPECIFIED" - Unspecified version.
+	//   "STABLE" - Stable version.
+	//   "LATEST" - Latest version.
+	ClassifierVersion string `json:"classifierVersion,omitempty"`
+	// Context: Optional. Context about the input that will be used to help on the
+	// classification.
+	Context *GoogleChecksAisafetyV1alphaClassifyContentRequestContext `json:"context,omitempty"`
+	// Input: Required. Content to be classified.
+	Input *GoogleChecksAisafetyV1alphaClassifyContentRequestInputContent `json:"input,omitempty"`
+	// Policies: Required. List of policies to classify against.
+	Policies []*GoogleChecksAisafetyV1alphaClassifyContentRequestPolicyConfig `json:"policies,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClassifierVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClassifierVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksAisafetyV1alphaClassifyContentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksAisafetyV1alphaClassifyContentRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksAisafetyV1alphaClassifyContentRequestContext: Context about the
+// input that will be used to help on the classification.
+type GoogleChecksAisafetyV1alphaClassifyContentRequestContext struct {
+	// Prompt: Optional. Prompt that generated the model response.
+	Prompt string `json:"prompt,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Prompt") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Prompt") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksAisafetyV1alphaClassifyContentRequestContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksAisafetyV1alphaClassifyContentRequestContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksAisafetyV1alphaClassifyContentRequestInputContent: Content to be
+// classified.
+type GoogleChecksAisafetyV1alphaClassifyContentRequestInputContent struct {
+	// TextInput: Content in text format.
+	TextInput *GoogleChecksAisafetyV1alphaTextInput `json:"textInput,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TextInput") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TextInput") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksAisafetyV1alphaClassifyContentRequestInputContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksAisafetyV1alphaClassifyContentRequestInputContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksAisafetyV1alphaClassifyContentRequestPolicyConfig: List of
+// policies to classify against.
+type GoogleChecksAisafetyV1alphaClassifyContentRequestPolicyConfig struct {
+	// PolicyType: Required. Type of the policy.
+	//
+	// Possible values:
+	//   "POLICY_TYPE_UNSPECIFIED" - Default.
+	//   "DANGEROUS_CONTENT" - The model facilitates, promotes or enables access to
+	// harmful goods, services, and activities.
+	//   "PII_SOLICITING_RECITING" - The model reveals an individual’s personal
+	// information and data.
+	//   "HARASSMENT" - The model generates content that is malicious,
+	// intimidating, bullying, or abusive towards another individual.
+	//   "SEXUALLY_EXPLICIT" - The model generates content that is sexually
+	// explicit in nature.
+	//   "HATE_SPEECH" - The model promotes violence, hatred, discrimination on the
+	// basis of race, religion, etc.
+	//   "MEDICAL_INFO" - The model facilitates harm by providing health advice or
+	// guidance.
+	//   "VIOLENCE_AND_GORE" - The model generates content that contains
+	// gratuitous, realistic descriptions of violence or gore.
+	//   "OBSCENITY_AND_PROFANITY"
+	PolicyType string `json:"policyType,omitempty"`
+	// Threshold: Optional. Score threshold to use when deciding if the content is
+	// violative or non-violative. If not specified, the default 0.5 threshold for
+	// the policy will be used.
+	Threshold float64 `json:"threshold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PolicyType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PolicyType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksAisafetyV1alphaClassifyContentRequestPolicyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksAisafetyV1alphaClassifyContentRequestPolicyConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleChecksAisafetyV1alphaClassifyContentRequestPolicyConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleChecksAisafetyV1alphaClassifyContentRequestPolicyConfig
+	var s1 struct {
+		Threshold gensupport.JSONFloat64 `json:"threshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Threshold = float64(s1.Threshold)
+	return nil
+}
+
+// GoogleChecksAisafetyV1alphaClassifyContentResponse: Response proto for
+// ClassifyContent RPC.
+type GoogleChecksAisafetyV1alphaClassifyContentResponse struct {
+	// PolicyResults: Results of the classification for each policy.
+	PolicyResults []*GoogleChecksAisafetyV1alphaClassifyContentResponsePolicyResult `json:"policyResults,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "PolicyResults") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PolicyResults") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksAisafetyV1alphaClassifyContentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksAisafetyV1alphaClassifyContentResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksAisafetyV1alphaClassifyContentResponsePolicyResult: Result for
+// one policy against the corresponding input.
+type GoogleChecksAisafetyV1alphaClassifyContentResponsePolicyResult struct {
+	// PolicyType: Type of the policy.
+	//
+	// Possible values:
+	//   "POLICY_TYPE_UNSPECIFIED" - Default.
+	//   "DANGEROUS_CONTENT" - The model facilitates, promotes or enables access to
+	// harmful goods, services, and activities.
+	//   "PII_SOLICITING_RECITING" - The model reveals an individual’s personal
+	// information and data.
+	//   "HARASSMENT" - The model generates content that is malicious,
+	// intimidating, bullying, or abusive towards another individual.
+	//   "SEXUALLY_EXPLICIT" - The model generates content that is sexually
+	// explicit in nature.
+	//   "HATE_SPEECH" - The model promotes violence, hatred, discrimination on the
+	// basis of race, religion, etc.
+	//   "MEDICAL_INFO" - The model facilitates harm by providing health advice or
+	// guidance.
+	//   "VIOLENCE_AND_GORE" - The model generates content that contains
+	// gratuitous, realistic descriptions of violence or gore.
+	//   "OBSCENITY_AND_PROFANITY"
+	PolicyType string `json:"policyType,omitempty"`
+	// Score: Final score for the results of this policy.
+	Score float64 `json:"score,omitempty"`
+	// ViolationResult: Result of the classification for the policy.
+	//
+	// Possible values:
+	//   "VIOLATION_RESULT_UNSPECIFIED" - Unspecified result.
+	//   "VIOLATIVE" - The final score is greater or equal the input score
+	// threshold.
+	//   "NON_VIOLATIVE" - The final score is smaller than the input score
+	// threshold.
+	//   "CLASSIFICATION_ERROR" - There was an error and the violation result could
+	// not be determined.
+	ViolationResult string `json:"violationResult,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PolicyType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PolicyType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksAisafetyV1alphaClassifyContentResponsePolicyResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksAisafetyV1alphaClassifyContentResponsePolicyResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleChecksAisafetyV1alphaClassifyContentResponsePolicyResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleChecksAisafetyV1alphaClassifyContentResponsePolicyResult
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
+}
+
+// GoogleChecksAisafetyV1alphaTextInput: Text input to be classified.
+type GoogleChecksAisafetyV1alphaTextInput struct {
+	// Content: Actual piece of text to be classified.
+	Content string `json:"content,omitempty"`
+	// LanguageCode: Optional. Language of the text in ISO 639-1 format. If the
+	// language is invalid or not specified, the system will try to detect it.
+	LanguageCode string `json:"languageCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksAisafetyV1alphaTextInput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksAisafetyV1alphaTextInput
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -797,6 +1069,8 @@ type GoogleChecksReportV1alphaCheckDataTypeEvidence struct {
 	// sender, recipients, and the content of the email.
 	//   "DATA_TYPE_TEXT_MESSAGES" - A user's text messages including the sender,
 	// recipients, and the content of the message.
+	//   "DATA_TYPE_OTHER_IN_APP_MESSAGES" - Any other types of messages. For
+	// example, instant messages or chat content.
 	//   "DATA_TYPE_PHOTOS" - A user's photos.
 	//   "DATA_TYPE_VIDEOS" - A user's videos.
 	//   "DATA_TYPE_VOICE_OR_SOUND_RECORDINGS" - A user's voice such as a voicemail
@@ -1263,6 +1537,8 @@ type GoogleChecksReportV1alphaDataMonitoringDataTypeResult struct {
 	// sender, recipients, and the content of the email.
 	//   "DATA_TYPE_TEXT_MESSAGES" - A user's text messages including the sender,
 	// recipients, and the content of the message.
+	//   "DATA_TYPE_OTHER_IN_APP_MESSAGES" - Any other types of messages. For
+	// example, instant messages or chat content.
 	//   "DATA_TYPE_PHOTOS" - A user's photos.
 	//   "DATA_TYPE_VIDEOS" - A user's videos.
 	//   "DATA_TYPE_VOICE_OR_SOUND_RECORDINGS" - A user's voice such as a voicemail
@@ -3118,6 +3394,102 @@ func (c *AccountsReposOperationsGetCall) Do(opts ...googleapi.CallOption) (*Oper
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type AisafetyClassifyContentCall struct {
+	s                                                 *Service
+	googlechecksaisafetyv1alphaclassifycontentrequest *GoogleChecksAisafetyV1alphaClassifyContentRequest
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// ClassifyContent: Analyze a piece of content with the provided set of
+// policies.
+func (r *AisafetyService) ClassifyContent(googlechecksaisafetyv1alphaclassifycontentrequest *GoogleChecksAisafetyV1alphaClassifyContentRequest) *AisafetyClassifyContentCall {
+	c := &AisafetyClassifyContentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googlechecksaisafetyv1alphaclassifycontentrequest = googlechecksaisafetyv1alphaclassifycontentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AisafetyClassifyContentCall) Fields(s ...googleapi.Field) *AisafetyClassifyContentCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AisafetyClassifyContentCall) Context(ctx context.Context) *AisafetyClassifyContentCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AisafetyClassifyContentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AisafetyClassifyContentCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechecksaisafetyv1alphaclassifycontentrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/aisafety:classifyContent")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "checks.aisafety.classifyContent" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChecksAisafetyV1alphaClassifyContentResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AisafetyClassifyContentCall) Do(opts ...googleapi.CallOption) (*GoogleChecksAisafetyV1alphaClassifyContentResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChecksAisafetyV1alphaClassifyContentResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

@@ -542,7 +542,10 @@ type ConfigManagementConfigSync struct {
 	// Monarch when Workload Identity is enabled. The GSA should have the
 	// Monitoring Metric Writer (roles/monitoring.metricWriter) IAM role. The
 	// Kubernetes ServiceAccount `default` in the namespace
-	// `config-management-monitoring` should be bound to the GSA.
+	// `config-management-monitoring` should be bound to the GSA. Deprecated: If
+	// Workload Identity Federation for GKE is enabled, Google Cloud Service
+	// Account is no longer needed for exporting Config Sync metrics:
+	// https://cloud.google.com/kubernetes-engine/enterprise/config-sync/docs/how-to/monitor-config-sync-cloud-monitoring#custom-monitoring.
 	MetricsGcpServiceAccountEmail string `json:"metricsGcpServiceAccountEmail,omitempty"`
 	// Oci: OCI repo configuration for the cluster.
 	Oci *ConfigManagementOciConfig `json:"oci,omitempty"`
@@ -711,6 +714,9 @@ type ConfigManagementConfigSyncState struct {
 	//   "STOPPED" - Syncing resources to the cluster is stopped at the cluster
 	// level.
 	ClusterLevelStopSyncingState string `json:"clusterLevelStopSyncingState,omitempty"`
+	// CrCount: Output only. The number of RootSync and RepoSync CRs in the
+	// cluster.
+	CrCount int64 `json:"crCount,omitempty"`
 	// DeploymentState: Information about the deployment of ConfigSync, including
 	// the version. of the various Pods deployed
 	DeploymentState *ConfigManagementConfigSyncDeploymentState `json:"deploymentState,omitempty"`

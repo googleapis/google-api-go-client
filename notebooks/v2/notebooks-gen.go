@@ -586,7 +586,7 @@ type DiagnoseInstanceRequest struct {
 	// DiagnosticConfig: Required. Defines flags that are used to run the
 	// diagnostic tool
 	DiagnosticConfig *DiagnosticConfig `json:"diagnosticConfig,omitempty"`
-	// TimeoutMinutes: Optional. Maxmium amount of time in minutes before the
+	// TimeoutMinutes: Optional. Maximum amount of time in minutes before the
 	// operation times out.
 	TimeoutMinutes int64 `json:"timeoutMinutes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiagnosticConfig") to

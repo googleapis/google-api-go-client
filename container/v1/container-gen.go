@@ -1509,6 +1509,9 @@ type ClusterUpdate struct {
 	// oint instead. Note that the value of enable_public_endpoint is reversed: if
 	// enable_private_endpoint is false, then enable_public_endpoint will be true.
 	DesiredEnablePrivateEndpoint bool `json:"desiredEnablePrivateEndpoint,omitempty"`
+	// DesiredEnterpriseConfig: The desired enterprise configuration for the
+	// cluster.
+	DesiredEnterpriseConfig *DesiredEnterpriseConfig `json:"desiredEnterpriseConfig,omitempty"`
 	// DesiredFleet: The desired fleet configuration for the cluster.
 	DesiredFleet *Fleet `json:"desiredFleet,omitempty"`
 	// DesiredGatewayApiConfig: The desired config of Gateway API on this cluster.
@@ -2198,6 +2201,35 @@ func (s DefaultSnatStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DesiredEnterpriseConfig: DesiredEnterpriseConfig is a wrapper used for
+// updating enterprise_config.
+type DesiredEnterpriseConfig struct {
+	// DesiredTier: desired_tier specifies the desired tier of the cluster.
+	//
+	// Possible values:
+	//   "CLUSTER_TIER_UNSPECIFIED" - CLUSTER_TIER_UNSPECIFIED is when cluster_tier
+	// is not set.
+	//   "STANDARD" - STANDARD indicates a standard GKE cluster.
+	//   "ENTERPRISE" - ENTERPRISE indicates a GKE Enterprise cluster.
+	DesiredTier string `json:"desiredTier,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DesiredTier") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DesiredTier") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DesiredEnterpriseConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DesiredEnterpriseConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DnsCacheConfig: Configuration for NodeLocal DNSCache
 type DnsCacheConfig struct {
 	// Enabled: Whether NodeLocal DNSCache is enabled for this cluster.
@@ -2240,6 +2272,14 @@ type EnterpriseConfig struct {
 	//   "STANDARD" - STANDARD indicates a standard GKE cluster.
 	//   "ENTERPRISE" - ENTERPRISE indicates a GKE Enterprise cluster.
 	ClusterTier string `json:"clusterTier,omitempty"`
+	// DesiredTier: desired_tier specifies the desired tier of the cluster.
+	//
+	// Possible values:
+	//   "CLUSTER_TIER_UNSPECIFIED" - CLUSTER_TIER_UNSPECIFIED is when cluster_tier
+	// is not set.
+	//   "STANDARD" - STANDARD indicates a standard GKE cluster.
+	//   "ENTERPRISE" - ENTERPRISE indicates a GKE Enterprise cluster.
+	DesiredTier string `json:"desiredTier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterTier") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

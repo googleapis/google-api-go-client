@@ -1374,8 +1374,11 @@ type DeprecatedEvent struct {
 	//   "SUBMIT_DIALOG" - A user clicks an interactive element of a dialog. For
 	// example, a user fills out information in a dialog and clicks a button to
 	// submit the information.
-	//   "CANCEL_DIALOG" - A user closes a dialog without submitting information,
-	// or the dialog is canceled.
+	//   "CANCEL_DIALOG" - A user closes a dialog without submitting information.
+	// The Chat app only receives this interaction event when users click the close
+	// icon in the top right corner of the dialog. When the user closes the dialog
+	// by other means (such as refreshing the browser, clicking outside the dialog
+	// box, or pressing the escape key), no event is sent. .
 	DialogEventType string `json:"dialogEventType,omitempty"`
 	// EventTime: The timestamp indicating when the interaction event occurred.
 	EventTime string `json:"eventTime,omitempty"`
@@ -1835,6 +1838,27 @@ type GoogleAppsCardV1Button struct {
 	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
 	// Text: The text displayed inside the button.
 	Text string `json:"text,omitempty"`
+	// Type: Optional. The type of a button. If unset, button type defaults to
+	// `OUTLINED`. If the `color` field is set, the button type is forced to
+	// `FILLED` and any value set for this field is ignored. Google Chat apps
+	// (https://developers.google.com/workspace/chat):
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Don't use. Unspecified.
+	//   "OUTLINED" - Outlined buttons are medium-emphasis buttons. They usually
+	// contain actions that are important, but aren’t the primary action in a
+	// Chat app or an add-on.
+	//   "FILLED" - A filled button has a container with a solid color. It has the
+	// most visual impact and is recommended for the important and primary action
+	// in a Chat app or an add-on.
+	//   "FILLED_TONAL" - A filled tonal button is an alternative middle ground
+	// between filled and outlined buttons. They’re useful in contexts where a
+	// lower-priority button requires slightly more emphasis than an outline button
+	// would give.
+	//   "BORDERLESS" - A button does not have an invisible container in its
+	// default state. It is often used for the lowest priority actions, especially
+	// when presenting multiple options.
+	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AltText") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2089,6 +2113,123 @@ type GoogleAppsCardV1CardHeader struct {
 
 func (s GoogleAppsCardV1CardHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsCardV1CardHeader
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1Chip: A text, icon, or text and icon chip that users can
+// click. Google Chat apps (https://developers.google.com/workspace/chat):
+type GoogleAppsCardV1Chip struct {
+	// AltText: The alternative text that's used for accessibility. Set descriptive
+	// text that lets users know what the chip does. For example, if a chip opens a
+	// hyperlink, write: "Opens a new browser tab and navigates to the Google Chat
+	// developer documentation at https://developers.google.com/workspace/chat".
+	AltText string `json:"altText,omitempty"`
+	// Disabled: Whether the chip is in an inactive state and ignores user actions.
+	// Defaults to `false`.
+	Disabled bool `json:"disabled,omitempty"`
+	// Enabled: Whether the chip is in an active state and responds to user
+	// actions. Defaults to `true`. Deprecated. Use `disabled` instead.
+	Enabled bool `json:"enabled,omitempty"`
+	// Icon: The icon image. If both `icon` and `text` are set, then the icon
+	// appears before the text.
+	Icon *GoogleAppsCardV1Icon `json:"icon,omitempty"`
+	// Label: The text displayed inside the chip.
+	Label string `json:"label,omitempty"`
+	// OnClick: Optional. The action to perform when a user clicks the chip, such
+	// as opening a hyperlink or running a custom function.
+	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AltText") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AltText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1Chip) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1Chip
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1ChipList: A list of chips layed out horizontally, which can
+// either scroll horizontally or wrap to the next line. Google Chat apps
+// (https://developers.google.com/workspace/chat):
+type GoogleAppsCardV1ChipList struct {
+	// Chips: An array of chips.
+	Chips []*GoogleAppsCardV1Chip `json:"chips,omitempty"`
+	// Layout: Specified chip list layout.
+	//
+	// Possible values:
+	//   "LAYOUT_UNSPECIFIED" - Don't use. Unspecified.
+	//   "WRAPPED" - Default value. The chip list wraps to the next line if there
+	// isn't enough horizontal space.
+	//   "HORIZONTAL_SCROLLABLE" - The chips scroll horizontally if they don't fit
+	// in the available space.
+	Layout string `json:"layout,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Chips") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Chips") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1ChipList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1ChipList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1CollapseControl: Represent an expand and collapse control.
+// Google Chat apps (https://developers.google.com/workspace/chat):
+type GoogleAppsCardV1CollapseControl struct {
+	// CollapseButton: Optional. Define a customizable button to collapse the
+	// section. Both expand_button and collapse_button field must be set. Only one
+	// field set will not take into effect. If this field isn't set, the default
+	// button is used.
+	CollapseButton *GoogleAppsCardV1Button `json:"collapseButton,omitempty"`
+	// ExpandButton: Optional. Define a customizable button to expand the section.
+	// Both expand_button and collapse_button field must be set. Only one field set
+	// will not take into effect. If this field isn't set, the default button is
+	// used.
+	ExpandButton *GoogleAppsCardV1Button `json:"expandButton,omitempty"`
+	// HorizontalAlignment: The horizontal alignment of the expand and collapse
+	// button.
+	//
+	// Possible values:
+	//   "HORIZONTAL_ALIGNMENT_UNSPECIFIED" - Don't use. Unspecified.
+	//   "START" - Default value. Aligns widgets to the start position of the
+	// column. For left-to-right layouts, aligns to the left. For right-to-left
+	// layouts, aligns to the right.
+	//   "CENTER" - Aligns widgets to the center of the column.
+	//   "END" - Aligns widgets to the end position of the column. For
+	// left-to-right layouts, aligns widgets to the right. For right-to-left
+	// layouts, aligns widgets to the left.
+	HorizontalAlignment string `json:"horizontalAlignment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CollapseButton") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CollapseButton") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1CollapseControl) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1CollapseControl
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2650,6 +2791,9 @@ type GoogleAppsCardV1OnClick struct {
 	OpenDynamicLinkAction *GoogleAppsCardV1Action `json:"openDynamicLinkAction,omitempty"`
 	// OpenLink: If specified, this `onClick` triggers an open link action.
 	OpenLink *GoogleAppsCardV1OpenLink `json:"openLink,omitempty"`
+	// OverflowMenu: If specified, this `onClick` opens an overflow menu. Google
+	// Chat apps (https://developers.google.com/workspace/chat):
+	OverflowMenu *GoogleAppsCardV1OverflowMenu `json:"overflowMenu,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2712,6 +2856,65 @@ func (s GoogleAppsCardV1OpenLink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCardV1OverflowMenu: A widget that presents a pop-up menu with one
+// or more actions that users can invoke. For example, showing non-primary
+// actions in a card. You can use this widget when actions don't fit in the
+// available space. To use, specify this widget in the `OnClick` action of
+// widgets that support it. For example, in a `Button`. Google Chat apps
+// (https://developers.google.com/workspace/chat):
+type GoogleAppsCardV1OverflowMenu struct {
+	// Items: Required. The list of menu options.
+	Items []*GoogleAppsCardV1OverflowMenuItem `json:"items,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1OverflowMenu) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1OverflowMenu
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAppsCardV1OverflowMenuItem: An option that users can invoke in an
+// overflow menu. Google Chat apps
+// (https://developers.google.com/workspace/chat):
+type GoogleAppsCardV1OverflowMenuItem struct {
+	// Disabled: Whether the menu option is disabled. Defaults to false.
+	Disabled bool `json:"disabled,omitempty"`
+	// OnClick: Required. The action invoked when a menu option is selected. This
+	// `OnClick` cannot contain an `OverflowMenu`, any specified `OverflowMenu` is
+	// dropped and the menu item disabled.
+	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
+	// StartIcon: The icon displayed in front of the text.
+	StartIcon *GoogleAppsCardV1Icon `json:"startIcon,omitempty"`
+	// Text: Required. The text that identifies or describes the item to users.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Disabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Disabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAppsCardV1OverflowMenuItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1OverflowMenuItem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAppsCardV1PlatformDataSource: For a `SelectionInput` widget that uses
 // a multiselect menu, a data source from Google Workspace. Used to populate
 // items in a multiselect menu. Google Chat apps
@@ -2753,6 +2956,11 @@ func (s GoogleAppsCardV1PlatformDataSource) MarshalJSON() ([]byte, error) {
 // rendered vertically in the order that they're specified. Google Workspace
 // Add-ons and Chat apps (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1Section struct {
+	// CollapseControl: Optional. Define the expand and collapse button of the
+	// section. This button will be shown only if the section is collapsible. If
+	// this field isn't set, the default button is used. Google Chat apps
+	// (https://developers.google.com/workspace/chat):
+	CollapseControl *GoogleAppsCardV1CollapseControl `json:"collapseControl,omitempty"`
 	// Collapsible: Indicates whether this section is collapsible. Collapsible
 	// sections hide some or all widgets, but users can expand the section to
 	// reveal the hidden widgets by clicking **Show more**. Users can hide the
@@ -2775,15 +2983,15 @@ type GoogleAppsCardV1Section struct {
 	UncollapsibleWidgetsCount int64 `json:"uncollapsibleWidgetsCount,omitempty"`
 	// Widgets: All the widgets in the section. Must contain at least one widget.
 	Widgets []*GoogleAppsCardV1Widget `json:"widgets,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Collapsible") to
+	// ForceSendFields is a list of field names (e.g. "CollapseControl") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Collapsible") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CollapseControl") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3122,17 +3330,25 @@ func (s GoogleAppsCardV1TextInput) MarshalJSON() ([]byte, error) {
 // Google Workspace Add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1TextParagraph struct {
+	// MaxLines: The maximum number of lines of text that are displayed in the
+	// widget. If the text exceeds the specified maximum number of lines, the
+	// excess content is concealed behind a **show more** button. If the text is
+	// equal or shorter than the specified maximum number of lines, a **show more**
+	// button isn't displayed. The default value is 0, in which case all context is
+	// displayed. Negative values are ignored. Google Chat apps
+	// (https://developers.google.com/workspace/chat):
+	MaxLines int64 `json:"maxLines,omitempty"`
 	// Text: The text that's shown in the widget.
 	Text string `json:"text,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "MaxLines") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Text") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "MaxLines") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3153,6 +3369,13 @@ type GoogleAppsCardV1Widget struct {
 	// "icon": { "knownIcon": "INVITE", "altText": "check calendar" }, "onClick": {
 	// "openLink": { "url": "https://example.com/calendar" } } } ] } ```
 	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
+	// ChipList: A list of chips. For example, the following JSON creates two
+	// chips. The first is a text chip and the second is an icon chip that opens a
+	// link: ``` "chipList": { "chips": [ { "text": "Edit", "disabled": true, }, {
+	// "icon": { "knownIcon": "INVITE", "altText": "check calendar" }, "onClick": {
+	// "openLink": { "url": "https://example.com/calendar" } } } ] } ``` Google
+	// Chat apps (https://developers.google.com/workspace/chat):
+	ChipList *GoogleAppsCardV1ChipList `json:"chipList,omitempty"`
 	// Columns: Displays up to 2 columns. To include more than 2 columns, or to use
 	// rows, use the `Grid` widget. For example, the following JSON creates 2
 	// columns that each contain text paragraphs: ``` "columns": { "columnItems": [
@@ -3262,6 +3485,9 @@ func (s GoogleAppsCardV1Widget) MarshalJSON() ([]byte, error) {
 type GoogleAppsCardV1Widgets struct {
 	// ButtonList: ButtonList widget.
 	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
+	// ChipList: ChipList widget. Google Chat apps
+	// (https://developers.google.com/workspace/chat):
+	ChipList *GoogleAppsCardV1ChipList `json:"chipList,omitempty"`
 	// DateTimePicker: DateTimePicker widget.
 	DateTimePicker *GoogleAppsCardV1DateTimePicker `json:"dateTimePicker,omitempty"`
 	// DecoratedText: DecoratedText widget.

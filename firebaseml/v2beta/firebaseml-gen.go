@@ -703,9 +703,9 @@ func (s GoogleCloudAiplatformV1beta1FunctionCallingConfig) MarshalJSON() ([]byte
 // GoogleCloudAiplatformV1beta1FunctionDeclaration: Structured representation
 // of a function declaration as defined by the OpenAPI 3.0 specification
 // (https://spec.openapis.org/oas/v3.0.3). Included in this declaration are the
-// function name and parameters. This FunctionDeclaration is a representation
-// of a block of code that can be used as a `Tool` by the model and executed by
-// the client.
+// function name, description, parameters and response type. This
+// FunctionDeclaration is a representation of a block of code that can be used
+// as a `Tool` by the model and executed by the client.
 type GoogleCloudAiplatformV1beta1FunctionDeclaration struct {
 	// Description: Optional. Description and purpose of the function. Model uses
 	// it to decide how and whether to call the function.

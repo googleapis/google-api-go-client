@@ -9222,7 +9222,7 @@
       }
     }
   },
-  "revision": "20241017",
+  "revision": "20241024",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActiveViewVideoViewabilityMetricConfig": {
@@ -9563,11 +9563,11 @@
       "type": "object"
     },
     "Adloox": {
-      "description": "Details of Adloox settings.",
+      "description": "Details of Adloox brand safety settings.",
       "id": "Adloox",
       "properties": {
         "adultExplicitSexualContent": {
-          "description": "Optional. Adult explicit sexual content.",
+          "description": "Optional. Adult and Explicit Sexual Content [GARM](https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.",
           "enum": [
             "GARM_RISK_EXCLUSION_UNSPECIFIED",
             "GARM_RISK_EXCLUSION_FLOOR",
@@ -9576,16 +9576,16 @@
             "GARM_RISK_EXCLUSION_LOW"
           ],
           "enumDescriptions": [
-            "This enum is only a placeholder and it doesn't specify any GARM risk level option.",
+            "This enum is only a placeholder and it doesn't specify any GARM risk exclusion option.",
             "Exclude floor risk.",
             "Exclude high and floor risk.",
-            "Exclude high, medium, and floor risk.",
-            "Exclude All Level of Risk (Low, Medium, High and Floor)."
+            "Exclude medium, high, and floor risk.",
+            "Exclude all levels of risk (low, medium, high and floor)."
           ],
           "type": "string"
         },
         "armsAmmunitionContent": {
-          "description": "Optional. Arms ammunition content.",
+          "description": "Optional. Arms and Ammunition Content [GARM](https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.",
           "enum": [
             "GARM_RISK_EXCLUSION_UNSPECIFIED",
             "GARM_RISK_EXCLUSION_FLOOR",
@@ -9594,16 +9594,16 @@
             "GARM_RISK_EXCLUSION_LOW"
           ],
           "enumDescriptions": [
-            "This enum is only a placeholder and it doesn't specify any GARM risk level option.",
+            "This enum is only a placeholder and it doesn't specify any GARM risk exclusion option.",
             "Exclude floor risk.",
             "Exclude high and floor risk.",
-            "Exclude high, medium, and floor risk.",
-            "Exclude All Level of Risk (Low, Medium, High and Floor)."
+            "Exclude medium, high, and floor risk.",
+            "Exclude all levels of risk (low, medium, high and floor)."
           ],
           "type": "string"
         },
         "crimeHarmfulActsIndividualsSocietyHumanRightsViolationsContent": {
-          "description": "Optional. Crime harmful acts to individuals society human rights violations content.",
+          "description": "Optional. Crime and Harmful Acts Content [GARM](https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.",
           "enum": [
             "GARM_RISK_EXCLUSION_UNSPECIFIED",
             "GARM_RISK_EXCLUSION_FLOOR",
@@ -9612,16 +9612,16 @@
             "GARM_RISK_EXCLUSION_LOW"
           ],
           "enumDescriptions": [
-            "This enum is only a placeholder and it doesn't specify any GARM risk level option.",
+            "This enum is only a placeholder and it doesn't specify any GARM risk exclusion option.",
             "Exclude floor risk.",
             "Exclude high and floor risk.",
-            "Exclude high, medium, and floor risk.",
-            "Exclude All Level of Risk (Low, Medium, High and Floor)."
+            "Exclude medium, high, and floor risk.",
+            "Exclude all levels of risk (low, medium, high and floor)."
           ],
           "type": "string"
         },
         "deathInjuryMilitaryConflictContent": {
-          "description": "Optional. Death injury military conflict content.",
+          "description": "Optional. Death, Injury, or Military Conflict Content [GARM](https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.",
           "enum": [
             "GARM_RISK_EXCLUSION_UNSPECIFIED",
             "GARM_RISK_EXCLUSION_FLOOR",
@@ -9630,16 +9630,16 @@
             "GARM_RISK_EXCLUSION_LOW"
           ],
           "enumDescriptions": [
-            "This enum is only a placeholder and it doesn't specify any GARM risk level option.",
+            "This enum is only a placeholder and it doesn't specify any GARM risk exclusion option.",
             "Exclude floor risk.",
             "Exclude high and floor risk.",
-            "Exclude high, medium, and floor risk.",
-            "Exclude All Level of Risk (Low, Medium, High and Floor)."
+            "Exclude medium, high, and floor risk.",
+            "Exclude all levels of risk (low, medium, high and floor)."
           ],
           "type": "string"
         },
         "debatedSensitiveSocialIssueContent": {
-          "description": "Optional. Debated sensitive social issue content.",
+          "description": "Optional. Debated Sensitive Social Issue Content [GARM](https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.",
           "enum": [
             "GARM_RISK_EXCLUSION_UNSPECIFIED",
             "GARM_RISK_EXCLUSION_FLOOR",
@@ -9648,16 +9648,16 @@
             "GARM_RISK_EXCLUSION_LOW"
           ],
           "enumDescriptions": [
-            "This enum is only a placeholder and it doesn't specify any GARM risk level option.",
+            "This enum is only a placeholder and it doesn't specify any GARM risk exclusion option.",
             "Exclude floor risk.",
             "Exclude high and floor risk.",
-            "Exclude high, medium, and floor risk.",
-            "Exclude All Level of Risk (Low, Medium, High and Floor)."
+            "Exclude medium, high, and floor risk.",
+            "Exclude all levels of risk (low, medium, high and floor)."
           ],
           "type": "string"
         },
         "displayIabViewability": {
-          "description": "Optional. Display IAB viewability.",
+          "description": "Optional. IAB viewability threshold for display ads.",
           "enum": [
             "DISPLAY_IAB_VIEWABILITY_UNSPECIFIED",
             "DISPLAY_IAB_VIEWABILITY_10",
@@ -9667,7 +9667,7 @@
             "DISPLAY_IAB_VIEWABILITY_75"
           ],
           "enumDescriptions": [
-            "This enum is only a placeholder and it doesn't specify any display viewability options.",
+            "Default value when not specified or is unknown in this version.",
             "10%+ in view (IAB display viewability standard).",
             "20%+ in view (IAB display viewability standard).",
             "35%+ in view (IAB display viewability standard).",
@@ -9677,7 +9677,7 @@
           "type": "string"
         },
         "excludedAdlooxCategories": {
-          "description": "Adloox's brand safety settings.",
+          "description": "Adloox categories to exclude.",
           "items": {
             "enum": [
               "ADLOOX_UNSPECIFIED",
@@ -9691,7 +9691,7 @@
               "FRAUD"
             ],
             "enumDescriptions": [
-              "This enum is only a placeholder and it doesn't specify any Adloox option.",
+              "Default value when a Adloox category is not specified or is unknown in this version.",
               "Adult content (hard).",
               "Adult content (soft).",
               "Illegal content.",
@@ -9706,14 +9706,14 @@
           "type": "array"
         },
         "excludedFraudIvtMfaCategories": {
-          "description": "Optional. Adloox's fraud IVT MFA settings.",
+          "description": "Optional. Adloox's fraud IVT MFA categories to exclude.",
           "items": {
             "enum": [
               "FRAUD_IVT_MFA_CATEGORY_UNSPECIFIED",
               "FRAUD_IVT_MFA"
             ],
             "enumDescriptions": [
-              "This enum is only a placeholder and it doesn't specify any fraud IVT MFA categories.",
+              "Default value when a Adloox Fraud, IVT, MFA category is not specified or is unknown in this version.",
               "FRAUD, IVT, MFA."
             ],
             "type": "string"
@@ -9721,7 +9721,7 @@
           "type": "array"
         },
         "hateSpeechActsAggressionContent": {
-          "description": "Optional. Hate speech acts of aggression content.",
+          "description": "Optional. Hate Speech and Acts of Aggression Content [GARM](https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.",
           "enum": [
             "GARM_RISK_EXCLUSION_UNSPECIFIED",
             "GARM_RISK_EXCLUSION_FLOOR",
@@ -9730,16 +9730,16 @@
             "GARM_RISK_EXCLUSION_LOW"
           ],
           "enumDescriptions": [
-            "This enum is only a placeholder and it doesn't specify any GARM risk level option.",
+            "This enum is only a placeholder and it doesn't specify any GARM risk exclusion option.",
             "Exclude floor risk.",
             "Exclude high and floor risk.",
-            "Exclude high, medium, and floor risk.",
-            "Exclude All Level of Risk (Low, Medium, High and Floor)."
+            "Exclude medium, high, and floor risk.",
+            "Exclude all levels of risk (low, medium, high and floor)."
           ],
           "type": "string"
         },
         "illegalDrugsTobaccoEcigarettesVapingAlcoholContent": {
-          "description": "Optional. Illegal drugs tobacco ecigarettes vaping alcohol content.",
+          "description": "Optional. Illegal Drugs/Alcohol Content [GARM](https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.",
           "enum": [
             "GARM_RISK_EXCLUSION_UNSPECIFIED",
             "GARM_RISK_EXCLUSION_FLOOR",
@@ -9748,16 +9748,16 @@
             "GARM_RISK_EXCLUSION_LOW"
           ],
           "enumDescriptions": [
-            "This enum is only a placeholder and it doesn't specify any GARM risk level option.",
+            "This enum is only a placeholder and it doesn't specify any GARM risk exclusion option.",
             "Exclude floor risk.",
             "Exclude high and floor risk.",
-            "Exclude high, medium, and floor risk.",
-            "Exclude All Level of Risk (Low, Medium, High and Floor)."
+            "Exclude medium, high, and floor risk.",
+            "Exclude all levels of risk (low, medium, high and floor)."
           ],
           "type": "string"
         },
         "misinformationContent": {
-          "description": "Optional. Misinformation content.",
+          "description": "Optional. Misinformation Content [GARM](https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.",
           "enum": [
             "GARM_RISK_EXCLUSION_UNSPECIFIED",
             "GARM_RISK_EXCLUSION_FLOOR",
@@ -9766,16 +9766,16 @@
             "GARM_RISK_EXCLUSION_LOW"
           ],
           "enumDescriptions": [
-            "This enum is only a placeholder and it doesn't specify any GARM risk level option.",
+            "This enum is only a placeholder and it doesn't specify any GARM risk exclusion option.",
             "Exclude floor risk.",
             "Exclude high and floor risk.",
-            "Exclude high, medium, and floor risk.",
-            "Exclude All Level of Risk (Low, Medium, High and Floor)."
+            "Exclude medium, high, and floor risk.",
+            "Exclude all levels of risk (low, medium, high and floor)."
           ],
           "type": "string"
         },
         "obscenityProfanityContent": {
-          "description": "Optional. Obscenity profanity content.",
+          "description": "Optional. Obscenity and Profanity Content [GARM](https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.",
           "enum": [
             "GARM_RISK_EXCLUSION_UNSPECIFIED",
             "GARM_RISK_EXCLUSION_FLOOR",
@@ -9784,16 +9784,16 @@
             "GARM_RISK_EXCLUSION_LOW"
           ],
           "enumDescriptions": [
-            "This enum is only a placeholder and it doesn't specify any GARM risk level option.",
+            "This enum is only a placeholder and it doesn't specify any GARM risk exclusion option.",
             "Exclude floor risk.",
             "Exclude high and floor risk.",
-            "Exclude high, medium, and floor risk.",
-            "Exclude All Level of Risk (Low, Medium, High and Floor)."
+            "Exclude medium, high, and floor risk.",
+            "Exclude all levels of risk (low, medium, high and floor)."
           ],
           "type": "string"
         },
         "onlinePiracyContent": {
-          "description": "Optional. Online piracy content.",
+          "description": "Optional. Online Piracy Content [GARM](https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.",
           "enum": [
             "GARM_RISK_EXCLUSION_UNSPECIFIED",
             "GARM_RISK_EXCLUSION_FLOOR",
@@ -9802,16 +9802,16 @@
             "GARM_RISK_EXCLUSION_LOW"
           ],
           "enumDescriptions": [
-            "This enum is only a placeholder and it doesn't specify any GARM risk level option.",
+            "This enum is only a placeholder and it doesn't specify any GARM risk exclusion option.",
             "Exclude floor risk.",
             "Exclude high and floor risk.",
-            "Exclude high, medium, and floor risk.",
-            "Exclude All Level of Risk (Low, Medium, High and Floor)."
+            "Exclude medium, high, and floor risk.",
+            "Exclude all levels of risk (low, medium, high and floor)."
           ],
           "type": "string"
         },
         "spamHarmfulContent": {
-          "description": "Optional. Spam harmful content.",
+          "description": "Optional. Spam or Harmful Content [GARM](https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.",
           "enum": [
             "GARM_RISK_EXCLUSION_UNSPECIFIED",
             "GARM_RISK_EXCLUSION_FLOOR",
@@ -9820,16 +9820,16 @@
             "GARM_RISK_EXCLUSION_LOW"
           ],
           "enumDescriptions": [
-            "This enum is only a placeholder and it doesn't specify any GARM risk level option.",
+            "This enum is only a placeholder and it doesn't specify any GARM risk exclusion option.",
             "Exclude floor risk.",
             "Exclude high and floor risk.",
-            "Exclude high, medium, and floor risk.",
-            "Exclude All Level of Risk (Low, Medium, High and Floor)."
+            "Exclude medium, high, and floor risk.",
+            "Exclude all levels of risk (low, medium, high and floor)."
           ],
           "type": "string"
         },
         "terrorismContent": {
-          "description": "Optional. Terrorism content.",
+          "description": "Optional. Terrorism Content [GARM](https://wfanet.org/leadership/garm/about-garm) risk ranges to exclude.",
           "enum": [
             "GARM_RISK_EXCLUSION_UNSPECIFIED",
             "GARM_RISK_EXCLUSION_FLOOR",
@@ -9838,16 +9838,16 @@
             "GARM_RISK_EXCLUSION_LOW"
           ],
           "enumDescriptions": [
-            "This enum is only a placeholder and it doesn't specify any GARM risk level option.",
+            "This enum is only a placeholder and it doesn't specify any GARM risk exclusion option.",
             "Exclude floor risk.",
             "Exclude high and floor risk.",
-            "Exclude high, medium, and floor risk.",
-            "Exclude All Level of Risk (Low, Medium, High and Floor)."
+            "Exclude medium, high, and floor risk.",
+            "Exclude all levels of risk (low, medium, high and floor)."
           ],
           "type": "string"
         },
         "videoIabViewability": {
-          "description": "Optional. Video IAB viewability.",
+          "description": "Optional. IAB viewability threshold for video ads.",
           "enum": [
             "VIDEO_IAB_VIEWABILITY_UNSPECIFIED",
             "VIDEO_IAB_VIEWABILITY_10",
@@ -9857,7 +9857,7 @@
             "VIDEO_IAB_VIEWABILITY_75"
           ],
           "enumDescriptions": [
-            "This enum is only a placeholder and it doesn't specify any video viewability options.",
+            "Default value when not specified or is unknown in this version.",
             "10%+ in view (IAB video viewability standard).",
             "20%+ in view (IAB video viewability standard).",
             "35%+ in view (IAB video viewability standard).",
@@ -9885,7 +9885,7 @@
         },
         "billingConfig": {
           "$ref": "AdvertiserBillingConfig",
-          "description": "Optional. Required. Billing related settings of the advertiser."
+          "description": "Required. Billing related settings of the advertiser."
         },
         "creativeConfig": {
           "$ref": "AdvertiserCreativeConfig",
@@ -9974,7 +9974,7 @@
       "id": "AdvertiserBillingConfig",
       "properties": {
         "billingProfileId": {
-          "description": "Optional. The ID of a billing profile assigned to the advertiser.",
+          "description": "Required. The ID of a billing profile assigned to the advertiser.",
           "format": "int64",
           "type": "string"
         }

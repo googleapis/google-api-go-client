@@ -4297,9 +4297,9 @@ type ParserConfig struct {
 	// Schema: Optional. Schemas used to parse messages in this store, if
 	// schematized parsing is desired.
 	Schema *SchemaPackage `json:"schema,omitempty"`
-	// SegmentTerminator: Byte(s) to use as the segment terminator. If this is
-	// unset, '\r' is used as segment terminator, matching the HL7 version 2
-	// specification.
+	// SegmentTerminator: Optional. Byte(s) to use as the segment terminator. If
+	// this is unset, '\r' is used as segment terminator, matching the HL7 version
+	// 2 specification.
 	SegmentTerminator string `json:"segmentTerminator,omitempty"`
 	// Version: Immutable. Determines the version of both the default parser to be
 	// used when `schema` is not given, as well as the schematized parser used when

@@ -14,7 +14,6 @@ import (
 	"log"
 	"net"
 	"os"
-	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -26,6 +25,8 @@ import (
 	"cloud.google.com/go/compute/metadata"
 	"go.opencensus.io/plugin/ocgrpc"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
+	"go.opentelemetry.io/otel/attribute"
+	"go.opentelemetry.io/otel/metric"
 	"golang.org/x/oauth2"
 	"golang.org/x/time/rate"
 	"google.golang.org/api/internal"
@@ -39,8 +40,6 @@ import (
 	// Install grpclb, which is required for direct path.
 	_ "google.golang.org/grpc/balancer/grpclb"
 )
-
-const dryRunAsyncRefresh = "GOOGLE_API_GO_EXPERIMENTAL_ASYNC_REFRESH_DRY_RUN"
 
 // Check env to disable DirectPath traffic.
 const disableDirectPath = "GOOGLE_CLOUD_DISABLE_DIRECT_PATH"
@@ -274,20 +273,29 @@ func prepareDialOptsNewAuth(ds *internal.DialSettings) []grpc.DialOption {
 type dryRunAsync struct {
 	asyncTokenSource oauth2.TokenSource
 	syncTokenSource  oauth2.TokenSource
+	errCounter       metric.Int64Counter
+	clientAttributes []attribute.KeyValue
 }
 
-func newDryRunAsync(ts oauth2.TokenSource) dryRunAsync {
+func newDryRunAsync(ts oauth2.TokenSource, errCounter metric.Int64Counter, clientAttributes []attribute.KeyValue) dryRunAsync {
 	tp := auth.NewCachedTokenProvider(oauth2adapt.TokenProviderFromTokenSource(ts), nil)
 	asyncTs := oauth2adapt.TokenSourceFromTokenProvider(tp)
-	return dryRunAsync{syncTokenSource: ts, asyncTokenSource: asyncTs}
+	return dryRunAsync{syncTokenSource: ts,
+		asyncTokenSource: asyncTs,
+		errCounter:       errCounter,
+		clientAttributes: clientAttributes,
+	}
 }
 
 // Token returns a token or an error.
 func (async dryRunAsync) Token() (*oauth2.Token, error) {
+	fmt.Println("Asynchronously refreshing token")
 	_, err := async.asyncTokenSource.Token()
-	if err != nil {
+	if err == nil { //TODO: Change this
+		async.errCounter.Add(context.Background(), 1, metric.WithAttributes(async.clientAttributes...))
 		fmt.Printf("Error during async refresh of token: %+v", err)
 	}
+	fmt.Println("Synchronously refreshing token")
 	return async.syncTokenSource.Token()
 }
 
@@ -329,8 +337,8 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 			}
 
 			ts := creds.TokenSource
-			if b, err := strconv.ParseBool(os.Getenv(dryRunAsyncRefresh)); err == nil && b {
-				ts = newDryRunAsync(ts)
+			if o.EnableAsyncRefreshDryRun != nil {
+				ts = newDryRunAsync(ts, o.EnableAsyncRefreshDryRun, o.ClientAttributes)
 			}
 			grpcOpts = append(grpcOpts, grpc.WithPerRPCCredentials(grpcTokenSource{
 				TokenSource:   oauth.TokenSource{TokenSource: ts},

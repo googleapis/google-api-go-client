@@ -1632,8 +1632,8 @@ type GooglePrivacyDlpV2CloudSqlProperties struct {
 	//   "DATABASE_ENGINE_MYSQL" - Cloud SQL for MySQL instance.
 	//   "DATABASE_ENGINE_POSTGRES" - Cloud SQL for PostgreSQL instance.
 	DatabaseEngine string `json:"databaseEngine,omitempty"`
-	// MaxConnections: Required. DLP will limit its connections to max_connections.
-	// Must be 2 or greater.
+	// MaxConnections: Required. The DLP API will limit its connections to
+	// max_connections. Must be 2 or greater.
 	MaxConnections int64 `json:"maxConnections,omitempty"`
 	// UsernamePassword: A username and password stored in Secret Manager.
 	UsernamePassword *GooglePrivacyDlpV2SecretManagerCredential `json:"usernamePassword,omitempty"`
@@ -2200,8 +2200,8 @@ func (s GooglePrivacyDlpV2Conditions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2Connection: A data connection to allow DLP to profile data
-// in locations that require additional configuration.
+// GooglePrivacyDlpV2Connection: A data connection to allow the DLP API to
+// profile data in locations that require additional configuration.
 type GooglePrivacyDlpV2Connection struct {
 	// CloudSql: Connect to a Cloud SQL instance.
 	CloudSql *GooglePrivacyDlpV2CloudSqlProperties `json:"cloudSql,omitempty"`
@@ -2215,8 +2215,8 @@ type GooglePrivacyDlpV2Connection struct {
 	//
 	// Possible values:
 	//   "CONNECTION_STATE_UNSPECIFIED" - Unused
-	//   "MISSING_CREDENTIALS" - DLP automatically created this connection during
-	// an initial scan, and it is awaiting full configuration by a user.
+	//   "MISSING_CREDENTIALS" - The DLP API automatically created this connection
+	// during an initial scan, and it is awaiting full configuration by a user.
 	//   "AVAILABLE" - A configured connection that has not encountered any errors.
 	//   "ERROR" - A configured connection that encountered errors during its last
 	// use. It will not be used again until it is set to AVAILABLE. If the
@@ -2862,7 +2862,8 @@ type GooglePrivacyDlpV2DataProfileAction struct {
 	// context-aware analytics
 	// (https://cloud.google.com/chronicle/docs/detection/usecase-dlp-high-risk-user-download).
 	PublishToChronicle *GooglePrivacyDlpV2PublishToChronicle `json:"publishToChronicle,omitempty"`
-	// PublishToScc: Publishes findings to SCC for each data profile.
+	// PublishToScc: Publishes findings to Security Command Center for each data
+	// profile.
 	PublishToScc *GooglePrivacyDlpV2PublishToSecurityCommandCenter `json:"publishToScc,omitempty"`
 	// TagResources: Tags the profiled resources with the specified tag values.
 	TagResources *GooglePrivacyDlpV2TagResources `json:"tagResources,omitempty"`
@@ -2974,7 +2975,7 @@ type GooglePrivacyDlpV2DataProfileJobConfig struct {
 	OtherCloudStartingLocation *GooglePrivacyDlpV2OtherCloudDiscoveryStartingLocation `json:"otherCloudStartingLocation,omitempty"`
 	// ProjectId: The project that will run the scan. The DLP service account that
 	// exists within this project must have access to all resources that are
-	// profiled, and the Cloud DLP API must be enabled.
+	// profiled, and the DLP API must be enabled.
 	ProjectId string `json:"projectId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataProfileActions") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7734,7 +7735,7 @@ type GooglePrivacyDlpV2OrgConfig struct {
 	Location *GooglePrivacyDlpV2DiscoveryStartingLocation `json:"location,omitempty"`
 	// ProjectId: The project that will run the scan. The DLP service account that
 	// exists within this project must have access to all resources that are
-	// profiled, and the Cloud DLP API must be enabled.
+	// profiled, and the DLP API must be enabled.
 	ProjectId string `json:"projectId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Location") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8410,7 +8411,7 @@ func (s GooglePrivacyDlpV2PublishToPubSub) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2PublishToSecurityCommandCenter: If set, a summary finding
-// will be created/updated in SCC for each profile.
+// will be created or updated in Security Command Center for each profile.
 type GooglePrivacyDlpV2PublishToSecurityCommandCenter struct {
 }
 
@@ -10950,7 +10951,7 @@ type InfoTypesListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of the sensitive information types that DLP API
+// List: Returns a list of the sensitive information types that the DLP API
 // supports. See
 // https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
 // to learn more.
@@ -11084,7 +11085,7 @@ type LocationsInfoTypesListCall struct {
 	header_      http.Header
 }
 
-// List: Returns a list of the sensitive information types that DLP API
+// List: Returns a list of the sensitive information types that the DLP API
 // supports. See
 // https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
 // to learn more.

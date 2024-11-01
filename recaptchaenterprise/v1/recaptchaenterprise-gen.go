@@ -1672,7 +1672,7 @@ func (s GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership) MarshalJS
 }
 
 // GoogleCloudRecaptchaenterpriseV1RemoveIpOverrideRequest: The
-// removeIpOverride request message.
+// RemoveIpOverride request message.
 type GoogleCloudRecaptchaenterpriseV1RemoveIpOverrideRequest struct {
 	// IpOverrideData: Required. IP override to be removed from the key.
 	IpOverrideData *GoogleCloudRecaptchaenterpriseV1IpOverrideData `json:"ipOverrideData,omitempty"`
@@ -1766,7 +1766,8 @@ func (s GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse) Marshal
 // GoogleCloudRecaptchaenterpriseV1RiskAnalysis: Risk analysis result for an
 // event.
 type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
-	// Challenge: Output only. Challenge information for SCORE_AND_CHALLENGE keys
+	// Challenge: Output only. Challenge information for SCORE_AND_CHALLENGE and
+	// INVISIBLE keys
 	//
 	// Possible values:
 	//   "CHALLENGE_UNSPECIFIED" - Default unspecified type.

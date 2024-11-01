@@ -1318,6 +1318,31 @@ func (s Buildings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ByteUsage: Represents a data capacity with some amount of current usage in
+// bytes.
+type ByteUsage struct {
+	// CapacityBytes: Output only. The total capacity value, in bytes.
+	CapacityBytes int64 `json:"capacityBytes,omitempty,string"`
+	// UsedBytes: Output only. The current usage value, in bytes.
+	UsedBytes int64 `json:"usedBytes,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CapacityBytes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CapacityBytes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ByteUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod ByteUsage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CalendarResource: Public API: Resources.calendars
 type CalendarResource struct {
 	// BuildingId: Unique ID for the building a resource is located in.
@@ -1581,6 +1606,9 @@ type ChromeOsDevice struct {
 	// Upgrade.
 	//   "kioskUpgrade" - The device has an annual Kiosk Upgrade.
 	DeviceLicenseType string `json:"deviceLicenseType,omitempty"`
+	// DiskSpaceUsage: Output only. How much disk space the device has available
+	// and is currently using.
+	DiskSpaceUsage *ByteUsage `json:"diskSpaceUsage,omitempty"`
 	// DiskVolumeReports: Reports of disk space and other info about
 	// mounted/connected volumes.
 	DiskVolumeReports []*ChromeOsDeviceDiskVolumeReports `json:"diskVolumeReports,omitempty"`

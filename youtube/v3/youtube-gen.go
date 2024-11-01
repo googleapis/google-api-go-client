@@ -6152,7 +6152,7 @@ type PlaylistItemListResponse struct {
 	// Items: A list of playlist items that match the request criteria.
 	Items []*PlaylistItem `json:"items,omitempty"`
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
-	// "youtube#playlistItemListResponse". Etag of this resource.
+	// "youtube#playlistItemListResponse".
 	Kind string `json:"kind,omitempty"`
 	// NextPageToken: The token that can be used as the value of the pageToken
 	// parameter to retrieve the next page in the result set.

@@ -6430,6 +6430,9 @@ func (s SendDiscoveryClientHeartbeatRequest) MarshalJSON() ([]byte, error) {
 
 // Settings: Describes the Migration Center settings related to the project.
 type Settings struct {
+	// CustomerConsentForGoogleSalesToAccessMigrationCenter: Customer consent for
+	// Google sales to access their Cloud Migration Center project.
+	CustomerConsentForGoogleSalesToAccessMigrationCenter bool `json:"customerConsentForGoogleSalesToAccessMigrationCenter,omitempty"`
 	// DisableCloudLogging: Disable Cloud Logging for the Migration Center API.
 	// Users are billed for the logs.
 	DisableCloudLogging bool `json:"disableCloudLogging,omitempty"`
@@ -6440,15 +6443,17 @@ type Settings struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "DisableCloudLogging") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomerConsentForGoogleSalesToAccessMigrationCenter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisableCloudLogging") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g.
+	// "CustomerConsentForGoogleSalesToAccessMigrationCenter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

@@ -1309,8 +1309,6 @@ type GoogleMapsPlacesV1Place struct {
 	AreaSummary *GoogleMapsPlacesV1PlaceAreaSummary `json:"areaSummary,omitempty"`
 	// Attributions: A set of data provider that must be shown with this result.
 	Attributions []*GoogleMapsPlacesV1PlaceAttribution `json:"attributions,omitempty"`
-	// BusinessStatus: The business status for the place.
-	//
 	// Possible values:
 	//   "BUSINESS_STATUS_UNSPECIFIED" - Default value. This value is unused.
 	//   "OPERATIONAL" - The establishment is operational, not necessarily open

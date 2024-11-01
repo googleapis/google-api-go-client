@@ -4133,7 +4133,7 @@
       }
     }
   },
-  "revision": "20241022",
+  "revision": "20241030",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -10076,7 +10076,7 @@
         },
         "kind": {
           "default": "youtube#playlistItemListResponse",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#playlistItemListResponse\". Etag of this resource.",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#playlistItemListResponse\".",
           "type": "string"
         },
         "nextPageToken": {

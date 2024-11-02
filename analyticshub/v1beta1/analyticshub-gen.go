@@ -525,70 +525,6 @@ func (s DataProvider) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DestinationDataset: Defines the destination bigquery dataset.
-type DestinationDataset struct {
-	// DatasetReference: Required. A reference that identifies the destination
-	// dataset.
-	DatasetReference *DestinationDatasetReference `json:"datasetReference,omitempty"`
-	// Description: Optional. A user-friendly description of the dataset.
-	Description string `json:"description,omitempty"`
-	// FriendlyName: Optional. A descriptive name for the dataset.
-	FriendlyName string `json:"friendlyName,omitempty"`
-	// Labels: Optional. The labels associated with this dataset. You can use these
-	// to organize and group your datasets. You can set this property when
-	// inserting or updating a dataset. See
-	// https://cloud.google.com/resource-manager/docs/creating-managing-labels for
-	// more information.
-	Labels map[string]string `json:"labels,omitempty"`
-	// Location: Required. The geographic location where the dataset should reside.
-	// See https://cloud.google.com/bigquery/docs/locations for supported
-	// locations.
-	Location string `json:"location,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DatasetReference") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DatasetReference") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s DestinationDataset) MarshalJSON() ([]byte, error) {
-	type NoMethod DestinationDataset
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// DestinationDatasetReference: Contains the reference that identifies a
-// destination bigquery dataset.
-type DestinationDatasetReference struct {
-	// DatasetId: Required. A unique ID for this dataset, without the project name.
-	// The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores
-	// (_). The maximum length is 1,024 characters.
-	DatasetId string `json:"datasetId,omitempty"`
-	// ProjectId: Required. The ID of the project containing this dataset.
-	ProjectId string `json:"projectId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DatasetId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DatasetId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s DestinationDatasetReference) MarshalJSON() ([]byte, error) {
-	type NoMethod DestinationDatasetReference
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -698,6 +634,71 @@ type GetPolicyOptions struct {
 
 func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBigqueryDataexchangeV1beta1DestinationDataset: Defines the
+// destination bigquery dataset.
+type GoogleCloudBigqueryDataexchangeV1beta1DestinationDataset struct {
+	// DatasetReference: Required. A reference that identifies the destination
+	// dataset.
+	DatasetReference *GoogleCloudBigqueryDataexchangeV1beta1DestinationDatasetReference `json:"datasetReference,omitempty"`
+	// Description: Optional. A user-friendly description of the dataset.
+	Description string `json:"description,omitempty"`
+	// FriendlyName: Optional. A descriptive name for the dataset.
+	FriendlyName string `json:"friendlyName,omitempty"`
+	// Labels: Optional. The labels associated with this dataset. You can use these
+	// to organize and group your datasets. You can set this property when
+	// inserting or updating a dataset. See
+	// https://cloud.google.com/resource-manager/docs/creating-managing-labels for
+	// more information.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Location: Required. The geographic location where the dataset should reside.
+	// See https://cloud.google.com/bigquery/docs/locations for supported
+	// locations.
+	Location string `json:"location,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatasetReference") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatasetReference") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBigqueryDataexchangeV1beta1DestinationDataset) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBigqueryDataexchangeV1beta1DestinationDataset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBigqueryDataexchangeV1beta1DestinationDatasetReference: Contains
+// the reference that identifies a destination bigquery dataset.
+type GoogleCloudBigqueryDataexchangeV1beta1DestinationDatasetReference struct {
+	// DatasetId: Required. A unique ID for this dataset, without the project name.
+	// The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores
+	// (_). The maximum length is 1,024 characters.
+	DatasetId string `json:"datasetId,omitempty"`
+	// ProjectId: Required. The ID of the project containing this dataset.
+	ProjectId string `json:"projectId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatasetId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatasetId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBigqueryDataexchangeV1beta1DestinationDatasetReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBigqueryDataexchangeV1beta1DestinationDatasetReference
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1174,7 +1175,7 @@ func (s SubscribeDataExchangeResponse) MarshalJSON() ([]byte, error) {
 type SubscribeListingRequest struct {
 	// DestinationDataset: BigQuery destination dataset to create for the
 	// subscriber.
-	DestinationDataset *DestinationDataset `json:"destinationDataset,omitempty"`
+	DestinationDataset *GoogleCloudBigqueryDataexchangeV1beta1DestinationDataset `json:"destinationDataset,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DestinationDataset") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

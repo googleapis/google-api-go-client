@@ -490,6 +490,7 @@ type ProjectsLocationsCollectionsDataStoresSessionsAnswersService struct {
 func NewProjectsLocationsCollectionsDataStoresSiteSearchEngineService(s *Service) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineService {
 	rs := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineService{s: s}
 	rs.Operations = NewProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsService(s)
+	rs.Sitemaps = NewProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsService(s)
 	rs.TargetSites = NewProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesService(s)
 	return rs
 }
@@ -498,6 +499,8 @@ type ProjectsLocationsCollectionsDataStoresSiteSearchEngineService struct {
 	s *Service
 
 	Operations *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsService
+
+	Sitemaps *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsService
 
 	TargetSites *ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesService
 }
@@ -508,6 +511,15 @@ func NewProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsService(
 }
 
 type ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsService(s *Service) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsService {
+	rs := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsService struct {
 	s *Service
 }
 
@@ -852,6 +864,7 @@ type ProjectsLocationsDataStoresSessionsAnswersService struct {
 
 func NewProjectsLocationsDataStoresSiteSearchEngineService(s *Service) *ProjectsLocationsDataStoresSiteSearchEngineService {
 	rs := &ProjectsLocationsDataStoresSiteSearchEngineService{s: s}
+	rs.Sitemaps = NewProjectsLocationsDataStoresSiteSearchEngineSitemapsService(s)
 	rs.TargetSites = NewProjectsLocationsDataStoresSiteSearchEngineTargetSitesService(s)
 	return rs
 }
@@ -859,7 +872,18 @@ func NewProjectsLocationsDataStoresSiteSearchEngineService(s *Service) *Projects
 type ProjectsLocationsDataStoresSiteSearchEngineService struct {
 	s *Service
 
+	Sitemaps *ProjectsLocationsDataStoresSiteSearchEngineSitemapsService
+
 	TargetSites *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesService
+}
+
+func NewProjectsLocationsDataStoresSiteSearchEngineSitemapsService(s *Service) *ProjectsLocationsDataStoresSiteSearchEngineSitemapsService {
+	rs := &ProjectsLocationsDataStoresSiteSearchEngineSitemapsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDataStoresSiteSearchEngineSitemapsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsDataStoresSiteSearchEngineTargetSitesService(s *Service) *ProjectsLocationsDataStoresSiteSearchEngineTargetSitesService {
@@ -7225,6 +7249,33 @@ func (s GoogleCloudDiscoveryengineV1alphaCreateSchemaMetadata) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaCreateSitemapMetadata: Metadata related to
+// the progress of the SiteSearchEngineService.CreateSitemap operation. This
+// will be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaCreateSitemapMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaCreateSitemapMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaCreateSitemapMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaCreateTargetSiteMetadata: Metadata related
 // to the progress of the SiteSearchEngineService.CreateTargetSite operation.
 // This will be returned by the google.longrunning.Operation.metadata field.
@@ -7693,6 +7744,33 @@ type GoogleCloudDiscoveryengineV1alphaDeleteSchemaMetadata struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDeleteSchemaMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDeleteSchemaMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDeleteSitemapMetadata: Metadata related to
+// the progress of the SiteSearchEngineService.DeleteSitemap operation. This
+// will be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1alphaDeleteSitemapMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDeleteSitemapMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDeleteSitemapMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8963,6 +9041,55 @@ type GoogleCloudDiscoveryengineV1alphaFetchDomainVerificationStatusResponse stru
 
 func (s GoogleCloudDiscoveryengineV1alphaFetchDomainVerificationStatusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaFetchDomainVerificationStatusResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaFetchSitemapsResponse: Response message for
+// SiteSearchEngineService.FetchSitemaps method.
+type GoogleCloudDiscoveryengineV1alphaFetchSitemapsResponse struct {
+	// SitemapsMetadata: List of Sitemaps fetched.
+	SitemapsMetadata []*GoogleCloudDiscoveryengineV1alphaFetchSitemapsResponseSitemapMetadata `json:"sitemapsMetadata,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "SitemapsMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SitemapsMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaFetchSitemapsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaFetchSitemapsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaFetchSitemapsResponseSitemapMetadata:
+// Contains a Sitemap and its metadata.
+type GoogleCloudDiscoveryengineV1alphaFetchSitemapsResponseSitemapMetadata struct {
+	// Sitemap: The Sitemap.
+	Sitemap *GoogleCloudDiscoveryengineV1alphaSitemap `json:"sitemap,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Sitemap") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Sitemap") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaFetchSitemapsResponseSitemapMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaFetchSitemapsResponseSitemapMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -14883,6 +15010,35 @@ func (s GoogleCloudDiscoveryengineV1alphaSiteVerificationInfo) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaSitemap: A sitemap for the
+// SiteSearchEngine.
+type GoogleCloudDiscoveryengineV1alphaSitemap struct {
+	// CreateTime: Output only. The sitemap's creation time.
+	CreateTime string `json:"createTime,omitempty"`
+	// Name: Output only. The fully qualified resource name of the sitemap.
+	// `projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine/sitemaps/
+	// *` The `sitemap_id` suffix is system-generated.
+	Name string `json:"name,omitempty"`
+	// Uri: Public URI for the sitemap, e.g. `www.example.com/sitemap.xml`.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSitemap) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSitemap
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaSpannerSource: The Spanner source for
 // importing data
 type GoogleCloudDiscoveryengineV1alphaSpannerSource struct {
@@ -16129,6 +16285,33 @@ func (s GoogleCloudDiscoveryengineV1betaCreateSchemaMetadata) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaCreateSitemapMetadata: Metadata related to
+// the progress of the SiteSearchEngineService.CreateSitemap operation. This
+// will be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1betaCreateSitemapMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaCreateSitemapMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaCreateSitemapMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaCreateTargetSiteMetadata: Metadata related
 // to the progress of the SiteSearchEngineService.CreateTargetSite operation.
 // This will be returned by the google.longrunning.Operation.metadata field.
@@ -16451,6 +16634,33 @@ type GoogleCloudDiscoveryengineV1betaDeleteSchemaMetadata struct {
 
 func (s GoogleCloudDiscoveryengineV1betaDeleteSchemaMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaDeleteSchemaMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaDeleteSitemapMetadata: Metadata related to
+// the progress of the SiteSearchEngineService.DeleteSitemap operation. This
+// will be returned by the google.longrunning.Operation.metadata field.
+type GoogleCloudDiscoveryengineV1betaDeleteSitemapMetadata struct {
+	// CreateTime: Operation create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDeleteSitemapMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDeleteSitemapMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17057,6 +17267,52 @@ type GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpecQuerySetSpec struct
 
 func (s GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpecQuerySetSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpecQuerySetSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaFetchSitemapsResponse: Response message for
+// SiteSearchEngineService.FetchSitemaps method.
+type GoogleCloudDiscoveryengineV1betaFetchSitemapsResponse struct {
+	// SitemapsMetadata: List of Sitemaps fetched.
+	SitemapsMetadata []*GoogleCloudDiscoveryengineV1betaFetchSitemapsResponseSitemapMetadata `json:"sitemapsMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SitemapsMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SitemapsMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaFetchSitemapsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaFetchSitemapsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaFetchSitemapsResponseSitemapMetadata:
+// Contains a Sitemap and its metadata.
+type GoogleCloudDiscoveryengineV1betaFetchSitemapsResponseSitemapMetadata struct {
+	// Sitemap: The Sitemap.
+	Sitemap *GoogleCloudDiscoveryengineV1betaSitemap `json:"sitemap,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Sitemap") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Sitemap") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaFetchSitemapsResponseSitemapMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaFetchSitemapsResponseSitemapMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -19055,6 +19311,34 @@ type GoogleCloudDiscoveryengineV1betaSiteVerificationInfo struct {
 
 func (s GoogleCloudDiscoveryengineV1betaSiteVerificationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaSiteVerificationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSitemap: A sitemap for the SiteSearchEngine.
+type GoogleCloudDiscoveryengineV1betaSitemap struct {
+	// CreateTime: Output only. The sitemap's creation time.
+	CreateTime string `json:"createTime,omitempty"`
+	// Name: Output only. The fully qualified resource name of the sitemap.
+	// `projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine/sitemaps/
+	// *` The `sitemap_id` suffix is system-generated.
+	Name string `json:"name,omitempty"`
+	// Uri: Public URI for the sitemap, e.g. `www.example.com/sitemap.xml`.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSitemap) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSitemap
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -29929,6 +30213,210 @@ func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineOperationsListCal
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsCreateCall struct {
+	s                                        *Service
+	parent                                   string
+	googleclouddiscoveryenginev1alphasitemap *GoogleCloudDiscoveryengineV1alphaSitemap
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Create: Creates a Sitemap.
+//
+//   - parent: Parent resource name of the SiteSearchEngine, such as
+//     `projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine`.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsService) Create(parent string, googleclouddiscoveryenginev1alphasitemap *GoogleCloudDiscoveryengineV1alphaSitemap) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsCreateCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphasitemap = googleclouddiscoveryenginev1alphasitemap
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsCreateCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphasitemap)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/sitemaps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.sitemaps.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Sitemap.
+//
+//   - name: Full resource name of Sitemap, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store}/siteSearchEngine/sitemaps/{sitemap}`. If the caller does
+//     not have permission to access the Sitemap, regardless of whether or not it
+//     exists, a PERMISSION_DENIED error is returned. If the requested Sitemap
+//     does not exist, a NOT_FOUND error is returned.
+func (r *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsService) Delete(name string) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsDeleteCall {
+	c := &ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.siteSearchEngine.sitemaps.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCollectionsDataStoresSiteSearchEngineSitemapsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsCollectionsDataStoresSiteSearchEngineTargetSitesBatchCreateCall struct {
@@ -43364,6 +43852,328 @@ func (c *ProjectsLocationsDataStoresSiteSearchEngineRecrawlUrisCall) Do(opts ...
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsDataStoresSiteSearchEngineSitemapsCreateCall struct {
+	s                                        *Service
+	parent                                   string
+	googleclouddiscoveryenginev1alphasitemap *GoogleCloudDiscoveryengineV1alphaSitemap
+	urlParams_                               gensupport.URLParams
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Create: Creates a Sitemap.
+//
+//   - parent: Parent resource name of the SiteSearchEngine, such as
+//     `projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine`.
+func (r *ProjectsLocationsDataStoresSiteSearchEngineSitemapsService) Create(parent string, googleclouddiscoveryenginev1alphasitemap *GoogleCloudDiscoveryengineV1alphaSitemap) *ProjectsLocationsDataStoresSiteSearchEngineSitemapsCreateCall {
+	c := &ProjectsLocationsDataStoresSiteSearchEngineSitemapsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1alphasitemap = googleclouddiscoveryenginev1alphasitemap
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresSiteSearchEngineSitemapsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsCreateCall) Context(ctx context.Context) *ProjectsLocationsDataStoresSiteSearchEngineSitemapsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1alphasitemap)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/sitemaps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.sitemaps.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsDataStoresSiteSearchEngineSitemapsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Sitemap.
+//
+//   - name: Full resource name of Sitemap, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store}/siteSearchEngine/sitemaps/{sitemap}`. If the caller does
+//     not have permission to access the Sitemap, regardless of whether or not it
+//     exists, a PERMISSION_DENIED error is returned. If the requested Sitemap
+//     does not exist, a NOT_FOUND error is returned.
+func (r *ProjectsLocationsDataStoresSiteSearchEngineSitemapsService) Delete(name string) *ProjectsLocationsDataStoresSiteSearchEngineSitemapsDeleteCall {
+	c := &ProjectsLocationsDataStoresSiteSearchEngineSitemapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresSiteSearchEngineSitemapsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDataStoresSiteSearchEngineSitemapsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.sitemaps.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsDataStoresSiteSearchEngineSitemapsFetchCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Fetch: Fetch Sitemaps in a DataStore.
+//
+//   - parent: Parent resource name of the SiteSearchEngine, such as
+//     `projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine`.
+func (r *ProjectsLocationsDataStoresSiteSearchEngineSitemapsService) Fetch(parent string) *ProjectsLocationsDataStoresSiteSearchEngineSitemapsFetchCall {
+	c := &ProjectsLocationsDataStoresSiteSearchEngineSitemapsFetchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// MatcherUrisMatcherUris sets the optional parameter
+// "matcher.urisMatcher.uris": The Sitemap uris.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsFetchCall) MatcherUrisMatcherUris(matcherUrisMatcherUris ...string) *ProjectsLocationsDataStoresSiteSearchEngineSitemapsFetchCall {
+	c.urlParams_.SetMulti("matcher.urisMatcher.uris", append([]string{}, matcherUrisMatcherUris...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsFetchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresSiteSearchEngineSitemapsFetchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsFetchCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataStoresSiteSearchEngineSitemapsFetchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsFetchCall) Context(ctx context.Context) *ProjectsLocationsDataStoresSiteSearchEngineSitemapsFetchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsFetchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsFetchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/sitemaps:fetch")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.siteSearchEngine.sitemaps.fetch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDiscoveryengineV1alphaFetchSitemapsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDataStoresSiteSearchEngineSitemapsFetchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaFetchSitemapsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaFetchSitemapsResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

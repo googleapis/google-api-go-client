@@ -2585,8 +2585,9 @@ type ManagementServer struct {
 	ManagementUri *ManagementURI `json:"managementUri,omitempty"`
 	// Name: Output only. Identifier. The resource name.
 	Name string `json:"name,omitempty"`
-	// Networks: Required. VPC networks to which the ManagementServer instance is
-	// connected. For this version, only a single network is supported.
+	// Networks: Optional. VPC networks to which the ManagementServer instance is
+	// connected. For this version, only a single network is supported. This field
+	// is optional if MS is created without PSA
 	Networks []*NetworkConfig `json:"networks,omitempty"`
 	// Oauth2ClientId: Output only. The OAuth 2.0 client id is required to make API
 	// calls to the BackupDR instance API of this ManagementServer. This is the

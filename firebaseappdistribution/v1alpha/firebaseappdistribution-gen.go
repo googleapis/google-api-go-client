@@ -467,6 +467,12 @@ type GoogleFirebaseAppdistroV1alphaAiStep struct {
 	Assertion string `json:"assertion,omitempty"`
 	// Goal: A goal to be accomplished by the AI
 	Goal string `json:"goal,omitempty"`
+	// Hint: Optional. Hint text containing suggestions to help the agent
+	// accomplish the goal
+	Hint string `json:"hint,omitempty"`
+	// SuccessCriteria: Optional. A description of criteria the agent should use to
+	// determine if the goal has been successfully completed
+	SuccessCriteria string `json:"successCriteria,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Assertion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1249,7 +1255,7 @@ type GoogleFirebaseAppdistroV1alphaReleaseTest struct {
 	// DeviceExecutions: Required. The results of the test on each device.
 	DeviceExecutions []*GoogleFirebaseAppdistroV1alphaDeviceExecution `json:"deviceExecutions,omitempty"`
 	// DisplayName: Optional. Display name of the release test. Required if the
-	// release test is created with multiple goals
+	// release test is created with multiple goals.
 	DisplayName string `json:"displayName,omitempty"`
 	// LoginCredential: Optional. Input only. Login credentials for the test. Input
 	// only.
@@ -1402,6 +1408,9 @@ func (s GoogleFirebaseAppdistroV1alphaTerminalAction) MarshalJSON() ([]byte, err
 
 // GoogleFirebaseAppdistroV1alphaTestConfig: Configuration for automated tests
 type GoogleFirebaseAppdistroV1alphaTestConfig struct {
+	// DisplayName: Optional. Display name of the AI driven test. Required if the
+	// release test is created with multiple goals.
+	DisplayName string `json:"displayName,omitempty"`
 	// Name: Identifier. The name of the test configuration resource. Format:
 	// `projects/{project_number}/apps/{app_id}/testConfig`
 	Name string `json:"name,omitempty"`
@@ -1412,15 +1421,15 @@ type GoogleFirebaseAppdistroV1alphaTestConfig struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

@@ -505,6 +505,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Generators = NewProjectsLocationsGeneratorsService(s)
 	rs.KnowledgeBases = NewProjectsLocationsKnowledgeBasesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.SipTrunks = NewProjectsLocationsSipTrunksService(s)
 	rs.StatelessSuggestion = NewProjectsLocationsStatelessSuggestionService(s)
 	rs.Suggestions = NewProjectsLocationsSuggestionsService(s)
 	return rs
@@ -528,6 +529,8 @@ type ProjectsLocationsService struct {
 	KnowledgeBases *ProjectsLocationsKnowledgeBasesService
 
 	Operations *ProjectsLocationsOperationsService
+
+	SipTrunks *ProjectsLocationsSipTrunksService
 
 	StatelessSuggestion *ProjectsLocationsStatelessSuggestionService
 
@@ -819,6 +822,15 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSipTrunksService(s *Service) *ProjectsLocationsSipTrunksService {
+	rs := &ProjectsLocationsSipTrunksService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSipTrunksService struct {
 	s *Service
 }
 
@@ -11872,6 +11884,82 @@ func (s GoogleCloudDialogflowV2beta1CompileSuggestionResponse) MarshalJSON() ([]
 type GoogleCloudDialogflowV2beta1CompleteConversationRequest struct {
 }
 
+// GoogleCloudDialogflowV2beta1Connection: Represents a connection for SIP
+// Trunk.
+type GoogleCloudDialogflowV2beta1Connection struct {
+	// ConnectionId: Output only. The unique identifier of the SIP Trunk
+	// connection.
+	ConnectionId string `json:"connectionId,omitempty"`
+	// ErrorDetails: Output only. The error details for the connection. Only
+	// populated when authentication errors occur.
+	ErrorDetails *GoogleCloudDialogflowV2beta1ConnectionErrorDetails `json:"errorDetails,omitempty"`
+	// State: Output only. State of the connection.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - SIP Trunk connection state is Not specified.
+	//   "CONNECTED" - SIP Trunk connection is connected.
+	//   "DISCONNECTED" - SIP Trunk connection is disconnected.
+	//   "AUTHENTICATION_FAILED" - SIP Trunk connection has authentication error.
+	//   "KEEPALIVE" - SIP Trunk connection is keepalive.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. When the connection status changed.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConnectionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectionId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1Connection) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1Connection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1ConnectionErrorDetails: The error details of Sip
+// Trunk connection authentication.
+type GoogleCloudDialogflowV2beta1ConnectionErrorDetails struct {
+	// CertificateState: Output only. The status of the certificate authentication.
+	//
+	// Possible values:
+	//   "CERTIFICATE_STATE_UNSPECIFIED" - Certificate state is not specified.
+	//   "CERTIFICATE_VALID" - Certificate is valid.
+	//   "CERTIFICATE_INVALID" - Catch all for any error not specified.
+	//   "CERTIFICATE_EXPIRED" - Certificate leaf node has expired.
+	//   "CERTIFICATE_HOSTNAME_NOT_FOUND" - There is no hostname defined to
+	// authenticate in SipTrunkingServer.
+	//   "CERTIFICATE_UNAUTHENTICATED" - No path found from the leaf certificate to
+	// any root.
+	//   "CERTIFICATE_TRUST_STORE_NOT_FOUND" - Trust store does not exist.
+	//   "CERTIFICATE_HOSTNAME_INVALID_FORMAT" - Hostname has invalid format.
+	//   "CERTIFICATE_QUOTA_EXCEEDED" - Certificate has exhausted its quota.
+	CertificateState string `json:"certificateState,omitempty"`
+	// ErrorMessage: The error message provided from SIP trunking auth service
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CertificateState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CertificateState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1ConnectionErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ConnectionErrorDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1Context: Dialogflow contexts are similar to
 // natural language context. If a person says to you "they are orange", you
 // need context in order to understand what "they" is referring to. Similarly,
@@ -16770,6 +16858,35 @@ func (s GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1ListSipTrunksResponse: The response message for
+// SipTrunks.ListSipTrunks.
+type GoogleCloudDialogflowV2beta1ListSipTrunksResponse struct {
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SipTrunks: The list of SIP trunks.
+	SipTrunks []*GoogleCloudDialogflowV2beta1SipTrunk `json:"sipTrunks,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1ListSipTrunksResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ListSipTrunksResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1ListSuggestionsResponse: The response message
 // for Participants.ListSuggestions.
 type GoogleCloudDialogflowV2beta1ListSuggestionsResponse struct {
@@ -18355,6 +18472,41 @@ type GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigRequest struct {
 
 func (s GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SetSuggestionFeatureConfigRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2beta1SipTrunk: SipTrunk is the resource that
+// represents a SIP trunk to connect to Google Telephony platform SIP trunking
+// service.
+type GoogleCloudDialogflowV2beta1SipTrunk struct {
+	// Connections: Output only. Connections of the SIP trunk.
+	Connections []*GoogleCloudDialogflowV2beta1Connection `json:"connections,omitempty"`
+	// DisplayName: Optional. Human readable alias for this trunk.
+	DisplayName string `json:"displayName,omitempty"`
+	// ExpectedHostname: Required. The expected hostnames in the peer certificate
+	// from partner that is used for TLS authentication.
+	ExpectedHostname []string `json:"expectedHostname,omitempty"`
+	// Name: Identifier. The unique identifier of the SIP trunk. Format:
+	// `projects//locations//sipTrunks/`.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Connections") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Connections") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1SipTrunk) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SipTrunk
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -47961,6 +48113,570 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsSipTrunksCreateCall struct {
+	s                                    *Service
+	parent                               string
+	googleclouddialogflowv2beta1siptrunk *GoogleCloudDialogflowV2beta1SipTrunk
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Create: Creates a SipTrunk for a specified location.
+//
+//   - parent: The location to create a SIP trunk for. Format:
+//     `projects//locations/`.
+func (r *ProjectsLocationsSipTrunksService) Create(parent string, googleclouddialogflowv2beta1siptrunk *GoogleCloudDialogflowV2beta1SipTrunk) *ProjectsLocationsSipTrunksCreateCall {
+	c := &ProjectsLocationsSipTrunksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowv2beta1siptrunk = googleclouddialogflowv2beta1siptrunk
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSipTrunksCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSipTrunksCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSipTrunksCreateCall) Context(ctx context.Context) *ProjectsLocationsSipTrunksCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSipTrunksCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSipTrunksCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2beta1siptrunk)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+parent}/sipTrunks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.sipTrunks.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1SipTrunk.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSipTrunksCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1SipTrunk, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1SipTrunk{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsSipTrunksDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a specified SipTrunk.
+//
+//   - name: The name of the SIP trunk to delete. Format:
+//     `projects//locations//sipTrunks/`.
+func (r *ProjectsLocationsSipTrunksService) Delete(name string) *ProjectsLocationsSipTrunksDeleteCall {
+	c := &ProjectsLocationsSipTrunksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSipTrunksDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSipTrunksDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSipTrunksDeleteCall) Context(ctx context.Context) *ProjectsLocationsSipTrunksDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSipTrunksDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSipTrunksDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.sipTrunks.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsSipTrunksDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsSipTrunksGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves the specified SipTrunk.
+//
+//   - name: The name of the SIP trunk to delete. Format:
+//     `projects//locations//sipTrunks/`.
+func (r *ProjectsLocationsSipTrunksService) Get(name string) *ProjectsLocationsSipTrunksGetCall {
+	c := &ProjectsLocationsSipTrunksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSipTrunksGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSipTrunksGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSipTrunksGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSipTrunksGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSipTrunksGetCall) Context(ctx context.Context) *ProjectsLocationsSipTrunksGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSipTrunksGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSipTrunksGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.sipTrunks.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1SipTrunk.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSipTrunksGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1SipTrunk, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1SipTrunk{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsSipTrunksListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of SipTrunks in the specified location.
+//
+//   - parent: The location to list SIP trunks from. Format:
+//     `projects//locations/`.
+func (r *ProjectsLocationsSipTrunksService) List(parent string) *ProjectsLocationsSipTrunksListCall {
+	c := &ProjectsLocationsSipTrunksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return in a single page. By default 100 and at most 1000.
+func (c *ProjectsLocationsSipTrunksListCall) PageSize(pageSize int64) *ProjectsLocationsSipTrunksListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous list request.
+func (c *ProjectsLocationsSipTrunksListCall) PageToken(pageToken string) *ProjectsLocationsSipTrunksListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSipTrunksListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSipTrunksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSipTrunksListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSipTrunksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSipTrunksListCall) Context(ctx context.Context) *ProjectsLocationsSipTrunksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSipTrunksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSipTrunksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+parent}/sipTrunks")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.sipTrunks.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1ListSipTrunksResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSipTrunksListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1ListSipTrunksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1ListSipTrunksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSipTrunksListCall) Pages(ctx context.Context, f func(*GoogleCloudDialogflowV2beta1ListSipTrunksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsSipTrunksPatchCall struct {
+	s                                    *Service
+	nameid                               string
+	googleclouddialogflowv2beta1siptrunk *GoogleCloudDialogflowV2beta1SipTrunk
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// Patch: Updates the specified SipTrunk.
+//
+//   - name: Identifier. The unique identifier of the SIP trunk. Format:
+//     `projects//locations//sipTrunks/`.
+func (r *ProjectsLocationsSipTrunksService) Patch(nameid string, googleclouddialogflowv2beta1siptrunk *GoogleCloudDialogflowV2beta1SipTrunk) *ProjectsLocationsSipTrunksPatchCall {
+	c := &ProjectsLocationsSipTrunksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.googleclouddialogflowv2beta1siptrunk = googleclouddialogflowv2beta1siptrunk
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The mask to control
+// which fields get updated. If the mask is not present, all fields will be
+// updated.
+func (c *ProjectsLocationsSipTrunksPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSipTrunksPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSipTrunksPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsSipTrunksPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSipTrunksPatchCall) Context(ctx context.Context) *ProjectsLocationsSipTrunksPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSipTrunksPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSipTrunksPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2beta1siptrunk)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.locations.sipTrunks.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDialogflowV2beta1SipTrunk.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSipTrunksPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1SipTrunk, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDialogflowV2beta1SipTrunk{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsStatelessSuggestionGenerateCall struct {

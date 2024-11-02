@@ -1191,7 +1191,7 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 }
 
 // GcpUserAccessBinding: Restricts access to Cloud Console and Google Cloud
-// APIs for a set of users using Context-Aware Access. Next ID: 11
+// APIs for a set of users using Context-Aware Access.
 type GcpUserAccessBinding struct {
 	// AccessLevels: Optional. Access level that a user must have to be granted
 	// access. Only one access level is supported, not multiple. This repeated
@@ -1228,6 +1228,9 @@ type GcpUserAccessBinding struct {
 	// this binding's restrictions on a subset of applications. This field cannot
 	// be set if restricted_client_applications is set.
 	ScopedAccessSettings []*ScopedAccessSettings `json:"scopedAccessSettings,omitempty"`
+	// SessionSettings: Optional. GCSL policy for the group key. Migrated from
+	// ReauthSettings
+	SessionSettings *SessionSettings `json:"sessionSettings,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -6659,12 +6662,13 @@ func (r *OrganizationsGcpUserAccessBindingsService) Patch(name string, gcpuserac
 // Append sets the optional parameter "append": This field controls whether or
 // not certain repeated settings in the update request overwrite or append to
 // existing settings on the binding. If true, then append. Otherwise overwrite.
-// So far, only scoped_access_settings supports appending. Global
-// access_levels, dry_run_access_levels, reauth_settings, and session_settings
-// are not compatible with append functionality, and the request will return an
-// error if append=true when these settings are in the update_mask. The request
-// will also return an error if append=true when "scoped_access_settings" is
-// not set in the update_mask.
+// So far, only scoped_access_settings with reauth_settings supports appending.
+// Global access_levels, access_levels in scoped_access_settings,
+// dry_run_access_levels, reauth_settings, and session_settings are not
+// compatible with append functionality, and the request will return an error
+// if append=true when these settings are in the update_mask. The request will
+// also return an error if append=true when "scoped_access_settings" is not set
+// in the update_mask.
 func (c *OrganizationsGcpUserAccessBindingsPatchCall) Append(append bool) *OrganizationsGcpUserAccessBindingsPatchCall {
 	c.urlParams_.Set("append", fmt.Sprint(append))
 	return c

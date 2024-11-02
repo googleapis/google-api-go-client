@@ -2372,6 +2372,207 @@ func (s GoogleApiServiceusageV2alphaEnableRule) MarshalJSON() ([]byte, error) {
 type GoogleApiServiceusageV2alphaUpdateConsumerPolicyMetadata struct {
 }
 
+// GoogleApiServiceusageV2betaAnalysis: A message to group the analysis
+// information.
+type GoogleApiServiceusageV2betaAnalysis struct {
+	// Analysis: Output only. Analysis result of updating a policy.
+	Analysis *GoogleApiServiceusageV2betaAnalysisResult `json:"analysis,omitempty"`
+	// AnalysisType: Output only. The type of analysis.
+	//
+	// Possible values:
+	//   "ANALYSIS_TYPE_UNSPECIFIED" - Unspecified analysis type. Do not use.
+	//   "ANALYSIS_TYPE_DEPENDENCY" - The analysis of service dependencies.
+	//   "ANALYSIS_TYPE_RESOURCE_USAGE" - The analysis of service resource usage.
+	AnalysisType string `json:"analysisType,omitempty"`
+	// DisplayName: Output only. The user friendly display name of the analysis
+	// type. E.g. service dependency analysis, service resource usage analysis,
+	// etc.
+	DisplayName string `json:"displayName,omitempty"`
+	// Service: The names of the service that has analysis result of warnings or
+	// blockers. Example: `services/storage.googleapis.com`.
+	Service string `json:"service,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Analysis") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Analysis") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiServiceusageV2betaAnalysis) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiServiceusageV2betaAnalysis
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiServiceusageV2betaAnalysisResult: An analysis result including
+// blockers and warnings.
+type GoogleApiServiceusageV2betaAnalysisResult struct {
+	// Blockers: Blocking information that would prevent the policy changes at
+	// runtime.
+	Blockers []*GoogleApiServiceusageV2betaImpact `json:"blockers,omitempty"`
+	// Warnings: Warning information indicating that the policy changes might be
+	// unsafe, but will not block the changes at runtime.
+	Warnings []*GoogleApiServiceusageV2betaImpact `json:"warnings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Blockers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Blockers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiServiceusageV2betaAnalysisResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiServiceusageV2betaAnalysisResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiServiceusageV2betaAnalyzeConsumerPolicyMetadata: Metadata for the
+// `AnalyzeConsumerPolicy` method.
+type GoogleApiServiceusageV2betaAnalyzeConsumerPolicyMetadata struct {
+}
+
+// GoogleApiServiceusageV2betaAnalyzeConsumerPolicyResponse: The response of
+// analyzing a consumer policy update.
+type GoogleApiServiceusageV2betaAnalyzeConsumerPolicyResponse struct {
+	// Analysis: The list of analyses returned from performing the intended policy
+	// update analysis. The analysis is grouped by service name and different
+	// analysis types. The empty analysis list means that the consumer policy can
+	// be updated without any warnings or blockers.
+	Analysis []*GoogleApiServiceusageV2betaAnalysis `json:"analysis,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Analysis") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Analysis") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiServiceusageV2betaAnalyzeConsumerPolicyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiServiceusageV2betaAnalyzeConsumerPolicyResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiServiceusageV2betaConsumerPolicy: Consumer Policy is a set of rules
+// that define what services or service groups can be used for a cloud resource
+// hierarchy.
+type GoogleApiServiceusageV2betaConsumerPolicy struct {
+	// Annotations: Optional. Annotations is an unstructured key-value map stored
+	// with a policy that may be set by external tools to store and retrieve
+	// arbitrary metadata. They are not queryable and should be preserved when
+	// modifying objects. AIP-128 (https://google.aip.dev/128#annotations)
+	Annotations map[string]string `json:"annotations,omitempty"`
+	// CreateTime: Output only. The time the policy was created. For singleton
+	// policies, this is the first touch of the policy.
+	CreateTime string `json:"createTime,omitempty"`
+	// EnableRules: Enable rules define usable services, groups, and categories.
+	// There can currently be at most one `EnableRule`. This restriction will be
+	// lifted in later releases.
+	EnableRules []*GoogleApiServiceusageV2betaEnableRule `json:"enableRules,omitempty"`
+	// Etag: Output only. An opaque tag indicating the current version of the
+	// policy, used for concurrency control.
+	Etag string `json:"etag,omitempty"`
+	// Name: Output only. The resource name of the policy. Only the `default`
+	// policy is supported: `projects/12345/consumerPolicies/default`,
+	// `folders/12345/consumerPolicies/default`,
+	// `organizations/12345/consumerPolicies/default`.
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. The time the policy was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiServiceusageV2betaConsumerPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiServiceusageV2betaConsumerPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiServiceusageV2betaEnableRule: The consumer policy rule that defines
+// enabled services, groups, and categories.
+type GoogleApiServiceusageV2betaEnableRule struct {
+	// Services: The names of the services that are enabled. Example:
+	// `services/storage.googleapis.com`.
+	Services []string `json:"services,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Services") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Services") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiServiceusageV2betaEnableRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiServiceusageV2betaEnableRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiServiceusageV2betaImpact: A message to group impacts of updating a
+// policy.
+type GoogleApiServiceusageV2betaImpact struct {
+	// Detail: Output only. User friendly impact detail in a free form message.
+	Detail string `json:"detail,omitempty"`
+	// ImpactType: Output only. The type of impact.
+	//
+	// Possible values:
+	//   "IMPACT_TYPE_UNSPECIFIED" - Reserved Blocks (Block n contains codes from
+	// 100n to 100(n+1) -1 Block 0 - Special/Admin codes Block 1 - Impact Type of
+	// ANALYSIS_TYPE_DEPENDENCY Block 2 - Impact Type of
+	// ANALYSIS_TYPE_RESOURCE_USAGE ...
+	//   "DEPENDENCY_MISSING_DEPENDENCIES" - Block 1 - Impact Type of
+	// ANALYSIS_TYPE_DEPENDENCY
+	ImpactType string `json:"impactType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Detail") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Detail") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiServiceusageV2betaImpact) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiServiceusageV2betaImpact
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiServiceusageV2betaUpdateConsumerPolicyMetadata: Metadata for the
+// `UpdateConsumerPolicy` method.
+type GoogleApiServiceusageV2betaUpdateConsumerPolicyMetadata struct {
+}
+
 // Http: Defines the HTTP configuration for an API service. It contains a list
 // of HttpRule, each specifying the mapping of an RPC method to one or more
 // HTTP REST API methods.

@@ -4010,19 +4010,20 @@ type Membership struct {
 	// only, except when used to import historical memberships in import mode
 	// spaces.
 	DeleteTime string `json:"deleteTime,omitempty"`
-	// GroupMember: The Google Group the membership corresponds to. Reading or
-	// mutating memberships for Google Groups requires user authentication
+	// GroupMember: Optional. The Google Group the membership corresponds to.
+	// Reading or mutating memberships for Google Groups requires user
+	// authentication
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 	GroupMember *Group `json:"groupMember,omitempty"`
-	// Member: The Google Chat user or app the membership corresponds to. If your
-	// Chat app authenticates as a user
+	// Member: Optional. The Google Chat user or app the membership corresponds to.
+	// If your Chat app authenticates as a user
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
 	// the output populates the user
 	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/User)
 	// `name` and `type`.
 	Member *User `json:"member,omitempty"`
-	// Name: Resource name of the membership, assigned by the server. Format:
-	// `spaces/{space}/members/{member}`
+	// Name: Identifier. Resource name of the membership, assigned by the server.
+	// Format: `spaces/{space}/members/{member}`
 	Name string `json:"name,omitempty"`
 	// Role: Optional. User's role within a Chat space, which determines their
 	// permitted actions in the space. This field can only be used as input in
@@ -8106,8 +8107,8 @@ type SpacesMembersPatchCall struct {
 // You can authenticate and authorize this method with administrator privileges
 // by setting the `use_admin_access` field in the request.
 //
-//   - name: Resource name of the membership, assigned by the server. Format:
-//     `spaces/{space}/members/{member}`.
+//   - name: Identifier. Resource name of the membership, assigned by the server.
+//     Format: `spaces/{space}/members/{member}`.
 func (r *SpacesMembersService) Patch(name string, membership *Membership) *SpacesMembersPatchCall {
 	c := &SpacesMembersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

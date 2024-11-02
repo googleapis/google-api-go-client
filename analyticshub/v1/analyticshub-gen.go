@@ -2093,6 +2093,9 @@ type SubscribeDataExchangeRequest struct {
 	// Destination: Required. The parent resource path of the Subscription. e.g.
 	// `projects/subscriberproject/locations/US`
 	Destination string `json:"destination,omitempty"`
+	// DestinationDataset: Optional. BigQuery destination dataset to create for the
+	// subscriber.
+	DestinationDataset *DestinationDataset `json:"destinationDataset,omitempty"`
 	// SubscriberContact: Email of the subscriber.
 	SubscriberContact string `json:"subscriberContact,omitempty"`
 	// Subscription: Required. Name of the subscription to create. e.g.

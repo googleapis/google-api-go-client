@@ -556,6 +556,9 @@ type ConfigManagementConfigSync struct {
 	// SourceFormat: Specifies whether the Config Sync Repo is in "hierarchical" or
 	// "unstructured" mode.
 	SourceFormat string `json:"sourceFormat,omitempty"`
+	// StopSyncing: Set to true to stop syncing configs for a single cluster.
+	// Default to false.
+	StopSyncing bool `json:"stopSyncing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowVerticalScale") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

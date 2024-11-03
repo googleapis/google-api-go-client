@@ -379,6 +379,34 @@ func (s BigQueryDestinationConfig) MarshalJSON() ([]byte, error) {
 type BigQueryProfile struct {
 }
 
+// BinaryLogParser: Configuration to use Binary Log Parser CDC technique.
+type BinaryLogParser struct {
+	// LogFileDirectories: Use Oracle directories.
+	LogFileDirectories *LogFileDirectories `json:"logFileDirectories,omitempty"`
+	// OracleAsmLogFileAccess: Use Oracle ASM.
+	OracleAsmLogFileAccess *OracleAsmLogFileAccess `json:"oracleAsmLogFileAccess,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LogFileDirectories") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LogFileDirectories") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BinaryLogParser) MarshalJSON() ([]byte, error) {
+	type NoMethod BinaryLogParser
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BinaryLogPosition: Use Binary log position based replication.
+type BinaryLogPosition struct {
+}
+
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
@@ -760,6 +788,10 @@ func (s GcsProfile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Gtid: Use GTID based replication.
+type Gtid struct {
+}
+
 // JsonFileFormat: JSON file format configuration.
 type JsonFileFormat struct {
 	// Compression: Compression of the loaded JSON file.
@@ -1038,6 +1070,35 @@ func (s Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LogFileDirectories: Configuration to specify the Oracle directories to
+// access the log files.
+type LogFileDirectories struct {
+	// ArchivedLogDirectory: Required. Oracle directory for archived logs.
+	ArchivedLogDirectory string `json:"archivedLogDirectory,omitempty"`
+	// OnlineLogDirectory: Required. Oracle directory for online logs.
+	OnlineLogDirectory string `json:"onlineLogDirectory,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArchivedLogDirectory") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArchivedLogDirectory") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LogFileDirectories) MarshalJSON() ([]byte, error) {
+	type NoMethod LogFileDirectories
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LogMiner: Configuration to use LogMiner CDC method.
+type LogMiner struct {
+}
+
 // LookupStreamObjectRequest: Request for looking up a specific stream object
 // by its source object identifier.
 type LookupStreamObjectRequest struct {
@@ -1239,8 +1300,12 @@ func (s MysqlRdbms) MarshalJSON() ([]byte, error) {
 
 // MysqlSourceConfig: MySQL source configuration
 type MysqlSourceConfig struct {
+	// BinaryLogPosition: Use Binary log position based replication.
+	BinaryLogPosition *BinaryLogPosition `json:"binaryLogPosition,omitempty"`
 	// ExcludeObjects: MySQL objects to exclude from the stream.
 	ExcludeObjects *MysqlRdbms `json:"excludeObjects,omitempty"`
+	// Gtid: Use GTID based replication.
+	Gtid *Gtid `json:"gtid,omitempty"`
 	// IncludeObjects: MySQL objects to retrieve from the source.
 	IncludeObjects *MysqlRdbms `json:"includeObjects,omitempty"`
 	// MaxConcurrentBackfillTasks: Maximum number of concurrent backfill tasks. The
@@ -1251,13 +1316,13 @@ type MysqlSourceConfig struct {
 	// should be non negative. If not set (or set to 0), the system's default value
 	// will be used.
 	MaxConcurrentCdcTasks int64 `json:"maxConcurrentCdcTasks,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
+	// ForceSendFields is a list of field names (e.g. "BinaryLogPosition") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExcludeObjects") to include in
+	// NullFields is a list of field names (e.g. "BinaryLogPosition") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1427,6 +1492,46 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OracleAsmConfig: Configuration for Oracle Automatic Storage Management (ASM)
+// connection.
+type OracleAsmConfig struct {
+	// AsmService: Required. ASM service name for the Oracle ASM connection.
+	AsmService string `json:"asmService,omitempty"`
+	// ConnectionAttributes: Optional. Connection string attributes
+	ConnectionAttributes map[string]string `json:"connectionAttributes,omitempty"`
+	// Hostname: Required. Hostname for the Oracle ASM connection.
+	Hostname string `json:"hostname,omitempty"`
+	// OracleSslConfig: Optional. SSL configuration for the Oracle connection.
+	OracleSslConfig *OracleSslConfig `json:"oracleSslConfig,omitempty"`
+	// Password: Required. Password for the Oracle ASM connection.
+	Password string `json:"password,omitempty"`
+	// Port: Required. Port for the Oracle ASM connection.
+	Port int64 `json:"port,omitempty"`
+	// Username: Required. Username for the Oracle ASM connection.
+	Username string `json:"username,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AsmService") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AsmService") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OracleAsmConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod OracleAsmConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OracleAsmLogFileAccess: Configuration to use Oracle ASM to access the log
+// files.
+type OracleAsmLogFileAccess struct {
+}
+
 // OracleColumn: Oracle Column.
 type OracleColumn struct {
 	// Column: Column name.
@@ -1497,6 +1602,8 @@ type OracleProfile struct {
 	DatabaseService string `json:"databaseService,omitempty"`
 	// Hostname: Required. Hostname for the Oracle connection.
 	Hostname string `json:"hostname,omitempty"`
+	// OracleAsmConfig: Optional. Configuration for Oracle ASM connection.
+	OracleAsmConfig *OracleAsmConfig `json:"oracleAsmConfig,omitempty"`
 	// OracleSslConfig: Optional. SSL configuration for the Oracle connection.
 	OracleSslConfig *OracleSslConfig `json:"oracleSslConfig,omitempty"`
 	// Password: Optional. Password for the Oracle connection. Mutually exclusive
@@ -1504,6 +1611,10 @@ type OracleProfile struct {
 	Password string `json:"password,omitempty"`
 	// Port: Port for the Oracle connection, default value is 1521.
 	Port int64 `json:"port,omitempty"`
+	// SecretManagerStoredPassword: Optional. A reference to a Secret Manager
+	// resource name storing the Oracle connection password. Mutually exclusive
+	// with the `password` field.
+	SecretManagerStoredPassword string `json:"secretManagerStoredPassword,omitempty"`
 	// Username: Required. Username for the Oracle connection.
 	Username string `json:"username,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConnectionAttributes") to
@@ -1594,12 +1705,16 @@ func (s OracleScnPosition) MarshalJSON() ([]byte, error) {
 
 // OracleSourceConfig: Oracle data source configuration
 type OracleSourceConfig struct {
+	// BinaryLogParser: Use Binary Log Parser.
+	BinaryLogParser *BinaryLogParser `json:"binaryLogParser,omitempty"`
 	// DropLargeObjects: Drop large object values.
 	DropLargeObjects *DropLargeObjects `json:"dropLargeObjects,omitempty"`
 	// ExcludeObjects: Oracle objects to exclude from the stream.
 	ExcludeObjects *OracleRdbms `json:"excludeObjects,omitempty"`
 	// IncludeObjects: Oracle objects to include in the stream.
 	IncludeObjects *OracleRdbms `json:"includeObjects,omitempty"`
+	// LogMiner: Use LogMiner.
+	LogMiner *LogMiner `json:"logMiner,omitempty"`
 	// MaxConcurrentBackfillTasks: Maximum number of concurrent backfill tasks. The
 	// number should be non-negative. If not set (or set to 0), the system's
 	// default value is used.
@@ -1610,13 +1725,13 @@ type OracleSourceConfig struct {
 	MaxConcurrentCdcTasks int64 `json:"maxConcurrentCdcTasks,omitempty"`
 	// StreamLargeObjects: Stream large object values.
 	StreamLargeObjects *StreamLargeObjects `json:"streamLargeObjects,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DropLargeObjects") to
+	// ForceSendFields is a list of field names (e.g. "BinaryLogParser") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DropLargeObjects") to include in
+	// NullFields is a list of field names (e.g. "BinaryLogParser") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1739,7 +1854,7 @@ func (s PostgresqlObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PostgresqlProfile: PostgreSQL database profile. Next ID: 7.
+// PostgresqlProfile: PostgreSQL database profile.
 type PostgresqlProfile struct {
 	// Database: Required. Database for the PostgreSQL connection.
 	Database string `json:"database,omitempty"`

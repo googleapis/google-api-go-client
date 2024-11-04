@@ -2139,6 +2139,67 @@ func (s *FloatingPointMean) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GPUUsage: Information about the GPU usage on the worker.
+type GPUUsage struct {
+	// Timestamp: Required. Timestamp of the measurement.
+	Timestamp string `json:"timestamp,omitempty"`
+	// Utilization: Required. Utilization info about the GPU.
+	Utilization *GPUUtilization `json:"utilization,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Timestamp") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Timestamp") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GPUUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod GPUUsage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GPUUtilization: Utilization details about the GPU.
+type GPUUtilization struct {
+	// Rate: Required. GPU utilization rate of any kernel over the last sample
+	// period in the range of [0, 1].
+	Rate float64 `json:"rate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Rate") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Rate") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GPUUtilization) MarshalJSON() ([]byte, error) {
+	type NoMethod GPUUtilization
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GPUUtilization) UnmarshalJSON(data []byte) error {
+	type NoMethod GPUUtilization
+	var s1 struct {
+		Rate gensupport.JSONFloat64 `json:"rate"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Rate = float64(s1.Rate)
+	return nil
+}
+
 // GetDebugConfigRequest: Request to get updated debug configuration for
 // component.
 type GetDebugConfigRequest struct {
@@ -4439,6 +4500,8 @@ type ResourceUtilizationReport struct {
 	Containers map[string]ResourceUtilizationReport `json:"containers,omitempty"`
 	// CpuTime: CPU utilization samples.
 	CpuTime []*CPUTime `json:"cpuTime,omitempty"`
+	// GpuUsage: Optional. GPU usage samples.
+	GpuUsage []*GPUUsage `json:"gpuUsage,omitempty"`
 	// MemoryInfo: Memory utilization samples.
 	MemoryInfo []*MemInfo `json:"memoryInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Containers") to

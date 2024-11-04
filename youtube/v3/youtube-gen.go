@@ -6152,7 +6152,7 @@ type PlaylistItemListResponse struct {
 	// Items: A list of playlist items that match the request criteria.
 	Items []*PlaylistItem `json:"items,omitempty"`
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
-	// "youtube#playlistItemListResponse". Etag of this resource.
+	// "youtube#playlistItemListResponse".
 	Kind string `json:"kind,omitempty"`
 	// NextPageToken: The token that can be used as the value of the pageToken
 	// parameter to retrieve the next page in the result set.
@@ -8340,6 +8340,9 @@ func (s VideoStatistics) MarshalJSON() ([]byte, error) {
 // VideoStatus: Basic details about a video category, such as its localized
 // title. Next Id: 19
 type VideoStatus struct {
+	// ContainsSyntheticMedia: Indicates if the video contains altered or synthetic
+	// media.
+	ContainsSyntheticMedia bool `json:"containsSyntheticMedia,omitempty"`
 	// Embeddable: This value indicates if the video can be embedded on another
 	// website. @mutable youtube.videos.insert youtube.videos.update
 	Embeddable bool `json:"embeddable,omitempty"`
@@ -8404,15 +8407,15 @@ type VideoStatus struct {
 	//   "rejected" - Video has been rejected. See RejectionReason.
 	//   "deleted" - Video has been deleted.
 	UploadStatus string `json:"uploadStatus,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Embeddable") to
+	// ForceSendFields is a list of field names (e.g. "ContainsSyntheticMedia") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Embeddable") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ContainsSyntheticMedia") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

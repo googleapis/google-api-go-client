@@ -130,6 +130,22 @@ const (
 	// View chat and spaces in Google Chat
 	ChatSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.spaces.readonly"
 
+	// See, edit, create, and delete all of your Google Drive files
+	DriveScope = "https://www.googleapis.com/auth/drive"
+
+	// See, edit, create, and delete only the specific Google Drive files you use
+	// with this app
+	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
+
+	// View and manage metadata of files in your Google Drive
+	DriveMetadataScope = "https://www.googleapis.com/auth/drive.metadata"
+
+	// See information about your Google Drive files
+	DriveMetadataReadonlyScope = "https://www.googleapis.com/auth/drive.metadata.readonly"
+
+	// See and download all your Google Drive files
+	DriveReadonlyScope = "https://www.googleapis.com/auth/drive.readonly"
+
 	// Create, edit, and see information about your Google Meet conferences created
 	// by the app.
 	MeetingsSpaceCreatedScope = "https://www.googleapis.com/auth/meetings.space.created"
@@ -150,6 +166,11 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/chat.messages.readonly",
 		"https://www.googleapis.com/auth/chat.spaces",
 		"https://www.googleapis.com/auth/chat.spaces.readonly",
+		"https://www.googleapis.com/auth/drive",
+		"https://www.googleapis.com/auth/drive.file",
+		"https://www.googleapis.com/auth/drive.metadata",
+		"https://www.googleapis.com/auth/drive.metadata.readonly",
+		"https://www.googleapis.com/auth/drive.readonly",
 		"https://www.googleapis.com/auth/meetings.space.created",
 		"https://www.googleapis.com/auth/meetings.space.readonly",
 	)
@@ -1268,8 +1289,9 @@ type SubscriptionsReactivateCall struct {
 // (https://developers.google.com/workspace/preview): Reactivates a suspended
 // Google Workspace subscription. This method resets your subscription's
 // `State` field to `ACTIVE`. Before you use this method, you must fix the
-// error that suspended the subscription. To learn how to use this method, see
-// Reactivate a Google Workspace subscription
+// error that suspended the subscription. This method will ignore or reject any
+// subscription that isn't currently in a suspended state. To learn how to use
+// this method, see Reactivate a Google Workspace subscription
 // (https://developers.google.com/workspace/events/guides/reactivate-subscription).
 //
 //   - name: Resource name of the subscription. Format:

@@ -5310,7 +5310,7 @@ func (s PySparkBatch) MarshalJSON() ([]byte, error) {
 }
 
 // PySparkJob: A Dataproc job for running Apache PySpark
-// (https://spark.apache.org/docs/0.9.0/python-programming-guide.html)
+// (https://spark.apache.org/docs/latest/api/python/index.html#pyspark-overview)
 // applications on YARN.
 type PySparkJob struct {
 	// ArchiveUris: Optional. HCFS URIs of archives to be extracted into the
@@ -6923,6 +6923,7 @@ type SoftwareConfig struct {
 	//   "HIVE_WEBHCAT" - The Hive Web HCatalog (the REST service for accessing
 	// HCatalog).
 	//   "HUDI" - Hudi.
+	//   "ICEBERG" - Iceberg.
 	//   "JUPYTER" - The Jupyter Notebook.
 	//   "PRESTO" - The Presto query engine.
 	//   "TRINO" - The Trino query engine.

@@ -1145,6 +1145,9 @@ type ConfigManagementConfigSync struct {
 	// SourceFormat: Specifies whether the Config Sync Repo is in "hierarchical" or
 	// "unstructured" mode.
 	SourceFormat string `json:"sourceFormat,omitempty"`
+	// StopSyncing: Set to true to stop syncing configs for a single cluster.
+	// Default to false.
+	StopSyncing bool `json:"stopSyncing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowVerticalScale") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5546,6 +5549,14 @@ func (s ServiceMeshDataPlaneManagement) MarshalJSON() ([]byte, error) {
 // ServiceMeshMembershipSpec: **Service Mesh**: Spec for a single Membership
 // for the servicemesh feature
 type ServiceMeshMembershipSpec struct {
+	// ConfigApi: Optional. Specifies the API that will be used for configuring the
+	// mesh workloads.
+	//
+	// Possible values:
+	//   "CONFIG_API_UNSPECIFIED" - Unspecified
+	//   "CONFIG_API_ISTIO" - Use the Istio API for configuration.
+	//   "CONFIG_API_GATEWAY" - Use the K8s Gateway API for configuration.
+	ConfigApi string `json:"configApi,omitempty"`
 	// ControlPlane: Deprecated: use `management` instead Enables automatic control
 	// plane management.
 	//
@@ -5567,13 +5578,13 @@ type ServiceMeshMembershipSpec struct {
 	//   "MANAGEMENT_MANUAL" - User will manually configure their service mesh
 	// components.
 	Management string `json:"management,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ControlPlane") to
+	// ForceSendFields is a list of field names (e.g. "ConfigApi") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ControlPlane") to include in API
+	// NullFields is a list of field names (e.g. "ConfigApi") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

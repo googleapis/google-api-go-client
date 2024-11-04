@@ -7600,7 +7600,10 @@ func (r *FilesAccessproposalsService) Resolve(fileId string, proposalId string) 
 // Possible values:
 //
 //	"ACTION_UNSPECIFIED" - Unspecified action
-//	"ACCEPT" - The user accepts the proposal
+//	"ACCEPT" - The user accepts the proposal. Note: If this action is used,
+//
+// the `role` field must have at least one value.
+//
 //	"DENY" - The user denies the proposal
 func (c *FilesAccessproposalsResolveCall) Action(action string) *FilesAccessproposalsResolveCall {
 	c.urlParams_.Set("action", action)

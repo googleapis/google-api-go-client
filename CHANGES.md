@@ -1,5 +1,29 @@
 # Changes
 
+## [0.204.0](https://github.com/googleapis/google-api-go-client/compare/v0.203.0...v0.204.0) (2024-10-31)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2837](https://github.com/googleapis/google-api-go-client/issues/2837)) ([343ae0e](https://github.com/googleapis/google-api-go-client/commit/343ae0e8222988b33ce388661056cd3a834a54a6))
+* **all:** Auto-regenerate discovery clients ([#2839](https://github.com/googleapis/google-api-go-client/issues/2839)) ([37b271e](https://github.com/googleapis/google-api-go-client/commit/37b271e98c5041584a0c4fc0741c2798ab05dbca))
+* **all:** Auto-regenerate discovery clients ([#2841](https://github.com/googleapis/google-api-go-client/issues/2841)) ([fb3747b](https://github.com/googleapis/google-api-go-client/commit/fb3747b8f9c99f0cf41b5830322192bcb0092f0a))
+* **all:** Auto-regenerate discovery clients ([#2842](https://github.com/googleapis/google-api-go-client/issues/2842)) ([7221d2c](https://github.com/googleapis/google-api-go-client/commit/7221d2c798d6ae77f88c60de23e5871e92fe03d3))
+* **all:** Auto-regenerate discovery clients ([#2844](https://github.com/googleapis/google-api-go-client/issues/2844)) ([56c5ddb](https://github.com/googleapis/google-api-go-client/commit/56c5ddb8eaf93f57891f285d913b21fb357b87a0))
+* **all:** Auto-regenerate discovery clients ([#2845](https://github.com/googleapis/google-api-go-client/issues/2845)) ([9d5f008](https://github.com/googleapis/google-api-go-client/commit/9d5f008642ce0996af3e4c84f9a017b64c6eb3d3))
+* **all:** Auto-regenerate discovery clients ([#2848](https://github.com/googleapis/google-api-go-client/issues/2848)) ([5bc448d](https://github.com/googleapis/google-api-go-client/commit/5bc448d6497f0c355b530d7b17d9f034a02aee6f))
+* **all:** Auto-regenerate discovery clients ([#2850](https://github.com/googleapis/google-api-go-client/issues/2850)) ([7955ec4](https://github.com/googleapis/google-api-go-client/commit/7955ec454d23d0a36a8ae1c0253b95f7fa3a930c))
+
+
+### Bug Fixes
+
+* **transport/grpc:** Pass through cert source to new auth lib ([#2840](https://github.com/googleapis/google-api-go-client/issues/2840)) ([c67e7c0](https://github.com/googleapis/google-api-go-client/commit/c67e7c09f9cbe3aea06cfe54f4e550ac16725c6c))
+
+
+### Documentation
+
+* Mark WithUniverseDomain as stable ([#2847](https://github.com/googleapis/google-api-go-client/issues/2847)) ([29e20f6](https://github.com/googleapis/google-api-go-client/commit/29e20f602923858630f5e00d5fbd303bcf421f13))
+
 ## [0.203.0](https://github.com/googleapis/google-api-go-client/compare/v0.202.0...v0.203.0) (2024-10-23)
 
 

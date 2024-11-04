@@ -1060,6 +1060,9 @@ func (s GoogleCloudRunV2ExportStatusResponse) MarshalJSON() ([]byte, error) {
 type GoogleCloudRunV2GCSVolumeSource struct {
 	// Bucket: Cloud Storage Bucket name.
 	Bucket string `json:"bucket,omitempty"`
+	// MountOptions: A list of additional flags to pass to the gcsfuse CLI. Options
+	// should be specified without the leading "--".
+	MountOptions []string `json:"mountOptions,omitempty"`
 	// ReadOnly: If true, the volume will be mounted as read only for all mounts.
 	ReadOnly bool `json:"readOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally

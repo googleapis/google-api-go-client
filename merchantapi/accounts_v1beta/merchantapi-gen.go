@@ -351,7 +351,15 @@ func (s Accepted) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Account: An account.
+// Account: The `Account` message represents a merchant's account within
+// Shopping Ads. It's the primary entity for managing product data, settings,
+// and interactions with Google's services and external providers. Accounts can
+// operate as standalone entities or be part of a multi-client account (MCA)
+// structure. In an MCA setup the parent account manages multiple sub-accounts.
+// Establishing an account involves configuring attributes like the account
+// name, time zone, and language preferences. The `Account` message is the
+// parent entity for many other resources, for example, `AccountRelationship`,
+// `Homepage`, `BusinessInfo` and so on.
 type Account struct {
 	// AccountId: Output only. The ID of the account.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -639,9 +647,14 @@ func (s BusinessIdentity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BusinessInfo: Collection of information related to a business.
+// BusinessInfo: The `BusinessInfo` message contains essential information
+// about a merchant's business. This message captures key business details such
+// as physical address, customer service contacts, and region-specific
+// identifiers.
 type BusinessInfo struct {
-	// Address: Optional. The address of the business.
+	// Address: Optional. The address of the business. Only `region_code`,
+	// `address_lines`, `postal_code`, `administrative_area` and `locality` fields
+	// are supported. All other fields are ignored.
 	Address *PostalAddress `json:"address,omitempty"`
 	// CustomerService: Optional. The customer service of the business.
 	CustomerService *CustomerService `json:"customerService,omitempty"`
@@ -1156,7 +1169,13 @@ func (s Headers) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Homepage: A store's homepage.
+// Homepage: The `Homepage` message represents a merchant's store homepage
+// within the system. A merchant's homepage is the primary domain where
+// customers interact with their store. The homepage can be claimed and
+// verified as a proof of ownership and allows the merchant to unlock features
+// that require a verified website. For more information, see Understanding
+// online store URL verification
+// (//support.google.com/merchants/answer/176793).
 type Homepage struct {
 	// Claimed: Output only. Whether the homepage is claimed. See
 	// https://support.google.com/merchants/answer/176793.
@@ -2633,7 +2652,15 @@ func (s Table) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TermsOfService: A `TermsOfService`.
+// TermsOfService: The `TermsOfService` message represents a specific version
+// of the terms of service that merchants must accept to access certain
+// features or services (see
+// https://support.google.com/merchants/answer/160173). This message is
+// important for the onboarding process, ensuring that merchants agree to the
+// necessary legal agreements for using the service. Merchants can retrieve the
+// latest terms of service for a given `kind` and `region` through
+// `RetrieveLatestTermsOfService`, and accept them as required through
+// `AcceptTermsOfService`.
 type TermsOfService struct {
 	// External: Whether this terms of service version is external. External terms
 	// of service versions can only be agreed through external processes and not
@@ -2855,7 +2882,10 @@ func (s TransitTimeValue) MarshalJSON() ([]byte, error) {
 type UnclaimHomepageRequest struct {
 }
 
-// User: A user (https://support.google.com/merchants/answer/12160472).
+// User: The `User` message represents a user associated with a Merchant Center
+// account. It is used to manage user permissions and access rights within the
+// account. For more information, see Frequently asked questions about people
+// and access levels (//support.google.com/merchants/answer/12160472).
 type User struct {
 	// AccessRights: Optional. The access rights
 	// (https://support.google.com/merchants/answer/12160472?sjid=6789834943175119429-EU#accesstypes)

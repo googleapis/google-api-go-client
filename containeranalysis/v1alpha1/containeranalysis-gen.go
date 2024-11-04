@@ -4103,6 +4103,8 @@ type Hash struct {
 	// Possible values:
 	//   "NONE" - No hash requested.
 	//   "SHA256" - A sha256 hash.
+	//   "GO_MODULE_H1" - Dirhash of a Go module's source code which is then
+	// hex-encoded.
 	Type string `json:"type,omitempty"`
 	// Value: The hash value.
 	Value string `json:"value,omitempty"`

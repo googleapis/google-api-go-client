@@ -7876,6 +7876,8 @@ type GoogleCloudDialogflowCxV3beta1Generator struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// LlmModelSettings: The LLM model settings.
 	LlmModelSettings *GoogleCloudDialogflowCxV3beta1LlmModelSettings `json:"llmModelSettings,omitempty"`
+	// ModelParameter: Parameters passed to the LLM to configure its behavior.
+	ModelParameter *GoogleCloudDialogflowCxV3beta1GeneratorModelParameter `json:"modelParameter,omitempty"`
 	// Name: The unique identifier of the generator. Must be set for the
 	// Generators.UpdateGenerator method. Generators.CreateGenerate populates the
 	// name automatically. Format: `projects//locations//agents//generators/`.
@@ -7903,6 +7905,58 @@ type GoogleCloudDialogflowCxV3beta1Generator struct {
 func (s GoogleCloudDialogflowCxV3beta1Generator) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1Generator
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1GeneratorModelParameter: Parameters to be
+// passed to the LLM. If not set, default values will be used.
+type GoogleCloudDialogflowCxV3beta1GeneratorModelParameter struct {
+	// MaxDecodeSteps: The maximum number of tokens to generate.
+	MaxDecodeSteps int64 `json:"maxDecodeSteps,omitempty"`
+	// Temperature: The temperature used for sampling. Temperature sampling occurs
+	// after both topP and topK have been applied. Valid range: [0.0, 1.0] Low
+	// temperature = less random. High temperature = more random.
+	Temperature float64 `json:"temperature,omitempty"`
+	// TopK: If set, the sampling process in each step is limited to the top_k
+	// tokens with highest probabilities. Valid range: [1, 40] or 1000+. Small topK
+	// = less random. Large topK = more random.
+	TopK int64 `json:"topK,omitempty"`
+	// TopP: If set, only the tokens comprising the top top_p probability mass are
+	// considered. If both top_p and top_k are set, top_p will be used for further
+	// refining candidates selected with top_k. Valid range: (0.0, 1.0]. Small topP
+	// = less random. Large topP = more random.
+	TopP float64 `json:"topP,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxDecodeSteps") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxDecodeSteps") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowCxV3beta1GeneratorModelParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1GeneratorModelParameter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1GeneratorModelParameter) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowCxV3beta1GeneratorModelParameter
+	var s1 struct {
+		Temperature gensupport.JSONFloat64 `json:"temperature"`
+		TopP        gensupport.JSONFloat64 `json:"topP"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Temperature = float64(s1.Temperature)
+	s.TopP = float64(s1.TopP)
+	return nil
 }
 
 // GoogleCloudDialogflowCxV3beta1GeneratorPlaceholder: Represents a custom

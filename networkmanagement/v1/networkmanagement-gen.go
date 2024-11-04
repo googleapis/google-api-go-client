@@ -1146,7 +1146,13 @@ type Endpoint struct {
 	//   "VPN_GATEWAY" - Classic Cloud VPN Gateway.
 	//   "PSC" - Forwarding Rule is a Private Service Connect endpoint.
 	ForwardingRuleTarget string `json:"forwardingRuleTarget,omitempty"`
-	// GkeMasterCluster: A cluster URI for Google Kubernetes Engine master
+	// Fqdn: DNS endpoint of Google Kubernetes Engine cluster control plane
+	// (https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture).
+	// Requires gke_master_cluster to be set, can't be used simultaneoulsly with
+	// ip_address.
+	Fqdn string `json:"fqdn,omitempty"`
+	// GkeMasterCluster: A cluster URI for Google Kubernetes Engine cluster control
+	// plane
 	// (https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture).
 	GkeMasterCluster string `json:"gkeMasterCluster,omitempty"`
 	// Instance: A Compute Engine instance URI.

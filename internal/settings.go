@@ -14,8 +14,6 @@ import (
 	"time"
 
 	"cloud.google.com/go/auth"
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/metric"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/internal/impersonate"
@@ -72,8 +70,7 @@ type DialSettings struct {
 	// New Auth library Options
 	AuthCredentials          *auth.Credentials
 	EnableNewAuthLibrary     bool
-	EnableAsyncRefreshDryRun metric.Int64Counter
-	ClientAttributes         []attribute.KeyValue
+	EnableAsyncRefreshDryRun func()
 }
 
 // GetScopes returns the user-provided scopes, if set, or else falls back to the

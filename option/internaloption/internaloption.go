@@ -6,8 +6,6 @@
 package internaloption
 
 import (
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/metric"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/internal"
 	"google.golang.org/api/option"
@@ -211,21 +209,18 @@ func (w enableNewAuthLibrary) Apply(o *internal.DialSettings) {
 // EnableAsyncRefreshDryRun  returns a ClientOption that specifies if libraries in this
 // module should asynchronously refresh auth token in parallel to sync refresh
 // This is an experimental option and will be removed in the future
-func EnableAsyncRefreshDryRun(errCounter metric.Int64Counter, clientAttributes []attribute.KeyValue) option.ClientOption {
+func EnableAsyncRefreshDryRun(callback func()) option.ClientOption {
 	return enableAsyncRefreshDryRun{
-		errCounter:       errCounter,
-		clientAttributes: clientAttributes,
+		callback: callback,
 	}
 }
 
 type enableAsyncRefreshDryRun struct {
-	errCounter       metric.Int64Counter
-	clientAttributes []attribute.KeyValue
+	callback func()
 }
 
 func (w enableAsyncRefreshDryRun) Apply(o *internal.DialSettings) {
-	o.EnableAsyncRefreshDryRun = w.errCounter
-	o.ClientAttributes = w.clientAttributes
+	o.EnableAsyncRefreshDryRun = w.callback
 }
 
 // EmbeddableAdapter is a no-op option.ClientOption that allow libraries to

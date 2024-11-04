@@ -10,7 +10,6 @@ package grpc
 import (
 	"context"
 	"errors"
-	"fmt"
 	"log"
 	"net"
 	"os"
@@ -25,8 +24,6 @@ import (
 	"cloud.google.com/go/compute/metadata"
 	"go.opencensus.io/plugin/ocgrpc"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
-	"go.opentelemetry.io/otel/attribute"
-	"go.opentelemetry.io/otel/metric"
 	"golang.org/x/oauth2"
 	"golang.org/x/time/rate"
 	"google.golang.org/api/internal"
@@ -273,29 +270,25 @@ func prepareDialOptsNewAuth(ds *internal.DialSettings) []grpc.DialOption {
 type dryRunAsync struct {
 	asyncTokenSource oauth2.TokenSource
 	syncTokenSource  oauth2.TokenSource
-	errCounter       metric.Int64Counter
-	clientAttributes []attribute.KeyValue
+	errHandler       func()
 }
 
-func newDryRunAsync(ts oauth2.TokenSource, errCounter metric.Int64Counter, clientAttributes []attribute.KeyValue) dryRunAsync {
+func newDryRunAsync(ts oauth2.TokenSource, errHandler func()) dryRunAsync {
 	tp := auth.NewCachedTokenProvider(oauth2adapt.TokenProviderFromTokenSource(ts), nil)
 	asyncTs := oauth2adapt.TokenSourceFromTokenProvider(tp)
-	return dryRunAsync{syncTokenSource: ts,
+	return dryRunAsync{
+		syncTokenSource:  ts,
 		asyncTokenSource: asyncTs,
-		errCounter:       errCounter,
-		clientAttributes: clientAttributes,
+		errHandler:       errHandler,
 	}
 }
 
 // Token returns a token or an error.
 func (async dryRunAsync) Token() (*oauth2.Token, error) {
-	fmt.Println("Asynchronously refreshing token")
 	_, err := async.asyncTokenSource.Token()
-	if err == nil { //TODO: Change this
-		async.errCounter.Add(context.Background(), 1, metric.WithAttributes(async.clientAttributes...))
-		fmt.Printf("Error during async refresh of token: %+v", err)
+	if err != nil {
+		async.errHandler()
 	}
-	fmt.Println("Synchronously refreshing token")
 	return async.syncTokenSource.Token()
 }
 
@@ -338,7 +331,7 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 
 			ts := creds.TokenSource
 			if o.EnableAsyncRefreshDryRun != nil {
-				ts = newDryRunAsync(ts, o.EnableAsyncRefreshDryRun, o.ClientAttributes)
+				ts = newDryRunAsync(ts, o.EnableAsyncRefreshDryRun)
 			}
 			grpcOpts = append(grpcOpts, grpc.WithPerRPCCredentials(grpcTokenSource{
 				TokenSource:   oauth.TokenSource{TokenSource: ts},

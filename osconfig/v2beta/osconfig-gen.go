@@ -1924,10 +1924,10 @@ type FoldersLocationsGlobalPolicyOrchestratorsCreateCall struct {
 // might be only set to `ACTIVE`, `STOPPED` or omitted (in which case, the
 // created resource will be in `ACTIVE` state anyway).
 //
-//   - parent: The parent resource name in the form of:
-//     `organizations/{organization_id}/locations/global`
-//     `folders/{folder_id}/locations/global`
-//     'projects/{project_id_or_number}/locations/global'.
+//   - parent: The parent resource name in the form of: *
+//     `organizations/{organization_id}/locations/global` *
+//     `folders/{folder_id}/locations/global` *
+//     `projects/{project_id_or_number}/locations/global`.
 func (r *FoldersLocationsGlobalPolicyOrchestratorsService) Create(parent string, googlecloudosconfigv2beta__policyorchestrator *GoogleCloudOsconfigV2beta__PolicyOrchestrator) *FoldersLocationsGlobalPolicyOrchestratorsCreateCall {
 	c := &FoldersLocationsGlobalPolicyOrchestratorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3024,10 +3024,10 @@ type OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall struct {
 // state field might be only set to `ACTIVE`, `STOPPED` or omitted (in which
 // case, the created resource will be in `ACTIVE` state anyway).
 //
-//   - parent: The parent resource name in the form of:
-//     `organizations/{organization_id}/locations/global`
-//     `folders/{folder_id}/locations/global`
-//     'projects/{project_id_or_number}/locations/global'.
+//   - parent: The parent resource name in the form of: *
+//     `organizations/{organization_id}/locations/global` *
+//     `folders/{folder_id}/locations/global` *
+//     `projects/{project_id_or_number}/locations/global`.
 func (r *OrganizationsLocationsGlobalPolicyOrchestratorsService) Create(parent string, googlecloudosconfigv2beta__policyorchestrator *GoogleCloudOsconfigV2beta__PolicyOrchestrator) *OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall {
 	c := &OrganizationsLocationsGlobalPolicyOrchestratorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4125,10 +4125,10 @@ type ProjectsLocationsGlobalPolicyOrchestratorsCreateCall struct {
 // might be only set to `ACTIVE`, `STOPPED` or omitted (in which case, the
 // created resource will be in `ACTIVE` state anyway).
 //
-//   - parent: The parent resource name in the form of:
-//     `organizations/{organization_id}/locations/global`
-//     `folders/{folder_id}/locations/global`
-//     'projects/{project_id_or_number}/locations/global'.
+//   - parent: The parent resource name in the form of: *
+//     `organizations/{organization_id}/locations/global` *
+//     `folders/{folder_id}/locations/global` *
+//     `projects/{project_id_or_number}/locations/global`.
 func (r *ProjectsLocationsGlobalPolicyOrchestratorsService) Create(parent string, googlecloudosconfigv2beta__policyorchestrator *GoogleCloudOsconfigV2beta__PolicyOrchestrator) *ProjectsLocationsGlobalPolicyOrchestratorsCreateCall {
 	c := &ProjectsLocationsGlobalPolicyOrchestratorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

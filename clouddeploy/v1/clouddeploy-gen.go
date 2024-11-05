@@ -780,6 +780,10 @@ type AutomationRule struct {
 	// RepairRolloutRule: Optional. The `RepairRolloutRule` will automatically
 	// repair a failed rollout.
 	RepairRolloutRule *RepairRolloutRule `json:"repairRolloutRule,omitempty"`
+	// TimedPromoteReleaseRule: Optional. The `TimedPromoteReleaseRule` will
+	// automatically promote a release from the current target(s) to the specified
+	// target(s) on a configured schedule.
+	TimedPromoteReleaseRule *TimedPromoteReleaseRule `json:"timedPromoteReleaseRule,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvanceRolloutRule") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -804,6 +808,10 @@ type AutomationRuleCondition struct {
 	// TargetsPresentCondition: Optional. Details around targets enumerated in the
 	// rule.
 	TargetsPresentCondition *TargetsPresentCondition `json:"targetsPresentCondition,omitempty"`
+	// TimedPromoteReleaseCondition: Optional. TimedPromoteReleaseCondition
+	// contains rule conditions specific to a an Automation with a timed promote
+	// release rule defined.
+	TimedPromoteReleaseCondition *TimedPromoteReleaseCondition `json:"timedPromoteReleaseCondition,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TargetsPresentCondition") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -875,10 +883,13 @@ type AutomationRun struct {
 	// StateDescription: Output only. Explains the current state of the
 	// `AutomationRun`. Present only when an explanation is needed.
 	StateDescription string `json:"stateDescription,omitempty"`
-	// TargetId: Output only. The ID of the target that represents the promotion
-	// stage that initiates the `AutomationRun`. The value of this field is the
-	// last segment of a target name.
+	// TargetId: Output only. The ID of the source target that initiates the
+	// `AutomationRun`. The value of this field is the last segment of a target
+	// name.
 	TargetId string `json:"targetId,omitempty"`
+	// TimedPromoteReleaseOperation: Output only. Promotes a release to a specified
+	// 'Target' as defined in a Timed Promote Release rule.
+	TimedPromoteReleaseOperation *TimedPromoteReleaseOperation `json:"timedPromoteReleaseOperation,omitempty"`
 	// UpdateTime: Output only. Time at which the automationRun was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// WaitUntilTime: Output only. Earliest time the `AutomationRun` will attempt
@@ -5531,6 +5542,30 @@ func (s TargetRender) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Targets: The targets involved in a single timed promotion.
+type Targets struct {
+	// DestinationTargetId: Optional. The destination target ID.
+	DestinationTargetId string `json:"destinationTargetId,omitempty"`
+	// SourceTargetId: Optional. The source target ID.
+	SourceTargetId string `json:"sourceTargetId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DestinationTargetId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DestinationTargetId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Targets) MarshalJSON() ([]byte, error) {
+	type NoMethod Targets
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TargetsPresentCondition: `TargetsPresentCondition` contains information on
 // any Targets referenced in the Delivery Pipeline that do not actually exist.
 type TargetsPresentCondition struct {
@@ -5732,6 +5767,107 @@ type TimeWindows struct {
 
 func (s TimeWindows) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeWindows
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TimedPromoteReleaseCondition: `TimedPromoteReleaseCondition` contains
+// conditions specific to an Automation with a Timed Promote Release rule
+// defined.
+type TimedPromoteReleaseCondition struct {
+	// NextPromotionTime: Output only. When the next scheduled promotion(s) will
+	// occur.
+	NextPromotionTime string `json:"nextPromotionTime,omitempty"`
+	// TargetsList: Output only. A list of targets involved in the upcoming timed
+	// promotion(s).
+	TargetsList []*Targets `json:"targetsList,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NextPromotionTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPromotionTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TimedPromoteReleaseCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod TimedPromoteReleaseCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TimedPromoteReleaseOperation: Contains the information of an automated timed
+// promote-release operation.
+type TimedPromoteReleaseOperation struct {
+	// Phase: Output only. The starting phase of the rollout created by this
+	// operation.
+	Phase string `json:"phase,omitempty"`
+	// Release: Output only. The name of the release to be promoted.
+	Release string `json:"release,omitempty"`
+	// TargetId: Output only. The ID of the target that represents the promotion
+	// stage to which the release will be promoted. The value of this field is the
+	// last segment of a target name.
+	TargetId string `json:"targetId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Phase") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Phase") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TimedPromoteReleaseOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod TimedPromoteReleaseOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TimedPromoteReleaseRule: The `TimedPromoteReleaseRule` will automatically
+// promote a release from the current target(s) to the specified target(s) on a
+// configured schedule.
+type TimedPromoteReleaseRule struct {
+	// Condition: Output only. Information around the state of the Automation rule.
+	Condition *AutomationRuleCondition `json:"condition,omitempty"`
+	// DestinationPhase: Optional. The starting phase of the rollout created by
+	// this rule. Default to the first phase.
+	DestinationPhase string `json:"destinationPhase,omitempty"`
+	// DestinationTargetId: Optional. The ID of the stage in the pipeline to which
+	// this `Release` is deploying. If unspecified, default it to the next stage in
+	// the promotion flow. The value of this field could be one of the following: *
+	// The last segment of a target name * "@next", the next target in the
+	// promotion sequence
+	DestinationTargetId string `json:"destinationTargetId,omitempty"`
+	// Id: Required. ID of the rule. This ID must be unique in the `Automation`
+	// resource to which this rule belongs. The format is
+	// `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
+	Id string `json:"id,omitempty"`
+	// Schedule: Required. Schedule in crontab format. e.g. "0 9 * * 1" for every
+	// Monday at 9am.
+	Schedule string `json:"schedule,omitempty"`
+	// TimeZone: Required. The time zone in IANA format IANA Time Zone Database
+	// (https://www.iana.org/time-zones) (e.g. America/New_York).
+	TimeZone string `json:"timeZone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Condition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Condition") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TimedPromoteReleaseRule) MarshalJSON() ([]byte, error) {
+	type NoMethod TimedPromoteReleaseRule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

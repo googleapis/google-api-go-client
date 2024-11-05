@@ -10807,6 +10807,135 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
+type ProjectsLocationsVmwareAdminClustersCreateCall struct {
+	s                  *Service
+	parent             string
+	vmwareadmincluster *VmwareAdminCluster
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a new VMware admin cluster in a given project and location.
+// The API needs to be combined with creating a bootstrap cluster to work.
+//
+//   - parent: The parent of the project and location where the cluster is
+//     created in. Format: "projects/{project}/locations/{location}".
+func (r *ProjectsLocationsVmwareAdminClustersService) Create(parent string, vmwareadmincluster *VmwareAdminCluster) *ProjectsLocationsVmwareAdminClustersCreateCall {
+	c := &ProjectsLocationsVmwareAdminClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.vmwareadmincluster = vmwareadmincluster
+	return c
+}
+
+// AllowPreflightFailure sets the optional parameter "allowPreflightFailure":
+// If set to true, CLM will force CCFE to persist the cluster resource in RMS
+// when the creation fails during standalone preflight checks. In that case the
+// subsequent create call will fail with "cluster already exists" error and
+// hence a update cluster is required to fix the cluster.
+func (c *ProjectsLocationsVmwareAdminClustersCreateCall) AllowPreflightFailure(allowPreflightFailure bool) *ProjectsLocationsVmwareAdminClustersCreateCall {
+	c.urlParams_.Set("allowPreflightFailure", fmt.Sprint(allowPreflightFailure))
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Validate the
+// request without actually doing any updates.
+func (c *ProjectsLocationsVmwareAdminClustersCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsVmwareAdminClustersCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// VmwareAdminClusterId sets the optional parameter "vmwareAdminClusterId":
+// Required. User provided identifier that is used as part of the resource
+// name; must conform to RFC-1034 and additionally restrict to lower-cased
+// letters. This comes out roughly to: /^a-z+[a-z0-9]$/
+func (c *ProjectsLocationsVmwareAdminClustersCreateCall) VmwareAdminClusterId(vmwareAdminClusterId string) *ProjectsLocationsVmwareAdminClustersCreateCall {
+	c.urlParams_.Set("vmwareAdminClusterId", vmwareAdminClusterId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsVmwareAdminClustersCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsVmwareAdminClustersCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsVmwareAdminClustersCreateCall) Context(ctx context.Context) *ProjectsLocationsVmwareAdminClustersCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsVmwareAdminClustersCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsVmwareAdminClustersCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.vmwareadmincluster)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/vmwareAdminClusters")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkeonprem.projects.locations.vmwareAdminClusters.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsVmwareAdminClustersCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsVmwareAdminClustersEnrollCall struct {
 	s                               *Service
 	parent                          string

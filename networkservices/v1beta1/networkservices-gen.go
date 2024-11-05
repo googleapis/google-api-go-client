@@ -428,7 +428,11 @@ type AuthzExtension struct {
 	//
 	// Possible values:
 	//   "WIRE_FORMAT_UNSPECIFIED" - Not specified.
-	//   "EXT_PROC_GRPC" - The extension service uses ExtProc GRPC API.
+	//   "EXT_PROC_GRPC" - The extension service uses ExtProc GRPC API over a gRPC
+	// stream. This is the default value if the wire format is not specified. The
+	// backend service for the extension must use HTTP2 or H2C as the protocol. All
+	// `supported_events` for a client request will be sent as part of the same
+	// gRPC stream.
 	WireFormat string `json:"wireFormat,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

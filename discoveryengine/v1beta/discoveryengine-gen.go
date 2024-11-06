@@ -11425,7 +11425,10 @@ func (s GoogleCloudDiscoveryengineV1betaCheckGroundingRequest) MarshalJSON() ([]
 type GoogleCloudDiscoveryengineV1betaCheckGroundingResponse struct {
 	// CitedChunks: List of facts cited across all claims in the answer candidate.
 	// These are derived from the facts supplied in the request.
-	CitedChunks []*GoogleCloudDiscoveryengineV1betaCheckGroundingResponseFactChunk `json:"citedChunks,omitempty"`
+	CitedChunks []*GoogleCloudDiscoveryengineV1betaFactChunk `json:"citedChunks,omitempty"`
+	// CitedFacts: List of facts cited across all claims in the answer candidate.
+	// These are derived from the facts supplied in the request.
+	CitedFacts []*GoogleCloudDiscoveryengineV1betaCheckGroundingResponseCheckGroundingFactChunk `json:"citedFacts,omitempty"`
 	// Claims: Claim texts and citation info across all claims in the answer
 	// candidate.
 	Claims []*GoogleCloudDiscoveryengineV1betaCheckGroundingResponseClaim `json:"claims,omitempty"`
@@ -11468,6 +11471,30 @@ func (s *GoogleCloudDiscoveryengineV1betaCheckGroundingResponse) UnmarshalJSON(d
 	return nil
 }
 
+// GoogleCloudDiscoveryengineV1betaCheckGroundingResponseCheckGroundingFactChunk
+// : Fact chunk for grounding check.
+type GoogleCloudDiscoveryengineV1betaCheckGroundingResponseCheckGroundingFactChunk struct {
+	// ChunkText: Text content of the fact chunk. Can be at most 10K characters
+	// long.
+	ChunkText string `json:"chunkText,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChunkText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChunkText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaCheckGroundingResponseCheckGroundingFactChunk) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaCheckGroundingResponseCheckGroundingFactChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaCheckGroundingResponseClaim: Text and
 // citation info for a claim in the answer candidate.
 type GoogleCloudDiscoveryengineV1betaCheckGroundingResponseClaim struct {
@@ -11507,34 +11534,6 @@ type GoogleCloudDiscoveryengineV1betaCheckGroundingResponseClaim struct {
 
 func (s GoogleCloudDiscoveryengineV1betaCheckGroundingResponseClaim) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaCheckGroundingResponseClaim
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1betaCheckGroundingResponseFactChunk: Fact chunk
-// for grounding check.
-type GoogleCloudDiscoveryengineV1betaCheckGroundingResponseFactChunk struct {
-	// ChunkText: Text content of the fact chunk. Can be at most 10K characters
-	// long.
-	ChunkText string `json:"chunkText,omitempty"`
-	// Source: Source from which this fact chunk was retrieved. For a fact chunk
-	// retrieved from inline facts, this field will contain the index of the
-	// specific fact from which this chunk was retrieved.
-	Source string `json:"source,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ChunkText") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ChunkText") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1betaCheckGroundingResponseFactChunk) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1betaCheckGroundingResponseFactChunk
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13836,6 +13835,112 @@ func (s GoogleCloudDiscoveryengineV1betaEvaluationEvaluationSpecQuerySetSpec) Ma
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaFactChunk: Fact Chunk.
+type GoogleCloudDiscoveryengineV1betaFactChunk struct {
+	// ChunkText: Text content of the fact chunk. Can be at most 10K characters
+	// long.
+	ChunkText string `json:"chunkText,omitempty"`
+	// Index: The index of this chunk. Currently, only used for the streaming mode.
+	Index int64 `json:"index,omitempty"`
+	// Source: Source from which this fact chunk was retrieved. If it was retrieved
+	// from the GroundingFacts provided in the request then this field will contain
+	// the index of the specific fact from which this chunk was retrieved.
+	Source string `json:"source,omitempty"`
+	// SourceMetadata: More fine-grained information for the source reference.
+	SourceMetadata map[string]string `json:"sourceMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChunkText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChunkText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaFactChunk) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaFactChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaFeedback: Information about the user
+// feedback. This information will be used for logging and metrics purpose.
+type GoogleCloudDiscoveryengineV1betaFeedback struct {
+	// Comment: Optional. The additional user comment of the feedback if user gives
+	// a thumb down.
+	Comment string `json:"comment,omitempty"`
+	// ConversationInfo: The related conversation information when user gives
+	// feedback.
+	ConversationInfo *GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo `json:"conversationInfo,omitempty"`
+	// FeedbackType: Required. Indicate whether the user gives a positive or
+	// negative feedback. If the user gives a negative feedback, there might be
+	// more feedback details.
+	//
+	// Possible values:
+	//   "FEEDBACK_TYPE_UNSPECIFIED" - Unspecified feedback type.
+	//   "LIKE" - The user gives a positive feedback.
+	//   "DISLIKE" - The user gives a negative feedback.
+	FeedbackType string `json:"feedbackType,omitempty"`
+	// LlmModelVersion: The version of the LLM model that was used to generate the
+	// response.
+	LlmModelVersion string `json:"llmModelVersion,omitempty"`
+	// Reasons: Optional. The reason if user gives a thumb down.
+	//
+	// Possible values:
+	//   "REASON_UNSPECIFIED" - Unspecified reason.
+	//   "INACCURATE_RESPONSE" - The response is inaccurate.
+	//   "NOT_RELEVANT" - The response is not relevant.
+	//   "INCOMPREHENSIVE" - The response is incomprehensive.
+	//   "OFFENSIVE_OR_UNSAFE" - The response is offensive or unsafe.
+	//   "BAD_CIATION" - The response is not well-associated with the query.
+	//   "FORMAT_AND_STYLES" - The response is not well-formatted.
+	Reasons []string `json:"reasons,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Comment") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Comment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaFeedback) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaFeedback
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo: The conversation
+// information such as the question index and session name.
+type GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo struct {
+	// QuestionIndex: The index of the user input within the conversation messages.
+	QuestionIndex int64 `json:"questionIndex,omitempty"`
+	// Session: Name of the newly generated or continued session.
+	Session string `json:"session,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "QuestionIndex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "QuestionIndex") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaFetchDomainVerificationStatusResponse:
 // Response message for SiteSearchEngineService.FetchDomainVerificationStatus
 // method.
@@ -15347,6 +15452,8 @@ func (s GoogleCloudDiscoveryengineV1betaPageInfo) MarshalJSON() ([]byte, error) 
 type GoogleCloudDiscoveryengineV1betaPanelInfo struct {
 	// DisplayName: The display name of the panel.
 	DisplayName string `json:"displayName,omitempty"`
+	// Documents: Optional. The document IDs associated with this panel.
+	Documents []*GoogleCloudDiscoveryengineV1betaDocumentInfo `json:"documents,omitempty"`
 	// PanelId: Required. The panel ID.
 	PanelId string `json:"panelId,omitempty"`
 	// PanelPosition: The ordered position of the panel, if shown to the user with
@@ -19459,6 +19566,9 @@ type GoogleCloudDiscoveryengineV1betaUserEvent struct {
 	// a song, etc. * `media-complete`: Finished or stopped midway through a video,
 	// song, etc.
 	EventType string `json:"eventType,omitempty"`
+	// Feedback: Optional. This field is optional except for the `add-feedback`
+	// event types.
+	Feedback *GoogleCloudDiscoveryengineV1betaFeedback `json:"feedback,omitempty"`
 	// Filter: The filter syntax consists of an expression language for
 	// constructing a predicate from one or more fields of the documents being
 	// filtered. One example is for `search` events, the associated SearchRequest
@@ -19477,6 +19587,9 @@ type GoogleCloudDiscoveryengineV1betaUserEvent struct {
 	PageInfo *GoogleCloudDiscoveryengineV1betaPageInfo `json:"pageInfo,omitempty"`
 	// Panel: Panel metadata associated with this user event.
 	Panel *GoogleCloudDiscoveryengineV1betaPanelInfo `json:"panel,omitempty"`
+	// Panels: Optional. List of panels associated with this event. Used for
+	// page-level impression data.
+	Panels []*GoogleCloudDiscoveryengineV1betaPanelInfo `json:"panels,omitempty"`
 	// PromotionIds: The promotion IDs if this is an event associated with
 	// promotions. Currently, this field is restricted to at most one ID.
 	PromotionIds []string `json:"promotionIds,omitempty"`

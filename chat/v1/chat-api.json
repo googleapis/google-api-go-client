@@ -763,7 +763,7 @@
         "messages": {
           "methods": {
             "create": {
-              "description": "Creates a message in a Google Chat space. For an example, see [Send a message](https://developers.google.com/workspace/chat/create-messages). The `create()` method requires either [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user) or [app authentication](https://developers.google.com/workspace/chat/authorize-import). Chat attributes the message sender differently depending on the type of authentication that you use in your request. The following image shows how Chat attributes a message when you use app authentication. Chat displays the Chat app as the message sender. The content of the message can contain text (`text`), cards (`cardsV2`), and accessory widgets (`accessoryWidgets`). ![Message sent with app authentication](https://developers.google.com/workspace/chat/images/message-app-auth.svg) The following image shows how Chat attributes a message when you use user authentication. Chat displays the user as the message sender and attributes the Chat app to the message by displaying its name. The content of message can only contain text (`text`). ![Message sent with user authentication](https://developers.google.com/workspace/chat/images/message-user-auth.svg) The maximum message size, including the message contents, is 32,000 bytes.",
+              "description": "Creates a message in a Google Chat space. For an example, see [Send a message](https://developers.google.com/workspace/chat/create-messages). The `create()` method requires either [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user) or [app authentication](https://developers.google.com/workspace/chat/authorize-import). Chat attributes the message sender differently depending on the type of authentication that you use in your request. The following image shows how Chat attributes a message when you use app authentication. Chat displays the Chat app as the message sender. The content of the message can contain text (`text`), cards (`cardsV2`), and accessory widgets (`accessoryWidgets`). ![Message sent with app authentication](https://developers.google.com/workspace/chat/images/message-app-auth.svg) The following image shows how Chat attributes a message when you use user authentication. Chat displays the user as the message sender and attributes the Chat app to the message by displaying its name. The content of message can only contain text (`text`). ![Message sent with user authentication](https://developers.google.com/workspace/chat/images/message-user-auth.svg) The maximum message size, including the message contents, is 32,000 bytes. For [webhook](https://developers.google.com/workspace/chat/quickstart/webhooks) requests, the response doesn't contain the full message. The response only populates the `name` and `thread.name` fields in addition to the information that was in the request.",
               "flatPath": "v1/spaces/{spacesId}/messages",
               "httpMethod": "POST",
               "id": "chat.spaces.messages.create",
@@ -1344,7 +1344,7 @@
       }
     }
   },
-  "revision": "20241029",
+  "revision": "20241031",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessSettings": {
@@ -2117,7 +2117,7 @@
           "readOnly": true
         },
         "unicode": {
-          "description": "A basic emoji represented by a unicode string.",
+          "description": "Optional. A basic emoji represented by a unicode string.",
           "type": "string"
         }
       },
@@ -2129,11 +2129,13 @@
       "properties": {
         "emoji": {
           "$ref": "Emoji",
-          "description": "Emoji associated with the reactions."
+          "description": "Output only. Emoji associated with the reactions.",
+          "readOnly": true
         },
         "reactionCount": {
-          "description": "The total number of reactions using the associated emoji.",
+          "description": "Output only. The total number of reactions using the associated emoji.",
           "format": "int32",
+          "readOnly": true,
           "type": "integer"
         }
       },
@@ -4239,10 +4241,10 @@
       "properties": {
         "emoji": {
           "$ref": "Emoji",
-          "description": "The emoji used in the reaction."
+          "description": "Required. The emoji used in the reaction."
         },
         "name": {
-          "description": "The resource name of the reaction. Format: `spaces/{space}/messages/{message}/reactions/{reaction}`",
+          "description": "Identifier. The resource name of the reaction. Format: `spaces/{space}/messages/{message}/reactions/{reaction}`",
           "type": "string"
         },
         "user": {

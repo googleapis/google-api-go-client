@@ -4730,7 +4730,9 @@ type Policy struct {
 	// AccountTypesWithManagementDisabled: Account types that can't be managed by
 	// the user.
 	AccountTypesWithManagementDisabled []string `json:"accountTypesWithManagementDisabled,omitempty"`
-	// AddUserDisabled: Whether adding new users and profiles is disabled.
+	// AddUserDisabled: Whether adding new users and profiles is disabled. For
+	// devices where managementMode is DEVICE_OWNER this field is ignored and the
+	// user is never allowed to add or remove users.
 	AddUserDisabled bool `json:"addUserDisabled,omitempty"`
 	// AdjustVolumeDisabled: Whether adjusting the master volume is disabled. Also
 	// mutes the device.

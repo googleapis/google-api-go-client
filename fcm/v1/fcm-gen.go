@@ -482,6 +482,13 @@ type ApnsConfig struct {
 	// backend sets a default value for `apns-expiration` of 30 days and a default
 	// value for `apns-priority` of 10 if not explicitly set.
 	Headers map[string]string `json:"headers,omitempty"`
+	// LiveActivityToken: Optional. Apple Live Activity
+	// (https://developer.apple.com/design/human-interface-guidelines/live-activities)
+	// token to send updates to. This token can either be a push token or
+	// push-to-start
+	// (https://developer.apple.com/documentation/activitykit/activity/pushtostarttoken)
+	// token from Apple.
+	LiveActivityToken string `json:"liveActivityToken,omitempty"`
 	// Payload: APNs payload as a JSON object, including both `aps` dictionary and
 	// custom payload. See Payload Key Reference
 	// (https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification).

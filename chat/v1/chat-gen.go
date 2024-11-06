@@ -1572,7 +1572,7 @@ func (s DriveLinkData) MarshalJSON() ([]byte, error) {
 type Emoji struct {
 	// CustomEmoji: Output only. A custom emoji.
 	CustomEmoji *CustomEmoji `json:"customEmoji,omitempty"`
-	// Unicode: A basic emoji represented by a unicode string.
+	// Unicode: Optional. A basic emoji represented by a unicode string.
 	Unicode string `json:"unicode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomEmoji") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1595,9 +1595,10 @@ func (s Emoji) MarshalJSON() ([]byte, error) {
 // EmojiReactionSummary: The number of people who reacted to a message with a
 // specific emoji.
 type EmojiReactionSummary struct {
-	// Emoji: Emoji associated with the reactions.
+	// Emoji: Output only. Emoji associated with the reactions.
 	Emoji *Emoji `json:"emoji,omitempty"`
-	// ReactionCount: The total number of reactions using the associated emoji.
+	// ReactionCount: Output only. The total number of reactions using the
+	// associated emoji.
 	ReactionCount int64 `json:"reactionCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Emoji") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4680,9 +4681,9 @@ func (s QuotedMessageMetadata) MarshalJSON() ([]byte, error) {
 
 // Reaction: A reaction to a message.
 type Reaction struct {
-	// Emoji: The emoji used in the reaction.
+	// Emoji: Required. The emoji used in the reaction.
 	Emoji *Emoji `json:"emoji,omitempty"`
-	// Name: The resource name of the reaction. Format:
+	// Name: Identifier. The resource name of the reaction. Format:
 	// `spaces/{space}/messages/{message}/reactions/{reaction}`
 	Name string `json:"name,omitempty"`
 	// User: Output only. The user who created the reaction.
@@ -8246,6 +8247,11 @@ type SpacesMessagesCreateCall struct {
 // can only contain text (`text`). !Message sent with user authentication
 // (https://developers.google.com/workspace/chat/images/message-user-auth.svg)
 // The maximum message size, including the message contents, is 32,000 bytes.
+// For webhook
+// (https://developers.google.com/workspace/chat/quickstart/webhooks) requests,
+// the response doesn't contain the full message. The response only populates
+// the `name` and `thread.name` fields in addition to the information that was
+// in the request.
 //
 //   - parent: The resource name of the space in which to create a message.
 //     Format: `spaces/{space}`.

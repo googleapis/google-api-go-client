@@ -560,6 +560,12 @@ type GoogleCloudChannelV1ChangeOfferRequest struct {
 	// available Parameters refer to the Offer.parameter_definitions from the
 	// desired offer.
 	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
+	// PriceReferenceId: Optional. Price reference ID for the offer. Optional field
+	// only for offers that require additional price information. Used to guarantee
+	// that the pricing is consistent between quoting the offer and placing the
+	// order. Yet to be implemented: this field is currently not evaluated in the
+	// API if populated in a request.
+	PriceReferenceId string `json:"priceReferenceId,omitempty"`
 	// PurchaseOrderId: Optional. Purchase order id provided by the reseller.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
 	// RequestId: Optional. You can specify an optional unique request ID, and if
@@ -1210,7 +1216,7 @@ type GoogleCloudChannelV1CustomerEvent struct {
 	// Customer: Resource name of the customer. Format:
 	// accounts/{account_id}/customers/{customer_id}
 	Customer string `json:"customer,omitempty"`
-	// EventType: Type of event which happened on the customer.
+	// EventType: Type of event which happened for the customer.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Not used.
@@ -1381,6 +1387,12 @@ type GoogleCloudChannelV1Entitlement struct {
 	// Google Cloud billing subaccounts, the following Parameter may be accepted as
 	// input: - display_name: The display name of the billing subaccount.
 	Parameters []*GoogleCloudChannelV1Parameter `json:"parameters,omitempty"`
+	// PriceReferenceId: Optional. Price reference ID for the offer. Optional field
+	// only for offers that require additional price information. Used to guarantee
+	// that the pricing is consistent between quoting the offer and placing the
+	// order. Yet to be implemented: this field is currently not evaluated in the
+	// API if populated in a request.
+	PriceReferenceId string `json:"priceReferenceId,omitempty"`
 	// ProvisionedService: Output only. Service provisioning details for the
 	// entitlement.
 	ProvisionedService *GoogleCloudChannelV1ProvisionedService `json:"provisionedService,omitempty"`
@@ -1552,7 +1564,7 @@ type GoogleCloudChannelV1EntitlementEvent struct {
 	// Entitlement: Resource name of an entitlement of the form:
 	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}
 	Entitlement string `json:"entitlement,omitempty"`
-	// EventType: Type of event which happened on the entitlement.
+	// EventType: Type of event which happened for the entitlement.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Not used.
@@ -2853,6 +2865,11 @@ func (s GoogleCloudChannelV1ProvisionedService) MarshalJSON() ([]byte, error) {
 type GoogleCloudChannelV1PurchasableOffer struct {
 	// Offer: Offer.
 	Offer *GoogleCloudChannelV1Offer `json:"offer,omitempty"`
+	// PriceReferenceId: Optional. Price reference ID for the offer. Optional field
+	// only for offers that require additional price information. Used to guarantee
+	// that the pricing is consistent between quoting the offer and placing the
+	// order.
+	PriceReferenceId string `json:"priceReferenceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Offer") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3733,6 +3750,11 @@ func (s GoogleCloudChannelV1TransferEntitlementsToGoogleRequest) MarshalJSON() (
 type GoogleCloudChannelV1TransferableOffer struct {
 	// Offer: Offer with parameter constraints updated to allow the Transfer.
 	Offer *GoogleCloudChannelV1Offer `json:"offer,omitempty"`
+	// PriceReferenceId: Optional. Price reference ID for the offer. Optional field
+	// only for offers that require additional price information. Used to guarantee
+	// that the pricing is consistent between quoting the offer and placing the
+	// order.
+	PriceReferenceId string `json:"priceReferenceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Offer") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3968,7 +3990,7 @@ type GoogleCloudChannelV1alpha1ChannelPartnerEvent struct {
 	// uses the format:
 	// accounts/{account_id}/channelPartnerLinks/{channel_partner_id}
 	ChannelPartner string `json:"channelPartner,omitempty"`
-	// EventType: Type of event performed on the Channel Partner.
+	// EventType: Type of event which happened for the channel partner.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value. Does not display if there are no
@@ -4070,7 +4092,7 @@ type GoogleCloudChannelV1alpha1CustomerEvent struct {
 	// Customer: Resource name of the customer. Format:
 	// accounts/{account_id}/customers/{customer_id}
 	Customer string `json:"customer,omitempty"`
-	// EventType: Type of event which happened on the customer.
+	// EventType: Type of event which happened for the customer.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Not used.
@@ -4258,7 +4280,7 @@ type GoogleCloudChannelV1alpha1EntitlementEvent struct {
 	// Entitlement: Resource name of an entitlement of the form:
 	// accounts/{account_id}/customers/{customer_id}/entitlements/{entitlement_id}
 	Entitlement string `json:"entitlement,omitempty"`
-	// EventType: Type of event which happened on the entitlement.
+	// EventType: Type of event which happened for the entitlement.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Not used.
@@ -4346,6 +4368,37 @@ type GoogleCloudChannelV1alpha1OperationMetadata struct {
 
 func (s GoogleCloudChannelV1alpha1OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudChannelV1alpha1OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudChannelV1alpha1OpportunityEvent: Represents Pub/Sub message
+// content describing opportunity updates.
+type GoogleCloudChannelV1alpha1OpportunityEvent struct {
+	// EventType: Type of event which happened for the opportunity.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Not used.
+	//   "CREATED" - New opportunity created.
+	//   "UPDATED" - Existing opportunity updated.
+	EventType string `json:"eventType,omitempty"`
+	// Opportunity: Resource name of the opportunity. Format:
+	// opportunities/{opportunity}
+	Opportunity string `json:"opportunity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudChannelV1alpha1OpportunityEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudChannelV1alpha1OpportunityEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4663,6 +4716,9 @@ type GoogleCloudChannelV1alpha1SubscriberEvent struct {
 	// EntitlementEvent: Entitlement event sent as part of Pub/Sub event to
 	// partners.
 	EntitlementEvent *GoogleCloudChannelV1alpha1EntitlementEvent `json:"entitlementEvent,omitempty"`
+	// OpportunityEvent: Opportunity event sent as part of Pub/Sub event to
+	// partners/integrators.
+	OpportunityEvent *GoogleCloudChannelV1alpha1OpportunityEvent `json:"opportunityEvent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChannelPartnerEvent") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5004,9 +5060,10 @@ func (s GoogleTypeDateTime) MarshalJSON() ([]byte, error) {
 
 // GoogleTypeDecimal: A representation of a decimal value, such as 2.5. Clients
 // may convert values into language-native decimal formats, such as Java's
-// BigDecimal or Python's decimal.Decimal. [BigDecimal]:
-// https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/math/BigDecimal.html
-// [decimal.Decimal]: https://docs.python.org/3/library/decimal.html
+// BigDecimal
+// (https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/math/BigDecimal.html)
+// or Python's decimal.Decimal
+// (https://docs.python.org/3/library/decimal.html).
 type GoogleTypeDecimal struct {
 	// Value: The decimal value, as a string. The string representation consists of
 	// an optional sign, `+` (`U+002B`) or `-` (`U+002D`), followed by a sequence

@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	cloud.google.com/go v0.116.0
-	cloud.google.com/go/auth v0.10.0
+	cloud.google.com/go/auth v0.10.1
 	cloud.google.com/go/auth/oauth2adapt v0.2.5
 	cloud.google.com/go/compute/metadata v0.5.2
 	github.com/google/go-cmp v0.6.0

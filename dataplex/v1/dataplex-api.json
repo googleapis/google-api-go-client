@@ -6224,7 +6224,7 @@
       }
     }
   },
-  "revision": "20241019",
+  "revision": "20241027",
   "rootUrl": "https://dataplex.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -8534,7 +8534,7 @@
       "type": "object"
     },
     "GoogleCloudDataplexV1DataScanEvent": {
-      "description": "These messages contain information about the execution of a datascan. The monitored resource is 'DataScan' Next ID: 13",
+      "description": "These messages contain information about the execution of a datascan. The monitored resource is 'DataScan'",
       "id": "GoogleCloudDataplexV1DataScanEvent",
       "properties": {
         "createTime": {
@@ -8641,12 +8641,14 @@
           "enum": [
             "SCAN_TYPE_UNSPECIFIED",
             "DATA_PROFILE",
-            "DATA_QUALITY"
+            "DATA_QUALITY",
+            "DATA_DISCOVERY"
           ],
           "enumDescriptions": [
             "An unspecified data scan type.",
             "Data scan for data profile.",
-            "Data scan for data quality."
+            "Data scan for data quality.",
+            "Data scan for data discovery."
           ],
           "type": "string"
         }
@@ -9059,7 +9061,11 @@
             "ENTITY_DELETED",
             "PARTITION_CREATED",
             "PARTITION_UPDATED",
-            "PARTITION_DELETED"
+            "PARTITION_DELETED",
+            "TABLE_PUBLISHED",
+            "TABLE_UPDATED",
+            "TABLE_IGNORED",
+            "TABLE_DELETED"
           ],
           "enumDescriptions": [
             "An unspecified event type.",
@@ -9069,7 +9075,11 @@
             "An event representing a metadata entity being deleted.",
             "An event representing a partition being created.",
             "An event representing a partition being updated.",
-            "An event representing a partition being deleted."
+            "An event representing a partition being deleted.",
+            "An event representing a table being published.",
+            "An event representing a table being updated.",
+            "An event representing a table being skipped in publishing.",
+            "An event representing a table being deleted."
           ],
           "type": "string"
         },

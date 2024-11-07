@@ -7946,7 +7946,7 @@ type VideoLiveStreamingDetails struct {
 	ConcurrentViewers uint64 `json:"concurrentViewers,omitempty,string"`
 	// ScheduledEndTime: The time that the broadcast is scheduled to end. If the
 	// value is empty or the property is not present, then the broadcast is
-	// scheduled to contiue indefinitely.
+	// scheduled to continue indefinitely.
 	ScheduledEndTime string `json:"scheduledEndTime,omitempty"`
 	// ScheduledStartTime: The time that the broadcast is scheduled to begin.
 	ScheduledStartTime string `json:"scheduledStartTime,omitempty"`

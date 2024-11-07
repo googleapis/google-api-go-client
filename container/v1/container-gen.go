@@ -1594,6 +1594,11 @@ type ClusterUpdate struct {
 	// all auto-provisioned node pools in autopilot clusters and node
 	// auto-provisioning enabled clusters.
 	DesiredNodePoolAutoConfigKubeletConfig *NodeKubeletConfig `json:"desiredNodePoolAutoConfigKubeletConfig,omitempty"`
+	// DesiredNodePoolAutoConfigLinuxNodeConfig: The desired Linux node config for
+	// all auto-provisioned node pools in autopilot clusters and node
+	// auto-provisioning enabled clusters. Currently only `cgroup_mode` can be set
+	// here.
+	DesiredNodePoolAutoConfigLinuxNodeConfig *LinuxNodeConfig `json:"desiredNodePoolAutoConfigLinuxNodeConfig,omitempty"`
 	// DesiredNodePoolAutoConfigNetworkTags: The desired network tags that apply to
 	// all auto-provisioned node pools in autopilot clusters and node
 	// auto-provisioning enabled clusters.
@@ -4153,6 +4158,20 @@ type NodeConfig struct {
 	// on a machine per zone. See:
 	// https://cloud.google.com/compute/docs/disks/local-ssd for more information.
 	LocalSsdCount int64 `json:"localSsdCount,omitempty"`
+	// LocalSsdEncryptionMode: Specifies which method should be used for encrypting
+	// the Local SSDs attahced to the node.
+	//
+	// Possible values:
+	//   "LOCAL_SSD_ENCRYPTION_MODE_UNSPECIFIED" - The given node will be encrypted
+	// using keys managed by Google infrastructure and the keys will be deleted
+	// when the node is deleted.
+	//   "STANDARD_ENCRYPTION" - The given node will be encrypted using keys
+	// managed by Google infrastructure and the keys will be deleted when the node
+	// is deleted.
+	//   "EPHEMERAL_KEY_ENCRYPTION" - The given node will opt-in for using
+	// ephemeral key for encryption of Local SSDs. The Local SSDs will not be able
+	// to recover data in case of node crash.
+	LocalSsdEncryptionMode string `json:"localSsdEncryptionMode,omitempty"`
 	// LoggingConfig: Logging configuration.
 	LoggingConfig *NodePoolLoggingConfig `json:"loggingConfig,omitempty"`
 	// MachineType: The name of a Google Compute Engine machine type
@@ -4598,6 +4617,8 @@ func (s NodePool) MarshalJSON() ([]byte, error) {
 // node pools in autopilot clusters and node auto-provisioning enabled
 // clusters.
 type NodePoolAutoConfig struct {
+	// LinuxNodeConfig: Output only. Configuration options for Linux nodes.
+	LinuxNodeConfig *LinuxNodeConfig `json:"linuxNodeConfig,omitempty"`
 	// NetworkTags: The list of instance tags applied to all nodes. Tags are used
 	// to identify valid sources or targets for network firewalls and are specified
 	// by the client during cluster creation. Each tag within the list must comply
@@ -4611,15 +4632,15 @@ type NodePoolAutoConfig struct {
 	// the nodes for managing Compute Engine firewalls using Network Firewall
 	// Policies.
 	ResourceManagerTags *ResourceManagerTags `json:"resourceManagerTags,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "NetworkTags") to
+	// ForceSendFields is a list of field names (e.g. "LinuxNodeConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "NetworkTags") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "LinuxNodeConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4645,20 +4666,22 @@ type NodePoolAutoscaling struct {
 	// sizes of different zones.
 	//   "ANY" - ANY policy picks zones that have the highest capacity available.
 	LocationPolicy string `json:"locationPolicy,omitempty"`
-	// MaxNodeCount: Maximum number of nodes for one location in the NodePool. Must
-	// be >= min_node_count. There has to be enough quota to scale up the cluster.
+	// MaxNodeCount: Maximum number of nodes for one location in the node pool.
+	// Must be >= min_node_count. There has to be enough quota to scale up the
+	// cluster.
 	MaxNodeCount int64 `json:"maxNodeCount,omitempty"`
-	// MinNodeCount: Minimum number of nodes for one location in the NodePool. Must
-	// be >= 1 and <= max_node_count.
+	// MinNodeCount: Minimum number of nodes for one location in the node pool.
+	// Must be greater than or equal to 0 and less than or equal to max_node_count.
 	MinNodeCount int64 `json:"minNodeCount,omitempty"`
 	// TotalMaxNodeCount: Maximum number of nodes in the node pool. Must be greater
-	// than total_min_node_count. There has to be enough quota to scale up the
-	// cluster. The total_*_node_count fields are mutually exclusive with the
-	// *_node_count fields.
+	// than or equal to total_min_node_count. There has to be enough quota to scale
+	// up the cluster. The total_*_node_count fields are mutually exclusive with
+	// the *_node_count fields.
 	TotalMaxNodeCount int64 `json:"totalMaxNodeCount,omitempty"`
 	// TotalMinNodeCount: Minimum number of nodes in the node pool. Must be greater
-	// than 1 less than total_max_node_count. The total_*_node_count fields are
-	// mutually exclusive with the *_node_count fields.
+	// than or equal to 0 and less than or equal to total_max_node_count. The
+	// total_*_node_count fields are mutually exclusive with the *_node_count
+	// fields.
 	TotalMinNodeCount int64 `json:"totalMinNodeCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Autoprovisioned") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7187,6 +7210,60 @@ type UpgradeEvent struct {
 
 func (s UpgradeEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpgradeInfoEvent: UpgradeInfoEvent is a notification sent to customers about
+// the upgrade information of a resource.
+type UpgradeInfoEvent struct {
+	// CurrentVersion: The current version before the upgrade.
+	CurrentVersion string `json:"currentVersion,omitempty"`
+	// Description: A brief description of the event.
+	Description string `json:"description,omitempty"`
+	// EndTime: The time when the operation ended.
+	EndTime string `json:"endTime,omitempty"`
+	// Operation: The operation associated with this upgrade.
+	Operation string `json:"operation,omitempty"`
+	// Resource: Optional relative path to the resource. For example in node pool
+	// upgrades, the relative path of the node pool.
+	Resource string `json:"resource,omitempty"`
+	// ResourceType: The resource type associated with the upgrade.
+	//
+	// Possible values:
+	//   "UPGRADE_RESOURCE_TYPE_UNSPECIFIED" - Default value. This shouldn't be
+	// used.
+	//   "MASTER" - Master / control plane
+	//   "NODE_POOL" - Node pool
+	ResourceType string `json:"resourceType,omitempty"`
+	// StartTime: The time when the operation was started.
+	StartTime string `json:"startTime,omitempty"`
+	// State: Output only. The state of the upgrade.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - STATE_UNSPECIFIED indicates the state is
+	// unspecified.
+	//   "STARTED" - STARTED indicates the upgrade has started.
+	//   "SUCCEEDED" - SUCCEEDED indicates the upgrade has completed successfully.
+	//   "FAILED" - FAILED indicates the upgrade has failed.
+	//   "CANCELED" - CANCELED indicates the upgrade has canceled.
+	State string `json:"state,omitempty"`
+	// TargetVersion: The target version for the upgrade.
+	TargetVersion string `json:"targetVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CurrentVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CurrentVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpgradeInfoEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeInfoEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

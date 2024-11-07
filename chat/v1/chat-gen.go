@@ -4144,10 +4144,12 @@ func (s MembershipBatchUpdatedEventData) MarshalJSON() ([]byte, error) {
 // MembershipCount: Represents the count of memberships of a space, grouped
 // into categories.
 type MembershipCount struct {
-	// JoinedDirectHumanUserCount: Count of human users that have directly joined
-	// the space, not counting users joined by having membership in a joined group.
+	// JoinedDirectHumanUserCount: Output only. Count of human users that have
+	// directly joined the space, not counting users joined by having membership in
+	// a joined group.
 	JoinedDirectHumanUserCount int64 `json:"joinedDirectHumanUserCount,omitempty"`
-	// JoinedGroupCount: Count of all groups that have directly joined the space.
+	// JoinedGroupCount: Output only. Count of all groups that have directly joined
+	// the space.
 	JoinedGroupCount int64 `json:"joinedGroupCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "JoinedDirectHumanUserCount")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -4239,10 +4241,11 @@ func (s MembershipUpdatedEventData) MarshalJSON() ([]byte, error) {
 
 // Message: A message in a Google Chat space.
 type Message struct {
-	// AccessoryWidgets: One or more interactive widgets that appear at the bottom
-	// of a message. You can add accessory widgets to messages that contain text,
-	// cards, or both text and cards. Not supported for messages that contain
-	// dialogs. For details, see Add interactive widgets at the bottom of a message
+	// AccessoryWidgets: Optional. One or more interactive widgets that appear at
+	// the bottom of a message. You can add accessory widgets to messages that
+	// contain text, cards, or both text and cards. Not supported for messages that
+	// contain dialogs. For details, see Add interactive widgets at the bottom of a
+	// message
 	// (https://developers.google.com/workspace/chat/create-messages#add-accessory-widgets).
 	// Creating a message with accessory widgets requires [app authentication]
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
@@ -4258,7 +4261,7 @@ type Message struct {
 	ArgumentText string `json:"argumentText,omitempty"`
 	// AttachedGifs: Output only. GIF images that are attached to the message.
 	AttachedGifs []*AttachedGif `json:"attachedGifs,omitempty"`
-	// Attachment: User-uploaded attachment.
+	// Attachment: Optional. User-uploaded attachment.
 	Attachment []*Attachment `json:"attachment,omitempty"`
 	// Cards: Deprecated: Use `cards_v2` instead. Rich, formatted, and interactive
 	// cards that you can use to display UI elements such as: formatted texts,
@@ -4266,7 +4269,7 @@ type Message struct {
 	// plain-text body of the message. `cards` and `cards_v2` can have a maximum
 	// size of 32 KB.
 	Cards []*Card `json:"cards,omitempty"`
-	// CardsV2: An array of cards
+	// CardsV2: Optional. An array of cards
 	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/cards).
 	// Only Chat apps can create cards. If your Chat app authenticates as a user
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
@@ -4275,9 +4278,9 @@ type Message struct {
 	// (https://developers.google.com/workspace/chat/create-messages). Card builder
 	// (https://addons.gsuite.google.com/uikit/builder)
 	CardsV2 []*CardWithId `json:"cardsV2,omitempty"`
-	// ClientAssignedMessageId: Optional. A custom ID for the message. You can use
-	// field to identify a message, or to get, delete, or update a message. To set
-	// a custom ID, specify the `messageId`
+	// ClientAssignedMessageId: Optional. Optional. A custom ID for the message.
+	// You can use field to identify a message, or to get, delete, or update a
+	// message. To set a custom ID, specify the `messageId`
 	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages/create#body.QUERY_PARAMETERS.message_id)
 	// field when you create the message. For details, see Name a message
 	// (https://developers.google.com/workspace/chat/create-messages#name_a_created_message).
@@ -4297,8 +4300,9 @@ type Message struct {
 	// EmojiReactionSummaries: Output only. The list of emoji reaction summaries on
 	// the message.
 	EmojiReactionSummaries []*EmojiReactionSummary `json:"emojiReactionSummaries,omitempty"`
-	// FallbackText: A plain-text description of the message's cards, used when the
-	// actual cards can't be displayed—for example, mobile notifications.
+	// FallbackText: Optional. A plain-text description of the message's cards,
+	// used when the actual cards can't be displayed—for example, mobile
+	// notifications.
 	FallbackText string `json:"fallbackText,omitempty"`
 	// FormattedText: Output only. Contains the message `text` with markups added
 	// to communicate formatting. This field might not capture all formatting
@@ -4322,7 +4326,7 @@ type Message struct {
 	// preview pattern. For more information, see Preview links
 	// (https://developers.google.com/workspace/chat/preview-links).
 	MatchedUrl *MatchedUrl `json:"matchedUrl,omitempty"`
-	// Name: Resource name of the message. Format:
+	// Name: Identifier. Resource name of the message. Format:
 	// `spaces/{space}/messages/{message}` Where `{space}` is the ID of the space
 	// where the message is posted and `{message}` is a system-assigned ID for the
 	// message. For example, `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`.
@@ -4333,10 +4337,10 @@ type Message struct {
 	// message
 	// (https://developers.google.com/workspace/chat/create-messages#name_a_created_message).
 	Name string `json:"name,omitempty"`
-	// PrivateMessageViewer: Immutable. Input for creating a message, otherwise
-	// output only. The user that can view the message. When set, the message is
-	// private and only visible to the specified user and the Chat app. To include
-	// this field in your request, you must call the Chat API using app
+	// PrivateMessageViewer: Optional. Immutable. Input for creating a message,
+	// otherwise output only. The user that can view the message. When set, the
+	// message is private and only visible to the specified user and the Chat app.
+	// To include this field in your request, you must call the Chat API using app
 	// authentication
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 	// and omit the following: * Attachments
@@ -4359,14 +4363,14 @@ type Message struct {
 	Sender *User `json:"sender,omitempty"`
 	// SlashCommand: Output only. Slash command information, if applicable.
 	SlashCommand *SlashCommand `json:"slashCommand,omitempty"`
-	// Space: If your Chat app authenticates as a user
+	// Space: Output only. If your Chat app authenticates as a user
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
-	// the output populates the space
+	// the output only populates the space
 	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces)
 	// `name`.
 	Space *Space `json:"space,omitempty"`
-	// Text: Plain-text body of the message. The first link to an image, video, or
-	// web page generates a preview chip
+	// Text: Optional. Plain-text body of the message. The first link to an image,
+	// video, or web page generates a preview chip
 	// (https://developers.google.com/workspace/chat/preview-links). You can also
 	// @mention a Google Chat user
 	// (https://developers.google.com/workspace/chat/format-messages#messages-@mention),
@@ -4591,9 +4595,9 @@ func (s OpenLink) MarshalJSON() ([]byte, error) {
 
 // PermissionSetting: Represents a space permission setting.
 type PermissionSetting struct {
-	// ManagersAllowed: Whether spaces managers have this permission.
+	// ManagersAllowed: Optional. Whether spaces managers have this permission.
 	ManagersAllowed bool `json:"managersAllowed,omitempty"`
-	// MembersAllowed: Whether non-manager members have this permission.
+	// MembersAllowed: Optional. Whether non-manager members have this permission.
 	MembersAllowed bool `json:"membersAllowed,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ManagersAllowed") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4618,22 +4622,23 @@ func (s PermissionSetting) MarshalJSON() ([]byte, error) {
 // updating an existing named space. To set permission settings when creating a
 // space, specify the `PredefinedPermissionSettings` field in your request.
 type PermissionSettings struct {
-	// ManageApps: Setting for managing apps in a space.
+	// ManageApps: Optional. Setting for managing apps in a space.
 	ManageApps *PermissionSetting `json:"manageApps,omitempty"`
-	// ManageMembersAndGroups: Setting for managing members and groups in a space.
+	// ManageMembersAndGroups: Optional. Setting for managing members and groups in
+	// a space.
 	ManageMembersAndGroups *PermissionSetting `json:"manageMembersAndGroups,omitempty"`
-	// ManageWebhooks: Setting for managing webhooks in a space.
+	// ManageWebhooks: Optional. Setting for managing webhooks in a space.
 	ManageWebhooks *PermissionSetting `json:"manageWebhooks,omitempty"`
-	// ModifySpaceDetails: Setting for updating space name, avatar, description and
-	// guidelines.
+	// ModifySpaceDetails: Optional. Setting for updating space name, avatar,
+	// description and guidelines.
 	ModifySpaceDetails *PermissionSetting `json:"modifySpaceDetails,omitempty"`
 	// PostMessages: Output only. Setting for posting messages in a space.
 	PostMessages *PermissionSetting `json:"postMessages,omitempty"`
-	// ReplyMessages: Setting for replying to messages in a space.
+	// ReplyMessages: Optional. Setting for replying to messages in a space.
 	ReplyMessages *PermissionSetting `json:"replyMessages,omitempty"`
-	// ToggleHistory: Setting for toggling space history on and off.
+	// ToggleHistory: Optional. Setting for toggling space history on and off.
 	ToggleHistory *PermissionSetting `json:"toggleHistory,omitempty"`
-	// UseAtMentionAll: Setting for using @all in a space.
+	// UseAtMentionAll: Optional. Setting for using @all in a space.
 	UseAtMentionAll *PermissionSetting `json:"useAtMentionAll,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ManageApps") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5060,7 +5065,8 @@ type Space struct {
 	// the original creation time. Only populated in the output when `spaceType` is
 	// `GROUP_CHAT` or `SPACE`.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: The space's display name. Required when creating a space
+	// DisplayName: Optional. The space's display name. Required when creating a
+	// space
 	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces/create)
 	// with a `spaceType` of `SPACE`. If you receive the error message
 	// `ALREADY_EXISTS` when creating a space or updating the `displayName`, try a
@@ -5068,12 +5074,13 @@ type Space struct {
 	// organization might already use this display name. For direct messages, this
 	// field might be empty. Supports up to 128 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// ExternalUserAllowed: Immutable. Whether this space permits any Google Chat
-	// user as a member. Input when creating a space in a Google Workspace
-	// organization. Omit this field when creating spaces in the following
-	// conditions: * The authenticated user uses a consumer account (unmanaged user
-	// account). By default, a space created by a consumer account permits any
-	// Google Chat user. For existing spaces, this field is output only.
+	// ExternalUserAllowed: Optional. Immutable. Whether this space permits any
+	// Google Chat user as a member. Input when creating a space in a Google
+	// Workspace organization. Omit this field when creating spaces in the
+	// following conditions: * The authenticated user uses a consumer account
+	// (unmanaged user account). By default, a space created by a consumer account
+	// permits any Google Chat user. For existing spaces, this field is output
+	// only.
 	ExternalUserAllowed bool `json:"externalUserAllowed,omitempty"`
 	// ImportMode: Optional. Whether this space is created in `Import Mode` as part
 	// of a data migration into Google Workspace. While spaces are being imported,
@@ -5087,9 +5094,9 @@ type Space struct {
 	// member type. Populated when the `space_type` is `SPACE`, `DIRECT_MESSAGE` or
 	// `GROUP_CHAT`.
 	MembershipCount *MembershipCount `json:"membershipCount,omitempty"`
-	// Name: Resource name of the space. Format: `spaces/{space}` Where `{space}`
-	// represents the system-assigned ID for the space. You can obtain the space ID
-	// by calling the `spaces.list()`
+	// Name: Identifier. Resource name of the space. Format: `spaces/{space}` Where
+	// `{space}` represents the system-assigned ID for the space. You can obtain
+	// the space ID by calling the `spaces.list()`
 	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces/list)
 	// method or from the space URL. For example, if the space URL is
 	// `https://mail.google.com/mail/u/0/#chat/space/AAAAAAAAA`, the space ID is
@@ -5114,10 +5121,11 @@ type Space struct {
 	// SingleUserBotDm: Optional. Whether the space is a DM between a Chat app and
 	// a single human.
 	SingleUserBotDm bool `json:"singleUserBotDm,omitempty"`
-	// SpaceDetails: Details about the space including description and rules.
+	// SpaceDetails: Optional. Details about the space including description and
+	// rules.
 	SpaceDetails *SpaceDetails `json:"spaceDetails,omitempty"`
-	// SpaceHistoryState: The message history state for messages and threads in
-	// this space.
+	// SpaceHistoryState: Optional. The message history state for messages and
+	// threads in this space.
 	//
 	// Possible values:
 	//   "HISTORY_STATE_UNSPECIFIED" - Default value. Do not use.
@@ -5139,8 +5147,8 @@ type Space struct {
 	//   "UNTHREADED_MESSAGES" - Direct messages (DMs) between two people and group
 	// conversations between 3 or more people.
 	SpaceThreadingState string `json:"spaceThreadingState,omitempty"`
-	// SpaceType: The type of space. Required when creating a space or updating the
-	// space type of a space. Output only for other usage.
+	// SpaceType: Optional. The type of space. Required when creating a space or
+	// updating the space type of a space. Output only for other usage.
 	//
 	// Possible values:
 	//   "SPACE_TYPE_UNSPECIFIED" - Reserved.
@@ -5549,7 +5557,7 @@ func (s TextParagraph) MarshalJSON() ([]byte, error) {
 // (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages/create#messagereplyoption)
 // field to determine what happens if no matching thread is found.
 type Thread struct {
-	// Name: Resource name of the thread. Example:
+	// Name: Identifier. Resource name of the thread. Example:
 	// `spaces/{space}/threads/{thread}`
 	Name string `json:"name,omitempty"`
 	// ThreadKey: Optional. Input for creating or updating a thread. Otherwise,
@@ -6951,9 +6959,9 @@ type SpacesPatchCall struct {
 // You can authenticate and authorize this method with administrator privileges
 // by setting the `use_admin_access` field in the request.
 //
-//   - name: Resource name of the space. Format: `spaces/{space}` Where `{space}`
-//     represents the system-assigned ID for the space. You can obtain the space
-//     ID by calling the `spaces.list()`
+//   - name: Identifier. Resource name of the space. Format: `spaces/{space}`
+//     Where `{space}` represents the system-assigned ID for the space. You can
+//     obtain the space ID by calling the `spaces.list()`
 //     (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces/list)
 //     method or from the space URL. For example, if the space URL is
 //     `https://mail.google.com/mail/u/0/#chat/space/AAAAAAAAA`, the space ID is
@@ -8863,7 +8871,7 @@ type SpacesMessagesPatchCall struct {
 // When using app authentication, requests can only update messages created by
 // the calling Chat app.
 //
-//   - name: Resource name of the message. Format:
+//   - name: Identifier. Resource name of the message. Format:
 //     `spaces/{space}/messages/{message}` Where `{space}` is the ID of the space
 //     where the message is posted and `{message}` is a system-assigned ID for
 //     the message. For example,
@@ -9009,7 +9017,7 @@ type SpacesMessagesUpdateCall struct {
 // When using app authentication, requests can only update messages created by
 // the calling Chat app.
 //
-//   - name: Resource name of the message. Format:
+//   - name: Identifier. Resource name of the message. Format:
 //     `spaces/{space}/messages/{message}` Where `{space}` is the ID of the space
 //     where the message is posted and `{message}` is a system-assigned ID for
 //     the message. For example,

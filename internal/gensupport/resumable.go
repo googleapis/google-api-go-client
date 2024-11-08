@@ -43,6 +43,8 @@ type ResumableUpload struct {
 	// retries should happen.
 	ChunkRetryDeadline time.Duration
 
+	// ChunkTransferTimeout configures the per-chunk transfer timeout. If a chunk upload stalls for longer than
+	// this duration, the upload will be retried.
 	ChunkTransferTimeout time.Duration
 
 	// Track current request invocation ID and attempt count for retry metrics

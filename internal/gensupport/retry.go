@@ -25,7 +25,8 @@ type Backoff interface {
 // These are declared as global variables so that tests can overwrite them.
 var (
 	// Default per-chunk deadline for resumable uploads.
-	defaultRetryDeadline   = 32 * time.Second
+	defaultRetryDeadline = 32 * time.Second
+	// Default per-chunk transfer timeout for resumable uploads.
 	defaultTransferTimeout = 8 * time.Second
 	// Default backoff timer.
 	backoff = func() Backoff {

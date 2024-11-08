@@ -259,6 +259,16 @@ func ChunkSize(size int) MediaOption {
 	return chunkSizeOption(size)
 }
 
+type chunkTransferTimeoutOption time.Duration
+
+func (cd chunkTransferTimeoutOption) setOptions(o *MediaOptions) {
+	o.ChunkTransferTimeout = time.Duration(cd)
+}
+
+func ChunkTransferTimeout(deadline time.Duration) MediaOption {
+	return chunkTransferTimeoutOption(deadline)
+}
+
 type chunkRetryDeadlineOption time.Duration
 
 func (cd chunkRetryDeadlineOption) setOptions(o *MediaOptions) {
@@ -283,6 +293,7 @@ type MediaOptions struct {
 	ForceEmptyContentType bool
 	ChunkSize             int
 	ChunkRetryDeadline    time.Duration
+	ChunkTransferTimeout  time.Duration
 }
 
 // ProcessMediaOptions stores options from opts in a MediaOptions.

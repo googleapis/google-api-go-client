@@ -43,6 +43,8 @@ type ResumableUpload struct {
 	// retries should happen.
 	ChunkRetryDeadline time.Duration
 
+	ChunkTransferTimeout time.Duration
+
 	// Track current request invocation ID and attempt count for retry metrics
 	// and idempotency headers.
 	invocationID string
@@ -161,7 +163,6 @@ func (rx *ResumableUpload) transferChunk(ctx context.Context) (*http.Response, e
 // rx is private to the auto-generated API code.
 // Exactly one of resp or err will be nil.  If resp is non-nil, the caller must call resp.Body.Close.
 func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err error) {
-
 	// There are a couple of cases where it's possible for err and resp to both
 	// be non-nil. However, we expose a simpler contract to our callers: exactly
 	// one of resp and err will be non-nil. This means that any response body
@@ -188,6 +189,14 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 	// Configure retryable error criteria.
 	errorFunc := rx.Retry.errorFunc()
 
+	// Configure per-chunk transfer timeout.
+	var transferTimeout time.Duration
+	if rx.ChunkRetryDeadline != 0 {
+		transferTimeout = rx.ChunkTransferTimeout
+	} else {
+		transferTimeout = defaultTransferTimeout
+	}
+
 	// Configure per-chunk retry deadline.
 	var retryDeadline time.Duration
 	if rx.ChunkRetryDeadline != 0 {
@@ -209,6 +218,7 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 		// Retry loop for a single chunk.
 		for {
 			pauseTimer := time.NewTimer(pause)
+
 			select {
 			case <-ctx.Done():
 				quitAfterTimer.Stop()
@@ -241,15 +251,22 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 			default:
 			}
 
-			resp, err = rx.transferChunk(ctx)
+			rCtx, cancel := context.WithTimeout(ctx, transferTimeout)
+			defer cancel()
+
+			resp, err = rx.transferChunk(rCtx)
 
 			var status int
 			if resp != nil {
 				status = resp.StatusCode
 			}
 
+			if errors.Is(err, context.DeadlineExceeded) {
+				continue
+			}
+
 			// Check if we should retry the request.
-			if !errorFunc(status, err) {
+			if !errorFunc(status, err) && rCtx.Err() != nil {
 				quitAfterTimer.Stop()
 				break
 			}

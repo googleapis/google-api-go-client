@@ -211,6 +211,7 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 	// Send all chunks.
 	for {
 		var pause time.Duration
+
 		// Each chunk gets its own initialized-at-zero backoff and invocation ID.
 		bo := rx.Retry.backoff()
 		quitAfterTimer := time.NewTimer(retryDeadline)
@@ -220,7 +221,6 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 		// Retry loop for a single chunk.
 		for {
 			pauseTimer := time.NewTimer(pause)
-
 			select {
 			case <-ctx.Done():
 				quitAfterTimer.Stop()

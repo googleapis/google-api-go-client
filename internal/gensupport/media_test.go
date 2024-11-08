@@ -296,7 +296,7 @@ func TestResumableUpload(t *testing.T) {
 		if test.chunkTransferTimeOut != 0 {
 			if got := mi.ResumableUpload(""); got != nil {
 				if got.ChunkTransferTimeout != test.chunkTransferTimeOut {
-					t.Errorf("%s: ChunkRetryDeadline: got %v, want %v", test.desc, got.ChunkTransferTimeout, test.chunkTransferTimeOut)
+					t.Errorf("%s: ChunkTransferTimeout: got %v, want %v", test.desc, got.ChunkTransferTimeout, test.chunkTransferTimeOut)
 				}
 			} else {
 				t.Errorf("%s: test case invalid; resumable upload is nil", test.desc)

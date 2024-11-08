@@ -2118,7 +2118,7 @@ type AccountsLabelsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the labels assigned to an account.
+// List: Lists the labels owned by an account.
 //
 // - parent: The parent account. Format: accounts/{account}.
 func (r *AccountsLabelsService) List(parent string) *AccountsLabelsListCall {

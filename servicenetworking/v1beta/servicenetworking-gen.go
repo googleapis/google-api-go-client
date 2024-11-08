@@ -1544,20 +1544,25 @@ func (s EnumValue) MarshalJSON() ([]byte, error) {
 // library generation. These fields will be deprecated once the feature
 // graduates and is enabled by default.
 type ExperimentalFeatures struct {
+	// ProtobufPythonicTypesEnabled: Enables generation of protobuf code using new
+	// types that are more Pythonic which are included in `protobuf>=5.29.x`. This
+	// feature will be enabled by default 1 month after launching the feature in
+	// preview packages.
+	ProtobufPythonicTypesEnabled bool `json:"protobufPythonicTypesEnabled,omitempty"`
 	// RestAsyncIoEnabled: Enables generation of asynchronous REST clients if
 	// `rest` transport is enabled. By default, asynchronous REST clients will not
 	// be generated. This feature will be enabled by default 1 month after
 	// launching the feature in preview packages.
 	RestAsyncIoEnabled bool `json:"restAsyncIoEnabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RestAsyncIoEnabled") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "ProtobufPythonicTypesEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RestAsyncIoEnabled") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ProtobufPythonicTypesEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

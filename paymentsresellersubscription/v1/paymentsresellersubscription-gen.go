@@ -158,6 +158,7 @@ func NewPartnersService(s *Service) *PartnersService {
 	rs.Products = NewPartnersProductsService(s)
 	rs.Promotions = NewPartnersPromotionsService(s)
 	rs.Subscriptions = NewPartnersSubscriptionsService(s)
+	rs.UserSessions = NewPartnersUserSessionsService(s)
 	return rs
 }
 
@@ -169,6 +170,8 @@ type PartnersService struct {
 	Promotions *PartnersPromotionsService
 
 	Subscriptions *PartnersSubscriptionsService
+
+	UserSessions *PartnersUserSessionsService
 }
 
 func NewPartnersProductsService(s *Service) *PartnersProductsService {
@@ -195,6 +198,15 @@ func NewPartnersSubscriptionsService(s *Service) *PartnersSubscriptionsService {
 }
 
 type PartnersSubscriptionsService struct {
+	s *Service
+}
+
+func NewPartnersUserSessionsService(s *Service) *PartnersUserSessionsService {
+	rs := &PartnersUserSessionsService{s: s}
+	return rs
+}
+
+type PartnersUserSessionsService struct {
 	s *Service
 }
 
@@ -301,6 +313,37 @@ func (s GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse) Mar
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1CreateSubscriptionIntent: Intent
+// message for creating a Subscription resource.
+type GoogleCloudPaymentsResellerSubscriptionV1CreateSubscriptionIntent struct {
+	// Parent: Required. The parent resource name, which is the identifier of the
+	// partner.
+	Parent string `json:"parent,omitempty"`
+	// Subscription: Required. The Subscription to be created.
+	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
+	// SubscriptionId: Required. Identifies the subscription resource on the
+	// Partner side. The value is restricted to 63 ASCII characters at the maximum.
+	// If a subscription was previously created with the same subscription_id, we
+	// will directly return that one.
+	SubscriptionId string `json:"subscriptionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Parent") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPaymentsResellerSubscriptionV1CreateSubscriptionIntent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1CreateSubscriptionIntent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudPaymentsResellerSubscriptionV1Duration: Describes the length of a
 // period of a time.
 type GoogleCloudPaymentsResellerSubscriptionV1Duration struct {
@@ -330,6 +373,30 @@ type GoogleCloudPaymentsResellerSubscriptionV1Duration struct {
 
 func (s GoogleCloudPaymentsResellerSubscriptionV1Duration) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Duration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionIntent: Intent
+// for entitling the previously provisioned subscription to an end user.
+type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionIntent struct {
+	// Name: Required. The name of the subscription resource that is entitled to
+	// the current end user.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionIntent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionIntent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -608,6 +675,58 @@ func (s GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails) Mars
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest:
+// [Preview only] Request to generate a user session.
+type GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest struct {
+	// IntentPayload: The user intent to generate the user session.
+	IntentPayload *GoogleCloudPaymentsResellerSubscriptionV1IntentPayload `json:"intentPayload,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IntentPayload") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IntentPayload") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse:
+// [Preview only] Response that contains the details for generated user
+// session.
+type GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse struct {
+	// UserSession: The generated user session. The token size of proportional to
+	// the size of the intent payload. Therefore, please be mindful of keeping the
+	// request intent payload reasonably small.
+	UserSession *GoogleCloudPaymentsResellerSubscriptionV1UserSession `json:"userSession,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "UserSession") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UserSession") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload: Payload specific
 // to Google One products.
 type GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload struct {
@@ -658,6 +777,31 @@ type GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload struct {
 
 func (s GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1IntentPayload: The payload that
+// describes the user intent.
+type GoogleCloudPaymentsResellerSubscriptionV1IntentPayload struct {
+	// CreateIntent: The request to create a subscription.
+	CreateIntent *GoogleCloudPaymentsResellerSubscriptionV1CreateSubscriptionIntent `json:"createIntent,omitempty"`
+	// EntitleIntent: The request to entitle a subscription.
+	EntitleIntent *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionIntent `json:"entitleIntent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateIntent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateIntent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPaymentsResellerSubscriptionV1IntentPayload) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1IntentPayload
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1425,6 +1569,45 @@ type GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse str
 
 func (s GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1UserSession: A user session
+// contains a short-lived token that includes information required to interact
+// with Google Payments Reseller Platform using the following web endpoints. -
+// A user session token should be generated dynamically for an authenticated
+// user. You should refrain from sharing a token directly with a user in an
+// unauthenticated context, such as SMS, or email. - You can re-generate new
+// session tokens repeatedly for same `generate` request if necessary,
+// regardless of the previous tokens being expired or not. You don't need to
+// worry about multiple sessions resulting in duplicate fulfillments as
+// guaranteed by the same subscription id. Please refer to the Google Managed
+// Signup
+// (/payments/reseller/subscription/reference/index/User.Signup.Integration/Goog
+// le.Managed.Signup.\(In.Preview\)) documentation for additional integration
+// details.
+type GoogleCloudPaymentsResellerSubscriptionV1UserSession struct {
+	// ExpireTime: Output only. The time at which the user session expires.
+	ExpireTime string `json:"expireTime,omitempty"`
+	// Token: Output only. The encrypted token of the user session, including the
+	// information of the user's intent and request. This token should be provided
+	// when redirecting the user to Google.
+	Token string `json:"token,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpireTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudPaymentsResellerSubscriptionV1UserSession) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1UserSession
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2766,6 +2949,114 @@ func (c *PartnersSubscriptionsUndoCancelCall) Do(opts ...googleapi.CallOption) (
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type PartnersUserSessionsGenerateCall struct {
+	s                                                                   *Service
+	parent                                                              string
+	googlecloudpaymentsresellersubscriptionv1generateusersessionrequest *GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest
+	urlParams_                                                          gensupport.URLParams
+	ctx_                                                                context.Context
+	header_                                                             http.Header
+}
+
+// Generate: This API replaces user authorized OAuth consnet based APIs
+// (Create, Entitle). Generates a short-lived token for a user session based on
+// the user intent. You can use the session token to redirect the user to
+// Google to finish the signup flow. You can re-generate new session token
+// repeatedly for same request if necessary, regardless of the previous tokens
+// being expired or not.
+//
+//   - parent: The parent, the partner that can resell. Format:
+//     partners/{partner}.
+func (r *PartnersUserSessionsService) Generate(parent string, googlecloudpaymentsresellersubscriptionv1generateusersessionrequest *GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest) *PartnersUserSessionsGenerateCall {
+	c := &PartnersUserSessionsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudpaymentsresellersubscriptionv1generateusersessionrequest = googlecloudpaymentsresellersubscriptionv1generateusersessionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PartnersUserSessionsGenerateCall) Fields(s ...googleapi.Field) *PartnersUserSessionsGenerateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PartnersUserSessionsGenerateCall) Context(ctx context.Context) *PartnersUserSessionsGenerateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PartnersUserSessionsGenerateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersUserSessionsGenerateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1generateusersessionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userSessions:generate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "paymentsresellersubscription.partners.userSessions.generate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse.ServerR
+// esponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *PartnersUserSessionsGenerateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

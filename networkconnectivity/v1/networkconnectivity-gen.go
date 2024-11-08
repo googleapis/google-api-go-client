@@ -1190,6 +1190,33 @@ func (s Hub) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// HubStatusEntry: The hub status entry.
+type HubStatusEntry struct {
+	// Count: The number of status. If group_by is not set in the request, the
+	// default is 1.
+	Count int64 `json:"count,omitempty"`
+	// GroupBy: The same group_by field from the request.
+	GroupBy string `json:"groupBy,omitempty"`
+	// PscPropagationStatus: The PSC propagation status.
+	PscPropagationStatus *PscPropagationStatus `json:"pscPropagationStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HubStatusEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod HubStatusEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InterconnectAttachment: InterconnectAttachment that this route applies to.
 type InterconnectAttachment struct {
 	// Region: Optional. Cloud region to install this policy-based route on
@@ -1375,11 +1402,13 @@ func (s LinkedInterconnectAttachments) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// LinkedProducerVpcNetwork: Next ID: 7
 type LinkedProducerVpcNetwork struct {
 	// ExcludeExportRanges: Optional. IP ranges encompassing the subnets to be
 	// excluded from peering.
 	ExcludeExportRanges []string `json:"excludeExportRanges,omitempty"`
+	// IncludeExportRanges: Optional. IP ranges allowed to be included from
+	// peering.
+	IncludeExportRanges []string `json:"includeExportRanges,omitempty"`
 	// Network: Immutable. The URI of the Service Consumer VPC that the Producer
 	// VPC is peered with.
 	Network string `json:"network,omitempty"`
@@ -2531,6 +2560,90 @@ func (s PscConnection) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PscPropagationStatus: The PSC propagation status in a hub.
+type PscPropagationStatus struct {
+	// Code: The propagation status.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - The code is unspecified.
+	//   "READY" - The propagated PSC connection is ready.
+	//   "PROPAGATING" - PSC connection is propagating. This is a transient state.
+	//   "ERROR_PRODUCER_PROPAGATED_CONNECTION_LIMIT_EXCEEDED" - The PSC connection
+	// propagation failed because the VPC network or the project of the target
+	// spoke has exceeded the connection limit set by the producer.
+	//   "ERROR_PRODUCER_NAT_IP_SPACE_EXHAUSTED" - The PSC connection propagation
+	// failed because the NAT IP subnet space has been exhausted. It is equivalent
+	// to the `Needs attention` status of the PSC connection. See
+	// https://cloud.google.com/vpc/docs/about-accessing-vpc-hosted-services-endpoints#connection-statuses.
+	//   "ERROR_PRODUCER_QUOTA_EXCEEDED" - PSC connection propagation failed
+	// because the `PSC_ILB_CONSUMER_FORWARDING_RULES_PER_PRODUCER_NETWORK` quota
+	// in the producer VPC network has been exceeded.
+	//   "ERROR_CONSUMER_QUOTA_EXCEEDED" - The PSC connection propagation failed
+	// because the `PSC_PROPAGATED_CONNECTIONS_PER_VPC_NETWORK` quota in the
+	// consumer VPC network has been exceeded.
+	Code string `json:"code,omitempty"`
+	// Message: The human-readable summary of the PSC connection propagation
+	// status.
+	Message string `json:"message,omitempty"`
+	// SourceForwardingRule: The name of the forwarding rule exported to the hub.
+	SourceForwardingRule string `json:"sourceForwardingRule,omitempty"`
+	// SourceGroup: The name of the group that the source spoke belongs to.
+	SourceGroup string `json:"sourceGroup,omitempty"`
+	// SourceSpoke: The name of the spoke that the source forwarding rule belongs
+	// to.
+	SourceSpoke string `json:"sourceSpoke,omitempty"`
+	// TargetGroup: The name of the group that the target spoke belongs to.
+	TargetGroup string `json:"targetGroup,omitempty"`
+	// TargetSpoke: The name of the spoke that the source forwarding rule
+	// propagates to.
+	TargetSpoke string `json:"targetSpoke,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscPropagationStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod PscPropagationStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// QueryHubStatusResponse: The response for HubService.QueryHubStatus.
+type QueryHubStatusResponse struct {
+	// HubStatusEntries: The list of hub status.
+	HubStatusEntries []*HubStatusEntry `json:"hubStatusEntries,omitempty"`
+	// NextPageToken: The token for the next page of the response. To see more
+	// results, use this value as the page_token for your next request. If this
+	// value is empty, there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "HubStatusEntries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HubStatusEntries") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QueryHubStatusResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryHubStatusResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RegionalEndpoint: The RegionalEndpoint resource.
 type RegionalEndpoint struct {
 	// AccessType: Required. The access type of this regional endpoint. This field
@@ -2870,7 +2983,7 @@ func (s RoutingVPC) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceClass: The ServiceClass resource. Next id: 9
+// ServiceClass: The ServiceClass resource.
 type ServiceClass struct {
 	// CreateTime: Output only. Time when the ServiceClass was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2913,7 +3026,7 @@ func (s ServiceClass) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceConnectionMap: The ServiceConnectionMap resource. Next id: 15
+// ServiceConnectionMap: The ServiceConnectionMap resource.
 type ServiceConnectionMap struct {
 	// ConsumerPscConfigs: The PSC configurations on consumer side.
 	ConsumerPscConfigs []*ConsumerPscConfig `json:"consumerPscConfigs,omitempty"`
@@ -2977,7 +3090,7 @@ func (s ServiceConnectionMap) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceConnectionPolicy: The ServiceConnectionPolicy resource. Next id: 12
+// ServiceConnectionPolicy: The ServiceConnectionPolicy resource.
 type ServiceConnectionPolicy struct {
 	// CreateTime: Output only. Time when the ServiceConnectionPolicy was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3041,7 +3154,7 @@ func (s ServiceConnectionPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceConnectionToken: The ServiceConnectionToken resource. Next id: 10
+// ServiceConnectionToken: The ServiceConnectionToken resource.
 type ServiceConnectionToken struct {
 	// CreateTime: Output only. Time when the ServiceConnectionToken was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3152,8 +3265,7 @@ type Spoke struct {
 	// the following form:
 	// `projects/{project_number}/locations/{region}/spokes/{spoke_id}`
 	Name string `json:"name,omitempty"`
-	// Reasons: Output only. The reasons for current state of the spoke. Only
-	// present when the spoke is in the `INACTIVE` state.
+	// Reasons: Output only. The reasons for current state of the spoke.
 	Reasons []*StateReason `json:"reasons,omitempty"`
 	// SpokeType: Output only. The type of resource associated with the spoke.
 	//
@@ -3260,6 +3372,11 @@ type SpokeStateReasonCount struct {
 	//   "PAUSED" - The spoke has been deactivated internally.
 	//   "FAILED" - Network Connectivity Center encountered errors while accepting
 	// the spoke.
+	//   "UPDATE_PENDING_REVIEW" - The proposed spoke update is pending review.
+	//   "UPDATE_REJECTED" - The proposed spoke update has been rejected by the hub
+	// administrator.
+	//   "UPDATE_FAILED" - Network Connectivity Center encountered errors while
+	// accepting the spoke update.
 	StateReasonCode string `json:"stateReasonCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3358,6 +3475,11 @@ type StateReason struct {
 	//   "PAUSED" - The spoke has been deactivated internally.
 	//   "FAILED" - Network Connectivity Center encountered errors while accepting
 	// the spoke.
+	//   "UPDATE_PENDING_REVIEW" - The proposed spoke update is pending review.
+	//   "UPDATE_REJECTED" - The proposed spoke update has been rejected by the hub
+	// administrator.
+	//   "UPDATE_FAILED" - Network Connectivity Center encountered errors while
+	// accepting the spoke update.
 	Code string `json:"code,omitempty"`
 	// Message: Human-readable details about this reason.
 	Message string `json:"message,omitempty"`
@@ -4814,6 +4936,185 @@ func (c *ProjectsLocationsGlobalHubsPatchCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
+}
+
+type ProjectsLocationsGlobalHubsQueryStatusCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// QueryStatus: Query PSC propagation status the status of a Network
+// Connectivity Center hub.
+//
+// - name: The name of the hub.
+func (r *ProjectsLocationsGlobalHubsService) QueryStatus(name string) *ProjectsLocationsGlobalHubsQueryStatusCall {
+	c := &ProjectsLocationsGlobalHubsQueryStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression that filters the
+// list of results. The filter can be used to filter the results by the
+// following fields: * psc_propagation_status.source_spoke *
+// psc_propagation_status.source_group *
+// psc_propagation_status.source_forwarding_rule *
+// psc_propagation_status.target_spoke * psc_propagation_status.target_group *
+// psc_propagation_status.code * psc_propagation_status.message
+func (c *ProjectsLocationsGlobalHubsQueryStatusCall) Filter(filter string) *ProjectsLocationsGlobalHubsQueryStatusCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// GroupBy sets the optional parameter "groupBy": A field that counts are
+// grouped by. A comma-separated list of any of these fields: *
+// psc_propagation_status.source_spoke * psc_propagation_status.source_group *
+// psc_propagation_status.source_forwarding_rule *
+// psc_propagation_status.target_spoke * psc_propagation_status.target_group *
+// psc_propagation_status.code
+func (c *ProjectsLocationsGlobalHubsQueryStatusCall) GroupBy(groupBy string) *ProjectsLocationsGlobalHubsQueryStatusCall {
+	c.urlParams_.Set("groupBy", groupBy)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort the results in the
+// ascending order by specific fields returned in the response. A
+// comma-separated list of any of these fields: *
+// psc_propagation_status.source_spoke * psc_propagation_status.source_group *
+// psc_propagation_status.source_forwarding_rule *
+// psc_propagation_status.target_spoke * psc_propagation_status.target_group *
+// psc_propagation_status.code If `group_by` is set, the value of the
+// `order_by` field must be the same as or a subset of the `group_by` field.
+func (c *ProjectsLocationsGlobalHubsQueryStatusCall) OrderBy(orderBy string) *ProjectsLocationsGlobalHubsQueryStatusCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return per page.
+func (c *ProjectsLocationsGlobalHubsQueryStatusCall) PageSize(pageSize int64) *ProjectsLocationsGlobalHubsQueryStatusCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The page token.
+func (c *ProjectsLocationsGlobalHubsQueryStatusCall) PageToken(pageToken string) *ProjectsLocationsGlobalHubsQueryStatusCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGlobalHubsQueryStatusCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalHubsQueryStatusCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGlobalHubsQueryStatusCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalHubsQueryStatusCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGlobalHubsQueryStatusCall) Context(ctx context.Context) *ProjectsLocationsGlobalHubsQueryStatusCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGlobalHubsQueryStatusCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalHubsQueryStatusCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:queryStatus")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.global.hubs.queryStatus" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *QueryHubStatusResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsGlobalHubsQueryStatusCall) Do(opts ...googleapi.CallOption) (*QueryHubStatusResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &QueryHubStatusResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlobalHubsQueryStatusCall) Pages(ctx context.Context, f func(*QueryHubStatusResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsGlobalHubsRejectSpokeCall struct {

@@ -277,6 +277,9 @@ func TestResumableUpload(t *testing.T) {
 		if test.chunkRetryDeadline != 0 {
 			opts = append(opts, googleapi.ChunkRetryDeadline(test.chunkRetryDeadline))
 		}
+		if test.chunkTransferTimeOut != 0 {
+			opts = append(opts, googleapi.ChunkTransferTimeout(test.chunkTransferTimeOut))
+		}
 		mi := NewInfoFromMedia(test.r, opts)
 		if got, want := mi.UploadType(), test.wantUploadType; got != want {
 			t.Errorf("%s: upload type: got %q, want %q", test.desc, got, want)

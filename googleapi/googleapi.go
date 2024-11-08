@@ -269,8 +269,8 @@ func (cd chunkTransferTimeoutOption) setOptions(o *MediaOptions) {
 // transfer timeout. If a single chunk has been attempting to upload for longer than
 // this time then the old req got canceled and retried.
 // The default value is 8s.
-func ChunkTransferTimeout(deadline time.Duration) MediaOption {
-	return chunkTransferTimeoutOption(deadline)
+func ChunkTransferTimeout(timeout time.Duration) MediaOption {
+	return chunkTransferTimeoutOption(timeout)
 }
 
 type chunkRetryDeadlineOption time.Duration

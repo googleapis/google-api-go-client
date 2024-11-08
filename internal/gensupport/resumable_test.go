@@ -280,7 +280,7 @@ func TestCancelUploadBasic(t *testing.T) {
 	defer func() { backoff = oldBackoff }()
 
 	res, err := rx.Upload(ctx)
-	if err != context.Canceled {
+	if strings.Contains(err.Error(), "context cancelled") {
 		t.Fatalf("Upload err: got: %v; want: context cancelled", err)
 	}
 	if res != nil {

@@ -296,7 +296,8 @@ func (mi *MediaInfo) ResumableUpload(locURI string) *ResumableUpload {
 				mi.progressUpdater(curr, mi.size)
 			}
 		},
-		ChunkRetryDeadline: mi.chunkRetryDeadline,
+		ChunkRetryDeadline:   mi.chunkRetryDeadline,
+		ChunkTransferTimeout: mi.chunkTransferTimeout,
 	}
 }
 

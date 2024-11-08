@@ -165,6 +165,7 @@ func (rx *ResumableUpload) transferChunk(ctx context.Context) (*http.Response, e
 // rx is private to the auto-generated API code.
 // Exactly one of resp or err will be nil.  If resp is non-nil, the caller must call resp.Body.Close.
 func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err error) {
+
 	// There are a couple of cases where it's possible for err and resp to both
 	// be non-nil. However, we expose a simpler contract to our callers: exactly
 	// one of resp and err will be non-nil. This means that any response body
@@ -210,7 +211,6 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 	// Send all chunks.
 	for {
 		var pause time.Duration
-
 		// Each chunk gets its own initialized-at-zero backoff and invocation ID.
 		bo := rx.Retry.backoff()
 		quitAfterTimer := time.NewTimer(retryDeadline)
@@ -268,7 +268,8 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 			}
 
 			// Check if we should retry the request.
-			if !errorFunc(status, err) && rCtx.Err() != nil {
+			// The upload should be retried if the context is canceled due to a timeout.
+			if !errorFunc(status, err) && rCtx.Err() == nil {
 				quitAfterTimer.Stop()
 				break
 			}

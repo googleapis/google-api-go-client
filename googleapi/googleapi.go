@@ -265,6 +265,10 @@ func (cd chunkTransferTimeoutOption) setOptions(o *MediaOptions) {
 	o.ChunkTransferTimeout = time.Duration(cd)
 }
 
+// ChunkTransferTimeout returns a MediaOption which sets a per-chunk
+// transfer timeout. If a single chunk has been attempting to upload for longer than
+// this time then the old req got canceled and retried.
+// The default value is 8s.
 func ChunkTransferTimeout(deadline time.Duration) MediaOption {
 	return chunkTransferTimeoutOption(deadline)
 }

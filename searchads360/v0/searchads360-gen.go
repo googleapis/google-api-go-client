@@ -4725,6 +4725,10 @@ type GoogleAdsSearchads360V0Resources__AdGroupAd struct {
 	// The datetime is in the customer's time zone and in "yyyy-MM-dd
 	// HH:mm:ss.ssssss" format.
 	CreationTime string `json:"creationTime,omitempty"`
+	// EffectiveLabels: Output only. The resource names of effective labels
+	// attached to this ad. An effective label is a label inherited or directly
+	// assigned to this ad.
+	EffectiveLabels []string `json:"effectiveLabels,omitempty"`
 	// EngineId: Output only. ID of the ad in the external engine account. This
 	// field is for Search Ads 360 account only, for example, Yahoo Japan,
 	// Microsoft, Baidu etc. For non-Search Ads 360 entity, use "ad_group_ad.ad.id"
@@ -4798,6 +4802,41 @@ type GoogleAdsSearchads360V0Resources__AdGroupAd struct {
 
 func (s GoogleAdsSearchads360V0Resources__AdGroupAd) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupAd
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Resources__AdGroupAdEffectiveLabel: A relationship
+// between an ad group ad and an effective label. An effective label is a label
+// inherited or directly assigned to this ad group ad.
+type GoogleAdsSearchads360V0Resources__AdGroupAdEffectiveLabel struct {
+	// AdGroupAd: Immutable. The ad group ad to which the effective label is
+	// attached.
+	AdGroupAd string `json:"adGroupAd,omitempty"`
+	// Label: Immutable. The effective label assigned to the ad group ad.
+	Label string `json:"label,omitempty"`
+	// OwnerCustomerId: Output only. The ID of the Customer which owns the
+	// effective label.
+	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
+	// ResourceName: Immutable. The resource name of the ad group ad effective
+	// label. Ad group ad effective label resource names have the form:
+	// `customers/{customer_id}/adGroupAdEffectiveLabels/{ad_group_id}~{ad_id}~{labe
+	// l_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdGroupAd") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdGroupAd") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V0Resources__AdGroupAdEffectiveLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupAdEffectiveLabel
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5004,6 +5043,10 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterion struct {
 	CriterionId int64 `json:"criterionId,omitempty,string"`
 	// EffectiveCpcBidMicros: Output only. The effective CPC (cost-per-click) bid.
 	EffectiveCpcBidMicros int64 `json:"effectiveCpcBidMicros,omitempty,string"`
+	// EffectiveLabels: Output only. The resource names of effective labels
+	// attached to this ad group criterion. An effective label is a label inherited
+	// or directly assigned to this ad group criterion.
+	EffectiveLabels []string `json:"effectiveLabels,omitempty"`
 	// EngineId: Output only. ID of the ad group criterion in the external engine
 	// account. This field is for non-Google Ads account only, for example, Yahoo
 	// Japan, Microsoft, Baidu etc. For Google Ads entity, use
@@ -5180,6 +5223,43 @@ func (s *GoogleAdsSearchads360V0Resources__AdGroupCriterion) UnmarshalJSON(data 
 	}
 	s.BidModifier = float64(s1.BidModifier)
 	return nil
+}
+
+// GoogleAdsSearchads360V0Resources__AdGroupCriterionEffectiveLabel: A
+// relationship between an ad group criterion and an effective label. An
+// effective label is a label inherited or directly assigned to this ad group
+// criterion.
+type GoogleAdsSearchads360V0Resources__AdGroupCriterionEffectiveLabel struct {
+	// AdGroupCriterion: Immutable. The ad group criterion to which the effective
+	// label is attached.
+	AdGroupCriterion string `json:"adGroupCriterion,omitempty"`
+	// Label: Immutable. The effective label assigned to the ad group criterion.
+	Label string `json:"label,omitempty"`
+	// OwnerCustomerId: Output only. The ID of the Customer which owns the
+	// effective label.
+	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
+	// ResourceName: Immutable. The resource name of the ad group criterion
+	// effective label. Ad group criterion effective label resource names have the
+	// form:
+	// `customers/{customer_id}/adGroupCriterionEffectiveLabels/{ad_group_id}~{crite
+	// rion_id}~{label_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdGroupCriterion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdGroupCriterion") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V0Resources__AdGroupCriterionEffectiveLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AdGroupCriterionEffectiveLabel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel: A relationship
@@ -8274,6 +8354,40 @@ func (s GoogleAdsSearchads360V0Resources__UserList) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Resources__UserLocationView: A user location view.
+// User Location View includes all metrics aggregated at the country level, one
+// row per country. It reports metrics at the actual physical location of the
+// user by targeted or not targeted location. If other segment fields are used,
+// you may get more than one row per country.
+type GoogleAdsSearchads360V0Resources__UserLocationView struct {
+	// CountryCriterionId: Output only. Criterion Id for the country.
+	CountryCriterionId int64 `json:"countryCriterionId,omitempty,string"`
+	// ResourceName: Output only. The resource name of the user location view.
+	// UserLocation view resource names have the form:
+	// `customers/{customer_id}/userLocationViews/{country_criterion_id}~{targeting_
+	// location}`
+	ResourceName string `json:"resourceName,omitempty"`
+	// TargetingLocation: Output only. Indicates whether location was targeted or
+	// not.
+	TargetingLocation bool `json:"targetingLocation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CountryCriterionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CountryCriterionId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V0Resources__UserLocationView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__UserLocationView
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Resources__Visit: A visit.
 type GoogleAdsSearchads360V0Resources__Visit struct {
 	// AdId: Output only. Ad ID. A value of 0 indicates that the ad is
@@ -8598,6 +8712,9 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 	AdGroup *GoogleAdsSearchads360V0Resources__AdGroup `json:"adGroup,omitempty"`
 	// AdGroupAd: The ad referenced in the query.
 	AdGroupAd *GoogleAdsSearchads360V0Resources__AdGroupAd `json:"adGroupAd,omitempty"`
+	// AdGroupAdEffectiveLabel: The ad group ad effective label referenced in the
+	// query.
+	AdGroupAdEffectiveLabel *GoogleAdsSearchads360V0Resources__AdGroupAdEffectiveLabel `json:"adGroupAdEffectiveLabel,omitempty"`
 	// AdGroupAdLabel: The ad group ad label referenced in the query.
 	AdGroupAdLabel *GoogleAdsSearchads360V0Resources__AdGroupAdLabel `json:"adGroupAdLabel,omitempty"`
 	// AdGroupAsset: The ad group asset referenced in the query.
@@ -8610,6 +8727,9 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 	AdGroupBidModifier *GoogleAdsSearchads360V0Resources__AdGroupBidModifier `json:"adGroupBidModifier,omitempty"`
 	// AdGroupCriterion: The criterion referenced in the query.
 	AdGroupCriterion *GoogleAdsSearchads360V0Resources__AdGroupCriterion `json:"adGroupCriterion,omitempty"`
+	// AdGroupCriterionEffectiveLabel: The ad group criterion effective label
+	// referenced in the query.
+	AdGroupCriterionEffectiveLabel *GoogleAdsSearchads360V0Resources__AdGroupCriterionEffectiveLabel `json:"adGroupCriterionEffectiveLabel,omitempty"`
 	// AdGroupCriterionLabel: The ad group criterion label referenced in the query.
 	AdGroupCriterionLabel *GoogleAdsSearchads360V0Resources__AdGroupCriterionLabel `json:"adGroupCriterionLabel,omitempty"`
 	// AdGroupEffectiveLabel: The ad group effective label referenced in the query.
@@ -8707,6 +8827,8 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 	ShoppingPerformanceView *GoogleAdsSearchads360V0Resources__ShoppingPerformanceView `json:"shoppingPerformanceView,omitempty"`
 	// UserList: The user list referenced in the query.
 	UserList *GoogleAdsSearchads360V0Resources__UserList `json:"userList,omitempty"`
+	// UserLocationView: The user location view referenced in the query.
+	UserLocationView *GoogleAdsSearchads360V0Resources__UserLocationView `json:"userLocationView,omitempty"`
 	// Visit: The event level visit referenced in the query.
 	Visit *GoogleAdsSearchads360V0Resources__Visit `json:"visit,omitempty"`
 	// WebpageView: The webpage view referenced in the query.

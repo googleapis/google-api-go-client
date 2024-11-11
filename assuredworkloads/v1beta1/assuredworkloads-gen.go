@@ -423,8 +423,9 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	//   "FEDRAMP_MODERATE" - FedRAMP Moderate data protection controls
 	//   "US_REGIONAL_ACCESS" - Assured Workloads For US Regions data protection
 	// controls
-	//   "HIPAA" - Health Insurance Portability and Accountability Act controls
-	//   "HITRUST" - Health Information Trust Alliance controls
+	//   "HIPAA" - [DEPRECATED] Health Insurance Portability and Accountability Act
+	// controls
+	//   "HITRUST" - [DEPRECATED] Health Information Trust Alliance controls
 	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and Support
 	// controls
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
@@ -1121,8 +1122,9 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//   "FEDRAMP_MODERATE" - FedRAMP Moderate data protection controls
 	//   "US_REGIONAL_ACCESS" - Assured Workloads For US Regions data protection
 	// controls
-	//   "HIPAA" - Health Insurance Portability and Accountability Act controls
-	//   "HITRUST" - Health Information Trust Alliance controls
+	//   "HIPAA" - [DEPRECATED] Health Insurance Portability and Accountability Act
+	// controls
+	//   "HITRUST" - [DEPRECATED] Health Information Trust Alliance controls
 	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and Support
 	// controls
 	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and

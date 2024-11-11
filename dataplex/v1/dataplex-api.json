@@ -240,6 +240,16 @@
       "description": "Regional Endpoint",
       "endpointUrl": "https://dataplex.us-west8.rep.googleapis.com/",
       "location": "us-west8"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://dataplex.us.rep.googleapis.com/",
+      "location": "us"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://dataplex.eu.rep.googleapis.com/",
+      "location": "eu"
     }
   ],
   "fullyEncodeReservedExpansion": true,
@@ -6010,6 +6020,11 @@
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
                       "type": "string"
+                    },
+                    "validateOnly": {
+                      "description": "Optional. The service validates the request without performing any mutations. The default is false.",
+                      "location": "query",
+                      "type": "boolean"
                     }
                   },
                   "path": "v1/{+parent}/metadataJobs",
@@ -6224,7 +6239,7 @@
       }
     }
   },
-  "revision": "20241027",
+  "revision": "20241106",
   "rootUrl": "https://dataplex.googleapis.com/",
   "schemas": {
     "Empty": {

@@ -394,9 +394,9 @@ type Argument struct {
 	//   "FIXED_TYPE" - The argument is a variable with fully specified type, which
 	// can be a struct or an array, but not a table.
 	//   "ANY_TYPE" - The argument is any type, including struct or array, but not
-	// a table. To be added: FIXED_TABLE, ANY_TABLE
+	// a table.
 	ArgumentKind string `json:"argumentKind,omitempty"`
-	// DataType: Required unless argument_kind = ANY_TYPE.
+	// DataType: Set if argument_kind == FIXED_TYPE.
 	DataType *StandardSqlDataType `json:"dataType,omitempty"`
 	// IsAggregate: Optional. Whether the argument is an aggregate function
 	// parameter. Must be Unset for routine types other than AGGREGATE_FUNCTION.
@@ -951,22 +951,22 @@ func (s BiEngineStatistics) MarshalJSON() ([]byte, error) {
 
 // BigLakeConfiguration: Configuration for BigLake managed tables.
 type BigLakeConfiguration struct {
-	// ConnectionId: Required. The connection specifying the credentials to be used
+	// ConnectionId: Optional. The connection specifying the credentials to be used
 	// to read and write to external storage, such as Cloud Storage. The
 	// connection_id can have the form `{project}.{location}.{connection_id}` or
 	// `projects/{project}/locations/{location}/connections/{connection_id}".
 	ConnectionId string `json:"connectionId,omitempty"`
-	// FileFormat: Required. The file format the table data is stored in.
+	// FileFormat: Optional. The file format the table data is stored in.
 	//
 	// Possible values:
 	//   "FILE_FORMAT_UNSPECIFIED" - Default Value.
 	//   "PARQUET" - Apache Parquet format.
 	FileFormat string `json:"fileFormat,omitempty"`
-	// StorageUri: Required. The fully qualified location prefix of the external
+	// StorageUri: Optional. The fully qualified location prefix of the external
 	// folder where table data is stored. The '*' wildcard character is not
 	// allowed. The URI should be in the format `gs://bucket/path_to_table/`
 	StorageUri string `json:"storageUri,omitempty"`
-	// TableFormat: Required. The table format the metadata only snapshots are
+	// TableFormat: Optional. The table format the metadata only snapshots are
 	// stored in.
 	//
 	// Possible values:
@@ -9583,8 +9583,8 @@ type TrainingOptions struct {
 	ColsampleBytree float64 `json:"colsampleBytree,omitempty"`
 	// ContributionMetric: The contribution metric. Applies to contribution
 	// analysis models. Allowed formats supported are for summable and summable
-	// ratio contribution metrics. These include expressions such as "SUM(x)" or
-	// "SUM(x)/SUM(y)", where x and y are column names from the base table.
+	// ratio contribution metrics. These include expressions such as `SUM(x)` or
+	// `SUM(x)/SUM(y)`, where x and y are column names from the base table.
 	ContributionMetric string `json:"contributionMetric,omitempty"`
 	// DartNormalizeType: Type of normalization algorithm for boosted tree models
 	// using dart booster.

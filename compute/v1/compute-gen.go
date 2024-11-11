@@ -4520,8 +4520,7 @@ type BackendBucketCdnPolicy struct {
 	// identifiable) content. CACHE_ALL_STATIC Automatically cache static content,
 	// including common image formats, media (video and audio), and web assets
 	// (JavaScript and CSS). Requests and responses that are marked as uncacheable,
-	// as well as dynamic content (including HTML), will not be cached. If no value
-	// is provided for cdnPolicy.cacheMode, it defaults to CACHE_ALL_STATIC.
+	// as well as dynamic content (including HTML), will not be cached.
 	//
 	// Possible values:
 	//   "CACHE_ALL_STATIC" - Automatically cache static content, including common
@@ -5471,8 +5470,7 @@ type BackendServiceCdnPolicy struct {
 	// identifiable) content. CACHE_ALL_STATIC Automatically cache static content,
 	// including common image formats, media (video and audio), and web assets
 	// (JavaScript and CSS). Requests and responses that are marked as uncacheable,
-	// as well as dynamic content (including HTML), will not be cached. If no value
-	// is provided for cdnPolicy.cacheMode, it defaults to CACHE_ALL_STATIC.
+	// as well as dynamic content (including HTML), will not be cached.
 	//
 	// Possible values:
 	//   "CACHE_ALL_STATIC" - Automatically cache static content, including common
@@ -7217,6 +7215,7 @@ type Commitment struct {
 	//   "COMPUTE_OPTIMIZED_H3"
 	//   "GENERAL_PURPOSE"
 	//   "GENERAL_PURPOSE_C4"
+	//   "GENERAL_PURPOSE_C4A"
 	//   "GENERAL_PURPOSE_E2"
 	//   "GENERAL_PURPOSE_N2"
 	//   "GENERAL_PURPOSE_N2D"
@@ -27686,26 +27685,6 @@ func (s NetworkPerformanceConfig) MarshalJSON() ([]byte, error) {
 // network, and a flag indicating the type of routing behavior to enforce
 // network-wide.
 type NetworkRoutingConfig struct {
-	// BgpAlwaysCompareMed: Enable comparison of Multi-Exit Discriminators (MED)
-	// across routes with different neighbor ASNs when using the STANDARD BGP best
-	// path selection algorithm.
-	BgpAlwaysCompareMed bool `json:"bgpAlwaysCompareMed,omitempty"`
-	// BgpBestPathSelectionMode: The BGP best path selection algorithm to be
-	// employed within this network for dynamic routes learned by Cloud Routers.
-	// Can be LEGACY (default) or STANDARD.
-	//
-	// Possible values:
-	//   "LEGACY"
-	//   "STANDARD"
-	BgpBestPathSelectionMode string `json:"bgpBestPathSelectionMode,omitempty"`
-	// BgpInterRegionCost: Allows to define a preferred approach for handling
-	// inter-region cost in the selection process when using the STANDARD BGP best
-	// path selection algorithm. Can be DEFAULT or ADD_COST_TO_MED.
-	//
-	// Possible values:
-	//   "ADD_COST_TO_MED"
-	//   "DEFAULT"
-	BgpInterRegionCost string `json:"bgpInterRegionCost,omitempty"`
 	// RoutingMode: The network-wide routing mode to use. If set to REGIONAL, this
 	// network's Cloud Routers will only advertise routes with subnets of this
 	// network in the same region as the router. If set to GLOBAL, this network's
@@ -27716,15 +27695,15 @@ type NetworkRoutingConfig struct {
 	//   "GLOBAL"
 	//   "REGIONAL"
 	RoutingMode string `json:"routingMode,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BgpAlwaysCompareMed") to
+	// ForceSendFields is a list of field names (e.g. "RoutingMode") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BgpAlwaysCompareMed") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "RoutingMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -37340,10 +37319,6 @@ type Route struct {
 	// You can specify this as a full or partial URL. For example:
 	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/
 	NextHopInstance string `json:"nextHopInstance,omitempty"`
-	// NextHopInterRegionCost: [Output only] Internal fixed region-to-region cost
-	// that Google Cloud calculates based on factors such as network performance,
-	// distance, and available bandwidth between regions.
-	NextHopInterRegionCost int64 `json:"nextHopInterRegionCost,omitempty"`
 	// NextHopIp: The network IP address of an instance that should handle matching
 	// packets. Both IPv6 address and IPv4 addresses are supported. Must specify an
 	// IPv4 address in dot-decimal notation (e.g. 192.0.2.99) or an IPv6 address in
@@ -37351,20 +37326,9 @@ type Route struct {
 	// addresses will be displayed using RFC 5952 compressed format (e.g.
 	// 2001:db8::2d9:51:0:0). Should never be an IPv4-mapped IPv6 address.
 	NextHopIp string `json:"nextHopIp,omitempty"`
-	// NextHopMed: [Output Only] Multi-Exit Discriminator, a BGP route metric that
-	// indicates the desirability of a particular route in a network.
-	NextHopMed int64 `json:"nextHopMed,omitempty"`
 	// NextHopNetwork: The URL of the local network if it should handle matching
 	// packets.
 	NextHopNetwork string `json:"nextHopNetwork,omitempty"`
-	// NextHopOrigin: [Output Only] Indicates the origin of the route. Can be IGP
-	// (Interior Gateway Protocol), EGP (Exterior Gateway Protocol), or INCOMPLETE.
-	//
-	// Possible values:
-	//   "EGP"
-	//   "IGP"
-	//   "INCOMPLETE"
-	NextHopOrigin string `json:"nextHopOrigin,omitempty"`
 	// NextHopPeering: [Output Only] The network peering name that should handle
 	// matching packets, which should conform to RFC1035.
 	NextHopPeering string `json:"nextHopPeering,omitempty"`
@@ -45658,7 +45622,7 @@ type Subnetwork struct {
 	// VMs in this subnet to Google services.
 	PrivateIpv6GoogleAccess string `json:"privateIpv6GoogleAccess,omitempty"`
 	// Purpose: The purpose of the resource. This field can be either PRIVATE,
-	// GLOBAL_MANAGED_PROXY, REGIONAL_MANAGED_PROXY, or PRIVATE_SERVICE_CONNECT.
+	// GLOBAL_MANAGED_PROXY, REGIONAL_MANAGED_PROXY, PRIVATE_SERVICE_CONNECT, or
 	// PRIVATE is the default purpose for user-created subnets or subnets that are
 	// automatically created in auto mode networks. Subnets with purpose set to
 	// GLOBAL_MANAGED_PROXY or REGIONAL_MANAGED_PROXY are user-created subnetworks
@@ -51498,7 +51462,7 @@ type UsableSubnetwork struct {
 	// Network: Network URL.
 	Network string `json:"network,omitempty"`
 	// Purpose: The purpose of the resource. This field can be either PRIVATE,
-	// GLOBAL_MANAGED_PROXY, REGIONAL_MANAGED_PROXY, or PRIVATE_SERVICE_CONNECT.
+	// GLOBAL_MANAGED_PROXY, REGIONAL_MANAGED_PROXY, PRIVATE_SERVICE_CONNECT, or
 	// PRIVATE is the default purpose for user-created subnets or subnets that are
 	// automatically created in auto mode networks. Subnets with purpose set to
 	// GLOBAL_MANAGED_PROXY or REGIONAL_MANAGED_PROXY are user-created subnetworks

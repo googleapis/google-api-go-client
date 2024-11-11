@@ -1091,6 +1091,9 @@ type Event struct {
 	// can be used to only update the participant's response. Optional. The default
 	// is False.
 	AttendeesOmitted bool `json:"attendeesOmitted,omitempty"`
+	// BirthdayProperties: Birthday or special event data. Used if eventType is
+	// "birthday". Immutable.
+	BirthdayProperties *EventBirthdayProperties `json:"birthdayProperties,omitempty"`
 	// ColorId: The color of the event. This is an ID referring to an entry in the
 	// event section of the colors definition (see the  colors endpoint). Optional.
 	ColorId string `json:"colorId,omitempty"`
@@ -1577,6 +1580,44 @@ type EventAttendee struct {
 
 func (s EventAttendee) MarshalJSON() ([]byte, error) {
 	type NoMethod EventAttendee
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type EventBirthdayProperties struct {
+	// Contact: Resource name of the contact this birthday event is linked to. This
+	// can be used to fetch contact details from People API. Format:
+	// "people/c12345". Read-only.
+	Contact string `json:"contact,omitempty"`
+	// CustomTypeName: Custom type label specified for this event. This is
+	// populated if birthdayProperties.type is set to "custom". Read-only.
+	CustomTypeName string `json:"customTypeName,omitempty"`
+	// Type: Type of birthday or special event. Possible values are:
+	// - "anniversary" - An anniversary other than birthday. Always has a contact.
+	//
+	// - "birthday" - A birthday event. This is the default value.
+	// - "custom" - A special date whose label is further specified in the
+	// customTypeName field. Always has a contact.
+	// - "other" - A special date which does not fall into the other categories,
+	// and does not have a custom label. Always has a contact.
+	// - "self" - Calendar owner's own birthday. Cannot have a contact.  The
+	// Calendar API only supports creating events with the type "birthday". The
+	// type cannot be changed after the event is created.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Contact") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Contact") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EventBirthdayProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod EventBirthdayProperties
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

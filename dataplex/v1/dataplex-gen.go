@@ -28365,6 +28365,14 @@ func (c *ProjectsLocationsMetadataJobsCreateCall) MetadataJobId(metadataJobId st
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": The service
+// validates the request without performing any mutations. The default is
+// false.
+func (c *ProjectsLocationsMetadataJobsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsMetadataJobsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.

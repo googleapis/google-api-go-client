@@ -30951,9 +30951,7 @@ func (c *InstancesGetSerialPortOutputCall) Port(port int64) *InstancesGetSerialP
 // adjusted start position is returned as the `start` property value. You can
 // also provide a negative start position, which translates to the most recent
 // number of bytes written to the serial port. For example, -3 is interpreted
-// as the most recent 3 bytes written to the serial console. Note that the
-// negative start is bounded by the retained buffer size, and the returned
-// serial console output will not exceed the max buffer size.
+// as the most recent 3 bytes written to the serial console.
 func (c *InstancesGetSerialPortOutputCall) Start(start int64) *InstancesGetSerialPortOutputCall {
 	c.urlParams_.Set("start", fmt.Sprint(start))
 	return c

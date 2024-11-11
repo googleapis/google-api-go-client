@@ -723,8 +723,9 @@ func (s AttachedGif) MarshalJSON() ([]byte, error) {
 
 // Attachment: An attachment in Google Chat.
 type Attachment struct {
-	// AttachmentDataRef: A reference to the attachment data. This field is used
-	// with the media API to download the attachment data.
+	// AttachmentDataRef: Optional. A reference to the attachment data. This field
+	// is used to create or update messages with attachments, or with the media API
+	// to download the attachment data.
 	AttachmentDataRef *AttachmentDataRef `json:"attachmentDataRef,omitempty"`
 	// ContentName: Output only. The original file name for the content, not the
 	// full path.
@@ -738,7 +739,7 @@ type Attachment struct {
 	// DriveDataRef: Output only. A reference to the Google Drive attachment. This
 	// field is used with the Google Drive API.
 	DriveDataRef *DriveDataRef `json:"driveDataRef,omitempty"`
-	// Name: Resource name of the attachment, in the form
+	// Name: Optional. Resource name of the attachment, in the form
 	// `spaces/{space}/messages/{message}/attachments/{attachment}`.
 	Name string `json:"name,omitempty"`
 	// Source: Output only. The source of the attachment.
@@ -775,12 +776,12 @@ func (s Attachment) MarshalJSON() ([]byte, error) {
 
 // AttachmentDataRef: A reference to the attachment data.
 type AttachmentDataRef struct {
-	// AttachmentUploadToken: Opaque token containing a reference to an uploaded
-	// attachment. Treated by clients as an opaque string and used to create or
-	// update Chat messages with attachments.
+	// AttachmentUploadToken: Optional. Opaque token containing a reference to an
+	// uploaded attachment. Treated by clients as an opaque string and used to
+	// create or update Chat messages with attachments.
 	AttachmentUploadToken string `json:"attachmentUploadToken,omitempty"`
-	// ResourceName: The resource name of the attachment data. This field is used
-	// with the media API to download the attachment data.
+	// ResourceName: Optional. The resource name of the attachment data. This field
+	// is used with the media API to download the attachment data.
 	ResourceName string `json:"resourceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AttachmentUploadToken") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3014,7 +3015,7 @@ func (s GoogleAppsCardV1Section) MarshalJSON() ([]byte, error) {
 // Workspace Add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1SelectionInput struct {
-	// ExternalDataSource: An external data source, such as a relational data base.
+	// ExternalDataSource: An external data source, such as a relational database.
 	ExternalDataSource *GoogleAppsCardV1Action `json:"externalDataSource,omitempty"`
 	// Items: An array of selectable items. For example, an array of radio buttons
 	// or checkboxes. Supports up to 100 items.
@@ -3029,10 +3030,12 @@ type GoogleAppsCardV1SelectionInput struct {
 	// defaults to 3 items.
 	MultiSelectMaxSelectedItems int64 `json:"multiSelectMaxSelectedItems,omitempty"`
 	// MultiSelectMinQueryLength: For multiselect menus, the number of text
-	// characters that a user inputs before the app queries autocomplete and
-	// displays suggested items in the menu. If unspecified, defaults to 0
-	// characters for static data sources and 3 characters for external data
-	// sources.
+	// characters that a user inputs before the menu returns suggested selection
+	// items. If unset, the multiselect menu uses the following default values: *
+	// If the menu uses a static array of `SelectionInput` items, defaults to 0
+	// characters and immediately populates items from the array. * If the menu
+	// uses a dynamic data source (`multi_select_data_source`), defaults to 3
+	// characters before querying the data source to return suggested items.
 	MultiSelectMinQueryLength int64 `json:"multiSelectMinQueryLength,omitempty"`
 	// Name: Required. The name that identifies the selection input in a form input
 	// event. For details about working with form inputs, see Receive form data
@@ -3057,17 +3060,18 @@ type GoogleAppsCardV1SelectionInput struct {
 	// button.
 	//   "SWITCH" - A set of switches. Users can turn on one or more switches.
 	//   "DROPDOWN" - A dropdown menu. Users can select one item from the menu.
-	//   "MULTI_SELECT" - A multiselect menu for static or dynamic data. From the
-	// menu bar, users select one or more items. Users can also input values to
-	// populate dynamic data. For example, users can start typing the name of a
-	// Google Chat space and the widget autosuggests the space. To populate items
-	// for a multiselect menu, you can use one of the following types of data
-	// sources: * Static data: Items are specified as `SelectionItem` objects in
-	// the widget. Up to 100 items. * Google Workspace data: Items are populated
-	// using data from Google Workspace, such as Google Workspace users or Google
-	// Chat spaces. * External data: Items are populated from an external data
-	// source outside of Google Workspace. For examples of how to implement
-	// multiselect menus, see [Add a multiselect
+	//   "MULTI_SELECT" - A menu with a text box. Users can type and select one or
+	// more items. For Google Workspace Add-ons, you must populate items using a
+	// static array of `SelectionItem` objects. For Google Chat apps, you can also
+	// populate items using a dynamic data source and autosuggest items as users
+	// type in the menu. For example, users can start typing the name of a Google
+	// Chat space and the widget autosuggests the space. To dynamically populate
+	// items for a multiselect menu, use one of the following types of data
+	// sources: * Google Workspace data: Items are populated using data from Google
+	// Workspace, such as Google Workspace users or Google Chat spaces. * External
+	// data: Items are populated from an external data source outside of Google
+	// Workspace. For examples of how to implement multiselect menus for Chat apps,
+	// see [Add a multiselect
 	// menu](https://developers.google.com/workspace/chat/design-interactive-card-di
 	// alog#multiselect-menu). [Google Workspace Add-ons and Chat
 	// apps](https://developers.google.com/workspace/extend):
@@ -3091,7 +3095,8 @@ func (s GoogleAppsCardV1SelectionInput) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAppsCardV1SelectionItem: An item that users can select in a selection
-// input, such as a checkbox or switch. Google Workspace Add-ons and Chat apps
+// input, such as a checkbox or switch. Supports up to 100 items. Google
+// Workspace Add-ons and Chat apps
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1SelectionItem struct {
 	// BottomText: For multiselect menus, a text description or label that's
@@ -5670,8 +5675,8 @@ func (s TimeZone) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UpdatedWidget: The response of the updated widget. Used to provide
-// autocomplete options for a widget.
+// UpdatedWidget: For `selectionInput` widgets, returns autocomplete
+// suggestions for a multiselect menu.
 type UpdatedWidget struct {
 	// Suggestions: List of widget autocomplete results
 	Suggestions *SelectionItems `json:"suggestions,omitempty"`
@@ -8287,7 +8292,10 @@ func (c *SpacesMessagesCreateCall) MessageId(messageId string) *SpacesMessagesCr
 
 // MessageReplyOption sets the optional parameter "messageReplyOption":
 // Specifies whether a message starts a thread or replies to one. Only
-// supported in named spaces.
+// supported in named spaces. When responding to user interactions
+// (https://developers.google.com/workspace/chat/receive-respond-interactions),
+// this field is ignored. For interactions within a thread, the reply is
+// created in the same thread. Otherwise, the reply is created as a new thread.
 //
 // Possible values:
 //

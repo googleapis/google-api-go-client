@@ -377,11 +377,8 @@ type AccessSettings struct {
 	// field must have exactly one element. Example:
 	// "accessPolicies/9522/accessLevels/device_trusted"
 	AccessLevels []string `json:"accessLevels,omitempty"`
-	// ReauthSettings: Optional. Reauth settings applied to user access on a given
-	// AccessScope.
-	ReauthSettings *ReauthSettings `json:"reauthSettings,omitempty"`
 	// SessionSettings: Optional. Session settings applied to user access on a
-	// given AccessScope. Migrated from ReauthSettings
+	// given AccessScope.
 	SessionSettings *SessionSettings `json:"sessionSettings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessLevels") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1218,8 +1215,6 @@ type GcpUserAccessBinding struct {
 	// Should not be specified by the client during creation. Example:
 	// "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N"
 	Name string `json:"name,omitempty"`
-	// ReauthSettings: Optional. GCSL policy for the group key.
-	ReauthSettings *ReauthSettings `json:"reauthSettings,omitempty"`
 	// RestrictedClientApplications: Optional. A list of applications that are
 	// subject to this binding's restrictions. If the list is empty, the binding
 	// restrictions will universally apply to all applications.
@@ -1228,8 +1223,7 @@ type GcpUserAccessBinding struct {
 	// this binding's restrictions on a subset of applications. This field cannot
 	// be set if restricted_client_applications is set.
 	ScopedAccessSettings []*ScopedAccessSettings `json:"scopedAccessSettings,omitempty"`
-	// SessionSettings: Optional. GCSL policy for the group key. Migrated from
-	// ReauthSettings
+	// SessionSettings: Optional. GCSL policy for the group key.
 	SessionSettings *SessionSettings `json:"sessionSettings,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1871,58 +1865,6 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ReauthSettings: Stores settings related to Google Cloud Session Length
-// including session duration, the type of challenge (i.e. method) they should
-// face when their session expires, and other related settings.
-type ReauthSettings struct {
-	// MaxInactivity: Optional. How long a user is allowed to take between actions
-	// before a new access token must be issued. Presently only set for Cloud Apps.
-	MaxInactivity string `json:"maxInactivity,omitempty"`
-	// ReauthMethod: Optional. Reauth method when users GCP session is up.
-	//
-	// Possible values:
-	//   "REAUTH_METHOD_UNSPECIFIED" - If method undefined in API, we will use
-	// LOGIN by default.
-	//   "LOGIN" - The user will prompted to perform regular login. Users who are
-	// enrolled for two-step verification and haven't chosen to "Remember this
-	// computer" will be prompted for their second factor.
-	//   "SECURITY_KEY" - The user will be prompted to autheticate using their
-	// security key. If no security key has been configured, then we will fallback
-	// to LOGIN.
-	//   "PASSWORD" - The user will be prompted for their password.
-	ReauthMethod string `json:"reauthMethod,omitempty"`
-	// SessionLength: Optional. The session length. Setting this field to zero is
-	// equal to disabling. Reauth. Also can set infinite session by flipping the
-	// enabled bit to false below. If use_oidc_max_age is true, for OIDC apps, the
-	// session length will be the minimum of this field and OIDC max_age param.
-	SessionLength string `json:"sessionLength,omitempty"`
-	// SessionLengthEnabled: Optional. Big red button to turn off GCSL. When false,
-	// all fields set above will be disregarded and the session length is basically
-	// infinite.
-	SessionLengthEnabled bool `json:"sessionLengthEnabled,omitempty"`
-	// UseOidcMaxAge: Optional. Only useful for OIDC apps. When false, the OIDC
-	// max_age param, if passed in the authentication request will be ignored. When
-	// true, the re-auth period will be the minimum of the session_length field and
-	// the max_age OIDC param.
-	UseOidcMaxAge bool `json:"useOidcMaxAge,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MaxInactivity") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MaxInactivity") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ReauthSettings) MarshalJSON() ([]byte, error) {
-	type NoMethod ReauthSettings
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // ReplaceAccessLevelsRequest: A request to replace all existing Access Levels
 // in an Access Policy with the Access Levels provided. This is done
 // atomically.
@@ -2079,6 +2021,11 @@ type ServicePerimeter struct {
 	// Description: Description of the `ServicePerimeter` and its use. Does not
 	// affect behavior.
 	Description string `json:"description,omitempty"`
+	// Etag: Optional. An opaque identifier for the current version of the
+	// `ServicePerimeter`. Clients should not expect this to be in any specific
+	// format. If etag is not provided, the operation will be performed as if a
+	// valid etag is provided.
+	Etag string `json:"etag,omitempty"`
 	// Name: Identifier. Resource name for the `ServicePerimeter`. Format:
 	// `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`. The
 	// `service_perimeter` component must begin with a letter, followed by

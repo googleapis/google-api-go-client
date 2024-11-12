@@ -150,7 +150,7 @@
       }
     }
   },
-  "revision": "20241101",
+  "revision": "20241109",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "ListQuotaGroupsResponse": {
@@ -162,7 +162,7 @@
           "type": "string"
         },
         "quotaGroups": {
-          "description": "The methods, current quota usage and limits per each group. The quota is shared between all methods in the group. The groups are sorted in descending order based on quotaUsage.",
+          "description": "The methods, current quota usage and limits per each group. The quota is shared between all methods in the group. The groups are sorted in descending order based on quota_usage.",
           "items": {
             "$ref": "QuotaGroup"
           },

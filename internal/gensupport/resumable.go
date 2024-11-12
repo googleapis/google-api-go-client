@@ -263,12 +263,8 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 				status = resp.StatusCode
 			}
 
-			if errors.Is(err, context.DeadlineExceeded) {
-				continue
-			}
-
 			// Check if we should retry the request.
-			// The upload should be retried if the context is canceled due to a timeout.
+			// The upload should be retried if the rCtx is canceled due to a timeout.
 			if !errorFunc(status, err) && rCtx.Err() == nil {
 				quitAfterTimer.Stop()
 				break

@@ -335,12 +335,11 @@ func TestRetry_EachChunkHasItsOwnRetryDeadline(t *testing.T) {
 	}
 
 	rx := &ResumableUpload{
-		Client:               &http.Client{Transport: tr},
-		Media:                NewMediaBuffer(media, chunkSize),
-		MediaType:            "text/plain",
-		Callback:             func(int64) {},
-		ChunkRetryDeadline:   5 * time.Second,
-		ChunkTransferTimeout: 2 * time.Second,
+		Client:             &http.Client{Transport: tr},
+		Media:              NewMediaBuffer(media, chunkSize),
+		MediaType:          "text/plain",
+		Callback:           func(int64) {},
+		ChunkRetryDeadline: 5 * time.Second,
 	}
 
 	oldBackoff := backoff

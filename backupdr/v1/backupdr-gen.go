@@ -1004,8 +1004,8 @@ type BackupPlanAssociation struct {
 	// Resource: Required. Immutable. Resource name of workload on which backupplan
 	// is applied
 	Resource string `json:"resource,omitempty"`
-	// ResourceType: Optional. Resource type of workload on which backupplan is
-	// applied
+	// ResourceType: Optional. Required. Resource type of workload on which
+	// backupplan is applied
 	ResourceType string `json:"resourceType,omitempty"`
 	// RulesConfigInfo: Output only. The config info related to backup rules.
 	RulesConfigInfo []*RuleConfigInfo `json:"rulesConfigInfo,omitempty"`

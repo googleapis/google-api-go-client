@@ -181,7 +181,7 @@ type ListQuotaGroupsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// QuotaGroups: The methods, current quota usage and limits per each group. The
 	// quota is shared between all methods in the group. The groups are sorted in
-	// descending order based on quotaUsage.
+	// descending order based on quota_usage.
 	QuotaGroups []*QuotaGroup `json:"quotaGroups,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

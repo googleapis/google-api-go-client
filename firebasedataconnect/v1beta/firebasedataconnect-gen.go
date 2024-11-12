@@ -661,7 +661,11 @@ func (s Impersonation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListConnectorsResponse: Message for response to listing Connectors.
+// ListConnectorsResponse: Message for response to listing Connectors. By
+// default, `connectors.source` will not be included in the response. To
+// specify the fields included in the response, the response field mask can be
+// provided by using the query parameter `$fields` or the header
+// `X-Goog-FieldMask`.
 type ListConnectorsResponse struct {
 	// Connectors: The list of Connectors.
 	Connectors []*Connector `json:"connectors,omitempty"`
@@ -747,7 +751,10 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListSchemasResponse: Message for response to listing Schemas.
+// ListSchemasResponse: Message for response to listing Schemas. By default,
+// `schemas.source` will not be included in the response. To specify the fields
+// included in the response, the response field mask can be provided by using
+// the query parameter `$fields` or the header `X-Goog-FieldMask`.
 type ListSchemasResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
 	// next page. If this field is omitted, there are no subsequent pages.

@@ -269,6 +269,7 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 				status = resp.StatusCode
 			}
 
+			// The upload should be retried if the rCtx is canceled due to a timeout.
 			select {
 			case <-rCtx.Done():
 				if rCtx.Err() == context.DeadlineExceeded {
@@ -278,7 +279,6 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 			}
 
 			// Check if we should retry the request.
-			// The upload should be retried if the rCtx is canceled due to a timeout.
 			if !errorFunc(status, err) {
 				quitAfterTimer.Stop()
 				break

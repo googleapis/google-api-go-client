@@ -192,10 +192,6 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 	// Configure retryable error criteria.
 	errorFunc := rx.Retry.errorFunc()
 
-	// Configure per-chunk transfer timeout.
-	var transferTimeout time.Duration
-	transferTimeout = rx.ChunkTransferTimeout
-
 	// Configure per-chunk retry deadline.
 	var retryDeadline time.Duration
 	if rx.ChunkRetryDeadline != 0 {
@@ -253,8 +249,8 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 			var cancel context.CancelFunc
 
 			rCtx = ctx
-			if transferTimeout != 0 {
-				rCtx, cancel = context.WithTimeout(ctx, transferTimeout)
+			if rx.ChunkTransferTimeout != 0 {
+				rCtx, cancel = context.WithTimeout(ctx, rx.ChunkTransferTimeout)
 			}
 
 			resp, err = rx.transferChunk(rCtx)

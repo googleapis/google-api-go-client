@@ -19,10 +19,10 @@ require (
 	golang.org/x/oauth2 v0.24.0
 	golang.org/x/sync v0.9.0
 	golang.org/x/time v0.8.0
-	google.golang.org/genproto dd2ea8efbc28
-	google.golang.org/genproto/googleapis/bytestream dd2ea8efbc28
-	google.golang.org/genproto/googleapis/rpc dd2ea8efbc28
-	google.golang.org/grpc v1.68.0
+	google.golang.org/genproto v0.0.0-20241104194629-dd2ea8efbc28
+	google.golang.org/genproto/googleapis/bytestream v0.0.0-20241104194629-dd2ea8efbc28
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20241104194629-dd2ea8efbc28
+	google.golang.org/grpc v1.67.1
 	google.golang.org/protobuf v1.35.1
 )
 
@@ -34,7 +34,7 @@ require (
 	go.opentelemetry.io/otel v1.29.0 // indirect
 	go.opentelemetry.io/otel/metric v1.29.0 // indirect
 	go.opentelemetry.io/otel/trace v1.29.0 // indirect
-	golang.org/x/crypto v0.28.0 // indirect
-	golang.org/x/sys v0.26.0 // indirect
-	golang.org/x/text v0.19.0 // indirect
+	golang.org/x/crypto v0.29.0 // indirect
+	golang.org/x/sys v0.27.0 // indirect
+	golang.org/x/text v0.20.0 // indirect
 )

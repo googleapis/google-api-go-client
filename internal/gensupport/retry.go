@@ -26,8 +26,6 @@ type Backoff interface {
 var (
 	// Default per-chunk deadline for resumable uploads.
 	defaultRetryDeadline = 32 * time.Second
-	// Default per-chunk transfer timeout for resumable uploads.
-	defaultTransferTimeout = 0 * time.Second
 	// Default backoff timer.
 	backoff = func() Backoff {
 		return &gax.Backoff{Initial: 100 * time.Millisecond}

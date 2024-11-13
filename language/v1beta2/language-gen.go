@@ -1262,7 +1262,7 @@ type Entity struct {
 	// importance or centrality of that entity to the entire document text. Scores
 	// closer to 0 are less salient, while scores closer to 1.0 are highly salient.
 	Salience float64 `json:"salience,omitempty"`
-	// Sentiment: For calls to AnalyzeEntitySentimentRequest or if
+	// Sentiment: For calls to AnalyzeEntitySentiment or if
 	// AnnotateTextRequest.Features.extract_entity_sentiment is set to true, this
 	// field will contain the aggregate sentiment expressed for this entity in the
 	// provided document.
@@ -1333,7 +1333,7 @@ func (s *Entity) UnmarshalJSON(data []byte) error {
 // EntityMention: Represents a mention for an entity in the text. Currently,
 // proper noun mentions are supported.
 type EntityMention struct {
-	// Sentiment: For calls to AnalyzeEntitySentimentRequest or if
+	// Sentiment: For calls to AnalyzeEntitySentiment or if
 	// AnnotateTextRequest.Features.extract_entity_sentiment is set to true, this
 	// field will contain the sentiment expressed for this mention of the entity in
 	// the provided document.
@@ -2040,7 +2040,7 @@ func (s *RamMetric) UnmarshalJSON(data []byte) error {
 
 // Sentence: Represents a sentence in the input document.
 type Sentence struct {
-	// Sentiment: For calls to AnalyzeSentimentRequest or if
+	// Sentiment: For calls to AnalyzeSentiment or if
 	// AnnotateTextRequest.Features.extract_document_sentiment is set to true, this
 	// field will contain the sentiment for the sentence.
 	Sentiment *Sentiment `json:"sentiment,omitempty"`

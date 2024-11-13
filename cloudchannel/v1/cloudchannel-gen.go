@@ -837,7 +837,8 @@ type GoogleCloudChannelV1CloudIdentityCustomerAccount struct {
 	// domain.
 	Existing bool `json:"existing,omitempty"`
 	// Owned: Returns true if the Cloud Identity account is associated with a
-	// customer of the Channel Services partner.
+	// customer of the Channel Services partner (with active subscriptions or
+	// purchase consents).
 	Owned bool `json:"owned,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "ChannelPartnerCloudIdentityId") to unconditionally include in API requests.

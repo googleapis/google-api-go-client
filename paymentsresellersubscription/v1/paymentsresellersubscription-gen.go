@@ -400,10 +400,9 @@ func (s GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionIntent) Mars
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest:
-// LINT.IfChange Partner request for entitling the previously provisioned
-// subscription to an end user. The end user identity is inferred from the
-// request OAuth context.
+// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest: Partner
+// request for entitling the previously provisioned subscription to an end
+// user. The end user identity is inferred from the request OAuth context.
 type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest struct {
 	// LineItemEntitlementDetails: Optional. The line items to be entitled. If
 	// unspecified, all line items will be entitled.
@@ -702,9 +701,8 @@ func (s GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionRequest) Mar
 // [Preview only] Response that contains the details for generated user
 // session.
 type GoogleCloudPaymentsResellerSubscriptionV1GenerateUserSessionResponse struct {
-	// UserSession: The generated user session. The token size of proportional to
-	// the size of the intent payload. Therefore, please be mindful of keeping the
-	// request intent payload reasonably small.
+	// UserSession: The generated user session. The token size is proportional to
+	// the size of the intent payload.
 	UserSession *GoogleCloudPaymentsResellerSubscriptionV1UserSession `json:"userSession,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2970,12 +2968,12 @@ type PartnersUserSessionsGenerateCall struct {
 	header_                                                             http.Header
 }
 
-// Generate: This API replaces user authorized OAuth consnet based APIs
+// Generate: This API replaces user authorized OAuth consent based APIs
 // (Create, Entitle). Generates a short-lived token for a user session based on
 // the user intent. You can use the session token to redirect the user to
 // Google to finish the signup flow. You can re-generate new session token
-// repeatedly for same request if necessary, regardless of the previous tokens
-// being expired or not.
+// repeatedly for the same request if necessary, regardless of the previous
+// tokens being expired or not.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.

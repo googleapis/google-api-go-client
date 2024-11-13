@@ -1906,20 +1906,28 @@ func (s GoogleCloudDiscoveryengineV1AnswerQueryRequestAnswerGenerationSpecPrompt
 // GoogleCloudDiscoveryengineV1AnswerQueryRequestGroundingSpec: Grounding
 // specification.
 type GoogleCloudDiscoveryengineV1AnswerQueryRequestGroundingSpec struct {
+	// FilteringLevel: Optional. Specifies whether to enable the filtering based on
+	// grounding score and at what level.
+	//
+	// Possible values:
+	//   "FILTERING_LEVEL_UNSPECIFIED" - Default is no filter
+	//   "FILTERING_LEVEL_LOW" - Filter answers based on a low threshold.
+	//   "FILTERING_LEVEL_HIGH" - Filter answers based on a high threshold.
+	FilteringLevel string `json:"filteringLevel,omitempty"`
 	// IncludeGroundingSupports: Optional. Specifies whether to include
 	// grounding_supports in the answer. The default value is `false`. When this
 	// field is set to `true`, returned answer will have `grounding_score` and will
 	// contain GroundingSupports for each claim.
 	IncludeGroundingSupports bool `json:"includeGroundingSupports,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IncludeGroundingSupports")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "FilteringLevel") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IncludeGroundingSupports") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "FilteringLevel") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2126,7 +2134,7 @@ type GoogleCloudDiscoveryengineV1AnswerQueryRequestSearchSpecSearchParams struct
 	//   "SEARCH_RESULT_MODE_UNSPECIFIED" - Default value.
 	//   "DOCUMENTS" - Returns documents in the search result.
 	//   "CHUNKS" - Returns chunks in the search result. Only available if the
-	// DataStore.DocumentProcessingConfig.chunking_config is specified.
+	// DocumentProcessingConfig.chunking_config is specified.
 	SearchResultMode string `json:"searchResultMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BoostSpec") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3392,8 +3400,7 @@ type GoogleCloudDiscoveryengineV1CheckGroundingResponseClaim struct {
 	// GroundingCheckRequired: Indicates that this claim required grounding check.
 	// When the system decided this claim doesn't require attribution/grounding
 	// check, this field will be set to false. In that case, no grounding check was
-	// done for the claim and therefore citation_indices, anti_citation_indices,
-	// and score should not be returned.
+	// done for the claim and therefore citation_indices should not be returned.
 	GroundingCheckRequired bool `json:"groundingCheckRequired,omitempty"`
 	// StartPos: Position indicating the start of the claim in the answer
 	// candidate, measured in bytes.
@@ -3481,7 +3488,7 @@ type GoogleCloudDiscoveryengineV1Chunk struct {
 	PageSpan *GoogleCloudDiscoveryengineV1ChunkPageSpan `json:"pageSpan,omitempty"`
 	// RelevanceScore: Output only. Represents the relevance score based on
 	// similarity. Higher score indicates higher chunk relevance. The score is in
-	// range [-1.0, 1.0]. Only populated on SearchService.SearchResponse.
+	// range [-1.0, 1.0]. Only populated on SearchResponse.
 	RelevanceScore float64 `json:"relevanceScore,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChunkMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4991,6 +4998,11 @@ func (s GoogleCloudDiscoveryengineV1DocumentIndexStatus) MarshalJSON() ([]byte, 
 // GoogleCloudDiscoveryengineV1DocumentInfo: Detailed document information
 // associated with a user event.
 type GoogleCloudDiscoveryengineV1DocumentInfo struct {
+	// ConversionValue: Optional. The conversion value associated with this
+	// Document. Must be set if UserEvent.event_type is "conversion". For example,
+	// a value of 1000 signifies that 1000 seconds were spent viewing a Document
+	// for the `watch` conversion type.
+	ConversionValue float64 `json:"conversionValue,omitempty"`
 	// Id: The Document resource ID.
 	Id string `json:"id,omitempty"`
 	// Joined: Output only. Whether the referenced Document can be found in the
@@ -5010,15 +5022,15 @@ type GoogleCloudDiscoveryengineV1DocumentInfo struct {
 	Quantity int64 `json:"quantity,omitempty"`
 	// Uri: The Document URI - only allowed for website data stores.
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ConversionValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Id") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "ConversionValue") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5026,6 +5038,20 @@ type GoogleCloudDiscoveryengineV1DocumentInfo struct {
 func (s GoogleCloudDiscoveryengineV1DocumentInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1DocumentInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1DocumentInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1DocumentInfo
+	var s1 struct {
+		ConversionValue gensupport.JSONFloat64 `json:"conversionValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ConversionValue = float64(s1.ConversionValue)
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1DocumentProcessingConfig: A singleton resource
@@ -5503,81 +5529,6 @@ type GoogleCloudDiscoveryengineV1FactChunk struct {
 
 func (s GoogleCloudDiscoveryengineV1FactChunk) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1FactChunk
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1Feedback: Information about the user feedback.
-// This information will be used for logging and metrics purpose.
-type GoogleCloudDiscoveryengineV1Feedback struct {
-	// Comment: Optional. The additional user comment of the feedback if user gives
-	// a thumb down.
-	Comment string `json:"comment,omitempty"`
-	// ConversationInfo: The related conversation information when user gives
-	// feedback.
-	ConversationInfo *GoogleCloudDiscoveryengineV1FeedbackConversationInfo `json:"conversationInfo,omitempty"`
-	// FeedbackType: Required. Indicate whether the user gives a positive or
-	// negative feedback. If the user gives a negative feedback, there might be
-	// more feedback details.
-	//
-	// Possible values:
-	//   "FEEDBACK_TYPE_UNSPECIFIED" - Unspecified feedback type.
-	//   "LIKE" - The user gives a positive feedback.
-	//   "DISLIKE" - The user gives a negative feedback.
-	FeedbackType string `json:"feedbackType,omitempty"`
-	// LlmModelVersion: The version of the LLM model that was used to generate the
-	// response.
-	LlmModelVersion string `json:"llmModelVersion,omitempty"`
-	// Reasons: Optional. The reason if user gives a thumb down.
-	//
-	// Possible values:
-	//   "REASON_UNSPECIFIED" - Unspecified reason.
-	//   "INACCURATE_RESPONSE" - The response is inaccurate.
-	//   "NOT_RELEVANT" - The response is not relevant.
-	//   "INCOMPREHENSIVE" - The response is incomprehensive.
-	//   "OFFENSIVE_OR_UNSAFE" - The response is offensive or unsafe.
-	//   "BAD_CIATION" - The response is not well-associated with the query.
-	//   "FORMAT_AND_STYLES" - The response is not well-formatted.
-	Reasons []string `json:"reasons,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Comment") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Comment") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1Feedback) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1Feedback
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDiscoveryengineV1FeedbackConversationInfo: The conversation
-// information such as the question index and session name.
-type GoogleCloudDiscoveryengineV1FeedbackConversationInfo struct {
-	// QuestionIndex: The index of the user input within the conversation messages.
-	QuestionIndex int64 `json:"questionIndex,omitempty"`
-	// Session: Name of the newly generated or continued session.
-	Session string `json:"session,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "QuestionIndex") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "QuestionIndex") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudDiscoveryengineV1FeedbackConversationInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDiscoveryengineV1FeedbackConversationInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7247,6 +7198,8 @@ type GoogleCloudDiscoveryengineV1RankingRecord struct {
 	// Id: The unique ID to represent the record.
 	Id string `json:"id,omitempty"`
 	// Score: The score of this record based on the given query and selected model.
+	// The score will be rounded to 2 decimal places. If the score is close to 0,
+	// it will be rounded to 0.0001 to avoid returning unset.
 	Score float64 `json:"score,omitempty"`
 	// Title: The title of the record. Empty by default. At least one of title or
 	// content should be set otherwise an INVALID_ARGUMENT error is thrown.
@@ -7935,7 +7888,7 @@ type GoogleCloudDiscoveryengineV1SearchRequestContentSearchSpec struct {
 	//   "SEARCH_RESULT_MODE_UNSPECIFIED" - Default value.
 	//   "DOCUMENTS" - Returns documents in the search result.
 	//   "CHUNKS" - Returns chunks in the search result. Only available if the
-	// DataStore.DocumentProcessingConfig.chunking_config is specified.
+	// DocumentProcessingConfig.chunking_config is specified.
 	SearchResultMode string `json:"searchResultMode,omitempty"`
 	// SnippetSpec: If `snippetSpec` is not specified, snippets are not included in
 	// the search response.
@@ -9050,6 +9003,10 @@ type GoogleCloudDiscoveryengineV1SessionTurn struct {
 	// Answer: The resource name of the answer to the user query. Only set if the
 	// answer generation (/answer API call) happened in this turn.
 	Answer string `json:"answer,omitempty"`
+	// DetailedAnswer: Output only. In ConversationalSearchService.GetSession API,
+	// if GetSessionRequest.include_answer_details is set to true, this field will
+	// be populated when getting answer query session.
+	DetailedAnswer *GoogleCloudDiscoveryengineV1Answer `json:"detailedAnswer,omitempty"`
 	// Query: The user query.
 	Query *GoogleCloudDiscoveryengineV1Query `json:"query,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
@@ -9671,6 +9628,13 @@ type GoogleCloudDiscoveryengineV1UserEvent struct {
 	// event. This field should be set for `search` event when autocomplete
 	// function is enabled and the user clicks a suggestion for search.
 	CompletionInfo *GoogleCloudDiscoveryengineV1CompletionInfo `json:"completionInfo,omitempty"`
+	// ConversionType: Optional. Conversion type. Required if UserEvent.event_type
+	// is `conversion`. This is a customer-defined conversion name in lowercase
+	// letters or numbers separated by "-", such as "watch", "good-visit" etc. Do
+	// not set the field if UserEvent.event_type is not `conversion`. This mixes
+	// the custom conversion event with predefined events like `search`,
+	// `view-item` etc.
+	ConversionType string `json:"conversionType,omitempty"`
 	// DataStore: The DataStore resource full name, of the form
 	// `projects/{project}/locations/{location}/collections/{collection_id}/dataStor
 	// es/{data_store_id}`. Optional. Only required for user events whose data
@@ -9712,11 +9676,9 @@ type GoogleCloudDiscoveryengineV1UserEvent struct {
 	// e.g. in Retail online shopping * `purchase`: Purchase an item(s)
 	// Media-related values: * `media-play`: Start/resume watching a video, playing
 	// a song, etc. * `media-complete`: Finished or stopped midway through a video,
-	// song, etc.
+	// song, etc. Custom conversion value: * `conversion`: Customer defined
+	// conversion event.
 	EventType string `json:"eventType,omitempty"`
-	// Feedback: Optional. This field is optional except for the `add-feedback`
-	// event types.
-	Feedback *GoogleCloudDiscoveryengineV1Feedback `json:"feedback,omitempty"`
 	// Filter: The filter syntax consists of an expression language for
 	// constructing a predicate from one or more fields of the documents being
 	// filtered. One example is for `search` events, the associated SearchRequest
@@ -14153,7 +14115,7 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpec struct {
 	//   "SEARCH_RESULT_MODE_UNSPECIFIED" - Default value.
 	//   "DOCUMENTS" - Returns documents in the search result.
 	//   "CHUNKS" - Returns chunks in the search result. Only available if the
-	// DataStore.DocumentProcessingConfig.chunking_config is specified.
+	// DocumentProcessingConfig.chunking_config is specified.
 	SearchResultMode string `json:"searchResultMode,omitempty"`
 	// SnippetSpec: If `snippetSpec` is not specified, snippets are not included in
 	// the search response.
@@ -14933,6 +14895,10 @@ type GoogleCloudDiscoveryengineV1alphaSessionTurn struct {
 	// Answer: The resource name of the answer to the user query. Only set if the
 	// answer generation (/answer API call) happened in this turn.
 	Answer string `json:"answer,omitempty"`
+	// DetailedAnswer: Output only. In ConversationalSearchService.GetSession API,
+	// if GetSessionRequest.include_answer_details is set to true, this field will
+	// be populated when getting answer query session.
+	DetailedAnswer *GoogleCloudDiscoveryengineV1alphaAnswer `json:"detailedAnswer,omitempty"`
 	// Query: The user query.
 	Query *GoogleCloudDiscoveryengineV1alphaQuery `json:"query,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
@@ -18155,7 +18121,7 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpec struct {
 	//   "SEARCH_RESULT_MODE_UNSPECIFIED" - Default value.
 	//   "DOCUMENTS" - Returns documents in the search result.
 	//   "CHUNKS" - Returns chunks in the search result. Only available if the
-	// DataStore.DocumentProcessingConfig.chunking_config is specified.
+	// DocumentProcessingConfig.chunking_config is specified.
 	SearchResultMode string `json:"searchResultMode,omitempty"`
 	// SnippetSpec: If `snippetSpec` is not specified, snippets are not included in
 	// the search response.
@@ -41080,6 +41046,114 @@ func (c *ProjectsLocationsUserEventsCollectCall) Do(opts ...googleapi.CallOption
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleApiHttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsUserEventsImportCall struct {
+	s                                                   *Service
+	parent                                              string
+	googleclouddiscoveryenginev1importusereventsrequest *GoogleCloudDiscoveryengineV1ImportUserEventsRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// Import: Bulk import of user events. Request processing might be synchronous.
+// Events that already exist are skipped. Use this method for backfilling
+// historical user events. Operation.response is of type ImportResponse. Note
+// that it is possible for a subset of the items to be successfully inserted.
+// Operation.metadata is of type ImportMetadata.
+//
+//   - parent: Parent DataStore resource name, of the form
+//     `projects/{project}/locations/{location}/collections/{collection}/dataStore
+//     s/{data_store}`.
+func (r *ProjectsLocationsUserEventsService) Import(parent string, googleclouddiscoveryenginev1importusereventsrequest *GoogleCloudDiscoveryengineV1ImportUserEventsRequest) *ProjectsLocationsUserEventsImportCall {
+	c := &ProjectsLocationsUserEventsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddiscoveryenginev1importusereventsrequest = googleclouddiscoveryenginev1importusereventsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsUserEventsImportCall) Fields(s ...googleapi.Field) *ProjectsLocationsUserEventsImportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsUserEventsImportCall) Context(ctx context.Context) *ProjectsLocationsUserEventsImportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsUserEventsImportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUserEventsImportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddiscoveryenginev1importusereventsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/userEvents:import")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.userEvents.import" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsUserEventsImportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

@@ -217,7 +217,7 @@ type AnalyzeEntitiesResponse struct {
 	Entities []*Entity `json:"entities,omitempty"`
 	// LanguageCode: The language of the text, which will be the same as the
 	// language specified in the request or, if not specified, the
-	// automatically-detected language. See Document.language field for more
+	// automatically-detected language. See Document.language_code field for more
 	// details.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// LanguageSupported: Whether the language is officially supported. The API may
@@ -289,7 +289,7 @@ type AnalyzeSentimentResponse struct {
 	DocumentSentiment *Sentiment `json:"documentSentiment,omitempty"`
 	// LanguageCode: The language of the text, which will be the same as the
 	// language specified in the request or, if not specified, the
-	// automatically-detected language. See Document.language field for more
+	// automatically-detected language. See Document.language_code field for more
 	// details.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// LanguageSupported: Whether the language is officially supported. The API may
@@ -398,12 +398,11 @@ type AnnotateTextResponse struct {
 	DocumentSentiment *Sentiment `json:"documentSentiment,omitempty"`
 	// Entities: Entities, along with their semantic information, in the input
 	// document. Populated if the user enables
-	// AnnotateTextRequest.Features.extract_entities or
-	// AnnotateTextRequest.Features.extract_entity_sentiment.
+	// AnnotateTextRequest.Features.extract_entities .
 	Entities []*Entity `json:"entities,omitempty"`
 	// LanguageCode: The language of the text, which will be the same as the
 	// language specified in the request or, if not specified, the
-	// automatically-detected language. See Document.language field for more
+	// automatically-detected language. See Document.language_code field for more
 	// details.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// LanguageSupported: Whether the language is officially supported by all
@@ -511,7 +510,7 @@ type ClassifyTextResponse struct {
 	Categories []*ClassificationCategory `json:"categories,omitempty"`
 	// LanguageCode: The language of the text, which will be the same as the
 	// language specified in the request or, if not specified, the
-	// automatically-detected language. See Document.language field for more
+	// automatically-detected language. See Document.language_code field for more
 	// details.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// LanguageSupported: Whether the language is officially supported. The API may
@@ -943,10 +942,8 @@ type Entity struct {
 	Metadata map[string]string `json:"metadata,omitempty"`
 	// Name: The representative name for the entity.
 	Name string `json:"name,omitempty"`
-	// Sentiment: For calls to AnalyzeEntitySentimentRequest or if
-	// AnnotateTextRequest.Features.extract_entity_sentiment is set to true, this
-	// field will contain the aggregate sentiment expressed for this entity in the
-	// provided document.
+	// Sentiment: For calls to AnalyzeEntitySentiment this field will contain the
+	// aggregate sentiment expressed for this entity in the provided document.
 	Sentiment *Sentiment `json:"sentiment,omitempty"`
 	// Type: The entity type.
 	//
@@ -1004,10 +1001,8 @@ type EntityMention struct {
 	// the probability of the entity mention being the entity type. The score is in
 	// (0, 1] range.
 	Probability float64 `json:"probability,omitempty"`
-	// Sentiment: For calls to AnalyzeEntitySentimentRequest or if
-	// AnnotateTextRequest.Features.extract_entity_sentiment is set to true, this
-	// field will contain the sentiment expressed for this mention of the entity in
-	// the provided document.
+	// Sentiment: For calls to AnalyzeEntitySentiment this field will contain the
+	// sentiment expressed for this mention of the entity in the provided document.
 	Sentiment *Sentiment `json:"sentiment,omitempty"`
 	// Text: The mention text.
 	Text *TextSpan `json:"text,omitempty"`
@@ -1323,7 +1318,7 @@ func (s ModerateTextRequest) MarshalJSON() ([]byte, error) {
 type ModerateTextResponse struct {
 	// LanguageCode: The language of the text, which will be the same as the
 	// language specified in the request or, if not specified, the
-	// automatically-detected language. See Document.language field for more
+	// automatically-detected language. See Document.language_code field for more
 	// details.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// LanguageSupported: Whether the language is officially supported. The API may
@@ -1584,7 +1579,7 @@ func (s *RamMetric) UnmarshalJSON(data []byte) error {
 
 // Sentence: Represents a sentence in the input document.
 type Sentence struct {
-	// Sentiment: For calls to AnalyzeSentimentRequest or if
+	// Sentiment: For calls to AnalyzeSentiment or if
 	// AnnotateTextRequest.Features.extract_document_sentiment is set to true, this
 	// field will contain the sentiment for the sentence.
 	Sentiment *Sentiment `json:"sentiment,omitempty"`

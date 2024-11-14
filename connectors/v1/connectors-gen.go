@@ -1536,6 +1536,8 @@ type CustomConnector struct {
 	ActiveConnectorVersions []string `json:"activeConnectorVersions,omitempty"`
 	// AllConnectorVersions: Output only. All connector versions.
 	AllConnectorVersions []string `json:"allConnectorVersions,omitempty"`
+	// AllMarketplaceVersions: Output only. All marketplace versions.
+	AllMarketplaceVersions []string `json:"allMarketplaceVersions,omitempty"`
 	// CreateTime: Output only. Created time.
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomConnectorType: Required. Type of the custom connector.
@@ -1558,6 +1560,8 @@ type CustomConnector struct {
 	// Name: Identifier. Resource name of the CustomConnector. Format:
 	// projects/{project}/locations/{location}/customConnectors/{connector}
 	Name string `json:"name,omitempty"`
+	// PublishedMarketplaceVersions: Output only. Published marketplace versions.
+	PublishedMarketplaceVersions []string `json:"publishedMarketplaceVersions,omitempty"`
 	// UpdateTime: Output only. Updated time.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -1608,6 +1612,11 @@ type CustomConnectorVersion struct {
 	// projects/{project}/locations/{location}/customConnectors/{custom_connector}/c
 	// ustomConnectorVersions/{custom_connector_version}
 	Name string `json:"name,omitempty"`
+	// PartnerMetadata: Optional. Partner metadata details. This should be
+	// populated only when publishing the custom connector to partner connector.
+	PartnerMetadata *PartnerMetadata `json:"partnerMetadata,omitempty"`
+	// PublishStatus: Output only. Publish status of a custom connector.
+	PublishStatus *PublishStatus `json:"publishStatus,omitempty"`
 	// ServiceAccount: Optional. Service account used by runtime plane to access
 	// auth config secrets.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
@@ -2403,6 +2412,8 @@ type EventingRuntimeData struct {
 	Status *EventingStatus `json:"status,omitempty"`
 	// WebhookData: Output only. Webhook data.
 	WebhookData *WebhookData `json:"webhookData,omitempty"`
+	// WebhookSubscriptions: Output only. Webhook subscriptions.
+	WebhookSubscriptions *WebhookSubscriptions `json:"webhookSubscriptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EventsListenerEndpoint") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4271,6 +4282,68 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PartnerMetadata: Partner metadata details. This will be populated when
+// publishing the custom connector as a partner connector version. On
+// publishing, parntner connector version will be created using the fields in
+// PartnerMetadata.
+type PartnerMetadata struct {
+	// AcceptGcpTos: Required. Whether the user has accepted the Google Cloud
+	// Platform Terms of Service (https://cloud.google.com/terms/) and the Google
+	// Cloud Marketplace Terms of Service
+	// (https://cloud.google.com/terms/marketplace/launcher?hl=en).
+	AcceptGcpTos bool `json:"acceptGcpTos,omitempty"`
+	// AdditionalComments: Optional. Additional comments for the submission.
+	AdditionalComments string `json:"additionalComments,omitempty"`
+	// ConfirmPartnerRequirements: Required. Confirmation that connector meets all
+	// applicable requirements mentioned in the Partner Connector Publishing
+	// requirements list and Partner onboardiong requirements list
+	// (https://cloud.google.com/marketplace/docs/partners/get-started#requirements).
+	ConfirmPartnerRequirements bool `json:"confirmPartnerRequirements,omitempty"`
+	// DemoUri: Required. Public URL for the demo video.
+	DemoUri string `json:"demoUri,omitempty"`
+	// IntegrationTemplates: Required. Integration example templates for the custom
+	// connector.
+	IntegrationTemplates string `json:"integrationTemplates,omitempty"`
+	// MarketplaceProduct: Optional. Marketplace product name.
+	MarketplaceProduct string `json:"marketplaceProduct,omitempty"`
+	// MarketplaceProductId: Required. Marketplace product ID.
+	MarketplaceProductId string `json:"marketplaceProductId,omitempty"`
+	// MarketplaceProductProjectId: Optional. Marketplace product project ID.
+	MarketplaceProductProjectId string `json:"marketplaceProductProjectId,omitempty"`
+	// MarketplaceProductUri: Optional. Marketplace product URL.
+	MarketplaceProductUri string `json:"marketplaceProductUri,omitempty"`
+	// Partner: Required. Partner name.
+	Partner string `json:"partner,omitempty"`
+	// PartnerConnectorDisplayName: Required. Partner connector display name.
+	PartnerConnectorDisplayName string `json:"partnerConnectorDisplayName,omitempty"`
+	// PublishRequestTime: Output only. Publish request time.
+	PublishRequestTime string `json:"publishRequestTime,omitempty"`
+	// TargetApplication: Required. Target application for which partner connector
+	// is built.
+	TargetApplication string `json:"targetApplication,omitempty"`
+	// TargetCustomerSegment: Required. Target customer segment for the partner
+	// connector.
+	TargetCustomerSegment string `json:"targetCustomerSegment,omitempty"`
+	// UseCases: Required. Details about partner connector use cases.
+	UseCases string `json:"useCases,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AcceptGcpTos") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcceptGcpTos") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PartnerMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod PartnerMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PerSliSloEligibility: PerSliSloEligibility is a mapping from an SLI name to
 // eligibility.
 type PerSliSloEligibility struct {
@@ -4480,6 +4553,45 @@ type ProvisionedResource struct {
 
 func (s ProvisionedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ProvisionedResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PublishStatus: Publish status of a custom connector.
+type PublishStatus struct {
+	// PublishState: Output only. Publish state of the custom connector.
+	//
+	// Possible values:
+	//   "PUBLISH_STATE_UNSPECIFIED" - State Unspecified.
+	//   "PUBLISHED" - Connector version has been published as partner connector
+	// version.
+	//   "PUBLISH_IN_PROGRESS" - Connector version is in the process of being
+	// published as partner connector version.
+	//   "UNPUBLISHED" - Connector version has been unpublished as partner
+	// connector version
+	PublishState string `json:"publishState,omitempty"`
+	// PublishTime: Output only. Publish time.
+	PublishTime string `json:"publishTime,omitempty"`
+	// PublishedAs: Output only. Partner connector name. Will be set on the custom
+	// connector. Format: providers/partner/connectors//versions/
+	PublishedAs string `json:"publishedAs,omitempty"`
+	// PublishedSource: Output only. Custom connector name. Will be set on the
+	// partner connector. Format: providers/customconnectors/connectors//versions/
+	PublishedSource string `json:"publishedSource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PublishState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PublishState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PublishStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod PublishStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5659,6 +5771,29 @@ type WebhookData struct {
 
 func (s WebhookData) MarshalJSON() ([]byte, error) {
 	type NoMethod WebhookData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WebhookSubscriptions: WebhookSubscriptions has details of webhook
+// subscriptions.
+type WebhookSubscriptions struct {
+	// WebhookData: Output only. Webhook data.
+	WebhookData []*WebhookData `json:"webhookData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WebhookData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WebhookData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WebhookSubscriptions) MarshalJSON() ([]byte, error) {
+	type NoMethod WebhookSubscriptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

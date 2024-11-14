@@ -471,6 +471,10 @@ type InstanceConfig struct {
 	//   "MULTIREGION_XLARGE" - Instance Size MULTIREGION_XLARGE
 	//   "MULTIREGION_2XLARGE" - Instance Size MULTIREGION_2XLARGE.
 	//   "MULTIREGION_3XLARGE" - Instance Size MULTIREGION_3XLARGE.
+	//   "DEV_SMALL" - Instance Size DEV_SMALL
+	//   "SANDBOX_SMALL" - Instance Size SANDBOX_SMALL
+	//   "TRIAL_SMALL" - Instance Size TRIAL_SMALL
+	//   "TIME_LIMITED_TRIAL_SMALL" - Instance Size TIME_LIMITED_TRIAL_SMALL
 	InstanceSize string `json:"instanceSize,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InstanceSize") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -787,6 +791,10 @@ type Quota struct {
 	//   "MULTIREGION_XLARGE" - Instance Size MULTIREGION_XLARGE
 	//   "MULTIREGION_2XLARGE" - Instance Size MULTIREGION_2XLARGE.
 	//   "MULTIREGION_3XLARGE" - Instance Size MULTIREGION_3XLARGE.
+	//   "DEV_SMALL" - Instance Size DEV_SMALL
+	//   "SANDBOX_SMALL" - Instance Size SANDBOX_SMALL
+	//   "TRIAL_SMALL" - Instance Size TRIAL_SMALL
+	//   "TIME_LIMITED_TRIAL_SMALL" - Instance Size TIME_LIMITED_TRIAL_SMALL
 	ContactCenterInstanceSize string `json:"contactCenterInstanceSize,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContactCenterCountLimit") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -216,7 +216,7 @@ type EmbeddableAdapter struct{}
 
 func (*EmbeddableAdapter) Apply(_ *internal.DialSettings) {}
 
-// GetLogger is a helper for client libraries to extract the [slog.Logger]from
+// GetLogger is a helper for client libraries to extract the [slog.Logger] from
 // the provided options or return a default logger if one is not found.
 //
 // It should only be used internally by generated clients. This is an EXPERIMENTAL API

@@ -1373,6 +1373,7 @@ type GooglePrivacyDlpV2ByteContentItem struct {
 	//   "AUDIO" - Audio file types. Only used for profiling.
 	//   "VIDEO" - Video file types. Only used for profiling.
 	//   "EXECUTABLE" - Executable file types. Only used for profiling.
+	//   "AI_MODEL" - AI model file types. Only used for profiling.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5124,6 +5125,7 @@ type GooglePrivacyDlpV2FileClusterType struct {
 	//   "CLUSTER_ARCHIVE" - Archives and containers like .zip, .tar etc.
 	//   "CLUSTER_MULTIMEDIA" - Multimedia like .mp4, .avi etc.
 	//   "CLUSTER_EXECUTABLE" - Executable files like .exe, .class, .apk etc.
+	//   "CLUSTER_AI_MODEL" - AI models like .tflite etc.
 	Cluster string `json:"cluster,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cluster") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

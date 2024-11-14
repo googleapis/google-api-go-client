@@ -373,7 +373,7 @@ func (w withUniverseDomain) Apply(o *internal.DialSettings) {
 // WithLogger returns a ClientOption that sets the logger used throughout the
 // client library call stack. If this option is provided it takes precedence
 // over the value set in GOOGLE_SDK_GO_LOGGING_LEVEL. Specifying this option
-// enables logging at the provided loggers configured level.
+// enables logging at the provided logger's configured level.
 func WithLogger(l *slog.Logger) ClientOption {
 	return withLogger{l}
 }

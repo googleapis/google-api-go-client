@@ -480,9 +480,9 @@ type GoogleIdentityStsV1ExchangeTokenResponse struct {
 	AccessToken string `json:"access_token,omitempty"`
 	// ExpiresIn: The amount of time, in seconds, between the time when the access
 	// token was issued and the time when the access token will expire. This field
-	// is absent when the `subject_token` in the request is a Google-issued,
-	// short-lived access token. In this case, the access token has the same
-	// expiration time as the `subject_token`.
+	// is absent when the `subject_token` in the request is a a short-lived access
+	// token for a Cloud Identity or Google Workspace user account. In this case,
+	// the access token has the same expiration time as the `subject_token`.
 	ExpiresIn int64 `json:"expires_in,omitempty"`
 	// IssuedTokenType: The token type. Always matches the value of
 	// `requested_token_type` from the request.

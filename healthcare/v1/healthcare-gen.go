@@ -924,8 +924,8 @@ type CancelOperationRequest struct {
 // CharacterMaskConfig: Mask a string by replacing its characters with a fixed
 // character.
 type CharacterMaskConfig struct {
-	// MaskingCharacter: Character to mask the sensitive values. If not supplied,
-	// defaults to "*".
+	// MaskingCharacter: Optional. Character to mask the sensitive values. If not
+	// supplied, defaults to "*".
 	MaskingCharacter string `json:"maskingCharacter,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MaskingCharacter") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1377,8 +1377,8 @@ func (s DateShiftConfig) MarshalJSON() ([]byte, error) {
 // DeidentifiedStoreDestination: Contains configuration for streaming
 // de-identified FHIR export.
 type DeidentifiedStoreDestination struct {
-	// Config: The configuration to use when de-identifying resources that are
-	// added to this store.
+	// Config: Optional. The configuration to use when de-identifying resources
+	// that are added to this store.
 	Config *DeidentifyConfig `json:"config,omitempty"`
 	// Store: Optional. The full resource name of a Cloud Healthcare FHIR store,
 	// for example,
@@ -1408,19 +1408,19 @@ func (s DeidentifiedStoreDestination) MarshalJSON() ([]byte, error) {
 // https://tools.ietf.org/html/rfc6838 media type or subtype. Configs are
 // applied in a nested manner at runtime.
 type DeidentifyConfig struct {
-	// Dicom: Configures de-id of application/DICOM content.
+	// Dicom: Optional. Configures de-id of application/DICOM content.
 	Dicom *DicomConfig `json:"dicom,omitempty"`
-	// Fhir: Configures de-id of application/FHIR content.
+	// Fhir: Optional. Configures de-id of application/FHIR content.
 	Fhir *FhirConfig `json:"fhir,omitempty"`
-	// Image: Configures de-identification of image pixels wherever they are found
-	// in the source_dataset.
+	// Image: Optional. Configures de-identification of image pixels wherever they
+	// are found in the source_dataset.
 	Image *ImageConfig `json:"image,omitempty"`
-	// Text: Configures de-identification of text wherever it is found in the
-	// source_dataset.
+	// Text: Optional. Configures de-identification of text wherever it is found in
+	// the source_dataset.
 	Text *TextConfig `json:"text,omitempty"`
-	// UseRegionalDataProcessing: Ensures in-flight data remains in the region of
-	// origin during de-identification. The default value is false. Using this
-	// option results in a significant reduction of throughput, and is not
+	// UseRegionalDataProcessing: Optional. Ensures in-flight data remains in the
+	// region of origin during de-identification. The default value is false. Using
+	// this option results in a significant reduction of throughput, and is not
 	// compatible with `LOCATION` or `ORGANIZATION_NAME` infoTypes. `LOCATION` must
 	// be excluded within TextConfig, and must also be excluded within ImageConfig
 	// if image redaction is required.
@@ -1597,7 +1597,7 @@ type DicomConfig struct {
 	KeepList *TagFilterList `json:"keepList,omitempty"`
 	// RemoveList: List of tags to remove. Keep all other tags.
 	RemoveList *TagFilterList `json:"removeList,omitempty"`
-	// SkipIdRedaction: If true, skip replacing StudyInstanceUID,
+	// SkipIdRedaction: Optional. If true, skip replacing StudyInstanceUID,
 	// SeriesInstanceUID, SOPInstanceUID, and MediaStorageSOPInstanceUID and leave
 	// them untouched. The Cloud Healthcare API regenerates these UIDs by default
 	// based on the DICOM Standard's reasoning: "Whilst these UIDs cannot be mapped
@@ -2259,15 +2259,15 @@ func (s *Feature) UnmarshalJSON(data []byte) error {
 
 // FhirConfig: Specifies how to handle de-identification of a FHIR store.
 type FhirConfig struct {
-	// DefaultKeepExtensions: The behaviour for handling FHIR extensions that
-	// aren't otherwise specified for de-identification. If true, all extensions
-	// are preserved during de-identification by default. If false or unspecified,
-	// all extensions are removed during de-identification by default.
+	// DefaultKeepExtensions: Optional. The behaviour for handling FHIR extensions
+	// that aren't otherwise specified for de-identification. If true, all
+	// extensions are preserved during de-identification by default. If false or
+	// unspecified, all extensions are removed during de-identification by default.
 	DefaultKeepExtensions bool `json:"defaultKeepExtensions,omitempty"`
-	// FieldMetadataList: Specifies FHIR paths to match and how to transform them.
-	// Any field that is not matched by a FieldMetadata is passed through to the
-	// output dataset unmodified. All extensions will be processed according to
-	// `default_keep_extensions`.
+	// FieldMetadataList: Optional. Specifies FHIR paths to match and how to
+	// transform them. Any field that is not matched by a FieldMetadata is passed
+	// through to the output dataset unmodified. All extensions will be processed
+	// according to `default_keep_extensions`.
 	FieldMetadataList []*FieldMetadata `json:"fieldMetadataList,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DefaultKeepExtensions") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2580,15 +2580,15 @@ func (s Field) MarshalJSON() ([]byte, error) {
 // FieldMetadata: Specifies FHIR paths to match, and how to handle
 // de-identification of matching fields.
 type FieldMetadata struct {
-	// Action: Deidentify action for one field.
+	// Action: Optional. Deidentify action for one field.
 	//
 	// Possible values:
-	//   "ACTION_UNSPECIFIED" - No action specified.
+	//   "ACTION_UNSPECIFIED" - No action specified. Defaults to DO_NOT_TRANSFORM.
 	//   "TRANSFORM" - Transform the entire field.
 	//   "INSPECT_AND_TRANSFORM" - Inspect and transform any found PHI.
 	//   "DO_NOT_TRANSFORM" - Do not transform.
 	Action string `json:"action,omitempty"`
-	// Paths: List of paths to FHIR fields to be redacted. Each path is a
+	// Paths: Optional. List of paths to FHIR fields to be redacted. Each path is a
 	// period-separated list where each component is either a field name or FHIR
 	// type name, for example: Patient, HumanName. For "choice" types (those
 	// defined in the FHIR spec with the form: field[x]) we use two separate
@@ -3390,7 +3390,7 @@ func (s Image) MarshalJSON() ([]byte, error) {
 
 // ImageConfig: Specifies how to handle de-identification of image pixels.
 type ImageConfig struct {
-	// TextRedactionMode: Determines how to redact text from image.
+	// TextRedactionMode: Optional. Determines how to redact text from image.
 	//
 	// Possible values:
 	//   "TEXT_REDACTION_MODE_UNSPECIFIED" - No text redaction specified. Same as
@@ -3540,8 +3540,8 @@ type InfoTypeTransformation struct {
 	CryptoHashConfig *CryptoHashConfig `json:"cryptoHashConfig,omitempty"`
 	// DateShiftConfig: Config for date shift.
 	DateShiftConfig *DateShiftConfig `json:"dateShiftConfig,omitempty"`
-	// InfoTypes: InfoTypes to apply this transformation to. If this is not
-	// specified, the transformation applies to any info_type.
+	// InfoTypes: Optional. InfoTypes to apply this transformation to. If this is
+	// not specified, the transformation applies to any info_type.
 	InfoTypes []string `json:"infoTypes,omitempty"`
 	// RedactConfig: Config for text redaction.
 	RedactConfig *RedactConfig `json:"redactConfig,omitempty"`
@@ -5481,8 +5481,8 @@ func (s StudyMetrics) MarshalJSON() ([]byte, error) {
 
 // TagFilterList: List of tags to be filtered.
 type TagFilterList struct {
-	// Tags: Tags to be filtered. Tags must be DICOM Data Elements, File Meta
-	// Elements, or Directory Structuring Elements, as defined at:
+	// Tags: Optional. Tags to be filtered. Tags must be DICOM Data Elements, File
+	// Meta Elements, or Directory Structuring Elements, as defined at:
 	// http://dicom.nema.org/medical/dicom/current/output/html/part06.html#table_6-1,.
 	// They may be provided by "Keyword" or "Tag". For example "PatientID",
 	// "00100010".
@@ -5558,14 +5558,14 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type TextConfig struct {
-	// AdditionalTransformations: Transformations to apply to the detected data,
-	// overridden by `exclude_info_types`.
+	// AdditionalTransformations: Optional. Transformations to apply to the
+	// detected data, overridden by `exclude_info_types`.
 	AdditionalTransformations []*InfoTypeTransformation `json:"additionalTransformations,omitempty"`
-	// ExcludeInfoTypes: InfoTypes to skip transforming, overriding
+	// ExcludeInfoTypes: Optional. InfoTypes to skip transforming, overriding
 	// `additional_transformations`.
 	ExcludeInfoTypes []string `json:"excludeInfoTypes,omitempty"`
-	// Transformations: The transformations to apply to the detected data.
-	// Deprecated. Use `additional_transformations` instead.
+	// Transformations: Optional. The transformations to apply to the detected
+	// data. Deprecated. Use `additional_transformations` instead.
 	Transformations []*InfoTypeTransformation `json:"transformations,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalTransformations")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -17032,7 +17032,7 @@ type ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall struct {
 // `Content-Type` header, and the `securityContext` field (not present in
 // `DSTU2`) will be populated from the `X-Security-Context` header if it
 // exists. At this time `securityContext` has no special behavior in the Cloud
-// Healthcare API. Note: the limit on data ingested through this method is 2
+// Healthcare API. Note: the limit on data ingested through this method is 1
 // GB. For best performance, use a non-FHIR data type instead of wrapping the
 // data in a Binary resource. Some of the Healthcare API features, such as
 // exporting to BigQuery

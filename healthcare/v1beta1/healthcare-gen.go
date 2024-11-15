@@ -21735,7 +21735,7 @@ type ProjectsLocationsDatasetsFhirStoresFhirBinaryCreateCall struct {
 // `Content-Type` header, and the `securityContext` field (not present in
 // `DSTU2`) will be populated from the `X-Security-Context` header if it
 // exists. At this time `securityContext` has no special behavior in the Cloud
-// Healthcare API. Note: the limit on data ingested through this method is 2
+// Healthcare API. Note: the limit on data ingested through this method is 1
 // GB. For best performance, use a non-FHIR data type instead of wrapping the
 // data in a Binary resource. Some of the Healthcare API features, such as
 // exporting to BigQuery

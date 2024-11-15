@@ -827,22 +827,6 @@ type ConnectSettings struct {
 	//   "MYSQL_5_5" - The database version is MySQL 5.5.
 	//   "MYSQL_5_6" - The database version is MySQL 5.6.
 	//   "MYSQL_5_7" - The database version is MySQL 5.7.
-	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
-	// Standard.
-	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server 2017
-	// Enterprise.
-	//   "SQLSERVER_2017_EXPRESS" - The database version is SQL Server 2017
-	// Express.
-	//   "SQLSERVER_2017_WEB" - The database version is SQL Server 2017 Web.
-	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
-	//   "POSTGRES_10" - The database version is PostgreSQL 10.
-	//   "POSTGRES_11" - The database version is PostgreSQL 11.
-	//   "POSTGRES_12" - The database version is PostgreSQL 12.
-	//   "POSTGRES_13" - The database version is PostgreSQL 13.
-	//   "POSTGRES_14" - The database version is PostgreSQL 14.
-	//   "POSTGRES_15" - The database version is PostgreSQL 15.
-	//   "POSTGRES_16" - The database version is PostgreSQL 16.
-	//   "POSTGRES_17" - The database version is PostgreSQL 17.
 	//   "MYSQL_8_0" - The database version is MySQL 8.
 	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the minor
 	// version is 18.
@@ -876,7 +860,27 @@ type ConnectSettings struct {
 	// version is 39.
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
 	// version is 40.
+	//   "MYSQL_8_0_41" - The database major version is MySQL 8.0 and the minor
+	// version is 41.
+	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
+	// version is 42.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
+	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
+	// Standard.
+	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server 2017
+	// Enterprise.
+	//   "SQLSERVER_2017_EXPRESS" - The database version is SQL Server 2017
+	// Express.
+	//   "SQLSERVER_2017_WEB" - The database version is SQL Server 2017 Web.
+	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
+	//   "POSTGRES_10" - The database version is PostgreSQL 10.
+	//   "POSTGRES_11" - The database version is PostgreSQL 11.
+	//   "POSTGRES_12" - The database version is PostgreSQL 12.
+	//   "POSTGRES_13" - The database version is PostgreSQL 13.
+	//   "POSTGRES_14" - The database version is PostgreSQL 14.
+	//   "POSTGRES_15" - The database version is PostgreSQL 15.
+	//   "POSTGRES_16" - The database version is PostgreSQL 16.
+	//   "POSTGRES_17" - The database version is PostgreSQL 17.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -1073,22 +1077,6 @@ type DatabaseInstance struct {
 	//   "MYSQL_5_5" - The database version is MySQL 5.5.
 	//   "MYSQL_5_6" - The database version is MySQL 5.6.
 	//   "MYSQL_5_7" - The database version is MySQL 5.7.
-	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
-	// Standard.
-	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server 2017
-	// Enterprise.
-	//   "SQLSERVER_2017_EXPRESS" - The database version is SQL Server 2017
-	// Express.
-	//   "SQLSERVER_2017_WEB" - The database version is SQL Server 2017 Web.
-	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
-	//   "POSTGRES_10" - The database version is PostgreSQL 10.
-	//   "POSTGRES_11" - The database version is PostgreSQL 11.
-	//   "POSTGRES_12" - The database version is PostgreSQL 12.
-	//   "POSTGRES_13" - The database version is PostgreSQL 13.
-	//   "POSTGRES_14" - The database version is PostgreSQL 14.
-	//   "POSTGRES_15" - The database version is PostgreSQL 15.
-	//   "POSTGRES_16" - The database version is PostgreSQL 16.
-	//   "POSTGRES_17" - The database version is PostgreSQL 17.
 	//   "MYSQL_8_0" - The database version is MySQL 8.
 	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the minor
 	// version is 18.
@@ -1122,7 +1110,27 @@ type DatabaseInstance struct {
 	// version is 39.
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
 	// version is 40.
+	//   "MYSQL_8_0_41" - The database major version is MySQL 8.0 and the minor
+	// version is 41.
+	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
+	// version is 42.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
+	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
+	// Standard.
+	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server 2017
+	// Enterprise.
+	//   "SQLSERVER_2017_EXPRESS" - The database version is SQL Server 2017
+	// Express.
+	//   "SQLSERVER_2017_WEB" - The database version is SQL Server 2017 Web.
+	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
+	//   "POSTGRES_10" - The database version is PostgreSQL 10.
+	//   "POSTGRES_11" - The database version is PostgreSQL 11.
+	//   "POSTGRES_12" - The database version is PostgreSQL 12.
+	//   "POSTGRES_13" - The database version is PostgreSQL 13.
+	//   "POSTGRES_14" - The database version is PostgreSQL 14.
+	//   "POSTGRES_15" - The database version is PostgreSQL 15.
+	//   "POSTGRES_16" - The database version is PostgreSQL 16.
+	//   "POSTGRES_17" - The database version is PostgreSQL 17.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -1816,6 +1824,28 @@ func (s ExportContextSqlExportOptionsPostgresExportOptions) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExternalSyncSelectedObject: The selected object that Cloud SQL migrates.
+type ExternalSyncSelectedObject struct {
+	// Database: The name of the database that Cloud SQL migrates.
+	Database string `json:"database,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Database") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExternalSyncSelectedObject) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalSyncSelectedObject
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FailoverContext: Database instance failover context.
 type FailoverContext struct {
 	// Kind: This is always `sql#failoverContext`.
@@ -1865,22 +1895,6 @@ type Flag struct {
 	//   "MYSQL_5_5" - The database version is MySQL 5.5.
 	//   "MYSQL_5_6" - The database version is MySQL 5.6.
 	//   "MYSQL_5_7" - The database version is MySQL 5.7.
-	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
-	// Standard.
-	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server 2017
-	// Enterprise.
-	//   "SQLSERVER_2017_EXPRESS" - The database version is SQL Server 2017
-	// Express.
-	//   "SQLSERVER_2017_WEB" - The database version is SQL Server 2017 Web.
-	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
-	//   "POSTGRES_10" - The database version is PostgreSQL 10.
-	//   "POSTGRES_11" - The database version is PostgreSQL 11.
-	//   "POSTGRES_12" - The database version is PostgreSQL 12.
-	//   "POSTGRES_13" - The database version is PostgreSQL 13.
-	//   "POSTGRES_14" - The database version is PostgreSQL 14.
-	//   "POSTGRES_15" - The database version is PostgreSQL 15.
-	//   "POSTGRES_16" - The database version is PostgreSQL 16.
-	//   "POSTGRES_17" - The database version is PostgreSQL 17.
 	//   "MYSQL_8_0" - The database version is MySQL 8.
 	//   "MYSQL_8_0_18" - The database major version is MySQL 8.0 and the minor
 	// version is 18.
@@ -1914,7 +1928,27 @@ type Flag struct {
 	// version is 39.
 	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the minor
 	// version is 40.
+	//   "MYSQL_8_0_41" - The database major version is MySQL 8.0 and the minor
+	// version is 41.
+	//   "MYSQL_8_0_42" - The database major version is MySQL 8.0 and the minor
+	// version is 42.
 	//   "MYSQL_8_4" - The database version is MySQL 8.4.
+	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
+	// Standard.
+	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server 2017
+	// Enterprise.
+	//   "SQLSERVER_2017_EXPRESS" - The database version is SQL Server 2017
+	// Express.
+	//   "SQLSERVER_2017_WEB" - The database version is SQL Server 2017 Web.
+	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
+	//   "POSTGRES_10" - The database version is PostgreSQL 10.
+	//   "POSTGRES_11" - The database version is PostgreSQL 11.
+	//   "POSTGRES_12" - The database version is PostgreSQL 12.
+	//   "POSTGRES_13" - The database version is PostgreSQL 13.
+	//   "POSTGRES_14" - The database version is PostgreSQL 14.
+	//   "POSTGRES_15" - The database version is PostgreSQL 15.
+	//   "POSTGRES_16" - The database version is PostgreSQL 16.
+	//   "POSTGRES_17" - The database version is PostgreSQL 17.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server 2019
@@ -3062,9 +3096,25 @@ type OnPremisesConfiguration struct {
 	Kind string `json:"kind,omitempty"`
 	// Password: The password for connecting to on-premises instance.
 	Password string `json:"password,omitempty"`
+	// SelectedObjects: Optional. A list of objects that the user selects for
+	// replication from an external source instance.
+	SelectedObjects []*SelectedObjects `json:"selectedObjects,omitempty"`
 	// SourceInstance: The reference to Cloud SQL instance if the source is Cloud
 	// SQL.
 	SourceInstance *InstanceReference `json:"sourceInstance,omitempty"`
+	// SslOption: Optional. SSL option for replica connection to the on-premises
+	// source.
+	//
+	// Possible values:
+	//   "SSL_OPTION_UNSPECIFIED" - Unknown SSL option i.e. SSL option not
+	// specified by user.
+	//   "DISABLE" - SSL is not used for replica connection to the on-premises
+	// source.
+	//   "REQUIRE" - SSL is required for replica connection to the on-premises
+	// source.
+	//   "VERIFY_CA" - Verify CA is required for replica connection to the
+	// on-premises source.
+	SslOption string `json:"sslOption,omitempty"`
 	// Username: The username for connecting to on-premises instance.
 	Username string `json:"username,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
@@ -3191,6 +3241,8 @@ type Operation struct {
 	// operation runs as part of a switchover operation to the original primary
 	// instance.
 	//   "MAJOR_VERSION_UPGRADE" - Updates the major version of a Cloud SQL
+	// instance.
+	//   "ADVANCED_BACKUP" - Creates a backup for an Advanced BackupTier Cloud SQL
 	// instance.
 	OperationType string `json:"operationType,omitempty"`
 	// SelfLink: The URI of this resource.
@@ -3707,6 +3759,29 @@ type RotateServerCertificateContext struct {
 
 func (s RotateServerCertificateContext) MarshalJSON() ([]byte, error) {
 	type NoMethod RotateServerCertificateContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SelectedObjects: A list of objects that the user selects for replication
+// from an external source instance.
+type SelectedObjects struct {
+	// Database: Required. The name of the database to migrate.
+	Database string `json:"database,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Database") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SelectedObjects) MarshalJSON() ([]byte, error) {
+	type NoMethod SelectedObjects
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4275,6 +4350,9 @@ type SqlInstancesVerifyExternalSyncSettingsRequest struct {
 	MigrationType string `json:"migrationType,omitempty"`
 	// MysqlSyncConfig: Optional. MySQL-specific settings for start external sync.
 	MysqlSyncConfig *MySqlSyncConfig `json:"mysqlSyncConfig,omitempty"`
+	// SelectedObjects: Optional. Migrate only the specified objects from the
+	// source instance. If this field is empty, then migrate all objects.
+	SelectedObjects []*ExternalSyncSelectedObject `json:"selectedObjects,omitempty"`
 	// SyncMode: External sync mode
 	//
 	// Possible values:

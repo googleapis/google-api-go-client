@@ -1980,6 +1980,19 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	// use to encrypt this container image. For more information, go to
 	// https://cloud.google.com/run/docs/securing/using-cmek
 	EncryptionKey string `json:"encryptionKey,omitempty"`
+	// EncryptionKeyRevocationAction: Optional. The action to take if the
+	// encryption key is revoked.
+	//
+	// Possible values:
+	//   "ENCRYPTION_KEY_REVOCATION_ACTION_UNSPECIFIED" - Unspecified
+	//   "PREVENT_NEW" - Prevents the creation of new instances.
+	//   "SHUTDOWN" - Shuts down existing instances, and prevents creation of new
+	// ones.
+	EncryptionKeyRevocationAction string `json:"encryptionKeyRevocationAction,omitempty"`
+	// EncryptionKeyShutdownDuration: Optional. If encryption_key_revocation_action
+	// is SHUTDOWN, the duration before shutting down all instances. The minimum
+	// increment is 1 hour.
+	EncryptionKeyShutdownDuration string `json:"encryptionKeyShutdownDuration,omitempty"`
 	// ExecutionEnvironment: Optional. The sandbox environment to host this
 	// Revision.
 	//

@@ -497,6 +497,9 @@ func (s AirportInfo) MarshalJSON() ([]byte, error) {
 type AppLinkData struct {
 	// AndroidAppLinkInfo: Optional information about the partner app link.
 	AndroidAppLinkInfo *AppLinkDataAppLinkInfo `json:"androidAppLinkInfo,omitempty"`
+	// DisplayText: Optional display text for the app link button. Character limit
+	// is 30.
+	DisplayText *LocalizedString `json:"displayText,omitempty"`
 	// IosAppLinkInfo: Deprecated. Links to open iOS apps are not supported.
 	IosAppLinkInfo *AppLinkDataAppLinkInfo `json:"iosAppLinkInfo,omitempty"`
 	// WebAppLinkInfo: Optional information about the partner web link.

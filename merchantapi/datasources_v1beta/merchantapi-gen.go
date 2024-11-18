@@ -371,7 +371,7 @@ type FetchSettings struct {
 	//   "FREQUENCY_WEEKLY" - The fetch happens every week.
 	//   "FREQUENCY_MONTHLY" - The fetch happens every month.
 	Frequency string `json:"frequency,omitempty"`
-	// Password: Optional. An optional password for fetch url. Used for submitting
+	// Password: Optional. An optional password for fetch_uri. Used for submitting
 	// data sources through SFTP
 	// (https://support.google.com/merchants/answer/13813117).
 	Password string `json:"password,omitempty"`
@@ -381,7 +381,7 @@ type FetchSettings struct {
 	// TimeZone: Optional. Time zone (https://cldr.unicode.org) used for schedule.
 	// UTC by default. For example, "America/Los_Angeles".
 	TimeZone string `json:"timeZone,omitempty"`
-	// Username: Optional. An optional user name for fetch url. Used for submitting
+	// Username: Optional. An optional user name for fetch_uri. Used for submitting
 	// data sources through SFTP
 	// (https://support.google.com/merchants/answer/13813117).
 	Username string `json:"username,omitempty"`
@@ -699,6 +699,7 @@ type ProductChange struct {
 	// Reviews](https://support.google.com/merchants/answer/14620732).
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
+	//   "YOUTUBE_CHECKOUT" - [YouTube Checkout](
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or

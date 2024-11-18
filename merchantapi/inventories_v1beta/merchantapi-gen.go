@@ -469,6 +469,7 @@ type ProductChange struct {
 	// Reviews](https://support.google.com/merchants/answer/14620732).
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
+	//   "YOUTUBE_CHECKOUT" - [YouTube Checkout](
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -541,7 +542,7 @@ func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 
 // RegionalInventory: Regional inventory information for the product.
 // Represents specific information like price and availability for a given
-// product in a specific `region`. For a list of all accepted attribute values,
+// product in a specific `region`.For a list of all accepted attribute values,
 // see the regional product inventory data specification
 // (https://support.google.com/merchants/answer/9698880).
 type RegionalInventory struct {

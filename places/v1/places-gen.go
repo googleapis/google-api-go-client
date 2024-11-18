@@ -420,6 +420,14 @@ func (s GoogleMapsPlacesV1AuthorAttribution) MarshalJSON() ([]byte, error) {
 // GoogleMapsPlacesV1AutocompletePlacesRequest: Request proto for
 // AutocompletePlaces.
 type GoogleMapsPlacesV1AutocompletePlacesRequest struct {
+	// IncludePureServiceAreaBusinesses: Optional. Include pure service area
+	// businesses if the field is set to true. Pure service area business is a
+	// business that visits or delivers to customers directly but does not serve
+	// customers at their business address. For example, businesses like cleaning
+	// services or plumbers. Those businesses do not have a physical address or
+	// location on Google Maps. Places will not return fields including `location`,
+	// `plus_code`, and other location related fields for these businesses.
+	IncludePureServiceAreaBusinesses bool `json:"includePureServiceAreaBusinesses,omitempty"`
 	// IncludeQueryPredictions: Optional. If true, the response will include both
 	// Place and query predictions. Otherwise the response will only return Place
 	// predictions.
@@ -489,16 +497,18 @@ type GoogleMapsPlacesV1AutocompletePlacesRequest struct {
 	// a unique session token for each new session. Using the same token for more
 	// than one session will result in each request being billed individually.
 	SessionToken string `json:"sessionToken,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IncludeQueryPredictions") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "IncludePureServiceAreaBusinesses") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IncludeQueryPredictions") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "IncludePureServiceAreaBusinesses") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
@@ -1309,6 +1319,8 @@ type GoogleMapsPlacesV1Place struct {
 	AreaSummary *GoogleMapsPlacesV1PlaceAreaSummary `json:"areaSummary,omitempty"`
 	// Attributions: A set of data provider that must be shown with this result.
 	Attributions []*GoogleMapsPlacesV1PlaceAttribution `json:"attributions,omitempty"`
+	// BusinessStatus: The business status for the place.
+	//
 	// Possible values:
 	//   "BUSINESS_STATUS_UNSPECIFIED" - Default value. This value is unused.
 	//   "OPERATIONAL" - The establishment is operational, not necessarily open
@@ -1316,6 +1328,8 @@ type GoogleMapsPlacesV1Place struct {
 	//   "CLOSED_TEMPORARILY" - The establishment is temporarily closed.
 	//   "CLOSED_PERMANENTLY" - The establishment is permanently closed.
 	BusinessStatus string `json:"businessStatus,omitempty"`
+	// ContainingPlaces: List of places in which the current place is located.
+	ContainingPlaces []*GoogleMapsPlacesV1PlaceContainingPlace `json:"containingPlaces,omitempty"`
 	// CurbsidePickup: Specifies if the business supports curbside pickup.
 	CurbsidePickup bool `json:"curbsidePickup,omitempty"`
 	// CurrentOpeningHours: The hours of operation for the next seven days
@@ -1414,6 +1428,8 @@ type GoogleMapsPlacesV1Place struct {
 	//   "PRICE_LEVEL_EXPENSIVE" - Place provides expensive services.
 	//   "PRICE_LEVEL_VERY_EXPENSIVE" - Place provides very expensive services.
 	PriceLevel string `json:"priceLevel,omitempty"`
+	// PriceRange: The price range associated with a Place.
+	PriceRange *GoogleMapsPlacesV1PriceRange `json:"priceRange,omitempty"`
 	// PrimaryType: The primary type of the given result. This type must one of the
 	// Places API supported types. For example, "restaurant", "cafe", "airport",
 	// etc. A place can only have a single primary type. For the complete list of
@@ -1425,6 +1441,12 @@ type GoogleMapsPlacesV1Place struct {
 	// values, see Table A and Table B at
 	// https://developers.google.com/maps/documentation/places/web-service/place-types
 	PrimaryTypeDisplayName *GoogleTypeLocalizedText `json:"primaryTypeDisplayName,omitempty"`
+	// PureServiceAreaBusiness: Indicates whether the place is a pure service area
+	// business. Pure service area business is a business that visits or delivers
+	// to customers directly but does not serve customers at their business
+	// address. For example, businesses like cleaning services or plumbers. Those
+	// businesses may not have a physical address or location on Google Maps.
+	PureServiceAreaBusiness bool `json:"pureServiceAreaBusiness,omitempty"`
 	// Rating: A rating between 1.0 and 5.0, based on user reviews of this place.
 	Rating float64 `json:"rating,omitempty"`
 	// RegularOpeningHours: The regular hours of operation.
@@ -1639,6 +1661,31 @@ func (s GoogleMapsPlacesV1PlaceAttribution) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleMapsPlacesV1PlaceContainingPlace: Info about the place in which this
+// place is located.
+type GoogleMapsPlacesV1PlaceContainingPlace struct {
+	// Id: The place id of the place in which this place is located.
+	Id string `json:"id,omitempty"`
+	// Name: The resource name of the place in which this place is located.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1PlaceContainingPlace) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1PlaceContainingPlace
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleMapsPlacesV1PlaceGenerativeSummary: Experimental: See
 // https://developers.google.com/maps/documentation/places/web-service/experimental/places-generative
 // for more details. AI-generated summary of the place.
@@ -1714,6 +1761,14 @@ func (s GoogleMapsPlacesV1PlaceGoogleMapsLinks) MarshalJSON() ([]byte, error) {
 // GoogleMapsPlacesV1PlaceOpeningHours: Information about business hour of the
 // place.
 type GoogleMapsPlacesV1PlaceOpeningHours struct {
+	// NextCloseTime: The next time the current opening hours period ends up to 7
+	// days in the future. This field is only populated if the opening hours period
+	// is active at the time of serving the request.
+	NextCloseTime string `json:"nextCloseTime,omitempty"`
+	// NextOpenTime: The next time the current opening hours period starts up to 7
+	// days in the future. This field is only populated if the opening hours period
+	// is not active at the time of serving the request.
+	NextOpenTime string `json:"nextOpenTime,omitempty"`
 	// OpenNow: Whether the opening hours period is currently active. For regular
 	// opening hours and current opening hours, this field means whether the place
 	// is open. For secondary opening hours and current secondary opening hours,
@@ -1756,13 +1811,13 @@ type GoogleMapsPlacesV1PlaceOpeningHours struct {
 	// unknown or could not be converted to localized text. Example: "Sun:
 	// 18:00–06:00"
 	WeekdayDescriptions []string `json:"weekdayDescriptions,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "OpenNow") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "NextCloseTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "OpenNow") to include in API
+	// NullFields is a list of field names (e.g. "NextCloseTime") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2011,6 +2066,34 @@ type GoogleMapsPlacesV1Polyline struct {
 
 func (s GoogleMapsPlacesV1Polyline) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1Polyline
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1PriceRange: The price range associated with a Place.
+// `end_price` could be unset, which indicates a range without upper bound
+// (e.g. "More than $100").
+type GoogleMapsPlacesV1PriceRange struct {
+	// EndPrice: The high end of the price range (exclusive). Price should be lower
+	// than this amount.
+	EndPrice *GoogleTypeMoney `json:"endPrice,omitempty"`
+	// StartPrice: The low end of the price range (inclusive). Price should be at
+	// or above this amount.
+	StartPrice *GoogleTypeMoney `json:"startPrice,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndPrice") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndPrice") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1PriceRange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1PriceRange
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2432,6 +2515,14 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	// EvOptions: Optional. Set the searchable EV options of a place search
 	// request.
 	EvOptions *GoogleMapsPlacesV1SearchTextRequestEVOptions `json:"evOptions,omitempty"`
+	// IncludePureServiceAreaBusinesses: Optional. Include pure service area
+	// businesses if the field is set to true. Pure service area business is a
+	// business that visits or delivers to customers directly but does not serve
+	// customers at their business address. For example, businesses like cleaning
+	// services or plumbers. Those businesses do not have a physical address or
+	// location on Google Maps. Places will not return fields including `location`,
+	// `plus_code`, and other location related fields for these businesses.
+	IncludePureServiceAreaBusinesses bool `json:"includePureServiceAreaBusinesses,omitempty"`
 	// IncludedType: The requested place type. Full list of types supported:
 	// https://developers.google.com/maps/documentation/places/web-service/place-types.
 	// Only support one included type.

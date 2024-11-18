@@ -15,6 +15,28 @@
   "description": "Discovery Engine API.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/generative-ai-app-builder/docs/",
+  "endpoints": [
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://discoveryengine.asia-northeast1.rep.googleapis.com/",
+      "location": "asia-northeast1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://discoveryengine.europe-west2.rep.googleapis.com/",
+      "location": "europe-west2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://discoveryengine.us.rep.googleapis.com/",
+      "location": "us"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://discoveryengine.eu.rep.googleapis.com/",
+      "location": "eu"
+    }
+  ],
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -5952,6 +5974,34 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "import": {
+                  "description": "Bulk import of user events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. Operation.response is of type ImportResponse. Note that it is possible for a subset of the items to be successfully inserted. Operation.metadata is of type ImportMetadata.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/userEvents:import",
+                  "httpMethod": "POST",
+                  "id": "discoveryengine.projects.locations.userEvents.import",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. Parent DataStore resource name, of the form `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/userEvents:import",
+                  "request": {
+                    "$ref": "GoogleCloudDiscoveryengineV1ImportUserEventsRequest"
+                  },
+                  "response": {
+                    "$ref": "GoogleLongrunningOperation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "write": {
                   "description": "Writes a single user event.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/userEvents:write",
@@ -6090,7 +6140,7 @@
       }
     }
   },
-  "revision": "20241030",
+  "revision": "20241110",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -6763,6 +6813,20 @@
       "description": "Grounding specification.",
       "id": "GoogleCloudDiscoveryengineV1AnswerQueryRequestGroundingSpec",
       "properties": {
+        "filteringLevel": {
+          "description": "Optional. Specifies whether to enable the filtering based on grounding score and at what level.",
+          "enum": [
+            "FILTERING_LEVEL_UNSPECIFIED",
+            "FILTERING_LEVEL_LOW",
+            "FILTERING_LEVEL_HIGH"
+          ],
+          "enumDescriptions": [
+            "Default is no filter",
+            "Filter answers based on a low threshold.",
+            "Filter answers based on a high threshold."
+          ],
+          "type": "string"
+        },
         "includeGroundingSupports": {
           "description": "Optional. Specifies whether to include grounding_supports in the answer. The default value is `false`. When this field is set to `true`, returned answer will have `grounding_score` and will contain GroundingSupports for each claim.",
           "type": "boolean"
@@ -6904,7 +6968,7 @@
           "enumDescriptions": [
             "Default value.",
             "Returns documents in the search result.",
-            "Returns chunks in the search result. Only available if the DataStore.DocumentProcessingConfig.chunking_config is specified."
+            "Returns chunks in the search result. Only available if the DocumentProcessingConfig.chunking_config is specified."
           ],
           "type": "string"
         }
@@ -7756,7 +7820,14 @@
         "citedChunks": {
           "description": "List of facts cited across all claims in the answer candidate. These are derived from the facts supplied in the request.",
           "items": {
-            "$ref": "GoogleCloudDiscoveryengineV1CheckGroundingResponseFactChunk"
+            "$ref": "GoogleCloudDiscoveryengineV1FactChunk"
+          },
+          "type": "array"
+        },
+        "citedFacts": {
+          "description": "List of facts cited across all claims in the answer candidate. These are derived from the facts supplied in the request.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1CheckGroundingResponseCheckGroundingFactChunk"
           },
           "type": "array"
         },
@@ -7771,6 +7842,17 @@
           "description": "The support score for the input answer candidate. Higher the score, higher is the fraction of claims that are supported by the provided facts. This is always set when a response is returned.",
           "format": "float",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1CheckGroundingResponseCheckGroundingFactChunk": {
+      "description": "Fact chunk for grounding check.",
+      "id": "GoogleCloudDiscoveryengineV1CheckGroundingResponseCheckGroundingFactChunk",
+      "properties": {
+        "chunkText": {
+          "description": "Text content of the fact chunk. Can be at most 10K characters long.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -7797,28 +7879,13 @@
           "type": "integer"
         },
         "groundingCheckRequired": {
-          "description": "Indicates that this claim required grounding check. When the system decided this claim doesn't require attribution/grounding check, this field will be set to false. In that case, no grounding check was done for the claim and therefore citation_indices, anti_citation_indices, and score should not be returned.",
+          "description": "Indicates that this claim required grounding check. When the system decided this claim doesn't require attribution/grounding check, this field will be set to false. In that case, no grounding check was done for the claim and therefore citation_indices should not be returned.",
           "type": "boolean"
         },
         "startPos": {
           "description": "Position indicating the start of the claim in the answer candidate, measured in bytes.",
           "format": "int32",
           "type": "integer"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDiscoveryengineV1CheckGroundingResponseFactChunk": {
-      "description": "Fact chunk for grounding check.",
-      "id": "GoogleCloudDiscoveryengineV1CheckGroundingResponseFactChunk",
-      "properties": {
-        "chunkText": {
-          "description": "Text content of the fact chunk. Can be at most 10K characters long.",
-          "type": "string"
-        },
-        "source": {
-          "description": "Source from which this fact chunk was retrieved. For a fact chunk retrieved from inline facts, this field will contain the index of the specific fact from which this chunk was retrieved.",
-          "type": "string"
         }
       },
       "type": "object"
@@ -7874,7 +7941,7 @@
           "description": "Page span of the chunk."
         },
         "relevanceScore": {
-          "description": "Output only. Represents the relevance score based on similarity. Higher score indicates higher chunk relevance. The score is in range [-1.0, 1.0]. Only populated on SearchService.SearchResponse.",
+          "description": "Output only. Represents the relevance score based on similarity. Higher score indicates higher chunk relevance. The score is in range [-1.0, 1.0]. Only populated on SearchResponse.",
           "format": "double",
           "readOnly": true,
           "type": "number"
@@ -9003,6 +9070,11 @@
       "description": "Detailed document information associated with a user event.",
       "id": "GoogleCloudDiscoveryengineV1DocumentInfo",
       "properties": {
+        "conversionValue": {
+          "description": "Optional. The conversion value associated with this Document. Must be set if UserEvent.event_type is \"conversion\". For example, a value of 1000 signifies that 1000 seconds were spent viewing a Document for the `watch` conversion type.",
+          "format": "float",
+          "type": "number"
+        },
         "id": {
           "description": "The Document resource ID.",
           "type": "string"
@@ -9348,6 +9420,33 @@
             "Enterprise tier."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1FactChunk": {
+      "description": "Fact Chunk.",
+      "id": "GoogleCloudDiscoveryengineV1FactChunk",
+      "properties": {
+        "chunkText": {
+          "description": "Text content of the fact chunk. Can be at most 10K characters long.",
+          "type": "string"
+        },
+        "index": {
+          "description": "The index of this chunk. Currently, only used for the streaming mode.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "source": {
+          "description": "Source from which this fact chunk was retrieved. If it was retrieved from the GroundingFacts provided in the request then this field will contain the index of the specific fact from which this chunk was retrieved.",
+          "type": "string"
+        },
+        "sourceMetadata": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "More fine-grained information for the source reference.",
+          "type": "object"
         }
       },
       "type": "object"
@@ -10087,6 +10186,13 @@
           "description": "The display name of the panel.",
           "type": "string"
         },
+        "documents": {
+          "description": "Optional. The document IDs associated with this panel.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1DocumentInfo"
+          },
+          "type": "array"
+        },
         "panelId": {
           "description": "Required. The panel ID.",
           "type": "string"
@@ -10479,7 +10585,7 @@
           "type": "string"
         },
         "score": {
-          "description": "The score of this record based on the given query and selected model.",
+          "description": "The score of this record based on the given query and selected model. The score will be rounded to 2 decimal places. If the score is close to 0, it will be rounded to 0.0001 to avoid returning unset.",
           "format": "float",
           "type": "number"
         },
@@ -10889,7 +10995,7 @@
           "enumDescriptions": [
             "Default value.",
             "Returns documents in the search result.",
-            "Returns chunks in the search result. Only available if the DataStore.DocumentProcessingConfig.chunking_config is specified."
+            "Returns chunks in the search result. Only available if the DocumentProcessingConfig.chunking_config is specified."
           ],
           "type": "string"
         },
@@ -11612,6 +11718,11 @@
           "description": "The resource name of the answer to the user query. Only set if the answer generation (/answer API call) happened in this turn.",
           "type": "string"
         },
+        "detailedAnswer": {
+          "$ref": "GoogleCloudDiscoveryengineV1Answer",
+          "description": "Output only. In ConversationalSearchService.GetSession API, if GetSessionRequest.include_answer_details is set to true, this field will be populated when getting answer query session.",
+          "readOnly": true
+        },
         "query": {
           "$ref": "GoogleCloudDiscoveryengineV1Query",
           "description": "The user query."
@@ -12029,6 +12140,10 @@
           "$ref": "GoogleCloudDiscoveryengineV1CompletionInfo",
           "description": "CompletionService.CompleteQuery details related to the event. This field should be set for `search` event when autocomplete function is enabled and the user clicks a suggestion for search."
         },
+        "conversionType": {
+          "description": "Optional. Conversion type. Required if UserEvent.event_type is `conversion`. This is a customer-defined conversion name in lowercase letters or numbers separated by \"-\", such as \"watch\", \"good-visit\" etc. Do not set the field if UserEvent.event_type is not `conversion`. This mixes the custom conversion event with predefined events like `search`, `view-item` etc.",
+          "type": "string"
+        },
         "dataStore": {
           "description": "The DataStore resource full name, of the form `projects/{project}/locations/{location}/collections/{collection_id}/dataStores/{data_store_id}`. Optional. Only required for user events whose data store can't by determined by UserEvent.engine or UserEvent.documents. If data store is set in the parent of write/import/collect user event requests, this field can be omitted.",
           "type": "string"
@@ -12054,7 +12169,7 @@
           "type": "string"
         },
         "eventType": {
-          "description": "Required. User event type. Allowed values are: Generic values: * `search`: Search for Documents. * `view-item`: Detailed page view of a Document. * `view-item-list`: View of a panel or ordered list of Documents. * `view-home-page`: View of the home page. * `view-category-page`: View of a category page, e.g. Home \u003e Men \u003e Jeans * `add-feedback`: Add a user feedback. Retail-related values: * `add-to-cart`: Add an item(s) to cart, e.g. in Retail online shopping * `purchase`: Purchase an item(s) Media-related values: * `media-play`: Start/resume watching a video, playing a song, etc. * `media-complete`: Finished or stopped midway through a video, song, etc.",
+          "description": "Required. User event type. Allowed values are: Generic values: * `search`: Search for Documents. * `view-item`: Detailed page view of a Document. * `view-item-list`: View of a panel or ordered list of Documents. * `view-home-page`: View of the home page. * `view-category-page`: View of a category page, e.g. Home \u003e Men \u003e Jeans * `add-feedback`: Add a user feedback. Retail-related values: * `add-to-cart`: Add an item(s) to cart, e.g. in Retail online shopping * `purchase`: Purchase an item(s) Media-related values: * `media-play`: Start/resume watching a video, playing a song, etc. * `media-complete`: Finished or stopped midway through a video, song, etc. Custom conversion value: * `conversion`: Customer defined conversion event.",
           "type": "string"
         },
         "filter": {
@@ -12072,6 +12187,13 @@
         "panel": {
           "$ref": "GoogleCloudDiscoveryengineV1PanelInfo",
           "description": "Panel metadata associated with this user event."
+        },
+        "panels": {
+          "description": "Optional. List of panels associated with this event. Used for page-level impression data.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1PanelInfo"
+          },
+          "type": "array"
         },
         "promotionIds": {
           "description": "The promotion IDs if this is an event associated with promotions. Currently, this field is restricted to at most one ID.",
@@ -15369,7 +15491,7 @@
           "enumDescriptions": [
             "Default value.",
             "Returns documents in the search result.",
-            "Returns chunks in the search result. Only available if the DataStore.DocumentProcessingConfig.chunking_config is specified."
+            "Returns chunks in the search result. Only available if the DocumentProcessingConfig.chunking_config is specified."
           ],
           "type": "string"
         },
@@ -15842,6 +15964,11 @@
         "answer": {
           "description": "The resource name of the answer to the user query. Only set if the answer generation (/answer API call) happened in this turn.",
           "type": "string"
+        },
+        "detailedAnswer": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaAnswer",
+          "description": "Output only. In ConversationalSearchService.GetSession API, if GetSessionRequest.include_answer_details is set to true, this field will be populated when getting answer query session.",
+          "readOnly": true
         },
         "query": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaQuery",
@@ -18216,7 +18343,7 @@
           "enumDescriptions": [
             "Default value.",
             "Returns documents in the search result.",
-            "Returns chunks in the search result. Only available if the DataStore.DocumentProcessingConfig.chunking_config is specified."
+            "Returns chunks in the search result. Only available if the DocumentProcessingConfig.chunking_config is specified."
           ],
           "type": "string"
         },

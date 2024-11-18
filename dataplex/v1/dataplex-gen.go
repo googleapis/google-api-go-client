@@ -3539,8 +3539,7 @@ func (s GoogleCloudDataplexV1DataScan) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDataplexV1DataScanEvent: These messages contain information about
-// the execution of a datascan. The monitored resource is 'DataScan' Next ID:
-// 13
+// the execution of a datascan. The monitored resource is 'DataScan'
 type GoogleCloudDataplexV1DataScanEvent struct {
 	// CreateTime: The time when the data scan job was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3597,6 +3596,7 @@ type GoogleCloudDataplexV1DataScanEvent struct {
 	//   "SCAN_TYPE_UNSPECIFIED" - An unspecified data scan type.
 	//   "DATA_PROFILE" - Data scan for data profile.
 	//   "DATA_QUALITY" - Data scan for data quality.
+	//   "DATA_DISCOVERY" - Data scan for data discovery.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4082,6 +4082,11 @@ type GoogleCloudDataplexV1DiscoveryEvent struct {
 	//   "PARTITION_CREATED" - An event representing a partition being created.
 	//   "PARTITION_UPDATED" - An event representing a partition being updated.
 	//   "PARTITION_DELETED" - An event representing a partition being deleted.
+	//   "TABLE_PUBLISHED" - An event representing a table being published.
+	//   "TABLE_UPDATED" - An event representing a table being updated.
+	//   "TABLE_IGNORED" - An event representing a table being skipped in
+	// publishing.
+	//   "TABLE_DELETED" - An event representing a table being deleted.
 	Type string `json:"type,omitempty"`
 	// ZoneId: The id of the associated zone.
 	ZoneId string `json:"zoneId,omitempty"`
@@ -28357,6 +28362,14 @@ func (r *ProjectsLocationsMetadataJobsService) Create(parent string, googlecloud
 // ID. If not provided, a unique ID is generated with the prefix metadata-job-.
 func (c *ProjectsLocationsMetadataJobsCreateCall) MetadataJobId(metadataJobId string) *ProjectsLocationsMetadataJobsCreateCall {
 	c.urlParams_.Set("metadataJobId", metadataJobId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": The service
+// validates the request without performing any mutations. The default is
+// false.
+func (c *ProjectsLocationsMetadataJobsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsMetadataJobsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 

@@ -644,6 +644,9 @@ type InternalRange struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: A description of this resource.
 	Description string `json:"description,omitempty"`
+	// Immutable: Optional. Immutable ranges cannot have their fields modified,
+	// except for labels and description.
+	Immutable bool `json:"immutable,omitempty"`
 	// IpCidrRange: IP range that this internal range defines. NOTE: IPv6 ranges
 	// are limited to usage=EXTERNAL_TO_VPC and peering=FOR_SELF. NOTE: For IPv6
 	// Ranges this field is compulsory, i.e. the address range must be specified

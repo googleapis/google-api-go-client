@@ -863,22 +863,22 @@ type ApplicationPolicy struct {
 	// default.
 	//   "PROMPT" - Prompt the user to grant a permission.
 	//   "GRANT" - Automatically grant a permission.On Android 12 and above,
-	// Manifest.permission.READ_SMS
+	// READ_SMS
 	// (https://developer.android.com/reference/android/Manifest.permission#READ_SMS)
 	// and following sensor-related permissions can only be granted on fully
-	// managed devices: Manifest.permission.ACCESS_FINE_LOCATION
+	// managed devices: ACCESS_FINE_LOCATION
 	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_FINE_LOCATION)
-	// Manifest.permission.ACCESS_BACKGROUND_LOCATION
+	// ACCESS_BACKGROUND_LOCATION
 	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_BACKGROUND_LOCATION)
-	// Manifest.permission.ACCESS_COARSE_LOCATION
+	// ACCESS_COARSE_LOCATION
 	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_COARSE_LOCATION)
-	// Manifest.permission.CAMERA
+	// CAMERA
 	// (https://developer.android.com/reference/android/Manifest.permission#CAMERA)
-	// Manifest.permission.RECORD_AUDIO
+	// RECORD_AUDIO
 	// (https://developer.android.com/reference/android/Manifest.permission#RECORD_AUDIO)
-	// Manifest.permission.ACTIVITY_RECOGNITION
+	// ACTIVITY_RECOGNITION
 	// (https://developer.android.com/reference/android/Manifest.permission#ACTIVITY_RECOGNITION)
-	// Manifest.permission.BODY_SENSORS
+	// BODY_SENSORS
 	// (https://developer.android.com/reference/android/Manifest.permission#BODY_SENSORS)
 	//   "DENY" - Automatically deny a permission.
 	DefaultPermissionPolicy string `json:"defaultPermissionPolicy,omitempty"`
@@ -4562,22 +4562,22 @@ type PermissionGrant struct {
 	// default.
 	//   "PROMPT" - Prompt the user to grant a permission.
 	//   "GRANT" - Automatically grant a permission.On Android 12 and above,
-	// Manifest.permission.READ_SMS
+	// READ_SMS
 	// (https://developer.android.com/reference/android/Manifest.permission#READ_SMS)
 	// and following sensor-related permissions can only be granted on fully
-	// managed devices: Manifest.permission.ACCESS_FINE_LOCATION
+	// managed devices: ACCESS_FINE_LOCATION
 	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_FINE_LOCATION)
-	// Manifest.permission.ACCESS_BACKGROUND_LOCATION
+	// ACCESS_BACKGROUND_LOCATION
 	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_BACKGROUND_LOCATION)
-	// Manifest.permission.ACCESS_COARSE_LOCATION
+	// ACCESS_COARSE_LOCATION
 	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_COARSE_LOCATION)
-	// Manifest.permission.CAMERA
+	// CAMERA
 	// (https://developer.android.com/reference/android/Manifest.permission#CAMERA)
-	// Manifest.permission.RECORD_AUDIO
+	// RECORD_AUDIO
 	// (https://developer.android.com/reference/android/Manifest.permission#RECORD_AUDIO)
-	// Manifest.permission.ACTIVITY_RECOGNITION
+	// ACTIVITY_RECOGNITION
 	// (https://developer.android.com/reference/android/Manifest.permission#ACTIVITY_RECOGNITION)
-	// Manifest.permission.BODY_SENSORS
+	// BODY_SENSORS
 	// (https://developer.android.com/reference/android/Manifest.permission#BODY_SENSORS)
 	//   "DENY" - Automatically deny a permission.
 	Policy string `json:"policy,omitempty"`
@@ -4730,7 +4730,9 @@ type Policy struct {
 	// AccountTypesWithManagementDisabled: Account types that can't be managed by
 	// the user.
 	AccountTypesWithManagementDisabled []string `json:"accountTypesWithManagementDisabled,omitempty"`
-	// AddUserDisabled: Whether adding new users and profiles is disabled.
+	// AddUserDisabled: Whether adding new users and profiles is disabled. For
+	// devices where managementMode is DEVICE_OWNER this field is ignored and the
+	// user is never allowed to add or remove users.
 	AddUserDisabled bool `json:"addUserDisabled,omitempty"`
 	// AdjustVolumeDisabled: Whether adjusting the master volume is disabled. Also
 	// mutes the device.
@@ -4892,22 +4894,22 @@ type Policy struct {
 	// default.
 	//   "PROMPT" - Prompt the user to grant a permission.
 	//   "GRANT" - Automatically grant a permission.On Android 12 and above,
-	// Manifest.permission.READ_SMS
+	// READ_SMS
 	// (https://developer.android.com/reference/android/Manifest.permission#READ_SMS)
 	// and following sensor-related permissions can only be granted on fully
-	// managed devices: Manifest.permission.ACCESS_FINE_LOCATION
+	// managed devices: ACCESS_FINE_LOCATION
 	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_FINE_LOCATION)
-	// Manifest.permission.ACCESS_BACKGROUND_LOCATION
+	// ACCESS_BACKGROUND_LOCATION
 	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_BACKGROUND_LOCATION)
-	// Manifest.permission.ACCESS_COARSE_LOCATION
+	// ACCESS_COARSE_LOCATION
 	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_COARSE_LOCATION)
-	// Manifest.permission.CAMERA
+	// CAMERA
 	// (https://developer.android.com/reference/android/Manifest.permission#CAMERA)
-	// Manifest.permission.RECORD_AUDIO
+	// RECORD_AUDIO
 	// (https://developer.android.com/reference/android/Manifest.permission#RECORD_AUDIO)
-	// Manifest.permission.ACTIVITY_RECOGNITION
+	// ACTIVITY_RECOGNITION
 	// (https://developer.android.com/reference/android/Manifest.permission#ACTIVITY_RECOGNITION)
-	// Manifest.permission.BODY_SENSORS
+	// BODY_SENSORS
 	// (https://developer.android.com/reference/android/Manifest.permission#BODY_SENSORS)
 	//   "DENY" - Automatically deny a permission.
 	DefaultPermissionPolicy string `json:"defaultPermissionPolicy,omitempty"`

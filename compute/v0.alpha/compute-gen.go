@@ -5000,8 +5000,7 @@ type BackendBucketCdnPolicy struct {
 	// identifiable) content. CACHE_ALL_STATIC Automatically cache static content,
 	// including common image formats, media (video and audio), and web assets
 	// (JavaScript and CSS). Requests and responses that are marked as uncacheable,
-	// as well as dynamic content (including HTML), will not be cached. If no value
-	// is provided for cdnPolicy.cacheMode, it defaults to CACHE_ALL_STATIC.
+	// as well as dynamic content (including HTML), will not be cached.
 	//
 	// Possible values:
 	//   "CACHE_ALL_STATIC" - Automatically cache static content, including common
@@ -6232,8 +6231,7 @@ type BackendServiceCdnPolicy struct {
 	// identifiable) content. CACHE_ALL_STATIC Automatically cache static content,
 	// including common image formats, media (video and audio), and web assets
 	// (JavaScript and CSS). Requests and responses that are marked as uncacheable,
-	// as well as dynamic content (including HTML), will not be cached. If no value
-	// is provided for cdnPolicy.cacheMode, it defaults to CACHE_ALL_STATIC.
+	// as well as dynamic content (including HTML), will not be cached.
 	//
 	// Possible values:
 	//   "CACHE_ALL_STATIC" - Automatically cache static content, including common
@@ -8529,6 +8527,7 @@ type Commitment struct {
 	//   "COMPUTE_OPTIMIZED_H3"
 	//   "GENERAL_PURPOSE"
 	//   "GENERAL_PURPOSE_C4"
+	//   "GENERAL_PURPOSE_C4A"
 	//   "GENERAL_PURPOSE_E2"
 	//   "GENERAL_PURPOSE_N2"
 	//   "GENERAL_PURPOSE_N2D"
@@ -34327,8 +34326,8 @@ type NetworkInterface struct {
 	//   "UNSPECIFIED_NIC_TYPE" - No type specified.
 	//   "VIRTIO_NET" - VIRTIO
 	NicType string `json:"nicType,omitempty"`
-	// ParentNicName: Name of the parent network interface of a dynamic network
-	// interface.
+	// ParentNicName: Name of the parent network interface of a VLAN based nic. If
+	// this field is specified, vlan must be set.
 	ParentNicName string `json:"parentNicName,omitempty"`
 	// QueueCount: The networking queue count that's specified by users for the
 	// network interface. Both Rx and Tx queues will be set to this number. It'll
@@ -34358,8 +34357,9 @@ type NetworkInterface struct {
 	// https://www.googleapis.com/compute/v1/projects/project/regions/region
 	// /subnetworks/subnetwork - regions/region/subnetworks/subnetwork
 	Subnetwork string `json:"subnetwork,omitempty"`
-	// Vlan: VLAN tag of a dynamic network interface, must be in range from 2 to
-	// 4094 inclusively.
+	// Vlan: VLAN tag of a VLAN based network interface, must be in range from 2 to
+	// 4094 inclusively. This field is mandatory if the parent network interface
+	// name is set.
 	Vlan int64 `json:"vlan,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessConfigs") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -34704,8 +34704,6 @@ type NetworkProfile struct {
 	// Kind: [Output Only] Type of the resource. Always compute#networkProfile for
 	// network profiles.
 	Kind string `json:"kind,omitempty"`
-	// Location: [Output Only] Location to which the network is restricted.
-	Location *NetworkProfileLocation `json:"location,omitempty"`
 	// Name: [Output Only] Name of the resource.
 	Name string `json:"name,omitempty"`
 	// SelfLink: [Output Only] Server-defined URL for the resource.
@@ -34733,30 +34731,6 @@ type NetworkProfile struct {
 
 func (s NetworkProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkProfile
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-type NetworkProfileLocation struct {
-	Name string `json:"name,omitempty"`
-	// Possible values:
-	//   "REGION"
-	//   "ZONE"
-	Scope string `json:"scope,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s NetworkProfileLocation) MarshalJSON() ([]byte, error) {
-	type NoMethod NetworkProfileLocation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -57498,7 +57472,7 @@ type Subnetwork struct {
 	// VMs in this subnet to Google services.
 	PrivateIpv6GoogleAccess string `json:"privateIpv6GoogleAccess,omitempty"`
 	// Purpose: The purpose of the resource. This field can be either PRIVATE,
-	// GLOBAL_MANAGED_PROXY, REGIONAL_MANAGED_PROXY, or PRIVATE_SERVICE_CONNECT.
+	// GLOBAL_MANAGED_PROXY, REGIONAL_MANAGED_PROXY, PRIVATE_SERVICE_CONNECT, or
 	// PRIVATE is the default purpose for user-created subnets or subnets that are
 	// automatically created in auto mode networks. Subnets with purpose set to
 	// GLOBAL_MANAGED_PROXY or REGIONAL_MANAGED_PROXY are user-created subnetworks
@@ -63874,7 +63848,7 @@ type UsableSubnetwork struct {
 	// Network: Network URL.
 	Network string `json:"network,omitempty"`
 	// Purpose: The purpose of the resource. This field can be either PRIVATE,
-	// GLOBAL_MANAGED_PROXY, REGIONAL_MANAGED_PROXY, or PRIVATE_SERVICE_CONNECT.
+	// GLOBAL_MANAGED_PROXY, REGIONAL_MANAGED_PROXY, PRIVATE_SERVICE_CONNECT, or
 	// PRIVATE is the default purpose for user-created subnets or subnets that are
 	// automatically created in auto mode networks. Subnets with purpose set to
 	// GLOBAL_MANAGED_PROXY or REGIONAL_MANAGED_PROXY are user-created subnetworks

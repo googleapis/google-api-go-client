@@ -706,7 +706,7 @@ func (s EncryptionConfig) MarshalJSON() ([]byte, error) {
 
 // Environment: An environment for running orchestration tasks.
 type Environment struct {
-	// Config: Configuration parameters for this environment.
+	// Config: Optional. Configuration parameters for this environment.
 	Config *EnvironmentConfig `json:"config,omitempty"`
 	// CreateTime: Output only. The time at which this environment was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -717,7 +717,7 @@ type Environment struct {
 	// [\p{Ll}\p{Lo}\p{N}_-]{0,63} * Both keys and values are additionally
 	// constrained to be <= 128 bytes in size.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: The resource name of the environment, in the form:
+	// Name: Identifier. The resource name of the environment, in the form:
 	// "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
 	// EnvironmentId must start with a lowercase letter followed by up to 63
 	// lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
@@ -825,14 +825,15 @@ type EnvironmentConfig struct {
 	// feature is: - in case of private environment: enabled with no external
 	// networks allowlisted. - in case of public environment: disabled.
 	MasterAuthorizedNetworksConfig *MasterAuthorizedNetworksConfig `json:"masterAuthorizedNetworksConfig,omitempty"`
-	// NodeConfig: The configuration used for the Kubernetes Engine cluster.
+	// NodeConfig: Optional. The configuration used for the Kubernetes Engine
+	// cluster.
 	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
 	// NodeCount: The number of nodes in the Kubernetes Engine cluster that will be
 	// used to run this environment. This field is supported for Cloud Composer
 	// environments in versions composer-1.*.*-airflow-*.*.*.
 	NodeCount int64 `json:"nodeCount,omitempty"`
-	// PrivateEnvironmentConfig: The configuration used for the Private IP Cloud
-	// Composer environment.
+	// PrivateEnvironmentConfig: Optional. The configuration used for the Private
+	// IP Cloud Composer environment.
 	PrivateEnvironmentConfig *PrivateEnvironmentConfig `json:"privateEnvironmentConfig,omitempty"`
 	// RecoveryConfig: Optional. The Recovery settings configuration of an
 	// environment. This field is supported for Cloud Composer environments in
@@ -847,7 +848,7 @@ type EnvironmentConfig struct {
 	// parameters.
 	//   "HIGH_RESILIENCE" - Enabled High Resilience mode, including Cloud SQL HA.
 	ResilienceMode string `json:"resilienceMode,omitempty"`
-	// SoftwareConfig: The configuration settings for software inside the
+	// SoftwareConfig: Optional. The configuration settings for software inside the
 	// environment.
 	SoftwareConfig *SoftwareConfig `json:"softwareConfig,omitempty"`
 	// WebServerConfig: Optional. The configuration settings for the Airflow web
@@ -1993,9 +1994,10 @@ type SoftwareConfig struct {
 	// `GKE_CLUSTER_NAME` * `SQL_DATABASE` * `SQL_INSTANCE` * `SQL_PASSWORD` *
 	// `SQL_PROJECT` * `SQL_REGION` * `SQL_USER`
 	EnvVariables map[string]string `json:"envVariables,omitempty"`
-	// ImageVersion: The version of the software running in the environment. This
-	// encapsulates both the version of Cloud Composer functionality and the
-	// version of Apache Airflow. It must match the regular expression
+	// ImageVersion: Optional. The version of the software running in the
+	// environment. This encapsulates both the version of Cloud Composer
+	// functionality and the version of Apache Airflow. It must match the regular
+	// expression
 	// `composer-([0-9]+(\.[0-9]+\.[0-9]+(-preview\.[0-9]+)?)?|latest)-airflow-([0-9
 	// ]+(\.[0-9]+(\.[0-9]+)?)?)`. When used as input, the server also checks if
 	// the provided version is supported and denies the request for an unsupported
@@ -2248,7 +2250,8 @@ func (s *TriggererResource) UnmarshalJSON(data []byte) error {
 type UserWorkloadsConfigMap struct {
 	// Data: Optional. The "data" field of Kubernetes ConfigMap, organized in
 	// key-value pairs. For details see:
-	// https://kubernetes.io/docs/concepts/configuration/configmap/
+	// https://kubernetes.io/docs/concepts/configuration/configmap/ Example: {
+	// "example_key": "example_value", "another_key": "another_value" }
 	Data map[string]string `json:"data,omitempty"`
 	// Name: Identifier. The resource name of the ConfigMap, in the form:
 	// "projects/{projectId}/locations/{locationId}/environments/{environmentId}/use
@@ -2282,6 +2285,8 @@ type UserWorkloadsSecret struct {
 	// key-value pairs, which can contain sensitive values such as a password, a
 	// token, or a key. The values for all keys have to be base64-encoded strings.
 	// For details see: https://kubernetes.io/docs/concepts/configuration/secret/
+	// Example: { "example": "ZXhhbXBsZV92YWx1ZQ==", "another-example":
+	// "YW5vdGhlcl9leGFtcGxlX3ZhbHVl" }
 	Data map[string]string `json:"data,omitempty"`
 	// Name: Identifier. The resource name of the Secret, in the form:
 	// "projects/{projectId}/locations/{locationId}/environments/{environmentId}/use

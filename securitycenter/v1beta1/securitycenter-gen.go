@@ -1753,6 +1753,30 @@ func (s *Detection) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Disk: Contains information about the disk associated with the finding.
+type Disk struct {
+	// Name: The name of the disk, for example,
+	// "https://www.googleapis.com/compute/v1/projects/project-id/zones/zone-id/disk
+	// s/disk-id".
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Disk) MarshalJSON() ([]byte, error) {
+	type NoMethod Disk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DiskPath: Path of the file in terms of underlying disk/partition
 // identifiers.
 type DiskPath struct {
@@ -2051,6 +2075,8 @@ type Finding struct {
 	Database *Database `json:"database,omitempty"`
 	// Description: Contains more details about the finding.
 	Description string `json:"description,omitempty"`
+	// Disk: Disk associated with the finding.
+	Disk *Disk `json:"disk,omitempty"`
 	// EventTime: The time the finding was first detected. If an existing finding
 	// is updated, then this is the time the update occurred. For example, if the
 	// finding represents an open firewall, this property captures the time the
@@ -2580,6 +2606,14 @@ func (s GoogleCloudSecuritycenterV1CustomOutputSpec) MarshalJSON() ([]byte, erro
 // enablement_state for the module in all child folders or projects is also
 // `enabled`. EffectiveSecurityHealthAnalyticsCustomModule is read-only.
 type GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule struct {
+	// CloudProvider: The cloud provider of the custom module.
+	//
+	// Possible values:
+	//   "CLOUD_PROVIDER_UNSPECIFIED" - Unspecified cloud provider.
+	//   "GOOGLE_CLOUD_PLATFORM" - Google Cloud Platform.
+	//   "AMAZON_WEB_SERVICES" - Amazon Web Services.
+	//   "MICROSOFT_AZURE" - Microsoft Azure.
+	CloudProvider string `json:"cloudProvider,omitempty"`
 	// CustomConfig: Output only. The user-specified configuration for the module.
 	CustomConfig *GoogleCloudSecuritycenterV1CustomConfig `json:"customConfig,omitempty"`
 	// DisplayName: Output only. The display name for the custom module. The name
@@ -2602,13 +2636,13 @@ type GoogleCloudSecuritycenterV1EffectiveSecurityHealthAnalyticsCustomModule str
 	// "projects/{project}/securityHealthAnalyticsSettings/effectiveCustomModules/{c
 	// ustomModule}"
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CustomConfig") to
+	// ForceSendFields is a list of field names (e.g. "CloudProvider") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CustomConfig") to include in API
+	// NullFields is a list of field names (e.g. "CloudProvider") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2954,8 +2988,9 @@ type GoogleCloudSecuritycenterV1ResourceValueConfig struct {
 	// combination with a resource_type that is related to BigQuery, e.g.
 	// "bigquery.googleapis.com/Dataset".
 	SensitiveDataProtectionMapping *GoogleCloudSecuritycenterV1SensitiveDataProtectionMapping `json:"sensitiveDataProtectionMapping,omitempty"`
-	// TagValues: Required. Tag values combined with `AND` to check against. Values
-	// in the form "tagValues/123" Example: `[ "tagValues/123", "tagValues/456",
+	// TagValues: Required. Tag values combined with `AND` to check against. For
+	// Google Cloud resources, they are tag value IDs in the form of
+	// "tagValues/123". Example: `[ "tagValues/123", "tagValues/456",
 	// "tagValues/789" ]`
 	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
 	TagValues []string `json:"tagValues,omitempty"`
@@ -3024,6 +3059,14 @@ type GoogleCloudSecuritycenterV1SecurityHealthAnalyticsCustomModule struct {
 	// custom module. Otherwise, `ancestor_module` specifies the organization or
 	// folder from which the custom module is inherited.
 	AncestorModule string `json:"ancestorModule,omitempty"`
+	// CloudProvider: The cloud provider of the custom module.
+	//
+	// Possible values:
+	//   "CLOUD_PROVIDER_UNSPECIFIED" - Unspecified cloud provider.
+	//   "GOOGLE_CLOUD_PLATFORM" - Google Cloud.
+	//   "AMAZON_WEB_SERVICES" - Amazon Web Services (AWS).
+	//   "MICROSOFT_AZURE" - Microsoft Azure.
+	CloudProvider string `json:"cloudProvider,omitempty"`
 	// CustomConfig: The user specified custom configuration for the module.
 	CustomConfig *GoogleCloudSecuritycenterV1CustomConfig `json:"customConfig,omitempty"`
 	// DisplayName: The display name of the Security Health Analytics custom
@@ -4888,6 +4931,31 @@ func (s *GoogleCloudSecuritycenterV2Detection) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
+// GoogleCloudSecuritycenterV2Disk: Contains information about the disk
+// associated with the finding.
+type GoogleCloudSecuritycenterV2Disk struct {
+	// Name: The name of the disk, for example,
+	// "https://www.googleapis.com/compute/v1/projects/project-id/zones/zone-id/disk
+	// s/disk-id".
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2Disk) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2Disk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudSecuritycenterV2DiskPath: Path of the file in terms of underlying
 // disk/partition identifiers.
 type GoogleCloudSecuritycenterV2DiskPath struct {
@@ -5199,6 +5267,8 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	Database *GoogleCloudSecuritycenterV2Database `json:"database,omitempty"`
 	// Description: Contains more details about the finding.
 	Description string `json:"description,omitempty"`
+	// Disk: Disk associated with the finding.
+	Disk *GoogleCloudSecuritycenterV2Disk `json:"disk,omitempty"`
 	// EventTime: The time the finding was first detected. If an existing finding
 	// is updated, then this is the time the update occurred. For example, if the
 	// finding represents an open firewall, this property captures the time the
@@ -6646,9 +6716,9 @@ type GoogleCloudSecuritycenterV2ResourceValueConfig struct {
 	// combination with a resource_type that is related to BigQuery, e.g.
 	// "bigquery.googleapis.com/Dataset".
 	SensitiveDataProtectionMapping *GoogleCloudSecuritycenterV2SensitiveDataProtectionMapping `json:"sensitiveDataProtectionMapping,omitempty"`
-	// TagValues: Tag values combined with `AND` to check against. Values in the
-	// form "tagValues/123" Example: `[ "tagValues/123", "tagValues/456",
-	// "tagValues/789" ]`
+	// TagValues: Tag values combined with `AND` to check against. For Google Cloud
+	// resources, they are tag value IDs in the form of "tagValues/123". Example:
+	// `[ "tagValues/123", "tagValues/456", "tagValues/789" ]`
 	// https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
 	TagValues []string `json:"tagValues,omitempty"`
 	// UpdateTime: Output only. Timestamp this resource value configuration was

@@ -181,7 +181,7 @@ type ListQuotaGroupsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// QuotaGroups: The methods, current quota usage and limits per each group. The
 	// quota is shared between all methods in the group. The groups are sorted in
-	// descending order based on quotaUsage.
+	// descending order based on quota_usage.
 	QuotaGroups []*QuotaGroup `json:"quotaGroups,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -278,6 +278,7 @@ type ProductChange struct {
 	// Reviews](https://support.google.com/merchants/answer/14620732).
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
+	//   "YOUTUBE_CHECKOUT" - [YouTube Checkout](
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or

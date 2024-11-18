@@ -217,7 +217,7 @@ type AnalyzeEntitiesResponse struct {
 	Entities []*Entity `json:"entities,omitempty"`
 	// LanguageCode: The language of the text, which will be the same as the
 	// language specified in the request or, if not specified, the
-	// automatically-detected language. See Document.language field for more
+	// automatically-detected language. See Document.language_code field for more
 	// details.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// LanguageSupported: Whether the language is officially supported. The API may
@@ -289,7 +289,7 @@ type AnalyzeSentimentResponse struct {
 	DocumentSentiment *Sentiment `json:"documentSentiment,omitempty"`
 	// LanguageCode: The language of the text, which will be the same as the
 	// language specified in the request or, if not specified, the
-	// automatically-detected language. See Document.language field for more
+	// automatically-detected language. See Document.language_code field for more
 	// details.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// LanguageSupported: Whether the language is officially supported. The API may
@@ -398,12 +398,11 @@ type AnnotateTextResponse struct {
 	DocumentSentiment *Sentiment `json:"documentSentiment,omitempty"`
 	// Entities: Entities, along with their semantic information, in the input
 	// document. Populated if the user enables
-	// AnnotateTextRequest.Features.extract_entities or
-	// AnnotateTextRequest.Features.extract_entity_sentiment.
+	// AnnotateTextRequest.Features.extract_entities .
 	Entities []*Entity `json:"entities,omitempty"`
 	// LanguageCode: The language of the text, which will be the same as the
 	// language specified in the request or, if not specified, the
-	// automatically-detected language. See Document.language field for more
+	// automatically-detected language. See Document.language_code field for more
 	// details.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// LanguageSupported: Whether the language is officially supported by all
@@ -511,7 +510,7 @@ type ClassifyTextResponse struct {
 	Categories []*ClassificationCategory `json:"categories,omitempty"`
 	// LanguageCode: The language of the text, which will be the same as the
 	// language specified in the request or, if not specified, the
-	// automatically-detected language. See Document.language field for more
+	// automatically-detected language. See Document.language_code field for more
 	// details.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// LanguageSupported: Whether the language is officially supported. The API may
@@ -943,10 +942,8 @@ type Entity struct {
 	Metadata map[string]string `json:"metadata,omitempty"`
 	// Name: The representative name for the entity.
 	Name string `json:"name,omitempty"`
-	// Sentiment: For calls to AnalyzeEntitySentiment or if
-	// AnnotateTextRequest.Features.extract_entity_sentiment is set to true, this
-	// field will contain the aggregate sentiment expressed for this entity in the
-	// provided document.
+	// Sentiment: For calls to AnalyzeEntitySentiment this field will contain the
+	// aggregate sentiment expressed for this entity in the provided document.
 	Sentiment *Sentiment `json:"sentiment,omitempty"`
 	// Type: The entity type.
 	//
@@ -1004,10 +1001,8 @@ type EntityMention struct {
 	// the probability of the entity mention being the entity type. The score is in
 	// (0, 1] range.
 	Probability float64 `json:"probability,omitempty"`
-	// Sentiment: For calls to AnalyzeEntitySentiment or if
-	// AnnotateTextRequest.Features.extract_entity_sentiment is set to true, this
-	// field will contain the sentiment expressed for this mention of the entity in
-	// the provided document.
+	// Sentiment: For calls to AnalyzeEntitySentiment this field will contain the
+	// sentiment expressed for this mention of the entity in the provided document.
 	Sentiment *Sentiment `json:"sentiment,omitempty"`
 	// Text: The mention text.
 	Text *TextSpan `json:"text,omitempty"`
@@ -1256,7 +1251,7 @@ func (s GpuMetric) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InfraUsage: Infra Usage of billing metrics. Next ID: 6
+// InfraUsage: Infra Usage of billing metrics.
 type InfraUsage struct {
 	// CpuMetrics: Aggregated core metrics since requested start_time.
 	CpuMetrics []*CpuMetric `json:"cpuMetrics,omitempty"`
@@ -1323,7 +1318,7 @@ func (s ModerateTextRequest) MarshalJSON() ([]byte, error) {
 type ModerateTextResponse struct {
 	// LanguageCode: The language of the text, which will be the same as the
 	// language specified in the request or, if not specified, the
-	// automatically-detected language. See Document.language field for more
+	// automatically-detected language. See Document.language_code field for more
 	// details.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// LanguageSupported: Whether the language is officially supported. The API may
@@ -1611,7 +1606,7 @@ func (s Sentence) MarshalJSON() ([]byte, error) {
 // Sentiment: Represents the feeling associated with the entire text or
 // entities in the text.
 type Sentiment struct {
-	// Magnitude: A non-negative number in the [0, +inf) range, which represents
+	// Magnitude: A non-negative number in the [0, +inf] range, which represents
 	// the absolute magnitude of sentiment regardless of score (positive or
 	// negative).
 	Magnitude float64 `json:"magnitude,omitempty"`
@@ -2117,9 +2112,6 @@ func (s XPSColumnSpecCorrelatedColumn) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// XPSColumnSpecForecastingMetadata:
-// ===========================================================================
-// # The fields below are used exclusively for Forecasting.
 type XPSColumnSpecForecastingMetadata struct {
 	// ColumnType: The type of the column for FORECASTING model training purposes.
 	//
@@ -2672,11 +2664,11 @@ type XPSExportModelOutputConfig struct {
 	// ExportFirebaseAuxiliaryInfo: For any model and format: If true, will
 	// additionally export FirebaseExportedModelInfo in a firebase.txt file.
 	ExportFirebaseAuxiliaryInfo bool `json:"exportFirebaseAuxiliaryInfo,omitempty"`
-	// OutputGcrUri: The Google Contained Registry (GCR) path the exported files to
-	// be pushed to. This location is set if the exported format is DOCKDER.
+	// OutputGcrUri: The Google Contained Registry path the exported files to be
+	// pushed to. This location is set if the exported format is DOCKDER.
 	OutputGcrUri string `json:"outputGcrUri,omitempty"`
-	// OutputGcsUri: The Google Cloud Storage (GCS) directory where XPS will output
-	// the exported models and related files. Format: gs://bucket/directory
+	// OutputGcsUri: The Google Cloud Storage directory where XPS will output the
+	// exported models and related files. Format: gs://bucket/directory
 	OutputGcsUri       string                 `json:"outputGcsUri,omitempty"`
 	TfJsFormat         *XPSTfJsFormat         `json:"tfJsFormat,omitempty"`
 	TfLiteFormat       *XPSTfLiteFormat       `json:"tfLiteFormat,omitempty"`
@@ -2699,8 +2691,8 @@ func (s XPSExportModelOutputConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// XPSFileSpec: Spec of input and output files, on external file systems (CNS,
-// GCS, etc).
+// XPSFileSpec: Spec of input and output files, on external file systems (for
+// example, Colossus Namespace System or Google Cloud Storage).
 type XPSFileSpec struct {
 	// DirectoryPath: Deprecated. Use file_spec.
 	DirectoryPath string `json:"directoryPath,omitempty"`
@@ -2708,7 +2700,7 @@ type XPSFileSpec struct {
 	//   "FILE_FORMAT_UNKNOWN"
 	//   "FILE_FORMAT_SSTABLE"
 	//   "FILE_FORMAT_TRANSLATION_RKV" - Internal format for parallel text data
-	// used by Google Translate. go/rkvtools
+	// used by Google Translate.
 	//   "FILE_FORMAT_RECORDIO"
 	//   "FILE_FORMAT_RAW_CSV" - Only the lexicographically first file described by
 	// the file_spec contains the header line.
@@ -2897,8 +2889,9 @@ func (s XPSImageClassificationTrainResponse) MarshalJSON() ([]byte, error) {
 // requesting format.
 type XPSImageExportModelSpec struct {
 	// ExportModelOutputConfig: Contains the model format and internal location of
-	// the model files to be exported/downloaded. Use the GCS bucket name which is
-	// provided via TrainRequest.gcs_bucket_name to store the model files.
+	// the model files to be exported/downloaded. Use the Google Cloud Storage
+	// bucket name which is provided via TrainRequest.gcs_bucket_name to store the
+	// model files.
 	ExportModelOutputConfig []*XPSExportModelOutputConfig `json:"exportModelOutputConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportModelOutputConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2927,15 +2920,16 @@ type XPSImageModelArtifactSpec struct {
 	// ExportArtifact: The model binary files in different formats for model
 	// export.
 	ExportArtifact []*XPSModelArtifactItem `json:"exportArtifact,omitempty"`
-	// LabelGcsUri: GCS uri of decoded labels file for model export 'dict.txt'.
+	// LabelGcsUri: Google Cloud Storage URI of decoded labels file for model
+	// export 'dict.txt'.
 	LabelGcsUri string `json:"labelGcsUri,omitempty"`
 	// ServingArtifact: The default model binary file used for serving (e.g. online
 	// predict, batch predict) via public Cloud AI Platform API.
 	ServingArtifact *XPSModelArtifactItem `json:"servingArtifact,omitempty"`
-	// TfJsBinaryGcsPrefix: GCS uri prefix of Tensorflow JavaScript binary files
-	// 'groupX-shardXofX.bin' Deprecated.
+	// TfJsBinaryGcsPrefix: Google Cloud Storage URI prefix of Tensorflow
+	// JavaScript binary files 'groupX-shardXofX.bin'. Deprecated.
 	TfJsBinaryGcsPrefix string `json:"tfJsBinaryGcsPrefix,omitempty"`
-	// TfLiteMetadataGcsUri: GCS uri of Tensorflow Lite metadata
+	// TfLiteMetadataGcsUri: Google Cloud Storage URI of Tensorflow Lite metadata
 	// 'tflite_metadata.json'.
 	TfLiteMetadataGcsUri string `json:"tfLiteMetadataGcsUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CheckpointArtifact") to
@@ -3029,7 +3023,7 @@ type XPSImageModelServingSpecModelThroughputEstimation struct {
 	// traffic, US-based traffic, or very large models should use this partition.
 	// Capacity in this partition is significantly cheaper than partition-0.
 	//   "PARTITION_JELLYFISH" - To be used by customers with Jellyfish-accelerated
-	// ops. See go/servomatic-jellyfish for details.
+	// ops.
 	//   "PARTITION_CPU" - The partition used by regionalized servomatic cloud
 	// regions.
 	//   "PARTITION_CUSTOM_STORAGE_CPU" - The partition used for loading models
@@ -3400,8 +3394,7 @@ type XPSModelArtifactItem struct {
 	//   "CORE_ML" - Used for iOS mobile devices in (.mlmodel) format. See
 	// https://developer.apple.com/documentation/coreml
 	ArtifactFormat string `json:"artifactFormat,omitempty"`
-	// GcsUri: The Google Cloud Storage (GCS) uri that stores the model binary
-	// files.
+	// GcsUri: The Google Cloud Storage URI that stores the model binary files.
 	GcsUri string `json:"gcsUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArtifactFormat") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3421,7 +3414,6 @@ func (s XPSModelArtifactItem) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// XPSPreprocessResponse: Next ID: 8
 type XPSPreprocessResponse struct {
 	// OutputExampleSet: Preprocessed examples, that are to be imported into AutoML
 	// storage. This should point to RecordIO file(s) of PreprocessedExample
@@ -3689,8 +3681,7 @@ func (s XPSResponseExplanationParameters) MarshalJSON() ([]byte, error) {
 }
 
 // XPSResponseExplanationSpec: Specification of Model explanation.
-// Feature-based XAI in AutoML Vision ICN is deprecated, see b/288407203 for
-// context.
+// Feature-based XAI in AutoML Vision ICN is deprecated.
 type XPSResponseExplanationSpec struct {
 	// ExplanationType: Explanation type. For AutoML Image Classification models,
 	// possible values are: * `image-integrated-gradients` * `image-xrai`
@@ -4229,7 +4220,6 @@ func (s *XPSTablesConfidenceMetricsEntry) UnmarshalJSON(data []byte) error {
 }
 
 // XPSTablesDatasetMetadata: Metadata for a dataset used for AutoML Tables.
-// Next ID: 6
 type XPSTablesDatasetMetadata struct {
 	// MlUseColumnId: Id the column to split the table.
 	MlUseColumnId int64 `json:"mlUseColumnId,omitempty"`
@@ -4567,7 +4557,7 @@ func (s XPSTablesTrainingOperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// XPSTextComponentModel: Component model. Next ID: 10
+// XPSTextComponentModel: Component model.
 type XPSTextComponentModel struct {
 	// BatchPredictionModelGcsUri: The Cloud Storage resource path to hold batch
 	// prediction model.
@@ -4587,7 +4577,7 @@ type XPSTextComponentModel struct {
 	// traffic, US-based traffic, or very large models should use this partition.
 	// Capacity in this partition is significantly cheaper than partition-0.
 	//   "PARTITION_JELLYFISH" - To be used by customers with Jellyfish-accelerated
-	// ops. See go/servomatic-jellyfish for details.
+	// ops.
 	//   "PARTITION_CPU" - The partition used by regionalized servomatic cloud
 	// regions.
 	//   "PARTITION_CUSTOM_STORAGE_CPU" - The partition used for loading models
@@ -4617,8 +4607,7 @@ type XPSTextComponentModel struct {
 	//   "TEXT_MODEL_TYPE_COMPOSITE" - A composite model represents a set of
 	// component models that have to be used together for prediction. A composite
 	// model appears to be a single model to the model user. It may contain only
-	// one component model. Please refer to go/cnl-composite-models for more
-	// information.
+	// one component model.
 	//   "TEXT_MODEL_TYPE_ALL_MODELS" - Model type used to train default, MA, and
 	// ATC models in a single batch worker pipeline.
 	//   "TEXT_MODEL_TYPE_BERT" - BERT pipeline needs a specific model type, since
@@ -4957,7 +4946,6 @@ func (s *XPSTrackMetricsEntryConfidenceMetricsEntry) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-// XPSTrainResponse: Next ID: 18
 type XPSTrainResponse struct {
 	// DeployedModelSizeBytes: Estimated model size in bytes once deployed.
 	DeployedModelSizeBytes int64 `json:"deployedModelSizeBytes,omitempty,string"`
@@ -5374,8 +5362,9 @@ func (s XPSVideoClassificationTrainResponse) MarshalJSON() ([]byte, error) {
 // requesting format.
 type XPSVideoExportModelSpec struct {
 	// ExportModelOutputConfig: Contains the model format and internal location of
-	// the model files to be exported/downloaded. Use the GCS bucket name which is
-	// provided via TrainRequest.gcs_bucket_name to store the model files.
+	// the model files to be exported/downloaded. Use the Google Cloud Storage
+	// bucket name which is provided via TrainRequest.gcs_bucket_name to store the
+	// model files.
 	ExportModelOutputConfig []*XPSExportModelOutputConfig `json:"exportModelOutputConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportModelOutputConfig") to
 	// unconditionally include in API requests. By default, fields with empty or

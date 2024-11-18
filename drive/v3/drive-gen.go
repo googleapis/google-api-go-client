@@ -178,6 +178,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.About = NewAboutService(s)
+	s.Accessproposals = NewAccessproposalsService(s)
 	s.Apps = NewAppsService(s)
 	s.Changes = NewChangesService(s)
 	s.Channels = NewChannelsService(s)
@@ -199,6 +200,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	About *AboutService
+
+	Accessproposals *AccessproposalsService
 
 	Apps *AppsService
 
@@ -238,6 +241,15 @@ func NewAboutService(s *Service) *AboutService {
 }
 
 type AboutService struct {
+	s *Service
+}
+
+func NewAccessproposalsService(s *Service) *AccessproposalsService {
+	rs := &AccessproposalsService{s: s}
+	return rs
+}
+
+type AccessproposalsService struct {
 	s *Service
 }
 
@@ -288,22 +300,10 @@ type DrivesService struct {
 
 func NewFilesService(s *Service) *FilesService {
 	rs := &FilesService{s: s}
-	rs.Accessproposals = NewFilesAccessproposalsService(s)
 	return rs
 }
 
 type FilesService struct {
-	s *Service
-
-	Accessproposals *FilesAccessproposalsService
-}
-
-func NewFilesAccessproposalsService(s *Service) *FilesAccessproposalsService {
-	rs := &FilesAccessproposalsService{s: s}
-	return rs
-}
-
-type FilesAccessproposalsService struct {
 	s *Service
 }
 
@@ -523,6 +523,9 @@ type AccessProposal struct {
 	RequesterEmailAddress string `json:"requesterEmailAddress,omitempty"`
 	// RolesAndViews: A wrapper for the role and view of an access proposal.
 	RolesAndViews []*AccessProposalRoleAndView `json:"rolesAndViews,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2679,6 +2682,45 @@ func (s ReplyList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ResolveAccessProposalRequest: Request message for resolving an
+// AccessProposal on a file.
+type ResolveAccessProposalRequest struct {
+	// Action: Required. The action to take on the AccessProposal.
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED" - Unspecified action
+	//   "ACCEPT" - The user accepts the proposal. Note: If this action is used,
+	// the `role` field must have at least one value.
+	//   "DENY" - The user denies the proposal
+	Action string `json:"action,omitempty"`
+	// Role: Optional. The roles the approver has allowed, if any. Note: This field
+	// is required for the `ACCEPT` action.
+	Role []string `json:"role,omitempty"`
+	// SendNotification: Optional. Whether to send an email to the requester when
+	// the AccessProposal is denied or accepted.
+	SendNotification bool `json:"sendNotification,omitempty"`
+	// View: Optional. Indicates the view for this access proposal. This should
+	// only be set when the proposal belongs to a view. `published` is the only
+	// supported value.
+	View string `json:"view,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResolveAccessProposalRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ResolveAccessProposalRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Revision: The metadata for a revision to a file. Some resource methods (such
 // as `revisions.update`) require a `revisionId`. Use the `revisions.list`
 // method to retrieve the ID for a revision.
@@ -3263,6 +3305,344 @@ func (c *AboutGetCall) Do(opts ...googleapi.CallOption) (*About, error) {
 		return nil, err
 	}
 	return ret, nil
+}
+
+type AccessproposalsGetCall struct {
+	s            *Service
+	fileId       string
+	proposalId   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves an AccessProposal by ID.
+//
+// - fileId: The id of the item the request is on.
+// - proposalId: The id of the access proposal to resolve.
+func (r *AccessproposalsService) Get(fileId string, proposalId string) *AccessproposalsGetCall {
+	c := &AccessproposalsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.fileId = fileId
+	c.proposalId = proposalId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccessproposalsGetCall) Fields(s ...googleapi.Field) *AccessproposalsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccessproposalsGetCall) IfNoneMatch(entityTag string) *AccessproposalsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccessproposalsGetCall) Context(ctx context.Context) *AccessproposalsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccessproposalsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccessproposalsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/accessproposals/{proposalId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":     c.fileId,
+		"proposalId": c.proposalId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drive.accessproposals.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AccessProposal.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccessproposalsGetCall) Do(opts ...googleapi.CallOption) (*AccessProposal, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AccessProposal{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type AccessproposalsListCall struct {
+	s            *Service
+	fileId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List the AccessProposals on a file. Note: Only approvers are able to
+// list AccessProposals on a file. If the user is not an approver, returns a
+// 403.
+//
+// - fileId: The id of the item the request is on.
+func (r *AccessproposalsService) List(fileId string) *AccessproposalsListCall {
+	c := &AccessproposalsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.fileId = fileId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The number of results per
+// page
+func (c *AccessproposalsListCall) PageSize(pageSize int64) *AccessproposalsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The continuation token on
+// the list of access requests.
+func (c *AccessproposalsListCall) PageToken(pageToken string) *AccessproposalsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccessproposalsListCall) Fields(s ...googleapi.Field) *AccessproposalsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccessproposalsListCall) IfNoneMatch(entityTag string) *AccessproposalsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccessproposalsListCall) Context(ctx context.Context) *AccessproposalsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccessproposalsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccessproposalsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/accessproposals")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId": c.fileId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drive.accessproposals.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAccessProposalsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccessproposalsListCall) Do(opts ...googleapi.CallOption) (*ListAccessProposalsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAccessProposalsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccessproposalsListCall) Pages(ctx context.Context, f func(*ListAccessProposalsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type AccessproposalsResolveCall struct {
+	s                            *Service
+	fileId                       string
+	proposalId                   string
+	resolveaccessproposalrequest *ResolveAccessProposalRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// Resolve: Used to approve or deny an Access Proposal.
+//
+// - fileId: The id of the item the request is on.
+// - proposalId: The id of the access proposal to resolve.
+func (r *AccessproposalsService) Resolve(fileId string, proposalId string, resolveaccessproposalrequest *ResolveAccessProposalRequest) *AccessproposalsResolveCall {
+	c := &AccessproposalsResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.fileId = fileId
+	c.proposalId = proposalId
+	c.resolveaccessproposalrequest = resolveaccessproposalrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccessproposalsResolveCall) Fields(s ...googleapi.Field) *AccessproposalsResolveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccessproposalsResolveCall) Context(ctx context.Context) *AccessproposalsResolveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccessproposalsResolveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccessproposalsResolveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resolveaccessproposalrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/accessproposals/{proposalId}:resolve")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":     c.fileId,
+		"proposalId": c.proposalId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drive.accessproposals.resolve" call.
+func (c *AccessproposalsResolveCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	return nil
 }
 
 type AppsGetCall struct {
@@ -7427,266 +7807,6 @@ func (c *FilesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 		return nil, err
 	}
 	return ret, nil
-}
-
-type FilesAccessproposalsListCall struct {
-	s            *Service
-	fileId       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: List the AccessProposals on a file. Note: Only approvers are able to
-// list AccessProposals on a file. If the user is not an approver, returns a
-// 403.
-//
-// - fileId: The id of the item the request is on.
-func (r *FilesAccessproposalsService) List(fileId string) *FilesAccessproposalsListCall {
-	c := &FilesAccessproposalsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.fileId = fileId
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The number of results per
-// page
-func (c *FilesAccessproposalsListCall) PageSize(pageSize int64) *FilesAccessproposalsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": The continuation token on
-// the list of access requests.
-func (c *FilesAccessproposalsListCall) PageToken(pageToken string) *FilesAccessproposalsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *FilesAccessproposalsListCall) Fields(s ...googleapi.Field) *FilesAccessproposalsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *FilesAccessproposalsListCall) IfNoneMatch(entityTag string) *FilesAccessproposalsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *FilesAccessproposalsListCall) Context(ctx context.Context) *FilesAccessproposalsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *FilesAccessproposalsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *FilesAccessproposalsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/accessproposals")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"fileId": c.fileId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "drive.files.accessproposals.list" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *ListAccessProposalsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *FilesAccessproposalsListCall) Do(opts ...googleapi.CallOption) (*ListAccessProposalsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ListAccessProposalsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *FilesAccessproposalsListCall) Pages(ctx context.Context, f func(*ListAccessProposalsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken"))
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-type FilesAccessproposalsResolveCall struct {
-	s          *Service
-	fileId     string
-	proposalId string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Resolve: Used to approve or deny an Access Proposal.
-//
-// - fileId: The id of the item the request is on.
-// - proposalId: The id of the access proposal to resolve.
-func (r *FilesAccessproposalsService) Resolve(fileId string, proposalId string) *FilesAccessproposalsResolveCall {
-	c := &FilesAccessproposalsResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.fileId = fileId
-	c.proposalId = proposalId
-	return c
-}
-
-// Action sets the optional parameter "action": Required. The action to take on
-// the AccessProposal.
-//
-// Possible values:
-//
-//	"ACTION_UNSPECIFIED" - Unspecified action
-//	"ACCEPT" - The user accepts the proposal. Note: If this action is used,
-//
-// the `role` field must have at least one value.
-//
-//	"DENY" - The user denies the proposal
-func (c *FilesAccessproposalsResolveCall) Action(action string) *FilesAccessproposalsResolveCall {
-	c.urlParams_.Set("action", action)
-	return c
-}
-
-// Role sets the optional parameter "role": The roles the approver has allowed,
-// if any. Note: This field is required for the `ACCEPT` action.
-func (c *FilesAccessproposalsResolveCall) Role(role ...string) *FilesAccessproposalsResolveCall {
-	c.urlParams_.SetMulti("role", append([]string{}, role...))
-	return c
-}
-
-// SendNotification sets the optional parameter "sendNotification": Whether to
-// send an email to the requester when the AccessProposal is denied or
-// accepted.
-func (c *FilesAccessproposalsResolveCall) SendNotification(sendNotification bool) *FilesAccessproposalsResolveCall {
-	c.urlParams_.Set("sendNotification", fmt.Sprint(sendNotification))
-	return c
-}
-
-// View sets the optional parameter "view": Indicates the view for this access
-// proposal. This should only be set when the proposal belongs to a view.
-// `published` is the only supported value.
-func (c *FilesAccessproposalsResolveCall) View(view string) *FilesAccessproposalsResolveCall {
-	c.urlParams_.Set("view", view)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *FilesAccessproposalsResolveCall) Fields(s ...googleapi.Field) *FilesAccessproposalsResolveCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *FilesAccessproposalsResolveCall) Context(ctx context.Context) *FilesAccessproposalsResolveCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *FilesAccessproposalsResolveCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *FilesAccessproposalsResolveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/accessproposals/{proposalId}:resolve")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"fileId":     c.fileId,
-		"proposalId": c.proposalId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "drive.files.accessproposals.resolve" call.
-func (c *FilesAccessproposalsResolveCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return gensupport.WrapError(err)
-	}
-	return nil
 }
 
 type OperationCancelCall struct {

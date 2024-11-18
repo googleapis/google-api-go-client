@@ -3089,6 +3089,8 @@ type GoogleChromeManagementV1TelemetryAppLaunchEvent struct {
 	// experimental feature Sparky.
 	//   "APPLICATION_LAUNCH_SOURCE_NAVIGATION_CAPTURING" - Application launched
 	// from navigation capturing.
+	//   "APPLICATION_LAUNCH_SOURCE_WEB_INSTALL_API" - Application launched from
+	// web install API.
 	AppLaunchSource string `json:"appLaunchSource,omitempty"`
 	// AppType: Type of app.
 	//

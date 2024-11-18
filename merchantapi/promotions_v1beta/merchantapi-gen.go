@@ -489,6 +489,7 @@ type DestinationStatus struct {
 	// Reviews](https://support.google.com/merchants/answer/14620732).
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
+	//   "YOUTUBE_CHECKOUT" - [YouTube Checkout](
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// Status: Output only. The status for the specified destination.
 	//
@@ -630,6 +631,7 @@ type ItemLevelIssue struct {
 	// Reviews](https://support.google.com/merchants/answer/14620732).
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
+	//   "YOUTUBE_CHECKOUT" - [YouTube Checkout](
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// Resolution: Output only. Whether the issue can be resolved by the merchant.
 	Resolution string `json:"resolution,omitempty"`
@@ -761,6 +763,7 @@ type ProductChange struct {
 	// Reviews](https://support.google.com/merchants/answer/14620732).
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
+	//   "YOUTUBE_CHECKOUT" - [YouTube Checkout](
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or

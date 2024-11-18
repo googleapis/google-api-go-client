@@ -13011,7 +13011,7 @@ func (s *GoogleCloudDialogflowV2beta1FaqAnswer) UnmarshalJSON(data []byte) error
 
 // GoogleCloudDialogflowV2beta1FewShotExample: Providing examples in the
 // generator (i.e. building a few-shot generator) helps convey the desired
-// format of the LLM response. NEXT_ID: 10
+// format of the LLM response. NEXT_ID: 11
 type GoogleCloudDialogflowV2beta1FewShotExample struct {
 	// ConversationContext: Optional. Conversation transcripts.
 	ConversationContext *GoogleCloudDialogflowV2beta1ConversationContext `json:"conversationContext,omitempty"`
@@ -13437,7 +13437,7 @@ type GoogleCloudDialogflowV2beta1Generator struct {
 	// Name: Output only. Identifier. The resource name of the generator. Format:
 	// `projects//locations//generators/`
 	Name string `json:"name,omitempty"`
-	// SummarizationContext: Input of prebuilt Summarization feature.
+	// SummarizationContext: Input of Summarization feature.
 	SummarizationContext *GoogleCloudDialogflowV2beta1SummarizationContext `json:"summarizationContext,omitempty"`
 	// TriggerEvent: Optional. The trigger event of the generator. It defines when
 	// the generator is triggered in a conversation.

@@ -1388,7 +1388,7 @@ type FirewallEndpointAssociation struct {
 	//   "ACTIVE" - Active and ready for traffic.
 	//   "DELETING" - Being deleted.
 	//   "INACTIVE" - Down or in an error state.
-	//   "ORPHAN" - The GCP project that housed the association has been deleted.
+	//   "ORPHAN" - The project that housed the association has been deleted.
 	State string `json:"state,omitempty"`
 	// TlsInspectionPolicy: Optional. The URL of the TlsInspectionPolicy that is
 	// being associated.
@@ -2841,7 +2841,6 @@ func (s MirroringDeploymentGroupConnectedEndpointGroup) MarshalJSON() ([]byte, e
 }
 
 // MirroringEndpointGroup: Message describing MirroringEndpointGroup object.
-// Next ID: 10
 type MirroringEndpointGroup struct {
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
@@ -2852,7 +2851,8 @@ type MirroringEndpointGroup struct {
 	// `projects/{project}/locations/global/mirroringDeploymentGroups/{mirroringDepl
 	// oymentGroup}`
 	MirroringDeploymentGroup string `json:"mirroringDeploymentGroup,omitempty"`
-	// Name: Immutable. Identifier. The name of the MirroringEndpointGroup.
+	// Name: Immutable. Identifier. Next ID: 11 The name of the
+	// MirroringEndpointGroup.
 	Name string `json:"name,omitempty"`
 	// Reconciling: Output only. Whether reconciling is in progress, recommended
 	// per https://google.aip.dev/128.
@@ -15715,7 +15715,8 @@ type ProjectsLocationsMirroringEndpointGroupsPatchCall struct {
 
 // Patch: Updates a single MirroringEndpointGroup.
 //
-// - name: Immutable. Identifier. The name of the MirroringEndpointGroup.
+//   - name: Immutable. Identifier. Next ID: 11 The name of the
+//     MirroringEndpointGroup.
 func (r *ProjectsLocationsMirroringEndpointGroupsService) Patch(name string, mirroringendpointgroup *MirroringEndpointGroup) *ProjectsLocationsMirroringEndpointGroupsPatchCall {
 	c := &ProjectsLocationsMirroringEndpointGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

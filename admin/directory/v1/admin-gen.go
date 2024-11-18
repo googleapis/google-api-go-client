@@ -3512,14 +3512,8 @@ func (s MobileDevices) MarshalJSON() ([]byte, error) {
 // Guide (/admin-sdk/directory/v1/guides/manage-org-units.html). The customer's
 // organizational unit hierarchy is limited to 35 levels of depth.
 type OrgUnit struct {
-	// BlockInheritance: Determines if a sub-organizational unit can inherit the
-	// settings of the parent organization. The default value is `false`, meaning a
-	// sub-organizational unit inherits the settings of the nearest parent
-	// organizational unit. This field is deprecated. Setting it to `true` is no
-	// longer supported and can have _unintended consequences_. For more
-	// information about inheritance and users in an organization structure, see
-	// the administration help center
-	// (https://support.google.com/a/answer/4352075).
+	// BlockInheritance: This field is deprecated and setting its value has no
+	// effect.
 	BlockInheritance bool `json:"blockInheritance,omitempty"`
 	// Description: Description of the organizational unit.
 	Description string `json:"description,omitempty"`

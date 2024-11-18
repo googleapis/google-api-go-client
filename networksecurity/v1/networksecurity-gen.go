@@ -537,6 +537,490 @@ func (s AuthorizationPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AuthzPolicy: `AuthzPolicy` is a resource that allows to forward traffic to a
+// callout backend designed to scan the traffic for security purposes.
+type AuthzPolicy struct {
+	// Action: Required. Can be one of `ALLOW`, `DENY`, `CUSTOM`. When the action
+	// is `CUSTOM`, `customProvider` must be specified. When the action is `ALLOW`,
+	// only requests matching the policy will be allowed. When the action is
+	// `DENY`, only requests matching the policy will be denied. When a request
+	// arrives, the policies are evaluated in the following order: 1. If there is a
+	// `CUSTOM` policy that matches the request, the `CUSTOM` policy is evaluated
+	// using the custom authorization providers and the request is denied if the
+	// provider rejects the request. 2. If there are any `DENY` policies that match
+	// the request, the request is denied. 3. If there are no `ALLOW` policies for
+	// the resource or if any of the `ALLOW` policies match the request, the
+	// request is allowed. 4. Else the request is denied by default if none of the
+	// configured AuthzPolicies with `ALLOW` action match the request.
+	//
+	// Possible values:
+	//   "AUTHZ_ACTION_UNSPECIFIED" - Unspecified action.
+	//   "ALLOW" - Allow request to pass through to the backend.
+	//   "DENY" - Deny the request and return a HTTP 404 to the client.
+	//   "CUSTOM" - Delegate the authorization decision to an external
+	// authorization engine.
+	Action string `json:"action,omitempty"`
+	// CreateTime: Output only. The timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// CustomProvider: Optional. Required if the action is `CUSTOM`. Allows
+	// delegating authorization decisions to Cloud IAP or to Service Extensions.
+	// One of `cloudIap` or `authzExtension` must be specified.
+	CustomProvider *AuthzPolicyCustomProvider `json:"customProvider,omitempty"`
+	// Description: Optional. A human-readable description of the resource.
+	Description string `json:"description,omitempty"`
+	// HttpRules: Optional. A list of authorization HTTP rules to match against the
+	// incoming request. A policy match occurs when at least one HTTP rule matches
+	// the request or when no HTTP rules are specified in the policy. At least one
+	// HTTP Rule is required for Allow or Deny Action. Limited to 5 rules.
+	HttpRules []*AuthzPolicyAuthzRule `json:"httpRules,omitempty"`
+	// Labels: Optional. Set of labels associated with the `AuthzPolicy` resource.
+	// The format must comply with the following requirements
+	// (/compute/docs/labeling-resources#requirements).
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Required. Identifier. Name of the `AuthzPolicy` resource in the
+	// following format:
+	// `projects/{project}/locations/{location}/authzPolicies/{authz_policy}`.
+	Name string `json:"name,omitempty"`
+	// Target: Required. Specifies the set of resources to which this policy should
+	// be applied to.
+	Target *AuthzPolicyTarget `json:"target,omitempty"`
+	// UpdateTime: Output only. The timestamp when the resource was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyAuthzRule: Conditions to match against the incoming request.
+type AuthzPolicyAuthzRule struct {
+	// From: Optional. Describes properties of one or more sources of a request.
+	From *AuthzPolicyAuthzRuleFrom `json:"from,omitempty"`
+	// To: Optional. Describes properties of one or more targets of a request.
+	To *AuthzPolicyAuthzRuleTo `json:"to,omitempty"`
+	// When: Optional. CEL expression that describes the conditions to be satisfied
+	// for the action. The result of the CEL expression is ANDed with the from and
+	// to. Refer to the CEL language reference for a list of available attributes.
+	When string `json:"when,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "From") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "From") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyAuthzRule) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyAuthzRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyAuthzRuleFrom: Describes properties of one or more sources of a
+// request.
+type AuthzPolicyAuthzRuleFrom struct {
+	// NotSources: Optional. Describes the negated properties of request sources.
+	// Matches requests from sources that do not match the criteria specified in
+	// this field. At least one of sources or notSources must be specified.
+	NotSources []*AuthzPolicyAuthzRuleFromRequestSource `json:"notSources,omitempty"`
+	// Sources: Optional. Describes the properties of a request's sources. At least
+	// one of sources or notSources must be specified. Limited to 5 sources. A
+	// match occurs when ANY source (in sources or notSources) matches the request.
+	// Within a single source, the match follows AND semantics across fields and OR
+	// semantics within a single field, i.e. a match occurs when ANY principal
+	// matches AND ANY ipBlocks match.
+	Sources []*AuthzPolicyAuthzRuleFromRequestSource `json:"sources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NotSources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NotSources") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyAuthzRuleFrom) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyAuthzRuleFrom
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyAuthzRuleFromRequestSource: Describes the properties of a single
+// source.
+type AuthzPolicyAuthzRuleFromRequestSource struct {
+	// Principals: Optional. A list of identities derived from the client's
+	// certificate. This field will not match on a request unless mutual TLS is
+	// enabled for the Forwarding rule or Gateway. Each identity is a string whose
+	// value is matched against the URI SAN, or DNS SAN or the subject field in the
+	// client's certificate. The match can be exact, prefix, suffix or a substring
+	// match. One of exact, prefix, suffix or contains must be specified. Limited
+	// to 5 principals.
+	Principals []*AuthzPolicyAuthzRuleStringMatch `json:"principals,omitempty"`
+	// Resources: Optional. A list of resources to match against the resource of
+	// the source VM of a request. Limited to 5 resources.
+	Resources []*AuthzPolicyAuthzRuleRequestResource `json:"resources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Principals") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Principals") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyAuthzRuleFromRequestSource) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyAuthzRuleFromRequestSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyAuthzRuleHeaderMatch: Determines how a HTTP header should be
+// matched.
+type AuthzPolicyAuthzRuleHeaderMatch struct {
+	// Name: Optional. Specifies the name of the header in the request.
+	Name string `json:"name,omitempty"`
+	// Value: Optional. Specifies how the header match will be performed.
+	Value *AuthzPolicyAuthzRuleStringMatch `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyAuthzRuleHeaderMatch) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyAuthzRuleHeaderMatch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyAuthzRuleRequestResource: Describes the properties of a client VM
+// resource accessing the internal application load balancers.
+type AuthzPolicyAuthzRuleRequestResource struct {
+	// IamServiceAccount: Optional. An IAM service account to match against the
+	// source service account of the VM sending the request.
+	IamServiceAccount *AuthzPolicyAuthzRuleStringMatch `json:"iamServiceAccount,omitempty"`
+	// TagValueIdSet: Optional. A list of resource tag value permanent IDs to match
+	// against the resource manager tags value associated with the source VM of a
+	// request.
+	TagValueIdSet *AuthzPolicyAuthzRuleRequestResourceTagValueIdSet `json:"tagValueIdSet,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IamServiceAccount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IamServiceAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyAuthzRuleRequestResource) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyAuthzRuleRequestResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyAuthzRuleRequestResourceTagValueIdSet: Describes a set of
+// resource tag value permanent IDs to match against the resource manager tags
+// value associated with the source VM of a request.
+type AuthzPolicyAuthzRuleRequestResourceTagValueIdSet struct {
+	// Ids: Required. A list of resource tag value permanent IDs to match against
+	// the resource manager tags value associated with the source VM of a request.
+	// The match follows AND semantics which means all the ids must match. Limited
+	// to 5 matches.
+	Ids googleapi.Int64s `json:"ids,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Ids") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Ids") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyAuthzRuleRequestResourceTagValueIdSet) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyAuthzRuleRequestResourceTagValueIdSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyAuthzRuleStringMatch: Determines how a string value should be
+// matched.
+type AuthzPolicyAuthzRuleStringMatch struct {
+	// Contains: The input string must have the substring specified here. Note:
+	// empty contains match is not allowed, please use regex instead. Examples: *
+	// ``abc`` matches the value ``xyz.abc.def``
+	Contains string `json:"contains,omitempty"`
+	// Exact: The input string must match exactly the string specified here.
+	// Examples: * ``abc`` only matches the value ``abc``.
+	Exact string `json:"exact,omitempty"`
+	// IgnoreCase: If true, indicates the exact/prefix/suffix/contains matching
+	// should be case insensitive. For example, the matcher ``data`` will match
+	// both input string ``Data`` and ``data`` if set to true.
+	IgnoreCase bool `json:"ignoreCase,omitempty"`
+	// Prefix: The input string must have the prefix specified here. Note: empty
+	// prefix is not allowed, please use regex instead. Examples: * ``abc`` matches
+	// the value ``abc.xyz``
+	Prefix string `json:"prefix,omitempty"`
+	// Suffix: The input string must have the suffix specified here. Note: empty
+	// prefix is not allowed, please use regex instead. Examples: * ``abc`` matches
+	// the value ``xyz.abc``
+	Suffix string `json:"suffix,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Contains") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Contains") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyAuthzRuleStringMatch) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyAuthzRuleStringMatch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyAuthzRuleTo: Describes properties of one or more targets of a
+// request.
+type AuthzPolicyAuthzRuleTo struct {
+	// NotOperations: Optional. Describes the negated properties of the targets of
+	// a request. Matches requests for operations that do not match the criteria
+	// specified in this field. At least one of operations or notOperations must be
+	// specified.
+	NotOperations []*AuthzPolicyAuthzRuleToRequestOperation `json:"notOperations,omitempty"`
+	// Operations: Optional. Describes properties of one or more targets of a
+	// request. At least one of operations or notOperations must be specified.
+	// Limited to 5 operations. A match occurs when ANY operation (in operations or
+	// notOperations) matches. Within an operation, the match follows AND semantics
+	// across fields and OR semantics within a field, i.e. a match occurs when ANY
+	// path matches AND ANY header matches and ANY method matches.
+	Operations []*AuthzPolicyAuthzRuleToRequestOperation `json:"operations,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NotOperations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NotOperations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyAuthzRuleTo) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyAuthzRuleTo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyAuthzRuleToRequestOperation: Describes properties of one or more
+// targets of a request.
+type AuthzPolicyAuthzRuleToRequestOperation struct {
+	// HeaderSet: Optional. A list of headers to match against in http header.
+	HeaderSet *AuthzPolicyAuthzRuleToRequestOperationHeaderSet `json:"headerSet,omitempty"`
+	// Hosts: Optional. A list of HTTP Hosts to match against. The match can be one
+	// of exact, prefix, suffix, or contains (substring match). Matches are always
+	// case sensitive unless the ignoreCase is set. Limited to 5 matches.
+	Hosts []*AuthzPolicyAuthzRuleStringMatch `json:"hosts,omitempty"`
+	// Methods: Optional. A list of HTTP methods to match against. Each entry must
+	// be a valid HTTP method name (GET, PUT, POST, HEAD, PATCH, DELETE, OPTIONS).
+	// It only allows exact match and is always case sensitive.
+	Methods []string `json:"methods,omitempty"`
+	// Paths: Optional. A list of paths to match against. The match can be one of
+	// exact, prefix, suffix, or contains (substring match). Matches are always
+	// case sensitive unless the ignoreCase is set. Limited to 5 matches. Note that
+	// this path match includes the query parameters. For gRPC services, this
+	// should be a fully-qualified name of the form /package.service/method.
+	Paths []*AuthzPolicyAuthzRuleStringMatch `json:"paths,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HeaderSet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HeaderSet") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyAuthzRuleToRequestOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyAuthzRuleToRequestOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyAuthzRuleToRequestOperationHeaderSet: Describes a set of HTTP
+// headers to match against.
+type AuthzPolicyAuthzRuleToRequestOperationHeaderSet struct {
+	// Headers: Required. A list of headers to match against in http header. The
+	// match can be one of exact, prefix, suffix, or contains (substring match).
+	// The match follows AND semantics which means all the headers must match.
+	// Matches are always case sensitive unless the ignoreCase is set. Limited to 5
+	// matches.
+	Headers []*AuthzPolicyAuthzRuleHeaderMatch `json:"headers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Headers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyAuthzRuleToRequestOperationHeaderSet) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyAuthzRuleToRequestOperationHeaderSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyCustomProvider: Allows delegating authorization decisions to
+// Cloud IAP or to Service Extensions.
+type AuthzPolicyCustomProvider struct {
+	// AuthzExtension: Optional. Delegate authorization decision to user authored
+	// Service Extension. Only one of cloudIap or authzExtension can be specified.
+	AuthzExtension *AuthzPolicyCustomProviderAuthzExtension `json:"authzExtension,omitempty"`
+	// CloudIap: Optional. Delegates authorization decisions to Cloud IAP.
+	// Applicable only for managed load balancers. Enabling Cloud IAP at the
+	// AuthzPolicy level is not compatible with Cloud IAP settings in the
+	// BackendService. Enabling IAP in both places will result in request failure.
+	// Ensure that IAP is enabled in either the AuthzPolicy or the BackendService
+	// but not in both places.
+	CloudIap *AuthzPolicyCustomProviderCloudIap `json:"cloudIap,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthzExtension") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthzExtension") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyCustomProvider) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyCustomProvider
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyCustomProviderAuthzExtension: Optional. Delegate authorization
+// decision to user authored extension. Only one of cloudIap or authzExtension
+// can be specified.
+type AuthzPolicyCustomProviderAuthzExtension struct {
+	// Resources: Required. A list of references to authorization extensions that
+	// will be invoked for requests matching this policy. Limited to 1 custom
+	// provider.
+	Resources []string `json:"resources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Resources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Resources") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyCustomProviderAuthzExtension) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyCustomProviderAuthzExtension
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuthzPolicyCustomProviderCloudIap: Optional. Delegates authorization
+// decisions to Cloud IAP. Applicable only for managed load balancers. Enabling
+// Cloud IAP at the AuthzPolicy level is not compatible with Cloud IAP settings
+// in the BackendService. Enabling IAP in both places will result in request
+// failure. Ensure that IAP is enabled in either the AuthzPolicy or the
+// BackendService but not in both places.
+type AuthzPolicyCustomProviderCloudIap struct {
+}
+
+// AuthzPolicyTarget: Specifies the set of targets to which this policy should
+// be applied to.
+type AuthzPolicyTarget struct {
+	// LoadBalancingScheme: Required. All gateways and forwarding rules referenced
+	// by this policy and extensions must share the same load balancing scheme.
+	// Supported values: `INTERNAL_MANAGED` and `EXTERNAL_MANAGED`. For more
+	// information, refer to Backend services overview
+	// (https://cloud.google.com/load-balancing/docs/backend-service).
+	//
+	// Possible values:
+	//   "LOAD_BALANCING_SCHEME_UNSPECIFIED" - Default value. Do not use.
+	//   "INTERNAL_MANAGED" - Signifies that this is used for Regional internal or
+	// Cross-region internal Application Load Balancing.
+	//   "EXTERNAL_MANAGED" - Signifies that this is used for Global external or
+	// Regional external Application Load Balancing.
+	//   "INTERNAL_SELF_MANAGED" - Signifies that this is used for Cloud Service
+	// Mesh. Meant for use by CSM GKE controller only.
+	LoadBalancingScheme string `json:"loadBalancingScheme,omitempty"`
+	// Resources: Required. A list of references to the Forwarding Rules on which
+	// this policy will be applied.
+	Resources []string `json:"resources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LoadBalancingScheme") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LoadBalancingScheme") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthzPolicyTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthzPolicyTarget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
@@ -856,7 +1340,7 @@ type FirewallEndpointAssociation struct {
 	//   "ACTIVE" - Active and ready for traffic.
 	//   "DELETING" - Being deleted.
 	//   "INACTIVE" - Down or in an error state.
-	//   "ORPHAN" - The GCP project that housed the association has been deleted.
+	//   "ORPHAN" - The project that housed the association has been deleted.
 	State string `json:"state,omitempty"`
 	// TlsInspectionPolicy: Optional. The URL of the TlsInspectionPolicy that is
 	// being associated.
@@ -1564,6 +2048,37 @@ type ListAuthorizationPoliciesResponse struct {
 
 func (s ListAuthorizationPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAuthorizationPoliciesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListAuthzPoliciesResponse: Message for response to listing `AuthzPolicy`
+// resources.
+type ListAuthzPoliciesResponse struct {
+	// AuthzPolicies: The list of `AuthzPolicy` resources.
+	AuthzPolicies []*AuthzPolicy `json:"authzPolicies,omitempty"`
+	// NextPageToken: A token identifying a page of results that the server
+	// returns.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AuthzPolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthzPolicies") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAuthzPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAuthzPoliciesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8656,6 +9171,352 @@ func (c *ProjectsLocationsAuthorizationPoliciesTestIamPermissionsCall) Do(opts .
 	return ret, nil
 }
 
+type ProjectsLocationsAuthzPoliciesCreateCall struct {
+	s           *Service
+	parent      string
+	authzpolicy *AuthzPolicy
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Create: Creates a new AuthzPolicy in a given project and location.
+//
+//   - parent: The parent resource of the `AuthzPolicy` resource. Must be in the
+//     format `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsAuthzPoliciesService) Create(parent string, authzpolicy *AuthzPolicy) *ProjectsLocationsAuthzPoliciesCreateCall {
+	c := &ProjectsLocationsAuthzPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.authzpolicy = authzpolicy
+	return c
+}
+
+// AuthzPolicyId sets the optional parameter "authzPolicyId": Required.
+// User-provided ID of the `AuthzPolicy` resource to be created.
+func (c *ProjectsLocationsAuthzPoliciesCreateCall) AuthzPolicyId(authzPolicyId string) *ProjectsLocationsAuthzPoliciesCreateCall {
+	c.urlParams_.Set("authzPolicyId", authzPolicyId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server can ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the same
+// request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsAuthzPoliciesCreateCall) RequestId(requestId string) *ProjectsLocationsAuthzPoliciesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthzPoliciesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthzPoliciesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthzPoliciesCreateCall) Context(ctx context.Context) *ProjectsLocationsAuthzPoliciesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthzPoliciesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthzPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.authzpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/authzPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.authzPolicies.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthzPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsAuthzPoliciesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single AuthzPolicy.
+//
+//   - name: The name of the `AuthzPolicy` resource to delete. Must be in the
+//     format
+//     `projects/{project}/locations/{location}/authzPolicies/{authz_policy}`.
+func (r *ProjectsLocationsAuthzPoliciesService) Delete(name string) *ProjectsLocationsAuthzPoliciesDeleteCall {
+	c := &ProjectsLocationsAuthzPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server can ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes after the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the same
+// request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsAuthzPoliciesDeleteCall) RequestId(requestId string) *ProjectsLocationsAuthzPoliciesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthzPoliciesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthzPoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthzPoliciesDeleteCall) Context(ctx context.Context) *ProjectsLocationsAuthzPoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthzPoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthzPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.authzPolicies.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthzPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsAuthzPoliciesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single AuthzPolicy.
+//
+//   - name: A name of the `AuthzPolicy` resource to get. Must be in the format
+//     `projects/{project}/locations/{location}/authzPolicies/{authz_policy}`.
+func (r *ProjectsLocationsAuthzPoliciesService) Get(name string) *ProjectsLocationsAuthzPoliciesGetCall {
+	c := &ProjectsLocationsAuthzPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthzPoliciesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthzPoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuthzPoliciesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthzPoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthzPoliciesGetCall) Context(ctx context.Context) *ProjectsLocationsAuthzPoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthzPoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthzPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.authzPolicies.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AuthzPolicy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthzPoliciesGetCall) Do(opts ...googleapi.CallOption) (*AuthzPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AuthzPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type ProjectsLocationsAuthzPoliciesGetIamPolicyCall struct {
 	s            *Service
 	resource     string
@@ -8772,6 +9633,294 @@ func (c *ProjectsLocationsAuthzPoliciesGetIamPolicyCall) Do(opts ...googleapi.Ca
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsAuthzPoliciesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists AuthzPolicies in a given project and location.
+//
+//   - parent: The project and location from which the `AuthzPolicy` resources
+//     are listed, specified in the following format:
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsAuthzPoliciesService) List(parent string) *ProjectsLocationsAuthzPoliciesListCall {
+	c := &ProjectsLocationsAuthzPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results.
+func (c *ProjectsLocationsAuthzPoliciesListCall) Filter(filter string) *ProjectsLocationsAuthzPoliciesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results.
+func (c *ProjectsLocationsAuthzPoliciesListCall) OrderBy(orderBy string) *ProjectsLocationsAuthzPoliciesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server might return fewer items than requested. If unspecified, the server
+// picks an appropriate default.
+func (c *ProjectsLocationsAuthzPoliciesListCall) PageSize(pageSize int64) *ProjectsLocationsAuthzPoliciesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results that the server returns.
+func (c *ProjectsLocationsAuthzPoliciesListCall) PageToken(pageToken string) *ProjectsLocationsAuthzPoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthzPoliciesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthzPoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuthzPoliciesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthzPoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthzPoliciesListCall) Context(ctx context.Context) *ProjectsLocationsAuthzPoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthzPoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthzPoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/authzPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.authzPolicies.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAuthzPoliciesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthzPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListAuthzPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAuthzPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAuthzPoliciesListCall) Pages(ctx context.Context, f func(*ListAuthzPoliciesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAuthzPoliciesPatchCall struct {
+	s           *Service
+	name        string
+	authzpolicy *AuthzPolicy
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Patch: Updates the parameters of a single AuthzPolicy.
+//
+//   - name: Identifier. Name of the `AuthzPolicy` resource in the following
+//     format:
+//     `projects/{project}/locations/{location}/authzPolicies/{authz_policy}`.
+func (r *ProjectsLocationsAuthzPoliciesService) Patch(name string, authzpolicy *AuthzPolicy) *ProjectsLocationsAuthzPoliciesPatchCall {
+	c := &ProjectsLocationsAuthzPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.authzpolicy = authzpolicy
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server can ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the same
+// request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsAuthzPoliciesPatchCall) RequestId(requestId string) *ProjectsLocationsAuthzPoliciesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Used to
+// specify the fields to be overwritten in the `AuthzPolicy` resource by the
+// update. The fields specified in the `update_mask` are relative to the
+// resource, not the full request. A field is overwritten if it is in the mask.
+// If the user does not specify a mask, then all fields are overwritten.
+func (c *ProjectsLocationsAuthzPoliciesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAuthzPoliciesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthzPoliciesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthzPoliciesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthzPoliciesPatchCall) Context(ctx context.Context) *ProjectsLocationsAuthzPoliciesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthzPoliciesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthzPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.authzpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.authzPolicies.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthzPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

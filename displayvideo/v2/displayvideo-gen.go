@@ -4796,8 +4796,9 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
-	//   "SDF_VERSION_8" - SDF version 8. **This SDF version is in beta. It is only
-	// available to a subset of users.**
+	//   "SDF_VERSION_8" - SDF version 8. Read the [v8 migration
+	// guide](/display-video/api/structured-data-file/v8-migration-guide) before
+	// migrating to this version.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8599,10 +8600,8 @@ type InsertionOrder struct {
 	// Name: Output only. The resource name of the insertion order.
 	Name string `json:"name,omitempty"`
 	// Pacing: Required. The budget spending speed setting of the insertion order.
-	// *Warning*: Starting on **November 5, 2024**, pacing_type `PACING_TYPE_ASAP`
-	// will no longer be compatible with pacing_period `PACING_PERIOD_FLIGHT`. Read
-	// more about this announced change
-	// (/display-video/api/deprecations#features.io_asap).
+	// pacing_type `PACING_TYPE_ASAP` is not compatible with pacing_period
+	// `PACING_PERIOD_FLIGHT`.
 	Pacing *Pacing `json:"pacing,omitempty"`
 	// PartnerCosts: The partner costs associated with the insertion order. If
 	// absent or empty in CreateInsertionOrder method, the newly created insertion
@@ -11915,10 +11914,8 @@ type Pacing struct {
 	// flight duration.
 	PacingPeriod string `json:"pacingPeriod,omitempty"`
 	// PacingType: Required. The type of pacing that defines how the budget amount
-	// will be spent across the pacing_period. *Warning*: Starting on **November 5,
-	// 2024**, `PACING_TYPE_ASAP` will no longer be compatible with pacing_period
-	// `PACING_PERIOD_FLIGHT` for insertion orders. Read more about this announced
-	// change (/display-video/api/deprecations#features.io_asap).
+	// will be spent across the pacing_period. `PACING_TYPE_ASAP` is not compatible
+	// with pacing_period `PACING_PERIOD_FLIGHT` for insertion orders.
 	//
 	// Possible values:
 	//   "PACING_TYPE_UNSPECIFIED" - Pacing mode value is not specified or is
@@ -13213,8 +13210,9 @@ type SdfConfig struct {
 	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
-	//   "SDF_VERSION_8" - SDF version 8. **This SDF version is in beta. It is only
-	// available to a subset of users.**
+	//   "SDF_VERSION_8" - SDF version 8. Read the [v8 migration
+	// guide](/display-video/api/structured-data-file/v8-migration-guide) before
+	// migrating to this version.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13290,8 +13288,9 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
-	//   "SDF_VERSION_8" - SDF version 8. **This SDF version is in beta. It is only
-	// available to a subset of users.**
+	//   "SDF_VERSION_8" - SDF version 8. Read the [v8 migration
+	// guide](/display-video/api/structured-data-file/v8-migration-guide) before
+	// migrating to this version.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -2512,6 +2512,8 @@ type GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest struct {
 	//   "GOOGLE_SIGNALS_SETTINGS" - GoogleSignalsSettings resource
 	//   "CONVERSION_EVENT" - ConversionEvent resource
 	//   "MEASUREMENT_PROTOCOL_SECRET" - MeasurementProtocolSecret resource
+	//   "CUSTOM_DIMENSION" - CustomDimension resource
+	//   "CUSTOM_METRIC" - CustomMetric resource
 	//   "DATA_RETENTION_SETTINGS" - DataRetentionSettings resource
 	//   "DISPLAY_VIDEO_360_ADVERTISER_LINK" - DisplayVideo360AdvertiserLink
 	// resource

@@ -184,7 +184,7 @@
       }
     }
   },
-  "revision": "20241109",
+  "revision": "20241112",
   "rootUrl": "https://digitalassetlinks.googleapis.com/",
   "schemas": {
     "AndroidAppAsset": {
@@ -253,7 +253,7 @@
               "ERROR_CODE_FETCH_BUDGET_EXHAUSTED"
             ],
             "enumDescriptions": [
-              "",
+              "Default value, otherwise unused.",
               "Unable to parse query.",
               "Unable to fetch the asset links data.",
               "Invalid HTTPS certificate .",
@@ -306,7 +306,7 @@
               "ERROR_CODE_FETCH_BUDGET_EXHAUSTED"
             ],
             "enumDescriptions": [
-              "",
+              "Default value, otherwise unused.",
               "Unable to parse query.",
               "Unable to fetch the asset links data.",
               "Invalid HTTPS certificate .",

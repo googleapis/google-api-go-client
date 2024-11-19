@@ -3628,6 +3628,8 @@ type PostgreSqlConnectionProfile struct {
 	// CloudSqlId: If the source is a Cloud SQL database, use this field to provide
 	// the Cloud SQL instance ID of the source.
 	CloudSqlId string `json:"cloudSqlId,omitempty"`
+	// Database: Optional. The name of the specific database within the host.
+	Database string `json:"database,omitempty"`
 	// Host: Required. The IP or hostname of the source PostgreSQL database.
 	Host string `json:"host,omitempty"`
 	// NetworkArchitecture: Output only. If the source is a Cloud SQL database,

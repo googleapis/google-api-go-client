@@ -511,10 +511,10 @@ func (s FileShareConfig) MarshalJSON() ([]byte, error) {
 
 // FixedIOPS: Fixed IOPS (input/output operations per second) parameters.
 type FixedIOPS struct {
-	// MaxIops: Required. Maximum raw IOPS.
+	// MaxIops: Required. Maximum IOPS.
 	MaxIops int64 `json:"maxIops,omitempty,string"`
 	// MaxReadIops: Optional. Deprecated: `max_iops` should be used instead of this
-	// parameter. Maximum raw read IOPS.
+	// parameter. Maximum read IOPS.
 	MaxReadIops int64 `json:"maxReadIops,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "MaxIops") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

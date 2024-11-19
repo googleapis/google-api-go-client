@@ -647,7 +647,10 @@ func (s BusinessIdentity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BusinessInfo: Collection of information related to a business.
+// BusinessInfo: The `BusinessInfo` message contains essential information
+// about a merchant's business. This message captures key business details such
+// as physical address, customer service contacts, and region-specific
+// identifiers.
 type BusinessInfo struct {
 	// Address: Optional. The address of the business. Only `region_code`,
 	// `address_lines`, `postal_code`, `administrative_area` and `locality` fields
@@ -1166,7 +1169,13 @@ func (s Headers) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Homepage: A store's homepage.
+// Homepage: The `Homepage` message represents a merchant's store homepage
+// within the system. A merchant's homepage is the primary domain where
+// customers interact with their store. The homepage can be claimed and
+// verified as a proof of ownership and allows the merchant to unlock features
+// that require a verified website. For more information, see Understanding
+// online store URL verification
+// (//support.google.com/merchants/answer/176793).
 type Homepage struct {
 	// Claimed: Output only. Whether the homepage is claimed. See
 	// https://support.google.com/merchants/answer/176793.

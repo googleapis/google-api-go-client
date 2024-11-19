@@ -566,7 +566,7 @@ type Deployment struct {
 	// sufficient quotas available to deploy resources in terraform configuration
 	// files.
 	QuotaValidation string `json:"quotaValidation,omitempty"`
-	// ServiceAccount: Optional. User-specified Service Account (SA) credentials to
+	// ServiceAccount: Required. User-specified Service Account (SA) credentials to
 	// be used when actuating resources. Format:
 	// `projects/{projectID}/serviceAccounts/{serviceAccount}`
 	ServiceAccount string `json:"serviceAccount,omitempty"`
@@ -1392,7 +1392,7 @@ type Preview struct {
 	//   "DELETE" - DELETE mode generates as execution plan for destroying current
 	// resources.
 	PreviewMode string `json:"previewMode,omitempty"`
-	// ServiceAccount: Optional. User-specified Service Account (SA) credentials to
+	// ServiceAccount: Required. User-specified Service Account (SA) credentials to
 	// be used when previewing resources. Format:
 	// `projects/{projectID}/serviceAccounts/{serviceAccount}`
 	ServiceAccount string `json:"serviceAccount,omitempty"`

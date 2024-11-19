@@ -4344,13 +4344,11 @@ type ProjectsLocationsQueuesTasksRunCall struct {
 // reached its RateLimits or is PAUSED. This command is meant to be used for
 // manual debugging. For example, RunTask can be used to retry a failed task
 // after a fix has been made or to manually force a task to be dispatched now.
-// The dispatched task is returned. That is, the task that is returned contains
-// the status after the task is dispatched but before the task is received by
-// its target. If Cloud Tasks receives a successful response from the task's
-// target, then the task will be deleted; otherwise the task's schedule_time
-// will be reset to the time that RunTask was called plus the retry delay
-// specified in the queue's RetryConfig. RunTask returns NOT_FOUND when it is
-// called on a task that has already succeeded or permanently failed.
+// If Cloud Tasks receives a successful response from the task's target, then
+// the task will be deleted; otherwise the task's schedule_time will be reset
+// to the time that RunTask was called plus the retry delay specified in the
+// queue's RetryConfig. RunTask returns NOT_FOUND when it is called on a task
+// that has already succeeded or permanently failed.
 //
 //   - name: The task name. For example:
 //     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`.

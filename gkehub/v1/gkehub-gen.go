@@ -470,6 +470,13 @@ type Authority struct {
 	// performed on `issuer`, and instead OIDC tokens will be validated using this
 	// field.
 	OidcJwks string `json:"oidcJwks,omitempty"`
+	// ScopeTenancyIdentityProvider: Optional. Output only. The identity provider
+	// for the scope-tenancy workload identity pool.
+	ScopeTenancyIdentityProvider string `json:"scopeTenancyIdentityProvider,omitempty"`
+	// ScopeTenancyWorkloadIdentityPool: Optional. Output only. The name of the
+	// scope-tenancy workload identity pool. This pool is set in the fleet-level
+	// feature.
+	ScopeTenancyWorkloadIdentityPool string `json:"scopeTenancyWorkloadIdentityPool,omitempty"`
 	// WorkloadIdentityPool: Output only. The name of the workload identity pool in
 	// which `issuer` will be recognized. There is a single Workload Identity Pool
 	// per Hub that is shared between all Memberships that belong to that Hub. For

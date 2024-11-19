@@ -35,6 +35,7 @@ type DialSettings struct {
 	DefaultEndpoint               string
 	DefaultEndpointTemplate       string
 	DefaultMTLSEndpoint           string
+	DefaultMTLSEndpointTemplate   string
 	Scopes                        []string
 	DefaultScopes                 []string
 	EnableJwtWithScope            bool

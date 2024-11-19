@@ -37,6 +37,7 @@ func TestDefaultApply(t *testing.T) {
 		WithDefaultEndpoint("https://example.com:443"),
 		WithDefaultEndpointTemplate("https://foo.UNIVERSE_DOMAIN/"),
 		WithDefaultMTLSEndpoint("http://mtls.example.com:445"),
+		WithDefaultMTLSEndpointTemplate("http://mtls.UNIVERSE_DOMAIN:445"),
 		WithDefaultScopes("a"),
 		WithDefaultUniverseDomain("foo.com"),
 		WithDefaultAudience("audience"),
@@ -46,12 +47,13 @@ func TestDefaultApply(t *testing.T) {
 		opt.Apply(&got)
 	}
 	want := internal.DialSettings{
-		DefaultScopes:           []string{"a"},
-		DefaultEndpoint:         "https://example.com:443",
-		DefaultEndpointTemplate: "https://foo.UNIVERSE_DOMAIN/",
-		DefaultUniverseDomain:   "foo.com",
-		DefaultAudience:         "audience",
-		DefaultMTLSEndpoint:     "http://mtls.example.com:445",
+		DefaultScopes:               []string{"a"},
+		DefaultEndpoint:             "https://example.com:443",
+		DefaultEndpointTemplate:     "https://foo.UNIVERSE_DOMAIN/",
+		DefaultUniverseDomain:       "foo.com",
+		DefaultAudience:             "audience",
+		DefaultMTLSEndpoint:         "http://mtls.example.com:445",
+		DefaultMTLSEndpointTemplate: "http://mtls.UNIVERSE_DOMAIN:445",
 	}
 	ignore := []cmp.Option{
 		cmpopts.IgnoreUnexported(grpc.ClientConn{}),

@@ -57,11 +57,34 @@ func (o defaultMTLSEndpointOption) Apply(settings *internal.DialSettings) {
 	settings.DefaultMTLSEndpoint = string(o)
 }
 
-// WithDefaultMTLSEndpoint is an option that indicates the default mTLS endpoint.
+// WithDefaultMTLSEndpoint is an option that indicates the default mTLS
+// endpoint.
 //
 // It should only be used internally by generated clients.
+//
+// Deprecated: WithDefaultMTLSEndpoint does not support setting the universe
+// domain. Use WithDefaultMTLSEndpointTemplate and WithDefaultUniverseDomain to
+// compose the default endpoint instead.
 func WithDefaultMTLSEndpoint(url string) option.ClientOption {
 	return defaultMTLSEndpointOption(url)
+}
+
+type defaultMTLSEndpointTemplateOption string
+
+func (o defaultMTLSEndpointTemplateOption) Apply(settings *internal.DialSettings) {
+	settings.DefaultMTLSEndpointTemplate = string(o)
+}
+
+// WithDefaultMTLSEndpointTemplate provides a template for creating the default
+// mTLS endpoint using a universe domain. See also WithDefaultUniverseDomain and
+// option.WithUniverseDomain. The placeholder UNIVERSE_DOMAIN should be used
+// instead of a concrete universe domain such as "googleapis.com".
+//
+// Example: WithDefaultMTLSEndpointTemplate("https://mtls.UNIVERSE_DOMAIN")
+//
+// It should only be used internally by generated clients.
+func WithDefaultMTLSEndpointTemplate(url string) option.ClientOption {
+	return defaultMTLSEndpointTemplateOption(url)
 }
 
 // SkipDialSettingsValidation bypasses validation on ClientOptions.

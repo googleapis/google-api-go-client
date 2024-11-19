@@ -245,7 +245,7 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 			default:
 			}
 
-			// "rCtx is derived from a context with a defined transferTimeout.
+			// rCtx is derived from a context with a defined transferTimeout with non-zero value.
 			// If a particular request exceeds this transfer time for getting response, the rCtx deadline will be exceeded,
 			// triggering a retry of the request.
 			var rCtx context.Context

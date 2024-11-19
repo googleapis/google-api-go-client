@@ -245,6 +245,9 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 			default:
 			}
 
+			// "rCtx is derived from a context with a defined transferTimeout.
+			// If a particular request exceeds this transfer time for getting response, the rCtx deadline will be exceeded,
+			// triggering a retry of the request.
 			var rCtx context.Context
 			var cancel context.CancelFunc
 
@@ -263,7 +266,7 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 			// The upload should be retried if the rCtx is canceled due to a timeout.
 			select {
 			case <-rCtx.Done():
-				if rCtx.Err() == context.DeadlineExceeded {
+				if errors.Is(rCtx.Err(), context.DeadlineExceeded) {
 					// Cancel the context for rCtx
 					cancel()
 					continue

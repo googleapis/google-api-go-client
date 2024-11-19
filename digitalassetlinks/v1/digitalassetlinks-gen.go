@@ -274,7 +274,7 @@ type CheckResponse struct {
 	// ErrorCode: Error codes that describe the result of the Check operation.
 	//
 	// Possible values:
-	//   "ERROR_CODE_UNSPECIFIED"
+	//   "ERROR_CODE_UNSPECIFIED" - Default value, otherwise unused.
 	//   "ERROR_CODE_INVALID_QUERY" - Unable to parse query.
 	//   "ERROR_CODE_FETCH_ERROR" - Unable to fetch the asset links data.
 	//   "ERROR_CODE_FAILED_SSL_VALIDATION" - Invalid HTTPS certificate .
@@ -328,7 +328,7 @@ type ListResponse struct {
 	// ErrorCode: Error codes that describe the result of the List operation.
 	//
 	// Possible values:
-	//   "ERROR_CODE_UNSPECIFIED"
+	//   "ERROR_CODE_UNSPECIFIED" - Default value, otherwise unused.
 	//   "ERROR_CODE_INVALID_QUERY" - Unable to parse query.
 	//   "ERROR_CODE_FETCH_ERROR" - Unable to fetch the asset links data.
 	//   "ERROR_CODE_FAILED_SSL_VALIDATION" - Invalid HTTPS certificate .

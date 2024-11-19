@@ -1101,7 +1101,7 @@ type Instance struct {
 	// setLabels method.
 	Labels map[string]string `json:"labels,omitempty"`
 	// MachineType: Required. The Compute Engine machine type
-	// (https://cloud.google.com/compute/docs/machine-types) of this instance.
+	// (https://cloud.google.com/compute/docs/machine-resource) of this instance.
 	MachineType string `json:"machineType,omitempty"`
 	// Metadata: Custom metadata to apply to this instance. For example, to specify
 	// a Cloud Storage bucket for automatic backup, you can use the
@@ -1842,8 +1842,8 @@ type OperationMetadata struct {
 	Endpoint string `json:"endpoint,omitempty"`
 	// RequestedCancellation: Identifies whether the user has requested
 	// cancellation of the operation. Operations that have successfully been
-	// cancelled have Operation.error value with a google.rpc.Status.code of 1,
-	// corresponding to `Code.CANCELLED`.
+	// cancelled have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
 	// StatusMessage: Human-readable status of the operation, if any.
 	StatusMessage string `json:"statusMessage,omitempty"`
@@ -2595,12 +2595,15 @@ type Schedule struct {
 	//   "STATE_UNSPECIFIED" - Unspecified state.
 	//   "ENABLED" - The job is executing normally.
 	//   "PAUSED" - The job is paused by the user. It will not execute. A user can
-	// intentionally pause the job using PauseJobRequest.
+	// intentionally pause the job using [Cloud
+	// Scheduler](https://cloud.google.com/scheduler/docs/creating#pause).
 	//   "DISABLED" - The job is disabled by the system due to error. The user
 	// cannot directly set a job to be disabled.
 	//   "UPDATE_FAILED" - The job state resulting from a failed
-	// CloudScheduler.UpdateJob operation. To recover a job from this state, retry
-	// CloudScheduler.UpdateJob until a successful response is received.
+	// [CloudScheduler.UpdateJob](https://cloud.google.com/scheduler/docs/creating#e
+	// dit) operation. To recover a job from this state, retry
+	// [CloudScheduler.UpdateJob](https://cloud.google.com/scheduler/docs/creating#e
+	// dit) until a successful response is received.
 	//   "INITIALIZING" - The schedule resource is being created.
 	//   "DELETING" - The schedule resource is being deleted.
 	State string `json:"state,omitempty"`
@@ -2773,7 +2776,7 @@ func (s SetInstanceLabelsRequest) MarshalJSON() ([]byte, error) {
 // SetInstanceMachineTypeRequest: Request for setting instance machine type.
 type SetInstanceMachineTypeRequest struct {
 	// MachineType: Required. The Compute Engine machine type
-	// (https://cloud.google.com/compute/docs/machine-types).
+	// (https://cloud.google.com/compute/docs/machine-resource).
 	MachineType string `json:"machineType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MachineType") to
 	// unconditionally include in API requests. By default, fields with empty or

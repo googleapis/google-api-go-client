@@ -328,7 +328,8 @@ type AnalyzeIamPolicyResponse struct {
 	// MainAnalysis: The main analysis that matches the original request.
 	MainAnalysis *IamPolicyAnalysis `json:"mainAnalysis,omitempty"`
 	// ServiceAccountImpersonationAnalysis: The service account impersonation
-	// analysis if AnalyzeIamPolicyRequest.analyze_service_account_impersonation is
+	// analysis if
+	// IamPolicyAnalysisQuery.Options.analyze_service_account_impersonation is
 	// enabled.
 	ServiceAccountImpersonationAnalysis []*IamPolicyAnalysis `json:"serviceAccountImpersonationAnalysis,omitempty"`
 
@@ -1159,7 +1160,7 @@ func (s EffectiveIamPolicy) MarshalJSON() ([]byte, error) {
 type EffectiveTagDetails struct {
 	// AttachedResource: The full resource name
 	// (https://cloud.google.com/asset-inventory/docs/resource-name-format) of the
-	// ancestor from which an effective_tag is inherited, according to tag
+	// ancestor from which effective_tags are inherited, according to tag
 	// inheritance
 	// (https://cloud.google.com/resource-manager/docs/tags/tags-overview#inheritance).
 	AttachedResource string `json:"attachedResource,omitempty"`
@@ -1579,9 +1580,9 @@ type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedAsset struc
 	// policies of the AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
 	GovernedResource *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource `json:"governedResource,omitempty"`
 	// PolicyBundle: The ordered list of all organization policies from the
-	// AnalyzeOrgPoliciesResponse.OrgPolicyResult.consolidated_policy.attached_resou
-	// rce to the scope specified in the request. If the constraint is defined with
-	// default policy, it will also appear in the list.
+	// consolidated_policy.attached_resource to the scope specified in the request.
+	// If the constraint is defined with default policy, it will also appear in the
+	// list.
 	PolicyBundle []*AnalyzerOrgPolicy `json:"policyBundle,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConsolidatedPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1946,9 +1947,9 @@ type GoogleCloudAssetV1GovernedContainer struct {
 	// me.
 	Parent string `json:"parent,omitempty"`
 	// PolicyBundle: The ordered list of all organization policies from the
-	// AnalyzeOrgPoliciesResponse.OrgPolicyResult.consolidated_policy.attached_resou
-	// rce. to the scope specified in the request. If the constraint is defined
-	// with default policy, it will also appear in the list.
+	// consolidated_policy.attached_resource. to the scope specified in the
+	// request. If the constraint is defined with default policy, it will also
+	// appear in the list.
 	PolicyBundle []*AnalyzerOrgPolicy `json:"policyBundle,omitempty"`
 	// Project: The project that this resource belongs to, in the format of
 	// projects/{PROJECT_NUMBER}. This field is available when the resource belongs
@@ -3374,6 +3375,11 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// Description: Description of the `ServicePerimeter` and its use. Does not
 	// affect behavior.
 	Description string `json:"description,omitempty"`
+	// Etag: Optional. An opaque identifier for the current version of the
+	// `ServicePerimeter`. Clients should not expect this to be in any specific
+	// format. If etag is not provided, the operation will be performed as if a
+	// valid etag is provided.
+	Etag string `json:"etag,omitempty"`
 	// Name: Identifier. Resource name for the `ServicePerimeter`. Format:
 	// `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`. The
 	// `service_perimeter` component must begin with a letter, followed by
@@ -4292,8 +4298,8 @@ func (s Options) MarshalJSON() ([]byte, error) {
 type OrgPolicyResult struct {
 	// ConsolidatedPolicy: The consolidated organization policy for the analyzed
 	// resource. The consolidated organization policy is computed by merging and
-	// evaluating AnalyzeOrgPoliciesResponse.policy_bundle. The evaluation will
-	// respect the organization policy hierarchy rules
+	// evaluating policy_bundle. The evaluation will respect the organization
+	// policy hierarchy rules
 	// (https://cloud.google.com/resource-manager/docs/organization-policy/understanding-hierarchy).
 	ConsolidatedPolicy *AnalyzerOrgPolicy `json:"consolidatedPolicy,omitempty"`
 	// Folders: The folder(s) that this consolidated policy belongs to, in the
@@ -4307,9 +4313,9 @@ type OrgPolicyResult struct {
 	// organization.
 	Organization string `json:"organization,omitempty"`
 	// PolicyBundle: The ordered list of all organization policies from the
-	// AnalyzeOrgPoliciesResponse.OrgPolicyResult.consolidated_policy.attached_resou
-	// rce. to the scope specified in the request. If the constraint is defined
-	// with default policy, it will also appear in the list.
+	// consolidated_policy.attached_resource. to the scope specified in the
+	// request. If the constraint is defined with default policy, it will also
+	// appear in the list.
 	PolicyBundle []*AnalyzerOrgPolicy `json:"policyBundle,omitempty"`
 	// Project: The project that this consolidated policy belongs to, in the format
 	// of projects/{PROJECT_NUMBER}. This field is available when the consolidated

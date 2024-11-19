@@ -7224,7 +7224,7 @@ func (s GoogleCloudDialogflowCxV3beta1FlowImportStrategy) MarshalJSON() ([]byte,
 }
 
 // GoogleCloudDialogflowCxV3beta1FlowInvocation: Stores metadata of the
-// invocation of a CX flow. Next Id: 7
+// invocation of a CX flow.
 type GoogleCloudDialogflowCxV3beta1FlowInvocation struct {
 	// Flow: Required. The unique identifier of the flow. Format:
 	// `projects//locations//agents//flows/`.
@@ -10281,7 +10281,7 @@ func (s GoogleCloudDialogflowCxV3beta1PlaybookInstruction) MarshalJSON() ([]byte
 }
 
 // GoogleCloudDialogflowCxV3beta1PlaybookInvocation: Stores metadata of the
-// invocation of a child playbook. Next Id: 5
+// invocation of a child playbook.
 type GoogleCloudDialogflowCxV3beta1PlaybookInvocation struct {
 	// Playbook: Required. The unique identifier of the playbook. Format:
 	// `projects//locations//agents//playbooks/`.

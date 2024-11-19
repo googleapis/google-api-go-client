@@ -1792,8 +1792,8 @@ type OperationMetadata struct {
 	ApiVersion string `json:"apiVersion,omitempty"`
 	// CancelRequested: Output only. Identifies whether the user has requested
 	// cancellation of the operation. Operations that have been cancelled
-	// successfully have Operation.error value with a google.rpc.Status.code of 1,
-	// corresponding to `Code.CANCELLED`.
+	// successfully have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.
 	CancelRequested bool `json:"cancelRequested,omitempty"`
 	// CreateTime: Output only. The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3411,6 +3411,10 @@ type ProjectsLocationsUpdateConfigCall struct {
 }
 
 // UpdateConfig: Update default config for a given project and location.
+// *Note:* This method does not fully implement AIP/134. In particular: 1. The
+// wildcard entry (***) is treated as a bad request 2. When the *field_mask* is
+// omitted, instead of only updating the set fields, the request is treated as
+// a full update on all modifiable fields
 //
 // - name: Identifier. The config name.
 func (r *ProjectsLocationsService) UpdateConfig(name string, config *Config) *ProjectsLocationsUpdateConfigCall {
@@ -4935,7 +4939,11 @@ type ProjectsLocationsRepositoriesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a single Repository.
+// Patch: Updates a single Repository. *Note:* This method does not fully
+// implement AIP/134. In particular: 1. The wildcard entry (***) is treated as
+// a bad request 2. When the *field_mask* is omitted, instead of only updating
+// the set fields, the request is treated as a full update on all modifiable
+// fields
 //
 // - name: Identifier. The repository's name.
 func (r *ProjectsLocationsRepositoriesService) Patch(name string, repository *Repository) *ProjectsLocationsRepositoriesPatchCall {
@@ -6996,7 +7004,11 @@ type ProjectsLocationsRepositoriesReleaseConfigsPatchCall struct {
 	header_       http.Header
 }
 
-// Patch: Updates a single ReleaseConfig.
+// Patch: Updates a single ReleaseConfig. *Note:* This method does not fully
+// implement AIP/134. In particular: 1. The wildcard entry (***) is treated as
+// a bad request 2. When the *field_mask* is omitted, instead of only updating
+// the set fields, the request is treated as a full update on all modifiable
+// fields
 //
 // - name: Identifier. The release config's name.
 func (r *ProjectsLocationsRepositoriesReleaseConfigsService) Patch(name string, releaseconfig *ReleaseConfig) *ProjectsLocationsRepositoriesReleaseConfigsPatchCall {
@@ -7564,7 +7576,11 @@ type ProjectsLocationsRepositoriesWorkflowConfigsPatchCall struct {
 	header_        http.Header
 }
 
-// Patch: Updates a single WorkflowConfig.
+// Patch: Updates a single WorkflowConfig. *Note:* This method does not fully
+// implement AIP/134. In particular: 1. The wildcard entry (***) is treated as
+// a bad request 2. When the *field_mask* is omitted, instead of only updating
+// the set fields, the request is treated as a full update on all modifiable
+// fields
 //
 // - name: Identifier. The workflow config's name.
 func (r *ProjectsLocationsRepositoriesWorkflowConfigsService) Patch(name string, workflowconfig *WorkflowConfig) *ProjectsLocationsRepositoriesWorkflowConfigsPatchCall {

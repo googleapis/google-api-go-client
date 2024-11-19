@@ -1046,7 +1046,11 @@ func (s BackupPlanAssociation) MarshalJSON() ([]byte, error) {
 type BackupRule struct {
 	// BackupRetentionDays: Required. Configures the duration for which backup data
 	// will be kept. It is defined in “days”. The value should be greater than
-	// or equal to minimum enforced retention of the backup vault.
+	// or equal to minimum enforced retention of the backup vault. Minimum value is
+	// 1 and maximum value is 90 for hourly backups. Minimum value is 1 and maximum
+	// value is 90 for daily backups. Minimum value is 7 and maximum value is 186
+	// for weekly backups. Minimum value is 30 and maximum value is 732 for monthly
+	// backups. Minimum value is 30 and maximum value is 36159 for yearly backups.
 	BackupRetentionDays int64 `json:"backupRetentionDays,omitempty"`
 	// RuleId: Required. Immutable. The unique id of this `BackupRule`. The
 	// `rule_id` is unique per `BackupPlan`.The `rule_id` must start with a

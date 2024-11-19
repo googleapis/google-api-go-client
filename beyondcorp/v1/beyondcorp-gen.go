@@ -1849,32 +1849,6 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1ListSecurityGatewaysResponse) Mar
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBeyondcorpSecuritygatewaysV1Peering: VPC Peering details.
-type GoogleCloudBeyondcorpSecuritygatewaysV1Peering struct {
-	// DnsZones: Optional. List of DNS zones for DNS peering with the customer VPC
-	// network.
-	DnsZones []string `json:"dnsZones,omitempty"`
-	// TargetNetwork: Required. The name of the Target VPC network name in the
-	// format: `projects/{project}/global/networks/{network}
-	TargetNetwork string `json:"targetNetwork,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DnsZones") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DnsZones") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudBeyondcorpSecuritygatewaysV1Peering) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1Peering
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway: Information about a
 // BeyoncCorp SecurityGateway resource.
 type GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGateway struct {
@@ -1963,45 +1937,6 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGatewayOperationMetadata str
 
 func (s GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGatewayOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1SecurityGatewayOperationMetadata
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudBeyondcorpSecuritygatewaysV1SetPeeringRequest: Set Peering
-// request for creating a VPC peering between Google network and customer
-// networks.
-type GoogleCloudBeyondcorpSecuritygatewaysV1SetPeeringRequest struct {
-	// Peerings: Required. List of Peering connection information.
-	Peerings []*GoogleCloudBeyondcorpSecuritygatewaysV1Peering `json:"peerings,omitempty"`
-	// RequestId: Optional. An optional request ID to identify requests. Specify a
-	// unique request ID so that if you must retry your request, the server will
-	// know to ignore the request if it has already been completed. The server will
-	// guarantee that for at least 60 minutes since the first request. For example,
-	// consider a situation where you make an initial request and the request times
-	// out. If you make the request again with the same request ID, the server can
-	// check if original operation with the same request ID was received, and if
-	// so, will ignore the second request. This prevents clients from accidentally
-	// creating duplicate commitments. The request ID must be a valid UUID with the
-	// exception that zero UUID is not supported
-	// (00000000-0000-0000-0000-000000000000).
-	RequestId string `json:"requestId,omitempty"`
-	// ValidateOnly: Optional. If set, validates request by executing a dry-run
-	// which would not alter the resource in any way.
-	ValidateOnly bool `json:"validateOnly,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Peerings") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Peerings") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudBeyondcorpSecuritygatewaysV1SetPeeringRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1SetPeeringRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10270,112 +10205,6 @@ func (c *ProjectsLocationsSecurityGatewaysSetIamPolicyCall) Do(opts ...googleapi
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &GoogleIamV1Policy{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-}
-
-type ProjectsLocationsSecurityGatewaysSetPeeringCall struct {
-	s                                                        *Service
-	securityGateway                                          string
-	googlecloudbeyondcorpsecuritygatewaysv1setpeeringrequest *GoogleCloudBeyondcorpSecuritygatewaysV1SetPeeringRequest
-	urlParams_                                               gensupport.URLParams
-	ctx_                                                     context.Context
-	header_                                                  http.Header
-}
-
-// SetPeering: This is a custom method to allow customers to create a peering
-// connections between Google network and customer networks. This is enabled
-// only for the allowlisted customers.
-//
-//   - securityGateway: BeyondCorp SecurityGateway name using the form:
-//     `projects/{project}/locations/{location}/securityGateways/{security_gateway
-//     }`.
-func (r *ProjectsLocationsSecurityGatewaysService) SetPeering(securityGateway string, googlecloudbeyondcorpsecuritygatewaysv1setpeeringrequest *GoogleCloudBeyondcorpSecuritygatewaysV1SetPeeringRequest) *ProjectsLocationsSecurityGatewaysSetPeeringCall {
-	c := &ProjectsLocationsSecurityGatewaysSetPeeringCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.securityGateway = securityGateway
-	c.googlecloudbeyondcorpsecuritygatewaysv1setpeeringrequest = googlecloudbeyondcorpsecuritygatewaysv1setpeeringrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsSecurityGatewaysSetPeeringCall) Fields(s ...googleapi.Field) *ProjectsLocationsSecurityGatewaysSetPeeringCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsSecurityGatewaysSetPeeringCall) Context(ctx context.Context) *ProjectsLocationsSecurityGatewaysSetPeeringCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsSecurityGatewaysSetPeeringCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsSecurityGatewaysSetPeeringCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudbeyondcorpsecuritygatewaysv1setpeeringrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+securityGateway}:setPeering")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"securityGateway": c.securityGateway,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "beyondcorp.projects.locations.securityGateways.setPeering" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsSecurityGatewaysSetPeeringCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

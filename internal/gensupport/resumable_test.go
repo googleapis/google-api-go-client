@@ -6,6 +6,7 @@ package gensupport
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -280,7 +281,7 @@ func TestCancelUploadBasic(t *testing.T) {
 	defer func() { backoff = oldBackoff }()
 
 	res, err := rx.Upload(ctx)
-	if err != context.Canceled {
+	if !errors.Is(err, context.Canceled) {
 		t.Fatalf("Upload err: got: %v; want: context cancelled", err)
 	}
 	if res != nil {

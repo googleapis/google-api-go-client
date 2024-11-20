@@ -281,7 +281,8 @@ type DeviceSignals struct {
 	OperatingSystem string `json:"operatingSystem,omitempty"`
 	// OsFirewall: The state of the OS level firewall. On ChromeOS, the value will
 	// always be ENABLED on regular devices and UNKNOWN on devices in developer
-	// mode. The signal is currently not available on MacOS 15 (Sequoia) and later.
+	// mode. Support for MacOS 15 (Sequoia) and later has been introduced in Chrome
+	// M131.
 	//
 	// Possible values:
 	//   "OS_FIREWALL_UNSPECIFIED" - Unspecified.

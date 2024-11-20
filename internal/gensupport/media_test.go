@@ -218,12 +218,13 @@ func TestUploadRequestGetBody(t *testing.T) {
 
 func TestResumableUpload(t *testing.T) {
 	for _, test := range []struct {
-		desc                string
-		r                   io.Reader
-		chunkSize           int
-		wantUploadType      string
-		wantResumableUpload bool
-		chunkRetryDeadline  time.Duration
+		desc                 string
+		r                    io.Reader
+		chunkSize            int
+		wantUploadType       string
+		wantResumableUpload  bool
+		chunkRetryDeadline   time.Duration
+		chunkTransferTimeOut time.Duration
 	}{
 		{
 			desc:                "chunk size of zero: don't use a MediaBuffer; upload as a single chunk",
@@ -263,10 +264,21 @@ func TestResumableUpload(t *testing.T) {
 			wantResumableUpload: true,
 			chunkRetryDeadline:  1 * time.Second,
 		},
+		{
+			desc:                 "confirm that ChunkTransferTimeout is carried to ResumableUpload",
+			r:                    &nullReader{2 * googleapi.MinUploadChunkSize},
+			chunkSize:            1,
+			wantUploadType:       "resumable",
+			wantResumableUpload:  true,
+			chunkTransferTimeOut: 5 * time.Second,
+		},
 	} {
 		opts := []googleapi.MediaOption{googleapi.ChunkSize(test.chunkSize)}
 		if test.chunkRetryDeadline != 0 {
 			opts = append(opts, googleapi.ChunkRetryDeadline(test.chunkRetryDeadline))
+		}
+		if test.chunkTransferTimeOut != 0 {
+			opts = append(opts, googleapi.ChunkTransferTimeout(test.chunkTransferTimeOut))
 		}
 		mi := NewInfoFromMedia(test.r, opts)
 		if got, want := mi.UploadType(), test.wantUploadType; got != want {
@@ -279,6 +291,15 @@ func TestResumableUpload(t *testing.T) {
 			if got := mi.ResumableUpload(""); got != nil {
 				if got.ChunkRetryDeadline != test.chunkRetryDeadline {
 					t.Errorf("%s: ChunkRetryDeadline: got %v, want %v", test.desc, got.ChunkRetryDeadline, test.chunkRetryDeadline)
+				}
+			} else {
+				t.Errorf("%s: test case invalid; resumable upload is nil", test.desc)
+			}
+		}
+		if test.chunkTransferTimeOut != 0 {
+			if got := mi.ResumableUpload(""); got != nil {
+				if got.ChunkTransferTimeout != test.chunkTransferTimeOut {
+					t.Errorf("%s: ChunkTransferTimeout: got %v, want %v", test.desc, got.ChunkTransferTimeout, test.chunkTransferTimeOut)
 				}
 			} else {
 				t.Errorf("%s: test case invalid; resumable upload is nil", test.desc)

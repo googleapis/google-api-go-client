@@ -4715,6 +4715,8 @@ type GoogleCloudApigeeV1EnvironmentConfig struct {
 	// aka Envoy Adapter, for op-based authentication as a URI, e.g. a Cloud
 	// Storage URI. This is only used by Envoy-based gateways.
 	ArcConfigLocation string `json:"arcConfigLocation,omitempty"`
+	// ClientIpResolutionConfig: The algorithm to resolve IP.
+	ClientIpResolutionConfig *GoogleCloudApigeeV1EnvironmentConfigClientIPResolutionConfig `json:"clientIpResolutionConfig,omitempty"`
 	// CreateTime: Time that the environment configuration was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DataCollectors: List of data collectors used by the deployments in the
@@ -4787,6 +4789,55 @@ type GoogleCloudApigeeV1EnvironmentConfig struct {
 
 func (s GoogleCloudApigeeV1EnvironmentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1EnvironmentConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1EnvironmentConfigClientIPResolutionConfig: Configuration
+// for resolving the client ip.
+type GoogleCloudApigeeV1EnvironmentConfigClientIPResolutionConfig struct {
+	// HeaderIndexAlgorithm: Resolves the client ip based on a custom header.
+	HeaderIndexAlgorithm *GoogleCloudApigeeV1EnvironmentConfigClientIPResolutionConfigHeaderIndexAlgorithm `json:"headerIndexAlgorithm,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HeaderIndexAlgorithm") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HeaderIndexAlgorithm") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1EnvironmentConfigClientIPResolutionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1EnvironmentConfigClientIPResolutionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1EnvironmentConfigClientIPResolutionConfigHeaderIndexAlgori
+// thm: Resolves the client ip based on a custom header.
+type GoogleCloudApigeeV1EnvironmentConfigClientIPResolutionConfigHeaderIndexAlgorithm struct {
+	// IpHeaderIndex: The index of the ip in the header. (By default, value is 0 if
+	// missing)
+	IpHeaderIndex int64 `json:"ipHeaderIndex,omitempty"`
+	// IpHeaderName: The name of the header to extract the client ip from.
+	IpHeaderName string `json:"ipHeaderName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IpHeaderIndex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IpHeaderIndex") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1EnvironmentConfigClientIPResolutionConfigHeaderIndexAlgorithm) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1EnvironmentConfigClientIPResolutionConfigHeaderIndexAlgorithm
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

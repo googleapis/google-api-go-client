@@ -1066,6 +1066,9 @@ type DropInfo struct {
 	//   "NO_KNOWN_ROUTE_FROM_PEERED_NETWORK_TO_DESTINATION" - Packet from the
 	// unknown peered network is dropped due to no known route from the source
 	// network to the destination IP address.
+	//   "PRIVATE_NAT_TO_PSC_ENDPOINT_UNSUPPORTED" - Sending packets processed by
+	// the Private NAT Gateways to the Private Service Connect endpoints is not
+	// supported.
 	Cause string `json:"cause,omitempty"`
 	// DestinationIp: Destination IP address of the dropped packet (if relevant).
 	DestinationIp string `json:"destinationIp,omitempty"`
@@ -1161,7 +1164,7 @@ type Endpoint struct {
 	// Fqdn: DNS endpoint of Google Kubernetes Engine cluster control plane
 	// (https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture).
 	// Requires gke_master_cluster to be set, can't be used simultaneoulsly with
-	// ip_address.
+	// ip_address or network. Applicable only to destination endpoint.
 	Fqdn string `json:"fqdn,omitempty"`
 	// GkeMasterCluster: A cluster URI for Google Kubernetes Engine cluster control
 	// plane
@@ -1512,9 +1515,11 @@ type GKEMasterInfo struct {
 	ClusterNetworkUri string `json:"clusterNetworkUri,omitempty"`
 	// ClusterUri: URI of a GKE cluster.
 	ClusterUri string `json:"clusterUri,omitempty"`
-	// ExternalIp: External IP address of a GKE cluster master.
+	// DnsEndpoint: DNS endpoint of a GKE cluster control plane.
+	DnsEndpoint string `json:"dnsEndpoint,omitempty"`
+	// ExternalIp: External IP address of a GKE cluster control plane.
 	ExternalIp string `json:"externalIp,omitempty"`
-	// InternalIp: Internal IP address of a GKE cluster master.
+	// InternalIp: Internal IP address of a GKE cluster control plane.
 	InternalIp string `json:"internalIp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterNetworkUri") to
 	// unconditionally include in API requests. By default, fields with empty or

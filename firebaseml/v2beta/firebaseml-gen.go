@@ -1419,6 +1419,192 @@ func (s GoogleCloudAiplatformV1beta1Part) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1beta1RagRetrievalConfig: Specifies the context
+// retrieval config.
+type GoogleCloudAiplatformV1beta1RagRetrievalConfig struct {
+	// Filter: Optional. Config for filters.
+	Filter *GoogleCloudAiplatformV1beta1RagRetrievalConfigFilter `json:"filter,omitempty"`
+	// HybridSearch: Optional. Config for Hybrid Search.
+	HybridSearch *GoogleCloudAiplatformV1beta1RagRetrievalConfigHybridSearch `json:"hybridSearch,omitempty"`
+	// Ranking: Optional. Config for ranking and reranking.
+	Ranking *GoogleCloudAiplatformV1beta1RagRetrievalConfigRanking `json:"ranking,omitempty"`
+	// TopK: Optional. The number of contexts to retrieve.
+	TopK int64 `json:"topK,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1RagRetrievalConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1RagRetrievalConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1RagRetrievalConfigFilter: Config for filters.
+type GoogleCloudAiplatformV1beta1RagRetrievalConfigFilter struct {
+	// MetadataFilter: Optional. String for metadata filtering.
+	MetadataFilter string `json:"metadataFilter,omitempty"`
+	// VectorDistanceThreshold: Optional. Only returns contexts with vector
+	// distance smaller than the threshold.
+	VectorDistanceThreshold float64 `json:"vectorDistanceThreshold,omitempty"`
+	// VectorSimilarityThreshold: Optional. Only returns contexts with vector
+	// similarity larger than the threshold.
+	VectorSimilarityThreshold float64 `json:"vectorSimilarityThreshold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MetadataFilter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MetadataFilter") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1RagRetrievalConfigFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1RagRetrievalConfigFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1beta1RagRetrievalConfigFilter) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1beta1RagRetrievalConfigFilter
+	var s1 struct {
+		VectorDistanceThreshold   gensupport.JSONFloat64 `json:"vectorDistanceThreshold"`
+		VectorSimilarityThreshold gensupport.JSONFloat64 `json:"vectorSimilarityThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.VectorDistanceThreshold = float64(s1.VectorDistanceThreshold)
+	s.VectorSimilarityThreshold = float64(s1.VectorSimilarityThreshold)
+	return nil
+}
+
+// GoogleCloudAiplatformV1beta1RagRetrievalConfigHybridSearch: Config for
+// Hybrid Search.
+type GoogleCloudAiplatformV1beta1RagRetrievalConfigHybridSearch struct {
+	// Alpha: Optional. Alpha value controls the weight between dense and sparse
+	// vector search results. The range is [0, 1], while 0 means sparse vector
+	// search only and 1 means dense vector search only. The default value is 0.5
+	// which balances sparse and dense vector search equally.
+	Alpha float64 `json:"alpha,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Alpha") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Alpha") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1RagRetrievalConfigHybridSearch) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1RagRetrievalConfigHybridSearch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1beta1RagRetrievalConfigHybridSearch) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1beta1RagRetrievalConfigHybridSearch
+	var s1 struct {
+		Alpha gensupport.JSONFloat64 `json:"alpha"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Alpha = float64(s1.Alpha)
+	return nil
+}
+
+// GoogleCloudAiplatformV1beta1RagRetrievalConfigRanking: Config for ranking
+// and reranking.
+type GoogleCloudAiplatformV1beta1RagRetrievalConfigRanking struct {
+	// LlmRanker: Optional. Config for LlmRanker.
+	LlmRanker *GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingLlmRanker `json:"llmRanker,omitempty"`
+	// RankService: Optional. Config for Rank Service.
+	RankService *GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingRankService `json:"rankService,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LlmRanker") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LlmRanker") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1RagRetrievalConfigRanking) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1RagRetrievalConfigRanking
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingLlmRanker: Config for
+// LlmRanker.
+type GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingLlmRanker struct {
+	// ModelName: Optional. The model name used for ranking. Format:
+	// `gemini-1.5-pro`
+	ModelName string `json:"modelName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ModelName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ModelName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingLlmRanker) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingLlmRanker
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingRankService: Config for
+// Rank Service.
+type GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingRankService struct {
+	// ModelName: Optional. The model name of the rank service. Format:
+	// `semantic-ranker-512@latest`
+	ModelName string `json:"modelName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ModelName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ModelName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingRankService) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingRankService
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1beta1Retrieval: Defines a retrieval tool that model
 // can call to access external knowledge.
 type GoogleCloudAiplatformV1beta1Retrieval struct {
@@ -1889,6 +2075,8 @@ type GoogleCloudAiplatformV1beta1VertexRagStore struct {
 	// multiple files from one corpus. In the future we may open up multiple
 	// corpora support.
 	RagResources []*GoogleCloudAiplatformV1beta1VertexRagStoreRagResource `json:"ragResources,omitempty"`
+	// RagRetrievalConfig: Optional. The retrieval config for the Rag query.
+	RagRetrievalConfig *GoogleCloudAiplatformV1beta1RagRetrievalConfig `json:"ragRetrievalConfig,omitempty"`
 	// SimilarityTopK: Optional. Number of top k results to return from the
 	// selected corpora.
 	SimilarityTopK int64 `json:"similarityTopK,omitempty"`

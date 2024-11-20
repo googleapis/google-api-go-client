@@ -1686,8 +1686,8 @@ type ListCaPoolsResponse struct {
 	// CaPools: The list of CaPools.
 	CaPools []*CaPool `json:"caPools,omitempty"`
 	// NextPageToken: A token to retrieve next page of results. Pass this value in
-	// ListCertificateAuthoritiesRequest.next_page_token to retrieve the next page
-	// of results.
+	// ListCertificateAuthoritiesRequest.page_token to retrieve the next page of
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Unreachable: A list of locations (e.g. "us-west1") that could not be
 	// reached.
@@ -1719,8 +1719,8 @@ type ListCertificateAuthoritiesResponse struct {
 	// CertificateAuthorities: The list of CertificateAuthorities.
 	CertificateAuthorities []*CertificateAuthority `json:"certificateAuthorities,omitempty"`
 	// NextPageToken: A token to retrieve next page of results. Pass this value in
-	// ListCertificateAuthoritiesRequest.next_page_token to retrieve the next page
-	// of results.
+	// ListCertificateAuthoritiesRequest.page_token to retrieve the next page of
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Unreachable: A list of locations (e.g. "us-west1") that could not be
 	// reached.
@@ -1752,8 +1752,8 @@ type ListCertificateRevocationListsResponse struct {
 	// CertificateRevocationLists: The list of CertificateRevocationLists.
 	CertificateRevocationLists []*CertificateRevocationList `json:"certificateRevocationLists,omitempty"`
 	// NextPageToken: A token to retrieve next page of results. Pass this value in
-	// ListCertificateRevocationListsRequest.next_page_token to retrieve the next
-	// page of results.
+	// ListCertificateRevocationListsRequest.page_token to retrieve the next page
+	// of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Unreachable: A list of locations (e.g. "us-west1") that could not be
 	// reached.
@@ -1785,7 +1785,7 @@ type ListCertificateTemplatesResponse struct {
 	// CertificateTemplates: The list of CertificateTemplates.
 	CertificateTemplates []*CertificateTemplate `json:"certificateTemplates,omitempty"`
 	// NextPageToken: A token to retrieve next page of results. Pass this value in
-	// ListCertificateTemplatesRequest.next_page_token to retrieve the next page of
+	// ListCertificateTemplatesRequest.page_token to retrieve the next page of
 	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Unreachable: A list of locations (e.g. "us-west1") that could not be
@@ -1818,8 +1818,7 @@ type ListCertificatesResponse struct {
 	// Certificates: The list of Certificates.
 	Certificates []*Certificate `json:"certificates,omitempty"`
 	// NextPageToken: A token to retrieve next page of results. Pass this value in
-	// ListCertificatesRequest.next_page_token to retrieve the next page of
-	// results.
+	// ListCertificatesRequest.page_token to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Unreachable: A list of locations (e.g. "us-west1") that could not be
 	// reached.
@@ -2081,8 +2080,8 @@ type OperationMetadata struct {
 	EndTime string `json:"endTime,omitempty"`
 	// RequestedCancellation: Output only. Identifies whether the user has
 	// requested cancellation of the operation. Operations that have successfully
-	// been cancelled have Operation.error value with a google.rpc.Status.code of
-	// 1, corresponding to `Code.CANCELLED`.
+	// been cancelled have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
 	// StatusMessage: Output only. Human-readable status of the operation, if any.
 	StatusMessage string `json:"statusMessage,omitempty"`
@@ -6196,7 +6195,7 @@ func (r *ProjectsLocationsCaPoolsCertificatesService) Create(parent string, cert
 // CertificateId sets the optional parameter "certificateId": It must be unique
 // within a location and match the regular expression `[a-zA-Z0-9_-]{1,63}`.
 // This field is required when using a CertificateAuthority in the Enterprise
-// CertificateAuthority.Tier, but is optional and its value is ignored
+// CertificateAuthority.tier, but is optional and its value is ignored
 // otherwise.
 func (c *ProjectsLocationsCaPoolsCertificatesCreateCall) CertificateId(certificateId string) *ProjectsLocationsCaPoolsCertificatesCreateCall {
 	c.urlParams_.Set("certificateId", certificateId)

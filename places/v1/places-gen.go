@@ -1449,7 +1449,10 @@ type GoogleMapsPlacesV1Place struct {
 	PureServiceAreaBusiness bool `json:"pureServiceAreaBusiness,omitempty"`
 	// Rating: A rating between 1.0 and 5.0, based on user reviews of this place.
 	Rating float64 `json:"rating,omitempty"`
-	// RegularOpeningHours: The regular hours of operation.
+	// RegularOpeningHours: The regular hours of operation. Note that if a place is
+	// always open (24 hours), the `close` field will not be set. Clients can rely
+	// on always open (24 hours) being represented as an `open` period containing
+	// day with value `0`, hour with value `0`, and minute with value `0`.
 	RegularOpeningHours *GoogleMapsPlacesV1PlaceOpeningHours `json:"regularOpeningHours,omitempty"`
 	// RegularSecondaryOpeningHours: Contains an array of entries for information
 	// about regular secondary hours of a business. Secondary hours are different
@@ -1861,9 +1864,9 @@ type GoogleMapsPlacesV1PlaceOpeningHoursPeriodPoint struct {
 	// Day: A day of the week, as an integer in the range 0-6. 0 is Sunday, 1 is
 	// Monday, etc.
 	Day int64 `json:"day,omitempty"`
-	// Hour: The hour in 2 digits. Ranges from 00 to 23.
+	// Hour: The hour in 24 hour format. Ranges from 0 to 23.
 	Hour int64 `json:"hour,omitempty"`
-	// Minute: The minute in 2 digits. Ranges from 00 to 59.
+	// Minute: The minute. Ranges from 0 to 59.
 	Minute int64 `json:"minute,omitempty"`
 	// Truncated: Whether or not this endpoint was truncated. Truncation occurs
 	// when the real hours are outside the times we are willing to return hours

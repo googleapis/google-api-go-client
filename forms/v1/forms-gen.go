@@ -1252,6 +1252,9 @@ type Question struct {
 	// the ID must not be already used in the form. If not provided, a new ID is
 	// assigned.
 	QuestionId string `json:"questionId,omitempty"`
+	// RatingQuestion: A respondent can choose a rating from a pre-defined set of
+	// icons.
+	RatingQuestion *RatingQuestion `json:"ratingQuestion,omitempty"`
 	// Required: Whether the question must be answered in order for a respondent to
 	// submit their response.
 	Required bool `json:"required,omitempty"`
@@ -1359,6 +1362,37 @@ type QuizSettings struct {
 
 func (s QuizSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod QuizSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RatingQuestion: A rating question. The user has a range of icons to choose
+// from.
+type RatingQuestion struct {
+	// IconType: Required. The icon type to use for the rating.
+	//
+	// Possible values:
+	//   "RATING_ICON_TYPE_UNSPECIFIED" - Default value. Unused.
+	//   "STAR" - A star icon.
+	//   "HEART" - A heart icon.
+	//   "THUMB_UP" - A thumbs down icon.
+	IconType string `json:"iconType,omitempty"`
+	// RatingScaleLevel: Required. The rating scale level of the rating question.
+	RatingScaleLevel int64 `json:"ratingScaleLevel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IconType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IconType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RatingQuestion) MarshalJSON() ([]byte, error) {
+	type NoMethod RatingQuestion
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

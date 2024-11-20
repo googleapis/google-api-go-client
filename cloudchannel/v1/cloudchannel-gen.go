@@ -563,8 +563,8 @@ type GoogleCloudChannelV1ChangeOfferRequest struct {
 	// PriceReferenceId: Optional. Price reference ID for the offer. Optional field
 	// only for offers that require additional price information. Used to guarantee
 	// that the pricing is consistent between quoting the offer and placing the
-	// order. Yet to be implemented: this field is currently not evaluated in the
-	// API if populated in a request.
+	// order. Not yet implemented: if populated in a request, this field isn't
+	// evaluated in the API.
 	PriceReferenceId string `json:"priceReferenceId,omitempty"`
 	// PurchaseOrderId: Optional. Purchase order id provided by the reseller.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
@@ -1391,8 +1391,8 @@ type GoogleCloudChannelV1Entitlement struct {
 	// PriceReferenceId: Optional. Price reference ID for the offer. Optional field
 	// only for offers that require additional price information. Used to guarantee
 	// that the pricing is consistent between quoting the offer and placing the
-	// order. Yet to be implemented: this field is currently not evaluated in the
-	// API if populated in a request.
+	// order. Not yet implemented: if this field is populated in a request, it
+	// isn't evaluated in the API.
 	PriceReferenceId string `json:"priceReferenceId,omitempty"`
 	// ProvisionedService: Output only. Service provisioning details for the
 	// entitlement.
@@ -4212,8 +4212,8 @@ type GoogleCloudChannelV1alpha1Entitlement struct {
 	// PriceReferenceId: Optional. Price reference ID for the offer. Optional field
 	// only for offers that require additional price information. Used to guarantee
 	// that the pricing is consistent between quoting the offer and placing the
-	// order. Yet to be implemented: this field is currently not evaluated in the
-	// API if populated in a request.
+	// order. Not yet implemented: if this field is populated in a request, it
+	// isn't evaluated in the API.
 	PriceReferenceId string `json:"priceReferenceId,omitempty"`
 	// ProvisionedService: Output only. Service provisioning details for the
 	// entitlement.
@@ -12959,7 +12959,7 @@ type OperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

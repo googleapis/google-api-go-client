@@ -1050,10 +1050,16 @@ func (s DimensionValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// EmptyFilter: Filter for empty values.
+type EmptyFilter struct {
+}
+
 // Filter: An expression to filter dimension or metric values.
 type Filter struct {
 	// BetweenFilter: A filter for two values.
 	BetweenFilter *BetweenFilter `json:"betweenFilter,omitempty"`
+	// EmptyFilter: A filter for empty values such as "(not set)" and "" values.
+	EmptyFilter *EmptyFilter `json:"emptyFilter,omitempty"`
 	// FieldName: The dimension name or metric name. In most methods, dimensions &
 	// metrics can be used for the first time in this field. However in a
 	// RunPivotReportRequest, this field must be additionally specified by name in

@@ -2160,6 +2160,9 @@ func (s ChannelStatus) MarshalJSON() ([]byte, error) {
 type ChannelToStoreLinkDetails struct {
 	// BillingDetails: Information specific to billing (read-only).
 	BillingDetails *ChannelToStoreLinkDetailsBillingDetails `json:"billingDetails,omitempty"`
+	// MerchantAffiliateProgramDetails: Information specific to merchant affiliate
+	// program (read-only).
+	MerchantAffiliateProgramDetails *ChannelToStoreLinkDetailsMerchantAffiliateProgramDetails `json:"merchantAffiliateProgramDetails,omitempty"`
 	// MerchantId: Google Merchant Center id of the store.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 	// StoreName: Name of the store.
@@ -2209,6 +2212,38 @@ type ChannelToStoreLinkDetailsBillingDetails struct {
 
 func (s ChannelToStoreLinkDetailsBillingDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ChannelToStoreLinkDetailsBillingDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ChannelToStoreLinkDetailsMerchantAffiliateProgramDetails: Information
+// specific to merchant affiliate program.
+type ChannelToStoreLinkDetailsMerchantAffiliateProgramDetails struct {
+	// Status: The current merchant affiliate program status.
+	//
+	// Possible values:
+	//   "merchantAffiliateProgramStatusUnspecified" - Unspecified status.
+	//   "merchantAffiliateProgramStatusEligible" - Merchant is eligible for the
+	// merchant affiliate program.
+	//   "merchantAffiliateProgramStatusActive" - Merchant affiliate program is
+	// active.
+	//   "merchantAffiliateProgramStatusPaused" - Merchant affiliate program is
+	// paused.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Status") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ChannelToStoreLinkDetailsMerchantAffiliateProgramDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ChannelToStoreLinkDetailsMerchantAffiliateProgramDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

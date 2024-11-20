@@ -7665,10 +7665,10 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// CustomFineTuningSpec: Custom fine tuning configs. If set, it has higher
 	// priority than the configs set in ServingConfig.custom_fine_tuning_spec.
 	CustomFineTuningSpec *GoogleCloudDiscoveryengineV1alphaCustomFineTuningSpec `json:"customFineTuningSpec,omitempty"`
-	// DataStoreSpecs: Specs defining dataStores to filter on in a search call and
-	// configurations for those dataStores. This is only considered for engines
-	// with multiple dataStores use case. For single dataStore within an engine,
-	// they should use the specs at the top level.
+	// DataStoreSpecs: Specs defining DataStores to filter on in a search call and
+	// configurations for those data stores. This is only considered for Engines
+	// with multiple data stores. For engines with a single data store, the specs
+	// directly under SearchRequest should be used.
 	DataStoreSpecs []*GoogleCloudDiscoveryengineV1alphaSearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
 	// EmbeddingSpec: Uses the provided embedding to do additional semantic
 	// document retrieval. The retrieval is based on the dot product of
@@ -15771,12 +15771,16 @@ type GoogleCloudDiscoveryengineV1betaPurgeUserEventsRequest struct {
 	// ISO 8601 "zulu" format. * `userPseudoId`: Double quoted string. Specifying
 	// this will delete all events associated with a visitor. * `userId`: Double
 	// quoted string. Specifying this will delete all events associated with a
-	// user. Examples: * Deleting all events in a time range: `eventTime >
+	// user. Note: This API only supports purging a max range of 30 days. Examples:
+	// * Deleting all events in a time range: `eventTime >
 	// "2012-04-23T18:25:43.511Z" eventTime < "2012-04-23T18:30:43.511Z" *
-	// Deleting specific eventType: `eventType = "search" * Deleting all events
-	// for a specific visitor: `userPseudoId = "visitor1024" * Deleting all events
-	// inside a DataStore: `*` The filtering fields are assumed to have an implicit
-	// AND.
+	// Deleting specific eventType in a time range: `eventTime >
+	// "2012-04-23T18:25:43.511Z" eventTime < "2012-04-23T18:30:43.511Z" eventType
+	// = "search" * Deleting all events for a specific visitor in a time range:
+	// `eventTime > "2012-04-23T18:25:43.511Z" eventTime <
+	// "2012-04-23T18:30:43.511Z" userPseudoId = "visitor1024" * Deleting the past
+	// 30 days of events inside a DataStore: `*` The filtering fields are assumed
+	// to have an implicit AND.
 	Filter string `json:"filter,omitempty"`
 	// Force: The `force` field is currently not supported. Purge user event
 	// requests will permanently delete all purgeable events. Once the development
@@ -16061,9 +16065,9 @@ type GoogleCloudDiscoveryengineV1betaRecommendRequest struct {
 	// filter_tags: ANY("Hot", "Cold"))` * `(filter_tags: ANY("Red", "Blue")) AND
 	// NOT (filter_tags: ANY("Green"))` If `attributeFilteringSyntax` is set to
 	// true under the `params` field, then attribute-based expressions are expected
-	// instead of the above described tag-based syntax. Examples: * (launguage:
+	// instead of the above described tag-based syntax. Examples: * (language:
 	// ANY("en", "es")) AND NOT (categories: ANY("Movie")) * (available: true) AND
-	// (launguage: ANY("en", "es")) OR (categories: ANY("Movie")) If your filter
+	// (language: ANY("en", "es")) OR (categories: ANY("Movie")) If your filter
 	// blocks all results, the API returns generic (unfiltered) popular Documents.
 	// If you only want results strictly matching the filters, set
 	// `strictFiltering` to `true` in RecommendRequest.params to receive empty
@@ -16531,10 +16535,10 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// ContentSearchSpec: A specification for configuring the behavior of content
 	// search.
 	ContentSearchSpec *GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpec `json:"contentSearchSpec,omitempty"`
-	// DataStoreSpecs: Specs defining dataStores to filter on in a search call and
-	// configurations for those dataStores. This is only considered for engines
-	// with multiple dataStores use case. For single dataStore within an engine,
-	// they should use the specs at the top level.
+	// DataStoreSpecs: Specs defining DataStores to filter on in a search call and
+	// configurations for those data stores. This is only considered for Engines
+	// with multiple data stores. For engines with a single data store, the specs
+	// directly under SearchRequest should be used.
 	DataStoreSpecs []*GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
 	// EmbeddingSpec: Uses the provided embedding to do additional semantic
 	// document retrieval. The retrieval is based on the dot product of
@@ -22383,7 +22387,7 @@ type ProjectsLocationsCollectionsDataStoresBranchesOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -36280,7 +36284,7 @@ type ProjectsLocationsDataStoresBranchesOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

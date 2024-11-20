@@ -772,7 +772,7 @@ type GoogleCloudRetailV2AttributesConfig struct {
 	//   "PRODUCT_LEVEL_ATTRIBUTE_CONFIG" - At this level, we honor the attribute
 	// configurations set in Product.attributes.
 	//   "CATALOG_LEVEL_ATTRIBUTE_CONFIG" - At this level, we honor the attribute
-	// configurations set in CatalogConfig.attribute_configs.
+	// configurations set in `CatalogConfig.attribute_configs`.
 	AttributeConfigLevel string `json:"attributeConfigLevel,omitempty"`
 	// CatalogAttributes: Enable attribute(s) config at catalog level. For example,
 	// indexable, dynamic_facetable, or searchable for each attribute. The key is
@@ -942,7 +942,7 @@ type GoogleCloudRetailV2BigQuerySource struct {
 	// the BigQuery export to a specific Cloud Storage directory.
 	GcsStagingDir string `json:"gcsStagingDir,omitempty"`
 	// PartitionDate: BigQuery time partitioned table's _PARTITIONDATE in
-	// YYYY-MM-DD format. Only supported in ImportProductsRequest.
+	// YYYY-MM-DD format.
 	PartitionDate *GoogleTypeDate `json:"partitionDate,omitempty"`
 	// ProjectId: The project ID (can be project # or ID) that the BigQuery source
 	// is in with a length limit of 128 characters. If not specified, inherits the
@@ -1034,8 +1034,7 @@ type GoogleCloudRetailV2CatalogAttribute struct {
 	// InUse: Output only. Indicates whether this attribute has been used by any
 	// products. `True` if at least one Product is using this attribute in
 	// Product.attributes. Otherwise, this field is `False`. CatalogAttribute can
-	// be pre-loaded by using CatalogService.AddCatalogAttribute,
-	// CatalogService.ImportCatalogAttributes, or
+	// be pre-loaded by using CatalogService.AddCatalogAttribute or
 	// CatalogService.UpdateAttributesConfig APIs. This field is `False` for
 	// pre-loaded CatalogAttributes. Only pre-loaded catalog attributes that are
 	// neither in use by products nor predefined can be deleted. Catalog attributes
@@ -1828,7 +1827,7 @@ func (s *GoogleCloudRetailV2CustomAttribute) UnmarshalJSON(data []byte) error {
 }
 
 // GoogleCloudRetailV2ExperimentInfo: Metadata for active A/B testing
-// Experiment.
+// experiment.
 type GoogleCloudRetailV2ExperimentInfo struct {
 	// Experiment: The fully qualified resource name of the experiment that
 	// provides the serving config under test, should an active experiment exist.
@@ -1861,7 +1860,7 @@ func (s GoogleCloudRetailV2ExperimentInfo) MarshalJSON() ([]byte, error) {
 // active serving config A/B tests.
 type GoogleCloudRetailV2ExperimentInfoServingConfigExperiment struct {
 	// ExperimentServingConfig: The fully qualified resource name of the serving
-	// config Experiment.VariantArm.serving_config_id responsible for generating
+	// config `Experiment.VariantArm.serving_config_id` responsible for generating
 	// the search response. For example:
 	// `projects/*/locations/*/catalogs/*/servingConfigs/*`.
 	ExperimentServingConfig string `json:"experimentServingConfig,omitempty"`
@@ -2730,19 +2729,38 @@ func (s GoogleCloudRetailV2ListServingConfigsResponse) MarshalJSON() ([]byte, er
 // GoogleCloudRetailV2LocalInventory: The inventory information at a place
 // (e.g. a store) identified by a place ID.
 type GoogleCloudRetailV2LocalInventory struct {
-	// Attributes: Additional local inventory attributes, for example, store name,
-	// promotion tags, etc. This field needs to pass all below criteria, otherwise
-	// an INVALID_ARGUMENT error is returned: * At most 30 attributes are allowed.
-	// * The key must be a UTF-8 encoded string with a length limit of 32
-	// characters. * The key must match the pattern: `a-zA-Z0-9*`. For example,
-	// key0LikeThis or KEY_1_LIKE_THIS. * The attribute values must be of the same
-	// type (text or number). * Only 1 value is allowed for each attribute. * For
-	// text values, the length limit is 256 UTF-8 characters. * The attribute does
-	// not support search. The `searchable` field should be unset or set to false.
-	// * The max summed total bytes of custom attribute keys and values per product
-	// is 5MiB.
+	// Attributes: Optional. Additional local inventory attributes, for example,
+	// store name, promotion tags, etc. This field needs to pass all below
+	// criteria, otherwise an INVALID_ARGUMENT error is returned: * At most 30
+	// attributes are allowed. * The key must be a UTF-8 encoded string with a
+	// length limit of 32 characters. * The key must match the pattern:
+	// `a-zA-Z0-9*`. For example, key0LikeThis or KEY_1_LIKE_THIS. * The attribute
+	// values must be of the same type (text or number). * Only 1 value is allowed
+	// for each attribute. * For text values, the length limit is 256 UTF-8
+	// characters. * The attribute does not support search. The `searchable` field
+	// should be unset or set to false. * The max summed total bytes of custom
+	// attribute keys and values per product is 5MiB.
 	Attributes map[string]GoogleCloudRetailV2CustomAttribute `json:"attributes,omitempty"`
-	// FulfillmentTypes: Input only. Supported fulfillment types. Valid fulfillment
+	// Availability: Optional. The availability of the Product at this place_id.
+	// Default to Availability.IN_STOCK. For primary products with variants set the
+	// availability of the primary as Availability.OUT_OF_STOCK and set the true
+	// availability at the variant level. This way the primary product will be
+	// considered "in stock" as long as it has at least one variant in stock. For
+	// primary products with no variants set the true availability at the primary
+	// level. Corresponding properties: Google Merchant Center property
+	// availability (https://support.google.com/merchants/answer/6324448).
+	// Schema.org property Offer.availability (https://schema.org/availability).
+	//
+	// Possible values:
+	//   "AVAILABILITY_UNSPECIFIED" - Default product availability. Default to
+	// Availability.IN_STOCK if unset.
+	//   "IN_STOCK" - Product in stock.
+	//   "OUT_OF_STOCK" - Product out of stock.
+	//   "PREORDER" - Product that is in pre-order state.
+	//   "BACKORDER" - Product that is back-ordered (i.e. temporarily out of
+	// stock).
+	Availability string `json:"availability,omitempty"`
+	// FulfillmentTypes: Optional. Supported fulfillment types. Valid fulfillment
 	// type values include commonly used types (such as pickup in store and same
 	// day delivery), and custom types. Customers have to map custom types to their
 	// display names before rendering UI. Supported values: * "pickup-in-store" *
@@ -2752,10 +2770,11 @@ type GoogleCloudRetailV2LocalInventory struct {
 	// an INVALID_ARGUMENT error is returned. All the elements must be distinct.
 	// Otherwise, an INVALID_ARGUMENT error is returned.
 	FulfillmentTypes []string `json:"fulfillmentTypes,omitempty"`
-	// PlaceId: The place ID for the current set of inventory information.
+	// PlaceId: Required. The place ID for the current set of inventory
+	// information.
 	PlaceId string `json:"placeId,omitempty"`
-	// PriceInfo: Product price and cost information. Google Merchant Center
-	// property price (https://support.google.com/merchants/answer/6324371).
+	// PriceInfo: Optional. Product price and cost information. Google Merchant
+	// Center property price (https://support.google.com/merchants/answer/6324371).
 	PriceInfo *GoogleCloudRetailV2PriceInfo `json:"priceInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5567,7 +5586,7 @@ type GoogleCloudRetailV2SearchResponse struct {
 	// correction type is AUTOMATIC, then the search results are based on
 	// corrected_query. Otherwise the original query is used for search.
 	CorrectedQuery string `json:"correctedQuery,omitempty"`
-	// ExperimentInfo: Metadata related to A/B testing Experiment associated with
+	// ExperimentInfo: Metadata related to A/B testing experiment associated with
 	// this response. Only exists when an experiment is triggered.
 	ExperimentInfo []*GoogleCloudRetailV2ExperimentInfo `json:"experimentInfo,omitempty"`
 	// Facets: Results of facets requested by user.
@@ -6533,12 +6552,11 @@ type GoogleCloudRetailV2UserInfo struct {
 	// SearchRequest.user_info. * using the JavaScript tag in
 	// UserEventService.CollectUserEvent or if direct_user_request is set.
 	IpAddress string `json:"ipAddress,omitempty"`
-	// UserAgent: User agent as included in the HTTP header. Required for getting
-	// SearchResponse.sponsored_results. The field must be a UTF-8 encoded string
-	// with a length limit of 1,000 characters. Otherwise, an INVALID_ARGUMENT
-	// error is returned. This should not be set when using the client side event
-	// reporting with GTM or JavaScript tag in UserEventService.CollectUserEvent or
-	// if direct_user_request is set.
+	// UserAgent: User agent as included in the HTTP header. The field must be a
+	// UTF-8 encoded string with a length limit of 1,000 characters. Otherwise, an
+	// INVALID_ARGUMENT error is returned. This should not be set when using the
+	// client side event reporting with GTM or JavaScript tag in
+	// UserEventService.CollectUserEvent or if direct_user_request is set.
 	UserAgent string `json:"userAgent,omitempty"`
 	// UserId: Highly recommended for logged-in users. Unique identifier for
 	// logged-in user, such as a user name. Don't set for anonymous users. Always

@@ -2022,9 +2022,9 @@ type ServicePerimeter struct {
 	// affect behavior.
 	Description string `json:"description,omitempty"`
 	// Etag: Optional. An opaque identifier for the current version of the
-	// `ServicePerimeter`. Clients should not expect this to be in any specific
-	// format. If etag is not provided, the operation will be performed as if a
-	// valid etag is provided.
+	// `ServicePerimeter`. This identifier does not follow any specific format. If
+	// an etag is not provided, the operation will be performed as if a valid etag
+	// is provided.
 	Etag string `json:"etag,omitempty"`
 	// Name: Identifier. Resource name for the `ServicePerimeter`. Format:
 	// `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`. The

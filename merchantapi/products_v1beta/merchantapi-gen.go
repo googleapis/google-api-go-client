@@ -958,6 +958,10 @@ type LoyaltyProgram struct {
 	// associate the assets below (for example, price and points) with a merchant.
 	// The corresponding program must be linked to the merchant account.
 	ProgramLabel string `json:"programLabel,omitempty"`
+	// ShippingLabel: The label of the shipping benefit. If the field has value,
+	// this offer has loyalty shipping benefit. If the field value isn't provided,
+	// the item is not eligible for loyalty shipping for the given loyalty tier.
+	ShippingLabel string `json:"shippingLabel,omitempty"`
 	// TierLabel: The label of the tier within the loyalty program. Must match one
 	// of the labels within the program.
 	TierLabel string `json:"tierLabel,omitempty"`
@@ -1220,7 +1224,7 @@ func (s *ProductDimension) UnmarshalJSON(data []byte) error {
 // ProductInput: This resource represents input data you submit for a product,
 // not the processed product that you see in Merchant Center, in Shopping ads,
 // or across Google surfaces. Product inputs, rules and supplemental data
-// source data are combined to create the processed product. Required product
+// source data are combined to create the processed Product. Required product
 // input attributes to pass data validation checks are primarily defined in the
 // Products Data Specification
 // (https://support.google.com/merchants/answer/188494). The following
@@ -1352,7 +1356,8 @@ type ProductStatusChangeMessage struct {
 	Attribute string `json:"attribute,omitempty"`
 	// Changes: A message to describe the change that happened to the product
 	Changes []*ProductChange `json:"changes,omitempty"`
-	// ExpirationTime: The product expiration time.
+	// ExpirationTime: The product expiration time. This field will not bet set if
+	// the notification is sent for a product deletion event.
 	ExpirationTime string `json:"expirationTime,omitempty"`
 	// ManagingAccount: The account that manages the merchant's account. can be the
 	// same as merchant id if it is standalone account. Format :

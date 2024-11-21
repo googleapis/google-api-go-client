@@ -1250,20 +1250,25 @@ func (s EnumValue) MarshalJSON() ([]byte, error) {
 // library generation. These fields will be deprecated once the feature
 // graduates and is enabled by default.
 type ExperimentalFeatures struct {
+	// ProtobufPythonicTypesEnabled: Enables generation of protobuf code using new
+	// types that are more Pythonic which are included in `protobuf>=5.29.x`. This
+	// feature will be enabled by default 1 month after launching the feature in
+	// preview packages.
+	ProtobufPythonicTypesEnabled bool `json:"protobufPythonicTypesEnabled,omitempty"`
 	// RestAsyncIoEnabled: Enables generation of asynchronous REST clients if
 	// `rest` transport is enabled. By default, asynchronous REST clients will not
 	// be generated. This feature will be enabled by default 1 month after
 	// launching the feature in preview packages.
 	RestAsyncIoEnabled bool `json:"restAsyncIoEnabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RestAsyncIoEnabled") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "ProtobufPythonicTypesEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RestAsyncIoEnabled") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ProtobufPythonicTypesEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1389,6 +1394,11 @@ func (s FieldPolicy) MarshalJSON() ([]byte, error) {
 type GoSettings struct {
 	// Common: Some settings.
 	Common *CommonLanguageSettings `json:"common,omitempty"`
+	// RenamedServices: Map of service names to renamed services. Keys are the
+	// package relative service names and values are the name to be used for the
+	// service client and call options. publishing: go_settings: renamed_services:
+	// Publisher: TopicAdmin
+	RenamedServices map[string]string `json:"renamedServices,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Common") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2873,10 +2883,10 @@ type QuotaLimit struct {
 	// as well as '-'. The maximum length of the limit name is 64 characters.
 	Name string `json:"name,omitempty"`
 	// Unit: Specify the unit of the quota limit. It uses the same syntax as
-	// Metric.unit. The supported unit kinds are determined by the quota backend
-	// system. Here are some examples: * "1/min/{project}" for quota per minute per
-	// project. Note: the order of unit components is insignificant. The "1" at the
-	// beginning is required to follow the metric unit syntax.
+	// MetricDescriptor.unit. The supported unit kinds are determined by the quota
+	// backend system. Here are some examples: * "1/min/{project}" for quota per
+	// minute per project. Note: the order of unit components is insignificant. The
+	// "1" at the beginning is required to follow the metric unit syntax.
 	Unit string `json:"unit,omitempty"`
 	// Values: Tiered limit values. You must specify this as a key:value pair, with
 	// an integer value that is the maximum number of requests allowed for the
@@ -3584,15 +3594,20 @@ func (s V1Beta1ImportProducerOverridesResponse) MarshalJSON() ([]byte, error) {
 // V1Beta1ImportProducerQuotaPoliciesRequest: Request message for
 // ImportProducerQuotaPolicies
 type V1Beta1ImportProducerQuotaPoliciesRequest struct {
-	// Force: Whether to force the import of the quota policies. If the policy
-	// import would decrease the default limit of any consumer tier by more than 10
-	// percent, the call is rejected, as a safety measure to avoid accidentally
-	// decreasing quota too quickly. Setting the force parameter to true ignores
-	// this restriction.
+	// Force: Whether quota policy can result in a decrease of effective limit.
+	// Don't allow any decreases if force is not specified. If force is specified,
+	// then don't allow any decreases below 120% of the 7d quota usage, or for
+	// cases where usage cannot be examined (custom dimensions/ per user/per
+	// resource), only allow a 10% decrease.
 	Force bool `json:"force,omitempty"`
-	// ForceJustification: If force option is set to true, force_justification is
-	// suggested to be set to log the reason in audit logs.
+	// ForceJustification: If force or force_skip_quota_usage_check option is set
+	// to true, force_justification is suggested to be set to log the reason in
+	// audit logs.
 	ForceJustification string `json:"forceJustification,omitempty"`
+	// ForceSkipQuotaUsageCheck: If set to true, skip the quota usage check. This
+	// field is only used when the effective limit can be decreased. If the force
+	// field is not set, this field will be ignored.
+	ForceSkipQuotaUsageCheck bool `json:"forceSkipQuotaUsageCheck,omitempty"`
 	// InlineSource: The import data is specified in the request message itself
 	InlineSource *V1Beta1PolicyInlineSource `json:"inlineSource,omitempty"`
 	// ValidateOnly: If set to true, validate the request, but do not actually

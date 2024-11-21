@@ -170,6 +170,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.BackupCollections = NewProjectsLocationsBackupCollectionsService(s)
 	rs.Clusters = NewProjectsLocationsClustersService(s)
 	rs.Instances = NewProjectsLocationsInstancesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
@@ -179,11 +180,34 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	BackupCollections *ProjectsLocationsBackupCollectionsService
+
 	Clusters *ProjectsLocationsClustersService
 
 	Instances *ProjectsLocationsInstancesService
 
 	Operations *ProjectsLocationsOperationsService
+}
+
+func NewProjectsLocationsBackupCollectionsService(s *Service) *ProjectsLocationsBackupCollectionsService {
+	rs := &ProjectsLocationsBackupCollectionsService{s: s}
+	rs.Backups = NewProjectsLocationsBackupCollectionsBackupsService(s)
+	return rs
+}
+
+type ProjectsLocationsBackupCollectionsService struct {
+	s *Service
+
+	Backups *ProjectsLocationsBackupCollectionsBackupsService
+}
+
+func NewProjectsLocationsBackupCollectionsBackupsService(s *Service) *ProjectsLocationsBackupCollectionsBackupsService {
+	rs := &ProjectsLocationsBackupCollectionsBackupsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsBackupCollectionsBackupsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsClustersService(s *Service) *ProjectsLocationsClustersService {
@@ -244,6 +268,42 @@ func (s AOFConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AutomatedBackupConfig: The automated backup config for a cluster.
+type AutomatedBackupConfig struct {
+	// AutomatedBackupMode: Optional. The automated backup mode. If the mode is
+	// disabled, the other fields will be ignored.
+	//
+	// Possible values:
+	//   "AUTOMATED_BACKUP_MODE_UNSPECIFIED" - Default value. Automated backup
+	// config is not specified.
+	//   "DISABLED" - Automated backup config disabled.
+	//   "ENABLED" - Automated backup config enabled.
+	AutomatedBackupMode string `json:"automatedBackupMode,omitempty"`
+	// FixedFrequencySchedule: Optional. Trigger automated backups at a fixed
+	// frequency.
+	FixedFrequencySchedule *FixedFrequencySchedule `json:"fixedFrequencySchedule,omitempty"`
+	// Retention: Optional. How long to keep automated backups before the backups
+	// are deleted. If not specified, the default value is 100 years which is also
+	// the maximum value supported. The minimum value is 1 day.
+	Retention string `json:"retention,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AutomatedBackupMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutomatedBackupMode") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutomatedBackupConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomatedBackupConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AvailabilityConfiguration: Configuration for availability of database
 // instance
 type AvailabilityConfiguration struct {
@@ -288,6 +348,133 @@ func (s AvailabilityConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Backup: Backup of a cluster.
+type Backup struct {
+	// BackupFiles: Output only. List of backup files of the backup.
+	BackupFiles []*BackupFile `json:"backupFiles,omitempty"`
+	// BackupType: Output only. Type of the backup.
+	//
+	// Possible values:
+	//   "BACKUP_TYPE_UNSPECIFIED" - The default value, not set.
+	//   "ON_DEMAND" - On-demand backup.
+	//   "AUTOMATED" - Automated backup.
+	BackupType string `json:"backupType,omitempty"`
+	// Cluster: Output only. Cluster resource path of this backup.
+	Cluster string `json:"cluster,omitempty"`
+	// ClusterUid: Output only. Cluster uid of this backup.
+	ClusterUid string `json:"clusterUid,omitempty"`
+	// CreateTime: Output only. The time when the backup was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// EngineVersion: Output only. redis-7.2, valkey-7.5
+	EngineVersion string `json:"engineVersion,omitempty"`
+	// ExpireTime: Output only. The time when the backup will expire.
+	ExpireTime string `json:"expireTime,omitempty"`
+	// Name: Identifier. Full resource path of the backup. the last part of the
+	// name is the backup id with the following format: [YYYYMMDDHHMMSS]_[Shorted
+	// Cluster UID] OR customer specified while backup cluster. Example:
+	// 20240515123000_1234
+	Name string `json:"name,omitempty"`
+	// NodeType: Output only. Node type of the cluster.
+	//
+	// Possible values:
+	//   "NODE_TYPE_UNSPECIFIED" - Node type unspecified
+	//   "REDIS_SHARED_CORE_NANO" - Redis shared core nano node_type.
+	//   "REDIS_HIGHMEM_MEDIUM" - Redis highmem medium node_type.
+	//   "REDIS_HIGHMEM_XLARGE" - Redis highmem xlarge node_type.
+	//   "REDIS_STANDARD_SMALL" - Redis standard small node_type.
+	NodeType string `json:"nodeType,omitempty"`
+	// ReplicaCount: Output only. Number of replicas for the cluster.
+	ReplicaCount int64 `json:"replicaCount,omitempty"`
+	// ShardCount: Output only. Number of shards for the cluster.
+	ShardCount int64 `json:"shardCount,omitempty"`
+	// State: Output only. State of the backup.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value, not set.
+	//   "CREATING" - The backup is being created.
+	//   "ACTIVE" - The backup is active to be used.
+	//   "DELETING" - The backup is being deleted.
+	State string `json:"state,omitempty"`
+	// TotalSizeBytes: Output only. Total size of the backup in bytes.
+	TotalSizeBytes int64 `json:"totalSizeBytes,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BackupFiles") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupFiles") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Backup) MarshalJSON() ([]byte, error) {
+	type NoMethod Backup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackupClusterRequest: Request for [BackupCluster].
+type BackupClusterRequest struct {
+	// BackupId: Optional. The id of the backup to be created. If not specified,
+	// the default value ([YYYYMMDDHHMMSS]_[Shortened Cluster UID] is used.
+	BackupId string `json:"backupId,omitempty"`
+	// Ttl: Optional. TTL for the backup to expire. Value range is 1 day to 100
+	// years. If not specified, the default value is 100 years.
+	Ttl string `json:"ttl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupClusterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupClusterRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackupCollection: BackupCollection of a cluster.
+type BackupCollection struct {
+	// Cluster: Output only. The full resource path of the cluster the backup
+	// collection belongs to. Example:
+	// projects/{project}/locations/{location}/clusters/{cluster}
+	Cluster string `json:"cluster,omitempty"`
+	// ClusterUid: Output only. The cluster uid of the backup collection.
+	ClusterUid string `json:"clusterUid,omitempty"`
+	// Name: Identifier. Full resource path of the backup collection.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Cluster") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cluster") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupCollection) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupCollection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BackupConfiguration: Configuration for automatic backups
 type BackupConfiguration struct {
 	// AutomatedBackupEnabled: Whether customer visible automated backups are
@@ -314,6 +501,32 @@ type BackupConfiguration struct {
 
 func (s BackupConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupConfiguration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackupFile: Backup is consisted of multiple backup files.
+type BackupFile struct {
+	// CreateTime: Output only. The time when the backup file was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// FileName: Output only. e.g: .rdb
+	FileName string `json:"fileName,omitempty"`
+	// SizeBytes: Output only. Size of the backup file in bytes.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupFile) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupFile
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -412,6 +625,13 @@ type Cluster struct {
 	//   "AUTH_MODE_IAM_AUTH" - IAM basic authorization mode
 	//   "AUTH_MODE_DISABLED" - Authorization disabled mode
 	AuthorizationMode string `json:"authorizationMode,omitempty"`
+	// AutomatedBackupConfig: Optional. The automated backup config for the
+	// cluster.
+	AutomatedBackupConfig *AutomatedBackupConfig `json:"automatedBackupConfig,omitempty"`
+	// BackupCollection: Optional. Output only. The backup collection full resource
+	// name. Example:
+	// projects/{project}/locations/{location}/backupCollections/{collection}
+	BackupCollection string `json:"backupCollection,omitempty"`
 	// ClusterEndpoints: Optional. A list of cluster enpoints.
 	ClusterEndpoints []*ClusterEndpoint `json:"clusterEndpoints,omitempty"`
 	// CreateTime: Output only. The timestamp associated with the cluster creation
@@ -426,12 +646,19 @@ type Cluster struct {
 	// for Redis clients to connect to the cluster. Currently only one discovery
 	// endpoint is supported.
 	DiscoveryEndpoints []*DiscoveryEndpoint `json:"discoveryEndpoints,omitempty"`
+	// GcsSource: Optional. Backups stored in Cloud Storage buckets. The Cloud
+	// Storage buckets need to be the same region as the clusters. Read permission
+	// is required to import from the provided Cloud Storage objects.
+	GcsSource *GcsBackupSource `json:"gcsSource,omitempty"`
 	// MaintenancePolicy: Optional. ClusterMaintenancePolicy determines when to
 	// allow or deny updates.
 	MaintenancePolicy *ClusterMaintenancePolicy `json:"maintenancePolicy,omitempty"`
 	// MaintenanceSchedule: Output only. ClusterMaintenanceSchedule Output only
 	// Published maintenance schedule.
 	MaintenanceSchedule *ClusterMaintenanceSchedule `json:"maintenanceSchedule,omitempty"`
+	// ManagedBackupSource: Optional. Backups generated and managed by memorystore
+	// service.
+	ManagedBackupSource *ManagedBackupSource `json:"managedBackupSource,omitempty"`
 	// Name: Required. Identifier. Unique name of the resource in this scope
 	// including project and location using the form:
 	// `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`
@@ -1645,6 +1872,28 @@ func (s Entitlement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExportBackupRequest: Request for [ExportBackup].
+type ExportBackupRequest struct {
+	// GcsBucket: Google Cloud Storage bucket, like "my-bucket".
+	GcsBucket string `json:"gcsBucket,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GcsBucket") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcsBucket") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExportBackupRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportBackupRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExportInstanceRequest: Request for Export.
 type ExportInstanceRequest struct {
 	// OutputConfig: Required. Specify data to be exported.
@@ -1701,6 +1950,57 @@ func (s FailoverInstanceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FixedFrequencySchedule: This schedule allows the backup to be triggered at a
+// fixed frequency (currently only daily is supported).
+type FixedFrequencySchedule struct {
+	// StartTime: Optional. The start time of every automated backup in UTC. It
+	// must be set to the start of an hour. If not specified, the default value is
+	// the start of the hour when the automated backup config is enabled. For
+	// example, if the automated backup config is enabled at 10:13 AM UTC without
+	// specifying start_time, the default start time is 10:00 AM UTC.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StartTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StartTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FixedFrequencySchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod FixedFrequencySchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GcsBackupSource: Backups stored in Cloud Storage buckets. The Cloud Storage
+// buckets need to be the same region as the clusters.
+type GcsBackupSource struct {
+	// Uris: Optional. URIs of the GCS objects to import. Example:
+	// gs://bucket1/object1, gs://bucket2/folder2/object2
+	Uris []string `json:"uris,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Uris") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Uris") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GcsBackupSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GcsBackupSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GcsDestination: The Cloud Storage location for the output content
 type GcsDestination struct {
 	// Uri: Required. Data destination URI (e.g. 'gs://my_bucket/my_object').
@@ -1753,8 +2053,8 @@ type GoogleCloudCommonOperationMetadata struct {
 	ApiVersion string `json:"apiVersion,omitempty"`
 	// CancelRequested: Output only. Identifies whether the user has requested
 	// cancellation of the operation. Operations that have been cancelled
-	// successfully have Operation.error value with a google.rpc.Status.code of 1,
-	// corresponding to `Code.CANCELLED`.
+	// successfully have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.
 	CancelRequested bool `json:"cancelRequested,omitempty"`
 	// CreateTime: Output only. The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2130,6 +2430,74 @@ func (s InternalResourceMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListBackupCollectionsResponse: Response for [ListBackupCollections].
+type ListBackupCollectionsResponse struct {
+	// BackupCollections: A list of backupCollections in the project. If the
+	// `location_id` in the parent field of the request is "-", all regions
+	// available to the project are queried, and the results aggregated. If in such
+	// an aggregated query a location is unavailable, a placeholder
+	// backupCollection entry is included in the response with the `name` field set
+	// to a value of the form
+	// `projects/{project_id}/locations/{location_id}/backupCollections/`- and the
+	// `status` field set to ERROR and `status_message` field set to "location not
+	// available for ListBackupCollections".
+	BackupCollections []*BackupCollection `json:"backupCollections,omitempty"`
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BackupCollections") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupCollections") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListBackupCollectionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBackupCollectionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListBackupsResponse: Response for [ListBackups].
+type ListBackupsResponse struct {
+	// Backups: A list of backups in the project.
+	Backups []*Backup `json:"backups,omitempty"`
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Backups that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Backups") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Backups") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListBackupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBackupsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListClustersResponse: Response for ListClusters.
 type ListClustersResponse struct {
 	// Clusters: A list of Redis clusters in the project in the specified location,
@@ -2312,6 +2680,9 @@ type MachineConfiguration struct {
 	MemorySizeInBytes int64 `json:"memorySizeInBytes,omitempty,string"`
 	// ShardCount: Optional. Number of shards (if applicable).
 	ShardCount int64 `json:"shardCount,omitempty"`
+	// VcpuCount: Optional. The number of vCPUs. TODO(b/342344482, b/342346271) add
+	// proto validations again after bug fix.
+	VcpuCount float64 `json:"vcpuCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CpuCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2328,6 +2699,20 @@ type MachineConfiguration struct {
 func (s MachineConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod MachineConfiguration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *MachineConfiguration) UnmarshalJSON(data []byte) error {
+	type NoMethod MachineConfiguration
+	var s1 struct {
+		VcpuCount gensupport.JSONFloat64 `json:"vcpuCount"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.VcpuCount = float64(s1.VcpuCount)
+	return nil
 }
 
 // MaintenancePolicy: Maintenance policy for an instance.
@@ -2391,6 +2776,34 @@ type MaintenanceSchedule struct {
 
 func (s MaintenanceSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceSchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ManagedBackupSource: Backups that generated and managed by memorystore.
+type ManagedBackupSource struct {
+	// Backup: Optional. Example:
+	// //redis.googleapis.com/projects/{project}/locations/{location}/backupCollecti
+	// ons/{collection}/backups/{backup} A shorter version (without the prefix) of
+	// the backup name is also supported, like
+	// projects/{project}/locations/{location}/backupCollections/{collection}/backup
+	// s/{backup_id} In this case, it assumes the backup is under
+	// redis.googleapis.com.
+	Backup string `json:"backup,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ManagedBackupSource) MarshalJSON() ([]byte, error) {
+	type NoMethod ManagedBackupSource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3703,6 +4116,838 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsBackupCollectionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a backup collection.
+//
+//   - name: Redis backupCollection resource name using the form:
+//     `projects/{project_id}/locations/{location_id}/backupCollections/{backup_co
+//     llection_id}` where `location_id` refers to a GCP region.
+func (r *ProjectsLocationsBackupCollectionsService) Get(name string) *ProjectsLocationsBackupCollectionsGetCall {
+	c := &ProjectsLocationsBackupCollectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupCollectionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupCollectionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBackupCollectionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackupCollectionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupCollectionsGetCall) Context(ctx context.Context) *ProjectsLocationsBackupCollectionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupCollectionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupCollectionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.backupCollections.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BackupCollection.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsBackupCollectionsGetCall) Do(opts ...googleapi.CallOption) (*BackupCollection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BackupCollection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsBackupCollectionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all backup collections owned by a consumer project in either the
+// specified location (region) or all locations. If `location_id` is specified
+// as `-` (wildcard), then all regions available to the project are queried,
+// and the results are aggregated.
+//
+//   - parent: The resource name of the backupCollection location using the form:
+//     `projects/{project_id}/locations/{location_id}` where `location_id` refers
+//     to a GCP region.
+func (r *ProjectsLocationsBackupCollectionsService) List(parent string) *ProjectsLocationsBackupCollectionsListCall {
+	c := &ProjectsLocationsBackupCollectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If not specified, a default value of 1000 will be used by the
+// service. Regardless of the page_size value, the response may include a
+// partial list and a caller should only rely on response's `next_page_token`
+// to determine if there are more clusters left to be queried.
+func (c *ProjectsLocationsBackupCollectionsListCall) PageSize(pageSize int64) *ProjectsLocationsBackupCollectionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The `next_page_token`
+// value returned from a previous [ListBackupCollections] request, if any.
+func (c *ProjectsLocationsBackupCollectionsListCall) PageToken(pageToken string) *ProjectsLocationsBackupCollectionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupCollectionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupCollectionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBackupCollectionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackupCollectionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupCollectionsListCall) Context(ctx context.Context) *ProjectsLocationsBackupCollectionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupCollectionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupCollectionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/backupCollections")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.backupCollections.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBackupCollectionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackupCollectionsListCall) Do(opts ...googleapi.CallOption) (*ListBackupCollectionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBackupCollectionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsBackupCollectionsListCall) Pages(ctx context.Context, f func(*ListBackupCollectionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsBackupCollectionsBackupsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a specific backup.
+//
+//   - name: Redis backup resource name using the form:
+//     `projects/{project_id}/locations/{location_id}/backupCollections/{backup_co
+//     llection_id}/backups/{backup_id}`.
+func (r *ProjectsLocationsBackupCollectionsBackupsService) Delete(name string) *ProjectsLocationsBackupCollectionsBackupsDeleteCall {
+	c := &ProjectsLocationsBackupCollectionsBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": Idempotent request UUID.
+func (c *ProjectsLocationsBackupCollectionsBackupsDeleteCall) RequestId(requestId string) *ProjectsLocationsBackupCollectionsBackupsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupCollectionsBackupsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupCollectionsBackupsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupCollectionsBackupsDeleteCall) Context(ctx context.Context) *ProjectsLocationsBackupCollectionsBackupsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupCollectionsBackupsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupCollectionsBackupsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.backupCollections.backups.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackupCollectionsBackupsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsBackupCollectionsBackupsExportCall struct {
+	s                   *Service
+	name                string
+	exportbackuprequest *ExportBackupRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Export: Exports a specific backup to a customer target Cloud Storage URI.
+//
+//   - name: Redis backup resource name using the form:
+//     `projects/{project_id}/locations/{location_id}/backupCollections/{backup_co
+//     llection_id}/backups/{backup_id}`.
+func (r *ProjectsLocationsBackupCollectionsBackupsService) Export(name string, exportbackuprequest *ExportBackupRequest) *ProjectsLocationsBackupCollectionsBackupsExportCall {
+	c := &ProjectsLocationsBackupCollectionsBackupsExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.exportbackuprequest = exportbackuprequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupCollectionsBackupsExportCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupCollectionsBackupsExportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupCollectionsBackupsExportCall) Context(ctx context.Context) *ProjectsLocationsBackupCollectionsBackupsExportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupCollectionsBackupsExportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupCollectionsBackupsExportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exportbackuprequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:export")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.backupCollections.backups.export" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackupCollectionsBackupsExportCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsBackupCollectionsBackupsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the details of a specific backup.
+//
+//   - name: Redis backup resource name using the form:
+//     `projects/{project_id}/locations/{location_id}/backupCollections/{backup_co
+//     llection_id}/backups/{backup_id}`.
+func (r *ProjectsLocationsBackupCollectionsBackupsService) Get(name string) *ProjectsLocationsBackupCollectionsBackupsGetCall {
+	c := &ProjectsLocationsBackupCollectionsBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupCollectionsBackupsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupCollectionsBackupsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBackupCollectionsBackupsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackupCollectionsBackupsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupCollectionsBackupsGetCall) Context(ctx context.Context) *ProjectsLocationsBackupCollectionsBackupsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupCollectionsBackupsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupCollectionsBackupsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.backupCollections.backups.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Backup.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsBackupCollectionsBackupsGetCall) Do(opts ...googleapi.CallOption) (*Backup, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Backup{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsBackupCollectionsBackupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all backups owned by a backup collection.
+//
+//   - parent: The resource name of the backupCollection using the form:
+//     `projects/{project_id}/locations/{location_id}/backupCollections/{backup_co
+//     llection_id}`.
+func (r *ProjectsLocationsBackupCollectionsBackupsService) List(parent string) *ProjectsLocationsBackupCollectionsBackupsListCall {
+	c := &ProjectsLocationsBackupCollectionsBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If not specified, a default value of 1000 will be used by the
+// service. Regardless of the page_size value, the response may include a
+// partial list and a caller should only rely on response's `next_page_token`
+// to determine if there are more clusters left to be queried.
+func (c *ProjectsLocationsBackupCollectionsBackupsListCall) PageSize(pageSize int64) *ProjectsLocationsBackupCollectionsBackupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The `next_page_token`
+// value returned from a previous [ListBackupCollections] request, if any.
+func (c *ProjectsLocationsBackupCollectionsBackupsListCall) PageToken(pageToken string) *ProjectsLocationsBackupCollectionsBackupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBackupCollectionsBackupsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupCollectionsBackupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBackupCollectionsBackupsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackupCollectionsBackupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBackupCollectionsBackupsListCall) Context(ctx context.Context) *ProjectsLocationsBackupCollectionsBackupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBackupCollectionsBackupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupCollectionsBackupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/backups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.backupCollections.backups.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBackupsResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsBackupCollectionsBackupsListCall) Do(opts ...googleapi.CallOption) (*ListBackupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBackupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsBackupCollectionsBackupsListCall) Pages(ctx context.Context, f func(*ListBackupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsClustersBackupCall struct {
+	s                    *Service
+	name                 string
+	backupclusterrequest *BackupClusterRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Backup: Backup Redis Cluster. If this is the first time a backup is being
+// created, a backup collection will be created at the backend, and this backup
+// belongs to this collection. Both collection and backup will have a resource
+// name. Backup will be executed for each shard. A replica (primary if nonHA)
+// will be selected to perform the execution. Backup call will be rejected if
+// there is an ongoing backup or update operation.
+//
+//   - name: Redis cluster resource name using the form:
+//     `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`
+//     where `location_id` refers to a GCP region.
+func (r *ProjectsLocationsClustersService) Backup(name string, backupclusterrequest *BackupClusterRequest) *ProjectsLocationsClustersBackupCall {
+	c := &ProjectsLocationsClustersBackupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.backupclusterrequest = backupclusterrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersBackupCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersBackupCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersBackupCall) Context(ctx context.Context) *ProjectsLocationsClustersBackupCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersBackupCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersBackupCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backupclusterrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:backup")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.clusters.backup" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersBackupCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsClustersCreateCall struct {
@@ -5785,7 +7030,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

@@ -6500,6 +6500,11 @@ type LoyaltyProgram struct {
 	// associate the assets below (for example, price and points) with a merchant.
 	// The corresponding program must be linked to the merchant account.
 	ProgramLabel string `json:"programLabel,omitempty"`
+	// ShippingLabel: Optional. The shipping label for the loyalty program. You can
+	// use this label to indicate whether this offer has the loyalty shipping
+	// benefit. If not specified, the item is not eligible for loyalty shipping for
+	// the given loyalty tier.
+	ShippingLabel string `json:"shippingLabel,omitempty"`
 	// TierLabel: Required. The label of the tier within the loyalty program. Must
 	// match one of the labels within the program.
 	TierLabel string `json:"tierLabel,omitempty"`

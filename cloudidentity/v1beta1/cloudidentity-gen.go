@@ -118,6 +118,20 @@ const (
 	// and their emails
 	CloudIdentityGroupsReadonlyScope = "https://www.googleapis.com/auth/cloud-identity.groups.readonly"
 
+	// See and edit all of the Inbound SSO profiles and their assignments to any
+	// Org Units or Google Groups in your Cloud Identity Organization.
+	CloudIdentityInboundssoScope = "https://www.googleapis.com/auth/cloud-identity.inboundsso"
+
+	// See all of the Inbound SSO profiles and their assignments to any Org Units
+	// or Google Groups in your Cloud Identity Organization.
+	CloudIdentityInboundssoReadonlyScope = "https://www.googleapis.com/auth/cloud-identity.inboundsso.readonly"
+
+	// See and edit policies in your Cloud Identity Organization.
+	CloudIdentityPoliciesScope = "https://www.googleapis.com/auth/cloud-identity.policies"
+
+	// See policies in your Cloud Identity Organization.
+	CloudIdentityPoliciesReadonlyScope = "https://www.googleapis.com/auth/cloud-identity.policies.readonly"
+
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
@@ -131,6 +145,10 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/cloud-identity.devices.readonly",
 		"https://www.googleapis.com/auth/cloud-identity.groups",
 		"https://www.googleapis.com/auth/cloud-identity.groups.readonly",
+		"https://www.googleapis.com/auth/cloud-identity.inboundsso",
+		"https://www.googleapis.com/auth/cloud-identity.inboundsso.readonly",
+		"https://www.googleapis.com/auth/cloud-identity.policies",
+		"https://www.googleapis.com/auth/cloud-identity.policies.readonly",
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -3594,7 +3612,7 @@ type PolicyQuery struct {
 	Query string `json:"query,omitempty"`
 	// SortOrder: Output only. The decimal sort order of this PolicyQuery. The
 	// value is relative to all other policies with the same setting type within
-	// the whole customer. (there are no duplicates within this set).
+	// the whole customer. (There are no duplicates within this set.)
 	SortOrder float64 `json:"sortOrder,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Group") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

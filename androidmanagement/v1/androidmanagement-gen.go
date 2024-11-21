@@ -889,13 +889,17 @@ type ApplicationPolicy struct {
 	// Possible values:
 	//   "DELEGATED_SCOPE_UNSPECIFIED" - No delegation scope specified.
 	//   "CERT_INSTALL" - Grants access to certificate installation and management.
+	// This scope can be delegated to multiple applications.
 	//   "MANAGED_CONFIGURATIONS" - Grants access to managed configurations
-	// management.
-	//   "BLOCK_UNINSTALL" - Grants access to blocking uninstallation.
+	// management. This scope can be delegated to multiple applications.
+	//   "BLOCK_UNINSTALL" - Grants access to blocking uninstallation. This scope
+	// can be delegated to multiple applications.
 	//   "PERMISSION_GRANT" - Grants access to permission policy and permission
-	// grant state.
-	//   "PACKAGE_ACCESS" - Grants access to package access state.
-	//   "ENABLE_SYSTEM_APP" - Grants access for enabling system apps.
+	// grant state. This scope can be delegated to multiple applications.
+	//   "PACKAGE_ACCESS" - Grants access to package access state. This scope can
+	// be delegated to multiple applications.
+	//   "ENABLE_SYSTEM_APP" - Grants access for enabling system apps. This scope
+	// can be delegated to multiple applications.
 	//   "NETWORK_ACTIVITY_LOGS" - Grants access to network activity logs. Allows
 	// the delegated application to call setNetworkLoggingEnabled
 	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#setNetworkLoggingEnabled%28android.content.ComponentName,%20boolean%29),
@@ -928,7 +932,7 @@ type ApplicationPolicy struct {
 	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#grantKeyPairToApp%28android.content.ComponentName,%20java.lang.String,%20java.lang.String%29)
 	// and revokeKeyPairFromApp
 	// (https://developer.android.com/reference/android/app/admin/DevicePolicyManager#revokeKeyPairFromApp%28android.content.ComponentName,%20java.lang.String,%20java.lang.String%29)
-	// methods. There can be at most one app that has this delegation.
+	// methods. This scope can be delegated to at most one application.
 	// choosePrivateKeyRules must be empty and privateKeySelectionEnabled has no
 	// effect if certificate selection is delegated to an application.
 	DelegatedScopes []string `json:"delegatedScopes,omitempty"`

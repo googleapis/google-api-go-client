@@ -428,8 +428,38 @@ func (s DecodeIntegrityTokenResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeviceAttributes: Contains information about the device for which the
+// integrity token was generated, e.g. Android SDK version.
+type DeviceAttributes struct {
+	// SdkVersion: Android SDK version of the device, as defined in the public
+	// Android documentation:
+	// https://developer.android.com/reference/android/os/Build.VERSION_CODES. It
+	// won't be set if a necessary requirement was missed. For example
+	// DeviceIntegrity did not meet the minimum bar.
+	SdkVersion int64 `json:"sdkVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SdkVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SdkVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeviceAttributes) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceAttributes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeviceIntegrity: Contains the device attestation information.
 type DeviceIntegrity struct {
+	// DeviceAttributes: Attributes of the device where the integrity token was
+	// generated.
+	DeviceAttributes *DeviceAttributes `json:"deviceAttributes,omitempty"`
 	// DeviceRecall: Details about the device recall bits set by the developer.
 	DeviceRecall *DeviceRecall `json:"deviceRecall,omitempty"`
 	// DeviceRecognitionVerdict: Details about the integrity of the device the app
@@ -452,15 +482,15 @@ type DeviceIntegrity struct {
 	// RecentDeviceActivity: Details about the device activity of the device the
 	// app is running on.
 	RecentDeviceActivity *RecentDeviceActivity `json:"recentDeviceActivity,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DeviceRecall") to
+	// ForceSendFields is a list of field names (e.g. "DeviceAttributes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DeviceRecall") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DeviceAttributes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

@@ -1956,7 +1956,7 @@ type OauthClient struct {
 	// ExpireTime: Output only. Time after which the OauthClient will be
 	// permanently purged and cannot be recovered.
 	ExpireTime string `json:"expireTime,omitempty"`
-	// Name: Immutable. The resource name of the OauthClient.
+	// Name: Immutable. Identifier. The resource name of the OauthClient.
 	// Format:`projects/{project}/locations/{location}/oauthClients/{oauth_client}`.
 	Name string `json:"name,omitempty"`
 	// State: Output only. The state of the OauthClient.
@@ -2005,7 +2005,8 @@ type OauthClientCredential struct {
 	// DisplayName: Optional. A user-specified display name of the
 	// OauthClientCredential. Cannot exceed 32 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// Name: Immutable. The resource name of the OauthClientCredential. Format:
+	// Name: Immutable. Identifier. The resource name of the OauthClientCredential.
+	// Format:
 	// `projects/{project}/locations/{location}/oauthClients/{oauth_client}/credenti
 	// als/{credential}`
 	Name string `json:"name,omitempty"`
@@ -2032,13 +2033,13 @@ func (s OauthClientCredential) MarshalJSON() ([]byte, error) {
 
 // Oidc: Represents an OpenId Connect 1.0 identity provider.
 type Oidc struct {
-	// AllowedAudiences: Acceptable values for the `aud` field (audience) in the
-	// OIDC token. Token exchange requests are rejected if the token audience does
-	// not match one of the configured values. Each audience may be at most 256
-	// characters. A maximum of 10 audiences may be configured. If this list is
-	// empty, the OIDC token audience must be equal to the full canonical resource
-	// name of the WorkloadIdentityPoolProvider, with or without the HTTPS prefix.
-	// For example: ```
+	// AllowedAudiences: Optional. Acceptable values for the `aud` field (audience)
+	// in the OIDC token. Token exchange requests are rejected if the token
+	// audience does not match one of the configured values. Each audience may be
+	// at most 256 characters. A maximum of 10 audiences may be configured. If this
+	// list is empty, the OIDC token audience must be equal to the full canonical
+	// resource name of the WorkloadIdentityPoolProvider, with or without the HTTPS
+	// prefix. For example: ```
 	// //iam.googleapis.com/projects//locations//workloadIdentityPools//providers/
 	// https://iam.googleapis.com/projects//locations//workloadIdentityPools//providers/
 	// ```
@@ -2124,8 +2125,8 @@ type OperationMetadata struct {
 	ApiVersion string `json:"apiVersion,omitempty"`
 	// CancelRequested: Output only. Identifies whether the user has requested
 	// cancellation of the operation. Operations that have been cancelled
-	// successfully have Operation.error value with a google.rpc.Status.code of 1,
-	// corresponding to `Code.CANCELLED`.
+	// successfully have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.
 	CancelRequested bool `json:"cancelRequested,omitempty"`
 	// CreateTime: Output only. The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3466,13 +3467,15 @@ func (s WorkforcePoolProviderKey) MarshalJSON() ([]byte, error) {
 // can define IAM policies to grant these identities access to Google Cloud
 // resources.
 type WorkloadIdentityPool struct {
-	// Description: A description of the pool. Cannot exceed 256 characters.
+	// Description: Optional. A description of the pool. Cannot exceed 256
+	// characters.
 	Description string `json:"description,omitempty"`
-	// Disabled: Whether the pool is disabled. You cannot use a disabled pool to
-	// exchange tokens, or use existing tokens to access resources. If the pool is
-	// re-enabled, existing tokens grant access again.
+	// Disabled: Optional. Whether the pool is disabled. You cannot use a disabled
+	// pool to exchange tokens, or use existing tokens to access resources. If the
+	// pool is re-enabled, existing tokens grant access again.
 	Disabled bool `json:"disabled,omitempty"`
-	// DisplayName: A display name for the pool. Cannot exceed 32 characters.
+	// DisplayName: Optional. A display name for the pool. Cannot exceed 32
+	// characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// ExpireTime: Output only. Time after which the workload identity pool will be
 	// permanently purged and cannot be recovered.
@@ -3520,7 +3523,7 @@ type WorkloadIdentityPoolOperationMetadata struct {
 // WorkloadIdentityPoolProvider: A configuration for an external identity
 // provider.
 type WorkloadIdentityPoolProvider struct {
-	// AttributeCondition: A Common Expression Language
+	// AttributeCondition: Optional. A Common Expression Language
 	// (https://opensource.google/projects/cel) expression, in plain text, to
 	// restrict what otherwise valid authentication credentials issued by the
 	// provider should not be accepted. The expression must output a boolean
@@ -3535,22 +3538,22 @@ type WorkloadIdentityPoolProvider struct {
 	// credentials with a mapped `google.groups` value of `admins`: ``` "'admins'
 	// in google.groups" ```
 	AttributeCondition string `json:"attributeCondition,omitempty"`
-	// AttributeMapping:  Maps attributes from authentication credentials issued by
-	// an external identity provider to Google Cloud attributes, such as `subject`
-	// and `segment`. Each key must be a string specifying the Google Cloud IAM
-	// attribute to map to. The following keys are supported: * `google.subject`:
-	// The principal IAM is authenticating. You can reference this value in IAM
-	// bindings. This is also the subject that appears in Cloud Logging logs.
-	// Cannot exceed 127 bytes. * `google.groups`: Groups the external identity
-	// belongs to. You can grant groups access to resources using an IAM
-	// `principalSet` binding; access applies to all members of the group. You can
-	// also provide custom attributes by specifying `attribute.{custom_attribute}`,
-	// where `{custom_attribute}` is the name of the custom attribute to be mapped.
-	// You can define a maximum of 50 custom attributes. The maximum length of a
-	// mapped attribute key is 100 characters, and the key may only contain the
-	// characters [a-z0-9_]. You can reference these attributes in IAM policies to
-	// define fine-grained access for a workload to Google Cloud resources. For
-	// example: * `google.subject`:
+	// AttributeMapping: Optional. Maps attributes from authentication credentials
+	// issued by an external identity provider to Google Cloud attributes, such as
+	// `subject` and `segment`. Each key must be a string specifying the Google
+	// Cloud IAM attribute to map to. The following keys are supported: *
+	// `google.subject`: The principal IAM is authenticating. You can reference
+	// this value in IAM bindings. This is also the subject that appears in Cloud
+	// Logging logs. Cannot exceed 127 bytes. * `google.groups`: Groups the
+	// external identity belongs to. You can grant groups access to resources using
+	// an IAM `principalSet` binding; access applies to all members of the group.
+	// You can also provide custom attributes by specifying
+	// `attribute.{custom_attribute}`, where `{custom_attribute}` is the name of
+	// the custom attribute to be mapped. You can define a maximum of 50 custom
+	// attributes. The maximum length of a mapped attribute key is 100 characters,
+	// and the key may only contain the characters [a-z0-9_]. You can reference
+	// these attributes in IAM policies to define fine-grained access for a
+	// workload to Google Cloud resources. For example: * `google.subject`:
 	// `principal://iam.googleapis.com/projects/{project}/locations/{location}/workl
 	// oadIdentityPools/{pool}/subject/{value}` * `google.groups`:
 	// `principalSet://iam.googleapis.com/projects/{project}/locations/{location}/wo
@@ -3578,12 +3581,15 @@ type WorkloadIdentityPoolProvider struct {
 	AttributeMapping map[string]string `json:"attributeMapping,omitempty"`
 	// Aws: An Amazon Web Services identity provider.
 	Aws *Aws `json:"aws,omitempty"`
-	// Description: A description for the provider. Cannot exceed 256 characters.
+	// Description: Optional. A description for the provider. Cannot exceed 256
+	// characters.
 	Description string `json:"description,omitempty"`
-	// Disabled: Whether the provider is disabled. You cannot use a disabled
-	// provider to exchange tokens. However, existing tokens still grant access.
+	// Disabled: Optional. Whether the provider is disabled. You cannot use a
+	// disabled provider to exchange tokens. However, existing tokens still grant
+	// access.
 	Disabled bool `json:"disabled,omitempty"`
-	// DisplayName: A display name for the provider. Cannot exceed 32 characters.
+	// DisplayName: Optional. A display name for the provider. Cannot exceed 32
+	// characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// ExpireTime: Output only. Time after which the workload identity pool
 	// provider will be permanently purged and cannot be recovered.
@@ -8239,7 +8245,7 @@ type ProjectsLocationsOauthClientsPatchCall struct {
 
 // Patch: Updates an existing OauthClient.
 //
-//   - name: Immutable. The resource name of the OauthClient.
+//   - name: Immutable. Identifier. The resource name of the OauthClient.
 //     Format:`projects/{project}/locations/{location}/oauthClients/{oauth_client}
 //     `.
 func (r *ProjectsLocationsOauthClientsService) Patch(name string, oauthclient *OauthClient) *ProjectsLocationsOauthClientsPatchCall {
@@ -8881,7 +8887,8 @@ type ProjectsLocationsOauthClientsCredentialsPatchCall struct {
 
 // Patch: Updates an existing OauthClientCredential.
 //
-//   - name: Immutable. The resource name of the OauthClientCredential. Format:
+//   - name: Immutable. Identifier. The resource name of the
+//     OauthClientCredential. Format:
 //     `projects/{project}/locations/{location}/oauthClients/{oauth_client}/creden
 //     tials/{credential}`.
 func (r *ProjectsLocationsOauthClientsCredentialsService) Patch(name string, oauthclientcredential *OauthClientCredential) *ProjectsLocationsOauthClientsCredentialsPatchCall {

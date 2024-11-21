@@ -1,5 +1,14 @@
 # Changes
 
+## [0.208.0](https://github.com/googleapis/google-api-go-client/compare/v0.207.0...v0.208.0) (2024-11-20)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2881](https://github.com/googleapis/google-api-go-client/issues/2881)) ([44435a9](https://github.com/googleapis/google-api-go-client/commit/44435a9a91048abc5776051221ce9e64b75f5734))
+* **gensupport:** Per-chunk transfer timeout configs ([09fa125](https://github.com/googleapis/google-api-go-client/commit/09fa125adbe59d02e1e67470bfeebcb6b9c1596e))
+* **gensupport:** Per-chunk transfer timeout configs ([#2865](https://github.com/googleapis/google-api-go-client/issues/2865)) ([09fa125](https://github.com/googleapis/google-api-go-client/commit/09fa125adbe59d02e1e67470bfeebcb6b9c1596e))
+
 ## [0.207.0](https://github.com/googleapis/google-api-go-client/compare/v0.206.0...v0.207.0) (2024-11-19)
 
 

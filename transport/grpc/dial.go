@@ -379,11 +379,15 @@ type grpcTokenSource struct {
 }
 
 // GetRequestMetadata gets the request metadata as a map from a grpcTokenSource.
-func (ts grpcTokenSource) GetRequestMetadata(ctx context.Context, uri ...string) (
-	map[string]string, error) {
-	metadata, err := ts.TokenSource.GetRequestMetadata(ctx, uri...)
+func (ts grpcTokenSource) GetRequestMetadata(ctx context.Context, uri ...string) (map[string]string, error) {
+	m, err := ts.TokenSource.GetRequestMetadata(ctx, uri...)
 	if err != nil {
 		return nil, err
+	}
+	// Copy map to avoid concurrent map writes error (#11161).
+	metadata := make(map[string]string)
+	for k, v := range m {
+		metadata[k] = v
 	}
 
 	// Attach system parameter
@@ -405,8 +409,7 @@ type grpcAPIKey struct {
 }
 
 // GetRequestMetadata gets the request metadata as a map from a grpcAPIKey.
-func (ts grpcAPIKey) GetRequestMetadata(ctx context.Context, uri ...string) (
-	map[string]string, error) {
+func (ts grpcAPIKey) GetRequestMetadata(ctx context.Context, uri ...string) (map[string]string, error) {
 	metadata := map[string]string{
 		"X-goog-api-key": ts.apiKey,
 	}

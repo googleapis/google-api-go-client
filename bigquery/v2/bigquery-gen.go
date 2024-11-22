@@ -5069,7 +5069,7 @@ type JobStatistics struct {
 	// as ENTERPRISE.
 	//   "STANDARD" - Standard edition.
 	//   "ENTERPRISE" - Enterprise edition.
-	//   "ENTERPRISE_PLUS" - Enterprise plus edition.
+	//   "ENTERPRISE_PLUS" - Enterprise Plus edition.
 	Edition string `json:"edition,omitempty"`
 	// EndTime: Output only. End time of this job, in milliseconds since the epoch.
 	// This field will be present whenever a job is in the DONE state.
@@ -8535,6 +8535,14 @@ type Table struct {
 	// Location: Output only. The geographic location where the table resides. This
 	// value is inherited from the dataset.
 	Location string `json:"location,omitempty"`
+	// ManagedTableType: Optional. If set, overrides the default managed table type
+	// configured in the dataset.
+	//
+	// Possible values:
+	//   "MANAGED_TABLE_TYPE_UNSPECIFIED" - No managed table type specified.
+	//   "NATIVE" - The managed table is a native BigQuery table.
+	//   "ICEBERG" - The managed table is a BigQuery table for Apache Iceberg.
+	ManagedTableType string `json:"managedTableType,omitempty"`
 	// MaterializedView: Optional. The materialized view definition.
 	MaterializedView *MaterializedViewDefinition `json:"materializedView,omitempty"`
 	// MaterializedViewStatus: Output only. The materialized view status.

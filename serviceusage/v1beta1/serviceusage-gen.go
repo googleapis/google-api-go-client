@@ -1812,20 +1812,25 @@ func (s EnumValue) MarshalJSON() ([]byte, error) {
 // library generation. These fields will be deprecated once the feature
 // graduates and is enabled by default.
 type ExperimentalFeatures struct {
+	// ProtobufPythonicTypesEnabled: Enables generation of protobuf code using new
+	// types that are more Pythonic which are included in `protobuf>=5.29.x`. This
+	// feature will be enabled by default 1 month after launching the feature in
+	// preview packages.
+	ProtobufPythonicTypesEnabled bool `json:"protobufPythonicTypesEnabled,omitempty"`
 	// RestAsyncIoEnabled: Enables generation of asynchronous REST clients if
 	// `rest` transport is enabled. By default, asynchronous REST clients will not
 	// be generated. This feature will be enabled by default 1 month after
 	// launching the feature in preview packages.
 	RestAsyncIoEnabled bool `json:"restAsyncIoEnabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RestAsyncIoEnabled") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "ProtobufPythonicTypesEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RestAsyncIoEnabled") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ProtobufPythonicTypesEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1986,6 +1991,11 @@ func (s GetServiceIdentityResponse) MarshalJSON() ([]byte, error) {
 type GoSettings struct {
 	// Common: Some settings.
 	Common *CommonLanguageSettings `json:"common,omitempty"`
+	// RenamedServices: Map of service names to renamed services. Keys are the
+	// package relative service names and values are the name to be used for the
+	// service client and call options. publishing: go_settings: renamed_services:
+	// Publisher: TopicAdmin
+	RenamedServices map[string]string `json:"renamedServices,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Common") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -4539,10 +4549,10 @@ type QuotaLimit struct {
 	// as well as '-'. The maximum length of the limit name is 64 characters.
 	Name string `json:"name,omitempty"`
 	// Unit: Specify the unit of the quota limit. It uses the same syntax as
-	// Metric.unit. The supported unit kinds are determined by the quota backend
-	// system. Here are some examples: * "1/min/{project}" for quota per minute per
-	// project. Note: the order of unit components is insignificant. The "1" at the
-	// beginning is required to follow the metric unit syntax.
+	// MetricDescriptor.unit. The supported unit kinds are determined by the quota
+	// backend system. Here are some examples: * "1/min/{project}" for quota per
+	// minute per project. Note: the order of unit components is insignificant. The
+	// "1" at the beginning is required to follow the metric unit syntax.
 	Unit string `json:"unit,omitempty"`
 	// Values: Tiered limit values. You must specify this as a key:value pair, with
 	// an integer value that is the maximum number of requests allowed for the

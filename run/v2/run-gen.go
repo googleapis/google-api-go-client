@@ -313,6 +313,10 @@ type GoogleCloudRunV2BuildpacksBuild struct {
 	// FunctionTarget: Optional. Name of the function target if the source is a
 	// function source. Required for function builds.
 	FunctionTarget string `json:"functionTarget,omitempty"`
+	// ProjectDescriptor: Optional. project_descriptor stores the path to the
+	// project descriptor file. When empty, it means that there is no project
+	// descriptor file in the source.
+	ProjectDescriptor string `json:"projectDescriptor,omitempty"`
 	// Runtime: The runtime name, e.g. 'go113'. Leave blank for generic builds.
 	Runtime string `json:"runtime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BaseImage") to
@@ -2016,8 +2020,9 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	// v2 RevisionTemplate.
 	Labels map[string]string `json:"labels,omitempty"`
 	// MaxInstanceRequestConcurrency: Optional. Sets the maximum number of requests
-	// that each serving instance can receive. If not specified or 0, defaults to
-	// 80 when requested `CPU >= 1` and defaults to 1 when requested `CPU < 1`.
+	// that each serving instance can receive. If not specified or 0, concurrency
+	// defaults to 80 when requested `CPU >= 1` and defaults to 1 when requested
+	// `CPU < 1`.
 	MaxInstanceRequestConcurrency int64 `json:"maxInstanceRequestConcurrency,omitempty"`
 	// NodeSelector: Optional. The node selector for the revision template.
 	NodeSelector *GoogleCloudRunV2NodeSelector `json:"nodeSelector,omitempty"`
@@ -2131,13 +2136,12 @@ type GoogleCloudRunV2SecretVolumeSource struct {
 	// Internally, a umask of 0222 will be applied to any non-zero value. * This is
 	// an integer representation of the mode bits. So, the octal integer value
 	// should look exactly as the chmod numeric notation with a leading zero. Some
-	// examples: for chmod 777 (a=rwx), set to 0777 (octal) or 511 (base-10). For
-	// chmod 640 (u=rw,g=r), set to 0640 (octal) or 416 (base-10). For chmod 755
-	// (u=rwx,g=rx,o=rx), set to 0755 (octal) or 493 (base-10). * This might be in
-	// conflict with other options that affect the file mode, like fsGroup, and the
-	// result can be other mode bits set. This might be in conflict with other
-	// options that affect the file mode, like fsGroup, and as a result, other mode
-	// bits could be set.
+	// examples: for chmod 640 (u=rw,g=r), set to 0640 (octal) or 416 (base-10).
+	// For chmod 755 (u=rwx,g=rx,o=rx), set to 0755 (octal) or 493 (base-10). *
+	// This might be in conflict with other options that affect the file mode, like
+	// fsGroup, and the result can be other mode bits set. This might be in
+	// conflict with other options that affect the file mode, like fsGroup, and as
+	// a result, other mode bits could be set.
 	DefaultMode int64 `json:"defaultMode,omitempty"`
 	// Items: If unspecified, the volume will expose a file whose name is the
 	// secret, relative to VolumeMount.mount_path. If specified, the key will be
@@ -2874,11 +2878,10 @@ type GoogleCloudRunV2VersionToPath struct {
 	// used. Notes * Internally, a umask of 0222 will be applied to any non-zero
 	// value. * This is an integer representation of the mode bits. So, the octal
 	// integer value should look exactly as the chmod numeric notation with a
-	// leading zero. Some examples: for chmod 777 (a=rwx), set to 0777 (octal) or
-	// 511 (base-10). For chmod 640 (u=rw,g=r), set to 0640 (octal) or 416
-	// (base-10). For chmod 755 (u=rwx,g=rx,o=rx), set to 0755 (octal) or 493
-	// (base-10). * This might be in conflict with other options that affect the
-	// file mode, like fsGroup, and the result can be other mode bits set.
+	// leading zero. Some examples: for chmod 640 (u=rw,g=r), set to 0640 (octal)
+	// or 416 (base-10). For chmod 755 (u=rwx,g=rx,o=rx), set to 0755 (octal) or
+	// 493 (base-10). * This might be in conflict with other options that affect
+	// the file mode, like fsGroup, and the result can be other mode bits set.
 	Mode int64 `json:"mode,omitempty"`
 	// Path: Required. The relative path of the secret in the container.
 	Path string `json:"path,omitempty"`

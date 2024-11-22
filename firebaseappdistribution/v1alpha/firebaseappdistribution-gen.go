@@ -1451,7 +1451,7 @@ func (s GoogleFirebaseAppdistroV1alphaTerminalAction) MarshalJSON() ([]byte, err
 type GoogleFirebaseAppdistroV1alphaTestCase struct {
 	// AiInstructions: Optional. Instructions for AI driven test.
 	AiInstructions *GoogleFirebaseAppdistroV1alphaAiInstructions `json:"aiInstructions,omitempty"`
-	// DisplayName: Optional. Display name of the test case.
+	// DisplayName: Required. Display name of the test case.
 	DisplayName string `json:"displayName,omitempty"`
 	// Name: Identifier. The name of the test case resource. Format:
 	// `projects/{project_number}/apps/{app_id}/testCases/{test_case_id}`

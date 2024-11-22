@@ -671,6 +671,12 @@ type Asset struct {
 	Attributes map[string]string `json:"attributes,omitempty"`
 	// CreateTime: Output only. The timestamp when the asset was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DatabaseDeploymentDetails: Output only. Asset information specific for
+	// database deployments.
+	DatabaseDeploymentDetails *DatabaseDeploymentDetails `json:"databaseDeploymentDetails,omitempty"`
+	// DatabaseDetails: Output only. Asset information specific for logical
+	// databases.
+	DatabaseDetails *DatabaseDetails `json:"databaseDetails,omitempty"`
 	// InsightList: Output only. The list of insights associated with the asset.
 	InsightList *InsightList `json:"insightList,omitempty"`
 	// Labels: Labels as key value pairs.
@@ -684,6 +690,8 @@ type Asset struct {
 	PerformanceData *AssetPerformanceData `json:"performanceData,omitempty"`
 	// Sources: Output only. The list of sources contributing to the asset.
 	Sources []string `json:"sources,omitempty"`
+	// Title: Output only. Server generated human readable name of the asset.
+	Title string `json:"title,omitempty"`
 	// UpdateTime: Output only. The timestamp when the asset was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -723,6 +731,11 @@ type AssetFrame struct {
 	//   "SOURCE_TYPE_CUSTOM" - Third-party owned sources.
 	//   "SOURCE_TYPE_DISCOVERY_CLIENT" - Discovery clients
 	CollectionType string `json:"collectionType,omitempty"`
+	// DatabaseDeploymentDetails: Asset information specific for database
+	// deployments.
+	DatabaseDeploymentDetails *DatabaseDeploymentDetails `json:"databaseDeploymentDetails,omitempty"`
+	// DatabaseDetails: Asset information specific for logical databases.
+	DatabaseDetails *DatabaseDetails `json:"databaseDetails,omitempty"`
 	// Labels: Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 	// MachineDetails: Asset information specific for virtual machines.
@@ -1205,8 +1218,12 @@ func (s DailyResourceUsageAggregationCPU) MarshalJSON() ([]byte, error) {
 
 // DailyResourceUsageAggregationDisk: Statistical aggregation of disk usage.
 type DailyResourceUsageAggregationDisk struct {
-	// Iops: Disk I/O operations per second.
+	// Iops: Optional. Disk I/O operations per second.
 	Iops *DailyResourceUsageAggregationStats `json:"iops,omitempty"`
+	// ReadIops: Optional. Disk read I/O operations per second.
+	ReadIops *DailyResourceUsageAggregationStats `json:"readIops,omitempty"`
+	// WriteIops: Optional. Disk write I/O operations per second.
+	WriteIops *DailyResourceUsageAggregationStats `json:"writeIops,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Iops") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1320,6 +1337,285 @@ func (s *DailyResourceUsageAggregationStats) UnmarshalJSON(data []byte) error {
 	s.NinteyFifthPercentile = float64(s1.NinteyFifthPercentile)
 	s.Peak = float64(s1.Peak)
 	return nil
+}
+
+// DatabaseDeploymentDetails: The details of a database deployment asset.
+type DatabaseDeploymentDetails struct {
+	// AggregatedStats: Output only. Aggregated stats for the database deployment.
+	AggregatedStats *DatabaseDeploymentDetailsAggregatedStats `json:"aggregatedStats,omitempty"`
+	// Edition: Optional. The database deployment edition.
+	Edition string `json:"edition,omitempty"`
+	// GeneratedId: Optional. The database deployment generated ID.
+	GeneratedId string `json:"generatedId,omitempty"`
+	// ManualUniqueId: Optional. A manual unique ID set by the user.
+	ManualUniqueId string `json:"manualUniqueId,omitempty"`
+	// Mysql: Optional. Details of a MYSQL database deployment.
+	Mysql *MysqlDatabaseDeployment `json:"mysql,omitempty"`
+	// Postgresql: Optional. Details of a PostgreSQL database deployment.
+	Postgresql *PostgreSqlDatabaseDeployment `json:"postgresql,omitempty"`
+	// SqlServer: Optional. Details of a Microsoft SQL Server database deployment.
+	SqlServer *SqlServerDatabaseDeployment `json:"sqlServer,omitempty"`
+	// Topology: Optional. Details of the database deployment topology.
+	Topology *DatabaseDeploymentTopology `json:"topology,omitempty"`
+	// Version: Optional. The database deployment version.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AggregatedStats") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AggregatedStats") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseDeploymentDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseDeploymentDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseDeploymentDetailsAggregatedStats: Aggregated stats for the database
+// deployment.
+type DatabaseDeploymentDetailsAggregatedStats struct {
+	// DatabaseCount: Output only. The number of databases in the deployment.
+	DatabaseCount int64 `json:"databaseCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DatabaseCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatabaseCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseDeploymentDetailsAggregatedStats) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseDeploymentDetailsAggregatedStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseDeploymentTopology: Details of database deployment's topology.
+type DatabaseDeploymentTopology struct {
+	// CoreCount: Optional. Number of total logical cores.
+	CoreCount int64 `json:"coreCount,omitempty"`
+	// CoreLimit: Optional. Number of total logical cores limited by db deployment.
+	CoreLimit int64 `json:"coreLimit,omitempty"`
+	// DiskAllocatedBytes: Optional. Disk allocated in bytes.
+	DiskAllocatedBytes int64 `json:"diskAllocatedBytes,omitempty,string"`
+	// DiskUsedBytes: Optional. Disk used in bytes.
+	DiskUsedBytes int64 `json:"diskUsedBytes,omitempty,string"`
+	// Instances: Optional. List of database instances.
+	Instances []*DatabaseInstance `json:"instances,omitempty"`
+	// MemoryBytes: Optional. Total memory in bytes.
+	MemoryBytes int64 `json:"memoryBytes,omitempty,string"`
+	// MemoryLimitBytes: Optional. Total memory in bytes limited by db deployment.
+	MemoryLimitBytes int64 `json:"memoryLimitBytes,omitempty,string"`
+	// PhysicalCoreCount: Optional. Number of total physical cores.
+	PhysicalCoreCount int64 `json:"physicalCoreCount,omitempty"`
+	// PhysicalCoreLimit: Optional. Number of total physical cores limited by db
+	// deployment.
+	PhysicalCoreLimit int64 `json:"physicalCoreLimit,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CoreCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CoreCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseDeploymentTopology) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseDeploymentTopology
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseDetails: Details of a logical database.
+type DatabaseDetails struct {
+	// AllocatedStorageBytes: Optional. The allocated storage for the database in
+	// bytes.
+	AllocatedStorageBytes int64 `json:"allocatedStorageBytes,omitempty,string"`
+	// DatabaseName: Required. The name of the database.
+	DatabaseName string `json:"databaseName,omitempty"`
+	// ParentDatabaseDeployment: Required. The parent database deployment that
+	// contains the logical database.
+	ParentDatabaseDeployment *DatabaseDetailsParentDatabaseDeployment `json:"parentDatabaseDeployment,omitempty"`
+	// Schemas: Optional. The database schemas.
+	Schemas []*DatabaseSchema `json:"schemas,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllocatedStorageBytes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllocatedStorageBytes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseDetailsParentDatabaseDeployment: The identifiers of the parent
+// database deployment.
+type DatabaseDetailsParentDatabaseDeployment struct {
+	// GeneratedId: Optional. The parent database deployment generated ID.
+	GeneratedId string `json:"generatedId,omitempty"`
+	// ManualUniqueId: Optional. The parent database deployment optional manual
+	// unique ID set by the user.
+	ManualUniqueId string `json:"manualUniqueId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GeneratedId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GeneratedId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseDetailsParentDatabaseDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseDetailsParentDatabaseDeployment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseInstance: Details of a database instance.
+type DatabaseInstance struct {
+	// InstanceName: Optional. The instance's name.
+	InstanceName string `json:"instanceName,omitempty"`
+	// Network: Optional. Networking details.
+	Network *DatabaseInstanceNetwork `json:"network,omitempty"`
+	// Role: Optional. The instance role in the database engine.
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - Unspecified.
+	//   "PRIMARY" - Primary.
+	//   "SECONDARY" - Secondary.
+	//   "ARBITER" - Arbiter.
+	Role string `json:"role,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstanceName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstanceName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseInstance) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseInstance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseInstanceNetwork: Network details of a database instance.
+type DatabaseInstanceNetwork struct {
+	// HostNames: Optional. The instance's host names.
+	HostNames []string `json:"hostNames,omitempty"`
+	// IpAddresses: Optional. The instance's IP addresses.
+	IpAddresses []string `json:"ipAddresses,omitempty"`
+	// PrimaryMacAddress: Optional. The instance's primary MAC address.
+	PrimaryMacAddress string `json:"primaryMacAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HostNames") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HostNames") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseInstanceNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseInstanceNetwork
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseObjects: Details of a group of database objects.
+type DatabaseObjects struct {
+	// Category: Optional. The category of the objects.
+	//
+	// Possible values:
+	//   "CATEGORY_UNSPECIFIED" - Unspecified type.
+	//   "TABLE" - Table.
+	//   "INDEX" - Index.
+	//   "CONSTRAINTS" - Constraints.
+	//   "VIEWS" - Views.
+	//   "SOURCE_CODE" - Source code, e.g. procedures.
+	//   "OTHER" - Uncategorized objects.
+	Category string `json:"category,omitempty"`
+	// Count: Optional. The number of objects.
+	Count int64 `json:"count,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseObjects) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseObjects
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseSchema: Details of a database schema.
+type DatabaseSchema struct {
+	// Mysql: Optional. Details of a Mysql schema.
+	Mysql *MySqlSchemaDetails `json:"mysql,omitempty"`
+	// Objects: Optional. List of details of objects by category.
+	Objects []*DatabaseObjects `json:"objects,omitempty"`
+	// Postgresql: Optional. Details of a PostgreSql schema.
+	Postgresql *PostgreSqlSchemaDetails `json:"postgresql,omitempty"`
+	// SchemaName: Required. The name of the schema.
+	SchemaName string `json:"schemaName,omitempty"`
+	// SqlServer: Optional. Details of a SqlServer schema.
+	SqlServer *SqlServerSchemaDetails `json:"sqlServer,omitempty"`
+	// TablesSizeBytes: Optional. The total size of tables in bytes.
+	TablesSizeBytes int64 `json:"tablesSizeBytes,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Mysql") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Mysql") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseSchema
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a birthday. The
@@ -1560,8 +1856,16 @@ func (s DiskPartitionList) MarshalJSON() ([]byte, error) {
 
 // DiskUsageSample: Disk usage sample. Values are across all disks.
 type DiskUsageSample struct {
-	// AverageIops: Average IOPS sampled over a short window. Must be non-negative.
+	// AverageIops: Optional. Average IOPS sampled over a short window. Must be
+	// non-negative. Must be equal to the sum of read and write if one of them is
+	// positive. if both read and write are zero they are ignored.
 	AverageIops float64 `json:"averageIops,omitempty"`
+	// AverageReadIops: Optional. Average read IOPS sampled over a short window.
+	// Must be non-negative.
+	AverageReadIops float64 `json:"averageReadIops,omitempty"`
+	// AverageWriteIops: Optional. Average write IOPS sampled over a short window.
+	// Must be non-negative.
+	AverageWriteIops float64 `json:"averageWriteIops,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AverageIops") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1583,7 +1887,9 @@ func (s DiskUsageSample) MarshalJSON() ([]byte, error) {
 func (s *DiskUsageSample) UnmarshalJSON(data []byte) error {
 	type NoMethod DiskUsageSample
 	var s1 struct {
-		AverageIops gensupport.JSONFloat64 `json:"averageIops"`
+		AverageIops      gensupport.JSONFloat64 `json:"averageIops"`
+		AverageReadIops  gensupport.JSONFloat64 `json:"averageReadIops"`
+		AverageWriteIops gensupport.JSONFloat64 `json:"averageWriteIops"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -1591,6 +1897,8 @@ func (s *DiskUsageSample) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.AverageIops = float64(s1.AverageIops)
+	s.AverageReadIops = float64(s1.AverageReadIops)
+	s.AverageWriteIops = float64(s1.AverageWriteIops)
 	return nil
 }
 
@@ -2154,6 +2462,8 @@ type ImportDataFile struct {
 	//   "IMPORT_JOB_FORMAT_STRATOZONE_CSV" - CSV format created manually and
 	// following the StratoZone format. For more information, see Manually create
 	// and upload data tables.
+	//   "IMPORT_JOB_FORMAT_DATABASE_ZIP" - ZIP file with nested CSV files
+	// generated by a database collector.
 	Format string `json:"format,omitempty"`
 	// Name: Output only. The name of the file.
 	Name string `json:"name,omitempty"`
@@ -2280,6 +2590,10 @@ func (s ImportJob) MarshalJSON() ([]byte, error) {
 
 // ImportRowError: A resource that reports the import job errors at row level.
 type ImportRowError struct {
+	// ArchiveError: Error details for an archive file.
+	ArchiveError *ImportRowErrorArchiveErrorDetails `json:"archiveError,omitempty"`
+	// AssetTitle: Output only. The asset title.
+	AssetTitle string `json:"assetTitle,omitempty"`
 	// CsvError: Error details for a CSV file.
 	CsvError *ImportRowErrorCsvErrorDetails `json:"csvError,omitempty"`
 	// Errors: The list of errors detected in the row.
@@ -2292,6 +2606,31 @@ type ImportRowError struct {
 	VmUuid string `json:"vmUuid,omitempty"`
 	// XlsxError: Error details for an XLSX file.
 	XlsxError *ImportRowErrorXlsxErrorDetails `json:"xlsxError,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArchiveError") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArchiveError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ImportRowError) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportRowError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ImportRowErrorArchiveErrorDetails: Error details for an archive file.
+type ImportRowErrorArchiveErrorDetails struct {
+	// CsvError: Error details for a CSV file.
+	CsvError *ImportRowErrorCsvErrorDetails `json:"csvError,omitempty"`
+	// FilePath: Output only. The file path inside the archive where the error was
+	// detected.
+	FilePath string `json:"filePath,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CsvError") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2305,8 +2644,8 @@ type ImportRowError struct {
 	NullFields []string `json:"-"`
 }
 
-func (s ImportRowError) MarshalJSON() ([]byte, error) {
-	type NoMethod ImportRowError
+func (s ImportRowErrorArchiveErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportRowErrorArchiveErrorDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2358,7 +2697,7 @@ func (s ImportRowErrorXlsxErrorDetails) MarshalJSON() ([]byte, error) {
 
 // Insight: An insight about an asset.
 type Insight struct {
-	// GenericInsight: Output only. A generic insight about an asset
+	// GenericInsight: Output only. A generic insight about an asset.
 	GenericInsight *GenericInsight `json:"genericInsight,omitempty"`
 	// MigrationInsight: Output only. An insight about potential migrations for an
 	// asset.
@@ -3103,6 +3442,174 @@ func (s Money) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MySqlPlugin: MySql plugin.
+type MySqlPlugin struct {
+	// Enabled: Required. The plugin is active.
+	Enabled bool `json:"enabled,omitempty"`
+	// Plugin: Required. The plugin name.
+	Plugin string `json:"plugin,omitempty"`
+	// Version: Required. The plugin version.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MySqlPlugin) MarshalJSON() ([]byte, error) {
+	type NoMethod MySqlPlugin
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MySqlProperty: MySql property.
+type MySqlProperty struct {
+	// Enabled: Required. The property is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// NumericValue: Required. The property numeric value.
+	NumericValue int64 `json:"numericValue,omitempty,string"`
+	// Property: Required. The property name.
+	Property string `json:"property,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MySqlProperty) MarshalJSON() ([]byte, error) {
+	type NoMethod MySqlProperty
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MySqlSchemaDetails: Specific details for a Mysql database.
+type MySqlSchemaDetails struct {
+	// StorageEngines: Optional. Mysql storage engine tables.
+	StorageEngines []*MySqlStorageEngineDetails `json:"storageEngines,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StorageEngines") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StorageEngines") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MySqlSchemaDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod MySqlSchemaDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MySqlStorageEngineDetails: Mysql storage engine tables.
+type MySqlStorageEngineDetails struct {
+	// EncryptedTableCount: Optional. The number of encrypted tables.
+	EncryptedTableCount int64 `json:"encryptedTableCount,omitempty"`
+	// Engine: Required. The storage engine.
+	//
+	// Possible values:
+	//   "ENGINE_UNSPECIFIED" - Unspecified storage engine.
+	//   "INNODB" - InnoDB.
+	//   "MYISAM" - MyISAM.
+	//   "MEMORY" - Memory.
+	//   "CSV" - CSV.
+	//   "ARCHIVE" - Archive.
+	//   "BLACKHOLE" - Blackhole.
+	//   "NDB" - NDB.
+	//   "MERGE" - Merge.
+	//   "FEDERATED" - Federated.
+	//   "EXAMPLE" - Example.
+	//   "OTHER" - Other.
+	Engine string `json:"engine,omitempty"`
+	// TableCount: Optional. The number of tables.
+	TableCount int64 `json:"tableCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncryptedTableCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptedTableCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MySqlStorageEngineDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod MySqlStorageEngineDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MySqlVariable: MySql variable.
+type MySqlVariable struct {
+	// Category: Required. The variable category.
+	Category string `json:"category,omitempty"`
+	// Value: Required. The variable value.
+	Value string `json:"value,omitempty"`
+	// Variable: Required. The variable name.
+	Variable string `json:"variable,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MySqlVariable) MarshalJSON() ([]byte, error) {
+	type NoMethod MySqlVariable
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MysqlDatabaseDeployment: Specific details for a Mysql database deployment.
+type MysqlDatabaseDeployment struct {
+	// Plugins: Optional. List of MySql plugins.
+	Plugins []*MySqlPlugin `json:"plugins,omitempty"`
+	// Properties: Optional. List of MySql properties.
+	Properties []*MySqlProperty `json:"properties,omitempty"`
+	// ResourceGroupsCount: Optional. Number of resource groups.
+	ResourceGroupsCount int64 `json:"resourceGroupsCount,omitempty"`
+	// Variables: Optional. List of MySql variables.
+	Variables []*MySqlVariable `json:"variables,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Plugins") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Plugins") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MysqlDatabaseDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod MysqlDatabaseDeployment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // NetworkAdapterDetails: Details of network adapter.
 type NetworkAdapterDetails struct {
 	// AdapterType: Network adapter type (e.g. VMXNET3).
@@ -3589,6 +4096,154 @@ type PlatformDetails struct {
 func (s PlatformDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod PlatformDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PostgreSqlDatabaseDeployment: Specific details for a PostgreSQL database
+// deployment.
+type PostgreSqlDatabaseDeployment struct {
+	// Properties: Optional. List of PostgreSql properties.
+	Properties []*PostgreSqlProperty `json:"properties,omitempty"`
+	// Settings: Optional. List of PostgreSql settings.
+	Settings []*PostgreSqlSetting `json:"settings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Properties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Properties") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PostgreSqlDatabaseDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgreSqlDatabaseDeployment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PostgreSqlExtension: PostgreSql extension.
+type PostgreSqlExtension struct {
+	// Extension: Required. The extension name.
+	Extension string `json:"extension,omitempty"`
+	// Version: Required. The extension version.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Extension") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Extension") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PostgreSqlExtension) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgreSqlExtension
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PostgreSqlProperty: PostgreSql property.
+type PostgreSqlProperty struct {
+	// Enabled: Required. The property is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// NumericValue: Required. The property numeric value.
+	NumericValue int64 `json:"numericValue,omitempty,string"`
+	// Property: Required. The property name.
+	Property string `json:"property,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PostgreSqlProperty) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgreSqlProperty
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PostgreSqlSchemaDetails: Specific details for a PostgreSql schema.
+type PostgreSqlSchemaDetails struct {
+	// ForeignTablesCount: Optional. PostgreSql foreign tables.
+	ForeignTablesCount int64 `json:"foreignTablesCount,omitempty"`
+	// PostgresqlExtensions: Optional. PostgreSql extensions.
+	PostgresqlExtensions []*PostgreSqlExtension `json:"postgresqlExtensions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ForeignTablesCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ForeignTablesCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PostgreSqlSchemaDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgreSqlSchemaDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PostgreSqlSetting: PostgreSql setting.
+type PostgreSqlSetting struct {
+	// BoolValue: Required. The setting boolean value.
+	BoolValue bool `json:"boolValue,omitempty"`
+	// IntValue: Required. The setting int value.
+	IntValue int64 `json:"intValue,omitempty,string"`
+	// RealValue: Required. The setting real value.
+	RealValue float64 `json:"realValue,omitempty"`
+	// Setting: Required. The setting name.
+	Setting string `json:"setting,omitempty"`
+	// Source: Required. The setting source.
+	Source string `json:"source,omitempty"`
+	// StringValue: Required. The setting string value. Notice that enum values are
+	// stored as strings.
+	StringValue string `json:"stringValue,omitempty"`
+	// Unit: Optional. The setting unit.
+	Unit string `json:"unit,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PostgreSqlSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod PostgreSqlSetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *PostgreSqlSetting) UnmarshalJSON(data []byte) error {
+	type NoMethod PostgreSqlSetting
+	var s1 struct {
+		RealValue gensupport.JSONFloat64 `json:"realValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.RealValue = float64(s1.RealValue)
+	return nil
 }
 
 // PreferenceSet: The preferences that apply to all assets in a given context.
@@ -4682,6 +5337,139 @@ func (s Source) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SqlServerDatabaseDeployment: Specific details for a Microsoft SQL Server
+// database deployment.
+type SqlServerDatabaseDeployment struct {
+	// Features: Optional. List of SQL Server features.
+	Features []*SqlServerFeature `json:"features,omitempty"`
+	// ServerFlags: Optional. List of SQL Server server flags.
+	ServerFlags []*SqlServerServerFlag `json:"serverFlags,omitempty"`
+	// TraceFlags: Optional. List of SQL Server trace flags.
+	TraceFlags []*SqlServerTraceFlag `json:"traceFlags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Features") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Features") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlServerDatabaseDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerDatabaseDeployment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerFeature: SQL Server feature details.
+type SqlServerFeature struct {
+	// Enabled: Required. Field enabled is set when a feature is used on the source
+	// deployment.
+	Enabled bool `json:"enabled,omitempty"`
+	// FeatureName: Required. The feature name.
+	FeatureName string `json:"featureName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlServerFeature) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerFeature
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerSchemaDetails: Specific details for a SqlServer database.
+type SqlServerSchemaDetails struct {
+	// ClrObjectCount: Optional. SqlServer number of CLR objects.
+	ClrObjectCount int64 `json:"clrObjectCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClrObjectCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClrObjectCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlServerSchemaDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerSchemaDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerServerFlag: SQL Server server flag details.
+type SqlServerServerFlag struct {
+	// ServerFlagName: Required. The server flag name.
+	ServerFlagName string `json:"serverFlagName,omitempty"`
+	// Value: Required. The server flag value set by the user.
+	Value string `json:"value,omitempty"`
+	// ValueInUse: Required. The server flag actual value. If `value_in_use` is
+	// different from `value` it means that either the configuration change was not
+	// applied or it is an expected behavior. See SQL Server documentation for more
+	// details.
+	ValueInUse string `json:"valueInUse,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ServerFlagName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ServerFlagName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlServerServerFlag) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerServerFlag
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerTraceFlag: SQL Server trace flag details.
+type SqlServerTraceFlag struct {
+	// Scope: Required. The trace flag scope.
+	//
+	// Possible values:
+	//   "SCOPE_UNSPECIFIED" - Unspecified.
+	//   "OFF" - Off.
+	//   "GLOBAL" - Global.
+	//   "SESSION" - Session.
+	Scope string `json:"scope,omitempty"`
+	// TraceFlagName: Required. The trace flag name.
+	TraceFlagName string `json:"traceFlagName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Scope") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Scope") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlServerTraceFlag) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerTraceFlag
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is suitable for
 // different programming environments, including REST APIs and RPC APIs. It is
 // used by gRPC (https://github.com/grpc). Each `Status` message contains three
@@ -4891,7 +5679,7 @@ type VirtualMachinePreferences struct {
 	//   "COMPUTE_MIGRATION_TARGET_PRODUCT_COMPUTE_ENGINE" - Prefer to migrate to
 	// Google Cloud Compute Engine.
 	//   "COMPUTE_MIGRATION_TARGET_PRODUCT_VMWARE_ENGINE" - Prefer to migrate to
-	// Google Cloud VMware Engine.
+	// Google Cloud VMware Engine.6278
 	//   "COMPUTE_MIGRATION_TARGET_PRODUCT_SOLE_TENANCY" - Prefer to migrate to
 	// Google Cloud Sole Tenant Nodes.
 	TargetProduct string `json:"targetProduct,omitempty"`

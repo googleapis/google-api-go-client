@@ -372,7 +372,7 @@ type CapacityCommitment struct {
 	// ENTERPRISE.
 	//   "STANDARD" - Standard edition.
 	//   "ENTERPRISE" - Enterprise edition.
-	//   "ENTERPRISE_PLUS" - Enterprise plus edition.
+	//   "ENTERPRISE_PLUS" - Enterprise Plus edition.
 	Edition string `json:"edition,omitempty"`
 	// FailureStatus: Output only. For FAILED commitment plan, provides the reason
 	// of failure.
@@ -664,7 +664,7 @@ type Reservation struct {
 	// target due to asynchronous nature of the system and various optimizations
 	// for small queries. Default value is 0 which means that concurrency target
 	// will be automatically computed by the system. NOTE: this field is exposed as
-	// target job concurrency in the Information Schema, DDL and BQ CLI.
+	// target job concurrency in the Information Schema, DDL and BigQuery CLI.
 	Concurrency int64 `json:"concurrency,omitempty,string"`
 	// CreationTime: Output only. Creation time of the reservation.
 	CreationTime string `json:"creationTime,omitempty"`
@@ -675,7 +675,7 @@ type Reservation struct {
 	// ENTERPRISE.
 	//   "STANDARD" - Standard edition.
 	//   "ENTERPRISE" - Enterprise edition.
-	//   "ENTERPRISE_PLUS" - Enterprise plus edition.
+	//   "ENTERPRISE_PLUS" - Enterprise Plus edition.
 	Edition string `json:"edition,omitempty"`
 	// IgnoreIdleSlots: If false, any query or pipeline job using this reservation
 	// will use idle slots from other reservations within the same admin project.
@@ -703,20 +703,21 @@ type Reservation struct {
 	// reservation which is set only during its creation and remains unchanged
 	// afterwards. It can be used by the customer to answer questions about
 	// disaster recovery billing. The field is output only for customers and should
-	// not be specified, however, the google.api.field_behavior is not set to
-	// OUTPUT_ONLY since these fields are set in rerouted requests sent across
+	// not be specified, however, the `google.api.field_behavior` is not set to
+	// `OUTPUT_ONLY` since these fields are set in rerouted requests sent across
 	// regions.
 	OriginalPrimaryLocation string `json:"originalPrimaryLocation,omitempty"`
 	// PrimaryLocation: Optional. The primary location of the reservation. The
-	// field is only meaningful for reservation used for cross region disaster
-	// recovery. The field is output only for customers and should not be
-	// specified, however, the google.api.field_behavior is not set to OUTPUT_ONLY
-	// since these fields are set in rerouted requests sent across regions.
+	// field is only meaningful for a failover reservation that is used for managed
+	// disaster recovery. The field is output only for customers and should not be
+	// specified. However, the `google.api.field_behavior` is not set to
+	// `OUTPUT_ONLY` since these fields are set in rerouted requests sent across
+	// regions.
 	PrimaryLocation string `json:"primaryLocation,omitempty"`
-	// SecondaryLocation: Optional. The secondary location of the reservation which
-	// is used for cross region disaster recovery purposes. Customer can set this
-	// in create/update reservation calls to create a failover reservation or
-	// convert a non-failover reservation to a failover reservation.
+	// SecondaryLocation: Optional. The secondary location of the reservation that
+	// is used for managed disaster recovery. Customers can set this in
+	// create/update reservation calls to create a failover reservation or convert
+	// a non-failover reservation to a failover reservation.
 	SecondaryLocation string `json:"secondaryLocation,omitempty"`
 	// SlotCapacity: Baseline slots available to this reservation. A slot is a unit
 	// of computational power in BigQuery, and serves as the unit of parallelism.
@@ -2505,7 +2506,7 @@ type ProjectsLocationsReservationsFailoverReservationCall struct {
 	header_                    http.Header
 }
 
-// FailoverReservation: Failover a reservation to the secondary location. The
+// FailoverReservation: Fail over a reservation to the secondary location. The
 // operation should be done in the current secondary location, which will be
 // promoted to the new primary location for the reservation. Attempting to
 // failover a reservation in the current primary location will fail with the

@@ -424,8 +424,7 @@ type BuildConfig struct {
 	// encryption key. Otherwise, GCF will create and use a repository named
 	// 'gcf-artifacts' for every deployed region. It must match the pattern
 	// `projects/{project}/locations/{location}/repositories/{repository}`.
-	// Cross-project repositories are not supported. Cross-location repositories
-	// are not supported. Repository format must be 'DOCKER'.
+	// Repository format must be 'DOCKER'.
 	DockerRepository string `json:"dockerRepository,omitempty"`
 	// EntryPoint: The name of the function (as defined in source code) that will
 	// be executed. Defaults to the resource name suffix, if not specified. For

@@ -776,7 +776,7 @@
       }
     }
   },
-  "revision": "20241115",
+  "revision": "20241120",
   "rootUrl": "https://firebaseappdistribution.googleapis.com/",
   "schemas": {
     "AndroidxCrawlerOutputPoint": {
@@ -1804,7 +1804,7 @@
           "description": "Optional. Instructions for AI driven test."
         },
         "displayName": {
-          "description": "Optional. Display name of the test case.",
+          "description": "Required. Display name of the test case.",
           "type": "string"
         },
         "name": {

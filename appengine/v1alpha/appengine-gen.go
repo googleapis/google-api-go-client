@@ -1298,6 +1298,36 @@ func (s Reasons) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ResourceEvent: The request that is passed to CLH during per-resource events.
+// The request will be sent with update semantics in all cases except for data
+// governance purge events. These events will be sent with delete semantics and
+// the CLH is expected to delete the resource receiving this event.
+type ResourceEvent struct {
+	// EventId: The unique ID for this per-resource event. CLHs can use this value
+	// to dedup repeated calls. required
+	EventId string `json:"eventId,omitempty"`
+	// Name: The name of the resource for which this event is. required
+	Name string `json:"name,omitempty"`
+	// State: The state of the project that led to this event.
+	State *ContainerState `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EventId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ResourceRecord: A DNS resource record.
 type ResourceRecord struct {
 	// Name: Relative name of the object affected by this record. Only applicable

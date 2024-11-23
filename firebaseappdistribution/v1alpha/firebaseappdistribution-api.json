@@ -776,7 +776,7 @@
       }
     }
   },
-  "revision": "20241120",
+  "revision": "20241121",
   "rootUrl": "https://firebaseappdistribution.googleapis.com/",
   "schemas": {
     "AndroidxCrawlerOutputPoint": {
@@ -908,6 +908,7 @@
       "id": "GoogleFirebaseAppdistroV1alphaAiInstructions",
       "properties": {
         "appDescription": {
+          "deprecated": true,
           "description": "Optional. Describes the app to give the AI some context",
           "type": "string"
         },

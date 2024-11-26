@@ -70,8 +70,10 @@ type DialSettings struct {
 	RequestReason string
 
 	// New Auth library Options
-	AuthCredentials          *auth.Credentials
-	EnableNewAuthLibrary     bool
+	AuthCredentials      *auth.Credentials
+	EnableNewAuthLibrary bool
+
+	// TODO(b/372244283): Remove after b/358175516 has been fixed
 	EnableAsyncRefreshDryRun func()
 }
 

@@ -209,23 +209,29 @@ func (w enableNewAuthLibrary) Apply(o *internal.DialSettings) {
 	o.EnableNewAuthLibrary = bool(w)
 }
 
-// EnableAsyncRefreshDryRun  returns a ClientOption that specifies if libraries in this
-// module should asynchronously refresh auth token in parallel to sync refresh
+// EnableAsyncRefreshDryRun returns a ClientOption that specifies if libraries in this
+// module should asynchronously refresh auth token in parallel to sync refresh.
+//
+// This option can be used to determine whether refreshing the token asymnchronously
+// prior to its actual expiry works without any issues in a particular environment.
 //
 // errHandler function will be called when there is an error while refreshing
-// the token asynchronously
+// the token asynchronously.
 //
-// This is an experimental option and will be removed in the future
+// This is an EXPERIMENTAL option and will be removed in the future.
+// TODO(b/372244283): Remove after b/358175516 has been fixed
 func EnableAsyncRefreshDryRun(errHandler func()) option.ClientOption {
 	return enableAsyncRefreshDryRun{
 		errHandler: errHandler,
 	}
 }
 
+// TODO(b/372244283): Remove after b/358175516 has been fixed
 type enableAsyncRefreshDryRun struct {
 	errHandler func()
 }
 
+// TODO(b/372244283): Remove after b/358175516 has been fixed
 func (w enableAsyncRefreshDryRun) Apply(o *internal.DialSettings) {
 	o.EnableAsyncRefreshDryRun = w.errHandler
 }

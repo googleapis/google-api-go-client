@@ -253,7 +253,7 @@ func GetLogger(opts []option.ClientOption) *slog.Logger {
 //
 // This function should only be used internally by generated clients. This is an
 // EXPERIMENTAL API and may be changed or removed in the future.
-func AuthCreds(ctx context.Context, opts ...option.ClientOption) (*auth.Credentials, error) {
+func AuthCreds(ctx context.Context, opts []option.ClientOption) (*auth.Credentials, error) {
 	var ds internal.DialSettings
 	for _, opt := range opts {
 		opt.Apply(&ds)

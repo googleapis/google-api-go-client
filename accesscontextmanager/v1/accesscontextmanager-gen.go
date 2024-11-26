@@ -1037,6 +1037,11 @@ type EgressPolicy struct {
 	// EgressTo: Defines the conditions on the ApiOperation and destination
 	// resources that cause this EgressPolicy to apply.
 	EgressTo *EgressTo `json:"egressTo,omitempty"`
+	// Title: Optional. Human-readable title for the egress rule. The title must be
+	// unique within the perimeter and can not exceed 100 characters. Within the
+	// access policy, the combined length of all rule titles must not exceed
+	// 240,000 characters.
+	Title string `json:"title,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EgressFrom") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1370,6 +1375,11 @@ type IngressPolicy struct {
 	// IngressTo: Defines the conditions on the ApiOperation and request
 	// destination that cause this IngressPolicy to apply.
 	IngressTo *IngressTo `json:"ingressTo,omitempty"`
+	// Title: Optional. Human-readable title for the ingress rule. The title must
+	// be unique within the perimeter and can not exceed 100 characters. Within the
+	// access policy, the combined length of all rule titles must not exceed
+	// 240,000 characters.
+	Title string `json:"title,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IngressFrom") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5675,7 +5685,7 @@ type OperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

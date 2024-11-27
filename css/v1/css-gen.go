@@ -366,15 +366,15 @@ type Attributes struct {
 	HeadlineOfferLink string `json:"headlineOfferLink,omitempty"`
 	// HeadlineOfferMobileLink: Mobile Link to the headline offer.
 	HeadlineOfferMobileLink string `json:"headlineOfferMobileLink,omitempty"`
-	// HeadlineOfferPrice: Headline Price of the aggregate offer.
+	// HeadlineOfferPrice: Headline Price of the CSS Product.
 	HeadlineOfferPrice *Price `json:"headlineOfferPrice,omitempty"`
-	// HeadlineOfferShippingPrice: Headline Price of the aggregate offer.
+	// HeadlineOfferShippingPrice: Headline Price of the CSS Product.
 	HeadlineOfferShippingPrice *Price `json:"headlineOfferShippingPrice,omitempty"`
 	// HeadlineOfferSubscriptionCost: Number of periods (months or years) and
 	// amount of payment per period for an item with an associated subscription
 	// contract.
 	HeadlineOfferSubscriptionCost *HeadlineOfferSubscriptionCost `json:"headlineOfferSubscriptionCost,omitempty"`
-	// HighPrice: High Price of the aggregate offer.
+	// HighPrice: High Price of the CSS Product.
 	HighPrice *Price `json:"highPrice,omitempty"`
 	// ImageLink: URL of an image of the item.
 	ImageLink string `json:"imageLink,omitempty"`
@@ -387,7 +387,7 @@ type Attributes struct {
 	IsBundle bool `json:"isBundle,omitempty"`
 	// ItemGroupId: Shared identifier for all variants of the same product.
 	ItemGroupId string `json:"itemGroupId,omitempty"`
-	// LowPrice: Low Price of the aggregate offer.
+	// LowPrice: Low Price of the CSS Product.
 	LowPrice *Price `json:"lowPrice,omitempty"`
 	// Material: The material of which the item is made.
 	Material string `json:"material,omitempty"`
@@ -396,7 +396,7 @@ type Attributes struct {
 	Mpn string `json:"mpn,omitempty"`
 	// Multipack: The number of identical products in a merchant-defined multipack.
 	Multipack int64 `json:"multipack,omitempty,string"`
-	// NumberOfOffers: The number of aggregate offers.
+	// NumberOfOffers: The number of CSS Products.
 	NumberOfOffers int64 `json:"numberOfOffers,omitempty,string"`
 	// Pattern: The item's pattern (e.g. polka dots).
 	Pattern string `json:"pattern,omitempty"`
@@ -489,7 +489,7 @@ func (s Certification) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CssProduct: The processed CSS Product(a.k.a Aggregate Offer internally).
+// CssProduct: The processed CSS Product.
 type CssProduct struct {
 	// Attributes: Output only. A list of product attributes.
 	Attributes *Attributes `json:"attributes,omitempty"`
@@ -663,16 +663,16 @@ func (s CustomAttribute) MarshalJSON() ([]byte, error) {
 
 // DestinationStatus: The destination status of the product status.
 type DestinationStatus struct {
-	// ApprovedCountries: List of country codes (ISO 3166-1 alpha-2) where the
-	// aggregate offer is approved.
+	// ApprovedCountries: List of country codes (ISO 3166-1 alpha-2) where the CSS
+	// Product is approved.
 	ApprovedCountries []string `json:"approvedCountries,omitempty"`
 	// Destination: The name of the destination
 	Destination string `json:"destination,omitempty"`
 	// DisapprovedCountries: List of country codes (ISO 3166-1 alpha-2) where the
-	// aggregate offer is disapproved.
+	// CSS Product is disapproved.
 	DisapprovedCountries []string `json:"disapprovedCountries,omitempty"`
-	// PendingCountries: List of country codes (ISO 3166-1 alpha-2) where the
-	// aggregate offer is pending approval.
+	// PendingCountries: List of country codes (ISO 3166-1 alpha-2) where the CSS
+	// Product is pending approval.
 	PendingCountries []string `json:"pendingCountries,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApprovedCountries") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -763,7 +763,7 @@ func (s HeadlineOfferSubscriptionCost) MarshalJSON() ([]byte, error) {
 // ItemLevelIssue: The ItemLevelIssue of the product status.
 type ItemLevelIssue struct {
 	// ApplicableCountries: List of country codes (ISO 3166-1 alpha-2) where issue
-	// applies to the aggregate offer.
+	// applies to the CSS Product.
 	ApplicableCountries []string `json:"applicableCountries,omitempty"`
 	// Attribute: The attribute's name, if the issue is caused by a single
 	// attribute.
@@ -780,7 +780,7 @@ type ItemLevelIssue struct {
 	Documentation string `json:"documentation,omitempty"`
 	// Resolution: Whether the issue can be resolved by the merchant.
 	Resolution string `json:"resolution,omitempty"`
-	// Servability: How this issue affects serving of the aggregate offer.
+	// Servability: How this issue affects serving of the CSS Product.
 	Servability string `json:"servability,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApplicableCountries") to
 	// unconditionally include in API requests. By default, fields with empty or

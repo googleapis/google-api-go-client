@@ -3945,6 +3945,9 @@ type GoogleCloudDiscoveryengineV1Control struct {
 	// Name: Immutable. Fully qualified name
 	// `projects/*/locations/global/dataStore/*/controls/*`
 	Name string `json:"name,omitempty"`
+	// PromoteAction: Promote certain links based on predefined trigger queries.
+	// This now only supports basic site search.
+	PromoteAction *GoogleCloudDiscoveryengineV1ControlPromoteAction `json:"promoteAction,omitempty"`
 	// RedirectAction: Defines a redirect-type control.
 	RedirectAction *GoogleCloudDiscoveryengineV1ControlRedirectAction `json:"redirectAction,omitempty"`
 	// SolutionType: Required. Immutable. What solution the control belongs to.
@@ -4073,6 +4076,33 @@ type GoogleCloudDiscoveryengineV1ControlFilterAction struct {
 
 func (s GoogleCloudDiscoveryengineV1ControlFilterAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1ControlFilterAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ControlPromoteAction: Promote certain links
+// based on some trigger queries. Example: Promote shoe store link when
+// searching for `shoe` keyword. The link can be outside of associated data
+// store.
+type GoogleCloudDiscoveryengineV1ControlPromoteAction struct {
+	// DataStore: Required. Data store with which this promotion is attached to.
+	DataStore string `json:"dataStore,omitempty"`
+	// SearchLinkPromotion: Required. Promotion attached to this action.
+	SearchLinkPromotion *GoogleCloudDiscoveryengineV1SearchLinkPromotion `json:"searchLinkPromotion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ControlPromoteAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ControlPromoteAction
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7517,6 +7547,40 @@ func (s GoogleCloudDiscoveryengineV1SearchInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1SearchLinkPromotion: Promotion proto includes
+// uri and other helping information to display the promotion.
+type GoogleCloudDiscoveryengineV1SearchLinkPromotion struct {
+	// Description: Optional. The Promotion description. Maximum length: 200
+	// characters.
+	Description string `json:"description,omitempty"`
+	// Enabled: Optional. The enabled promotion will be returned for any serving
+	// configs associated with the parent of the control this promotion is attached
+	// to. This flag is used for basic site search only.
+	Enabled bool `json:"enabled,omitempty"`
+	// ImageUri: Optional. The promotion thumbnail image url.
+	ImageUri string `json:"imageUri,omitempty"`
+	// Title: Required. The title of the promotion. Maximum length: 160 characters.
+	Title string `json:"title,omitempty"`
+	// Uri: Required. The URL for the page the user wants to promote.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SearchLinkPromotion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchLinkPromotion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1SearchRequest: Request message for
 // SearchService.Search method.
 type GoogleCloudDiscoveryengineV1SearchRequest struct {
@@ -8522,6 +8586,8 @@ type GoogleCloudDiscoveryengineV1SearchResponse struct {
 	RedirectUri string `json:"redirectUri,omitempty"`
 	// Results: A list of matched documents. The order represents the ranking.
 	Results []*GoogleCloudDiscoveryengineV1SearchResponseSearchResult `json:"results,omitempty"`
+	// SearchLinkPromotions: Promotions for site search.
+	SearchLinkPromotions []*GoogleCloudDiscoveryengineV1SearchLinkPromotion `json:"searchLinkPromotions,omitempty"`
 	// SessionInfo: Session information. Only set if SearchRequest.session is
 	// provided. See its description for more details.
 	SessionInfo *GoogleCloudDiscoveryengineV1SearchResponseSessionInfo `json:"sessionInfo,omitempty"`
@@ -10693,6 +10759,9 @@ type GoogleCloudDiscoveryengineV1alphaControl struct {
 	// Name: Immutable. Fully qualified name
 	// `projects/*/locations/global/dataStore/*/controls/*`
 	Name string `json:"name,omitempty"`
+	// PromoteAction: Promote certain links based on predefined trigger queries.
+	// This now only supports basic site search.
+	PromoteAction *GoogleCloudDiscoveryengineV1alphaControlPromoteAction `json:"promoteAction,omitempty"`
 	// RedirectAction: Defines a redirect-type control.
 	RedirectAction *GoogleCloudDiscoveryengineV1alphaControlRedirectAction `json:"redirectAction,omitempty"`
 	// SolutionType: Required. Immutable. What solution the control belongs to.
@@ -10818,6 +10887,33 @@ type GoogleCloudDiscoveryengineV1alphaControlFilterAction struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaControlFilterAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaControlFilterAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaControlPromoteAction: Promote certain links
+// based on some trigger queries. Example: Promote shoe store link when
+// searching for `shoe` keyword. The link can be outside of associated data
+// store.
+type GoogleCloudDiscoveryengineV1alphaControlPromoteAction struct {
+	// DataStore: Required. Data store with which this promotion is attached to.
+	DataStore string `json:"dataStore,omitempty"`
+	// SearchLinkPromotion: Required. Promotion attached to this action.
+	SearchLinkPromotion *GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion `json:"searchLinkPromotion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaControlPromoteAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaControlPromoteAction
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13683,6 +13779,40 @@ func (s GoogleCloudDiscoveryengineV1alphaSchema) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion: Promotion proto
+// includes uri and other helping information to display the promotion.
+type GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion struct {
+	// Description: Optional. The Promotion description. Maximum length: 200
+	// characters.
+	Description string `json:"description,omitempty"`
+	// Enabled: Optional. The enabled promotion will be returned for any serving
+	// configs associated with the parent of the control this promotion is attached
+	// to. This flag is used for basic site search only.
+	Enabled bool `json:"enabled,omitempty"`
+	// ImageUri: Optional. The promotion thumbnail image url.
+	ImageUri string `json:"imageUri,omitempty"`
+	// Title: Required. The title of the promotion. Maximum length: 160 characters.
+	Title string `json:"title,omitempty"`
+	// Uri: Required. The URL for the page the user wants to promote.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaSearchRequest: Request message for
 // SearchService.Search method.
 type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
@@ -15602,6 +15732,9 @@ type GoogleCloudDiscoveryengineV1betaControl struct {
 	// Name: Immutable. Fully qualified name
 	// `projects/*/locations/global/dataStore/*/controls/*`
 	Name string `json:"name,omitempty"`
+	// PromoteAction: Promote certain links based on predefined trigger queries.
+	// This now only supports basic site search.
+	PromoteAction *GoogleCloudDiscoveryengineV1betaControlPromoteAction `json:"promoteAction,omitempty"`
 	// RedirectAction: Defines a redirect-type control.
 	RedirectAction *GoogleCloudDiscoveryengineV1betaControlRedirectAction `json:"redirectAction,omitempty"`
 	// SolutionType: Required. Immutable. What solution the control belongs to.
@@ -15727,6 +15860,33 @@ type GoogleCloudDiscoveryengineV1betaControlFilterAction struct {
 
 func (s GoogleCloudDiscoveryengineV1betaControlFilterAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaControlFilterAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaControlPromoteAction: Promote certain links
+// based on some trigger queries. Example: Promote shoe store link when
+// searching for `shoe` keyword. The link can be outside of associated data
+// store.
+type GoogleCloudDiscoveryengineV1betaControlPromoteAction struct {
+	// DataStore: Required. Data store with which this promotion is attached to.
+	DataStore string `json:"dataStore,omitempty"`
+	// SearchLinkPromotion: Required. Promotion attached to this action.
+	SearchLinkPromotion *GoogleCloudDiscoveryengineV1betaSearchLinkPromotion `json:"searchLinkPromotion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaControlPromoteAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaControlPromoteAction
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17689,6 +17849,40 @@ type GoogleCloudDiscoveryengineV1betaSchema struct {
 
 func (s GoogleCloudDiscoveryengineV1betaSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaSchema
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchLinkPromotion: Promotion proto
+// includes uri and other helping information to display the promotion.
+type GoogleCloudDiscoveryengineV1betaSearchLinkPromotion struct {
+	// Description: Optional. The Promotion description. Maximum length: 200
+	// characters.
+	Description string `json:"description,omitempty"`
+	// Enabled: Optional. The enabled promotion will be returned for any serving
+	// configs associated with the parent of the control this promotion is attached
+	// to. This flag is used for basic site search only.
+	Enabled bool `json:"enabled,omitempty"`
+	// ImageUri: Optional. The promotion thumbnail image url.
+	ImageUri string `json:"imageUri,omitempty"`
+	// Title: Required. The title of the promotion. Maximum length: 160 characters.
+	Title string `json:"title,omitempty"`
+	// Uri: Required. The URL for the page the user wants to promote.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSearchLinkPromotion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchLinkPromotion
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

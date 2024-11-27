@@ -6140,7 +6140,7 @@
       }
     }
   },
-  "revision": "20241118",
+  "revision": "20241123",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -8279,6 +8279,10 @@
           "description": "Immutable. Fully qualified name `projects/*/locations/global/dataStore/*/controls/*`",
           "type": "string"
         },
+        "promoteAction": {
+          "$ref": "GoogleCloudDiscoveryengineV1ControlPromoteAction",
+          "description": "Promote certain links based on predefined trigger queries. This now only supports basic site search."
+        },
         "redirectAction": {
           "$ref": "GoogleCloudDiscoveryengineV1ControlRedirectAction",
           "description": "Defines a redirect-type control."
@@ -8356,6 +8360,21 @@
         "filter": {
           "description": "Required. A filter to apply on the matching condition results. Required Syntax documentation: https://cloud.google.com/retail/docs/filter-and-order Maximum length is 5000 characters. Otherwise an INVALID ARGUMENT error is thrown.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1ControlPromoteAction": {
+      "description": "Promote certain links based on some trigger queries. Example: Promote shoe store link when searching for `shoe` keyword. The link can be outside of associated data store.",
+      "id": "GoogleCloudDiscoveryengineV1ControlPromoteAction",
+      "properties": {
+        "dataStore": {
+          "description": "Required. Data store with which this promotion is attached to.",
+          "type": "string"
+        },
+        "searchLinkPromotion": {
+          "$ref": "GoogleCloudDiscoveryengineV1SearchLinkPromotion",
+          "description": "Required. Promotion attached to this action."
         }
       },
       "type": "object"
@@ -10757,6 +10776,33 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1SearchLinkPromotion": {
+      "description": "Promotion proto includes uri and other helping information to display the promotion.",
+      "id": "GoogleCloudDiscoveryengineV1SearchLinkPromotion",
+      "properties": {
+        "description": {
+          "description": "Optional. The Promotion description. Maximum length: 200 characters.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Optional. The enabled promotion will be returned for any serving configs associated with the parent of the control this promotion is attached to. This flag is used for basic site search only.",
+          "type": "boolean"
+        },
+        "imageUri": {
+          "description": "Optional. The promotion thumbnail image url.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Required. The title of the promotion. Maximum length: 160 characters.",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Required. The URL for the page the user wants to promote.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1SearchRequest": {
       "description": "Request message for SearchService.Search method.",
       "id": "GoogleCloudDiscoveryengineV1SearchRequest",
@@ -11368,6 +11414,13 @@
           "description": "A list of matched documents. The order represents the ranking.",
           "items": {
             "$ref": "GoogleCloudDiscoveryengineV1SearchResponseSearchResult"
+          },
+          "type": "array"
+        },
+        "searchLinkPromotions": {
+          "description": "Promotions for site search.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1SearchLinkPromotion"
           },
           "type": "array"
         },
@@ -12980,6 +13033,10 @@
           "description": "Immutable. Fully qualified name `projects/*/locations/global/dataStore/*/controls/*`",
           "type": "string"
         },
+        "promoteAction": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaControlPromoteAction",
+          "description": "Promote certain links based on predefined trigger queries. This now only supports basic site search."
+        },
         "redirectAction": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaControlRedirectAction",
           "description": "Defines a redirect-type control."
@@ -13057,6 +13114,21 @@
         "filter": {
           "description": "Required. A filter to apply on the matching condition results. Required Syntax documentation: https://cloud.google.com/retail/docs/filter-and-order Maximum length is 5000 characters. Otherwise an INVALID ARGUMENT error is thrown.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaControlPromoteAction": {
+      "description": "Promote certain links based on some trigger queries. Example: Promote shoe store link when searching for `shoe` keyword. The link can be outside of associated data store.",
+      "id": "GoogleCloudDiscoveryengineV1alphaControlPromoteAction",
+      "properties": {
+        "dataStore": {
+          "description": "Required. Data store with which this promotion is attached to.",
+          "type": "string"
+        },
+        "searchLinkPromotion": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion",
+          "description": "Required. Promotion attached to this action."
         }
       },
       "type": "object"
@@ -15207,6 +15279,33 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion": {
+      "description": "Promotion proto includes uri and other helping information to display the promotion.",
+      "id": "GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion",
+      "properties": {
+        "description": {
+          "description": "Optional. The Promotion description. Maximum length: 200 characters.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Optional. The enabled promotion will be returned for any serving configs associated with the parent of the control this promotion is attached to. This flag is used for basic site search only.",
+          "type": "boolean"
+        },
+        "imageUri": {
+          "description": "Optional. The promotion thumbnail image url.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Required. The title of the promotion. Maximum length: 160 characters.",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Required. The URL for the page the user wants to promote.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaSearchRequest": {
       "description": "Request message for SearchService.Search method.",
       "id": "GoogleCloudDiscoveryengineV1alphaSearchRequest",
@@ -16511,6 +16610,10 @@
           "description": "Immutable. Fully qualified name `projects/*/locations/global/dataStore/*/controls/*`",
           "type": "string"
         },
+        "promoteAction": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaControlPromoteAction",
+          "description": "Promote certain links based on predefined trigger queries. This now only supports basic site search."
+        },
         "redirectAction": {
           "$ref": "GoogleCloudDiscoveryengineV1betaControlRedirectAction",
           "description": "Defines a redirect-type control."
@@ -16588,6 +16691,21 @@
         "filter": {
           "description": "Required. A filter to apply on the matching condition results. Required Syntax documentation: https://cloud.google.com/retail/docs/filter-and-order Maximum length is 5000 characters. Otherwise an INVALID ARGUMENT error is thrown.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaControlPromoteAction": {
+      "description": "Promote certain links based on some trigger queries. Example: Promote shoe store link when searching for `shoe` keyword. The link can be outside of associated data store.",
+      "id": "GoogleCloudDiscoveryengineV1betaControlPromoteAction",
+      "properties": {
+        "dataStore": {
+          "description": "Required. Data store with which this promotion is attached to.",
+          "type": "string"
+        },
+        "searchLinkPromotion": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaSearchLinkPromotion",
+          "description": "Required. Promotion attached to this action."
         }
       },
       "type": "object"
@@ -18059,6 +18177,33 @@
           },
           "description": "The structured representation of the schema.",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaSearchLinkPromotion": {
+      "description": "Promotion proto includes uri and other helping information to display the promotion.",
+      "id": "GoogleCloudDiscoveryengineV1betaSearchLinkPromotion",
+      "properties": {
+        "description": {
+          "description": "Optional. The Promotion description. Maximum length: 200 characters.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Optional. The enabled promotion will be returned for any serving configs associated with the parent of the control this promotion is attached to. This flag is used for basic site search only.",
+          "type": "boolean"
+        },
+        "imageUri": {
+          "description": "Optional. The promotion thumbnail image url.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Required. The title of the promotion. Maximum length: 160 characters.",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Required. The URL for the page the user wants to promote.",
+          "type": "string"
         }
       },
       "type": "object"

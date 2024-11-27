@@ -3945,6 +3945,9 @@ type GoogleCloudDiscoveryengineV1Control struct {
 	// Name: Immutable. Fully qualified name
 	// `projects/*/locations/global/dataStore/*/controls/*`
 	Name string `json:"name,omitempty"`
+	// PromoteAction: Promote certain links based on predefined trigger queries.
+	// This now only supports basic site search.
+	PromoteAction *GoogleCloudDiscoveryengineV1ControlPromoteAction `json:"promoteAction,omitempty"`
 	// RedirectAction: Defines a redirect-type control.
 	RedirectAction *GoogleCloudDiscoveryengineV1ControlRedirectAction `json:"redirectAction,omitempty"`
 	// SolutionType: Required. Immutable. What solution the control belongs to.
@@ -4073,6 +4076,33 @@ type GoogleCloudDiscoveryengineV1ControlFilterAction struct {
 
 func (s GoogleCloudDiscoveryengineV1ControlFilterAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1ControlFilterAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ControlPromoteAction: Promote certain links
+// based on some trigger queries. Example: Promote shoe store link when
+// searching for `shoe` keyword. The link can be outside of associated data
+// store.
+type GoogleCloudDiscoveryengineV1ControlPromoteAction struct {
+	// DataStore: Required. Data store with which this promotion is attached to.
+	DataStore string `json:"dataStore,omitempty"`
+	// SearchLinkPromotion: Required. Promotion attached to this action.
+	SearchLinkPromotion *GoogleCloudDiscoveryengineV1SearchLinkPromotion `json:"searchLinkPromotion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ControlPromoteAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ControlPromoteAction
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7058,12 +7088,16 @@ type GoogleCloudDiscoveryengineV1PurgeUserEventsRequest struct {
 	// ISO 8601 "zulu" format. * `userPseudoId`: Double quoted string. Specifying
 	// this will delete all events associated with a visitor. * `userId`: Double
 	// quoted string. Specifying this will delete all events associated with a
-	// user. Examples: * Deleting all events in a time range: `eventTime >
+	// user. Note: This API only supports purging a max range of 30 days. Examples:
+	// * Deleting all events in a time range: `eventTime >
 	// "2012-04-23T18:25:43.511Z" eventTime < "2012-04-23T18:30:43.511Z" *
-	// Deleting specific eventType: `eventType = "search" * Deleting all events
-	// for a specific visitor: `userPseudoId = "visitor1024" * Deleting all events
-	// inside a DataStore: `*` The filtering fields are assumed to have an implicit
-	// AND.
+	// Deleting specific eventType in a time range: `eventTime >
+	// "2012-04-23T18:25:43.511Z" eventTime < "2012-04-23T18:30:43.511Z" eventType
+	// = "search" * Deleting all events for a specific visitor in a time range:
+	// `eventTime > "2012-04-23T18:25:43.511Z" eventTime <
+	// "2012-04-23T18:30:43.511Z" userPseudoId = "visitor1024" * Deleting the past
+	// 30 days of events inside a DataStore: `*` The filtering fields are assumed
+	// to have an implicit AND.
 	Filter string `json:"filter,omitempty"`
 	// Force: The `force` field is currently not supported. Purge user event
 	// requests will permanently delete all purgeable events. Once the development
@@ -7245,9 +7279,9 @@ type GoogleCloudDiscoveryengineV1RecommendRequest struct {
 	// filter_tags: ANY("Hot", "Cold"))` * `(filter_tags: ANY("Red", "Blue")) AND
 	// NOT (filter_tags: ANY("Green"))` If `attributeFilteringSyntax` is set to
 	// true under the `params` field, then attribute-based expressions are expected
-	// instead of the above described tag-based syntax. Examples: * (launguage:
+	// instead of the above described tag-based syntax. Examples: * (language:
 	// ANY("en", "es")) AND NOT (categories: ANY("Movie")) * (available: true) AND
-	// (launguage: ANY("en", "es")) OR (categories: ANY("Movie")) If your filter
+	// (language: ANY("en", "es")) OR (categories: ANY("Movie")) If your filter
 	// blocks all results, the API returns generic (unfiltered) popular Documents.
 	// If you only want results strictly matching the filters, set
 	// `strictFiltering` to `true` in RecommendRequest.params to receive empty
@@ -7513,6 +7547,40 @@ func (s GoogleCloudDiscoveryengineV1SearchInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1SearchLinkPromotion: Promotion proto includes
+// uri and other helping information to display the promotion.
+type GoogleCloudDiscoveryengineV1SearchLinkPromotion struct {
+	// Description: Optional. The Promotion description. Maximum length: 200
+	// characters.
+	Description string `json:"description,omitempty"`
+	// Enabled: Optional. The enabled promotion will be returned for any serving
+	// configs associated with the parent of the control this promotion is attached
+	// to. This flag is used for basic site search only.
+	Enabled bool `json:"enabled,omitempty"`
+	// ImageUri: Optional. The promotion thumbnail image url.
+	ImageUri string `json:"imageUri,omitempty"`
+	// Title: Required. The title of the promotion. Maximum length: 160 characters.
+	Title string `json:"title,omitempty"`
+	// Uri: Required. The URL for the page the user wants to promote.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SearchLinkPromotion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SearchLinkPromotion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1SearchRequest: Request message for
 // SearchService.Search method.
 type GoogleCloudDiscoveryengineV1SearchRequest struct {
@@ -7537,10 +7605,10 @@ type GoogleCloudDiscoveryengineV1SearchRequest struct {
 	// ContentSearchSpec: A specification for configuring the behavior of content
 	// search.
 	ContentSearchSpec *GoogleCloudDiscoveryengineV1SearchRequestContentSearchSpec `json:"contentSearchSpec,omitempty"`
-	// DataStoreSpecs: Specs defining dataStores to filter on in a search call and
-	// configurations for those dataStores. This is only considered for engines
-	// with multiple dataStores use case. For single dataStore within an engine,
-	// they should use the specs at the top level.
+	// DataStoreSpecs: Specs defining DataStores to filter on in a search call and
+	// configurations for those data stores. This is only considered for Engines
+	// with multiple data stores. For engines with a single data store, the specs
+	// directly under SearchRequest should be used.
 	DataStoreSpecs []*GoogleCloudDiscoveryengineV1SearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
 	// FacetSpecs: Facet specifications for faceted search. If empty, no facets are
 	// returned. A maximum of 100 values are allowed. Otherwise, an
@@ -8518,6 +8586,8 @@ type GoogleCloudDiscoveryengineV1SearchResponse struct {
 	RedirectUri string `json:"redirectUri,omitempty"`
 	// Results: A list of matched documents. The order represents the ranking.
 	Results []*GoogleCloudDiscoveryengineV1SearchResponseSearchResult `json:"results,omitempty"`
+	// SearchLinkPromotions: Promotions for site search.
+	SearchLinkPromotions []*GoogleCloudDiscoveryengineV1SearchLinkPromotion `json:"searchLinkPromotions,omitempty"`
 	// SessionInfo: Session information. Only set if SearchRequest.session is
 	// provided. See its description for more details.
 	SessionInfo *GoogleCloudDiscoveryengineV1SearchResponseSessionInfo `json:"sessionInfo,omitempty"`
@@ -10689,6 +10759,9 @@ type GoogleCloudDiscoveryengineV1alphaControl struct {
 	// Name: Immutable. Fully qualified name
 	// `projects/*/locations/global/dataStore/*/controls/*`
 	Name string `json:"name,omitempty"`
+	// PromoteAction: Promote certain links based on predefined trigger queries.
+	// This now only supports basic site search.
+	PromoteAction *GoogleCloudDiscoveryengineV1alphaControlPromoteAction `json:"promoteAction,omitempty"`
 	// RedirectAction: Defines a redirect-type control.
 	RedirectAction *GoogleCloudDiscoveryengineV1alphaControlRedirectAction `json:"redirectAction,omitempty"`
 	// SolutionType: Required. Immutable. What solution the control belongs to.
@@ -10814,6 +10887,33 @@ type GoogleCloudDiscoveryengineV1alphaControlFilterAction struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaControlFilterAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaControlFilterAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaControlPromoteAction: Promote certain links
+// based on some trigger queries. Example: Promote shoe store link when
+// searching for `shoe` keyword. The link can be outside of associated data
+// store.
+type GoogleCloudDiscoveryengineV1alphaControlPromoteAction struct {
+	// DataStore: Required. Data store with which this promotion is attached to.
+	DataStore string `json:"dataStore,omitempty"`
+	// SearchLinkPromotion: Required. Promotion attached to this action.
+	SearchLinkPromotion *GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion `json:"searchLinkPromotion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaControlPromoteAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaControlPromoteAction
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13679,6 +13779,40 @@ func (s GoogleCloudDiscoveryengineV1alphaSchema) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion: Promotion proto
+// includes uri and other helping information to display the promotion.
+type GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion struct {
+	// Description: Optional. The Promotion description. Maximum length: 200
+	// characters.
+	Description string `json:"description,omitempty"`
+	// Enabled: Optional. The enabled promotion will be returned for any serving
+	// configs associated with the parent of the control this promotion is attached
+	// to. This flag is used for basic site search only.
+	Enabled bool `json:"enabled,omitempty"`
+	// ImageUri: Optional. The promotion thumbnail image url.
+	ImageUri string `json:"imageUri,omitempty"`
+	// Title: Required. The title of the promotion. Maximum length: 160 characters.
+	Title string `json:"title,omitempty"`
+	// Uri: Required. The URL for the page the user wants to promote.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchLinkPromotion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaSearchRequest: Request message for
 // SearchService.Search method.
 type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
@@ -13706,10 +13840,10 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// CustomFineTuningSpec: Custom fine tuning configs. If set, it has higher
 	// priority than the configs set in ServingConfig.custom_fine_tuning_spec.
 	CustomFineTuningSpec *GoogleCloudDiscoveryengineV1alphaCustomFineTuningSpec `json:"customFineTuningSpec,omitempty"`
-	// DataStoreSpecs: Specs defining dataStores to filter on in a search call and
-	// configurations for those dataStores. This is only considered for engines
-	// with multiple dataStores use case. For single dataStore within an engine,
-	// they should use the specs at the top level.
+	// DataStoreSpecs: Specs defining DataStores to filter on in a search call and
+	// configurations for those data stores. This is only considered for Engines
+	// with multiple data stores. For engines with a single data store, the specs
+	// directly under SearchRequest should be used.
 	DataStoreSpecs []*GoogleCloudDiscoveryengineV1alphaSearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
 	// EmbeddingSpec: Uses the provided embedding to do additional semantic
 	// document retrieval. The retrieval is based on the dot product of
@@ -15598,6 +15732,9 @@ type GoogleCloudDiscoveryengineV1betaControl struct {
 	// Name: Immutable. Fully qualified name
 	// `projects/*/locations/global/dataStore/*/controls/*`
 	Name string `json:"name,omitempty"`
+	// PromoteAction: Promote certain links based on predefined trigger queries.
+	// This now only supports basic site search.
+	PromoteAction *GoogleCloudDiscoveryengineV1betaControlPromoteAction `json:"promoteAction,omitempty"`
 	// RedirectAction: Defines a redirect-type control.
 	RedirectAction *GoogleCloudDiscoveryengineV1betaControlRedirectAction `json:"redirectAction,omitempty"`
 	// SolutionType: Required. Immutable. What solution the control belongs to.
@@ -15723,6 +15860,33 @@ type GoogleCloudDiscoveryengineV1betaControlFilterAction struct {
 
 func (s GoogleCloudDiscoveryengineV1betaControlFilterAction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaControlFilterAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaControlPromoteAction: Promote certain links
+// based on some trigger queries. Example: Promote shoe store link when
+// searching for `shoe` keyword. The link can be outside of associated data
+// store.
+type GoogleCloudDiscoveryengineV1betaControlPromoteAction struct {
+	// DataStore: Required. Data store with which this promotion is attached to.
+	DataStore string `json:"dataStore,omitempty"`
+	// SearchLinkPromotion: Required. Promotion attached to this action.
+	SearchLinkPromotion *GoogleCloudDiscoveryengineV1betaSearchLinkPromotion `json:"searchLinkPromotion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaControlPromoteAction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaControlPromoteAction
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17688,6 +17852,40 @@ func (s GoogleCloudDiscoveryengineV1betaSchema) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaSearchLinkPromotion: Promotion proto
+// includes uri and other helping information to display the promotion.
+type GoogleCloudDiscoveryengineV1betaSearchLinkPromotion struct {
+	// Description: Optional. The Promotion description. Maximum length: 200
+	// characters.
+	Description string `json:"description,omitempty"`
+	// Enabled: Optional. The enabled promotion will be returned for any serving
+	// configs associated with the parent of the control this promotion is attached
+	// to. This flag is used for basic site search only.
+	Enabled bool `json:"enabled,omitempty"`
+	// ImageUri: Optional. The promotion thumbnail image url.
+	ImageUri string `json:"imageUri,omitempty"`
+	// Title: Required. The title of the promotion. Maximum length: 160 characters.
+	Title string `json:"title,omitempty"`
+	// Uri: Required. The URL for the page the user wants to promote.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSearchLinkPromotion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchLinkPromotion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaSearchRequest: Request message for
 // SearchService.Search method.
 type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
@@ -17712,10 +17910,10 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// ContentSearchSpec: A specification for configuring the behavior of content
 	// search.
 	ContentSearchSpec *GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpec `json:"contentSearchSpec,omitempty"`
-	// DataStoreSpecs: Specs defining dataStores to filter on in a search call and
-	// configurations for those dataStores. This is only considered for engines
-	// with multiple dataStores use case. For single dataStore within an engine,
-	// they should use the specs at the top level.
+	// DataStoreSpecs: Specs defining DataStores to filter on in a search call and
+	// configurations for those data stores. This is only considered for Engines
+	// with multiple data stores. For engines with a single data store, the specs
+	// directly under SearchRequest should be used.
 	DataStoreSpecs []*GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
 	// EmbeddingSpec: Uses the provided embedding to do additional semantic
 	// document retrieval. The retrieval is based on the dot product of
@@ -21963,7 +22161,7 @@ type ProjectsLocationsCollectionsDataStoresBranchesOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -34383,7 +34581,7 @@ type ProjectsLocationsDataStoresBranchesOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -41297,7 +41495,7 @@ type ProjectsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

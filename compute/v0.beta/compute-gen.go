@@ -29848,6 +29848,8 @@ type NetworkInterface struct {
 	// Possible values:
 	//   "GVNIC" - GVNIC
 	//   "IDPF" - IDPF
+	//   "IRDMA" - IRDMA
+	//   "MRDMA" - MRDMA
 	//   "UNSPECIFIED_NIC_TYPE" - No type specified.
 	//   "VIRTIO_NET" - VIRTIO
 	NicType string `json:"nicType,omitempty"`
@@ -30338,6 +30340,8 @@ type NetworkProfileNetworkFeatures struct {
 	// Possible values:
 	//   "GVNIC" - GVNIC
 	//   "IDPF" - IDPF
+	//   "IRDMA" - IRDMA
+	//   "MRDMA" - MRDMA
 	//   "UNSPECIFIED_NIC_TYPE" - No type specified.
 	//   "VIRTIO_NET" - VIRTIO
 	InterfaceTypes []string `json:"interfaceTypes,omitempty"`

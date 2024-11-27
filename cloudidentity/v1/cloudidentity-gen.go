@@ -118,6 +118,14 @@ const (
 	// and their emails
 	CloudIdentityGroupsReadonlyScope = "https://www.googleapis.com/auth/cloud-identity.groups.readonly"
 
+	// See and edit all of the Inbound SSO profiles and their assignments to any
+	// Org Units or Google Groups in your Cloud Identity Organization.
+	CloudIdentityInboundssoScope = "https://www.googleapis.com/auth/cloud-identity.inboundsso"
+
+	// See all of the Inbound SSO profiles and their assignments to any Org Units
+	// or Google Groups in your Cloud Identity Organization.
+	CloudIdentityInboundssoReadonlyScope = "https://www.googleapis.com/auth/cloud-identity.inboundsso.readonly"
+
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
@@ -131,6 +139,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/cloud-identity.devices.readonly",
 		"https://www.googleapis.com/auth/cloud-identity.groups",
 		"https://www.googleapis.com/auth/cloud-identity.groups.readonly",
+		"https://www.googleapis.com/auth/cloud-identity.inboundsso",
+		"https://www.googleapis.com/auth/cloud-identity.inboundsso.readonly",
 		"https://www.googleapis.com/auth/cloud-platform",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.

@@ -749,7 +749,7 @@ func (s BackupInfo) MarshalJSON() ([]byte, error) {
 }
 
 // BackupSchedule: BackupSchedule expresses the automated backup creation
-// specification for a Spanner database. Next ID: 10
+// specification for a Spanner database.
 type BackupSchedule struct {
 	// EncryptionConfig: Optional. The encryption configuration that will be used
 	// to encrypt the backup. If this field is not specified, the backup will use
@@ -1651,7 +1651,7 @@ func (s CreateInstanceConfigMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CreateInstanceConfigRequest: The request for CreateInstanceConfigRequest.
+// CreateInstanceConfigRequest: The request for CreateInstanceConfig.
 type CreateInstanceConfigRequest struct {
 	// InstanceConfig: Required. The `InstanceConfig` proto of the configuration to
 	// create. `instance_config.name` must be `/instanceConfigs/`.
@@ -2831,10 +2831,10 @@ type Instance struct {
 	//   "NONE" - No default backup schedule will be created automatically on
 	// creation of a database within the instance.
 	//   "AUTOMATIC" - A default backup schedule will be created automatically on
-	// creation of a database within the instance. The default backup schedule
-	// creates a full backup every 24 hours and retains the backup for a period of
-	// 7 days. Once created, the default backup schedule can be edited/deleted
-	// similar to any other backup schedule.
+	// creation of a database within the instance. Once created, the default backup
+	// schedule can be edited or deleted just like any other backup schedule.
+	// Currently, the default backup schedule creates a full backup every 24 hours
+	// and retains the backup for a period of 7 days.
 	DefaultBackupScheduleType string `json:"defaultBackupScheduleType,omitempty"`
 	// DisplayName: Required. The descriptive name for this instance as it appears
 	// in UIs. Must be unique per project and between 4 and 30 characters in
@@ -6431,7 +6431,7 @@ func (s UpdateInstanceConfigMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UpdateInstanceConfigRequest: The request for UpdateInstanceConfigRequest.
+// UpdateInstanceConfigRequest: The request for UpdateInstanceConfig.
 type UpdateInstanceConfigRequest struct {
 	// InstanceConfig: Required. The user instance configuration to update, which
 	// must always include the instance configuration name. Otherwise, only fields
@@ -16396,8 +16396,8 @@ func (c *ProjectsInstancesInstancePartitionOperationsListCall) Filter(filter str
 // InstancePartitionDeadline sets the optional parameter
 // "instancePartitionDeadline": Deadline used while retrieving metadata for
 // instance partition operations. Instance partitions whose operation metadata
-// cannot be retrieved within this deadline will be added to unreachable in
-// ListInstancePartitionOperationsResponse.
+// cannot be retrieved within this deadline will be added to
+// unreachable_instance_partitions in ListInstancePartitionOperationsResponse.
 func (c *ProjectsInstancesInstancePartitionOperationsListCall) InstancePartitionDeadline(instancePartitionDeadline string) *ProjectsInstancesInstancePartitionOperationsListCall {
 	c.urlParams_.Set("instancePartitionDeadline", instancePartitionDeadline)
 	return c

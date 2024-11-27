@@ -942,6 +942,42 @@ func (s ContinuousBackupSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CsvExportOptions: Options for exporting data in CSV format. For now, we only
+// support a query to get the data that needs to be exported.
+type CsvExportOptions struct {
+	// EscapeCharacter: Optional. Specifies the character that should appear before
+	// a data character that needs to be escaped. The default is the same as quote
+	// character. The value of this argument has to be a character in Hex ASCII
+	// Code.
+	EscapeCharacter string `json:"escapeCharacter,omitempty"`
+	// FieldDelimiter: Optional. Specifies the character that separates columns
+	// within each row (line) of the file. The default is comma. The value of this
+	// argument has to be a character in Hex ASCII Code.
+	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
+	// QuoteCharacter: Optional. Specifies the quoting character to be used when a
+	// data value is quoted. The default is double-quote. The value of this
+	// argument has to be a character in Hex ASCII Code.
+	QuoteCharacter string `json:"quoteCharacter,omitempty"`
+	// SelectQuery: Required. The select_query used to extract the data.
+	SelectQuery string `json:"selectQuery,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EscapeCharacter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EscapeCharacter") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CsvExportOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod CsvExportOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -1012,6 +1048,38 @@ func (s EncryptionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExportClusterRequest: Export cluster request.
+type ExportClusterRequest struct {
+	// CsvExportOptions: Options for exporting data in CSV format. Required field
+	// to be set for CSV file type.
+	CsvExportOptions *CsvExportOptions `json:"csvExportOptions,omitempty"`
+	// Database: Required. Name of the database where the query will be executed.
+	// Note - Value provided should be the same as expected from `SELECT
+	// current_database();` and NOT as a resource reference.
+	Database string `json:"database,omitempty"`
+	// GcsDestination: Required. Option to export data to cloud storage.
+	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
+	// SqlExportOptions: Options for exporting data in SQL format. Required field
+	// to be set for SQL file type.
+	SqlExportOptions *SqlExportOptions `json:"sqlExportOptions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CsvExportOptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CsvExportOptions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExportClusterRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportClusterRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FailoverInstanceRequest: Message for triggering failover on an Instance
 type FailoverInstanceRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
@@ -1045,6 +1113,31 @@ type FailoverInstanceRequest struct {
 
 func (s FailoverInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod FailoverInstanceRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GcsDestination: Destination for Export. Export will be done to cloud
+// storage.
+type GcsDestination struct {
+	// Uri: Required. The path to the file in Google Cloud Storage where the export
+	// will be stored. The URI is in the form `gs://bucketName/fileName`. If the
+	// file already exists, the request succeeds, but the operation fails.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Uri") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GcsDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GcsDestination
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2407,6 +2500,37 @@ type SecondaryConfig struct {
 
 func (s SecondaryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SecondaryConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlExportOptions: Options for exporting data in SQL format.
+type SqlExportOptions struct {
+	// CleanTargetObjects: Optional. If true, output commands to DROP all the
+	// dumped database objects prior to outputting the commands for creating them.
+	CleanTargetObjects bool `json:"cleanTargetObjects,omitempty"`
+	// IfExistTargetObjects: Optional. If true, use DROP ... IF EXISTS commands to
+	// check for the object's existence before dropping it in clean_target_objects
+	// mode.
+	IfExistTargetObjects bool `json:"ifExistTargetObjects,omitempty"`
+	// SchemaOnly: Optional. If true, only export the schema.
+	SchemaOnly bool `json:"schemaOnly,omitempty"`
+	// Tables: Optional. Tables to export from.
+	Tables []string `json:"tables,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CleanTargetObjects") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CleanTargetObjects") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlExportOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlExportOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5548,6 +5672,107 @@ func (c *ProjectsLocationsClustersDeleteCall) doRequest(alt string) (*http.Respo
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsClustersDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsClustersExportCall struct {
+	s                    *Service
+	name                 string
+	exportclusterrequest *ExportClusterRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Export: Exports data from the cluster. Imperative only.
+//
+// - name: The resource name of the cluster.
+func (r *ProjectsLocationsClustersService) Export(name string, exportclusterrequest *ExportClusterRequest) *ProjectsLocationsClustersExportCall {
+	c := &ProjectsLocationsClustersExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.exportclusterrequest = exportclusterrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsClustersExportCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersExportCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsClustersExportCall) Context(ctx context.Context) *ProjectsLocationsClustersExportCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsClustersExportCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersExportCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exportclusterrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:export")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alloydb.projects.locations.clusters.export" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersExportCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {

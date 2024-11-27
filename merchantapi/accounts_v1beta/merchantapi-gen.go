@@ -647,7 +647,10 @@ func (s BusinessIdentity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BusinessInfo: Collection of information related to a business.
+// BusinessInfo: The `BusinessInfo` message contains essential information
+// about a merchant's business. This message captures key business details such
+// as physical address, customer service contacts, and region-specific
+// identifiers.
 type BusinessInfo struct {
 	// Address: Optional. The address of the business. Only `region_code`,
 	// `address_lines`, `postal_code`, `administrative_area` and `locality` fields
@@ -696,7 +699,7 @@ func (s BusinessInfo) MarshalJSON() ([]byte, error) {
 
 // CarrierRate: A list of carrier rates that can be referred to by `main_table`
 // or `single_value`. Supported carrier services are defined in
-// https://support.google.com/merchants/answer/12577710?hl=en&ref_topic=12570808&sjid=10662598224319463032-NC#zippy=%2Cdelivery-cost-rate-type%2Ccarrier-rate-au-de-uk-and-us-only.
+// https://support.google.com/merchants/answer/12577710?ref_topic=12570808&sjid=10662598224319463032-NC#zippy=%2Cdelivery-cost-rate-type%2Ccarrier-rate-au-de-uk-and-us-only.
 type CarrierRate struct {
 	// Carrier: Required. Carrier service, such as "UPS" or "Fedex".
 	Carrier string `json:"carrier,omitempty"`
@@ -1166,7 +1169,13 @@ func (s Headers) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Homepage: A store's homepage.
+// Homepage: The `Homepage` message represents a merchant's store homepage
+// within the system. A merchant's homepage is the primary domain where
+// customers interact with their store. The homepage can be claimed and
+// verified as a proof of ownership and allows the merchant to unlock features
+// that require a verified website. For more information, see Understanding
+// online store URL verification
+// (//support.google.com/merchants/answer/176793).
 type Homepage struct {
 	// Claimed: Output only. Whether the homepage is claimed. See
 	// https://support.google.com/merchants/answer/176793.
@@ -1660,8 +1669,8 @@ type OnlineReturnPolicy struct {
 	// AcceptExchange: This field specifies if merchant allows customers to
 	// exchange products, this field is required.
 	AcceptExchange bool `json:"acceptExchange,omitempty"`
-	// Countries: Required. The countries of sale where the return policy applies.
-	// The values must be a valid 2 letter ISO 3166 code.
+	// Countries: Required. Immutable. The countries of sale where the return
+	// policy applies. The values must be a valid 2 letter ISO 3166 code.
 	Countries []string `json:"countries,omitempty"`
 	// ItemConditions: The item conditions accepted for returns must not be empty
 	// unless the type of return policy is 'noReturns'.
@@ -1671,12 +1680,12 @@ type OnlineReturnPolicy struct {
 	//   "NEW" - New.
 	//   "USED" - Used.
 	ItemConditions []string `json:"itemConditions,omitempty"`
-	// Label: Required. This field represents the unique user-defined label of the
-	// return policy. It is important to note that the same label cannot be used in
-	// different return policies for the same country. Unless a product specifies a
-	// specific label attribute, policies will be automatically labeled as
-	// 'default'. To assign a custom return policy to certain product groups,
-	// follow the instructions provided in the [Return policy label]
+	// Label: Required. Immutable. This field represents the unique user-defined
+	// label of the return policy. It is important to note that the same label
+	// cannot be used in different return policies for the same country. Unless a
+	// product specifies a specific label attribute, policies will be automatically
+	// labeled as 'default'. To assign a custom return policy to certain product
+	// groups, follow the instructions provided in the [Return policy label]
 	// (https://support.google.com/merchants/answer/9445425). The label can contain
 	// up to 50 characters.
 	Label string `json:"label,omitempty"`
@@ -1750,7 +1759,7 @@ type PhoneNumber struct {
 	// E164Number: The phone number, represented as a leading plus sign ('+'),
 	// followed by a phone number that uses a relaxed ITU E.164 format consisting
 	// of the country calling code (1 to 3 digits) and the subscriber number, with
-	// no additional spaces or formatting, e.g.: - correct: "+15552220123" -
+	// no additional spaces or formatting. For example: - correct: "+15552220123" -
 	// incorrect: "+1 (555) 222-01234 x123". The ITU E.164 format limits the latter
 	// to 12 digits, but in practice not all countries respect that, so we relax
 	// that restriction here. National-only numbers are not allowed. References: -
@@ -1820,42 +1829,43 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PostalAddress: Represents a postal address, e.g. for postal delivery or
-// payments addresses. Given a postal address, a postal service can deliver
+// PostalAddress: Represents a postal address. For example for postal delivery
+// or payments addresses. Given a postal address, a postal service can deliver
 // items to a premise, P.O. Box or similar. It is not intended to model
 // geographical locations (roads, towns, mountains). In typical usage an
-// address would be created via user input or from importing existing data,
+// address would be created by user input or from importing existing data,
 // depending on the type of process. Advice on address input / editing: - Use
 // an internationalization-ready address widget such as
 // https://github.com/google/libaddressinput) - Users should not be presented
 // with UI elements for input or editing of fields outside countries where that
-// field is used. For more guidance on how to use this schema, please see:
+// field is used. For more guidance on how to use this schema, see:
 // https://support.google.com/business/answer/6397478
 type PostalAddress struct {
 	// AddressLines: Unstructured address lines describing the lower levels of an
 	// address. Because values in address_lines do not have type information and
-	// may sometimes contain multiple values in a single field (e.g. "Austin, TX"),
-	// it is important that the line order is clear. The order of address lines
-	// should be "envelope order" for the country/region of the address. In places
-	// where this can vary (e.g. Japan), address_language is used to make it
-	// explicit (e.g. "ja" for large-to-small ordering and "ja-Latn" or "en" for
-	// small-to-large). This way, the most specific line of an address can be
-	// selected based on the language. The minimum permitted structural
-	// representation of an address consists of a region_code with all remaining
-	// information placed in the address_lines. It would be possible to format such
-	// an address very approximately without geocoding, but no semantic reasoning
-	// could be made about any of the address components until it was at least
-	// partially resolved. Creating an address only containing a region_code and
-	// address_lines, and then geocoding is the recommended way to handle
+	// may sometimes contain multiple values in a single field (For example
+	// "Austin, TX"), it is important that the line order is clear. The order of
+	// address lines should be "envelope order" for the country/region of the
+	// address. In places where this can vary (For example Japan), address_language
+	// is used to make it explicit (For example "ja" for large-to-small ordering
+	// and "ja-Latn" or "en" for small-to-large). This way, the most specific line
+	// of an address can be selected based on the language. The minimum permitted
+	// structural representation of an address consists of a region_code with all
+	// remaining information placed in the address_lines. It would be possible to
+	// format such an address very approximately without geocoding, but no semantic
+	// reasoning could be made about any of the address components until it was at
+	// least partially resolved. Creating an address only containing a region_code
+	// and address_lines, and then geocoding is the recommended way to handle
 	// completely unstructured addresses (as opposed to guessing which parts of the
 	// address should be localities or administrative areas).
 	AddressLines []string `json:"addressLines,omitempty"`
 	// AdministrativeArea: Optional. Highest administrative subdivision which is
 	// used for postal addresses of a country or region. For example, this can be a
 	// state, a province, an oblast, or a prefecture. Specifically, for Spain this
-	// is the province and not the autonomous community (e.g. "Barcelona" and not
-	// "Catalonia"). Many countries don't use an administrative area in postal
-	// addresses. E.g. in Switzerland this should be left unpopulated.
+	// is the province and not the autonomous community (For example "Barcelona"
+	// and not "Catalonia"). Many countries don't use an administrative area in
+	// postal addresses. For example in Switzerland this should be left
+	// unpopulated.
 	AdministrativeArea string `json:"administrativeArea,omitempty"`
 	// LanguageCode: Optional. BCP-47 language code of the contents of this address
 	// (if known). This is often the UI language of the input form or is expected
@@ -1875,7 +1885,7 @@ type PostalAddress struct {
 	Organization string `json:"organization,omitempty"`
 	// PostalCode: Optional. Postal code of the address. Not all countries use or
 	// require postal codes to be present, but where they are used, they may
-	// trigger additional validation with other parts of the address (e.g.
+	// trigger additional validation with other parts of the address (For example
 	// state/zip validation in the U.S.A.).
 	PostalCode string `json:"postalCode,omitempty"`
 	// Recipients: Optional. The recipient at the address. This field may, under
@@ -1894,9 +1904,10 @@ type PostalAddress struct {
 	Revision int64 `json:"revision,omitempty"`
 	// SortingCode: Optional. Additional, country-specific, sorting code. This is
 	// not used in most regions. Where it is used, the value is either a string
-	// like "CEDEX", optionally followed by a number (e.g. "CEDEX 7"), or just a
-	// number alone, representing the "sector code" (Jamaica), "delivery area
-	// indicator" (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
+	// like "CEDEX", optionally followed by a number (For example "CEDEX 7"), or
+	// just a number alone, representing the "sector code" (Jamaica), "delivery
+	// area indicator" (Malawi) or "post office indicator" (For example Côte
+	// d'Ivoire).
 	SortingCode string `json:"sortingCode,omitempty"`
 	// Sublocality: Optional. Sublocality of the address. For example, this can be
 	// neighborhoods, boroughs, districts.
@@ -2086,7 +2097,8 @@ type ProductStatusChangeMessage struct {
 	Attribute string `json:"attribute,omitempty"`
 	// Changes: A message to describe the change that happened to the product
 	Changes []*ProductChange `json:"changes,omitempty"`
-	// ExpirationTime: The product expiration time.
+	// ExpirationTime: The product expiration time. This field will not bet set if
+	// the notification is sent for a product deletion event.
 	ExpirationTime string `json:"expirationTime,omitempty"`
 	// ManagingAccount: The account that manages the merchant's account. can be the
 	// same as merchant id if it is standalone account. Format :
@@ -2515,14 +2527,14 @@ func (s ShippingSettings) MarshalJSON() ([]byte, error) {
 // ShortCode: An object representing a short code, which is a phone number that
 // is typically much shorter than regular phone numbers and can be used to
 // address messages in MMS and SMS systems, as well as for abbreviated dialing
-// (e.g. "Text 611 to see how many minutes you have remaining on your plan.").
-// Short codes are restricted to a region and are not internationally dialable,
-// which means the same short code can exist in different regions, with
-// different usage and pricing, even if those regions share the same country
-// calling code (e.g. US and CA).
+// (For example "Text 611 to see how many minutes you have remaining on your
+// plan."). Short codes are restricted to a region and are not internationally
+// dialable, which means the same short code can exist in different regions,
+// with different usage and pricing, even if those regions share the same
+// country calling code (For example: US and CA).
 type ShortCode struct {
 	// Number: Required. The short code digits, without a leading plus ('+') or
-	// country calling code, e.g. "611".
+	// country calling code. For example "611".
 	Number string `json:"number,omitempty"`
 	// RegionCode: Required. The BCP-47 region code of the location where calls to
 	// this short code can be made, such as "US" and "BB". Reference(s): -
@@ -2761,9 +2773,10 @@ func (s TermsOfServiceAgreementState) MarshalJSON() ([]byte, error) {
 // TimeZone: Represents a time zone from the IANA Time Zone Database
 // (https://www.iana.org/time-zones).
 type TimeZone struct {
-	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
+	// Id: IANA Time Zone Database time zone. For example "America/New_York".
 	Id string `json:"id,omitempty"`
-	// Version: Optional. IANA Time Zone Database version number, e.g. "2019a".
+	// Version: Optional. IANA Time Zone Database version number. For example
+	// "2019a".
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3571,7 +3584,8 @@ type AccountsListSubaccountsCall struct {
 // the following filter: `relationship(providerId={parent} AND
 // service(type="ACCOUNT_AGGREGATION"))`
 //
-// - provider: The parent account. Format: `accounts/{account}`.
+//   - provider: The aggregation service provider. Format:
+//     `providers/{providerId}`.
 func (r *AccountsService) ListSubaccounts(provider string) *AccountsListSubaccountsCall {
 	c := &AccountsListSubaccountsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.provider = provider

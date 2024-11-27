@@ -6,8 +6,10 @@
 package internaloption
 
 import (
+	"context"
 	"log/slog"
 
+	"cloud.google.com/go/auth"
 	"github.com/googleapis/gax-go/v2/internallog"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/internal"
@@ -254,4 +256,34 @@ func GetLogger(opts []option.ClientOption) *slog.Logger {
 		opt.Apply(&ds)
 	}
 	return internallog.New(ds.Logger)
+}
+
+// AuthCreds returns [cloud.google.com/go/auth.Credentials] using the following
+// options provided via [option.ClientOption], including legacy oauth2/google
+// options, in this order:
+//
+// * [option.WithAuthCredentials]
+// * [option/internaloption.WithCredentials] (internal use only)
+// * [option.WithCredentials]
+// * [option.WithTokenSource]
+//
+// If there are no applicable credentials options, then it passes the
+// following options to [cloud.google.com/go/auth/credentials.DetectDefault] and
+// returns the result:
+//
+// * [option.WithAudiences]
+// * [option.WithCredentialsFile]
+// * [option.WithCredentialsJSON]
+// * [option.WithScopes]
+// * [option/internaloption.WithDefaultScopes] (internal use only)
+// * [option/internaloption.EnableJwtWithScope] (internal use only)
+//
+// This function should only be used internally by generated clients. This is an
+// EXPERIMENTAL API and may be changed or removed in the future.
+func AuthCreds(ctx context.Context, opts []option.ClientOption) (*auth.Credentials, error) {
+	var ds internal.DialSettings
+	for _, opt := range opts {
+		opt.Apply(&ds)
+	}
+	return internal.AuthCreds(ctx, &ds)
 }

@@ -785,8 +785,8 @@ type OperationMetadata struct {
 	ApiVersion string `json:"apiVersion,omitempty"`
 	// CancelRequested: Output only. Identifies whether the user has requested
 	// cancellation of the operation. Operations that have been cancelled
-	// successfully have Operation.error value with a google.rpc.Status.code of 1,
-	// corresponding to `Code.CANCELLED`.
+	// successfully have google.longrunning.Operation.error value with a
+	// google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.
 	CancelRequested bool `json:"cancelRequested,omitempty"`
 	// CreateTime: Output only. The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2070,8 +2070,7 @@ func (c *ProjectsLocationsJobsListCall) PageSize(pageSize int64) *ProjectsLocati
 // page of results the server will return. To request the first page results,
 // page_token must be empty. To request the next page of results, page_token
 // must be the value of next_page_token returned from the previous call to
-// ListJobs. It is an error to switch the value of filter or order_by while
-// iterating through pages.
+// ListJobs.
 func (c *ProjectsLocationsJobsListCall) PageToken(pageToken string) *ProjectsLocationsJobsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

@@ -632,6 +632,12 @@ type GoogleCloudOrgpolicyV2PolicySpecPolicyRule struct {
 	// configuration is acceptable. This field can be set only in policies for
 	// boolean constraints.
 	Enforce bool `json:"enforce,omitempty"`
+	// Parameters: Optional. Required for GMCs if parameters defined in
+	// constraints. Pass parameter values when policy enforcement is enabled.
+	// Ensure that parameter value types match those defined in the constraint
+	// definition. For example: { "allowedLocations" : ["us-east1", "us-west1"],
+	// "allowAll" : true }
+	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 	// Values: List of values to be used for this policy rule. This field can be
 	// set only in policies for list constraints.
 	Values *GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues `json:"values,omitempty"`

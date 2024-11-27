@@ -1079,7 +1079,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.agents.operations.cancel",
@@ -1234,7 +1234,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/apps/{appsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.apps.operations.cancel",
@@ -1853,7 +1853,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/customJobs/{customJobsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.customJobs.operations.cancel",
@@ -2168,7 +2168,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/dataLabelingJobs/{dataLabelingJobsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.dataLabelingJobs.operations.cancel",
@@ -2683,7 +2683,7 @@
                     "operations": {
                       "methods": {
                         "cancel": {
-                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/annotationSpecs/{annotationSpecsId}/operations/{operationsId}:cancel",
                           "httpMethod": "POST",
                           "id": "aiplatform.projects.locations.datasets.annotationSpecs.operations.cancel",
@@ -2948,7 +2948,7 @@
                         "operations": {
                           "methods": {
                             "cancel": {
-                              "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                              "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                               "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dataItems/{dataItemsId}/annotations/{annotationsId}/operations/{operationsId}:cancel",
                               "httpMethod": "POST",
                               "id": "aiplatform.projects.locations.datasets.dataItems.annotations.operations.cancel",
@@ -3101,7 +3101,7 @@
                     "operations": {
                       "methods": {
                         "cancel": {
-                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dataItems/{dataItemsId}/operations/{operationsId}:cancel",
                           "httpMethod": "POST",
                           "id": "aiplatform.projects.locations.datasets.dataItems.operations.cancel",
@@ -3453,7 +3453,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.datasets.operations.cancel",
@@ -3685,7 +3685,7 @@
                     "operations": {
                       "methods": {
                         "cancel": {
-                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/savedQueries/{savedQueriesId}/operations/{operationsId}:cancel",
                           "httpMethod": "POST",
                           "id": "aiplatform.projects.locations.datasets.savedQueries.operations.cancel",
@@ -4028,7 +4028,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/deploymentResourcePools/{deploymentResourcePoolsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.deploymentResourcePools.operations.cancel",
@@ -4183,7 +4183,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/edgeDevices/{edgeDevicesId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.edgeDevices.operations.cancel",
@@ -5115,7 +5115,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/endpoints/{endpointsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.endpoints.operations.cancel",
@@ -5400,7 +5400,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/exampleStores/{exampleStoresId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.exampleStores.operations.cancel",
@@ -5555,7 +5555,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/extensionControllers/{extensionControllersId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.extensionControllers.operations.cancel",
@@ -5927,7 +5927,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/extensions/{extensionsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.extensions.operations.cancel",
@@ -6193,7 +6193,7 @@
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "A page token, received from a previous FeatureGroupAdminService.ListFeatureGroups call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to FeatureGroupAdminService.ListFeatureGroups must match the call that provided the page token.",
+                      "description": "A page token, received from a previous FeatureRegistryService.ListFeatureGroups call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to FeatureRegistryService.ListFeatureGroups must match the call that provided the page token.",
                       "location": "query",
                       "type": "string"
                     },
@@ -6484,6 +6484,132 @@
                           "path": "v1beta1/{+parent}/featureMonitorJobs",
                           "response": {
                             "$ref": "GoogleCloudAiplatformV1beta1ListFeatureMonitorJobsResponse"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        }
+                      }
+                    },
+                    "operations": {
+                      "methods": {
+                        "delete": {
+                          "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
+                          "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featureGroups/{featureGroupsId}/featureMonitors/{featureMonitorsId}/operations/{operationsId}",
+                          "httpMethod": "DELETE",
+                          "id": "aiplatform.projects.locations.featureGroups.featureMonitors.operations.delete",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "The name of the operation resource to be deleted.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/featureGroups/[^/]+/featureMonitors/[^/]+/operations/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1beta1/{+name}",
+                          "response": {
+                            "$ref": "GoogleProtobufEmpty"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        },
+                        "get": {
+                          "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+                          "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featureGroups/{featureGroupsId}/featureMonitors/{featureMonitorsId}/operations/{operationsId}",
+                          "httpMethod": "GET",
+                          "id": "aiplatform.projects.locations.featureGroups.featureMonitors.operations.get",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "The name of the operation resource.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/featureGroups/[^/]+/featureMonitors/[^/]+/operations/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1beta1/{+name}",
+                          "response": {
+                            "$ref": "GoogleLongrunningOperation"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        },
+                        "list": {
+                          "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
+                          "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featureGroups/{featureGroupsId}/featureMonitors/{featureMonitorsId}/operations",
+                          "httpMethod": "GET",
+                          "id": "aiplatform.projects.locations.featureGroups.featureMonitors.operations.list",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "filter": {
+                              "description": "The standard list filter.",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "name": {
+                              "description": "The name of the operation's parent resource.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/featureGroups/[^/]+/featureMonitors/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            },
+                            "pageSize": {
+                              "description": "The standard list page size.",
+                              "format": "int32",
+                              "location": "query",
+                              "type": "integer"
+                            },
+                            "pageToken": {
+                              "description": "The standard list page token.",
+                              "location": "query",
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1beta1/{+name}/operations",
+                          "response": {
+                            "$ref": "GoogleLongrunningListOperationsResponse"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        },
+                        "wait": {
+                          "description": "Waits until the specified long-running operation is done or reaches at most a specified timeout, returning the latest state. If the operation is already done, the latest state is immediately returned. If the timeout specified is greater than the default HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort basis. It may return the latest state before the specified timeout (including immediately), meaning even an immediate response is no guarantee that the operation is done.",
+                          "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featureGroups/{featureGroupsId}/featureMonitors/{featureMonitorsId}/operations/{operationsId}:wait",
+                          "httpMethod": "POST",
+                          "id": "aiplatform.projects.locations.featureGroups.featureMonitors.operations.wait",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "The name of the operation resource to wait on.",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/featureGroups/[^/]+/featureMonitors/[^/]+/operations/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            },
+                            "timeout": {
+                              "description": "The maximum duration to wait before timing out. If left blank, the wait will be at most the time permitted by the underlying HTTP/RPC protocol. If RPC context deadline is also specified, the shorter one will be used.",
+                              "format": "google-duration",
+                              "location": "query",
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1beta1/{+name}:wait",
+                          "response": {
+                            "$ref": "GoogleLongrunningOperation"
                           },
                           "scopes": [
                             "https://www.googleapis.com/auth/cloud-platform"
@@ -8936,7 +9062,7 @@
                         "operations": {
                           "methods": {
                             "cancel": {
-                              "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                              "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                               "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featurestores/{featurestoresId}/entityTypes/{entityTypesId}/features/{featuresId}/operations/{operationsId}:cancel",
                               "httpMethod": "POST",
                               "id": "aiplatform.projects.locations.featurestores.entityTypes.features.operations.cancel",
@@ -9089,7 +9215,7 @@
                     "operations": {
                       "methods": {
                         "cancel": {
-                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featurestores/{featurestoresId}/entityTypes/{entityTypesId}/operations/{operationsId}:cancel",
                           "httpMethod": "POST",
                           "id": "aiplatform.projects.locations.featurestores.entityTypes.operations.cancel",
@@ -9242,7 +9368,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featurestores/{featurestoresId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.featurestores.operations.cancel",
@@ -9552,7 +9678,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/hyperparameterTuningJobs/{hyperparameterTuningJobsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.hyperparameterTuningJobs.operations.cancel",
@@ -10008,7 +10134,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/indexEndpoints/{indexEndpointsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.indexEndpoints.operations.cancel",
@@ -10380,7 +10506,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/indexes/{indexesId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.indexes.operations.cancel",
@@ -10903,7 +11029,7 @@
                     "operations": {
                       "methods": {
                         "cancel": {
-                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/metadataStores/{metadataStoresId}/artifacts/{artifactsId}/operations/{operationsId}:cancel",
                           "httpMethod": "POST",
                           "id": "aiplatform.projects.locations.metadataStores.artifacts.operations.cancel",
@@ -11375,7 +11501,7 @@
                     "operations": {
                       "methods": {
                         "cancel": {
-                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/metadataStores/{metadataStoresId}/contexts/{contextsId}/operations/{operationsId}:cancel",
                           "httpMethod": "POST",
                           "id": "aiplatform.projects.locations.metadataStores.contexts.operations.cancel",
@@ -11786,7 +11912,7 @@
                     "operations": {
                       "methods": {
                         "cancel": {
-                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/metadataStores/{metadataStoresId}/executions/{executionsId}/operations/{operationsId}:cancel",
                           "httpMethod": "POST",
                           "id": "aiplatform.projects.locations.metadataStores.executions.operations.cancel",
@@ -12042,7 +12168,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/metadataStores/{metadataStoresId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.metadataStores.operations.cancel",
@@ -12255,7 +12381,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/migratableResources/{migratableResourcesId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.migratableResources.operations.cancel",
@@ -12655,7 +12781,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/modelDeploymentMonitoringJobs/{modelDeploymentMonitoringJobsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.modelDeploymentMonitoringJobs.operations.cancel",
@@ -13171,7 +13297,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/modelMonitors/{modelMonitorsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.modelMonitors.operations.cancel",
@@ -13870,7 +13996,7 @@
                     "operations": {
                       "methods": {
                         "cancel": {
-                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/models/{modelsId}/evaluations/{evaluationsId}/operations/{operationsId}:cancel",
                           "httpMethod": "POST",
                           "id": "aiplatform.projects.locations.models.evaluations.operations.cancel",
@@ -14127,7 +14253,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/models/{modelsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.models.operations.cancel",
@@ -14656,7 +14782,7 @@
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "Optional. The standard list page token. Typically obtained via ListNotebookExecutionJobs.next_page_token of the previous NotebookService.ListNotebookExecutionJobs call.",
+                      "description": "Optional. The standard list page token. Typically obtained via ListNotebookExecutionJobsResponse.next_page_token of the previous NotebookService.ListNotebookExecutionJobs call.",
                       "location": "query",
                       "type": "string"
                     },
@@ -14724,7 +14850,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/notebookExecutionJobs/{notebookExecutionJobsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.notebookExecutionJobs.operations.cancel",
@@ -15140,7 +15266,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/notebookRuntimeTemplates/{notebookRuntimeTemplatesId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.notebookRuntimeTemplates.operations.cancel",
@@ -15567,7 +15693,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/notebookRuntimes/{notebookRuntimesId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.notebookRuntimes.operations.cancel",
@@ -15720,7 +15846,7 @@
             "operations": {
               "methods": {
                 "cancel": {
-                  "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                  "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
                   "httpMethod": "POST",
                   "id": "aiplatform.projects.locations.operations.cancel",
@@ -15969,7 +16095,7 @@
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "Optional. The standard list page token. Typically obtained via ListPersistentResourceResponse.next_page_token of the previous PersistentResourceService.ListPersistentResource call.",
+                      "description": "Optional. The standard list page token. Typically obtained via ListPersistentResourcesResponse.next_page_token of the previous PersistentResourceService.ListPersistentResource call.",
                       "location": "query",
                       "type": "string"
                     },
@@ -16056,7 +16182,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/persistentResources/{persistentResourcesId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.persistentResources.operations.cancel",
@@ -16432,7 +16558,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/pipelineJobs/{pipelineJobsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.pipelineJobs.operations.cancel",
@@ -17064,7 +17190,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/ragCorpora/{ragCorporaId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.ragCorpora.operations.cancel",
@@ -17333,7 +17459,7 @@
                     "operations": {
                       "methods": {
                         "cancel": {
-                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/ragCorpora/{ragCorporaId}/ragFiles/{ragFilesId}/operations/{operationsId}:cancel",
                           "httpMethod": "POST",
                           "id": "aiplatform.projects.locations.ragCorpora.ragFiles.operations.cancel",
@@ -17673,7 +17799,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/reasoningEngines/{reasoningEnginesId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.reasoningEngines.operations.cancel",
@@ -18012,7 +18138,7 @@
                   ]
                 },
                 "resume": {
-                  "description": "Resumes a paused Schedule to start scheduling new runs. Will mark Schedule.state to 'ACTIVE'. Only paused Schedule can be resumed. When the Schedule is resumed, new runs will be scheduled starting from the next execution time after the current time based on the time_specification in the Schedule. If Schedule.catchUp is set up true, all missed runs will be scheduled for backfill first.",
+                  "description": "Resumes a paused Schedule to start scheduling new runs. Will mark Schedule.state to 'ACTIVE'. Only paused Schedule can be resumed. When the Schedule is resumed, new runs will be scheduled starting from the next execution time after the current time based on the time_specification in the Schedule. If Schedule.catch_up is set up true, all missed runs will be scheduled for backfill first.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/schedules/{schedulesId}:resume",
                   "httpMethod": "POST",
                   "id": "aiplatform.projects.locations.schedules.resume",
@@ -18044,7 +18170,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/schedules/{schedulesId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.schedules.operations.cancel",
@@ -18459,7 +18585,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/specialistPools/{specialistPoolsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.specialistPools.operations.cancel",
@@ -18758,7 +18884,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.studies.operations.cancel",
@@ -19195,7 +19321,7 @@
                     "operations": {
                       "methods": {
                         "cancel": {
-                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/studies/{studiesId}/trials/{trialsId}/operations/{operationsId}:cancel",
                           "httpMethod": "POST",
                           "id": "aiplatform.projects.locations.studies.trials.operations.cancel",
@@ -19828,7 +19954,7 @@
                     "operations": {
                       "methods": {
                         "cancel": {
-                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tensorboards/{tensorboardsId}/experiments/{experimentsId}/operations/{operationsId}:cancel",
                           "httpMethod": "POST",
                           "id": "aiplatform.projects.locations.tensorboards.experiments.operations.cancel",
@@ -20208,7 +20334,7 @@
                         "operations": {
                           "methods": {
                             "cancel": {
-                              "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                              "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                               "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tensorboards/{tensorboardsId}/experiments/{experimentsId}/runs/{runsId}/operations/{operationsId}:cancel",
                               "httpMethod": "POST",
                               "id": "aiplatform.projects.locations.tensorboards.experiments.runs.operations.cancel",
@@ -20627,7 +20753,7 @@
                             "operations": {
                               "methods": {
                                 "cancel": {
-                                  "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                                  "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tensorboards/{tensorboardsId}/experiments/{experimentsId}/runs/{runsId}/timeSeries/{timeSeriesId}/operations/{operationsId}:cancel",
                                   "httpMethod": "POST",
                                   "id": "aiplatform.projects.locations.tensorboards.experiments.runs.timeSeries.operations.cancel",
@@ -20784,7 +20910,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/tensorboards/{tensorboardsId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.tensorboards.operations.cancel",
@@ -21094,7 +21220,7 @@
                 "operations": {
                   "methods": {
                     "cancel": {
-                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+                      "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/trainingPipelines/{trainingPipelinesId}/operations/{operationsId}:cancel",
                       "httpMethod": "POST",
                       "id": "aiplatform.projects.locations.trainingPipelines.operations.cancel",
@@ -21348,7 +21474,7 @@
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "Optional. The standard list page token. Typically obtained via ListTuningJob.next_page_token of the previous GenAiTuningService.ListTuningJob][] call.",
+                      "description": "Optional. The standard list page token. Typically obtained via ListTuningJobsResponse.next_page_token of the previous GenAiTuningService.ListTuningJob][] call.",
                       "location": "query",
                       "type": "string"
                     },
@@ -21682,7 +21808,7 @@
       }
     }
   },
-  "revision": "20241026",
+  "revision": "20241119",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "CloudAiLargeModelsVisionGenerateVideoResponse": {
@@ -22986,7 +23112,7 @@
         },
         "request": {
           "$ref": "GoogleCloudAiplatformV1beta1MigrateResourceRequest",
-          "description": "It's the same as the value in MigrateResourceRequest.migrate_resource_requests."
+          "description": "It's the same as the value in BatchMigrateResourcesRequest.migrate_resource_requests."
         }
       },
       "type": "object"
@@ -23998,6 +24124,80 @@
           "description": "Optional. Which version to use for evaluation.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1CometInput": {
+      "description": "Input for Comet metric.",
+      "id": "GoogleCloudAiplatformV1beta1CometInput",
+      "properties": {
+        "instance": {
+          "$ref": "GoogleCloudAiplatformV1beta1CometInstance",
+          "description": "Required. Comet instance."
+        },
+        "metricSpec": {
+          "$ref": "GoogleCloudAiplatformV1beta1CometSpec",
+          "description": "Required. Spec for comet metric."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1CometInstance": {
+      "description": "Spec for Comet instance - The fields used for evaluation are dependent on the comet version.",
+      "id": "GoogleCloudAiplatformV1beta1CometInstance",
+      "properties": {
+        "prediction": {
+          "description": "Required. Output of the evaluated model.",
+          "type": "string"
+        },
+        "reference": {
+          "description": "Optional. Ground truth used to compare against the prediction.",
+          "type": "string"
+        },
+        "source": {
+          "description": "Optional. Source text in original language.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1CometResult": {
+      "description": "Spec for Comet result - calculates the comet score for the given instance using the version specified in the spec.",
+      "id": "GoogleCloudAiplatformV1beta1CometResult",
+      "properties": {
+        "score": {
+          "description": "Output only. Comet score. Range depends on version.",
+          "format": "float",
+          "readOnly": true,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1CometSpec": {
+      "description": "Spec for Comet metric.",
+      "id": "GoogleCloudAiplatformV1beta1CometSpec",
+      "properties": {
+        "sourceLanguage": {
+          "description": "Optional. Source language in BCP-47 format.",
+          "type": "string"
+        },
+        "targetLanguage": {
+          "description": "Optional. Target language in BCP-47 format. Covers both prediction and reference.",
+          "type": "string"
+        },
+        "version": {
+          "description": "Required. Which version to use for evaluation.",
+          "enum": [
+            "COMET_VERSION_UNSPECIFIED",
+            "COMET_22_SRC_REF"
+          ],
+          "enumDescriptions": [
+            "Comet version unspecified.",
+            "Comet 22 for translation + source + reference (source-reference-combined)."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -25505,6 +25705,11 @@
           "format": "int32",
           "type": "integer"
         },
+        "requiredReplicaCount": {
+          "description": "Optional. Number of required available replicas for the deployment to succeed. This field is only needed when partial model deployment/mutation is desired. If set, the model deploy/mutate operation will succeed once available_replica_count reaches required_replica_count, and the rest of the replicas will be retried. If not set, the default required_replica_count will be min_replica_count.",
+          "format": "int32",
+          "type": "integer"
+        },
         "spot": {
           "description": "Optional. If true, schedule the deployment workload on [spot VMs](https://cloud.google.com/kubernetes-engine/docs/concepts/spot-vms).",
           "type": "boolean"
@@ -25923,6 +26128,11 @@
           "description": "The resource name of the shared DeploymentResourcePool to deploy on. Format: `projects/{project}/locations/{location}/deploymentResourcePools/{deployment_resource_pool}`",
           "type": "string"
         },
+        "status": {
+          "$ref": "GoogleCloudAiplatformV1beta1DeployedModelStatus",
+          "description": "Output only. Runtime status of the deployed model.",
+          "readOnly": true
+        },
         "systemLabels": {
           "additionalProperties": {
             "type": "string"
@@ -25943,6 +26153,30 @@
         },
         "endpoint": {
           "description": "Immutable. A resource name of an Endpoint.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1DeployedModelStatus": {
+      "description": "Runtime status of the deployed model.",
+      "id": "GoogleCloudAiplatformV1beta1DeployedModelStatus",
+      "properties": {
+        "availableReplicaCount": {
+          "description": "Output only. The number of available replicas of the deployed model.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "lastUpdateTime": {
+          "description": "Output only. The time at which the status was last updated.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "message": {
+          "description": "Output only. The latest deployed model's status message (if any).",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -26488,6 +26722,10 @@
           "$ref": "GoogleCloudAiplatformV1beta1CoherenceInput",
           "description": "Input for coherence metric."
         },
+        "cometInput": {
+          "$ref": "GoogleCloudAiplatformV1beta1CometInput",
+          "description": "Translation metrics. Input for Comet metric."
+        },
         "exactMatchInput": {
           "$ref": "GoogleCloudAiplatformV1beta1ExactMatchInput",
           "description": "Auto metric instances. Instances and metric spec for exact match metric."
@@ -26503,6 +26741,10 @@
         "groundednessInput": {
           "$ref": "GoogleCloudAiplatformV1beta1GroundednessInput",
           "description": "Input for groundedness metric."
+        },
+        "metricxInput": {
+          "$ref": "GoogleCloudAiplatformV1beta1MetricxInput",
+          "description": "Input for Metricx metric."
         },
         "pairwiseMetricInput": {
           "$ref": "GoogleCloudAiplatformV1beta1PairwiseMetricInput",
@@ -26587,6 +26829,10 @@
           "$ref": "GoogleCloudAiplatformV1beta1CoherenceResult",
           "description": "Result for coherence metric."
         },
+        "cometResult": {
+          "$ref": "GoogleCloudAiplatformV1beta1CometResult",
+          "description": "Translation metrics. Result for Comet metric."
+        },
         "exactMatchResults": {
           "$ref": "GoogleCloudAiplatformV1beta1ExactMatchResults",
           "description": "Auto metric evaluation results. Results for exact match metric."
@@ -26602,6 +26848,10 @@
         "groundednessResult": {
           "$ref": "GoogleCloudAiplatformV1beta1GroundednessResult",
           "description": "Result for groundedness metric."
+        },
+        "metricxResult": {
+          "$ref": "GoogleCloudAiplatformV1beta1MetricxResult",
+          "description": "Result for Metricx metric."
         },
         "pairwiseMetricResult": {
           "$ref": "GoogleCloudAiplatformV1beta1PairwiseMetricResult",
@@ -27881,6 +28131,16 @@
           "$ref": "GoogleCloudAiplatformV1beta1RuntimeConfig",
           "description": "Optional. Runtime config controlling the runtime behavior of this Extension."
         },
+        "satisfiesPzi": {
+          "description": "Output only. Reserved for future use.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Reserved for future use.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "toolUseExamples": {
           "description": "Optional. Examples to illustrate the usage of the extension as a tool.",
           "items": {
@@ -27970,6 +28230,11 @@
           "description": "Query that is used to retrieve this fact.",
           "type": "string"
         },
+        "score": {
+          "description": "If present, according to the underlying Vector DB and the selected metric type, the score can be either the distance or the similarity between the query and the fact and its range depends on the metric type. For example, if the metric type is COSINE_DISTANCE, it represents the distance between the query and the fact. The larger the distance, the less relevant the fact is to the query. The range is [0, 2], while 0 means the most relevant and 2 means the least relevant.",
+          "format": "double",
+          "type": "number"
+        },
         "summary": {
           "description": "If present, the summary/snippet of the fact.",
           "type": "string"
@@ -27983,6 +28248,7 @@
           "type": "string"
         },
         "vectorDistance": {
+          "deprecated": true,
           "description": "If present, the distance between the query vector and this fact vector.",
           "format": "double",
           "type": "number"
@@ -30959,7 +31225,11 @@
         },
         "ragFileParsingConfig": {
           "$ref": "GoogleCloudAiplatformV1beta1RagFileParsingConfig",
-          "description": "Specifies the parsing config for RagFiles."
+          "description": "Optional. Specifies the parsing config for RagFiles. RAG will use the default parser if this field is not set."
+        },
+        "ragFileTransformationConfig": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagFileTransformationConfig",
+          "description": "Specifies the transformation config for RagFiles."
         },
         "sharePointSources": {
           "$ref": "GoogleCloudAiplatformV1beta1SharePointSources",
@@ -32260,7 +32530,7 @@
       "id": "GoogleCloudAiplatformV1beta1ListNotebookExecutionJobsResponse",
       "properties": {
         "nextPageToken": {
-          "description": "A token to retrieve next page of results. Pass to ListNotebookExecutionJobs.page_token to obtain that page.",
+          "description": "A token to retrieve next page of results. Pass to ListNotebookExecutionJobsRequest.page_token to obtain that page.",
           "type": "string"
         },
         "notebookExecutionJobs": {
@@ -32953,6 +33223,84 @@
         "diskUtilizationBytes": {
           "description": "The disk utilization of the MetadataStore in bytes.",
           "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1MetricxInput": {
+      "description": "Input for MetricX metric.",
+      "id": "GoogleCloudAiplatformV1beta1MetricxInput",
+      "properties": {
+        "instance": {
+          "$ref": "GoogleCloudAiplatformV1beta1MetricxInstance",
+          "description": "Required. Metricx instance."
+        },
+        "metricSpec": {
+          "$ref": "GoogleCloudAiplatformV1beta1MetricxSpec",
+          "description": "Required. Spec for Metricx metric."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1MetricxInstance": {
+      "description": "Spec for MetricX instance - The fields used for evaluation are dependent on the MetricX version.",
+      "id": "GoogleCloudAiplatformV1beta1MetricxInstance",
+      "properties": {
+        "prediction": {
+          "description": "Required. Output of the evaluated model.",
+          "type": "string"
+        },
+        "reference": {
+          "description": "Optional. Ground truth used to compare against the prediction.",
+          "type": "string"
+        },
+        "source": {
+          "description": "Optional. Source text in original language.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1MetricxResult": {
+      "description": "Spec for MetricX result - calculates the MetricX score for the given instance using the version specified in the spec.",
+      "id": "GoogleCloudAiplatformV1beta1MetricxResult",
+      "properties": {
+        "score": {
+          "description": "Output only. MetricX score. Range depends on version.",
+          "format": "float",
+          "readOnly": true,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1MetricxSpec": {
+      "description": "Spec for MetricX metric.",
+      "id": "GoogleCloudAiplatformV1beta1MetricxSpec",
+      "properties": {
+        "sourceLanguage": {
+          "description": "Optional. Source language in BCP-47 format.",
+          "type": "string"
+        },
+        "targetLanguage": {
+          "description": "Optional. Target language in BCP-47 format. Covers both prediction and reference.",
+          "type": "string"
+        },
+        "version": {
+          "description": "Required. Which version to use for evaluation.",
+          "enum": [
+            "METRICX_VERSION_UNSPECIFIED",
+            "METRICX_24_REF",
+            "METRICX_24_SRC",
+            "METRICX_24_SRC_REF"
+          ],
+          "enumDescriptions": [
+            "MetricX version unspecified.",
+            "MetricX 2024 (2.6) for translation + reference (reference-based).",
+            "MetricX 2024 (2.6) for translation + source (QE).",
+            "MetricX 2024 (2.6) for translation + source + reference (source-reference-combined)."
+          ],
           "type": "string"
         }
       },
@@ -34143,7 +34491,7 @@
           "description": "Email alert config."
         },
         "enableLogging": {
-          "description": "Dump the anomalies to Cloud Logging. The anomalies will be put to json payload encoded from proto google.cloud.aiplatform.logging.ModelMonitoringAnomaliesLogEntry. This can be further sinked to Pub/Sub or any other services supported by Cloud Logging.",
+          "description": "Dump the anomalies to Cloud Logging. The anomalies will be put to json payload encoded from proto ModelMonitoringStatsAnomalies. This can be further synced to Pub/Sub or any other services supported by Cloud Logging.",
           "type": "boolean"
         },
         "notificationChannels": {
@@ -35917,7 +36265,7 @@
         },
         "encryptionSpec": {
           "$ref": "GoogleCloudAiplatformV1beta1EncryptionSpec",
-          "description": "Customer-managed encryption key spec for the notebook execution job. This field is auto-populated if the NotebookService.NotebookRuntimeTemplate has an encryption spec."
+          "description": "Customer-managed encryption key spec for the notebook execution job. This field is auto-populated if the NotebookRuntimeTemplate has an encryption spec."
         },
         "executionTimeout": {
           "description": "Max running time of the execution job in seconds (default 86400s / 24 hrs).",
@@ -35969,6 +36317,10 @@
           "readOnly": true,
           "type": "string"
         },
+        "kernelName": {
+          "description": "The name of the kernel to use during notebook execution. If unset, the default kernel is used.",
+          "type": "string"
+        },
         "labels": {
           "additionalProperties": {
             "type": "string"
@@ -36004,6 +36356,10 @@
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
+        },
+        "workbenchRuntime": {
+          "$ref": "GoogleCloudAiplatformV1beta1NotebookExecutionJobWorkbenchRuntime",
+          "description": "The Workbench runtime configuration to use for the notebook execution."
         }
       },
       "type": "object"
@@ -36067,6 +36423,12 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1NotebookExecutionJobWorkbenchRuntime": {
+      "description": "Configuration for a Workbench Instances-based environment.",
+      "id": "GoogleCloudAiplatformV1beta1NotebookExecutionJobWorkbenchRuntime",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudAiplatformV1beta1NotebookIdleShutdownConfig": {
@@ -38770,15 +39132,26 @@
       "id": "GoogleCloudAiplatformV1beta1RagContextsContext",
       "properties": {
         "distance": {
+          "deprecated": true,
           "description": "The distance between the query dense embedding vector and the context text vector.",
           "format": "double",
           "type": "number"
+        },
+        "score": {
+          "description": "According to the underlying Vector DB and the selected metric type, the score can be either the distance or the similarity between the query and the context and its range depends on the metric type. For example, if the metric type is COSINE_DISTANCE, it represents the distance between the query and the context. The larger the distance, the less relevant the context is to the query. The range is [0, 2], while 0 means the most relevant and 2 means the least relevant.",
+          "format": "double",
+          "type": "number"
+        },
+        "sourceDisplayName": {
+          "description": "The file display name.",
+          "type": "string"
         },
         "sourceUri": {
           "description": "If the file is imported from Cloud Storage or Google Drive, source_uri will be original file URI in Cloud Storage or Google Drive; if file is uploaded, source_uri will be file display name.",
           "type": "string"
         },
         "sparseDistance": {
+          "deprecated": true,
           "description": "The distance between the query sparse embedding vector and the context text vector.",
           "format": "double",
           "type": "number"
@@ -38833,6 +39206,14 @@
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
+        },
+        "vectorDbConfig": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagVectorDbConfig",
+          "description": "Optional. Immutable. The config for the Vector DBs."
+        },
+        "vertexAiSearchConfig": {
+          "$ref": "GoogleCloudAiplatformV1beta1VertexAiSearchConfig",
+          "description": "Optional. Immutable. The config for the Vertex AI Search."
         }
       },
       "type": "object"
@@ -39020,6 +39401,27 @@
           "description": "The size of the chunks.",
           "format": "int32",
           "type": "integer"
+        },
+        "fixedLengthChunking": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagFileChunkingConfigFixedLengthChunking",
+          "description": "Specifies the fixed length chunking config."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1RagFileChunkingConfigFixedLengthChunking": {
+      "description": "Specifies the fixed length chunking config.",
+      "id": "GoogleCloudAiplatformV1beta1RagFileChunkingConfigFixedLengthChunking",
+      "properties": {
+        "chunkOverlap": {
+          "description": "The overlap between chunks.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "chunkSize": {
+          "description": "The size of the chunks.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -39028,6 +39430,14 @@
       "description": "Specifies the parsing config for RagFiles.",
       "id": "GoogleCloudAiplatformV1beta1RagFileParsingConfig",
       "properties": {
+        "advancedParser": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagFileParsingConfigAdvancedParser",
+          "description": "The Advanced Parser to use for RagFiles."
+        },
+        "layoutParser": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagFileParsingConfigLayoutParser",
+          "description": "The Layout Parser to use for RagFiles."
+        },
         "useAdvancedPdfParsing": {
           "deprecated": true,
           "description": "Whether to use advanced PDF parsing.",
@@ -39036,10 +39446,52 @@
       },
       "type": "object"
     },
+    "GoogleCloudAiplatformV1beta1RagFileParsingConfigAdvancedParser": {
+      "description": "Specifies the advanced parsing for RagFiles.",
+      "id": "GoogleCloudAiplatformV1beta1RagFileParsingConfigAdvancedParser",
+      "properties": {
+        "useAdvancedPdfParsing": {
+          "description": "Whether to use advanced PDF parsing.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1RagFileParsingConfigLayoutParser": {
+      "description": "Document AI Layout Parser config.",
+      "id": "GoogleCloudAiplatformV1beta1RagFileParsingConfigLayoutParser",
+      "properties": {
+        "maxParsingRequestsPerMin": {
+          "description": "The maximum number of requests the job is allowed to make to the Document AI processor per minute. Consult https://cloud.google.com/document-ai/quotas and the Quota page for your project to set an appropriate value here. If unspecified, a default value of 120 QPM would be used.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "processorName": {
+          "description": "The full resource name of a Document AI processor or processor version. The processor must have type `LAYOUT_PARSER_PROCESSOR`. If specified, the `additional_config.parse_as_scanned_pdf` field must be false. Format: * `projects/{project_id}/locations/{location}/processors/{processor_id}` * `projects/{project_id}/locations/{location}/processors/{processor_id}/processorVersions/{processor_version_id}`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1RagFileTransformationConfig": {
+      "description": "Specifies the transformation config for RagFiles.",
+      "id": "GoogleCloudAiplatformV1beta1RagFileTransformationConfig",
+      "properties": {
+        "ragFileChunkingConfig": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagFileChunkingConfig",
+          "description": "Specifies the chunking config for RagFiles."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudAiplatformV1beta1RagQuery": {
       "description": "A query to retrieve relevant contexts.",
       "id": "GoogleCloudAiplatformV1beta1RagQuery",
       "properties": {
+        "ragRetrievalConfig": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagRetrievalConfig",
+          "description": "Optional. The retrieval config for the query."
+        },
         "ranking": {
           "$ref": "GoogleCloudAiplatformV1beta1RagQueryRanking",
           "deprecated": true,
@@ -39070,6 +39522,100 @@
       },
       "type": "object"
     },
+    "GoogleCloudAiplatformV1beta1RagRetrievalConfig": {
+      "description": "Specifies the context retrieval config.",
+      "id": "GoogleCloudAiplatformV1beta1RagRetrievalConfig",
+      "properties": {
+        "filter": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagRetrievalConfigFilter",
+          "description": "Optional. Config for filters."
+        },
+        "hybridSearch": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagRetrievalConfigHybridSearch",
+          "description": "Optional. Config for Hybrid Search."
+        },
+        "ranking": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagRetrievalConfigRanking",
+          "description": "Optional. Config for ranking and reranking."
+        },
+        "topK": {
+          "description": "Optional. The number of contexts to retrieve.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1RagRetrievalConfigFilter": {
+      "description": "Config for filters.",
+      "id": "GoogleCloudAiplatformV1beta1RagRetrievalConfigFilter",
+      "properties": {
+        "metadataFilter": {
+          "description": "Optional. String for metadata filtering.",
+          "type": "string"
+        },
+        "vectorDistanceThreshold": {
+          "description": "Optional. Only returns contexts with vector distance smaller than the threshold.",
+          "format": "double",
+          "type": "number"
+        },
+        "vectorSimilarityThreshold": {
+          "description": "Optional. Only returns contexts with vector similarity larger than the threshold.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1RagRetrievalConfigHybridSearch": {
+      "description": "Config for Hybrid Search.",
+      "id": "GoogleCloudAiplatformV1beta1RagRetrievalConfigHybridSearch",
+      "properties": {
+        "alpha": {
+          "description": "Optional. Alpha value controls the weight between dense and sparse vector search results. The range is [0, 1], while 0 means sparse vector search only and 1 means dense vector search only. The default value is 0.5 which balances sparse and dense vector search equally.",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1RagRetrievalConfigRanking": {
+      "description": "Config for ranking and reranking.",
+      "id": "GoogleCloudAiplatformV1beta1RagRetrievalConfigRanking",
+      "properties": {
+        "llmRanker": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingLlmRanker",
+          "description": "Optional. Config for LlmRanker."
+        },
+        "rankService": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingRankService",
+          "description": "Optional. Config for Rank Service."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingLlmRanker": {
+      "description": "Config for LlmRanker.",
+      "id": "GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingLlmRanker",
+      "properties": {
+        "modelName": {
+          "description": "Optional. The model name used for ranking. Format: `gemini-1.5-pro`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingRankService": {
+      "description": "Config for Rank Service.",
+      "id": "GoogleCloudAiplatformV1beta1RagRetrievalConfigRankingRankService",
+      "properties": {
+        "modelName": {
+          "description": "Optional. The model name of the rank service. Format: `semantic-ranker-512@latest`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudAiplatformV1beta1RagVectorDbConfig": {
       "description": "Config for the Vector DB to use for RAG.",
       "id": "GoogleCloudAiplatformV1beta1RagVectorDbConfig",
@@ -39081,6 +39627,10 @@
         "pinecone": {
           "$ref": "GoogleCloudAiplatformV1beta1RagVectorDbConfigPinecone",
           "description": "The config for the Pinecone."
+        },
+        "ragEmbeddingModelConfig": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagEmbeddingModelConfig",
+          "description": "Optional. Immutable. The embedding model config of the Vector DB."
         },
         "ragManagedDb": {
           "$ref": "GoogleCloudAiplatformV1beta1RagVectorDbConfigRagManagedDb",
@@ -39926,6 +40476,7 @@
           "type": "array"
         },
         "vectorDistanceThreshold": {
+          "deprecated": true,
           "description": "Optional. Only return contexts with vector distance smaller than the threshold.",
           "format": "double",
           "type": "number"
@@ -40633,7 +41184,7 @@
           "type": "string"
         },
         "restartJobOnWorkerRestart": {
-          "description": "Restarts the entire CustomJob if a worker gets restarted. This feature can be used by distributed training jobs that are not resilient to workers leaving and joining a job.",
+          "description": "Optional. Restarts the entire CustomJob if a worker gets restarted. This feature can be used by distributed training jobs that are not resilient to workers leaving and joining a job.",
           "type": "boolean"
         },
         "strategy": {
@@ -40665,7 +41216,7 @@
           "type": "string"
         },
         "timeout": {
-          "description": "The maximum job running time. The default is 7 days.",
+          "description": "Optional. The maximum job running time. The default is 7 days.",
           "format": "google-duration",
           "type": "string"
         }
@@ -45634,7 +46185,7 @@
       "type": "object"
     },
     "GoogleCloudAiplatformV1beta1StreamingReadFeatureValuesRequest": {
-      "description": "Request message for FeaturestoreOnlineServingService.StreamingFeatureValuesRead.",
+      "description": "Request message for FeaturestoreOnlineServingService.StreamingReadFeatureValues.",
       "id": "GoogleCloudAiplatformV1beta1StreamingReadFeatureValuesRequest",
       "properties": {
         "entityIds": {
@@ -48103,6 +48654,10 @@
           "readOnly": true,
           "type": "string"
         },
+        "serviceAccount": {
+          "description": "The service account that the tuningJob workload runs as. If not specified, the Vertex AI Secure Fine-Tuned Service Agent in the project will be used. See https://cloud.google.com/iam/docs/service-agents#vertex-ai-secure-fine-tuning-service-agent Users starting the pipeline must have the `iam.serviceAccounts.actAs` permission on this service account.",
+          "type": "string"
+        },
         "startTime": {
           "description": "Output only. Time when the TuningJob for the first time entered the `JOB_STATE_RUNNING` state.",
           "format": "google-datetime",
@@ -48526,6 +49081,10 @@
           "$ref": "GoogleCloudAiplatformV1beta1RagFileChunkingConfig",
           "deprecated": true,
           "description": "Specifies the size and overlap of chunks after uploading RagFile."
+        },
+        "ragFileTransformationConfig": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagFileTransformationConfig",
+          "description": "Specifies the transformation config for RagFiles."
         }
       },
       "type": "object"
@@ -48636,6 +49195,17 @@
       },
       "type": "object"
     },
+    "GoogleCloudAiplatformV1beta1VertexAiSearchConfig": {
+      "description": "Config for the Vertex AI Search.",
+      "id": "GoogleCloudAiplatformV1beta1VertexAiSearchConfig",
+      "properties": {
+        "servingConfig": {
+          "description": "Vertex AI Search Serving Config resource full name. For example, `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/servingConfigs/{serving_config}` or `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/servingConfigs/{serving_config}`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudAiplatformV1beta1VertexRagStore": {
       "description": "Retrieve from Vertex RAG Store for grounding.",
       "id": "GoogleCloudAiplatformV1beta1VertexRagStore",
@@ -48655,6 +49225,10 @@
           },
           "type": "array"
         },
+        "ragRetrievalConfig": {
+          "$ref": "GoogleCloudAiplatformV1beta1RagRetrievalConfig",
+          "description": "Optional. The retrieval config for the Rag query."
+        },
         "similarityTopK": {
           "deprecated": true,
           "description": "Optional. Number of top k results to return from the selected corpora.",
@@ -48662,6 +49236,7 @@
           "type": "integer"
         },
         "vectorDistanceThreshold": {
+          "deprecated": true,
           "description": "Optional. Only return results with vector distance smaller than the threshold.",
           "format": "double",
           "type": "number"

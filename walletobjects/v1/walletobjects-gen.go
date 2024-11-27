@@ -497,6 +497,9 @@ func (s AirportInfo) MarshalJSON() ([]byte, error) {
 type AppLinkData struct {
 	// AndroidAppLinkInfo: Optional information about the partner app link.
 	AndroidAppLinkInfo *AppLinkDataAppLinkInfo `json:"androidAppLinkInfo,omitempty"`
+	// DisplayText: Optional display text for the app link button. Character limit
+	// is 30.
+	DisplayText *LocalizedString `json:"displayText,omitempty"`
 	// IosAppLinkInfo: Deprecated. Links to open iOS apps are not supported.
 	IosAppLinkInfo *AppLinkDataAppLinkInfo `json:"iosAppLinkInfo,omitempty"`
 	// WebAppLinkInfo: Optional information about the partner web link.
@@ -1887,6 +1890,12 @@ type EventTicketClass struct {
 	// Logo: The logo image of the ticket. This image is displayed in the card
 	// detail view of the app.
 	Logo *Image `json:"logo,omitempty"`
+	// MerchantLocations: Merchant locations. There is a maximum of ten on the
+	// class. Any additional MerchantLocations added beyond the 10 will be
+	// rejected. These locations will trigger a notification when a user enters
+	// within a Google-set radius of the point. This field replaces the deprecated
+	// LatLongPoints.
+	MerchantLocations []*MerchantLocation `json:"merchantLocations,omitempty"`
 	// Messages: An array of messages displayed in the app. All users of this
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
@@ -2178,6 +2187,12 @@ type EventTicketObject struct {
 	// Locations: Note: This field is currently not supported to trigger geo
 	// notifications.
 	Locations []*LatLongPoint `json:"locations,omitempty"`
+	// MerchantLocations: Merchant locations. There is a maximum of ten on the
+	// object. Any additional MerchantLocations added beyond the 10 will be
+	// rejected. These locations will trigger a notification when a user enters
+	// within a Google-set radius of the point. This field replaces the deprecated
+	// LatLongPoints.
+	MerchantLocations []*MerchantLocation `json:"merchantLocations,omitempty"`
 	// Messages: An array of messages displayed in the app. All users of this
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
@@ -2683,6 +2698,12 @@ type FlightClass struct {
 	// Locations: Note: This field is currently not supported to trigger geo
 	// notifications.
 	Locations []*LatLongPoint `json:"locations,omitempty"`
+	// MerchantLocations: Merchant locations. There is a maximum of ten on the
+	// class. Any additional MerchantLocations added beyond the 10 will be rejected
+	// by the validator. These locations will trigger a notification when a user
+	// enters within a Google-set radius of the point. This field replaces the
+	// deprecated LatLongPoints.
+	MerchantLocations []*MerchantLocation `json:"merchantLocations,omitempty"`
 	// Messages: An array of messages displayed in the app. All users of this
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
@@ -2967,6 +2988,12 @@ type FlightObject struct {
 	// Locations: Note: This field is currently not supported to trigger geo
 	// notifications.
 	Locations []*LatLongPoint `json:"locations,omitempty"`
+	// MerchantLocations: Merchant locations. There is a maximum of ten on the
+	// object. Any additional MerchantLocations added beyond the 10 will be
+	// rejected. These locations will trigger a notification when a user enters
+	// within a Google-set radius of the point. This field replaces the deprecated
+	// LatLongPoints.
+	MerchantLocations []*MerchantLocation `json:"merchantLocations,omitempty"`
 	// Messages: An array of messages displayed in the app. All users of this
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
@@ -3168,6 +3195,12 @@ type GenericClass struct {
 	// the object, both will be displayed. The maximum number of these fields
 	// displayed is 10 from class and 10 from object.
 	LinksModuleData *LinksModuleData `json:"linksModuleData,omitempty"`
+	// MerchantLocations: Merchant locations. There is a maximum of ten on the
+	// class. Any additional MerchantLocations added beyond the 10 will be
+	// rejected. These locations will trigger a notification when a user enters
+	// within a Google-set radius of the point. This field replaces the deprecated
+	// LatLongPoints.
+	MerchantLocations []*MerchantLocation `json:"merchantLocations,omitempty"`
 	// Messages: An array of messages displayed in the app. All users of this
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
@@ -3383,6 +3416,12 @@ type GenericObject struct {
 	// view in upper left, and also on the list/thumbnail view. If the logo is not
 	// present, the first letter of `cardTitle` would be shown as logo.
 	Logo *Image `json:"logo,omitempty"`
+	// MerchantLocations: Merchant locations. There is a maximum of ten on the
+	// object. Any additional MerchantLocations added beyond the 10 will be
+	// rejected. These locations will trigger a notification when a user enters
+	// within a Google-set radius of the point. This field replaces the deprecated
+	// LatLongPoints.
+	MerchantLocations []*MerchantLocation `json:"merchantLocations,omitempty"`
 	// Messages: An array of messages displayed in the app. All users of this
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
@@ -3601,6 +3640,12 @@ type GiftCardClass struct {
 	// Locations: Note: This field is currently not supported to trigger geo
 	// notifications.
 	Locations []*LatLongPoint `json:"locations,omitempty"`
+	// MerchantLocations: Merchant locations. There is a maximum of ten on the
+	// class. Any additional MerchantLocations added beyond the 10 will be
+	// rejected. These locations will trigger a notification when a user enters
+	// within a Google-set radius of the point. This field replaces the deprecated
+	// LatLongPoints.
+	MerchantLocations []*MerchantLocation `json:"merchantLocations,omitempty"`
 	// MerchantName: Merchant name, such as "Adam's Apparel". The app may display
 	// an ellipsis after the first 20 characters to ensure full string is displayed
 	// on smaller screens.
@@ -3858,6 +3903,12 @@ type GiftCardObject struct {
 	// Locations: Note: This field is currently not supported to trigger geo
 	// notifications.
 	Locations []*LatLongPoint `json:"locations,omitempty"`
+	// MerchantLocations: Merchant locations. There is a maximum of ten on the
+	// object. Any additional MerchantLocations added beyond the 10 will be
+	// rejected. These locations will trigger a notification when a user enters
+	// within a Google-set radius of the point. This field replaces the deprecated
+	// LatLongPoints.
+	MerchantLocations []*MerchantLocation `json:"merchantLocations,omitempty"`
 	// Messages: An array of messages displayed in the app. All users of this
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
@@ -4582,6 +4633,12 @@ type LoyaltyClass struct {
 	// Locations: Note: This field is currently not supported to trigger geo
 	// notifications.
 	Locations []*LatLongPoint `json:"locations,omitempty"`
+	// MerchantLocations: Merchant locations. There is a maximum of ten on the
+	// class. Any additional MerchantLocations added beyond the 10 will be
+	// rejected. These locations will trigger a notification when a user enters
+	// within a Google-set radius of the point. This field replaces the deprecated
+	// LatLongPoints.
+	MerchantLocations []*MerchantLocation `json:"merchantLocations,omitempty"`
 	// Messages: An array of messages displayed in the app. All users of this
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
@@ -4855,6 +4912,12 @@ type LoyaltyObject struct {
 	Locations []*LatLongPoint `json:"locations,omitempty"`
 	// LoyaltyPoints: The loyalty reward points label, balance, and type.
 	LoyaltyPoints *LoyaltyPoints `json:"loyaltyPoints,omitempty"`
+	// MerchantLocations: Merchant locations. There is a maximum of ten on the
+	// object. Any additional MerchantLocations added beyond the 10 will be
+	// rejected. These locations will trigger a notification when a user enters
+	// within a Google-set radius of the point. This field replaces the deprecated
+	// LatLongPoints.
+	MerchantLocations []*MerchantLocation `json:"merchantLocations,omitempty"`
 	// Messages: An array of messages displayed in the app. All users of this
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
@@ -5291,6 +5354,52 @@ func (s MediaRequestInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MerchantLocation: Locations of interest for this class or object. Currently,
+// this location is used for geofenced notifications. When a user is within a
+// set radius of this lat/long, and dwells there, Google will trigger a
+// notification. When a user exits this radius, the notification will be
+// hidden.
+type MerchantLocation struct {
+	// Latitude: The latitude specified as any value in the range of -90.0 through
+	// +90.0, both inclusive. Values outside these bounds will be rejected.
+	Latitude float64 `json:"latitude,omitempty"`
+	// Longitude: The longitude specified in the range -180.0 through +180.0, both
+	// inclusive. Values outside these bounds will be rejected.
+	Longitude float64 `json:"longitude,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Latitude") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Latitude") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MerchantLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod MerchantLocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *MerchantLocation) UnmarshalJSON(data []byte) error {
+	type NoMethod MerchantLocation
+	var s1 struct {
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
+}
+
 // Message: A message that will be displayed with a Valuable
 type Message struct {
 	// Body: The message body.
@@ -5594,6 +5703,12 @@ type OfferClass struct {
 	// Locations: Note: This field is currently not supported to trigger geo
 	// notifications.
 	Locations []*LatLongPoint `json:"locations,omitempty"`
+	// MerchantLocations: Merchant locations. There is a maximum of ten on the
+	// class. Any additional MerchantLocations added beyond the 10 will be
+	// rejected. These locations will trigger a notification when a user enters
+	// within a Google-set radius of the point. This field replaces the deprecated
+	// LatLongPoints.
+	MerchantLocations []*MerchantLocation `json:"merchantLocations,omitempty"`
 	// Messages: An array of messages displayed in the app. All users of this
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
@@ -5861,6 +5976,12 @@ type OfferObject struct {
 	// Locations: Note: This field is currently not supported to trigger geo
 	// notifications.
 	Locations []*LatLongPoint `json:"locations,omitempty"`
+	// MerchantLocations: Merchant locations. There is a maximum of ten on the
+	// object. Any additional MerchantLocations added beyond the 10 will be
+	// rejected. These locations will trigger a notification when a user enters
+	// within a Google-set radius of the point. This field replaces the deprecated
+	// LatLongPoints.
+	MerchantLocations []*MerchantLocation `json:"merchantLocations,omitempty"`
 	// Messages: An array of messages displayed in the app. All users of this
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
@@ -7036,6 +7157,12 @@ type TransitClass struct {
 	// Logo: Required. The logo image of the ticket. This image is displayed in the
 	// card detail view of the app.
 	Logo *Image `json:"logo,omitempty"`
+	// MerchantLocations: Merchant locations. There is a maximum of ten on the
+	// class. Any additional MerchantLocations added beyond the 10 will be
+	// rejected. These locations will trigger a notification when a user enters
+	// within a Google-set radius of the point. This field replaces the deprecated
+	// LatLongPoints.
+	MerchantLocations []*MerchantLocation `json:"merchantLocations,omitempty"`
 	// Messages: An array of messages displayed in the app. All users of this
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.
@@ -7321,6 +7448,12 @@ type TransitObject struct {
 	// Locations: Note: This field is currently not supported to trigger geo
 	// notifications.
 	Locations []*LatLongPoint `json:"locations,omitempty"`
+	// MerchantLocations: Merchant locations. There is a maximum of ten on the
+	// object. Any additional MerchantLocations added beyond the 10 will be
+	// rejected. These locations will trigger a notification when a user enters
+	// within a Google-set radius of the point. This field replaces the deprecated
+	// LatLongPoints.
+	MerchantLocations []*MerchantLocation `json:"merchantLocations,omitempty"`
 	// Messages: An array of messages displayed in the app. All users of this
 	// object will receive its associated messages. The maximum number of these
 	// fields is 10.

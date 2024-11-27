@@ -244,6 +244,7 @@ type ProjectsService struct {
 func NewProjectsAppsService(s *Service) *ProjectsAppsService {
 	rs := &ProjectsAppsService{s: s}
 	rs.Releases = NewProjectsAppsReleasesService(s)
+	rs.TestCases = NewProjectsAppsTestCasesService(s)
 	return rs
 }
 
@@ -251,6 +252,8 @@ type ProjectsAppsService struct {
 	s *Service
 
 	Releases *ProjectsAppsReleasesService
+
+	TestCases *ProjectsAppsTestCasesService
 }
 
 func NewProjectsAppsReleasesService(s *Service) *ProjectsAppsReleasesService {
@@ -271,6 +274,15 @@ func NewProjectsAppsReleasesTestsService(s *Service) *ProjectsAppsReleasesTestsS
 }
 
 type ProjectsAppsReleasesTestsService struct {
+	s *Service
+}
+
+func NewProjectsAppsTestCasesService(s *Service) *ProjectsAppsTestCasesService {
+	rs := &ProjectsAppsTestCasesService{s: s}
+	return rs
+}
+
+type ProjectsAppsTestCasesService struct {
 	s *Service
 }
 
@@ -1117,6 +1129,35 @@ func (s GoogleFirebaseAppdistroV1alphaListReleaseTestsResponse) MarshalJSON() ([
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppdistroV1alphaListTestCasesResponse: The response message
+// for `ListTestCases`.
+type GoogleFirebaseAppdistroV1alphaListTestCasesResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// TestCases: The test cases from the specified app.
+	TestCases []*GoogleFirebaseAppdistroV1alphaTestCase `json:"testCases,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppdistroV1alphaListTestCasesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaListTestCasesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirebaseAppdistroV1alphaLoginCredential: Login credential for
 // automated tests
 type GoogleFirebaseAppdistroV1alphaLoginCredential struct {
@@ -1406,6 +1447,36 @@ func (s GoogleFirebaseAppdistroV1alphaTerminalAction) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppdistroV1alphaTestCase: AI test cases
+type GoogleFirebaseAppdistroV1alphaTestCase struct {
+	// AiInstructions: Optional. Instructions for AI driven test.
+	AiInstructions *GoogleFirebaseAppdistroV1alphaAiInstructions `json:"aiInstructions,omitempty"`
+	// DisplayName: Required. Display name of the test case.
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Identifier. The name of the test case resource. Format:
+	// `projects/{project_number}/apps/{app_id}/testCases/{test_case_id}`
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AiInstructions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AiInstructions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppdistroV1alphaTestCase) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppdistroV1alphaTestCase
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirebaseAppdistroV1alphaTestConfig: Configuration for automated tests
 type GoogleFirebaseAppdistroV1alphaTestConfig struct {
 	// DisplayName: Optional. Display name of the AI driven test. Required if the
@@ -1493,6 +1564,16 @@ type GoogleFirebaseAppdistroV1alphaTesterUdid struct {
 func (s GoogleFirebaseAppdistroV1alphaTesterUdid) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppdistroV1alphaTesterUdid
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
+// defining duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For instance:
+// service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
+type GoogleProtobufEmpty struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 type AppsGetCall struct {
@@ -3108,6 +3189,574 @@ func (c *ProjectsAppsReleasesTestsListCall) Pages(ctx context.Context, f func(*G
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsAppsTestCasesCreateCall struct {
+	s                                      *Service
+	parent                                 string
+	googlefirebaseappdistrov1alphatestcase *GoogleFirebaseAppdistroV1alphaTestCase
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Create: Create a new test case.
+//
+//   - parent: The parent resource where this test case will be created. Format:
+//     `projects/{project_number}/apps/{app_id}`.
+func (r *ProjectsAppsTestCasesService) Create(parent string, googlefirebaseappdistrov1alphatestcase *GoogleFirebaseAppdistroV1alphaTestCase) *ProjectsAppsTestCasesCreateCall {
+	c := &ProjectsAppsTestCasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlefirebaseappdistrov1alphatestcase = googlefirebaseappdistrov1alphatestcase
+	return c
+}
+
+// TestCaseId sets the optional parameter "testCaseId": The ID to use for the
+// test case, which will become the final component of the test case's resource
+// name. This value should be 4-63 characters, and valid characters are /a-z-/.
+func (c *ProjectsAppsTestCasesCreateCall) TestCaseId(testCaseId string) *ProjectsAppsTestCasesCreateCall {
+	c.urlParams_.Set("testCaseId", testCaseId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAppsTestCasesCreateCall) Fields(s ...googleapi.Field) *ProjectsAppsTestCasesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAppsTestCasesCreateCall) Context(ctx context.Context) *ProjectsAppsTestCasesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAppsTestCasesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAppsTestCasesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappdistrov1alphatestcase)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/testCases")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappdistribution.projects.apps.testCases.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaTestCase.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsAppsTestCasesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaTestCase, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppdistroV1alphaTestCase{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsAppsTestCasesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a test case.
+//
+//   - name: The name of the test case resource to delete. Format:
+//     `projects/{project_number}/apps/{app_id}/testCases/{test_case_id}`.
+func (r *ProjectsAppsTestCasesService) Delete(name string) *ProjectsAppsTestCasesDeleteCall {
+	c := &ProjectsAppsTestCasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAppsTestCasesDeleteCall) Fields(s ...googleapi.Field) *ProjectsAppsTestCasesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAppsTestCasesDeleteCall) Context(ctx context.Context) *ProjectsAppsTestCasesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAppsTestCasesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAppsTestCasesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappdistribution.projects.apps.testCases.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsAppsTestCasesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsAppsTestCasesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a test case.
+//
+//   - name: The name of the test case resource to retrieve. Format:
+//     `projects/{project_number}/apps/{app_id}/testCases/{test_case_id}`.
+func (r *ProjectsAppsTestCasesService) Get(name string) *ProjectsAppsTestCasesGetCall {
+	c := &ProjectsAppsTestCasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAppsTestCasesGetCall) Fields(s ...googleapi.Field) *ProjectsAppsTestCasesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsAppsTestCasesGetCall) IfNoneMatch(entityTag string) *ProjectsAppsTestCasesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAppsTestCasesGetCall) Context(ctx context.Context) *ProjectsAppsTestCasesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAppsTestCasesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAppsTestCasesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappdistribution.projects.apps.testCases.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaTestCase.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsAppsTestCasesGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaTestCase, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppdistroV1alphaTestCase{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsAppsTestCasesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List test cases.
+//
+//   - parent: The parent resource from which to list test cases. Format:
+//     `projects/{project_number}/apps/{app_id}`.
+func (r *ProjectsAppsTestCasesService) List(parent string) *ProjectsAppsTestCasesListCall {
+	c := &ProjectsAppsTestCasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of test
+// cases to return. The service may return fewer than this value. If
+// unspecified, at most 50 test cases will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsAppsTestCasesListCall) PageSize(pageSize int64) *ProjectsAppsTestCasesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListTestCases` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListTestCases` must match the call that provided the page token.
+func (c *ProjectsAppsTestCasesListCall) PageToken(pageToken string) *ProjectsAppsTestCasesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAppsTestCasesListCall) Fields(s ...googleapi.Field) *ProjectsAppsTestCasesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsAppsTestCasesListCall) IfNoneMatch(entityTag string) *ProjectsAppsTestCasesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAppsTestCasesListCall) Context(ctx context.Context) *ProjectsAppsTestCasesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAppsTestCasesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAppsTestCasesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/testCases")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappdistribution.projects.apps.testCases.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaListTestCasesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsAppsTestCasesListCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaListTestCasesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppdistroV1alphaListTestCasesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsAppsTestCasesListCall) Pages(ctx context.Context, f func(*GoogleFirebaseAppdistroV1alphaListTestCasesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsAppsTestCasesPatchCall struct {
+	s                                      *Service
+	name                                   string
+	googlefirebaseappdistrov1alphatestcase *GoogleFirebaseAppdistroV1alphaTestCase
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Patch: Update a test case.
+//
+//   - name: Identifier. The name of the test case resource. Format:
+//     `projects/{project_number}/apps/{app_id}/testCases/{test_case_id}`.
+func (r *ProjectsAppsTestCasesService) Patch(name string, googlefirebaseappdistrov1alphatestcase *GoogleFirebaseAppdistroV1alphaTestCase) *ProjectsAppsTestCasesPatchCall {
+	c := &ProjectsAppsTestCasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlefirebaseappdistrov1alphatestcase = googlefirebaseappdistrov1alphatestcase
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAppsTestCasesPatchCall) Fields(s ...googleapi.Field) *ProjectsAppsTestCasesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAppsTestCasesPatchCall) Context(ctx context.Context) *ProjectsAppsTestCasesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAppsTestCasesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAppsTestCasesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirebaseappdistrov1alphatestcase)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappdistribution.projects.apps.testCases.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppdistroV1alphaTestCase.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsAppsTestCasesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppdistroV1alphaTestCase, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppdistroV1alphaTestCase{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsTestersGetUdidsCall struct {

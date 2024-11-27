@@ -2745,9 +2745,10 @@ func (s GoogleTypeDecimal) MarshalJSON() ([]byte, error) {
 // GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone Database
 // (https://www.iana.org/time-zones).
 type GoogleTypeTimeZone struct {
-	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
+	// Id: IANA Time Zone Database time zone. For example "America/New_York".
 	Id string `json:"id,omitempty"`
-	// Version: Optional. IANA Time Zone Database version number, e.g. "2019a".
+	// Version: Optional. IANA Time Zone Database version number. For example
+	// "2019a".
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3983,16 +3984,16 @@ func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeSeconds(intervalEndTimeSec
 }
 
 // IntervalEndTimeTimeZoneId sets the optional parameter
-// "interval.endTime.timeZone.id": IANA Time Zone Database time zone, e.g.
-// "America/New_York".
+// "interval.endTime.timeZone.id": IANA Time Zone Database time zone. For
+// example "America/New_York".
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeTimeZoneId(intervalEndTimeTimeZoneId string) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.timeZone.id", intervalEndTimeTimeZoneId)
 	return c
 }
 
 // IntervalEndTimeTimeZoneVersion sets the optional parameter
-// "interval.endTime.timeZone.version": IANA Time Zone Database version number,
-// e.g. "2019a".
+// "interval.endTime.timeZone.version": IANA Time Zone Database version number.
+// For example "2019a".
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeTimeZoneVersion(intervalEndTimeTimeZoneVersion string) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.timeZone.version", intervalEndTimeTimeZoneVersion)
 	return c
@@ -4066,8 +4067,8 @@ func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeSeconds(intervalStartTim
 }
 
 // IntervalStartTimeTimeZoneId sets the optional parameter
-// "interval.startTime.timeZone.id": IANA Time Zone Database time zone, e.g.
-// "America/New_York".
+// "interval.startTime.timeZone.id": IANA Time Zone Database time zone. For
+// example "America/New_York".
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeTimeZoneId(intervalStartTimeTimeZoneId string) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.timeZone.id", intervalStartTimeTimeZoneId)
 	return c
@@ -4075,7 +4076,7 @@ func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeTimeZoneId(intervalStart
 
 // IntervalStartTimeTimeZoneVersion sets the optional parameter
 // "interval.startTime.timeZone.version": IANA Time Zone Database version
-// number, e.g. "2019a".
+// number. For example "2019a".
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeTimeZoneVersion(intervalStartTimeTimeZoneVersion string) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.timeZone.version", intervalStartTimeTimeZoneVersion)
 	return c
@@ -4358,16 +4359,16 @@ func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeSeconds(intervalEndTimeSe
 }
 
 // IntervalEndTimeTimeZoneId sets the optional parameter
-// "interval.endTime.timeZone.id": IANA Time Zone Database time zone, e.g.
-// "America/New_York".
+// "interval.endTime.timeZone.id": IANA Time Zone Database time zone. For
+// example "America/New_York".
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeTimeZoneId(intervalEndTimeTimeZoneId string) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.timeZone.id", intervalEndTimeTimeZoneId)
 	return c
 }
 
 // IntervalEndTimeTimeZoneVersion sets the optional parameter
-// "interval.endTime.timeZone.version": IANA Time Zone Database version number,
-// e.g. "2019a".
+// "interval.endTime.timeZone.version": IANA Time Zone Database version number.
+// For example "2019a".
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeTimeZoneVersion(intervalEndTimeTimeZoneVersion string) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.timeZone.version", intervalEndTimeTimeZoneVersion)
 	return c
@@ -4441,8 +4442,8 @@ func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeSeconds(intervalStartTi
 }
 
 // IntervalStartTimeTimeZoneId sets the optional parameter
-// "interval.startTime.timeZone.id": IANA Time Zone Database time zone, e.g.
-// "America/New_York".
+// "interval.startTime.timeZone.id": IANA Time Zone Database time zone. For
+// example "America/New_York".
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeTimeZoneId(intervalStartTimeTimeZoneId string) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.timeZone.id", intervalStartTimeTimeZoneId)
 	return c
@@ -4450,7 +4451,7 @@ func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeTimeZoneId(intervalStar
 
 // IntervalStartTimeTimeZoneVersion sets the optional parameter
 // "interval.startTime.timeZone.version": IANA Time Zone Database version
-// number, e.g. "2019a".
+// number. For example "2019a".
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeTimeZoneVersion(intervalStartTimeTimeZoneVersion string) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.timeZone.version", intervalStartTimeTimeZoneVersion)
 	return c

@@ -832,7 +832,7 @@ type Instance struct {
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. The time when the Looker instance was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// UserMetadata: User metadata.
+	// UserMetadata: Optional. User metadata.
 	UserMetadata *UserMetadata `json:"userMetadata,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

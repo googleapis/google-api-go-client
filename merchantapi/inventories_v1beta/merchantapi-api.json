@@ -300,7 +300,7 @@
       }
     }
   },
-  "revision": "20241109",
+  "revision": "20241119",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "CustomAttribute": {
@@ -573,7 +573,7 @@
           "type": "array"
         },
         "expirationTime": {
-          "description": "The product expiration time.",
+          "description": "The product expiration time. This field will not bet set if the notification is sent for a product deletion event.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -605,7 +605,7 @@
       "type": "object"
     },
     "RegionalInventory": {
-      "description": "Regional inventory information for the product. Represents specific information like price and availability for a given product in a specific `region`.For a list of all accepted attribute values, see the [regional product inventory data specification](https://support.google.com/merchants/answer/9698880).",
+      "description": "Regional inventory information for the product. Represents specific information like price and availability for a given product in a specific `region`. For a list of all accepted attribute values, see the [regional product inventory data specification](https://support.google.com/merchants/answer/9698880).",
       "id": "RegionalInventory",
       "properties": {
         "account": {

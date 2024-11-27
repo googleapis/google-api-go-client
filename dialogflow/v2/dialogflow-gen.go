@@ -1119,7 +1119,7 @@ func (s GoogleCloudDialogflowCxV3AudioInput) MarshalJSON() ([]byte, error) {
 // an utterance has been detected. Note that no-speech event is not expected in
 // this phase. The client provides this configuration in terms of the durations
 // of those two phases. The durations are measured in terms of the audio length
-// from the the start of the input audio. No-speech event is a response with
+// from the start of the input audio. No-speech event is a response with
 // END_OF_UTTERANCE without any transcript following up.
 type GoogleCloudDialogflowCxV3BargeInConfig struct {
 	// NoBargeInDuration: Duration that is not eligible for barge-in at the
@@ -4400,7 +4400,7 @@ func (s GoogleCloudDialogflowCxV3beta1AudioInput) MarshalJSON() ([]byte, error) 
 // an utterance has been detected. Note that no-speech event is not expected in
 // this phase. The client provides this configuration in terms of the durations
 // of those two phases. The durations are measured in terms of the audio length
-// from the the start of the input audio. No-speech event is a response with
+// from the start of the input audio. No-speech event is a response with
 // END_OF_UTTERANCE without any transcript following up.
 type GoogleCloudDialogflowCxV3beta1BargeInConfig struct {
 	// NoBargeInDuration: Duration that is not eligible for barge-in at the
@@ -7905,9 +7905,10 @@ func (s GoogleCloudDialogflowV2AnalyzeContentRequest) MarshalJSON() ([]byte, err
 // Participants.AnalyzeContent.
 type GoogleCloudDialogflowV2AnalyzeContentResponse struct {
 	// AutomatedAgentReply: Only set if a Dialogflow automated agent has responded.
-	// Note that: AutomatedAgentReply.detect_intent_response.output_audio and
-	// AutomatedAgentReply.detect_intent_response.output_audio_config are always
-	// empty, use reply_audio instead.
+	// Note that in AutomatedAgentReply.DetectIntentResponse,
+	// Sessions.DetectIntentResponse.output_audio and
+	// Sessions.DetectIntentResponse.output_audio_config are always empty, use
+	// reply_audio instead.
 	AutomatedAgentReply *GoogleCloudDialogflowV2AutomatedAgentReply `json:"automatedAgentReply,omitempty"`
 	// DtmfParameters: Indicates the parameters of DTMF.
 	DtmfParameters *GoogleCloudDialogflowV2DtmfParameters `json:"dtmfParameters,omitempty"`
@@ -8048,8 +8049,9 @@ func (s GoogleCloudDialogflowV2AnswerFeedback) MarshalJSON() ([]byte, error) {
 // workflow for customers provide feedback to an answer is: 1. For human agent
 // assistant, customers get suggestion via ListSuggestions API. Together with
 // the answers, AnswerRecord.name are returned to the customers. 2. The
-// customer uses the AnswerRecord.name to call the UpdateAnswerRecord method to
-// send feedback about a specific answer that they believe is wrong.
+// customer uses the AnswerRecord.name to call the
+// AnswerRecords.UpdateAnswerRecord method to send feedback about a specific
+// answer that they believe is wrong.
 type GoogleCloudDialogflowV2AnswerRecord struct {
 	// AgentAssistantRecord: Output only. The record for human agent assistant.
 	AgentAssistantRecord *GoogleCloudDialogflowV2AgentAssistantRecord `json:"agentAssistantRecord,omitempty"`
@@ -8525,7 +8527,7 @@ func (s GoogleCloudDialogflowV2BatchUpdateIntentsResponse) MarshalJSON() ([]byte
 }
 
 // GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata:
-// Metadata for a ConversationProfile.ClearSuggestionFeatureConfig operation.
+// Metadata for a ConversationProfiles.ClearSuggestionFeatureConfig operation.
 type GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata struct {
 	// ConversationProfile: The resource name of the conversation profile. Format:
 	// `projects//locations//conversationProfiles/`
@@ -8575,7 +8577,7 @@ func (s GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata) Ma
 }
 
 // GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest: The request
-// message for ConversationProfiles.ClearFeature.
+// message for ConversationProfiles.ClearSuggestionFeatureConfig.
 type GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest struct {
 	// ParticipantRole: Required. The participant role to remove the suggestion
 	// feature config. Only HUMAN_AGENT or END_USER can be used.
@@ -9112,7 +9114,7 @@ func (s GoogleCloudDialogflowV2ConversationProfile) MarshalJSON() ([]byte, error
 }
 
 // GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata: Metadata
-// for ConversationDatasets.
+// for CreateConversationDataset.
 type GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata struct {
 	// ConversationDataset: The resource name of the conversation dataset that will
 	// be created. Format: `projects//locations//conversationDatasets/`
@@ -9241,7 +9243,7 @@ func (s GoogleCloudDialogflowV2CreateConversationModelOperationMetadata) Marshal
 }
 
 // GoogleCloudDialogflowV2DeleteConversationDatasetOperationMetadata: Metadata
-// for ConversationDatasets.
+// for DeleteConversationDataset.
 type GoogleCloudDialogflowV2DeleteConversationDatasetOperationMetadata struct {
 }
 
@@ -10131,7 +10133,7 @@ func (s *GoogleCloudDialogflowV2FaqAnswer) UnmarshalJSON(data []byte) error {
 
 // GoogleCloudDialogflowV2FewShotExample: Providing examples in the generator
 // (i.e. building a few-shot generator) helps convey the desired format of the
-// LLM response. NEXT_ID: 10
+// LLM response.
 type GoogleCloudDialogflowV2FewShotExample struct {
 	// ConversationContext: Optional. Conversation transcripts.
 	ConversationContext *GoogleCloudDialogflowV2ConversationContext `json:"conversationContext,omitempty"`
@@ -10458,10 +10460,10 @@ func (s GoogleCloudDialogflowV2GenerateStatelessSummaryRequestMinimalConversatio
 // GoogleCloudDialogflowV2GenerateStatelessSummaryResponse: The response
 // message for Conversations.GenerateStatelessSummary.
 type GoogleCloudDialogflowV2GenerateStatelessSummaryResponse struct {
-	// ContextSize: Number of messages prior to and including
-	// last_conversation_message used to compile the suggestion. It may be smaller
-	// than the GenerateStatelessSummaryRequest.context_size field in the request
-	// if there weren't that many messages in the conversation.
+	// ContextSize: Number of messages prior to and including latest_message used
+	// to compile the suggestion. It may be smaller than the
+	// GenerateStatelessSummaryRequest.max_context_size field in the request if
+	// there weren't that many messages in the conversation.
 	ContextSize int64 `json:"contextSize,omitempty"`
 	// LatestMessage: The name of the latest conversation message used as context
 	// for compiling suggestion. The format is specific to the user and the names
@@ -14444,7 +14446,7 @@ type GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecs struct 
 	// applied. The full names of the referenced data stores. Formats:
 	// `projects/{project}/locations/{location}/collections/{collection}/dataStores/
 	// {data_store}`
-	// `projects/{project}/locations/{location}/dataStores/{data_store}
+	// `projects/{project}/locations/{location}/dataStores/{data_store}`
 	DataStores []string `json:"dataStores,omitempty"`
 	// Spec: Optional. A list of boosting specifications.
 	Spec []*GoogleCloudDialogflowV2SearchKnowledgeRequestSearchConfigBoostSpecsBoostSpec `json:"spec,omitempty"`
@@ -14787,10 +14789,9 @@ func (s GoogleCloudDialogflowV2SentimentAnalysisRequestConfig) MarshalJSON() ([]
 // GoogleCloudDialogflowV2SentimentAnalysisResult: The result of sentiment
 // analysis. Sentiment analysis inspects user input and identifies the
 // prevailing subjective opinion, especially to determine a user's attitude as
-// positive, negative, or neutral. For Participants.DetectIntent, it needs to
-// be configured in DetectIntentRequest.query_params. For
-// Participants.StreamingDetectIntent, it needs to be configured in
-// StreamingDetectIntentRequest.query_params. And for
+// positive, negative, or neutral. For DetectIntent, it needs to be configured
+// in DetectIntentRequest.query_params. For StreamingDetectIntent, it needs to
+// be configured in StreamingDetectIntentRequest.query_params. And for
 // Participants.AnalyzeContent and Participants.StreamingAnalyzeContent, it
 // needs to be configured in ConversationProfile.human_agent_assistant_config
 type GoogleCloudDialogflowV2SentimentAnalysisResult struct {
@@ -14873,7 +14874,7 @@ func (s GoogleCloudDialogflowV2SessionEntityType) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata: Metadata
-// for a ConversationProfile.SetSuggestionFeatureConfig operation.
+// for a ConversationProfiles.SetSuggestionFeatureConfig operation.
 type GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata struct {
 	// ConversationProfile: The resource name of the conversation profile. Format:
 	// `projects//locations//conversationProfiles/`
@@ -14923,7 +14924,7 @@ func (s GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata) Mars
 }
 
 // GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest: The request
-// message for ConversationProfiles.SetSuggestionFeature.
+// message for ConversationProfiles.SetSuggestionFeatureConfig.
 type GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest struct {
 	// ParticipantRole: Required. The participant role to add or update the
 	// suggestion feature config. Only HUMAN_AGENT or END_USER can be used.
@@ -15388,9 +15389,9 @@ func (s GoogleCloudDialogflowV2SuggestConversationSummaryRequest) MarshalJSON() 
 // GoogleCloudDialogflowV2SuggestConversationSummaryResponse: The response
 // message for Conversations.SuggestConversationSummary.
 type GoogleCloudDialogflowV2SuggestConversationSummaryResponse struct {
-	// ContextSize: Number of messages prior to and including
-	// last_conversation_message used to compile the suggestion. It may be smaller
-	// than the SuggestSummaryRequest.context_size field in the request if there
+	// ContextSize: Number of messages prior to and including latest_message used
+	// to compile the suggestion. It may be smaller than the
+	// SuggestConversationSummaryRequest.context_size field in the request if there
 	// weren't that many messages in the conversation.
 	ContextSize int64 `json:"contextSize,omitempty"`
 	// LatestMessage: The name of the latest conversation message used as context
@@ -30804,7 +30805,7 @@ type ProjectsConversationProfilesCreateCall struct {
 }
 
 // Create: Creates a conversation profile in the specified project.
-// ConversationProfile.CreateTime and ConversationProfile.UpdateTime aren't
+// ConversationProfile.create_time and ConversationProfile.update_time aren't
 // populated in the response. You can retrieve them via GetConversationProfile
 // API.
 //
@@ -31261,7 +31262,7 @@ type ProjectsConversationProfilesPatchCall struct {
 }
 
 // Patch: Updates the specified conversation profile.
-// ConversationProfile.CreateTime and ConversationProfile.UpdateTime aren't
+// ConversationProfile.create_time and ConversationProfile.update_time aren't
 // populated in the response. You can retrieve them via GetConversationProfile
 // API.
 //
@@ -45083,7 +45084,7 @@ type ProjectsLocationsConversationProfilesCreateCall struct {
 }
 
 // Create: Creates a conversation profile in the specified project.
-// ConversationProfile.CreateTime and ConversationProfile.UpdateTime aren't
+// ConversationProfile.create_time and ConversationProfile.update_time aren't
 // populated in the response. You can retrieve them via GetConversationProfile
 // API.
 //
@@ -45540,7 +45541,7 @@ type ProjectsLocationsConversationProfilesPatchCall struct {
 }
 
 // Patch: Updates the specified conversation profile.
-// ConversationProfile.CreateTime and ConversationProfile.UpdateTime aren't
+// ConversationProfile.create_time and ConversationProfile.update_time aren't
 // populated in the response. You can retrieve them via GetConversationProfile
 // API.
 //

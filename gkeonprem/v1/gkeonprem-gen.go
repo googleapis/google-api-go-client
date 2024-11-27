@@ -4133,6 +4133,24 @@ func (s VmwareAdminManualLbConfig) MarshalJSON() ([]byte, error) {
 // parameters for a MetalLB load balancer. For admin clusters, currently no
 // configurations is needed.
 type VmwareAdminMetalLbConfig struct {
+	// Enabled: Whether MetalLB is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VmwareAdminMetalLbConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod VmwareAdminMetalLbConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // VmwareAdminNetworkConfig: VmwareAdminNetworkConfig contains network

@@ -6500,6 +6500,11 @@ type LoyaltyProgram struct {
 	// associate the assets below (for example, price and points) with a merchant.
 	// The corresponding program must be linked to the merchant account.
 	ProgramLabel string `json:"programLabel,omitempty"`
+	// ShippingLabel: Optional. The shipping label for the loyalty program. You can
+	// use this label to indicate whether this offer has the loyalty shipping
+	// benefit. If not specified, the item is not eligible for loyalty shipping for
+	// the given loyalty tier.
+	ShippingLabel string `json:"shippingLabel,omitempty"`
 	// TierLabel: Required. The label of the tier within the loyalty program. Must
 	// match one of the labels within the program.
 	TierLabel string `json:"tierLabel,omitempty"`
@@ -12338,9 +12343,10 @@ func (s TimePeriod) MarshalJSON() ([]byte, error) {
 // TimeZone: Represents a time zone from the IANA Time Zone Database
 // (https://www.iana.org/time-zones).
 type TimeZone struct {
-	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
+	// Id: IANA Time Zone Database time zone. For example "America/New_York".
 	Id string `json:"id,omitempty"`
-	// Version: Optional. IANA Time Zone Database version number, e.g. "2019a".
+	// Version: Optional. IANA Time Zone Database version number. For example
+	// "2019a".
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

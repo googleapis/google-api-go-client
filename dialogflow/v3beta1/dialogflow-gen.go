@@ -723,7 +723,7 @@ func (s GoogleCloudDialogflowCxV3AudioInput) MarshalJSON() ([]byte, error) {
 // an utterance has been detected. Note that no-speech event is not expected in
 // this phase. The client provides this configuration in terms of the durations
 // of those two phases. The durations are measured in terms of the audio length
-// from the the start of the input audio. No-speech event is a response with
+// from the start of the input audio. No-speech event is a response with
 // END_OF_UTTERANCE without any transcript following up.
 type GoogleCloudDialogflowCxV3BargeInConfig struct {
 	// NoBargeInDuration: Duration that is not eligible for barge-in at the
@@ -4430,7 +4430,7 @@ func (s GoogleCloudDialogflowCxV3beta1AudioInput) MarshalJSON() ([]byte, error) 
 // an utterance has been detected. Note that no-speech event is not expected in
 // this phase. The client provides this configuration in terms of the durations
 // of those two phases. The durations are measured in terms of the audio length
-// from the the start of the input audio. No-speech event is a response with
+// from the start of the input audio. No-speech event is a response with
 // END_OF_UTTERANCE without any transcript following up.
 type GoogleCloudDialogflowCxV3beta1BargeInConfig struct {
 	// NoBargeInDuration: Duration that is not eligible for barge-in at the
@@ -7224,7 +7224,7 @@ func (s GoogleCloudDialogflowCxV3beta1FlowImportStrategy) MarshalJSON() ([]byte,
 }
 
 // GoogleCloudDialogflowCxV3beta1FlowInvocation: Stores metadata of the
-// invocation of a CX flow. Next Id: 7
+// invocation of a CX flow.
 type GoogleCloudDialogflowCxV3beta1FlowInvocation struct {
 	// Flow: Required. The unique identifier of the flow. Format:
 	// `projects//locations//agents//flows/`.
@@ -10281,7 +10281,7 @@ func (s GoogleCloudDialogflowCxV3beta1PlaybookInstruction) MarshalJSON() ([]byte
 }
 
 // GoogleCloudDialogflowCxV3beta1PlaybookInvocation: Stores metadata of the
-// invocation of a child playbook. Next Id: 5
+// invocation of a child playbook.
 type GoogleCloudDialogflowCxV3beta1PlaybookInvocation struct {
 	// Playbook: Required. The unique identifier of the playbook. Format:
 	// `projects//locations//agents//playbooks/`.
@@ -10468,9 +10468,9 @@ type GoogleCloudDialogflowCxV3beta1QueryParameters struct {
 	// parameters. In most cases, current_page and parameters should be configured
 	// together to direct a session to a specific state.
 	CurrentPage string `json:"currentPage,omitempty"`
-	// CurrentPlaybook: Optional. Start the session with the specified playbook.
-	// You can only specify the playbook at the beginning of the session.
-	// Otherwise, an error will be thrown. Format:
+	// CurrentPlaybook: Optional. The unique identifier of the playbook to start or
+	// continue the session with. If `current_playbook` is specified, the previous
+	// state of the session will be ignored by Dialogflow. Format:
 	// `projects//locations//agents//playbooks/`.
 	CurrentPlaybook string `json:"currentPlaybook,omitempty"`
 	// DisableWebhook: Whether to disable webhook calls for this request.
@@ -13993,7 +13993,7 @@ func (s GoogleCloudDialogflowV2BatchUpdateIntentsResponse) MarshalJSON() ([]byte
 }
 
 // GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata:
-// Metadata for a ConversationProfile.ClearSuggestionFeatureConfig operation.
+// Metadata for a ConversationProfiles.ClearSuggestionFeatureConfig operation.
 type GoogleCloudDialogflowV2ClearSuggestionFeatureConfigOperationMetadata struct {
 	// ConversationProfile: The resource name of the conversation profile. Format:
 	// `projects//locations//conversationProfiles/`
@@ -14215,7 +14215,7 @@ func (s GoogleCloudDialogflowV2ConversationModel) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata: Metadata
-// for ConversationDatasets.
+// for CreateConversationDataset.
 type GoogleCloudDialogflowV2CreateConversationDatasetOperationMetadata struct {
 	// ConversationDataset: The resource name of the conversation dataset that will
 	// be created. Format: `projects//locations//conversationDatasets/`
@@ -14320,7 +14320,7 @@ func (s GoogleCloudDialogflowV2CreateConversationModelOperationMetadata) Marshal
 }
 
 // GoogleCloudDialogflowV2DeleteConversationDatasetOperationMetadata: Metadata
-// for ConversationDatasets.
+// for DeleteConversationDataset.
 type GoogleCloudDialogflowV2DeleteConversationDatasetOperationMetadata struct {
 }
 
@@ -16442,10 +16442,9 @@ func (s *GoogleCloudDialogflowV2Sentiment) UnmarshalJSON(data []byte) error {
 // GoogleCloudDialogflowV2SentimentAnalysisResult: The result of sentiment
 // analysis. Sentiment analysis inspects user input and identifies the
 // prevailing subjective opinion, especially to determine a user's attitude as
-// positive, negative, or neutral. For Participants.DetectIntent, it needs to
-// be configured in DetectIntentRequest.query_params. For
-// Participants.StreamingDetectIntent, it needs to be configured in
-// StreamingDetectIntentRequest.query_params. And for
+// positive, negative, or neutral. For DetectIntent, it needs to be configured
+// in DetectIntentRequest.query_params. For StreamingDetectIntent, it needs to
+// be configured in StreamingDetectIntentRequest.query_params. And for
 // Participants.AnalyzeContent and Participants.StreamingAnalyzeContent, it
 // needs to be configured in ConversationProfile.human_agent_assistant_config
 type GoogleCloudDialogflowV2SentimentAnalysisResult struct {
@@ -16525,7 +16524,7 @@ func (s GoogleCloudDialogflowV2SessionEntityType) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata: Metadata
-// for a ConversationProfile.SetSuggestionFeatureConfig operation.
+// for a ConversationProfiles.SetSuggestionFeatureConfig operation.
 type GoogleCloudDialogflowV2SetSuggestionFeatureConfigOperationMetadata struct {
 	// ConversationProfile: The resource name of the conversation profile. Format:
 	// `projects//locations//conversationProfiles/`

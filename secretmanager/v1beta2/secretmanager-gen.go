@@ -1348,7 +1348,7 @@ func (s Topic) MarshalJSON() ([]byte, error) {
 }
 
 // UserManaged: A replication policy that replicates the Secret payload into
-// the locations specified in Secret.replication.user_managed.replicas
+// the locations specified in Replication.UserManaged.replicas
 type UserManaged struct {
 	// Replicas: Required. The list of Replicas for this Secret. Cannot be empty.
 	Replicas []*Replica `json:"replicas,omitempty"`

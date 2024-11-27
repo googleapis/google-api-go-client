@@ -199,6 +199,7 @@ type AccountsAppsReportsService struct {
 func NewAccountsReposService(s *Service) *AccountsReposService {
 	rs := &AccountsReposService{s: s}
 	rs.Operations = NewAccountsReposOperationsService(s)
+	rs.Scans = NewAccountsReposScansService(s)
 	return rs
 }
 
@@ -206,6 +207,8 @@ type AccountsReposService struct {
 	s *Service
 
 	Operations *AccountsReposOperationsService
+
+	Scans *AccountsReposScansService
 }
 
 func NewAccountsReposOperationsService(s *Service) *AccountsReposOperationsService {
@@ -214,6 +217,15 @@ func NewAccountsReposOperationsService(s *Service) *AccountsReposOperationsServi
 }
 
 type AccountsReposOperationsService struct {
+	s *Service
+}
+
+func NewAccountsReposScansService(s *Service) *AccountsReposScansService {
+	rs := &AccountsReposScansService{s: s}
+	return rs
+}
+
+type AccountsReposScansService struct {
 	s *Service
 }
 
@@ -561,6 +573,473 @@ type GoogleChecksAisafetyV1alphaTextInput struct {
 
 func (s GoogleChecksAisafetyV1alphaTextInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChecksAisafetyV1alphaTextInput
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksRepoScanV1alphaCliAnalysis: The results of a Code Compliance CLI
+// analysis.
+type GoogleChecksRepoScanV1alphaCliAnalysis struct {
+	// CodeScans: Optional. Requested code scans resulting from preliminary CLI
+	// analysis.
+	CodeScans []*GoogleChecksRepoScanV1alphaCodeScan `json:"codeScans,omitempty"`
+	// Sources: Optional. Data sources detected in the scan.
+	Sources []*GoogleChecksRepoScanV1alphaSource `json:"sources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CodeScans") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CodeScans") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksRepoScanV1alphaCliAnalysis) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksRepoScanV1alphaCliAnalysis
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksRepoScanV1alphaCodeAttribution: Source code attribution.
+type GoogleChecksRepoScanV1alphaCodeAttribution struct {
+	// CodeExcerpt: Optional. Code excerpt where the source was detected along with
+	// surrounding code.
+	CodeExcerpt string `json:"codeExcerpt,omitempty"`
+	// LineNumber: Required. Line number (1-based).
+	LineNumber int64 `json:"lineNumber,omitempty"`
+	// Path: Required. Path of the file.
+	Path string `json:"path,omitempty"`
+	// StartLineNumber: Optional. Start line number of the code excerpt (1-based).
+	StartLineNumber int64 `json:"startLineNumber,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CodeExcerpt") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CodeExcerpt") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksRepoScanV1alphaCodeAttribution) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksRepoScanV1alphaCodeAttribution
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksRepoScanV1alphaCodeScan: A requested analysis of source code.
+// Contains the source code and processing state.
+type GoogleChecksRepoScanV1alphaCodeScan struct {
+	// DataTypeClassifications: Optional. Data type classification requests.
+	DataTypeClassifications []*GoogleChecksRepoScanV1alphaCodeScanDataTypeClassification `json:"dataTypeClassifications,omitempty"`
+	// SourceCode: Required. Source code to analyze.
+	SourceCode *GoogleChecksRepoScanV1alphaSourceCode `json:"sourceCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataTypeClassifications") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataTypeClassifications") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksRepoScanV1alphaCodeScan) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksRepoScanV1alphaCodeScan
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksRepoScanV1alphaCodeScanDataTypeClassification: A request to
+// classify data types.
+type GoogleChecksRepoScanV1alphaCodeScanDataTypeClassification struct {
+	// DataType: Required. Candidate data type.
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Not specified.
+	//   "DATA_TYPE_APPROXIMATE_LOCATION" - User or device physical location to an
+	// area greater than or equal to 3 square kilometers, such as the city a user
+	// is in, or location provided by Android's ACCESS_COARSE_LOCATION permission.
+	//   "DATA_TYPE_PRECISE_LOCATION" - User or device physical location within an
+	// area less than 3 square kilometers, such as location provided by Android's
+	// ACCESS_FINE_LOCATION permission.
+	//   "DATA_TYPE_PERSONAL_NAME" - How a user refers to themselves, such as their
+	// first or last name, or nickname.
+	//   "DATA_TYPE_EMAIL_ADDRESS" - A user's email address.
+	//   "DATA_TYPE_USER_IDS" - Identifiers that relate to an identifiable person.
+	// For example, an account ID, account number, or account name.
+	//   "DATA_TYPE_PHYSICAL_ADDRESS" - A user's address, such as a mailing or home
+	// address.
+	//   "DATA_TYPE_PHONE_NUMBER" - A user's phone number.
+	//   "DATA_TYPE_RACE_AND_ETHNICITY" - Information about a user's race or
+	// ethnicity.
+	//   "DATA_TYPE_POLITICAL_OR_RELIGIOUS_BELIEFS" - Information about a user's
+	// political or religious beliefs.
+	//   "DATA_TYPE_SEXUAL_ORIENTATION" - Information about a user's sexual
+	// orientation.
+	//   "DATA_TYPE_OTHER_PERSONAL_INFO" - Any other personal information such as
+	// date of birth, gender identity, veteran status, etc.
+	//   "DATA_TYPE_PAYMENT_INFO" - Information about a user's financial accounts
+	// such as credit card number.
+	//   "DATA_TYPE_PURCHASE_HISTORY" - Information about purchases or transactions
+	// a user has made.
+	//   "DATA_TYPE_CREDIT_SCORE" - Information about a user's credit score.
+	//   "DATA_TYPE_OTHER_FINANCIAL_INFO" - Any other financial information such as
+	// user salary or debts.
+	//   "DATA_TYPE_HEALTH_INFO" - Information about a user's health, such as
+	// medical records or symptoms.
+	//   "DATA_TYPE_FITNESS_INFO" - Information about a user's fitness, such as
+	// exercise or other physical activity.
+	//   "DATA_TYPE_EMAILS" - A user's emails including the email subject line,
+	// sender, recipients, and the content of the email.
+	//   "DATA_TYPE_TEXT_MESSAGES" - A user's text messages including the sender,
+	// recipients, and the content of the message.
+	//   "DATA_TYPE_OTHER_IN_APP_MESSAGES" - Any other types of messages. For
+	// example, instant messages or chat content.
+	//   "DATA_TYPE_PHOTOS" - A user's photos.
+	//   "DATA_TYPE_VIDEOS" - A user's videos.
+	//   "DATA_TYPE_VOICE_OR_SOUND_RECORDINGS" - A user's voice such as a voicemail
+	// or a sound recording.
+	//   "DATA_TYPE_MUSIC_FILES" - A user's music files.
+	//   "DATA_TYPE_OTHER_AUDIO_FILES" - Any other user-created or user-provided
+	// audio files.
+	//   "DATA_TYPE_FILES_AND_DOCS" - A user's files or documents, or information
+	// about their files or documents such as file names.
+	//   "DATA_TYPE_CALENDAR_EVENTS" - Information from a user's calendar such as
+	// events, event notes, and attendees.
+	//   "DATA_TYPE_CONTACTS" - Information about the user’s contacts such as
+	// contact names, message history, and social graph information like usernames,
+	// contact recency, contact frequency, interaction duration and call history.
+	//   "DATA_TYPE_APP_INTERACTIONS" - Information about how a user interacts with
+	// your app, such as the number of page views or taps.
+	//   "DATA_TYPE_IN_APP_SEARCH_HISTORY" - Information about what a user has
+	// searched for in your app.
+	//   "DATA_TYPE_INSTALLED_APPS" - Inventory of apps or packages installed on
+	// the user’s device.
+	//   "DATA_TYPE_OTHER_USER_GENERATED_CONTENT" - Any other user-generated
+	// content not listed here, or in any other section. For example, user bios,
+	// notes, or open-ended responses.
+	//   "DATA_TYPE_OTHER_ACTIONS" - Any other user activity or actions in-app not
+	// listed here such as gameplay, likes, and dialog options.
+	//   "DATA_TYPE_WEB_BROWSING_HISTORY" - Information about the websites a user
+	// has visited.
+	//   "DATA_TYPE_CRASH_LOGS" - Crash log data from your app. For example, the
+	// number of times your app has crashed, stack traces, or other information
+	// directly related to a crash.
+	//   "DATA_TYPE_PERFORMANCE_DIAGNOSTICS" - Information about the performance of
+	// your app. For example battery life, loading time, latency, framerate, or any
+	// technical diagnostics.
+	//   "DATA_TYPE_OTHER_APP_PERFORMANCE_DATA" - Any other app performance data
+	// not listed here.
+	//   "DATA_TYPE_DEVICE_OR_OTHER_IDS" - Identifiers that relate to an individual
+	// device, browser or app. For example, an IMEI number, MAC address, Widevine
+	// Device ID, Firebase installation ID, or advertising identifier.
+	DataType string `json:"dataType,omitempty"`
+	// LineNumber: Required. Line number (1-based).
+	LineNumber int64 `json:"lineNumber,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksRepoScanV1alphaCodeScanDataTypeClassification) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksRepoScanV1alphaCodeScanDataTypeClassification
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksRepoScanV1alphaGenerateScanRequest: The request message for
+// RepoScanService.GenerateScan.
+type GoogleChecksRepoScanV1alphaGenerateScanRequest struct {
+	// CliAnalysis: Required. CLI analysis results.
+	CliAnalysis *GoogleChecksRepoScanV1alphaCliAnalysis `json:"cliAnalysis,omitempty"`
+	// CliVersion: Required. CLI version.
+	CliVersion string `json:"cliVersion,omitempty"`
+	// LocalScanPath: Required. Local scan path.
+	LocalScanPath string `json:"localScanPath,omitempty"`
+	// ScmMetadata: Required. SCM metadata.
+	ScmMetadata *GoogleChecksRepoScanV1alphaScmMetadata `json:"scmMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CliAnalysis") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CliAnalysis") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksRepoScanV1alphaGenerateScanRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksRepoScanV1alphaGenerateScanRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksRepoScanV1alphaListRepoScansResponse: The response message for
+// RepoScanService.ListRepoScans.
+type GoogleChecksRepoScanV1alphaListRepoScansResponse struct {
+	// NextPageToken: A token which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// RepoScans: The repo scans for the specified app.
+	RepoScans []*GoogleChecksRepoScanV1alphaRepoScan `json:"repoScans,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksRepoScanV1alphaListRepoScansResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksRepoScanV1alphaListRepoScansResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksRepoScanV1alphaPullRequest: Pull request info.
+type GoogleChecksRepoScanV1alphaPullRequest struct {
+	// BaseBranch: Required. For PR analysis, we compare against the most recent
+	// scan of the base branch to highlight new issues.
+	BaseBranch string `json:"baseBranch,omitempty"`
+	// PrNumber: Required. This can be supplied by the user or parsed automatically
+	// from predefined CI environment variables.
+	PrNumber string `json:"prNumber,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseBranch") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseBranch") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksRepoScanV1alphaPullRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksRepoScanV1alphaPullRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksRepoScanV1alphaRepoScan: Repo scan.
+type GoogleChecksRepoScanV1alphaRepoScan struct {
+	// CliVersion: CLI version.
+	CliVersion string `json:"cliVersion,omitempty"`
+	// LocalScanPath: Local scan path.
+	LocalScanPath string `json:"localScanPath,omitempty"`
+	// Name: Identifier. Resource name of the scan.
+	Name string `json:"name,omitempty"`
+	// ResultsUri: A URL to view results.
+	ResultsUri string `json:"resultsUri,omitempty"`
+	// ScmMetadata: SCM metadata.
+	ScmMetadata *GoogleChecksRepoScanV1alphaScmMetadata `json:"scmMetadata,omitempty"`
+	// Sources: Data sources detected.
+	Sources []*GoogleChecksRepoScanV1alphaSource `json:"sources,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CliVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CliVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksRepoScanV1alphaRepoScan) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksRepoScanV1alphaRepoScan
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksRepoScanV1alphaScmMetadata: SCM metadata.
+type GoogleChecksRepoScanV1alphaScmMetadata struct {
+	// Branch: Required. Branch name.
+	Branch string `json:"branch,omitempty"`
+	// PullRequest: Optional. Contains info about the associated pull request. This
+	// is only populated for pull request scans.
+	PullRequest *GoogleChecksRepoScanV1alphaPullRequest `json:"pullRequest,omitempty"`
+	// RemoteUri: Required. Git remote URL.
+	RemoteUri string `json:"remoteUri,omitempty"`
+	// RevisionId: Required. Revision ID, e.g. Git commit hash.
+	RevisionId string `json:"revisionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Branch") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Branch") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksRepoScanV1alphaScmMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksRepoScanV1alphaScmMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksRepoScanV1alphaSource: Represents a data source finding.
+type GoogleChecksRepoScanV1alphaSource struct {
+	// CodeAttribution: Optional. Source code attribution for the finding.
+	CodeAttribution *GoogleChecksRepoScanV1alphaCodeAttribution `json:"codeAttribution,omitempty"`
+	// DataType: Required. Data type.
+	//
+	// Possible values:
+	//   "DATA_TYPE_UNSPECIFIED" - Not specified.
+	//   "DATA_TYPE_APPROXIMATE_LOCATION" - User or device physical location to an
+	// area greater than or equal to 3 square kilometers, such as the city a user
+	// is in, or location provided by Android's ACCESS_COARSE_LOCATION permission.
+	//   "DATA_TYPE_PRECISE_LOCATION" - User or device physical location within an
+	// area less than 3 square kilometers, such as location provided by Android's
+	// ACCESS_FINE_LOCATION permission.
+	//   "DATA_TYPE_PERSONAL_NAME" - How a user refers to themselves, such as their
+	// first or last name, or nickname.
+	//   "DATA_TYPE_EMAIL_ADDRESS" - A user's email address.
+	//   "DATA_TYPE_USER_IDS" - Identifiers that relate to an identifiable person.
+	// For example, an account ID, account number, or account name.
+	//   "DATA_TYPE_PHYSICAL_ADDRESS" - A user's address, such as a mailing or home
+	// address.
+	//   "DATA_TYPE_PHONE_NUMBER" - A user's phone number.
+	//   "DATA_TYPE_RACE_AND_ETHNICITY" - Information about a user's race or
+	// ethnicity.
+	//   "DATA_TYPE_POLITICAL_OR_RELIGIOUS_BELIEFS" - Information about a user's
+	// political or religious beliefs.
+	//   "DATA_TYPE_SEXUAL_ORIENTATION" - Information about a user's sexual
+	// orientation.
+	//   "DATA_TYPE_OTHER_PERSONAL_INFO" - Any other personal information such as
+	// date of birth, gender identity, veteran status, etc.
+	//   "DATA_TYPE_PAYMENT_INFO" - Information about a user's financial accounts
+	// such as credit card number.
+	//   "DATA_TYPE_PURCHASE_HISTORY" - Information about purchases or transactions
+	// a user has made.
+	//   "DATA_TYPE_CREDIT_SCORE" - Information about a user's credit score.
+	//   "DATA_TYPE_OTHER_FINANCIAL_INFO" - Any other financial information such as
+	// user salary or debts.
+	//   "DATA_TYPE_HEALTH_INFO" - Information about a user's health, such as
+	// medical records or symptoms.
+	//   "DATA_TYPE_FITNESS_INFO" - Information about a user's fitness, such as
+	// exercise or other physical activity.
+	//   "DATA_TYPE_EMAILS" - A user's emails including the email subject line,
+	// sender, recipients, and the content of the email.
+	//   "DATA_TYPE_TEXT_MESSAGES" - A user's text messages including the sender,
+	// recipients, and the content of the message.
+	//   "DATA_TYPE_OTHER_IN_APP_MESSAGES" - Any other types of messages. For
+	// example, instant messages or chat content.
+	//   "DATA_TYPE_PHOTOS" - A user's photos.
+	//   "DATA_TYPE_VIDEOS" - A user's videos.
+	//   "DATA_TYPE_VOICE_OR_SOUND_RECORDINGS" - A user's voice such as a voicemail
+	// or a sound recording.
+	//   "DATA_TYPE_MUSIC_FILES" - A user's music files.
+	//   "DATA_TYPE_OTHER_AUDIO_FILES" - Any other user-created or user-provided
+	// audio files.
+	//   "DATA_TYPE_FILES_AND_DOCS" - A user's files or documents, or information
+	// about their files or documents such as file names.
+	//   "DATA_TYPE_CALENDAR_EVENTS" - Information from a user's calendar such as
+	// events, event notes, and attendees.
+	//   "DATA_TYPE_CONTACTS" - Information about the user’s contacts such as
+	// contact names, message history, and social graph information like usernames,
+	// contact recency, contact frequency, interaction duration and call history.
+	//   "DATA_TYPE_APP_INTERACTIONS" - Information about how a user interacts with
+	// your app, such as the number of page views or taps.
+	//   "DATA_TYPE_IN_APP_SEARCH_HISTORY" - Information about what a user has
+	// searched for in your app.
+	//   "DATA_TYPE_INSTALLED_APPS" - Inventory of apps or packages installed on
+	// the user’s device.
+	//   "DATA_TYPE_OTHER_USER_GENERATED_CONTENT" - Any other user-generated
+	// content not listed here, or in any other section. For example, user bios,
+	// notes, or open-ended responses.
+	//   "DATA_TYPE_OTHER_ACTIONS" - Any other user activity or actions in-app not
+	// listed here such as gameplay, likes, and dialog options.
+	//   "DATA_TYPE_WEB_BROWSING_HISTORY" - Information about the websites a user
+	// has visited.
+	//   "DATA_TYPE_CRASH_LOGS" - Crash log data from your app. For example, the
+	// number of times your app has crashed, stack traces, or other information
+	// directly related to a crash.
+	//   "DATA_TYPE_PERFORMANCE_DIAGNOSTICS" - Information about the performance of
+	// your app. For example battery life, loading time, latency, framerate, or any
+	// technical diagnostics.
+	//   "DATA_TYPE_OTHER_APP_PERFORMANCE_DATA" - Any other app performance data
+	// not listed here.
+	//   "DATA_TYPE_DEVICE_OR_OTHER_IDS" - Identifiers that relate to an individual
+	// device, browser or app. For example, an IMEI number, MAC address, Widevine
+	// Device ID, Firebase installation ID, or advertising identifier.
+	DataType string `json:"dataType,omitempty"`
+	// FalsePositive: Optional. Whether the finding was marked as a false positive.
+	FalsePositive bool `json:"falsePositive,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CodeAttribution") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CodeAttribution") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksRepoScanV1alphaSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksRepoScanV1alphaSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChecksRepoScanV1alphaSourceCode: Contains source code from a repo.
+type GoogleChecksRepoScanV1alphaSourceCode struct {
+	// Code: Required. Source code.
+	Code string `json:"code,omitempty"`
+	// EndLine: Required. End line number (1-based).
+	EndLine int64 `json:"endLine,omitempty"`
+	// Path: Required. Path of the file.
+	Path string `json:"path,omitempty"`
+	// StartLine: Required. Start line number (1-based).
+	StartLine int64 `json:"startLine,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChecksRepoScanV1alphaSourceCode) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChecksRepoScanV1alphaSourceCode
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2451,7 +2930,7 @@ type AccountsAppsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -3404,6 +3883,375 @@ func (c *AccountsReposOperationsGetCall) Do(opts ...googleapi.CallOption) (*Oper
 		return nil, err
 	}
 	return ret, nil
+}
+
+type AccountsReposScansGenerateCall struct {
+	s                                              *Service
+	parent                                         string
+	googlechecksreposcanv1alphageneratescanrequest *GoogleChecksRepoScanV1alphaGenerateScanRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Generate: Uploads the results of local Code Compliance analysis and
+// generates a scan of privacy issues. Returns a google.longrunning.Operation
+// containing analysis and findings.
+//
+// - parent: Resource name of the repo. Example: `accounts/123/repos/456`.
+func (r *AccountsReposScansService) Generate(parent string, googlechecksreposcanv1alphageneratescanrequest *GoogleChecksRepoScanV1alphaGenerateScanRequest) *AccountsReposScansGenerateCall {
+	c := &AccountsReposScansGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlechecksreposcanv1alphageneratescanrequest = googlechecksreposcanv1alphageneratescanrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsReposScansGenerateCall) Fields(s ...googleapi.Field) *AccountsReposScansGenerateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsReposScansGenerateCall) Context(ctx context.Context) *AccountsReposScansGenerateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsReposScansGenerateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsReposScansGenerateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlechecksreposcanv1alphageneratescanrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/scans:generate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "checks.accounts.repos.scans.generate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AccountsReposScansGenerateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type AccountsReposScansGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a repo scan. By default, only the name and results_uri fields are
+// returned. You can include other fields by listing them in the `fields` URL
+// query parameter. For example, `?fields=name,sources` will return the name
+// and sources fields.
+//
+//   - name: Resource name of the repo scan. Example:
+//     `accounts/123/repos/456/scans/789`.
+func (r *AccountsReposScansService) Get(name string) *AccountsReposScansGetCall {
+	c := &AccountsReposScansGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsReposScansGetCall) Fields(s ...googleapi.Field) *AccountsReposScansGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsReposScansGetCall) IfNoneMatch(entityTag string) *AccountsReposScansGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsReposScansGetCall) Context(ctx context.Context) *AccountsReposScansGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsReposScansGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsReposScansGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "checks.accounts.repos.scans.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChecksRepoScanV1alphaRepoScan.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsReposScansGetCall) Do(opts ...googleapi.CallOption) (*GoogleChecksRepoScanV1alphaRepoScan, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChecksRepoScanV1alphaRepoScan{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type AccountsReposScansListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists repo scans for the specified repo.
+//
+// - parent: Resource name of the repo. Example: `accounts/123/repos/456`.
+func (r *AccountsReposScansService) List(parent string) *AccountsReposScansListCall {
+	c := &AccountsReposScansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An AIP-160
+// (https://google.aip.dev/160) filter string to filter repo scans. Example:
+// `scmMetadata.branch = main`
+func (c *AccountsReposScansListCall) Filter(filter string) *AccountsReposScansListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of repo
+// scans to return. If unspecified, at most 10 repo scans will be returned. The
+// maximum value is 50; values above 50 will be coerced to 50.
+func (c *AccountsReposScansListCall) PageSize(pageSize int64) *AccountsReposScansListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token received
+// from a previous `ListRepoScans` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListRepoScans` must match the call that provided the page token.
+func (c *AccountsReposScansListCall) PageToken(pageToken string) *AccountsReposScansListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AccountsReposScansListCall) Fields(s ...googleapi.Field) *AccountsReposScansListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *AccountsReposScansListCall) IfNoneMatch(entityTag string) *AccountsReposScansListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AccountsReposScansListCall) Context(ctx context.Context) *AccountsReposScansListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AccountsReposScansListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsReposScansListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/scans")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "checks.accounts.repos.scans.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChecksRepoScanV1alphaListRepoScansResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsReposScansListCall) Do(opts ...googleapi.CallOption) (*GoogleChecksRepoScanV1alphaListRepoScansResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChecksRepoScanV1alphaListRepoScansResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsReposScansListCall) Pages(ctx context.Context, f func(*GoogleChecksRepoScanV1alphaListRepoScansResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type AisafetyClassifyContentCall struct {

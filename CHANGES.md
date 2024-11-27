@@ -1,5 +1,30 @@
 # Changes
 
+## [0.209.0](https://github.com/googleapis/google-api-go-client/compare/v0.208.0...v0.209.0) (2024-11-21)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2883](https://github.com/googleapis/google-api-go-client/issues/2883)) ([0b83533](https://github.com/googleapis/google-api-go-client/commit/0b8353371f75d5f3645a3fe6b91cdf004566fa4a))
+
+## [0.208.0](https://github.com/googleapis/google-api-go-client/compare/v0.207.0...v0.208.0) (2024-11-20)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2881](https://github.com/googleapis/google-api-go-client/issues/2881)) ([44435a9](https://github.com/googleapis/google-api-go-client/commit/44435a9a91048abc5776051221ce9e64b75f5734))
+* **gensupport:** Per-chunk transfer timeout configs ([09fa125](https://github.com/googleapis/google-api-go-client/commit/09fa125adbe59d02e1e67470bfeebcb6b9c1596e))
+* **gensupport:** Per-chunk transfer timeout configs ([#2865](https://github.com/googleapis/google-api-go-client/issues/2865)) ([09fa125](https://github.com/googleapis/google-api-go-client/commit/09fa125adbe59d02e1e67470bfeebcb6b9c1596e))
+
+## [0.207.0](https://github.com/googleapis/google-api-go-client/compare/v0.206.0...v0.207.0) (2024-11-19)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2874](https://github.com/googleapis/google-api-go-client/issues/2874)) ([e9ebb69](https://github.com/googleapis/google-api-go-client/commit/e9ebb69c042ca5e25173253abce13870245e0356))
+* **all:** Auto-regenerate discovery clients ([#2876](https://github.com/googleapis/google-api-go-client/issues/2876)) ([796b248](https://github.com/googleapis/google-api-go-client/commit/796b2482d765d213ab7f9329558c8ea2ca988fe9))
+* **all:** Auto-regenerate discovery clients ([#2879](https://github.com/googleapis/google-api-go-client/issues/2879)) ([9c21349](https://github.com/googleapis/google-api-go-client/commit/9c21349472533bd39a0e55f2db4b9c2afd18c325))
+
 ## [0.206.0](https://github.com/googleapis/google-api-go-client/compare/v0.205.0...v0.206.0) (2024-11-14)
 
 

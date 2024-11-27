@@ -2129,6 +2129,11 @@ func (s GetDnsZoneResponse) MarshalJSON() ([]byte, error) {
 type GoSettings struct {
 	// Common: Some settings.
 	Common *CommonLanguageSettings `json:"common,omitempty"`
+	// RenamedServices: Map of service names to renamed services. Keys are the
+	// package relative service names and values are the name to be used for the
+	// service client and call options. publishing: go_settings: renamed_services:
+	// Publisher: TopicAdmin
+	RenamedServices map[string]string `json:"renamedServices,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Common") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -4937,7 +4942,7 @@ type OperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.

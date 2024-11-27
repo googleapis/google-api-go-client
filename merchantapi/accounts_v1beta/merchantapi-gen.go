@@ -1669,8 +1669,8 @@ type OnlineReturnPolicy struct {
 	// AcceptExchange: This field specifies if merchant allows customers to
 	// exchange products, this field is required.
 	AcceptExchange bool `json:"acceptExchange,omitempty"`
-	// Countries: Required. The countries of sale where the return policy applies.
-	// The values must be a valid 2 letter ISO 3166 code.
+	// Countries: Required. Immutable. The countries of sale where the return
+	// policy applies. The values must be a valid 2 letter ISO 3166 code.
 	Countries []string `json:"countries,omitempty"`
 	// ItemConditions: The item conditions accepted for returns must not be empty
 	// unless the type of return policy is 'noReturns'.
@@ -1680,12 +1680,12 @@ type OnlineReturnPolicy struct {
 	//   "NEW" - New.
 	//   "USED" - Used.
 	ItemConditions []string `json:"itemConditions,omitempty"`
-	// Label: Required. This field represents the unique user-defined label of the
-	// return policy. It is important to note that the same label cannot be used in
-	// different return policies for the same country. Unless a product specifies a
-	// specific label attribute, policies will be automatically labeled as
-	// 'default'. To assign a custom return policy to certain product groups,
-	// follow the instructions provided in the [Return policy label]
+	// Label: Required. Immutable. This field represents the unique user-defined
+	// label of the return policy. It is important to note that the same label
+	// cannot be used in different return policies for the same country. Unless a
+	// product specifies a specific label attribute, policies will be automatically
+	// labeled as 'default'. To assign a custom return policy to certain product
+	// groups, follow the instructions provided in the [Return policy label]
 	// (https://support.google.com/merchants/answer/9445425). The label can contain
 	// up to 50 characters.
 	Label string `json:"label,omitempty"`
@@ -3584,7 +3584,8 @@ type AccountsListSubaccountsCall struct {
 // the following filter: `relationship(providerId={parent} AND
 // service(type="ACCOUNT_AGGREGATION"))`
 //
-// - provider: The parent account. Format: `accounts/{account}`.
+//   - provider: The aggregation service provider. Format:
+//     `providers/{providerId}`.
 func (r *AccountsService) ListSubaccounts(provider string) *AccountsListSubaccountsCall {
 	c := &AccountsListSubaccountsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.provider = provider

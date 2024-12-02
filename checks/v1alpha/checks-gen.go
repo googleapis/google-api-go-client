@@ -995,6 +995,8 @@ type GoogleChecksRepoScanV1alphaSource struct {
 	// device, browser or app. For example, an IMEI number, MAC address, Widevine
 	// Device ID, Firebase installation ID, or advertising identifier.
 	DataType string `json:"dataType,omitempty"`
+	// FalsePositive: Optional. Whether the finding was marked as a false positive.
+	FalsePositive bool `json:"falsePositive,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CodeAttribution") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -4308,6 +4308,10 @@ func (s OfferTag) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OneTimeCode: A single use promotion code.
+type OneTimeCode struct {
+}
+
 // OneTimeExternalTransaction: Represents a one-time transaction.
 type OneTimeExternalTransaction struct {
 	// ExternalTransactionToken: Input only. Provided during the call to Create.
@@ -5563,6 +5567,30 @@ func (s SdkVersionTargeting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SignupPromotion: The promotion applied on this item when purchased.
+type SignupPromotion struct {
+	// OneTimeCode: A one-time code was applied.
+	OneTimeCode *OneTimeCode `json:"oneTimeCode,omitempty"`
+	// VanityCode: A vanity code was applied.
+	VanityCode *VanityCode `json:"vanityCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OneTimeCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OneTimeCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SignupPromotion) MarshalJSON() ([]byte, error) {
+	type NoMethod SignupPromotion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SplitApkMetadata: Holds data specific to Split APKs.
 type SplitApkMetadata struct {
 	// IsMasterSplit: Indicates whether this APK is the main split of the module.
@@ -6179,6 +6207,9 @@ type SubscriptionPurchaseLineItem struct {
 	PrepaidPlan *PrepaidPlan `json:"prepaidPlan,omitempty"`
 	// ProductId: The purchased product ID (for example, 'monthly001').
 	ProductId string `json:"productId,omitempty"`
+	// SignupPromotion: Promotion details about this item. Only set if a promotion
+	// was applied during signup.
+	SignupPromotion *SignupPromotion `json:"signupPromotion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoRenewingPlan") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7453,6 +7484,28 @@ type UsesPermission struct {
 
 func (s UsesPermission) MarshalJSON() ([]byte, error) {
 	type NoMethod UsesPermission
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VanityCode: A multiple use, predefined promotion code.
+type VanityCode struct {
+	// PromotionCode: The promotion code.
+	PromotionCode string `json:"promotionCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PromotionCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PromotionCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VanityCode) MarshalJSON() ([]byte, error) {
+	type NoMethod VanityCode
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

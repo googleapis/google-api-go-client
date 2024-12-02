@@ -9,11 +9,12 @@ import (
 	"os"
 	"testing"
 
+	"cloud.google.com/go/auth"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )
 
-func TestDefaultServiceAccount(t *testing.T) {
+func TestCreds_DefaultServiceAccount(t *testing.T) {
 	ctx := context.Background()
 
 	// Load a valid JSON file. No way to really test the contents; we just
@@ -37,7 +38,31 @@ func TestDefaultServiceAccount(t *testing.T) {
 	}
 }
 
-func TestJWTWithAudience(t *testing.T) {
+func TestAuthCreds_DefaultServiceAccount(t *testing.T) {
+	ctx := context.Background()
+
+	// Load a valid JSON file. No way to really test the contents; we just
+	// verify that there is no error.
+	ds := &DialSettings{
+		CredentialsFile: "testdata/service-account.json",
+		DefaultScopes:   []string{"foo"},
+	}
+	if _, err := AuthCreds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+
+	// Load valid JSON. No way to really test the contents; we just
+	// verify that there is no error.
+	ds = &DialSettings{
+		CredentialsJSON: []byte(validServiceAccountJSON),
+		DefaultScopes:   []string{"foo"},
+	}
+	if _, err := AuthCreds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+}
+
+func TestCreds_JWTWithAudience(t *testing.T) {
 	ctx := context.Background()
 
 	// Load a valid JSON file. No way to really test the contents; we just
@@ -55,7 +80,25 @@ func TestJWTWithAudience(t *testing.T) {
 	}
 }
 
-func TestJWTWithScope(t *testing.T) {
+func TestAuthCreds_JWTWithAudience(t *testing.T) {
+	ctx := context.Background()
+
+	// Load a valid JSON file. No way to really test the contents; we just
+	// verify that there is no error.
+	ds := &DialSettings{CredentialsFile: "testdata/service-account.json", Audiences: []string{"foo"}}
+	if _, err := AuthCreds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+
+	// Load valid JSON. No way to really test the contents; we just
+	// verify that there is no error.
+	ds = &DialSettings{CredentialsJSON: []byte(validServiceAccountJSON), Audiences: []string{"foo"}}
+	if _, err := AuthCreds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+}
+
+func TestCreds_JWTWithScope(t *testing.T) {
 	ctx := context.Background()
 
 	// Load a valid JSON file. No way to really test the contents; we just
@@ -81,7 +124,33 @@ func TestJWTWithScope(t *testing.T) {
 	}
 }
 
-func TestJWTWithScopeAndUniverseDomain(t *testing.T) {
+func TestAuthCreds_JWTWithScope(t *testing.T) {
+	ctx := context.Background()
+
+	// Load a valid JSON file. No way to really test the contents; we just
+	// verify that there is no error.
+	ds := &DialSettings{
+		CredentialsFile:    "testdata/service-account.json",
+		Scopes:             []string{"foo"},
+		EnableJwtWithScope: true,
+	}
+	if _, err := AuthCreds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+
+	// Load valid JSON. No way to really test the contents; we just
+	// verify that there is no error.
+	ds = &DialSettings{
+		CredentialsJSON:    []byte(validServiceAccountJSON),
+		Scopes:             []string{"foo"},
+		EnableJwtWithScope: true,
+	}
+	if _, err := AuthCreds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+}
+
+func TestCreds_JWTWithScopeAndUniverseDomain(t *testing.T) {
 	ctx := context.Background()
 
 	// Load a valid JSON file. No way to really test the contents; we just
@@ -109,7 +178,35 @@ func TestJWTWithScopeAndUniverseDomain(t *testing.T) {
 	}
 }
 
-func TestJWTWithDefaultScopes(t *testing.T) {
+func TestAuthCreds_JWTWithScopeAndUniverseDomain(t *testing.T) {
+	ctx := context.Background()
+
+	// Load a valid JSON file. No way to really test the contents; we just
+	// verify that there is no error.
+	ds := &DialSettings{
+		CredentialsFile:    "testdata/service-account.json",
+		Scopes:             []string{"foo"},
+		EnableJwtWithScope: true,
+		UniverseDomain:     "example.com",
+	}
+	if _, err := AuthCreds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+
+	// Load valid JSON. No way to really test the contents; we just
+	// verify that there is no error.
+	ds = &DialSettings{
+		CredentialsJSON:    []byte(validServiceAccountJSON),
+		Scopes:             []string{"foo"},
+		EnableJwtWithScope: true,
+		UniverseDomain:     "example.com",
+	}
+	if _, err := AuthCreds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+}
+
+func TestCreds_JWTWithDefaultScopes(t *testing.T) {
 	ctx := context.Background()
 
 	// Load a valid JSON file. No way to really test the contents; we just
@@ -135,7 +232,33 @@ func TestJWTWithDefaultScopes(t *testing.T) {
 	}
 }
 
-func TestJWTWithDefaultAudience(t *testing.T) {
+func TestAuthCreds_JWTWithDefaultScopes(t *testing.T) {
+	ctx := context.Background()
+
+	// Load a valid JSON file. No way to really test the contents; we just
+	// verify that there is no error.
+	ds := &DialSettings{
+		CredentialsFile:    "testdata/service-account.json",
+		DefaultScopes:      []string{"foo"},
+		EnableJwtWithScope: true,
+	}
+	if _, err := AuthCreds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+
+	// Load valid JSON. No way to really test the contents; we just
+	// verify that there is no error.
+	ds = &DialSettings{
+		CredentialsJSON:    []byte(validServiceAccountJSON),
+		DefaultScopes:      []string{"foo"},
+		EnableJwtWithScope: true,
+	}
+	if _, err := AuthCreds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+}
+
+func TestCreds_JWTWithDefaultAudience(t *testing.T) {
 	ctx := context.Background()
 
 	// Load a valid JSON file. No way to really test the contents; we just
@@ -159,7 +282,31 @@ func TestJWTWithDefaultAudience(t *testing.T) {
 	}
 }
 
-func TestOAuth(t *testing.T) {
+func TestAuthCreds_JWTWithDefaultAudience(t *testing.T) {
+	ctx := context.Background()
+
+	// Load a valid JSON file. No way to really test the contents; we just
+	// verify that there is no error.
+	ds := &DialSettings{
+		CredentialsFile: "testdata/service-account.json",
+		DefaultAudience: "foo",
+	}
+	if _, err := AuthCreds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+
+	// Load valid JSON. No way to really test the contents; we just
+	// verify that there is no error.
+	ds = &DialSettings{
+		CredentialsJSON: []byte(validServiceAccountJSON),
+		DefaultAudience: "foo",
+	}
+	if _, err := AuthCreds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+}
+
+func TestCreds_CredentialsFile_CredentialsJSON(t *testing.T) {
 	ctx := context.Background()
 
 	// Load a valid JSON file. No way to really test the contents; we just
@@ -173,6 +320,24 @@ func TestOAuth(t *testing.T) {
 	// verify that there is no error.
 	ds = &DialSettings{CredentialsJSON: []byte(validServiceAccountJSON), Scopes: []string{"foo"}}
 	if _, err := Creds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+}
+
+func TestAuthCreds_CredentialsFile_CredentialsJSON(t *testing.T) {
+	ctx := context.Background()
+
+	// Load a valid JSON file. No way to really test the contents; we just
+	// verify that there is no error.
+	ds := &DialSettings{CredentialsFile: "testdata/service-account.json", Scopes: []string{"foo"}}
+	if _, err := AuthCreds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+
+	// Load valid JSON. No way to really test the contents; we just
+	// verify that there is no error.
+	ds = &DialSettings{CredentialsJSON: []byte(validServiceAccountJSON), Scopes: []string{"foo"}}
+	if _, err := AuthCreds(ctx, ds); err != nil {
 		t.Errorf("got %v, wanted no error", err)
 	}
 }
@@ -268,7 +433,7 @@ func TestGetQuotaProject(t *testing.T) {
 	}
 }
 
-func TestCredsWithCredentials(t *testing.T) {
+func TestCreds(t *testing.T) {
 	tests := []struct {
 		name string
 		ds   *DialSettings
@@ -322,6 +487,98 @@ func TestCredsWithCredentials(t *testing.T) {
 			}
 			if tok, _ := creds.TokenSource.Token(); tok.AccessToken != tc.want {
 				t.Fatalf("tok.AccessToken = %q, want %q", tok.AccessToken, tc.want)
+			}
+		})
+	}
+}
+
+type staticTokenProvider string
+
+func (s staticTokenProvider) Token(context.Context) (*auth.Token, error) {
+	return &auth.Token{Value: string(s)}, nil
+}
+
+func TestAuthCreds(t *testing.T) {
+	tests := []struct {
+		name string
+		ds   *DialSettings
+		want string
+	}{
+		{
+			name: "only token source opt",
+			ds: &DialSettings{
+				TokenSource: oauth2.StaticTokenSource(&oauth2.Token{
+					AccessToken: "token",
+				}),
+			},
+			want: "token",
+		},
+		{
+			name: "credentials and token source creds opt",
+			ds: &DialSettings{
+				TokenSource: oauth2.StaticTokenSource(&oauth2.Token{
+					AccessToken: "token",
+				}),
+				Credentials: &google.Credentials{
+					TokenSource: oauth2.StaticTokenSource(&oauth2.Token{
+						AccessToken: "credentials",
+					}),
+				},
+			},
+			want: "credentials",
+		},
+		{
+			name: "internal, credentials and token source creds opt",
+			ds: &DialSettings{
+				TokenSource: oauth2.StaticTokenSource(&oauth2.Token{
+					AccessToken: "token",
+				}),
+				Credentials: &google.Credentials{
+					TokenSource: oauth2.StaticTokenSource(&oauth2.Token{
+						AccessToken: "credentials",
+					}),
+				},
+				InternalCredentials: &google.Credentials{
+					TokenSource: oauth2.StaticTokenSource(&oauth2.Token{
+						AccessToken: "internal",
+					}),
+				},
+			},
+			want: "internal",
+		},
+		{
+			name: "auth credentials, internal, credentials, token source creds opt",
+			ds: &DialSettings{
+				TokenSource: oauth2.StaticTokenSource(&oauth2.Token{
+					AccessToken: "token",
+				}),
+				Credentials: &google.Credentials{
+					TokenSource: oauth2.StaticTokenSource(&oauth2.Token{
+						AccessToken: "credentials",
+					}),
+				},
+				InternalCredentials: &google.Credentials{
+					TokenSource: oauth2.StaticTokenSource(&oauth2.Token{
+						AccessToken: "internal",
+					}),
+				},
+				AuthCredentials: &auth.Credentials{
+					TokenProvider: staticTokenProvider("auth credentials"),
+				},
+			},
+			want: "auth credentials",
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			ctx := context.Background()
+			creds, err := AuthCreds(ctx, tc.ds)
+			if err != nil {
+				t.Fatalf("got %v, want nil error", err)
+			}
+			if tok, _ := creds.TokenProvider.Token(ctx); tok.Value != tc.want {
+				t.Fatalf("tok.AccessToken = %q, want %q", tok.Value, tc.want)
 			}
 		})
 	}

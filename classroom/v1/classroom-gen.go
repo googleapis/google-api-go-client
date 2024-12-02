@@ -321,6 +321,7 @@ type CoursesAnnouncementsAddOnAttachmentsService struct {
 func NewCoursesCourseWorkService(s *Service) *CoursesCourseWorkService {
 	rs := &CoursesCourseWorkService{s: s}
 	rs.AddOnAttachments = NewCoursesCourseWorkAddOnAttachmentsService(s)
+	rs.Rubrics = NewCoursesCourseWorkRubricsService(s)
 	rs.StudentSubmissions = NewCoursesCourseWorkStudentSubmissionsService(s)
 	return rs
 }
@@ -329,6 +330,8 @@ type CoursesCourseWorkService struct {
 	s *Service
 
 	AddOnAttachments *CoursesCourseWorkAddOnAttachmentsService
+
+	Rubrics *CoursesCourseWorkRubricsService
 
 	StudentSubmissions *CoursesCourseWorkStudentSubmissionsService
 }
@@ -351,6 +354,15 @@ func NewCoursesCourseWorkAddOnAttachmentsStudentSubmissionsService(s *Service) *
 }
 
 type CoursesCourseWorkAddOnAttachmentsStudentSubmissionsService struct {
+	s *Service
+}
+
+func NewCoursesCourseWorkRubricsService(s *Service) *CoursesCourseWorkRubricsService {
+	rs := &CoursesCourseWorkRubricsService{s: s}
+	return rs
+}
+
+type CoursesCourseWorkRubricsService struct {
 	s *Service
 }
 
@@ -1371,6 +1383,35 @@ func (s CourseWorkMaterial) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Criterion: A rubric criterion. Each criterion is a dimension on which
+// performance is rated.
+type Criterion struct {
+	// Description: The description of the criterion.
+	Description string `json:"description,omitempty"`
+	// Id: The criterion ID. On creation, an ID is assigned.
+	Id string `json:"id,omitempty"`
+	// Levels: The list of levels within this criterion.
+	Levels []*Level `json:"levels,omitempty"`
+	// Title: The title of the criterion.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Criterion) MarshalJSON() ([]byte, error) {
+	type NoMethod Criterion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Date: Represents a whole or partial calendar date, such as a birthday. The
 // time of day and time zone are either specified elsewhere or are
 // insignificant. The date is relative to the Gregorian Calendar. This can
@@ -1882,6 +1923,51 @@ func (s Invitation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Level: A level of the criterion.
+type Level struct {
+	// Description: The description of the level.
+	Description string `json:"description,omitempty"`
+	// Id: The level ID. On creation, an ID is assigned.
+	Id string `json:"id,omitempty"`
+	// Points: Optional points associated with this level. If set, all levels
+	// within the rubric must specify points and the value must be distinct across
+	// all levels within a single criterion. 0 is distinct from no points.
+	Points float64 `json:"points,omitempty"`
+	// Title: The title of the level. If the level has no points set, title must be
+	// set.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Level) MarshalJSON() ([]byte, error) {
+	type NoMethod Level
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *Level) UnmarshalJSON(data []byte) error {
+	type NoMethod Level
+	var s1 struct {
+		Points gensupport.JSONFloat64 `json:"points"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Points = float64(s1.Points)
+	return nil
+}
+
 // Link: URL item.
 type Link struct {
 	// ThumbnailUrl: URL of a thumbnail image of the target URL. Read-only.
@@ -2159,6 +2245,34 @@ type ListInvitationsResponse struct {
 
 func (s ListInvitationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInvitationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListRubricsResponse: Response when listing rubrics.
+type ListRubricsResponse struct {
+	// NextPageToken: Token identifying the next page of results to return. If
+	// empty, no further results are available.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Rubrics: Rubrics that match the request.
+	Rubrics []*Rubric `json:"rubrics,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListRubricsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRubricsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2537,6 +2651,98 @@ func (s Registration) MarshalJSON() ([]byte, error) {
 type ReturnStudentSubmissionRequest struct {
 }
 
+// Rubric: The rubric of the course work. A rubric is a scoring guide used to
+// evaluate student work and give feedback. For further details, see Rubrics
+// structure and known limitations (/classroom/rubrics/limitations).
+type Rubric struct {
+	// CourseId: Identifier of the course. Read-only.
+	CourseId string `json:"courseId,omitempty"`
+	// CourseWorkId: Identifier for the course work this corresponds to. Read-only.
+	CourseWorkId string `json:"courseWorkId,omitempty"`
+	// CreationTime: Output only. Timestamp when this rubric was created.
+	// Read-only.
+	CreationTime string `json:"creationTime,omitempty"`
+	// Criteria: List of criteria. Each criterion is a dimension on which
+	// performance is rated.
+	Criteria []*Criterion `json:"criteria,omitempty"`
+	// Id: Classroom-assigned identifier for the rubric. This is unique among
+	// rubrics for the relevant course work. Read-only.
+	Id string `json:"id,omitempty"`
+	// SourceSpreadsheetId: Input only. Immutable. Google Sheets ID of the
+	// spreadsheet. This spreadsheet must contain formatted rubric settings. See
+	// Create or reuse a rubric for an assignment
+	// (https://support.google.com/edu/classroom/answer/9335069). Use of this field
+	// requires the `https://www.googleapis.com/auth/spreadsheets.readonly` or
+	// `https://www.googleapis.com/auth/spreadsheets` scope.
+	SourceSpreadsheetId string `json:"sourceSpreadsheetId,omitempty"`
+	// UpdateTime: Output only. Timestamp of the most recent change to this rubric.
+	// Read-only.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CourseId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CourseId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Rubric) MarshalJSON() ([]byte, error) {
+	type NoMethod Rubric
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RubricGrade: A rubric grade set for the student submission. There is at most
+// one entry per rubric criterion.
+type RubricGrade struct {
+	// CriterionId: Optional. Criterion ID.
+	CriterionId string `json:"criterionId,omitempty"`
+	// LevelId: Optional. Optional level ID of the selected level. If empty, no
+	// level was selected.
+	LevelId string `json:"levelId,omitempty"`
+	// Points: Optional. Optional points assigned for this criterion, typically
+	// based on the level. Levels might or might not have points. If unset, no
+	// points were set for this criterion.
+	Points float64 `json:"points,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CriterionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CriterionId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RubricGrade) MarshalJSON() ([]byte, error) {
+	type NoMethod RubricGrade
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *RubricGrade) UnmarshalJSON(data []byte) error {
+	type NoMethod RubricGrade
+	var s1 struct {
+		Points gensupport.JSONFloat64 `json:"points"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Points = float64(s1.Points)
+	return nil
+}
+
 // SharedDriveFile: Drive file that is used as material for course work.
 type SharedDriveFile struct {
 	// DriveFile: Drive file details.
@@ -2702,6 +2908,12 @@ type StudentSubmission struct {
 	// be non-negative. Decimal (that is, non-integer) values are allowed, but are
 	// rounded to two decimal places. This may be modified only by course teachers.
 	AssignedGrade float64 `json:"assignedGrade,omitempty"`
+	// AssignedRubricGrades: Assigned rubric grades based on the rubric's Criteria.
+	// This map is empty if there is no rubric attached to this course work or if a
+	// rubric is attached, but no grades have been set on any Criteria. Entries are
+	// only populated for grades that have been set. Key: The rubric's criterion
+	// ID. Read-only.
+	AssignedRubricGrades map[string]RubricGrade `json:"assignedRubricGrades,omitempty"`
 	// AssignmentSubmission: Submission content when course_work_type is
 	// ASSIGNMENT. Students can modify this content using ModifyAttachments.
 	AssignmentSubmission *AssignmentSubmission `json:"assignmentSubmission,omitempty"`
@@ -2730,6 +2942,12 @@ type StudentSubmission struct {
 	// are rounded to two decimal places. This is only visible to and modifiable by
 	// course teachers.
 	DraftGrade float64 `json:"draftGrade,omitempty"`
+	// DraftRubricGrades: Pending rubric grades based on the rubric's criteria.
+	// This map is empty if there is no rubric attached to this course work or if a
+	// rubric is attached, but no grades have been set on any criteria. Entries are
+	// only populated for grades that have been set. Key: The rubric's criterion
+	// ID. Read-only.
+	DraftRubricGrades map[string]RubricGrade `json:"draftRubricGrades,omitempty"`
 	// Id: Classroom-assigned Identifier for the student submission. This is unique
 	// among submissions for the relevant course work. Read-only.
 	Id string `json:"id,omitempty"`
@@ -6612,6 +6830,147 @@ func (c *CoursesCourseWorkPatchCall) Do(opts ...googleapi.CallOption) (*CourseWo
 	return ret, nil
 }
 
+type CoursesCourseWorkUpdateRubricCall struct {
+	s            *Service
+	courseId     string
+	courseWorkId string
+	rubric       *Rubric
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// UpdateRubric: Updates a rubric. See google.classroom.v1.Rubric for details
+// of which fields can be updated. Rubric update capabilities are limited
+// (/classroom/rubrics/limitations) once grading has started. This request must
+// be made by the Google Cloud console of the OAuth client ID
+// (https://support.google.com/cloud/answer/6158849) used to create the parent
+// course work item. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the requesting developer project didn't create the
+// corresponding course work, if the user isn't permitted to make the requested
+// modification to the rubric, or for access errors. This error code is also
+// returned if grading has already started on the rubric. * `INVALID_ARGUMENT`
+// if the request is malformed and for the following request error: *
+// `RubricCriteriaInvalidFormat` * `NOT_FOUND` if the requested course, course
+// work, or rubric doesn't exist or if the user doesn't have access to the
+// corresponding course work. * `INTERNAL` if grading has already started on
+// the rubric.
+//
+// - courseId: Identifier of the course.
+// - courseWorkId: Identifier of the course work.
+func (r *CoursesCourseWorkService) UpdateRubric(courseId string, courseWorkId string, rubric *Rubric) *CoursesCourseWorkUpdateRubricCall {
+	c := &CoursesCourseWorkUpdateRubricCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.courseWorkId = courseWorkId
+	c.rubric = rubric
+	return c
+}
+
+// Id sets the optional parameter "id": Identifier of the rubric.
+func (c *CoursesCourseWorkUpdateRubricCall) Id(id string) *CoursesCourseWorkUpdateRubricCall {
+	c.urlParams_.Set("id", id)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Mask that identifies
+// which fields on the rubric to update. This field is required to do an
+// update. The update fails if invalid fields are specified. There are multiple
+// options to define the criteria of a rubric: the `source_spreadsheet_id` and
+// the `criteria` list. Only one of these can be used at a time to define a
+// rubric. The rubric `criteria` list is fully replaced by the rubric criteria
+// specified in the update request. For example, if a criterion or level is
+// missing from the request, it is deleted. New criteria and levels are added
+// and an ID is assigned. Existing criteria and levels retain the previously
+// assigned ID if the ID is specified in the request. The following fields can
+// be specified by teachers: * `criteria` * `source_spreadsheet_id`
+func (c *CoursesCourseWorkUpdateRubricCall) UpdateMask(updateMask string) *CoursesCourseWorkUpdateRubricCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesCourseWorkUpdateRubricCall) Fields(s ...googleapi.Field) *CoursesCourseWorkUpdateRubricCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesCourseWorkUpdateRubricCall) Context(ctx context.Context) *CoursesCourseWorkUpdateRubricCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesCourseWorkUpdateRubricCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesCourseWorkUpdateRubricCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rubric)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/rubric")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":     c.courseId,
+		"courseWorkId": c.courseWorkId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.courseWork.updateRubric" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Rubric.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CoursesCourseWorkUpdateRubricCall) Do(opts ...googleapi.CallOption) (*Rubric, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Rubric{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
 type CoursesCourseWorkAddOnAttachmentsCreateCall struct {
 	s               *Service
 	courseId        string
@@ -7548,6 +7907,646 @@ func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsPatchCall) Do(opts .
 		return nil, gensupport.WrapError(err)
 	}
 	ret := &AddOnAttachmentStudentSubmission{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type CoursesCourseWorkRubricsCreateCall struct {
+	s            *Service
+	courseId     string
+	courseWorkId string
+	rubric       *Rubric
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Create: Creates a rubric. This request must be made by the Google Cloud
+// console of the OAuth client ID
+// (https://support.google.com/cloud/answer/6158849) used to create the parent
+// course work item. For further details, see Rubrics structure and known
+// limitations (/classroom/rubrics/limitations). This method returns the
+// following error codes: * `PERMISSION_DENIED` if the requesting user isn't
+// permitted to create rubrics for course work in the requested course. *
+// `INTERNAL` if the request has insufficient OAuth scopes. *
+// `INVALID_ARGUMENT` if the request is malformed and for the following request
+// error: * `RubricCriteriaInvalidFormat` * `NOT_FOUND` if the requested course
+// or course work don't exist or the user doesn't have access to the course or
+// course work. * `FAILED_PRECONDITION` for the following request error: *
+// `AttachmentNotVisible`
+//
+// - courseId: Identifier of the course.
+// - courseWorkId: Identifier of the course work.
+func (r *CoursesCourseWorkRubricsService) Create(courseId string, courseWorkId string, rubric *Rubric) *CoursesCourseWorkRubricsCreateCall {
+	c := &CoursesCourseWorkRubricsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.courseWorkId = courseWorkId
+	c.rubric = rubric
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesCourseWorkRubricsCreateCall) Fields(s ...googleapi.Field) *CoursesCourseWorkRubricsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesCourseWorkRubricsCreateCall) Context(ctx context.Context) *CoursesCourseWorkRubricsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesCourseWorkRubricsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesCourseWorkRubricsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rubric)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/rubrics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":     c.courseId,
+		"courseWorkId": c.courseWorkId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.courseWork.rubrics.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Rubric.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CoursesCourseWorkRubricsCreateCall) Do(opts ...googleapi.CallOption) (*Rubric, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Rubric{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type CoursesCourseWorkRubricsDeleteCall struct {
+	s            *Service
+	courseId     string
+	courseWorkId string
+	id           string
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Delete: Deletes a rubric. This request must be made by the Google Cloud
+// console of the OAuth client ID
+// (https://support.google.com/cloud/answer/6158849) used to create the
+// corresponding rubric. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the requesting developer project didn't create the
+// corresponding rubric, or if the requesting user isn't permitted to delete
+// the requested rubric. * `NOT_FOUND` if no rubric exists with the requested
+// ID or the user does not have access to the course, course work, or rubric. *
+// `INVALID_ARGUMENT` if grading has already started on the rubric.
+//
+// - courseId: Identifier of the course.
+// - courseWorkId: Identifier of the course work.
+// - id: Identifier of the rubric.
+func (r *CoursesCourseWorkRubricsService) Delete(courseId string, courseWorkId string, id string) *CoursesCourseWorkRubricsDeleteCall {
+	c := &CoursesCourseWorkRubricsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.courseWorkId = courseWorkId
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesCourseWorkRubricsDeleteCall) Fields(s ...googleapi.Field) *CoursesCourseWorkRubricsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesCourseWorkRubricsDeleteCall) Context(ctx context.Context) *CoursesCourseWorkRubricsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesCourseWorkRubricsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesCourseWorkRubricsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/rubrics/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":     c.courseId,
+		"courseWorkId": c.courseWorkId,
+		"id":           c.id,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.courseWork.rubrics.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CoursesCourseWorkRubricsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type CoursesCourseWorkRubricsGetCall struct {
+	s            *Service
+	courseId     string
+	courseWorkId string
+	id           string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns a rubric. This method returns the following error codes: *
+// `PERMISSION_DENIED` for access errors. * `INVALID_ARGUMENT` if the request
+// is malformed. * `NOT_FOUND` if the requested course, course work, or rubric
+// doesn't exist or if the user doesn't have access to the corresponding course
+// work.
+//
+// - courseId: Identifier of the course.
+// - courseWorkId: Identifier of the course work.
+// - id: Identifier of the rubric.
+func (r *CoursesCourseWorkRubricsService) Get(courseId string, courseWorkId string, id string) *CoursesCourseWorkRubricsGetCall {
+	c := &CoursesCourseWorkRubricsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.courseWorkId = courseWorkId
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesCourseWorkRubricsGetCall) Fields(s ...googleapi.Field) *CoursesCourseWorkRubricsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesCourseWorkRubricsGetCall) IfNoneMatch(entityTag string) *CoursesCourseWorkRubricsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesCourseWorkRubricsGetCall) Context(ctx context.Context) *CoursesCourseWorkRubricsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesCourseWorkRubricsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesCourseWorkRubricsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/rubrics/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":     c.courseId,
+		"courseWorkId": c.courseWorkId,
+		"id":           c.id,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.courseWork.rubrics.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Rubric.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CoursesCourseWorkRubricsGetCall) Do(opts ...googleapi.CallOption) (*Rubric, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Rubric{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type CoursesCourseWorkRubricsListCall struct {
+	s            *Service
+	courseId     string
+	courseWorkId string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of rubrics that the requester is permitted to view.
+// This method returns the following error codes: * `PERMISSION_DENIED` for
+// access errors. * `INVALID_ARGUMENT` if the request is malformed. *
+// `NOT_FOUND` if the requested course or course work doesn't exist or if the
+// user doesn't have access to the corresponding course work.
+//
+// - courseId: Identifier of the course.
+// - courseWorkId: Identifier of the course work.
+func (r *CoursesCourseWorkRubricsService) List(courseId string, courseWorkId string) *CoursesCourseWorkRubricsListCall {
+	c := &CoursesCourseWorkRubricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.courseWorkId = courseWorkId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// rubrics to return. If unspecified, at most 1 rubric is returned. The maximum
+// value is 1; values above 1 are coerced to 1.
+func (c *CoursesCourseWorkRubricsListCall) PageSize(pageSize int64) *CoursesCourseWorkRubricsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": nextPageToken value
+// returned from a previous list call, indicating that the subsequent page of
+// results should be returned. The list request must be otherwise identical to
+// the one that resulted in this token.
+func (c *CoursesCourseWorkRubricsListCall) PageToken(pageToken string) *CoursesCourseWorkRubricsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesCourseWorkRubricsListCall) Fields(s ...googleapi.Field) *CoursesCourseWorkRubricsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesCourseWorkRubricsListCall) IfNoneMatch(entityTag string) *CoursesCourseWorkRubricsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesCourseWorkRubricsListCall) Context(ctx context.Context) *CoursesCourseWorkRubricsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesCourseWorkRubricsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesCourseWorkRubricsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/rubrics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":     c.courseId,
+		"courseWorkId": c.courseWorkId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.courseWork.rubrics.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListRubricsResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CoursesCourseWorkRubricsListCall) Do(opts ...googleapi.CallOption) (*ListRubricsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRubricsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CoursesCourseWorkRubricsListCall) Pages(ctx context.Context, f func(*ListRubricsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type CoursesCourseWorkRubricsPatchCall struct {
+	s            *Service
+	courseId     string
+	courseWorkId string
+	id           string
+	rubric       *Rubric
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates a rubric. See google.classroom.v1.Rubric for details of which
+// fields can be updated. Rubric update capabilities are limited
+// (/classroom/rubrics/limitations) once grading has started. This request must
+// be made by the Google Cloud console of the OAuth client ID
+// (https://support.google.com/cloud/answer/6158849) used to create the parent
+// course work item. This method returns the following error codes: *
+// `PERMISSION_DENIED` if the requesting developer project didn't create the
+// corresponding course work, if the user isn't permitted to make the requested
+// modification to the rubric, or for access errors. This error code is also
+// returned if grading has already started on the rubric. * `INVALID_ARGUMENT`
+// if the request is malformed and for the following request error: *
+// `RubricCriteriaInvalidFormat` * `NOT_FOUND` if the requested course, course
+// work, or rubric doesn't exist or if the user doesn't have access to the
+// corresponding course work. * `INTERNAL` if grading has already started on
+// the rubric.
+//
+// - courseId: Identifier of the course.
+// - courseWorkId: Identifier of the course work.
+// - id: Optional. Identifier of the rubric.
+func (r *CoursesCourseWorkRubricsService) Patch(courseId string, courseWorkId string, id string, rubric *Rubric) *CoursesCourseWorkRubricsPatchCall {
+	c := &CoursesCourseWorkRubricsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.courseWorkId = courseWorkId
+	c.id = id
+	c.rubric = rubric
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Mask that identifies
+// which fields on the rubric to update. This field is required to do an
+// update. The update fails if invalid fields are specified. There are multiple
+// options to define the criteria of a rubric: the `source_spreadsheet_id` and
+// the `criteria` list. Only one of these can be used at a time to define a
+// rubric. The rubric `criteria` list is fully replaced by the rubric criteria
+// specified in the update request. For example, if a criterion or level is
+// missing from the request, it is deleted. New criteria and levels are added
+// and an ID is assigned. Existing criteria and levels retain the previously
+// assigned ID if the ID is specified in the request. The following fields can
+// be specified by teachers: * `criteria` * `source_spreadsheet_id`
+func (c *CoursesCourseWorkRubricsPatchCall) UpdateMask(updateMask string) *CoursesCourseWorkRubricsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesCourseWorkRubricsPatchCall) Fields(s ...googleapi.Field) *CoursesCourseWorkRubricsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesCourseWorkRubricsPatchCall) Context(ctx context.Context) *CoursesCourseWorkRubricsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesCourseWorkRubricsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesCourseWorkRubricsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rubric)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{courseWorkId}/rubrics/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":     c.courseId,
+		"courseWorkId": c.courseWorkId,
+		"id":           c.id,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.courseWork.rubrics.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Rubric.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CoursesCourseWorkRubricsPatchCall) Do(opts ...googleapi.CallOption) (*Rubric, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Rubric{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

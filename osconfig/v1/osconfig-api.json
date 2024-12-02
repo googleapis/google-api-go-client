@@ -1083,7 +1083,7 @@
       }
     }
   },
-  "revision": "20241117",
+  "revision": "20241126",
   "rootUrl": "https://osconfig.googleapis.com/",
   "schemas": {
     "AptSettings": {

@@ -1102,7 +1102,10 @@ type DeleteInboundSsoAssignmentOperationMetadata struct {
 
 // Device: A Device within the Cloud Identity Devices API. Represents a Device
 // known to Google Cloud, independent of the device ownership, type, and
-// whether it is assigned or in use by a user.
+// whether it is assigned or in use by a user. Important: Device API scopes
+// require that you use domain-wide delegation to access the API. For more
+// information, see Set up the Devices API
+// (https://cloud.google.com/identity/docs/how-to/setup-devices).
 type Device struct {
 	// AndroidSpecificAttributes: Output only. Attributes specific to Android
 	// devices.
@@ -2173,7 +2176,9 @@ type GoogleAppsCloudidentityDevicesV1Device struct {
 	// Name: Output only. Resource name
 	// (https://cloud.google.com/apis/design/resource_names) of the Device in
 	// format: `devices/{device}`, where device is the unique id assigned to the
-	// Device.
+	// Device. Important: Device API scopes require that you use domain-wide
+	// delegation to access the API. For more information, see Set up the Devices
+	// API (https://cloud.google.com/identity/docs/how-to/setup-devices).
 	Name string `json:"name,omitempty"`
 	// NetworkOperator: Output only. Mobile or network operator of device, if
 	// available.
@@ -3224,7 +3229,7 @@ func (s Membership) MarshalJSON() ([]byte, error) {
 type MembershipAdjacencyList struct {
 	// Edges: Each edge contains information about the member that belongs to this
 	// group. Note: Fields returned here will help identify the specific Membership
-	// resource (e.g name, preferred_member_key and role), but may not be a
+	// resource (e.g `name`, `preferred_member_key` and `role`), but may not be a
 	// comprehensive list of all fields.
 	Edges []*Membership `json:"edges,omitempty"`
 	// Group: Resource name of the group that the members belong to.
@@ -3611,8 +3616,8 @@ type PolicyQuery struct {
 	// corresponding value(s) as the query to make the query easier to use.
 	Query string `json:"query,omitempty"`
 	// SortOrder: Output only. The decimal sort order of this PolicyQuery. The
-	// value is relative to all other policies with the same setting type within
-	// the whole customer. (There are no duplicates within this set.)
+	// value is relative to all other policies with the same setting type for the
+	// customer. (There are no duplicates within this set).
 	SortOrder float64 `json:"sortOrder,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Group") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -8504,7 +8509,7 @@ type GroupsMembershipsGetMembershipGraphCall struct {
 //     (https://cloud.google.com/apis/design/resource_names) of the group to
 //     search transitive memberships in. Format: `groups/{group_id}`, where
 //     `group_id` is the unique ID assigned to the Group to which the Membership
-//     belongs to. group_id can be a wildcard collection id "-". When a group_id
+//     belongs to. group_id can be a wildcard collection id "-". When `group_id`
 //     is specified, the membership graph will be constrained to paths between
 //     the member (defined in the query) and the parent. If a wildcard collection
 //     is provided, all membership paths connected to the member will be
@@ -9056,7 +9061,7 @@ func (c *GroupsMembershipsSearchDirectGroupsCall) PageSize(pageSize int64) *Grou
 }
 
 // PageToken sets the optional parameter "pageToken": The next_page_token value
-// returned from a previous list request, if any
+// returned from a previous list request, if any.
 func (c *GroupsMembershipsSearchDirectGroupsCall) PageToken(pageToken string) *GroupsMembershipsSearchDirectGroupsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -9219,8 +9224,8 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) PageSize(pageSize int64) *
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The next_page_token value
-// returned from a previous list request, if any.
+// PageToken sets the optional parameter "pageToken": The `next_page_token`
+// value returned from a previous list request, if any.
 func (c *GroupsMembershipsSearchTransitiveGroupsCall) PageToken(pageToken string) *GroupsMembershipsSearchTransitiveGroupsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -9236,7 +9241,7 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) PageToken(pageToken string
 // operators on the parent of the group restricting the search within a
 // particular customer, e.g. `parent == 'customers/{customer_id}'`. The
 // `customer_id` must begin with "C" (for example, 'C046psxkn'). This filtering
-// is only supported for Admins with groups read permissons on the input
+// is only supported for Admins with groups read permissions on the input
 // customer. Example query: `member_key_id == 'member_key_id_value' && in
 // labels && parent == 'customers/C046psxkn'`
 func (c *GroupsMembershipsSearchTransitiveGroupsCall) Query(query string) *GroupsMembershipsSearchTransitiveGroupsCall {
@@ -11540,17 +11545,16 @@ func (r *PoliciesService) List() *PoliciesListCall {
 // You may use `customers/my_customer` to specify your own organization. When
 // no customer is mentioned it will be default to customers/my_customer. A
 // maximum of one customer clause can be used. The above clauses can only be
-// combined together in a single filter expression with the AND operator.
+// combined together in a single filter expression with the `&&` operator.
 func (c *PoliciesListCall) Filter(filter string) *PoliciesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// results to return. The service may return fewer than this value. If omitted
-// (or defaulted to zero) the server will default to 50. The maximum allowed
-// value is 100, though requests with page_size greater than that will be
-// interpreted as 100.
+// results to return. The service can return fewer than this number. If omitted
+// or set to 0, the default is 50 results per page. The maximum allowed value
+// is 100. `page_size` values greater than 100 default to 100.
 func (c *PoliciesListCall) PageSize(pageSize int64) *PoliciesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

@@ -479,6 +479,26 @@ type DeviceIntegrity struct {
 	//   "MEETS_VIRTUAL_INTEGRITY" - App is running on an Android emulator with
 	// Google Play services which meets core Android compatibility requirements.
 	DeviceRecognitionVerdict []string `json:"deviceRecognitionVerdict,omitempty"`
+	// LegacyDeviceRecognitionVerdict: Contains legacy details about the integrity
+	// of the device the app is running on. Only for devices with Android version T
+	// or higher and only for apps opted in to the new verdicts. Only available
+	// during the transition period to the new verdicts system and will be removed
+	// afterwards.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Play does not have sufficient information to evaluate device
+	// integrity
+	//   "MEETS_BASIC_INTEGRITY" - App is running on a device that passes basic
+	// system integrity checks, but may not meet Android platform compatibility
+	// requirements and may not be approved to run Google Play services.
+	//   "MEETS_DEVICE_INTEGRITY" - App is running on GMS Android device with
+	// Google Play services.
+	//   "MEETS_STRONG_INTEGRITY" - App is running on GMS Android device with
+	// Google Play services and has a strong guarantee of system integrity such as
+	// a hardware-backed keystore.
+	//   "MEETS_VIRTUAL_INTEGRITY" - App is running on an Android emulator with
+	// Google Play services which meets core Android compatibility requirements.
+	LegacyDeviceRecognitionVerdict []string `json:"legacyDeviceRecognitionVerdict,omitempty"`
 	// RecentDeviceActivity: Details about the device activity of the device the
 	// app is running on.
 	RecentDeviceActivity *RecentDeviceActivity `json:"recentDeviceActivity,omitempty"`

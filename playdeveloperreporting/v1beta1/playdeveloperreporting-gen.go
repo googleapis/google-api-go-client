@@ -3910,9 +3910,9 @@ func (r *VitalsErrorsIssuesService) Search(parent string) *VitalsErrorsIssuesSea
 // "Google". * `deviceType`: Matches error issues that occurred in the
 // requested device types. Example: `deviceType = "PHONE". * `errorIssueType`:
 // Matches error issues of the requested types only. Valid candidates: `CRASH`,
-// `ANR`. Example: `errorIssueType = CRASH OR errorIssueType = ANR`. *
-// `appProcessState`: Matches error issues on the process state of an app,
-// indicating whether an app runs in the foreground (user-visible) or
+// `ANR`, `NON_FATAL`. Example: `errorIssueType = CRASH OR errorIssueType =
+// ANR`. * `appProcessState`: Matches error issues on the process state of an
+// app, indicating whether an app runs in the foreground (user-visible) or
 // background. Valid candidates: `FOREGROUND`, `BACKGROUND`. Example:
 // `appProcessState = FOREGROUND`. * `isUserPerceived`: Matches error issues
 // that are user-perceived. It is not accompanied by any operators. Example:
@@ -4280,29 +4280,30 @@ func (r *VitalsErrorsReportsService) Search(parent string) *VitalsErrorsReportsS
 // occurred in the requested device brands. Example: `deviceBrand = "Google". *
 // `deviceType`: Matches error reports that occurred in the requested device
 // types. Example: `deviceType = "PHONE". * `errorIssueType`: Matches error
-// reports of the requested types only. Valid candidates: `CRASH`, `ANR`.
-// Example: `errorIssueType = CRASH OR errorIssueType = ANR`. * `errorIssueId`:
-// Matches error reports belonging to the requested error issue ids only.
-// Example: `errorIssueId = 1234 OR errorIssueId = 4567`. * `errorReportId`:
-// Matches error reports with the requested error report id. Example:
-// `errorReportId = 1234 OR errorReportId = 4567`. * `appProcessState`: Matches
-// error reports on the process state of an app, indicating whether an app runs
-// in the foreground (user-visible) or background. Valid candidates:
-// `FOREGROUND`, `BACKGROUND`. Example: `appProcessState = FOREGROUND`. *
-// `isUserPerceived`: Matches error reports that are user-perceived. It is not
-// accompanied by any operators. Example: `isUserPerceived`. ** Supported
-// operators:** * Comparison operators: The only supported comparison operator
-// is equality. The filtered field must appear on the left hand side of the
-// comparison. * Logical Operators: Logical operators `AND` and `OR` can be
-// used to build complex filters following a conjunctive normal form (CNF),
-// i.e., conjunctions of disjunctions. The `OR` operator takes precedence over
-// `AND` so the use of parenthesis is not necessary when building CNF. The `OR`
-// operator is only supported to build disjunctions that apply to the same
-// field, e.g., `versionCode = 123 OR versionCode = ANR`. The filter expression
-// `versionCode = 123 OR errorIssueType = ANR` is not valid. ** Examples **
-// Some valid filtering expressions: * `versionCode = 123 AND errorIssueType =
-// ANR` * `versionCode = 123 AND errorIssueType = OR errorIssueType = CRASH` *
-// `versionCode = 123 AND (errorIssueType = OR errorIssueType = CRASH)`
+// reports of the requested types only. Valid candidates: `CRASH`, `ANR`,
+// `NON_FATAL`. Example: `errorIssueType = CRASH OR errorIssueType = ANR`. *
+// `errorIssueId`: Matches error reports belonging to the requested error issue
+// ids only. Example: `errorIssueId = 1234 OR errorIssueId = 4567`. *
+// `errorReportId`: Matches error reports with the requested error report id.
+// Example: `errorReportId = 1234 OR errorReportId = 4567`. *
+// `appProcessState`: Matches error reports on the process state of an app,
+// indicating whether an app runs in the foreground (user-visible) or
+// background. Valid candidates: `FOREGROUND`, `BACKGROUND`. Example:
+// `appProcessState = FOREGROUND`. * `isUserPerceived`: Matches error reports
+// that are user-perceived. It is not accompanied by any operators. Example:
+// `isUserPerceived`. ** Supported operators:** * Comparison operators: The
+// only supported comparison operator is equality. The filtered field must
+// appear on the left hand side of the comparison. * Logical Operators: Logical
+// operators `AND` and `OR` can be used to build complex filters following a
+// conjunctive normal form (CNF), i.e., conjunctions of disjunctions. The `OR`
+// operator takes precedence over `AND` so the use of parenthesis is not
+// necessary when building CNF. The `OR` operator is only supported to build
+// disjunctions that apply to the same field, e.g., `versionCode = 123 OR
+// versionCode = ANR`. The filter expression `versionCode = 123 OR
+// errorIssueType = ANR` is not valid. ** Examples ** Some valid filtering
+// expressions: * `versionCode = 123 AND errorIssueType = ANR` * `versionCode =
+// 123 AND errorIssueType = OR errorIssueType = CRASH` * `versionCode = 123 AND
+// (errorIssueType = OR errorIssueType = CRASH)`
 func (c *VitalsErrorsReportsSearchCall) Filter(filter string) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("filter", filter)
 	return c

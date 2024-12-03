@@ -1390,7 +1390,9 @@ type GoogleAppsCloudidentityDevicesV1Device struct {
 	// Name: Output only. Resource name
 	// (https://cloud.google.com/apis/design/resource_names) of the Device in
 	// format: `devices/{device}`, where device is the unique id assigned to the
-	// Device.
+	// Device. Important: Device API scopes require that you use domain-wide
+	// delegation to access the API. For more information, see Set up the Devices
+	// API (https://cloud.google.com/identity/docs/how-to/setup-devices).
 	Name string `json:"name,omitempty"`
 	// NetworkOperator: Output only. Mobile or network operator of device, if
 	// available.
@@ -2446,7 +2448,7 @@ func (s Membership) MarshalJSON() ([]byte, error) {
 type MembershipAdjacencyList struct {
 	// Edges: Each edge contains information about the member that belongs to this
 	// group. Note: Fields returned here will help identify the specific Membership
-	// resource (e.g name, preferred_member_key and role), but may not be a
+	// resource (e.g `name`, `preferred_member_key` and `role`), but may not be a
 	// comprehensive list of all fields.
 	Edges []*Membership `json:"edges,omitempty"`
 	// Group: Resource name of the group that the members belong to.
@@ -8131,8 +8133,8 @@ func (c *GroupsMembershipsSearchDirectGroupsCall) PageSize(pageSize int64) *Grou
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The next_page_token value
-// returned from a previous list request, if any
+// PageToken sets the optional parameter "pageToken": The `next_page_token`
+// value returned from a previous list request, if any
 func (c *GroupsMembershipsSearchDirectGroupsCall) PageToken(pageToken string) *GroupsMembershipsSearchDirectGroupsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8296,8 +8298,8 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) PageSize(pageSize int64) *
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The next_page_token value
-// returned from a previous list request, if any.
+// PageToken sets the optional parameter "pageToken": The `next_page_token`
+// value returned from a previous list request, if any.
 func (c *GroupsMembershipsSearchTransitiveGroupsCall) PageToken(pageToken string) *GroupsMembershipsSearchTransitiveGroupsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8313,7 +8315,7 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) PageToken(pageToken string
 // operators on the parent of the group restricting the search within a
 // particular customer, e.g. `parent == 'customers/{customer_id}'`. The
 // `customer_id` must begin with "C" (for example, 'C046psxkn'). This filtering
-// is only supported for Admins with groups read permissons on the input
+// is only supported for Admins with groups read permissions on the input
 // customer. Example query: `member_key_id == 'member_key_id_value' && in
 // labels && parent == 'customers/C046psxkn'`
 func (c *GroupsMembershipsSearchTransitiveGroupsCall) Query(query string) *GroupsMembershipsSearchTransitiveGroupsCall {
@@ -8466,8 +8468,8 @@ func (c *GroupsMembershipsSearchTransitiveMembershipsCall) PageSize(pageSize int
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The next_page_token value
-// returned from a previous list request, if any.
+// PageToken sets the optional parameter "pageToken": The `next_page_token`
+// value returned from a previous list request, if any.
 func (c *GroupsMembershipsSearchTransitiveMembershipsCall) PageToken(pageToken string) *GroupsMembershipsSearchTransitiveMembershipsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

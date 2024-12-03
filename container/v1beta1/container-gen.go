@@ -7964,6 +7964,7 @@ type UpgradeDetails struct {
 	//   "FAILED" - Upgrade has failed with an error.
 	//   "SUCCEEDED" - Upgrade has succeeded.
 	//   "CANCELED" - Upgrade has been canceled.
+	//   "RUNNING" - Upgrade is running.
 	State string `json:"state,omitempty"`
 	// TargetVersion: The version after the upgrade.
 	TargetVersion string `json:"targetVersion,omitempty"`

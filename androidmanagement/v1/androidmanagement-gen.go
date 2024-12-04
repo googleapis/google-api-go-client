@@ -4706,6 +4706,17 @@ type PersonalUsagePolicies struct {
 	// installType set to AVAILABLE are allowed to be installed in the personal
 	// profile.
 	PersonalPlayStoreMode string `json:"personalPlayStoreMode,omitempty"`
+	// PrivateSpacePolicy: Optional. Controls whether a private space is allowed on
+	// the device.
+	//
+	// Possible values:
+	//   "PRIVATE_SPACE_POLICY_UNSPECIFIED" - Unspecified. Defaults to
+	// PRIVATE_SPACE_ALLOWED.
+	//   "PRIVATE_SPACE_ALLOWED" - Users can create a private space profile.
+	//   "PRIVATE_SPACE_DISALLOWED" - Users cannot create a private space profile.
+	// Supported only for company-owned devices with a work profile. Caution: Any
+	// existing private space will be removed.
+	PrivateSpacePolicy string `json:"privateSpacePolicy,omitempty"`
 	// ScreenCaptureDisabled: If true, screen capture is disabled for all users.
 	ScreenCaptureDisabled bool `json:"screenCaptureDisabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
@@ -4957,7 +4968,8 @@ type Policy struct {
 	InstallUnknownSourcesAllowed bool `json:"installUnknownSourcesAllowed,omitempty"`
 	// KeyguardDisabled: If true, this disables the Lock Screen
 	// (https://source.android.com/docs/core/display/multi_display/lock-screen) for
-	// primary and/or secondary displays.
+	// primary and/or secondary displays. This policy is supported only in
+	// dedicated device management mode.
 	KeyguardDisabled bool `json:"keyguardDisabled,omitempty"`
 	// KeyguardDisabledFeatures: Disabled keyguard customizations, such as widgets.
 	//

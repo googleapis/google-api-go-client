@@ -1,5 +1,24 @@
 # Changes
 
+## [0.210.0](https://github.com/googleapis/google-api-go-client/compare/v0.209.0...v0.210.0) (2024-12-04)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2886](https://github.com/googleapis/google-api-go-client/issues/2886)) ([f446504](https://github.com/googleapis/google-api-go-client/commit/f446504cac24bfcb8d3266c14de2a44ed7968063))
+* **all:** Auto-regenerate discovery clients ([#2888](https://github.com/googleapis/google-api-go-client/issues/2888)) ([a990614](https://github.com/googleapis/google-api-go-client/commit/a990614ba53fcc403665d6003643db6bc4d03ce8))
+* **all:** Auto-regenerate discovery clients ([#2892](https://github.com/googleapis/google-api-go-client/issues/2892)) ([22e0d11](https://github.com/googleapis/google-api-go-client/commit/22e0d11172087cd646df9b9235dc9bdb8aba3044))
+* **all:** Auto-regenerate discovery clients ([#2893](https://github.com/googleapis/google-api-go-client/issues/2893)) ([2657039](https://github.com/googleapis/google-api-go-client/commit/2657039424359bca2583b00041e2c6228e4a939f))
+* **all:** Auto-regenerate discovery clients ([#2895](https://github.com/googleapis/google-api-go-client/issues/2895)) ([46fab24](https://github.com/googleapis/google-api-go-client/commit/46fab242a8144b8887696df9a285a651315d6dd8))
+* **all:** Auto-regenerate discovery clients ([#2896](https://github.com/googleapis/google-api-go-client/issues/2896)) ([efded92](https://github.com/googleapis/google-api-go-client/commit/efded92b5ef075836d41c82ddbcc71b73c6fa2e9))
+* Async refresh dry run in parallel with sync refresh ([#2849](https://github.com/googleapis/google-api-go-client/issues/2849)) ([acd2581](https://github.com/googleapis/google-api-go-client/commit/acd258182eaf544256fba965e079b4198ad41efc))
+* **option/internaloption:** Add AuthCreds helper ([#2891](https://github.com/googleapis/google-api-go-client/issues/2891)) ([6ee8349](https://github.com/googleapis/google-api-go-client/commit/6ee8349e13c65c5a4f2f3caf9056d7c37e195fcf))
+
+
+### Bug Fixes
+
+* **gensupport:** Context cancel error check ([#2890](https://github.com/googleapis/google-api-go-client/issues/2890)) ([f57c82d](https://github.com/googleapis/google-api-go-client/commit/f57c82deba73faa59e85dcb1aa136de2d1a40664))
+
 ## [0.209.0](https://github.com/googleapis/google-api-go-client/compare/v0.208.0...v0.209.0) (2024-11-21)
 
 

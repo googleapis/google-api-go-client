@@ -472,6 +472,8 @@ type Channel struct {
 	// to encrypt/decrypt their event data. It must match the pattern
 	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
+	// Labels: Optional. Resource labels.
+	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Required. The resource name of the channel. Must be unique within the
 	// location on the project and must be in
 	// `projects/{project}/locations/{location}/channels/{channel_id}` format.
@@ -550,6 +552,8 @@ type ChannelConnection struct {
 	Channel string `json:"channel,omitempty"`
 	// CreateTime: Output only. The creation time.
 	CreateTime string `json:"createTime,omitempty"`
+	// Labels: Optional. Resource labels.
+	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Required. The name of the connection.
 	Name string `json:"name,omitempty"`
 	// Uid: Output only. Server assigned ID of the resource. The server guarantees
@@ -1216,48 +1220,49 @@ type GoogleCloudEventarcV1PipelineDestinationHttpEndpoint struct {
 	// CloudEvent HTTP Binding Binary Content Mode representation of the final
 	// message and by overwriting the body of the request: ``` { "headers":
 	// headers.merge({"new-header-key": "new-header-value"}), "body": "new-body" }
-	// ``` Additionally, the following CEL extension functions are provided for use
-	// in this CEL expression: - toBase64Url: map.toBase64Url() -> string -
-	// Converts a CelValue to a base64url encoded string - toJsonString:
-	// map.toJsonString() -> string - Converts a CelValue to a JSON string - merge:
-	// map1.merge(map2) -> map3 - Merges the passed CEL map with the existing CEL
-	// map the function is applied to. - If the same key exists in both maps, if
-	// the key's value is type map both maps are merged else the value from the
-	// passed map is used. - denormalize: map.denormalize() -> map - Denormalizes a
-	// CEL map such that every value of type map or key in the map is expanded to
-	// return a single level map. - The resulting keys are "." separated indices of
-	// the map keys. - For example: { "a": 1, "b": { "c": 2, "d": 3 } "e": [4, 5] }
-	// .denormalize() -> { "a": 1, "b.c": 2, "b.d": 3, "e.0": 4, "e.1": 5 } -
-	// setField: map.setField(key, value) -> message - Sets the field of the
-	// message with the given key to the given value. - If the field is not present
-	// it will be added. - If the field is present it will be overwritten. - The
-	// key can be a dot separated path to set a field in a nested message. - Key
-	// must be of type string. - Value may be any valid type. - removeFields:
+	// ``` - The default binding for the message payload can be accessed using the
+	// `body` variable. It conatins a string representation of the message payload
+	// in the format specified by the `output_payload_format` field. If the
+	// `input_payload_format` field is not set, the `body` variable contains the
+	// same message payload bytes that were published. Additionally, the following
+	// CEL extension functions are provided for use in this CEL expression: -
+	// toBase64Url: map.toBase64Url() -> string - Converts a CelValue to a
+	// base64url encoded string - toJsonString: map.toJsonString() -> string -
+	// Converts a CelValue to a JSON string - merge: map1.merge(map2) -> map3 -
+	// Merges the passed CEL map with the existing CEL map the function is applied
+	// to. - If the same key exists in both maps, if the key's value is type map
+	// both maps are merged else the value from the passed map is used. -
+	// denormalize: map.denormalize() -> map - Denormalizes a CEL map such that
+	// every value of type map or key in the map is expanded to return a single
+	// level map. - The resulting keys are "." separated indices of the map keys. -
+	// For example: { "a": 1, "b": { "c": 2, "d": 3 } "e": [4, 5] } .denormalize()
+	// -> { "a": 1, "b.c": 2, "b.d": 3, "e.0": 4, "e.1": 5 } - setField:
+	// map.setField(key, value) -> message - Sets the field of the message with the
+	// given key to the given value. - If the field is not present it will be
+	// added. - If the field is present it will be overwritten. - The key can be a
+	// dot separated path to set a field in a nested message. - Key must be of type
+	// string. - Value may be any valid type. - removeFields:
 	// map.removeFields([key1, key2, ...]) -> message - Removes the fields of the
 	// map with the given keys. - The keys can be a dot separated path to remove a
 	// field in a nested message. - If a key is not found it will be ignored. -
 	// Keys must be of type string. - toMap: [map1, map2, ...].toMap() -> map -
 	// Converts a CEL list of CEL maps to a single CEL map -
-	// toDestinationPayloadFormat(): message.data.toDestinationPayloadFormat() ->
-	// string or bytes - Converts the message data to the destination payload
-	// format specified in Pipeline.Destination.output_payload_format - This
-	// function is meant to be applied to the message.data field. - If the
-	// destination payload format is not set, the function will return the message
-	// data unchanged. - toCloudEventJsonWithPayloadFormat:
+	// toCloudEventJsonWithPayloadFormat:
 	// message.toCloudEventJsonWithPayloadFormat() -> map - Converts a message to
-	// the corresponding structure of JSON format for CloudEvents - This function
-	// applies toDestinationPayloadFormat() to the message data. It also sets the
-	// corresponding datacontenttype of the CloudEvent, as indicated by
-	// Pipeline.Destination.output_payload_format. If no output_payload_format is
-	// set it will use the existing datacontenttype on the CloudEvent if present,
-	// else leave datacontenttype absent. - This function expects that the content
-	// of the message will adhere to the standard CloudEvent format. If it doesn't
-	// then this function will fail. - The result is a CEL map that corresponds to
-	// the JSON representation of the CloudEvent. To convert that data to a JSON
-	// string it can be chained with the toJsonString function. The Pipeline
-	// expects that the message it receives adheres to the standard CloudEvent
-	// format. If it doesn't then the outgoing message request may fail with a
-	// persistent error.
+	// the corresponding structure of JSON format for CloudEvents. - It converts
+	// `data` to destination payload format specified in `output_payload_format`.
+	// If `output_payload_format` is not set, the data will remain unchanged. - It
+	// also sets the corresponding datacontenttype of the CloudEvent, as indicated
+	// by `output_payload_format`. If no `output_payload_format` is set it will use
+	// the value of the "datacontenttype" attribute on the CloudEvent if present,
+	// else remove "datacontenttype" attribute. - This function expects that the
+	// content of the message will adhere to the standard CloudEvent format. If it
+	// doesn't then this function will fail. - The result is a CEL map that
+	// corresponds to the JSON representation of the CloudEvent. To convert that
+	// data to a JSON string it can be chained with the toJsonString function. The
+	// Pipeline expects that the message it receives adheres to the standard
+	// CloudEvent format. If it doesn't then the outgoing message request may fail
+	// with a persistent error.
 	MessageBindingTemplate string `json:"messageBindingTemplate,omitempty"`
 	// Uri: Required. The URI of the HTTP enpdoint. The value must be a RFC2396 URI
 	// string. Examples: `https://svc.us-central1.p.local:8080/route`. Only the
@@ -2000,7 +2005,7 @@ func (s Location) MarshalJSON() ([]byte, error) {
 }
 
 // LoggingConfig: The configuration for Platform Telemetry logging for Eventarc
-// Avdvanced resources.
+// Advanced resources.
 type LoggingConfig struct {
 	// LogSeverity: Optional. The minimum severity of logs that will be sent to
 	// Stackdriver/Platform Telemetry. Logs at severitiy ≥ this value will be
@@ -4916,7 +4921,7 @@ func (r *ProjectsLocationsEnrollmentsService) Create(parent string, enrollment *
 
 // EnrollmentId sets the optional parameter "enrollmentId": Required. The
 // user-provided ID to be assigned to the Enrollment. It should match the
-// format (^a-z ([a-z0-9-]{0,61}[a-z0-9])?$).
+// format `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`.
 func (c *ProjectsLocationsEnrollmentsCreateCall) EnrollmentId(enrollmentId string) *ProjectsLocationsEnrollmentsCreateCall {
 	c.urlParams_.Set("enrollmentId", enrollmentId)
 	return c
@@ -5888,7 +5893,7 @@ func (r *ProjectsLocationsGoogleApiSourcesService) Create(parent string, googlea
 
 // GoogleApiSourceId sets the optional parameter "googleApiSourceId": Required.
 // The user-provided ID to be assigned to the GoogleApiSource. It should match
-// the format (^a-z ([a-z0-9-]{0,61}[a-z0-9])?$).
+// the format `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`.
 func (c *ProjectsLocationsGoogleApiSourcesCreateCall) GoogleApiSourceId(googleApiSourceId string) *ProjectsLocationsGoogleApiSourcesCreateCall {
 	c.urlParams_.Set("googleApiSourceId", googleApiSourceId)
 	return c
@@ -6862,7 +6867,7 @@ func (r *ProjectsLocationsMessageBusesService) Create(parent string, messagebus 
 
 // MessageBusId sets the optional parameter "messageBusId": Required. The
 // user-provided ID to be assigned to the MessageBus. It should match the
-// format (^a-z ([a-z0-9-]{0,61}[a-z0-9])?$)
+// format `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`.
 func (c *ProjectsLocationsMessageBusesCreateCall) MessageBusId(messageBusId string) *ProjectsLocationsMessageBusesCreateCall {
 	c.urlParams_.Set("messageBusId", messageBusId)
 	return c
@@ -7974,7 +7979,7 @@ type ProjectsLocationsOperationsCancelCall struct {
 // other methods to check whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation, the
 // operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of 1, corresponding to
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -8445,7 +8450,8 @@ func (r *ProjectsLocationsPipelinesService) Create(parent string, pipeline *Pipe
 }
 
 // PipelineId sets the optional parameter "pipelineId": Required. The
-// user-provided ID to be assigned to the Pipeline.
+// user-provided ID to be assigned to the Pipeline. It should match the format
+// `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`.
 func (c *ProjectsLocationsPipelinesCreateCall) PipelineId(pipelineId string) *ProjectsLocationsPipelinesCreateCall {
 	c.urlParams_.Set("pipelineId", pipelineId)
 	return c

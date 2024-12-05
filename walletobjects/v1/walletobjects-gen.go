@@ -1430,8 +1430,8 @@ func (s DiffVersionResponse) MarshalJSON() ([]byte, error) {
 }
 
 // DiscoverableProgram: Information about how a class may be discovered and
-// instantiated from within the Android Pay app. This is done by searching for
-// a loyalty or gift card program and scanning or manually entering.
+// instantiated from within the Google Wallet app. This is done by searching
+// for a loyalty or gift card program and scanning or manually entering.
 type DiscoverableProgram struct {
 	// MerchantSigninInfo: Information about the ability to signin and add a
 	// valuable for this program through a merchant site. Used when

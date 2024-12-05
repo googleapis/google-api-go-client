@@ -1718,8 +1718,8 @@ func (r *CustomersService) List() *CustomersListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number of
-// customers to show in a page of results. A number between 1 and 100
+// PageSize sets the optional parameter "pageSize": Required. The maximum
+// number of customers to show in a page of results. A number between 1 and 100
 // (inclusive).
 func (c *CustomersListCall) PageSize(pageSize int64) *CustomersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -2606,8 +2606,9 @@ func (r *CustomersDevicesService) List(parent string) *CustomersDevicesListCall 
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number of
-// devices to show in a page of results. Must be between 1 and 100 inclusive.
+// PageSize sets the optional parameter "pageSize": Required. The maximum
+// number of devices to show in a page of results. Must be between 1 and 100
+// inclusive.
 func (c *CustomersDevicesListCall) PageSize(pageSize int64) *CustomersDevicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
